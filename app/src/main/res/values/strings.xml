@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Self Service App</string>
+    <string name="login">Login</string>
+    <string name="toast_welcome">Welcome</string>
+    <string name="unable_to_connect">Not connected to internet</string>
+    <string name="basic">Basic </string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="progress_message_login">Logging In</string>
 </resources>
