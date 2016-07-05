@@ -1,11 +1,11 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.presenters;
 
 import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.Client;
-import org.mifos.selfserviceapp.presenters.BasePresenter;
+import org.mifos.selfserviceapp.ui.views.ClientListMvpView;
 
 import retrofit2.Call;
 import retrofit2.Callback;

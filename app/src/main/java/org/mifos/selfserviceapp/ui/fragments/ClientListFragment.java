@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.ui.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +17,9 @@ import org.mifos.selfserviceapp.adapters.ClientListAdapter;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.presenters.ClientListPresenter;
+import org.mifos.selfserviceapp.ui.views.ClientListMvpView;
+import org.mifos.selfserviceapp.ui.activities.ClientAccountsActivity;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 

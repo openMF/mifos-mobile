@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.ui.views;
 
 import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;

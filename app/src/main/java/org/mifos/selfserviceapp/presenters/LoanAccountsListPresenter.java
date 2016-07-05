@@ -1,13 +1,11 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.presenters;
 
 import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
-import org.mifos.selfserviceapp.presenters.BasePresenter;
+import org.mifos.selfserviceapp.ui.views.LoanAccountsListView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +19,7 @@ import retrofit2.Response;
 public class LoanAccountsListPresenter extends BasePresenter<LoanAccountsListView>{
     DataManager mDataManager;
 
-    protected LoanAccountsListPresenter(DataManager dataManager) {
+    public LoanAccountsListPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 

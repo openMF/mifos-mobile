@@ -1,8 +1,7 @@
-package org.mifos.selfserviceapp.login;
+package org.mifos.selfserviceapp.ui.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -10,24 +9,24 @@ import android.support.v7.widget.AppCompatButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.home.HomeActivity;
+import org.mifos.selfserviceapp.presenters.LoginPresenter;
+import org.mifos.selfserviceapp.ui.views.LoginView;
 import org.mifos.selfserviceapp.utils.PrefManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Response;
 
 /**
  * @author Vishwajeet
  * @since 05/06/16
  */
 
-public class LoginActivity extends AppCompatActivity implements LoginView{
+public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private LoginPresenter mLoginPresenter;
     private DataManager mDataManager;

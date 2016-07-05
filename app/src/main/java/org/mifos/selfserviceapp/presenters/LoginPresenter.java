@@ -1,11 +1,11 @@
-package org.mifos.selfserviceapp.login;
+package org.mifos.selfserviceapp.presenters;
 
 import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.presenters.BasePresenter;
+import org.mifos.selfserviceapp.ui.views.LoginView;
 import org.mifos.selfserviceapp.utils.PrefManager;
 
 import retrofit2.Call;
@@ -21,7 +21,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     DataManager mDataManager;
     PrefManager prefManager;
 
-    protected LoginPresenter(DataManager dataManager) {
+    public LoginPresenter(DataManager dataManager) {
        mDataManager = dataManager;
     }
 

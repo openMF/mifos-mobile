@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.ui.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -14,8 +14,9 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.adapters.SavingAccountsListAdapter;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.presenters.SavingAccountsListPresenter;
+import org.mifos.selfserviceapp.ui.views.SavingAccountsListView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 

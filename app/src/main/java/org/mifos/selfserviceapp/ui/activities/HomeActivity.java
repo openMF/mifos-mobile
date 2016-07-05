@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.ui.fragments.ClientListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

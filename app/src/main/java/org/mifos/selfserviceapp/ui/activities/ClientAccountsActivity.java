@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.adapters.ViewPagerAdapter;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountsListFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingAccountsListFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
 import butterknife.BindView;

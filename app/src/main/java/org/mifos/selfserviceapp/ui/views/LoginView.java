@@ -1,9 +1,6 @@
-package org.mifos.selfserviceapp.login;
+package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
-
-import retrofit2.Response;
 
 /**
  * @author Vishwajeet

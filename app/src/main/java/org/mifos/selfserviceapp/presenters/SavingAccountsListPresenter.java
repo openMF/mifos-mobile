@@ -1,12 +1,11 @@
-package org.mifos.selfserviceapp.home;
+package org.mifos.selfserviceapp.presenters;
 
 import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
-import org.mifos.selfserviceapp.presenters.BasePresenter;
+import org.mifos.selfserviceapp.ui.views.SavingAccountsListView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +18,7 @@ import retrofit2.Response;
 public class SavingAccountsListPresenter extends BasePresenter<SavingAccountsListView>{
     DataManager mDataManager;
 
-    protected SavingAccountsListPresenter(DataManager dataManager) {
+    public SavingAccountsListPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
