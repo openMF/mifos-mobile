@@ -6,11 +6,6 @@
 package org.mifos.selfserviceapp.api;
 
 
-import android.content.Context;
-import android.util.Log;
-
-import org.mifos.selfserviceapp.utils.PrefManager;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -26,21 +21,20 @@ public class ApiRequestInterceptor implements Interceptor {
 
     public static final String HEADER_TENANT = "Fineract-Platform-TenantId";
     public static final String HEADER_AUTH = "Authorization";
-    private Context context;
+    private String authToken;
 
-    public ApiRequestInterceptor(Context context) {
-        this.context = context;
+    public ApiRequestInterceptor(String authToken) {
+        this.authToken = authToken;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request chainrequest = chain.request();
-        Builder builder = chainrequest.newBuilder()
+        Request chainRequest = chain.request();
+        Builder builder = chainRequest.newBuilder()
                 .header(HEADER_TENANT, "default");
 
-        if (PrefManager.getInstance(context).isAuthenticated()) {
-            builder.header(HEADER_AUTH, PrefManager.getInstance(context).getToken());
-            Log.v("TAG", PrefManager.getInstance(context).getToken());
+        if (authToken != null && !authToken.isEmpty()) {
+            builder.header(HEADER_AUTH, authToken);
         }
 
         Request request = builder.build();

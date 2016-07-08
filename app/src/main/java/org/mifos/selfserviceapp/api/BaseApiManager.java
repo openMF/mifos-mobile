@@ -1,12 +1,9 @@
 package org.mifos.selfserviceapp.api;
 
-import android.content.Context;
-
 import org.mifos.selfserviceapp.api.services.AuthenticationService;
 import org.mifos.selfserviceapp.api.services.ClientService;
 import org.mifos.selfserviceapp.api.services.LoanAccountsListService;
 import org.mifos.selfserviceapp.api.services.SavingAccountsListService;
-import org.mifos.selfserviceapp.home.SavingAccountsListFragment;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,10 +23,14 @@ public class BaseApiManager {
     private ClientService clientsApi;
     private SavingAccountsListService savingAccountsListApi;
     private LoanAccountsListService loanAccountsListApi;
-    private Context context;
+    private String authToken = "";
 
-    public BaseApiManager(Context context){
-        this.context = context;
+    public BaseApiManager(){
+        authenticationApi = createApi(AuthenticationService.class, BASE_URL);
+    }
+
+    public BaseApiManager(String authToken) {
+        this.authToken = authToken;
         authenticationApi = createApi(AuthenticationService.class, BASE_URL);
         clientsApi = createApi(ClientService.class, BASE_URL);
         savingAccountsListApi = createApi(SavingAccountsListService.class, BASE_URL);
@@ -39,9 +40,11 @@ public class BaseApiManager {
     public OkHttpClient getOkHttpClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(new ApiRequestInterceptor(context)).build();
 
-        return client;
+        return new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .addInterceptor(new ApiRequestInterceptor(authToken))
+                .build();
     }
 
     private <T> T createApi(Class<T> clazz, String baseUrl) {
@@ -70,4 +73,11 @@ public class BaseApiManager {
         return loanAccountsListApi;
     }
 
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 }

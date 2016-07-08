@@ -4,6 +4,10 @@ import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.utils.PrefManager;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Call;
 
@@ -11,27 +15,37 @@ import retrofit2.Call;
  * @author Vishwajeet
  * @since 13/6/16.
  */
+@Singleton
 public class DataManager {
 
-    public final BaseApiManager mBaseApiManager;
+    private final BaseApiManager baseApiManager;
 
-    public DataManager(BaseApiManager baseApiManager){
-        mBaseApiManager = baseApiManager;
+    private final PrefManager prefManager;
+
+    @Inject
+    public DataManager(PrefManager prefManager){
+        this.prefManager = prefManager;
+
+        if (prefManager.isAuthenticated()) {
+            baseApiManager = new BaseApiManager(prefManager.getToken());
+        } else {
+            baseApiManager = new BaseApiManager();
+        }
     }
 
     public Call<User> login(String username, String password) {
-        return mBaseApiManager.getAuthenticationApi().authenticate(username, password);
+        return baseApiManager.getAuthenticationApi().authenticate(username, password);
     }
 
     public Call<Client> getClients() {
-        return mBaseApiManager.getClientsApi().getAllClients();
+        return baseApiManager.getClientsApi().getAllClients();
     }
 
     public Call<SavingAccount> getSavingAccounts(int id) {
-        return mBaseApiManager.getSavingAccountsListApi().getSavingAccountsList(id);
+        return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(id);
     }
 
     public Call<LoanAccount> getLoanAccounts(int id) {
-        return mBaseApiManager.getLoanAccountsListApi().getLoanAccountsList(id);
+        return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(id);
     }
 }

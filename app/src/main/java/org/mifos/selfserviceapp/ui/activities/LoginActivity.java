@@ -1,21 +1,16 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.api.BaseApiManager;
-import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.home.HomeActivity;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
-import org.mifos.selfserviceapp.utils.PrefManager;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,13 +21,15 @@ import butterknife.OnClick;
  * @since 05/06/16
  */
 
-public class LoginActivity extends AppCompatActivity implements LoginView {
+public class LoginActivity extends BaseActivity implements LoginView {
 
-    private LoginPresenter mLoginPresenter;
-    private DataManager mDataManager;
-    private BaseApiManager mBaseApiManager;
+    @Inject
+    LoginPresenter mLoginPresenter;
+
     private ProgressDialog progress;
-    private PrefManager prefManager;
+
+    private String username;
+    private String password;
 
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
@@ -41,19 +38,15 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @BindView(R.id.et_password)
     EditText etPassword;
 
-    private String username;
-    private String password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getActivityComponent().inject(this);
+
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        mBaseApiManager = new BaseApiManager(getApplicationContext());
-        mDataManager = new DataManager(mBaseApiManager);
-        mLoginPresenter = new LoginPresenter(mDataManager);
-        prefManager = PrefManager.getInstance(getApplicationContext());
         mLoginPresenter.attachView(this);
     }
 
@@ -76,8 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         Toast.makeText(this, getString(R.string.toast_welcome) + " "
                 +userName, Toast.LENGTH_LONG).show();
 
-        mLoginPresenter.setPref(prefManager);
-        startActivity(new Intent(this, HomeActivity.class));
+        //startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
@@ -115,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mLoginPresenter.detachView();
+        super.onDestroy();
     }
 }

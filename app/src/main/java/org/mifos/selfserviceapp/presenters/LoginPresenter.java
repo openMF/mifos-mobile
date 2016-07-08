@@ -1,13 +1,15 @@
 package org.mifos.selfserviceapp.presenters;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.api.DataManager;
+import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
-import org.mifos.selfserviceapp.utils.PrefManager;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,11 +21,12 @@ import retrofit2.Response;
  */
 public class LoginPresenter extends BasePresenter<LoginView> {
 
-    DataManager mDataManager;
-    PrefManager prefManager;
+    private DataManager mDataManager;
+    private Context context;
 
+    @Inject
     public LoginPresenter(DataManager dataManager) {
-       mDataManager = dataManager;
+        this.mDataManager = dataManager;
     }
 
     public void login(String username, String password) {
@@ -48,16 +51,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     public void setUserInfo(Response<User> response) {
         // Saving userID
-        getPref().setUserId(response.body().getUserId());
+//        getPref().setUserId(response.body().getUserId());
         // Saving user's token
-        getPref().saveToken("Basic "+ response.body().getBase64EncodedAuthenticationKey());
+//        getPref().saveToken("Basic "+ response.body().getBase64EncodedAuthenticationKey());
     }
 
-    public void setPref(PrefManager prefManager) {
-        this.prefManager = prefManager;
-    }
-
-    public PrefManager getPref() {
-        return prefManager;
-    }
 }
