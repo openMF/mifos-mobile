@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.presenters;
+package org.mifos.selfserviceapp.presenters.base;
 
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 

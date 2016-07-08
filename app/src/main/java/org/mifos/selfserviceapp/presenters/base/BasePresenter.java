@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.presenters;
+package org.mifos.selfserviceapp.presenters.base;
 
 import android.content.Context;
 

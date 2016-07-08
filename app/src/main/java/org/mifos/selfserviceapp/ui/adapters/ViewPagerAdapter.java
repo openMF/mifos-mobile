@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.adapters;
+package org.mifos.selfserviceapp.ui.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

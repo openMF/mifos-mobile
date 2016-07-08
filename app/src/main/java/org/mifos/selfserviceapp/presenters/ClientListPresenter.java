@@ -5,6 +5,7 @@ import android.util.Log;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.ClientListMvpView;
 
 import retrofit2.Call;
@@ -15,7 +16,7 @@ import retrofit2.Response;
  * @since 19/06/16
  */
 
-public class ClientListPresenter extends BasePresenter<ClientListMvpView>{
+public class ClientListPresenter extends BasePresenter<ClientListMvpView> {
 
     DataManager mDataManager;
 

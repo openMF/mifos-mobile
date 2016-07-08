@@ -5,6 +5,7 @@ import android.util.Log;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.api.DataManager;
+import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
 import org.mifos.selfserviceapp.utils.PrefManager;
 

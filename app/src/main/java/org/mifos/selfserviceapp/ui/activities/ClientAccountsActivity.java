@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.adapters.ViewPagerAdapter;
+import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountsListFragment;
 import org.mifos.selfserviceapp.ui.fragments.SavingAccountsListFragment;
 import org.mifos.selfserviceapp.utils.Constants;

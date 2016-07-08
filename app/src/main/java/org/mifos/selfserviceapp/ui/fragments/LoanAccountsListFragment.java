@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.adapters.LoanAccountsListAdapter;
+import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.accounts.LoanAccount;

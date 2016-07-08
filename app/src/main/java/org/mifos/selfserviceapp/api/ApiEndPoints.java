@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.api.model;
+package org.mifos.selfserviceapp.api;
 
 /**
  * @author Vishwajeet

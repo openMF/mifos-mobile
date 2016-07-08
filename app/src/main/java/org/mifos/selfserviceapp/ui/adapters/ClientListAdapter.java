@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.adapters;
+package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,7 +1,6 @@
 package org.mifos.selfserviceapp.api.services;
 
-import org.mifos.selfserviceapp.api.model.ApiEndPoints;
-import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.api.ApiEndPoints;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
 
 import retrofit2.Call;
