@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Self Service App</string>
+    <string name="login">Login</string>
+    <string name="toast_welcome">Welcome %s</string>
+    <string name="unable_to_connect">Not connected to internet</string>
+    <string name="basic">Basic </string>
+    <string name="username">Username</string>
+    <string name="progress_message_login">Logging In</string>
+    <string name="progress_message_loading">Loading</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="accounts">Accounts</string>
+    <string name="clients">Clients</string>
+    <string name="funds_transfer">Funds Transfer</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="questionnaire">Questionnaire</string>
+    <string name="about_us">About Us</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <string name="home">Home</string>
+    <string name="medium_text">Medium Text</string>
+    <string name="small_text">Small Text</string>
+    <string name="client_accounts">Client Accounts</string>
+    <string name="splash">Splash</string>
+    <string name="saving_accounts">Saving Accounts</string>
+    <string name="loan_accounts">Loan Accounts</string>
+
+    <string name="error_unauthorised">Invalid Username/Password</string>
+    <string name="error_message_server">Error loading response from server</string>
+    <string name="error_validation_blank">%s cannot be blank</string>
+    <string name="error_validation_minimum_chars">%s cannot be less than %d characters</string>
+    <string name="error_validation_cannot_contain_spaces">%s cannot contain %s</string>
+
+    <string name="not_contain_username">Spaces</string>
 </resources>

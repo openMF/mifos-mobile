@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- dummy ids are given to ech group to make dividers between each group -->
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1" >
+
+        <item
+            android:id="@+id/item_clients"
+            android:checked="true"
+            android:icon="@mipmap/mifos_logo"
+            android:title="@string/clients"
+            />
+
+        <item
+            android:id="@+id/item_accounts"
+            android:checked="false"
+            android:icon="@mipmap/mifos_logo"
+            android:title="@string/accounts"
+            />
+
+        <item
+            android:id="@+id/item_funds_transfer"
+            android:checked="false"
+            android:icon="@mipmap/mifos_logo"
+            android:title="@string/funds_transfer"
+            />
+
+        <item
+            android:id="@+id/item_recent_transactions"
+            android:checked="false"
+            android:icon="@mipmap/mifos_logo"
+            android:title="@string/recent_transactions"
+            />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2">
+
+        <item
+            android:id="@+id/item_questionnaire"
+            android:checked="false"
+            android:icon="@mipmap/mifos_logo"
+            android:title="@string/questionnaire"
+            />
+
+        <item
+            android:id="@+id/item_about_us"
+            android:checked="false"
+            android:icon="@mipmap/mifos_logo"
+            android:title="@string/about_us"
+            />
+
+    </group>
+
+</menu>

@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.presenters;
+package org.mifos.selfserviceapp.presenters.base;
 
 import android.content.Context;
 
@@ -14,9 +14,9 @@ public class BasePresenter<T extends MVPView> implements Presenter<T> {
 
     protected Context context;
 
-    protected BasePresenter(Context context) {
+    /*protected BasePresenter(Context context) {
         this.context = context;
-    }
+    }*/
 
     @Override
     public void attachView(T mvpView) {
