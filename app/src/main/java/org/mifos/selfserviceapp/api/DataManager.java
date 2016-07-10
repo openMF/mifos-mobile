@@ -53,6 +53,11 @@ public class DataManager {
         return prefManager;
     }
 
+    /**
+     * This method is used to re-initialise the {@link BaseApiManager} with the
+     * authentication token, so that the Header can be added to the subsequent
+     * requests that we make with it.
+     */
     public void authenticateApiManager() {
         baseApiManager = new BaseApiManager(prefManager.getToken());
     }
