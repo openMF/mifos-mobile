@@ -9,12 +9,35 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 public interface LoginView extends MVPView {
 
-    void onLoginSuccessful(String userName);
+    /**
+     * Should be called when the user credentials are successfully
+     * authenticated from the API.
+     * The username would be passed to the view so that we can
+     * at least say hello!
+     *
+     * @param userName Username of the user that successfully logged in!
+     */
+    void onLoginSuccess(String userName);
 
-    void onLoginError(Throwable throwable);
+    /**
+     * Should be called when there was an error trying to authenticate
+     * the user from the API. The error could be of many types like
+     * <ul>
+     *     <li>Invalid Login Credentials</li>
+     *     <li>No network connection</li>
+     * </ul>
+     * and must be communicated with a well described message.
+     *
+     * @param errorMessage Error message that tells the user why login failed.
+     */
+    void onLoginError(String errorMessage);
 
-    void showProgress();
-
-    void hideProgress();
+    /**
+     * Should be called when there is a problem with the user input that we
+     * requested. The problem must be communicated back to the user clearly.
+     *
+     * @param errorMessage Error message that tells the user about the problem.
+     */
+    void showInputValidationError(String errorMessage);
 
 }

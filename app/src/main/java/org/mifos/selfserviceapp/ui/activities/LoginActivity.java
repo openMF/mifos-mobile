@@ -24,12 +24,9 @@ import butterknife.OnClick;
 public class LoginActivity extends BaseActivity implements LoginView {
 
     @Inject
-    LoginPresenter mLoginPresenter;
+    LoginPresenter loginPresenter;
 
     private ProgressDialog progress;
-
-    private String username;
-    private String password;
 
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
@@ -47,38 +44,22 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        mLoginPresenter.attachView(this);
-    }
-
-    public boolean validateUserInputs() {
-        username = etUsername.getEditableText().toString();
-        if (username.length() < 5) {
-            Toast.makeText(this, R.string.invalid_username, Toast.LENGTH_LONG);
-            return false;
-        }
-        password = etPassword.getEditableText().toString();
-        if (password.length() < 6) {
-            Toast.makeText(this, R.string.invalid_password, Toast.LENGTH_LONG);
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public void onLoginSuccessful(String userName) {
-
-        Toast.makeText(this, getString(R.string.toast_welcome) + " "
-                +userName, Toast.LENGTH_LONG).show();
-
-        //startActivity(new Intent(this, HomeActivity.class));
-        finish();
+        loginPresenter.attachView(this);
     }
 
     @Override
-    public void onLoginError(Throwable throwable) {
+    public void onLoginSuccess(String userName) {
 
-    //TODO: Handle this error properly
-    Toast.makeText(this, R.string.unable_to_connect, Toast.LENGTH_LONG).show();
+        final String toastMessage =
+                getString(R.string.toast_welcome, userName);
+        showToast(toastMessage);
 
+        // TODO : Handle the flow from here
+    }
+
+    @Override
+    public void onLoginError(String errorMessage) {
+        showToast(errorMessage);
     }
 
     @Override
@@ -97,17 +78,25 @@ public class LoginActivity extends BaseActivity implements LoginView {
             progress.dismiss();
     }
 
-    @OnClick(R.id.btn_login)
-    public void loginClick(){
-        if (!validateUserInputs())
-            return;
+    @Override
+    public void showInputValidationError(String errorMessage) {
+       showToast(errorMessage, Toast.LENGTH_LONG);
+    }
 
-        mLoginPresenter.login(username, password);
+    @OnClick(R.id.btn_login)
+    public void onLoginClicked(){
+
+        final String username = etUsername.getEditableText().toString();
+        final String password = etPassword.getEditableText().toString();
+
+        loginPresenter.login(username, password);
     }
 
     @Override
     protected void onDestroy() {
-        mLoginPresenter.detachView();
+        loginPresenter.detachView();
         super.onDestroy();
     }
+
+
 }

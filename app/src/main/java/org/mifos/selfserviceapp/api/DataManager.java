@@ -18,7 +18,7 @@ import retrofit2.Call;
 @Singleton
 public class DataManager {
 
-    private final BaseApiManager baseApiManager;
+    private BaseApiManager baseApiManager;
 
     private final PrefManager prefManager;
 
@@ -47,5 +47,13 @@ public class DataManager {
 
     public Call<LoanAccount> getLoanAccounts(int id) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(id);
+    }
+
+    public PrefManager getPrefManager() {
+        return prefManager;
+    }
+
+    public void authenticateApiManager() {
+        baseApiManager = new BaseApiManager(prefManager.getToken());
     }
 }

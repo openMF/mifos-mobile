@@ -1,7 +1,9 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import org.mifos.selfserviceapp.MifosSelfServiceApp;
 import org.mifos.selfserviceapp.injection.component.ActivityComponent;
@@ -31,4 +33,27 @@ public class BaseActivity extends AppCompatActivity {
         return activityComponent;
     }
 
+    /**
+     * Displays a toast in current activity. In this method the duration
+     * supplied is Short by default. If you want to specify duration
+     * use {@link BaseActivity#showToast(String, int)} method.
+     *
+     * @param message Message that the toast must show.
+     */
+    public void showToast(String message) {
+        showToast(message, Toast.LENGTH_SHORT);
+    }
+
+    /**
+     * Displays a toast in current activity. The duration can of two types:
+     * <ul>
+     *     <li>SHORT</li>
+     *     <li>LONG</li>
+     * </ul>
+     * @param message Message that the toast must show.
+     * @param toastType Duration for which the toast must be visible.
+     */
+    public void showToast(@NonNull String message, @NonNull int toastType) {
+        Toast.makeText(BaseActivity.this, message, toastType).show();
+    }
 }
