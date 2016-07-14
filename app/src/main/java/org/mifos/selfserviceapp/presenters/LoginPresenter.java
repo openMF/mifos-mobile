@@ -89,7 +89,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         getMvpView().onLoginSuccess(userName);
 
                         final int userID = user.getUserId();
-                        final String authToken =
+                        final String authToken = "Basic "+
                                 user.getBase64EncodedAuthenticationKey();
                         saveAuthenticationTokenForSession(userID,authToken);
                     }

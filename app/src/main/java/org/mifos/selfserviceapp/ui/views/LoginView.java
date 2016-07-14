@@ -6,7 +6,6 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
  * @author Vishwajeet
  * @since 05/06/16
  */
-
 public interface LoginView extends MVPView {
 
     /**
@@ -39,5 +38,4 @@ public interface LoginView extends MVPView {
      * @param errorMessage Error message that tells the user about the problem.
      */
     void showInputValidationError(String errorMessage);
-
 }
