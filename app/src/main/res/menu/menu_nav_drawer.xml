@@ -5,10 +5,10 @@
         android:id="@+id/group1" >
 
         <item
-            android:id="@+id/item_clients"
+            android:id="@+id/item_client_list"
             android:checked="true"
             android:icon="@mipmap/mifos_logo"
-            android:title="@string/clients"
+            android:title="@string/clients_list"
             />
 
         <item
