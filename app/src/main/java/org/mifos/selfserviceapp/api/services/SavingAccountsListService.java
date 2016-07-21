@@ -8,7 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * Created by vjs3 on 21/6/16.
+ * @author Vishwajeet
+ * @since 21/6/16.
  */
 public interface SavingAccountsListService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts?fields=savingsAccounts")

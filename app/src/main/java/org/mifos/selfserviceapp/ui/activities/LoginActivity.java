@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.widget.EditText;
@@ -54,7 +55,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 getString(R.string.toast_welcome, userName);
         showToast(toastMessage);
 
-        // TODO : Handle the flow from here
+        startActivity(new Intent(this, ClientListActivity.class));
     }
 
     @Override

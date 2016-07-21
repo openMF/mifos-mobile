@@ -5,15 +5,8 @@
         android:id="@+id/group1" >
 
         <item
-            android:id="@+id/item_clients"
-            android:checked="true"
-            android:icon="@mipmap/mifos_logo"
-            android:title="@string/clients"
-            />
-
-        <item
             android:id="@+id/item_accounts"
-            android:checked="false"
+            android:checked="true"
             android:icon="@mipmap/mifos_logo"
             android:title="@string/accounts"
             />
