@@ -24,12 +24,15 @@
     <string name="splash">Splash</string>
     <string name="saving_accounts">Saving Accounts</string>
     <string name="loan_accounts">Loan Accounts</string>
+    <string name="clients_list">Chose a client</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
     <string name="error_validation_blank">%1$s cannot be blank</string>
     <string name="error_validation_minimum_chars">%1$s cannot be less than %2$d characters</string>
     <string name="error_validation_cannot_contain_spaces">%1$s cannot contain %2$s</string>
+    <string name="error_internal_server">Error in internal server, please try again</string>
+    <string name="error_client_loading">Error loading client list</string>
 
     <string name="not_contain_username">Spaces</string>
 </resources>
