@@ -48,7 +48,7 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (holder instanceof RecyclerView.ViewHolder) {
 
             LoanAccount loanAccount = getItem(position);
-            ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo().toString());
+            ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo());
             ((ViewHolder) holder).tv_loanAccountProductName.setText(loanAccount.getProductName());
 
         }

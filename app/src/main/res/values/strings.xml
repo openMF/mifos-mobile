@@ -33,6 +33,8 @@
     <string name="error_validation_cannot_contain_spaces">%1$s cannot contain %2$s</string>
     <string name="error_internal_server">Error in internal server, please try again</string>
     <string name="error_client_loading">Error loading client list</string>
+    <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
+    <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
 
     <string name="not_contain_username">Spaces</string>
 </resources>

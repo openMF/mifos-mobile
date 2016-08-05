@@ -26,7 +26,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.HomeActivity"
-            android:label="@string/home"
+            android:label="@string/accounts"
             android:screenOrientation="portrait" />
 
     </application>
