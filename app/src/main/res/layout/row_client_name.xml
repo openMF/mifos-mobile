@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="@dimen/row_padding_left"
+    android:paddingRight="@dimen/row_padding_right"
     >
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="@dimen/row_padding_left">
 
         <TextView
             android:id="@+id/tv_clientName"
@@ -25,7 +25,7 @@
             android:lines="1"
             android:ellipsize="end"
             android:text="@string/medium_text"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_medium"
             android:textColor="@color/black"/>
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/small_text"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_small"
             android:textColor="@color/gray_dark"/>
 
     </LinearLayout>

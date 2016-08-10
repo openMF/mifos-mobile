@@ -6,6 +6,9 @@ import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.ClientListActivity;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
+import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountsListFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingAccountsListFragment;
 
 import dagger.Component;
 
@@ -22,5 +25,11 @@ public interface ActivityComponent {
     void inject(ClientListActivity clientListActivity);
 
     void inject(HomeActivity homeActivity);
+
+    void inject(ClientAccountsFragment clientAccountsFragment);
+
+    void inject(LoanAccountsListFragment loanAccountsListFragment);
+
+    void inject(SavingAccountsListFragment savingAccountsListFragment);
 
 }

@@ -58,6 +58,7 @@ public class ClientListActivity extends BaseActivity
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         rvClients.setLayoutManager(layoutManager);
         rvClients.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
         rvClients.setHasFixedSize(true);

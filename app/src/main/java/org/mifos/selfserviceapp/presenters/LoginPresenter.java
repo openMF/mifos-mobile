@@ -9,6 +9,7 @@ import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.PrefManager;
 
 import javax.inject.Inject;
@@ -31,8 +32,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      *
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
-     * @param context Context of the view attached to the presenter. In this case
-     *                it is that of an {@link android.support.v7.app.AppCompatActivity}
+     * @param context     Context of the view attached to the presenter. In this case
+     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
     public LoginPresenter(DataManager dataManager, @ActivityContext Context context) {
@@ -89,9 +90,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         getMvpView().onLoginSuccess(userName);
 
                         final int userID = user.getUserId();
-                        final String authToken = "Basic " +
+                        final String authToken = Constants.BASIC +
                                 user.getBase64EncodedAuthenticationKey();
-                        saveAuthenticationTokenForSession(userID,authToken);
+                        saveAuthenticationTokenForSession(userID, authToken);
                     }
                 } else if (response.code() == 401) {
                     getMvpView().onLoginError(context.getString(R.string.error_unauthorised));
@@ -111,7 +112,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * The authentication token would be used for accessing the authenticated
      * APIs.
      *
-     * @param userID - The userID of the user to be saved.
+     * @param userID    - The userID of the user to be saved.
      * @param authToken - The authentication token to be saved.
      */
     private void saveAuthenticationTokenForSession(int userID, String authToken) {
@@ -125,6 +126,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     /**
      * Notifies the view about an empty input in the given field name.
+     *
      * @param fieldName Field name of the input that was empty
      */
     private void showEmptyInputError(String fieldName) {
@@ -136,7 +138,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * Notifies the view that the user has not entered the minimum number of
      * characters the input requires.
      *
-     * @param fieldName Field name of the input.
+     * @param fieldName     Field name of the input.
      * @param minimumLength Minimum number of characters the field requires.
      */
     private void showMinimumInputLengthNotAchievedError(String fieldName, int minimumLength) {

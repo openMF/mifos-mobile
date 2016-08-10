@@ -3,6 +3,8 @@ package org.mifos.selfserviceapp.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.support.v7.widget.Toolbar;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
+import org.mifos.selfserviceapp.utils.Constants;
 
 
 import butterknife.BindView;
@@ -23,6 +27,8 @@ import butterknife.ButterKnife;
  */
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int clientId;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -42,8 +48,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            toolbar.setTitle(getString(R.string.home));
+            toolbar.setTitle(getString(R.string.accounts));
         }
+
+        clientId = getIntent().getExtras().getInt(Constants.CLIENT_ID);
+        ClientAccountsFragment.newInstance(clientId);
+        replaceFragment(ClientAccountsFragment.newInstance(clientId), R.id.container);
 
         setupNavigationBar();
     }
@@ -59,6 +69,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         // select which item to open
         switch (item.getItemId()) {
             case R.id.item_accounts:
+                replaceFragment(ClientAccountsFragment.newInstance(clientId), R.id.container);
                 break;
             case R.id.item_funds_transfer:
                 break;
@@ -77,7 +88,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     *This method is used to set up the navigation drawer for
+     * This method is used to set up the navigation drawer for
      * self-service application
      */
     private void setupNavigationBar() {
@@ -100,5 +111,22 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }
+
+    /**
+     * Replace the Activity with desired fragment depending upon what user is
+     * selecting in navigation drawer.
+     *
+     * @param fragment    Name of the fragment which is to be replaced
+     * @param containerId id of container where fragment has to be hold
+     */
+    private void replaceFragment(Fragment fragment, int containerId) {
+        invalidateOptionsMenu();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(containerId, fragment);
+        transaction.commit();
+
+    }
+
 
 }

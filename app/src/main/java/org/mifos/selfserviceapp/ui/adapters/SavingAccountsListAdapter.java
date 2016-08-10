@@ -61,15 +61,15 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
         return savingAccountsList.size();
     }
 
-public static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.tv_clientSavingAccountNumber)
-    TextView tv_clientSavingAccountNumber;
-    @BindView(R.id.tv_savingAccountProductName)
-    TextView tv_savingAccountProductName;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_clientSavingAccountNumber)
+        TextView tv_clientSavingAccountNumber;
+        @BindView(R.id.tv_savingAccountProductName)
+        TextView tv_savingAccountProductName;
 
-    public ViewHolder(View v) {
-        super(v);
-        ButterKnife.bind(this, v);
+        public ViewHolder(View v) {
+            super(v);
+            ButterKnife.bind(this, v);
+        }
     }
-}
 }
