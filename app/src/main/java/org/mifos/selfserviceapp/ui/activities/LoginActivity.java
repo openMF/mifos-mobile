@@ -81,11 +81,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void showInputValidationError(String errorMessage) {
-       showToast(errorMessage, Toast.LENGTH_LONG);
+        showToast(errorMessage, Toast.LENGTH_LONG);
     }
 
     @OnClick(R.id.btn_login)
-    public void onLoginClicked(){
+    public void onLoginClicked() {
 
         final String username = etUsername.getEditableText().toString();
         final String password = etPassword.getEditableText().toString();

@@ -48,11 +48,11 @@ public class SavingAccountsListPresenter extends BasePresenter<SavingAccountsLis
                 if (response.code() == 200) {
                     SavingAccount savingAccount = response.body();
                     List<SavingAccount> savingAccountsList = response.body().getSavingsAccounts();
-                    if(savingAccount !=null) {
+                    if (savingAccount != null) {
                         getMvpView().showSavingAccounts(savingAccountsList);
                     }
 
-                } else if (response.code() >= 400 && response.code() <500) {
+                } else if (response.code() >= 400 && response.code() < 500) {
                     getMvpView().showErrorFetchingSavingAccounts(context.getString(R.string.error_saving_accounts_list_loading));
                 } else if (response.code() == 500) {
                     getMvpView().showErrorFetchingSavingAccounts(context.getString(R.string.error_internal_server));

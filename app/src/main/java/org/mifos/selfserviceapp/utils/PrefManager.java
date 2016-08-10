@@ -26,7 +26,7 @@ public class PrefManager {
     public PrefManager(@ApplicationContext Context context) {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
-    
+
     public int getInt(String preferenceKey, int preferenceDefaultValue) {
         return sharedPreferences.getInt(preferenceKey, preferenceDefaultValue);
     }

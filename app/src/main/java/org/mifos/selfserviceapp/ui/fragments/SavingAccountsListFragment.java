@@ -74,7 +74,7 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
 
         rvSavingAccountsList.setLayoutManager(layoutManager);
         rvSavingAccountsList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
-       // rvSavingAccountsList.setHasFixedSize(true);
+        // rvSavingAccountsList.setHasFixedSize(true);
 
         swipeSavingContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
@@ -89,7 +89,7 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
         return view;
     }
 
-        public static SavingAccountsListFragment newInstance(int clientId) {
+    public static SavingAccountsListFragment newInstance(int clientId) {
         SavingAccountsListFragment fragment = new SavingAccountsListFragment();
         Bundle args = new Bundle();
         args.putInt(Constants.CLIENT_ID, clientId);

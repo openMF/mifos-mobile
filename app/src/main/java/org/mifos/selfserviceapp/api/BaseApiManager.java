@@ -25,7 +25,7 @@ public class BaseApiManager {
     private LoanAccountsListService loanAccountsListApi;
     private String authToken = "";
 
-    public BaseApiManager(){
+    public BaseApiManager() {
         authenticationApi = createApi(AuthenticationService.class, BASE_URL);
     }
 
@@ -57,7 +57,7 @@ public class BaseApiManager {
                 .create(clazz);
     }
 
-    public AuthenticationService getAuthenticationApi(){
+    public AuthenticationService getAuthenticationApi() {
         return authenticationApi;
     }
 

@@ -18,6 +18,7 @@ public class MifosSelfServiceApp extends Application {
     public static MifosSelfServiceApp get(Context context) {
         return (MifosSelfServiceApp) context.getApplicationContext();
     }
+
     @Override
     public void onCreate() {
         super.onCreate();

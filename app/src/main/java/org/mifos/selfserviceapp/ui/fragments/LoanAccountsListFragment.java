@@ -42,7 +42,7 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
     private View rootView;
     private LinearLayoutManager layoutManager;
     private int clientId;
-    private List<LoanAccount> loanAccountsList = new ArrayList<>();;
+    private List<LoanAccount> loanAccountsList = new ArrayList<>();
     private ProgressDialog progressDialog;
     private LoanAccountsListAdapter loanAccountsListAdapter;
 
@@ -72,7 +72,7 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
 
         rvLoanAccountsList.setLayoutManager(layoutManager);
         rvLoanAccountsList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
-      //  rvLoanAccountsList.setHasFixedSize(true);
+        //  rvLoanAccountsList.setHasFixedSize(true);
 
         swipeLoanContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
@@ -94,6 +94,7 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onItemClick(View childView, int position) {
 

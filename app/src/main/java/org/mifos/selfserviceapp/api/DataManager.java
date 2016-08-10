@@ -23,7 +23,7 @@ public class DataManager {
     private final PrefManager prefManager;
 
     @Inject
-    public DataManager(PrefManager prefManager){
+    public DataManager(PrefManager prefManager) {
         this.prefManager = prefManager;
 
         if (prefManager.isAuthenticated()) {

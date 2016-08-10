@@ -20,6 +20,11 @@ public interface LoanAccountsListView extends MVPView {
      */
     void showErrorFetchingLoanAccounts(String message);
 
+    /**
+     * Use to display List of loan accounts for the respective clients.
+     *
+     * @param loanAccountsList List containing loan accounts of a particular client
+     */
     void showLoanAccounts(List<LoanAccount> loanAccountsList);
 }
 

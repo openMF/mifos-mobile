@@ -18,5 +18,4 @@
         android:lines="1"
         android:ellipsize="end"/>
 
-
 </LinearLayout>

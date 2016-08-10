@@ -88,7 +88,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     *This method is used to set up the navigation drawer for
+     * This method is used to set up the navigation drawer for
      * self-service application
      */
     private void setupNavigationBar() {

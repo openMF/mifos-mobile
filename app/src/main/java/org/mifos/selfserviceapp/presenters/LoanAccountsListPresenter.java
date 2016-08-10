@@ -48,11 +48,11 @@ public class LoanAccountsListPresenter extends BasePresenter<LoanAccountsListVie
                 if (response.code() == 200) {
                     LoanAccount loanAccount = response.body();
                     List<LoanAccount> loanAccountsList = response.body().getLoanAccounts();
-                    if(loanAccount !=null) {
+                    if (loanAccount != null) {
                         getMvpView().showLoanAccounts(loanAccountsList);
                     }
 
-                } else if (response.code() >= 400 && response.code() <500) {
+                } else if (response.code() >= 400 && response.code() < 500) {
                     getMvpView().showErrorFetchingLoanAccounts(context.getString(R.string.error_loan_accounts_list_loading));
                 } else if (response.code() == 500) {
                     getMvpView().showErrorFetchingLoanAccounts(context.getString(R.string.error_internal_server));

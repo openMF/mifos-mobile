@@ -6,9 +6,10 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
 import java.util.List;
 
 /**
- * Created by vjs3 on 6/8/16.
+ * @author Vishwajeet
+ * @since 06/08/16.
  */
-public interface SavingAccountsListView extends MVPView{
+public interface SavingAccountsListView extends MVPView {
 
     /**
      * Should be called if there is any error from client side in loading the client's loan accounts list from server.
@@ -18,5 +19,10 @@ public interface SavingAccountsListView extends MVPView{
      */
     void showErrorFetchingSavingAccounts(String message);
 
+    /**
+     * Use to display List of saving accounts for the respective clients.
+     *
+     * @param savingAccountsList List containing saving accounts of a particular client
+     */
     void showSavingAccounts(List<SavingAccount> savingAccountsList);
 }

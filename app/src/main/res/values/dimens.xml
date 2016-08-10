@@ -1,4 +1,28 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
 
+    <!-- Dimen values for height -->
+
+    <dimen name="toolbar_height">32dp</dimen>
+    <dimen name="tab_layout_height">28dp</dimen>
+    <dimen name="login_height">72dp</dimen>
+
+    <!-- Dimen values for padding -->
+
+    <dimen name="row_padding_left">16dp</dimen>
+    <dimen name="row_padding_right">16dp</dimen>
+    <dimen name="login_padding_left">24dp</dimen>
+    <dimen name="login_padding_right">24dp</dimen>
+    <dimen name="login_padding_top">56dp</dimen>
+    <dimen name="login_padding_button">12dp</dimen>
+
+    <!-- Dimen values for margins-->
+    <dimen name="login_margin_top">24dp</dimen>
+    <dimen name="login_margin_bottom">24dp</dimen>
+    <dimen name="login_text_input_margin_top">8dp</dimen>
+    <dimen name="login_text_input_margin_bottom">8dp</dimen>
+
+    <!-- Dimen values for text size -->
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_small">14sp</dimen>
 </resources>

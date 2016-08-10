@@ -42,7 +42,7 @@
 
     <!-- Material design colors -->
 
-    <color name="primary">#3f51b5</color>
+    <color name="primary">#3F51B5</color>
     <color name="primary_dark">#303F9F</color>
     <color name="primary_light">#BBDEFB</color>
     <color name="accent">#03a9f4</color>
