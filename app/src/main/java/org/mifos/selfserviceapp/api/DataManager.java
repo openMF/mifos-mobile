@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.data.Transaction;
 import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
@@ -47,6 +48,10 @@ public class DataManager {
 
     public Call<LoanAccount> getLoanAccounts(int id) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(id);
+    }
+
+    public Call<Transaction> getRecentTransactions(int id) {
+        return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(id);
     }
 
     public PrefManager getPrefManager() {

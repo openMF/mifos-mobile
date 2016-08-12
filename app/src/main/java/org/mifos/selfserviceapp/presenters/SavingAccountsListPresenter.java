@@ -21,7 +21,7 @@ public class SavingAccountsListPresenter extends BasePresenter<SavingAccountsLis
     private DataManager dataManager;
 
     /**
-     * Initialises the ClientListPresenter by automatically injecting an instance of
+     * Initialises the SavingAccountsListPresenter by automatically injecting an instance of
      * {@link DataManager} and {@link Context}.
      *
      * @param dataManager DataManager class that provides access to the data

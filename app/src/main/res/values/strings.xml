@@ -35,6 +35,7 @@
     <string name="error_client_loading">Error loading client list</string>
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
     <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
+    <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
 
     <string name="not_contain_username">Spaces</string>
 </resources>
