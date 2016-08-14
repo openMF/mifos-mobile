@@ -2,8 +2,8 @@ package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.User;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
+import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
 import org.mifos.selfserviceapp.utils.PrefManager;
 
 import javax.inject.Inject;
@@ -41,11 +41,11 @@ public class DataManager {
         return baseApiManager.getClientsApi().getAllClients();
     }
 
-    public Call<SavingAccount> getSavingAccounts(int id) {
+    public Call<SavingAccountsListResponse> getSavingAccounts(int id) {
         return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(id);
     }
 
-    public Call<LoanAccount> getLoanAccounts(int id) {
+    public Call<LoanAccountsListResponse> getLoanAccounts(int id) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(id);
     }
 
