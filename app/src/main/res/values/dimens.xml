@@ -15,12 +15,14 @@
     <dimen name="login_padding_right">24dp</dimen>
     <dimen name="login_padding_top">56dp</dimen>
     <dimen name="login_padding_button">12dp</dimen>
+    <dimen name="ticker">24dp</dimen>
 
     <!-- Dimen values for margins-->
     <dimen name="login_margin_top">24dp</dimen>
     <dimen name="login_margin_bottom">24dp</dimen>
     <dimen name="login_text_input_margin_top">8dp</dimen>
     <dimen name="login_text_input_margin_bottom">8dp</dimen>
+    <dimen name="recent_transaction_text_view_margin_left">20dp</dimen>
 
     <!-- Dimen values for text size -->
     <dimen name="text_medium">16sp</dimen>

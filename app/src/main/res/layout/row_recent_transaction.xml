@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/row_padding_left"
+    android:paddingRight="@dimen/row_padding_right"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left">
+
+        <TextView
+            android:id="@+id/tv_transactionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/medium_text"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medium_text"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/recent_transaction_text_view_margin_left" />
+
+        <TextView
+            android:id="@+id/tv_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medium_text"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/recent_transaction_text_view_margin_left" />
+
+    </LinearLayout>
+</LinearLayout>

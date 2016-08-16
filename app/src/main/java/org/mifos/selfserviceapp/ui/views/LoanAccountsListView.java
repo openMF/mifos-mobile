@@ -13,10 +13,12 @@ import java.util.List;
 public interface LoanAccountsListView extends MVPView {
 
     /**
-     * Should be called if there is any error from client side in loading the client's loan accounts list from server.
+     * Should be called if there is any error from client side in loading the client's loan
+     * accounts list from server.
      * Reason for error should be mentioned clearly to the user.
      *
-     * @param message Error message to display showing reason of failure in loading client list
+     * @param message Error message to display showing reason of failure in loading client's
+     *                loan accounts list.
      */
     void showErrorFetchingLoanAccounts(String message);
 

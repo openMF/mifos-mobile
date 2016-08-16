@@ -16,6 +16,10 @@ import org.mifos.selfserviceapp.utils.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Vishwajeet
+ * @since 14/07/2016
+ */
 public class ClientAccountsFragment extends Fragment {
     private int clientId;
 

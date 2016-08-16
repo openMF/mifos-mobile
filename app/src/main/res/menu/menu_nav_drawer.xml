@@ -7,21 +7,21 @@
         <item
             android:id="@+id/item_accounts"
             android:checked="true"
-            android:icon="@mipmap/mifos_logo"
+            android:icon="@mipmap/ic_account_balance_black_24dp"
             android:title="@string/accounts"
             />
 
         <item
             android:id="@+id/item_funds_transfer"
             android:checked="false"
-            android:icon="@mipmap/mifos_logo"
+            android:icon= "@mipmap/ic_attach_money_black_24dp"
             android:title="@string/funds_transfer"
             />
 
         <item
             android:id="@+id/item_recent_transactions"
             android:checked="false"
-            android:icon="@mipmap/mifos_logo"
+            android:icon="@mipmap/ic_compare_arrows_black_24dp"
             android:title="@string/recent_transactions"
             />
     </group>
@@ -32,14 +32,14 @@
         <item
             android:id="@+id/item_questionnaire"
             android:checked="false"
-            android:icon="@mipmap/mifos_logo"
+            android:icon="@mipmap/ic_question_answer_black_24dp"
             android:title="@string/questionnaire"
             />
 
         <item
             android:id="@+id/item_about_us"
             android:checked="false"
-            android:icon="@mipmap/mifos_logo"
+            android:icon="@mipmap/ic_info_black_24dp"
             android:title="@string/about_us"
             />
 
