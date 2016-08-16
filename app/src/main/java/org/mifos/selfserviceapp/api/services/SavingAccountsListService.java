@@ -1,7 +1,7 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,5 +13,5 @@ import retrofit2.http.Path;
  */
 public interface SavingAccountsListService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts?fields=savingsAccounts")
-    Call<SavingAccount> getSavingAccountsList(@Path("clientId") int clientId);
+    Call<SavingAccountsListResponse> getSavingAccountsList(@Path("clientId") int clientId);
 }

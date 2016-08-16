@@ -5,6 +5,7 @@ import android.content.Context;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.accounts.LoanAccount;
+import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsListView;
@@ -37,16 +38,16 @@ public class LoanAccountsListPresenter extends BasePresenter<LoanAccountsListVie
     }
 
     public void loadLoanAccountsList(int clientId) {
-        Call<LoanAccount> call = dataManager.getLoanAccounts(clientId);
+        Call<LoanAccountsListResponse> call = dataManager.getLoanAccounts(clientId);
         getMvpView().showProgress();
 
-        call.enqueue(new Callback<LoanAccount>() {
+        call.enqueue(new Callback<LoanAccountsListResponse>() {
             @Override
-            public void onResponse(Response<LoanAccount> response) {
+            public void onResponse(Response<LoanAccountsListResponse> response) {
                 getMvpView().hideProgress();
 
                 if (response.code() == 200) {
-                    LoanAccount loanAccount = response.body();
+                    LoanAccountsListResponse loanAccount = response.body();
                     List<LoanAccount> loanAccountsList = response.body().getLoanAccounts();
                     if (loanAccount != null) {
                         getMvpView().showLoanAccounts(loanAccountsList);
