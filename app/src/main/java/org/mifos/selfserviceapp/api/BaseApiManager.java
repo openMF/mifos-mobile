@@ -3,6 +3,7 @@ package org.mifos.selfserviceapp.api;
 import org.mifos.selfserviceapp.api.services.AuthenticationService;
 import org.mifos.selfserviceapp.api.services.ClientService;
 import org.mifos.selfserviceapp.api.services.LoanAccountsListService;
+import org.mifos.selfserviceapp.api.services.RecentTransactionsService;
 import org.mifos.selfserviceapp.api.services.SavingAccountsListService;
 
 import okhttp3.OkHttpClient;
@@ -23,6 +24,7 @@ public class BaseApiManager {
     private ClientService clientsApi;
     private SavingAccountsListService savingAccountsListApi;
     private LoanAccountsListService loanAccountsListApi;
+    private RecentTransactionsService recentTransactionsApi;
     private String authToken = "";
 
     public BaseApiManager() {
@@ -35,6 +37,7 @@ public class BaseApiManager {
         clientsApi = createApi(ClientService.class, BASE_URL);
         savingAccountsListApi = createApi(SavingAccountsListService.class, BASE_URL);
         loanAccountsListApi = createApi(LoanAccountsListService.class, BASE_URL);
+        recentTransactionsApi = createApi(RecentTransactionsService.class, BASE_URL);
     }
 
     public OkHttpClient getOkHttpClient() {
@@ -71,6 +74,10 @@ public class BaseApiManager {
 
     public LoanAccountsListService getLoanAccountsListApi() {
         return loanAccountsListApi;
+    }
+
+    public RecentTransactionsService getRecentTransactionsApi() {
+        return recentTransactionsApi;
     }
 
     public String getAuthToken() {
