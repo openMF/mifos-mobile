@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.data.TransactionsListResponse;
 import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
 import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
@@ -41,12 +42,16 @@ public class DataManager {
         return baseApiManager.getClientsApi().getAllClients();
     }
 
-    public Call<SavingAccountsListResponse> getSavingAccounts(int id) {
-        return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(id);
+    public Call<SavingAccountsListResponse> getSavingAccounts(int clientId) {
+        return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(clientId);
     }
 
-    public Call<LoanAccountsListResponse> getLoanAccounts(int id) {
-        return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(id);
+    public Call<LoanAccountsListResponse> getLoanAccounts(int clientId) {
+        return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(clientId);
+    }
+
+    public Call<TransactionsListResponse> getRecentTransactions(int clientId) {
+        return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(clientId);
     }
 
     public PrefManager getPrefManager() {

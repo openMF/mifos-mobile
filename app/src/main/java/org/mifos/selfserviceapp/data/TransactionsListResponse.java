@@ -1,0 +1,20 @@
+package org.mifos.selfserviceapp.data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Vishwajeet
+ * @since 17/8/16.
+ */
+public class TransactionsListResponse {
+    private List<Transaction> pageItems = new ArrayList<>();
+
+    public List<Transaction> getPageItems() {
+        return pageItems;
+    }
+
+    public void setPageItems(List<Transaction> transactions) {
+        this.pageItems = transactions;
+    }
+}

@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
+import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
 
@@ -74,6 +75,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.item_funds_transfer:
                 break;
             case R.id.item_recent_transactions:
+                RecentTransactionsFragment.newInstance(clientId);
+                replaceFragment(RecentTransactionsFragment.newInstance(clientId), R.id.container);
                 break;
             case R.id.item_questionnaire:
                 break;
@@ -84,6 +87,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         // close the drawer
         mDrawerLayout.closeDrawer(GravityCompat.START);
         mNavigationView.setCheckedItem(R.id.item_accounts);
+        setTitle(item.getTitle());
         return true;
     }
 
