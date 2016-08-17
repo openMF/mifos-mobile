@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
+import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
@@ -77,6 +78,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.item_recent_transactions:
                 RecentTransactionsFragment.newInstance(clientId);
                 replaceFragment(RecentTransactionsFragment.newInstance(clientId), R.id.container);
+                break;
+            case R.id.item_charges:
+                ClientChargeFragment.newInstance(clientId);
+                replaceFragment(ClientChargeFragment.newInstance(clientId), R.id.container);
                 break;
             case R.id.item_questionnaire:
                 break;

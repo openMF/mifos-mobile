@@ -13,6 +13,7 @@
     <string name="clients">Clients</string>
     <string name="funds_transfer">Funds Transfer</string>
     <string name="recent_transactions">Recent Transactions</string>
+    <string name="charges">Charges</string>
     <string name="questionnaire">Questionnaire</string>
     <string name="about_us">About Us</string>
     <string name="open_drawer">Open Drawer</string>
@@ -36,6 +37,7 @@
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
     <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
+    <string name="error_client_charge_loading">Error loading in client charges</string>
 
     <string name="not_contain_username">Spaces</string>
 </resources>

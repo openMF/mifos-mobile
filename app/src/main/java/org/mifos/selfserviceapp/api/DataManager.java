@@ -1,5 +1,6 @@
 package org.mifos.selfserviceapp.api;
 
+import org.mifos.selfserviceapp.data.ChargeListResponse;
 import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.TransactionsListResponse;
 import org.mifos.selfserviceapp.data.User;
@@ -52,6 +53,10 @@ public class DataManager {
 
     public Call<TransactionsListResponse> getRecentTransactions(int clientId) {
         return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(clientId);
+    }
+
+    public Call<ChargeListResponse> getClientCharges(int clientId) {
+        return baseApiManager.getClientChargeApi().getClientChargeList(clientId);
     }
 
     public PrefManager getPrefManager() {
