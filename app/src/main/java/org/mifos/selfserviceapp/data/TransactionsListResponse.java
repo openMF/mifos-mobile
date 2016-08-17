@@ -14,7 +14,7 @@ public class TransactionsListResponse {
         return pageItems;
     }
 
-    public void setPageItems(List<Transaction> transactions) {
-        this.pageItems = transactions;
+    public void setPageItems(List<Transaction> pageItems) {
+        this.pageItems = pageItems;
     }
 }

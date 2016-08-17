@@ -25,6 +25,13 @@
             android:icon="@mipmap/ic_compare_arrows_black_24dp"
             android:title="@string/recent_transactions"
             />
+
+        <item
+            android:id="@+id/item_charges"
+            android:checked="false"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/charges"
+            />
     </group>
 
     <group android:checkableBehavior="single"
