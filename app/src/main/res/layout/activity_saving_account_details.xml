@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_clientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/client_name"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_client_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_savingAccountNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/account_number"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_saving_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_nominalInterestRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/nominal_interest_rate"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_nominal_interest_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_accountBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/account_balance"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_account_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_totalDeposits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/total_deposits"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_total_deposits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_savingProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/saving_product_name"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_savings_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_minRequiredBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/min_required_balance"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_min_req_bal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left" />
+
+    </TableRow>
+</TableLayout>

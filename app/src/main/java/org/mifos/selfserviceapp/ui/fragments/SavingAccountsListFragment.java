@@ -2,6 +2,7 @@ package org.mifos.selfserviceapp.ui.fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
 import org.mifos.selfserviceapp.presenters.SavingAccountsListPresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
+import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsListView;
@@ -99,7 +101,9 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
 
     @Override
     public void onItemClick(View childView, int position) {
-
+        Intent intent = new Intent(getActivity(), SavingAccountsDetailActivity.class);
+        intent.putExtra(Constants.ACCOUNT_ID, savingAccountsList.get(position).getId());
+        startActivity(intent);
     }
 
     @Override
