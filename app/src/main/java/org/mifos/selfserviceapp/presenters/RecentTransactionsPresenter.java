@@ -42,7 +42,7 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
         this.dataManager = dataManager;
     }
 
-    public void loadRecentTransactions(int clientId) {
+    public void loadRecentTransactions(long clientId) {
         Call<TransactionsListResponse> call = dataManager.getRecentTransactions(clientId);
         getMvpView().showProgress();
 

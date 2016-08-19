@@ -41,7 +41,7 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
 
     private View rootView;
     private LinearLayoutManager layoutManager;
-    private int clientId;
+    private long clientId;
     private List<LoanAccount> loanAccountsList = new ArrayList<>();
     private ProgressDialog progressDialog;
     private LoanAccountsListAdapter loanAccountsListAdapter;
@@ -56,7 +56,7 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null)
-            clientId = getArguments().getInt(Constants.CLIENT_ID);
+            clientId = getArguments().getLong(Constants.CLIENT_ID);
     }
 
     @Nullable
@@ -87,10 +87,10 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
         return rootView;
     }
 
-    public static LoanAccountsListFragment newInstance(int clientId) {
+    public static LoanAccountsListFragment newInstance(long clientId) {
         LoanAccountsListFragment fragment = new LoanAccountsListFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.CLIENT_ID, clientId);
+        args.putLong(Constants.CLIENT_ID, clientId);
         fragment.setArguments(args);
         return fragment;
     }

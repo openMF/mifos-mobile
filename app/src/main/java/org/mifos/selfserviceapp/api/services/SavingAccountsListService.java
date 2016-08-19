@@ -14,9 +14,9 @@ import retrofit2.http.Path;
  */
 public interface SavingAccountsListService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts?fields=savingsAccounts")
-    Call<SavingAccountsListResponse> getSavingAccountsList(@Path("clientId") int clientId);
+    Call<SavingAccountsListResponse> getSavingAccountsList(@Path("clientId") long clientId);
 
     @GET(ApiEndPoints.SAVINGSACOUNTS + "/{accountId}/")
-    Call<SavingAccount> getSavingAccountsDetail(@Path("accountId") int accountId);
+    Call<SavingAccount> getSavingAccountsDetail(@Path("accountId") long accountId);
 
 }

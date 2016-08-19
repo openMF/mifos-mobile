@@ -37,7 +37,7 @@ public class LoanAccountsListPresenter extends BasePresenter<LoanAccountsListVie
         this.dataManager = dataManager;
     }
 
-    public void loadLoanAccountsList(int clientId) {
+    public void loadLoanAccountsList(long clientId) {
         Call<LoanAccountsListResponse> call = dataManager.getLoanAccounts(clientId);
         getMvpView().showProgress();
 

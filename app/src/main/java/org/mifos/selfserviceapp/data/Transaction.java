@@ -8,10 +8,10 @@ import java.util.List;
  * @since 10/8/16.
  */
 public class Transaction {
-    private int id;
-    private int officeId;
+    private long id;
+    private long officeId;
     private List<Long> submittedOnDate = new ArrayList<>();
-    private float amount;
+    private double amount;
     private Type type;
     private Currency currency;
 
@@ -19,7 +19,7 @@ public class Transaction {
         return submittedOnDate;
     }
 
-    public int getOfficeId() {
+    public long getOfficeId() {
         return officeId;
     }
 
@@ -27,7 +27,7 @@ public class Transaction {
         this.submittedOnDate = submittedOnDate;
     }
 
-    public void setOfficeId(int officeId) {
+    public void setOfficeId(long officeId) {
         this.officeId = officeId;
 
     }
@@ -36,15 +36,15 @@ public class Transaction {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -65,7 +65,7 @@ public class Transaction {
     }
 
     public static class Type {
-        private int id;
+        private long id;
         private String code;
         private String value;
 
@@ -77,11 +77,11 @@ public class Transaction {
             this.value = value;
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
             this.id = id;
         }
     }

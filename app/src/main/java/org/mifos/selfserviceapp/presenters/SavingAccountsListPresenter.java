@@ -37,7 +37,7 @@ public class SavingAccountsListPresenter extends BasePresenter<SavingAccountsLis
         this.dataManager = dataManager;
     }
 
-    public void loadSavingAccountsList(int clientId) {
+    public void loadSavingAccountsList(long clientId) {
         Call<SavingAccountsListResponse> call = dataManager.getSavingAccounts(clientId);
         getMvpView().showProgress();
 

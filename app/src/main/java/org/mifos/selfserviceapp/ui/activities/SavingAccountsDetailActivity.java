@@ -26,7 +26,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
     @Inject
     SavingAccountsDetailPresenter mSavingAccountsDetailPresenter;
 
-    private int accountId;
+    private long accountId;
     private ProgressDialog progressDialog;
 
     @BindView(R.id.tv_clientName)
@@ -75,7 +75,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
 
         mSavingAccountsDetailPresenter.attachView(this);
 
-        accountId = getIntent().getExtras().getInt(Constants.ACCOUNT_ID);
+        accountId = getIntent().getExtras().getLong(Constants.ACCOUNT_ID);
 
         mSavingAccountsDetailPresenter.loadSavingAccountDetails(accountId);
         showBackButton();

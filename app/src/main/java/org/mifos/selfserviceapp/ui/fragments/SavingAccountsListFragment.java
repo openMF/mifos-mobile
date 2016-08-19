@@ -44,7 +44,7 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
     @Inject
     SavingAccountsListPresenter mSavingAccountsListPresenter;
 
-    private int clientId;
+    private long clientId;
     private View view;
     private ProgressDialog progressDialog;
     private List<SavingAccount> savingAccountsList = new ArrayList<>();
@@ -61,7 +61,7 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null)
-            clientId = getArguments().getInt(Constants.CLIENT_ID);
+            clientId = getArguments().getLong(Constants.CLIENT_ID);
     }
 
     @Override
@@ -91,10 +91,10 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
         return view;
     }
 
-    public static SavingAccountsListFragment newInstance(int clientId) {
+    public static SavingAccountsListFragment newInstance(long clientId) {
         SavingAccountsListFragment fragment = new SavingAccountsListFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.CLIENT_ID, clientId);
+        args.putLong(Constants.CLIENT_ID, clientId);
         fragment.setArguments(args);
         return fragment;
     }

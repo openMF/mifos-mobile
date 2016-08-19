@@ -44,23 +44,23 @@ public class DataManager {
         return baseApiManager.getClientsApi().getAllClients();
     }
 
-    public Call<SavingAccountsListResponse> getSavingAccounts(int clientId) {
+    public Call<SavingAccountsListResponse> getSavingAccounts(long clientId) {
         return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(clientId);
     }
 
-    public Call<LoanAccountsListResponse> getLoanAccounts(int clientId) {
+    public Call<LoanAccountsListResponse> getLoanAccounts(long clientId) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(clientId);
     }
 
-    public Call<TransactionsListResponse> getRecentTransactions(int clientId) {
+    public Call<TransactionsListResponse> getRecentTransactions(long clientId) {
         return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(clientId);
     }
 
-    public Call<ChargeListResponse> getClientCharges(int clientId) {
+    public Call<ChargeListResponse> getClientCharges(long clientId) {
         return baseApiManager.getClientChargeApi().getClientChargeList(clientId);
     }
 
-    public Call<SavingAccount> getSavingAccountDetails(int accountId) {
+    public Call<SavingAccount> getSavingAccountDetails(long accountId) {
         return baseApiManager.getSavingAccountsListApi().getSavingAccountsDetail(accountId);
     }
 

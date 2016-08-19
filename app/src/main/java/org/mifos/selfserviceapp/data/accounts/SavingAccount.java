@@ -6,16 +6,18 @@ package org.mifos.selfserviceapp.data.accounts;
  */
 
 public class SavingAccount {
-    private int id;
+    private long id;
+    private long overdraftLimit;
+    private long  minRequiredBalance;
+
+    private double accountBalance;
+    private double totalDeposits;
+
     private String accountNo;
     private String productName;
     private String savingsProductName;
     private String clientName;
     private String savingsProductId;
-    private int overdraftLimit;
-    private int minRequiredBalance;
-    private double accountBalance;
-    private double totalDeposits;
 
     public double getNominalAnnualInterestRate() {
         return nominalAnnualInterestRate;
@@ -67,19 +69,19 @@ public class SavingAccount {
         this.savingsProductId = savingsProductId;
     }
 
-    public int getOverdraftLimit() {
+    public long getOverdraftLimit() {
         return overdraftLimit;
     }
 
-    public void setOverdraftLimit(int overdraftLimit) {
+    public void setOverdraftLimit(long overdraftLimit) {
         this.overdraftLimit = overdraftLimit;
     }
 
-    public int getMinRequiredBalance() {
+    public long getMinRequiredBalance() {
         return minRequiredBalance;
     }
 
-    public void setMinRequiredBalance(int minRequiredBalance) {
+    public void setMinRequiredBalance(long minRequiredBalance) {
         this.minRequiredBalance = minRequiredBalance;
     }
 
@@ -99,11 +101,11 @@ public class SavingAccount {
         this.productName = productName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

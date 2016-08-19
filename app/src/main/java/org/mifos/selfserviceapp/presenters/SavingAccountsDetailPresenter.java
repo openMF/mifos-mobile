@@ -45,7 +45,7 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      * and notify the view to display it. Notify the view, in case there is any error in fetching
      * the list from server.
      */
-    public void loadSavingAccountDetails(int accountId) {
+    public void loadSavingAccountDetails(long accountId) {
         Call<SavingAccount> call = dataManager.getSavingAccountDetails(accountId);
         getMvpView().showProgress();
         call.enqueue(new Callback<SavingAccount>() {

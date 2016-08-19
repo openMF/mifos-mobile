@@ -40,7 +40,7 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
     @Inject
     RecentTransactionsPresenter mRecentTransactionsPresenter;
 
-    private int clientId;
+    private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
     private ProgressDialog progressDialog;
@@ -52,10 +52,10 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
     @BindView(R.id.swipe_transaction_container)
     SwipeRefreshLayout swipeTransactionContainer;
 
-    public static RecentTransactionsFragment newInstance(int clientId) {
+    public static RecentTransactionsFragment newInstance(long clientId) {
         RecentTransactionsFragment recentTransactionsFragment = new RecentTransactionsFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.CLIENT_ID, clientId);
+        args.putLong(Constants.CLIENT_ID, clientId);
         recentTransactionsFragment.setArguments(args);
         return recentTransactionsFragment;
     }
@@ -65,7 +65,7 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null)
-            clientId = getArguments().getInt(Constants.CLIENT_ID);
+            clientId = getArguments().getLong(Constants.CLIENT_ID);
     }
 
     @Override

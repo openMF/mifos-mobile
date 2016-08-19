@@ -39,7 +39,7 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
     @Inject
     ClientChargePresenter mClientChargePresenter;
 
-    private int clientId;
+    private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
     private ProgressDialog progressDialog;
@@ -51,10 +51,10 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
     @BindView(R.id.swipe_charge_container)
     SwipeRefreshLayout swipeChargeContainer;
 
-    public static ClientChargeFragment newInstance(int clientId) {
+    public static ClientChargeFragment newInstance(long clientId) {
         ClientChargeFragment clientChargeFragment = new ClientChargeFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.CLIENT_ID, clientId);
+        args.putLong(Constants.CLIENT_ID, clientId);
         clientChargeFragment.setArguments(args);
         return clientChargeFragment;
     }
@@ -64,7 +64,7 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null)
-            clientId = getArguments().getInt(Constants.CLIENT_ID);
+            clientId = getArguments().getLong(Constants.CLIENT_ID);
     }
 
     @Override

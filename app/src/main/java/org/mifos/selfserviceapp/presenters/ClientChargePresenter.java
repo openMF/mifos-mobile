@@ -41,7 +41,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
         this.dataManager = dataManager;
     }
 
-    public void loadClientCharges(int clientId) {
+    public void loadClientCharges(long clientId) {
         Call<ChargeListResponse> call = dataManager.getClientCharges(clientId);
         getMvpView().showProgress();
 

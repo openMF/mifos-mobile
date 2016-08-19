@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ClientAccountsFragment extends Fragment {
-    private int clientId;
+    private long clientId;
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
@@ -37,7 +37,7 @@ public class ClientAccountsFragment extends Fragment {
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
 
-        clientId = this.getArguments().getInt(Constants.CLIENT_ID);
+        clientId = this.getArguments().getLong(Constants.CLIENT_ID);
 
         setUpViewPager(viewPager);
 
@@ -53,10 +53,10 @@ public class ClientAccountsFragment extends Fragment {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-    public static ClientAccountsFragment newInstance(int clientId) {
+    public static ClientAccountsFragment newInstance(long clientId) {
         ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.CLIENT_ID, clientId);
+        args.putLong(Constants.CLIENT_ID, clientId);
         clientAccountsFragment.setArguments(args);
         return clientAccountsFragment;
     }
