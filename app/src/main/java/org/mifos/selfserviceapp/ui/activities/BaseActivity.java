@@ -3,6 +3,7 @@ package org.mifos.selfserviceapp.ui.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.MifosSelfServiceApp;
@@ -31,6 +32,26 @@ public class BaseActivity extends AppCompatActivity {
                     .build();
         }
         return activityComponent;
+    }
+
+    /**
+     * This method is use to provide back button feature in the toolbar of activities
+     */
+    protected void showBackButton() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
