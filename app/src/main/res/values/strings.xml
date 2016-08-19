@@ -16,6 +16,11 @@
     <string name="charges">Charges</string>
     <string name="questionnaire">Questionnaire</string>
     <string name="about_us">About Us</string>
+    <string name="saving_account_details">Saving Account Details</string>
+    <string name="nominal_interest_rate">Nominal Interest Rate</string>
+    <string name="account_number">Account Number</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="total_deposits">Total Deposits</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
     <string name="home">Home</string>
@@ -36,8 +41,12 @@
     <string name="error_client_loading">Error loading client list</string>
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
     <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
+    <string name="error_saving_account_details_loading">Error loading in saving accounts detail</string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
     <string name="error_client_charge_loading">Error loading in client charges</string>
 
     <string name="not_contain_username">Spaces</string>
+    <string name="client_name">Client Name</string>
+    <string name="saving_product_name">Product Name</string>
+    <string name="min_required_balance">Min. Required Bal.</string>
 </resources>
