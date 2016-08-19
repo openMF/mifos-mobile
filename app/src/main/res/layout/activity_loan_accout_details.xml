@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_clientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/client_name"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_client_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_accountNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/account_number"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_loanProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/loan_product_name"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_loan_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_loanProductDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/loan_purpose"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_loan_product_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_principal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/principal"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_principal_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_principalDisbursed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/principal_disbursed"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_principal_disbursed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_annualInterestRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/annual_interest_rate"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_annual_interest_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_interestCharged"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/interest_charged"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_interest_charged"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/table_row_padding_top">
+
+        <TextView
+            android:id="@+id/tv_interestPaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/interest_paid"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_interest_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left" />
+    </TableRow>
+
+ </TableLayout>

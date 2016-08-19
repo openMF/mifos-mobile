@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
@@ -94,7 +95,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
 
     @Override
     public void showErrorFetchingSavingAccountsDetail(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override

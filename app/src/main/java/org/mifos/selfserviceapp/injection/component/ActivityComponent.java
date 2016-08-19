@@ -5,6 +5,7 @@ import org.mifos.selfserviceapp.injection.module.ActivityDataModule;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.ClientListActivity;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
@@ -40,5 +41,7 @@ public interface ActivityComponent {
     void inject(ClientChargeFragment clientChargeFragment);
 
     void inject(SavingAccountsDetailActivity savingAccountsDetailActivity);
+
+    void inject(LoanAccountsDetailActivity loanAccountsDetailActivity);
 
 }
