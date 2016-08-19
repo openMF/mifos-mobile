@@ -19,7 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by vjs3 on 18/8/16.
+ * @author Vishwajee
+ * @since 18/8/16.
  */
 
 public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsDetailView>{
@@ -41,9 +42,9 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
     }
 
     /**
-     * Load list of client id's attached to particular self-service user from the server
-     * and notify the view to display it. Notify the view, in case there is any error in fetching
-     * the list from server.
+     *Load details of a particular saving account from the server and notify the view to
+     * display it. Notify the view, in case there is any error in fetching
+     * the details from server.
      */
     public void loadSavingAccountDetails(int accountId) {
         Call<SavingAccount> call = dataManager.getSavingAccountDetails(accountId);

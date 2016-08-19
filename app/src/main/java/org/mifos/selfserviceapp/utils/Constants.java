@@ -13,6 +13,8 @@ public class Constants {
 
     public static final String ACCOUNT_ID = "accountId";
 
+    public static final String LOAN_ID = "loanID";
+
     public static final String BASIC = "Basic ";
 
     public static final String BACK_SLASH = "/";
