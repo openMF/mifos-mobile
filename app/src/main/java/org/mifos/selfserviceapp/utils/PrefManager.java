@@ -35,6 +35,14 @@ public class PrefManager {
         sharedPreferences.edit().putInt(preferenceKey, preferenceValue).apply();
     }
 
+    public long getLong(String preferenceKey, long preferenceDefaultValue) {
+        return sharedPreferences.getLong(preferenceKey, preferenceDefaultValue);
+    }
+
+    public void putLong(String preferenceKey, long preferenceValue) {
+        sharedPreferences.edit().putLong(preferenceKey, preferenceValue).apply();
+    }
+
     public String getString(String preferenceKey, String preferenceDefaultValue) {
         return sharedPreferences.getString(preferenceKey, preferenceDefaultValue);
     }
@@ -59,12 +67,12 @@ public class PrefManager {
         return !TextUtils.isEmpty(getToken());
     }
 
-    public int getUserId() {
-        return getInt(USER_ID, -1);
+    public long getUserId() {
+        return getLong(USER_ID, -1);
     }
 
-    public void setUserId(int id) {
-        putInt(USER_ID, id);
+    public void setUserId(long id) {
+        putLong(USER_ID, id);
     }
 
     public String getTenant() {

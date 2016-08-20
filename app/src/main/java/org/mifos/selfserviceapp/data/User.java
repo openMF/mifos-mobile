@@ -12,7 +12,7 @@ import static org.mifos.selfserviceapp.R.string.username;
 
 public class User {
 
-    private int userId;
+    private long userId;
     private boolean authenticated;
     private String username;
     private String base64EncodedAuthenticationKey;
@@ -26,11 +26,11 @@ public class User {
         this.username = username;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
