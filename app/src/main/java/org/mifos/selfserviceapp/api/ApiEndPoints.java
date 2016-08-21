@@ -12,4 +12,5 @@ public class ApiEndPoints {
     public static final String AUTHENTICATION = "authentication";
     public static final String CLIENTS = "clients";
     public static final String SAVINGSACOUNTS = "savingsaccounts";
+    public static final String ACCOUNTTRANSFERS = "accounttransfers";
 }

@@ -40,6 +40,7 @@
     <string name="error_internal_server">Error in internal server, please try again</string>
     <string name="error_client_loading">Error loading client list</string>
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
+    <string name="error_fund_transfer">Error in transferring funds</string>
     <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
     <string name="error_saving_account_details_loading">Error loading in saving accounts detail</string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
@@ -49,4 +50,11 @@
     <string name="client_name">Client Name</string>
     <string name="saving_product_name">Product Name</string>
     <string name="min_required_balance">Min. Required Bal.</string>
+    <string name="transfer_payment">Transfer Payment</string>
+    <string name="cancel">Cancel</string>
+    <string name="from_account">Transfer From Account</string>
+    <string name="to_account">Transfer to Account</string>
+    <string name="amount_transfer">Transfer Amount</string>
+    <string name="transfer_date">Transfer Date</string>
+    <string name="transfer_description">Transfer Description</string>
 </resources>

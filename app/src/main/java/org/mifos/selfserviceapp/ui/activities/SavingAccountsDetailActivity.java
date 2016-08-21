@@ -78,7 +78,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
         accountId = getIntent().getExtras().getInt(Constants.ACCOUNT_ID);
 
         mSavingAccountsDetailPresenter.loadSavingAccountDetails(accountId);
-        showBackButton();
+       // showBackButton();
     }
 
     @Override

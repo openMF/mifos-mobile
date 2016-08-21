@@ -2,8 +2,12 @@ package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.data.ChargeListResponse;
 import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.data.FundTransfer.FundTransferTemplateResponse;
 import org.mifos.selfserviceapp.data.TransactionsListResponse;
 import org.mifos.selfserviceapp.data.User;
+import org.mifos.selfserviceapp.data.FundTransfer.FundTransferRequest;
+import org.mifos.selfserviceapp.data.FundTransfer.FundTransferResponse;
+import org.mifos.selfserviceapp.data.FundTransfer.FundTransferTemplate;
 import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
 import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
@@ -64,6 +68,14 @@ public class DataManager {
         return baseApiManager.getSavingAccountsListApi().getSavingAccountsDetail(accountId);
     }
 
+    public Call<FundTransferTemplateResponse> getFundTransferTemplate() {
+        return baseApiManager.getFundTransferApi().getAccountTransferTemplate();
+    }
+
+    public Call<FundTransferResponse> submitTransfer(FundTransferRequest fundTransferRequest) {
+        return baseApiManager.getFundTransferApi().submitTransfer(fundTransferRequest);
+    }
+
     public PrefManager getPrefManager() {
         return prefManager;
     }
@@ -76,4 +88,5 @@ public class DataManager {
     public void authenticateApiManager() {
         baseApiManager = new BaseApiManager(prefManager.getToken());
     }
+
 }
