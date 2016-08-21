@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private int clientId;
+    private long clientId;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -53,7 +53,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             toolbar.setTitle(getString(R.string.accounts));
         }
 
-        clientId = getIntent().getExtras().getInt(Constants.CLIENT_ID);
+        clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
         ClientAccountsFragment.newInstance(clientId);
         replaceFragment(ClientAccountsFragment.newInstance(clientId), R.id.container);
 

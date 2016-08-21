@@ -11,7 +11,7 @@ public class Charge {
     private int id;
     private int chargeId;
     private String name;
-    private int amount;
+    private double amount;
     private List<Long> dueDate = new ArrayList<>();
     private Currency currency;
 
@@ -39,11 +39,11 @@ public class Charge {
         this.name = name;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

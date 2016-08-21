@@ -13,5 +13,5 @@ import retrofit2.http.Path;
  */
 public interface LoanAccountsListService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts?fields=loanAccounts")
-    Call<LoanAccountsListResponse> getLoanAccountsList(@Path("clientId") int clientId);
+    Call<LoanAccountsListResponse> getLoanAccountsList(@Path("clientId") long clientId);
 }

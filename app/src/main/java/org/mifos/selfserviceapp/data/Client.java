@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class Client {
 
-    private int id;
+    private long id;
     private String accountNo;
-    private List<Integer> activationDate = new ArrayList<Integer>();
-    private List<Integer> dobDate = new ArrayList<Integer>();
+    private List<Long> activationDate = new ArrayList<>();
+    private List<Long> dobDate = new ArrayList<>();
     private String firstname;
     private String middlename;
     private String lastname;
@@ -28,19 +28,19 @@ public class Client {
         this.pageItems = pageItems;
     }
 
-    public List<Integer> getDobDate() {
+    public List<Long> getDobDate() {
         return dobDate;
     }
 
-    public void setDobDate(List<Integer> dobDate) {
+    public void setDobDate(List<Long> dobDate) {
         this.dobDate = dobDate;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -52,11 +52,11 @@ public class Client {
         this.accountNo = accountNo;
     }
 
-    public List<Integer> getActivationDate() {
+    public List<Long> getActivationDate() {
         return activationDate;
     }
 
-    public void setActivationDate(List<Integer> activationDate) {
+    public void setActivationDate(List<Long> activationDate) {
         this.activationDate = activationDate;
     }
 

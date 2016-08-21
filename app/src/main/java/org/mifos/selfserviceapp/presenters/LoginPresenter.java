@@ -89,7 +89,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         final String userName = user.getUserName();
                         getMvpView().onLoginSuccess(userName);
 
-                        final int userID = user.getUserId();
+                        final long userID = user.getUserId();
                         final String authToken = Constants.BASIC +
                                 user.getBase64EncodedAuthenticationKey();
                         saveAuthenticationTokenForSession(userID, authToken);
@@ -115,7 +115,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * @param userID    - The userID of the user to be saved.
      * @param authToken - The authentication token to be saved.
      */
-    private void saveAuthenticationTokenForSession(int userID, String authToken) {
+    private void saveAuthenticationTokenForSession(long userID, String authToken) {
 
         final PrefManager prefManager = dataManager.getPrefManager();
         prefManager.setUserId(userID);

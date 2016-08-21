@@ -3,6 +3,8 @@ package org.mifos.selfserviceapp.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mifos.selfserviceapp.R.string.username;
+
 /**
  * @author Vishwajeet
  * @since 12/06/16
@@ -10,10 +12,10 @@ import java.util.List;
 
 public class User {
 
-    private String username;
-    private int userId;
-    private String base64EncodedAuthenticationKey;
+    private long userId;
     private boolean authenticated;
+    private String username;
+    private String base64EncodedAuthenticationKey;
     private List<String> permissions = new ArrayList<String>();
 
     public String getUserName() {
@@ -24,11 +26,11 @@ public class User {
         this.username = username;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

@@ -14,5 +14,5 @@ import retrofit2.http.Path;
  */
 public interface ClientChargeService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/charges")
-    Call<ChargeListResponse> getClientChargeList(@Path("clientId") int clientId);
+    Call<ChargeListResponse> getClientChargeList(@Path("clientId") long clientId);
 }

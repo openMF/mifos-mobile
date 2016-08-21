@@ -5,7 +5,7 @@ package org.mifos.selfserviceapp.data.accounts;
  * @since 22/06/16.
  */
 public class LoanAccount {
-    private int id;
+    private long id;
     private String accountNo;
     private String productName;
 
@@ -25,11 +25,11 @@ public class LoanAccount {
         this.productName = productName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

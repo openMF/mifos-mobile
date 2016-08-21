@@ -14,5 +14,5 @@ import retrofit2.http.Path;
  */
 public interface RecentTransactionsService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/transactions")
-    Call<TransactionsListResponse> getRecentTransactionsList(@Path("clientId") int clientId);
+    Call<TransactionsListResponse> getRecentTransactionsList(@Path("clientId") long clientId);
 }
