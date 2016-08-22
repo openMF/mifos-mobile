@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
+import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
 
 import retrofit2.Call;
@@ -14,4 +15,7 @@ import retrofit2.http.Path;
 public interface LoanAccountsListService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts?fields=loanAccounts")
     Call<LoanAccountsListResponse> getLoanAccountsList(@Path("clientId") long clientId);
+
+    @GET(ApiEndPoints.LOANS + "/{loanId}/")
+    Call<LoanAccount> getLoanAccountsDetail(@Path("loanId") long loanId);
 }

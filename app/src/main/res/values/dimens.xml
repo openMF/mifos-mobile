@@ -25,6 +25,7 @@
     <dimen name="login_text_input_margin_bottom">8dp</dimen>
     <dimen name="recent_transaction_text_view_margin_left">20dp</dimen>
     <dimen name="saving_accounts_text_view_margin_left">50dp</dimen>
+    <dimen name="loan_accounts_text_view_margin_left">50dp</dimen>
     <dimen name="client_charge_text_view_margin_left">20dp</dimen>
 
     <!-- Dimen values for text size -->

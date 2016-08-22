@@ -4,13 +4,10 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.Client;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
-import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
-
-import java.util.List;
+import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 
 import javax.inject.Inject;
 
@@ -20,14 +17,14 @@ import retrofit2.Response;
 
 /**
  * @author Vishwajeet
- * @since 18/8/16.
+ * @since 19/08/16
  */
 
-public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsDetailView> {
+public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetailView> {
     private DataManager dataManager;
 
     /**
-     * Initialises the SavingAccountsDetailPresenter by automatically injecting an instance of
+     * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
      * {@link DataManager} and {@link Context}.
      *
      * @param dataManager DataManager class that provides access to the data
@@ -36,40 +33,40 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public SavingAccountsDetailPresenter(DataManager dataManager, @ActivityContext Context context) {
+    protected LoanAccountsDetailPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
     }
 
     /**
-     * Load details of a particular saving account from the server and notify the view
+     * Load details of a particular loan account from the server and notify the view
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
      */
-    public void loadSavingAccountDetails(long accountId) {
-        Call<SavingAccount> call = dataManager.getSavingAccountDetails(accountId);
+    public void loadLoanAccountDetails(long loanId) {
+        Call<LoanAccount> call = dataManager.getLoanAccountDetails(loanId);
         getMvpView().showProgress();
-        call.enqueue(new Callback<SavingAccount>() {
+        call.enqueue(new Callback<LoanAccount>() {
             @Override
-            public void onResponse(Response<SavingAccount> response) {
+            public void onResponse(Response<LoanAccount> response) {
                 getMvpView().hideProgress();
 
                 if (response.code() == 200) {
-                    final SavingAccount savingAccount = response.body();
-                    if (savingAccount != null) {
-                        getMvpView().showSavingAccountsDetail(savingAccount);
+                    final LoanAccount loanAccount = response.body();
+                    if (loanAccount != null) {
+                        getMvpView().showLoanAccountsDetail(loanAccount);
                     }
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingSavingAccountsDetail(context.getString(R.string.error_saving_account_details_loading));
+                    getMvpView().showErrorFetchingLoanAccountsDetail(context.getString(R.string.error_loan_account_details_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingSavingAccountsDetail(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingLoanAccountsDetail(context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingSavingAccountsDetail(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingLoanAccountsDetail(context.getString(R.string.error_message_server));
             }
         });
     }

@@ -1,6 +1,5 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 /**
  * @author Vishwajeet
