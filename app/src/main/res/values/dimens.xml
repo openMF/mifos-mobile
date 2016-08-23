@@ -19,6 +19,8 @@
     <dimen name="table_row_padding_top">15dp</dimen>
 
     <!-- Dimen values for margins-->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="fund_transfer_button_margin">8dp</dimen>
     <dimen name="login_margin_top">24dp</dimen>
     <dimen name="login_margin_bottom">24dp</dimen>
     <dimen name="login_text_input_margin_top">8dp</dimen>
@@ -26,6 +28,7 @@
     <dimen name="recent_transaction_text_view_margin_left">20dp</dimen>
     <dimen name="saving_accounts_text_view_margin_left">50dp</dimen>
     <dimen name="client_charge_text_view_margin_left">20dp</dimen>
+    <dimen name="fund_transfer_padding">4dp</dimen>
 
     <!-- Dimen values for text size -->
     <dimen name="text_large">20sp</dimen>
