@@ -20,7 +20,8 @@ public interface ClientListView extends MVPView {
     void showClients(List<Client> clientList);
 
     /**
-     * Should be called if there is any error from client side in loading the client list from server.
+     * Should be called if there is any error from client side in loading the client list from
+     * server.
      * Reason for error should be mentioned clearly to the user.
      *
      * @param message Error message to display showing reason of failure in loading client list

@@ -16,5 +16,5 @@ public interface AuthenticationService {
 
     @POST(ApiEndPoints.AUTHENTICATION)
     Call<User> authenticate(@Query("username") String username,
-                            @Query("password") String password);
+            @Query("password") String password);
 }

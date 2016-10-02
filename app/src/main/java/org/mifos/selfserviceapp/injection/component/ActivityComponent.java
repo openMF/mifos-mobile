@@ -21,7 +21,8 @@ import dagger.Component;
  * @since 08/07/16
  */
 @PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, ActivityDataModule.class})
+@Component(dependencies = ApplicationComponent.class,
+        modules = {ActivityModule.class, ActivityDataModule.class})
 public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);

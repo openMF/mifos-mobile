@@ -1,7 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
 import org.mifos.selfserviceapp.data.Transaction;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 import java.util.List;

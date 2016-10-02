@@ -17,12 +17,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ClientAccountsFragment extends Fragment {
-    private long clientId;
-
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
     TabLayout tabLayout;
+    private long clientId;
+
+    public static ClientAccountsFragment newInstance(long clientId) {
+        ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
+        Bundle args = new Bundle();
+        args.putLong(Constants.CLIENT_ID, clientId);
+        clientAccountsFragment.setArguments(args);
+        return clientAccountsFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,16 +55,10 @@ public class ClientAccountsFragment extends Fragment {
 
     private void setUpViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
-        viewPagerAdapter.addFragment(SavingAccountsListFragment.newInstance(clientId), getString(R.string.saving_accounts));
-        viewPagerAdapter.addFragment(LoanAccountsListFragment.newInstance(clientId), getString(R.string.loan_accounts));
+        viewPagerAdapter.addFragment(SavingAccountsListFragment.newInstance(clientId),
+                getString(R.string.saving_accounts));
+        viewPagerAdapter.addFragment(LoanAccountsListFragment.newInstance(clientId),
+                getString(R.string.loan_accounts));
         viewPager.setAdapter(viewPagerAdapter);
-    }
-
-    public static ClientAccountsFragment newInstance(long clientId) {
-        ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
-        Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
-        clientAccountsFragment.setArguments(args);
-        return clientAccountsFragment;
     }
 }

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,22 +34,21 @@ import butterknife.ButterKnife;
  * @author Vishwwajeet
  * @since 09/08/16
  */
-public class RecentTransactionsFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, RecentTransactionsView {
+public class RecentTransactionsFragment extends Fragment implements
+        RecyclerItemClickListener.OnItemClickListener, RecentTransactionsView {
 
     @Inject
     RecentTransactionsPresenter mRecentTransactionsPresenter;
-
+    RecentTransactionListAdapter recentTransactionsListAdapter;
+    @BindView(R.id.rv_recent_transactions)
+    RecyclerView rvRecentTransactions;
+    @BindView(R.id.swipe_transaction_container)
+    SwipeRefreshLayout swipeTransactionContainer;
     private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
     private ProgressDialog progressDialog;
     private List<Transaction> recentTransactionList = new ArrayList<Transaction>();
-    RecentTransactionListAdapter recentTransactionsListAdapter;
-
-    @BindView(R.id.rv_recent_transactions)
-    RecyclerView rvRecentTransactions;
-    @BindView(R.id.swipe_transaction_container)
-    SwipeRefreshLayout swipeTransactionContainer;
 
     public static RecentTransactionsFragment newInstance(long clientId) {
         RecentTransactionsFragment recentTransactionsFragment = new RecentTransactionsFragment();
@@ -64,12 +62,14 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        if (getArguments() != null)
+        if (getArguments() != null) {
             clientId = getArguments().getLong(Constants.CLIENT_ID);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_recent_transactions, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -79,8 +79,10 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         rvRecentTransactions.setLayoutManager(layoutManager);
-        rvRecentTransactions.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        rvRecentTransactions.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
+        rvRecentTransactions.addItemDecoration(
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        rvRecentTransactions.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), this));
 
         swipeTransactionContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
@@ -107,8 +109,9 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override
@@ -130,12 +133,14 @@ public class RecentTransactionsFragment extends Fragment implements RecyclerItem
     public void showRecentTransactions(List<Transaction> recentTransactionList) {
         this.recentTransactionList = recentTransactionList;
         inflateRecentTransactionList();
-        if (swipeTransactionContainer.isRefreshing())
+        if (swipeTransactionContainer.isRefreshing()) {
             swipeTransactionContainer.setRefreshing(false);
+        }
     }
 
     private void inflateRecentTransactionList() {
-        recentTransactionsListAdapter = new RecentTransactionListAdapter(getContext(), recentTransactionList);
+        recentTransactionsListAdapter = new RecentTransactionListAdapter(getContext(),
+                recentTransactionList);
         rvRecentTransactions.setAdapter(recentTransactionsListAdapter);
     }
 

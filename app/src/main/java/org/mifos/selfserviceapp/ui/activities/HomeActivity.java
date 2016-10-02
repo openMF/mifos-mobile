@@ -8,17 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v7.widget.Toolbar;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,9 +26,8 @@ import butterknife.ButterKnife;
  * @since 14/07/2016
  */
 
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private long clientId;
+public class HomeActivity extends BaseActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -38,6 +35,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     NavigationView mNavigationView;
     @BindView(R.id.drawer)
     DrawerLayout mDrawerLayout;
+    private long clientId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

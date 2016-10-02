@@ -54,16 +54,19 @@ public class SavingAccountsListPresenter extends BasePresenter<SavingAccountsLis
                     }
 
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingSavingAccounts(context.getString(R.string.error_saving_accounts_list_loading));
+                    getMvpView().showErrorFetchingSavingAccounts(
+                            context.getString(R.string.error_saving_accounts_list_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingSavingAccounts(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingSavingAccounts(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingSavingAccounts(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingSavingAccounts(
+                        context.getString(R.string.error_message_server));
             }
         });
     }

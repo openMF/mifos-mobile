@@ -34,16 +34,14 @@ public class ClientListActivity extends BaseActivity
 
     @Inject
     ClientListPresenter mClientListPresenter;
-
-    private ClientListAdapter clientListAdapter;
-    private List<Client> clientList = new ArrayList<>();
-    private LinearLayoutManager layoutManager;
-    private ProgressDialog progressDialog;
-
     @BindView(R.id.rv_clients)
     RecyclerView rvClients;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
+    private ClientListAdapter clientListAdapter;
+    private List<Client> clientList = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,16 +103,18 @@ public class ClientListActivity extends BaseActivity
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override
     public void showClients(List<Client> clientList) {
         this.clientList = clientList;
         inflateClientList();
-        if (swipeRefreshLayout.isRefreshing())
+        if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     /**

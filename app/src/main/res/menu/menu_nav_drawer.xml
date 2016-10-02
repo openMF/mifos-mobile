@@ -1,55 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- dummy ids are given to ech group to make dividers between each group -->
-    <group android:checkableBehavior="single"
-        android:id="@+id/group1"
-        >
+    <group android:id="@+id/group1"
+           android:checkableBehavior="single">
 
         <item
             android:id="@+id/item_accounts"
             android:checked="true"
             android:icon="@mipmap/ic_account_balance_black_24dp"
-            android:title="@string/accounts"
-            />
+            android:title="@string/accounts"/>
 
         <item
             android:id="@+id/item_funds_transfer"
             android:checked="false"
             android:icon="@mipmap/ic_attach_money_black_24dp"
-            android:title="@string/funds_transfer"
-            />
+            android:title="@string/funds_transfer"/>
 
         <item
             android:id="@+id/item_recent_transactions"
             android:checked="false"
             android:icon="@mipmap/ic_compare_arrows_black_24dp"
-            android:title="@string/recent_transactions"
-            />
+            android:title="@string/recent_transactions"/>
 
         <item
             android:id="@+id/item_charges"
             android:checked="false"
             android:icon="@mipmap/ic_label_black_24dp"
-            android:title="@string/charges"
-            />
+            android:title="@string/charges"/>
     </group>
 
-    <group android:checkableBehavior="single"
-        android:id="@+id/group2">
+    <group android:id="@+id/group2"
+           android:checkableBehavior="single">
 
         <item
             android:id="@+id/item_questionnaire"
             android:checked="false"
             android:icon="@mipmap/ic_question_answer_black_24dp"
-            android:title="@string/questionnaire"
-            />
+            android:title="@string/questionnaire"/>
 
         <item
             android:id="@+id/item_about_us"
             android:checked="false"
             android:icon="@mipmap/ic_info_black_24dp"
-            android:title="@string/about_us"
-            />
+            android:title="@string/about_us"/>
 
     </group>
 

@@ -23,8 +23,8 @@ public interface LoginView extends MVPView {
      * Should be called when there was an error trying to authenticate
      * the user from the API. The error could be of many types like
      * <ul>
-     *     <li>Invalid Login Credentials</li>
-     *     <li>No network connection</li>
+     * <li>Invalid Login Credentials</li>
+     * <li>No network connection</li>
      * </ul>
      * and must be communicated with a well described message.
      *

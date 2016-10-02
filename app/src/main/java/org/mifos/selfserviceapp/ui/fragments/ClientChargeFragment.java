@@ -35,21 +35,20 @@ import butterknife.ButterKnife;
  * @since 17/8/16.
  */
 
-public class ClientChargeFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
+public class ClientChargeFragment extends Fragment implements
+        RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
     @Inject
     ClientChargePresenter mClientChargePresenter;
-
+    ClientChargeAdapter clientChargeAdapter;
+    @BindView(R.id.rv_client_charge)
+    RecyclerView rvClientCharge;
+    @BindView(R.id.swipe_charge_container)
+    SwipeRefreshLayout swipeChargeContainer;
     private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
     private ProgressDialog progressDialog;
     private List<Charge> clientChargeList = new ArrayList<>();
-    ClientChargeAdapter clientChargeAdapter;
-
-    @BindView(R.id.rv_client_charge)
-    RecyclerView rvClientCharge;
-    @BindView(R.id.swipe_charge_container)
-    SwipeRefreshLayout swipeChargeContainer;
 
     public static ClientChargeFragment newInstance(long clientId) {
         ClientChargeFragment clientChargeFragment = new ClientChargeFragment();
@@ -63,12 +62,14 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        if (getArguments() != null)
+        if (getArguments() != null) {
             clientId = getArguments().getLong(Constants.CLIENT_ID);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_client_charge, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -78,7 +79,8 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         rvClientCharge.setLayoutManager(layoutManager);
-        rvClientCharge.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        rvClientCharge.addItemDecoration(
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         rvClientCharge.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
 
         swipeChargeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
@@ -103,8 +105,9 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
     public void showClientCharges(List<Charge> clientChargeList) {
         this.clientChargeList = clientChargeList;
         inflateClientChargeList();
-        if (swipeChargeContainer.isRefreshing())
+        if (swipeChargeContainer.isRefreshing()) {
             swipeChargeContainer.setRefreshing(false);
+        }
     }
 
     private void inflateClientChargeList() {
@@ -124,8 +127,9 @@ public class ClientChargeFragment extends Fragment implements RecyclerItemClickL
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override

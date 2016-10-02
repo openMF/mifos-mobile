@@ -18,7 +18,6 @@ import org.mifos.selfserviceapp.data.accounts.SavingAccount;
 import org.mifos.selfserviceapp.presenters.SavingAccountsListPresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
-import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsListView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -37,11 +36,15 @@ import butterknife.ButterKnife;
  * @since 02/08/16.
  */
 
-public class SavingAccountsListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, SavingAccountsListView {
+public class SavingAccountsListFragment extends Fragment implements
+        RecyclerItemClickListener.OnItemClickListener, SavingAccountsListView {
 
     @Inject
     SavingAccountsListPresenter mSavingAccountsListPresenter;
-
+    @BindView(R.id.rv_saving_accounts_list)
+    RecyclerView rvSavingAccountsList;
+    @BindView(R.id.swipe_saving_container)
+    SwipeRefreshLayout swipeSavingContainer;
     private long clientId;
     private View view;
     private ProgressDialog progressDialog;
@@ -49,21 +52,26 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
     private LinearLayoutManager layoutManager;
     private SavingAccountsListAdapter savingAccountsListAdapter;
 
-    @BindView(R.id.rv_saving_accounts_list)
-    RecyclerView rvSavingAccountsList;
-    @BindView(R.id.swipe_saving_container)
-    SwipeRefreshLayout swipeSavingContainer;
+    public static SavingAccountsListFragment newInstance(long clientId) {
+        SavingAccountsListFragment fragment = new SavingAccountsListFragment();
+        Bundle args = new Bundle();
+        args.putLong(Constants.CLIENT_ID, clientId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        if (getArguments() != null)
+        if (getArguments() != null) {
             clientId = getArguments().getLong(Constants.CLIENT_ID);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_saving_accounts_list, container, false);
         ButterKnife.bind(this, view);
 
@@ -73,7 +81,8 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         rvSavingAccountsList.setLayoutManager(layoutManager);
-        rvSavingAccountsList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
+        rvSavingAccountsList.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), this));
         // rvSavingAccountsList.setHasFixedSize(true);
 
         swipeSavingContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
@@ -87,14 +96,6 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
 
         mSavingAccountsListPresenter.loadSavingAccountsList(clientId);
         return view;
-    }
-
-    public static SavingAccountsListFragment newInstance(long clientId) {
-        SavingAccountsListFragment fragment = new SavingAccountsListFragment();
-        Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -118,8 +119,9 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
     public void showSavingAccounts(List<SavingAccount> savingAccountsList) {
         this.savingAccountsList = savingAccountsList;
         inflateSavingAccountsList();
-        if (swipeSavingContainer.isRefreshing())
+        if (swipeSavingContainer.isRefreshing()) {
             swipeSavingContainer.setRefreshing(false);
+        }
     }
 
     private void inflateSavingAccountsList() {
@@ -139,8 +141,9 @@ public class SavingAccountsListFragment extends Fragment implements RecyclerItem
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override

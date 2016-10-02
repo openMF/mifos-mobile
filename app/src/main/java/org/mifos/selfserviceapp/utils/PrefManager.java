@@ -80,7 +80,8 @@ public class PrefManager {
     }
 
     public void setTenant(String tenant) {
-        if (!TextUtils.isEmpty(tenant))
+        if (!TextUtils.isEmpty(tenant)) {
             putString(TENANT, tenant);
+        }
     }
 }

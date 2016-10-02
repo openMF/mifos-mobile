@@ -50,11 +50,15 @@ public class RecentTransactionListAdapter extends RecyclerView.Adapter<RecyclerV
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Transaction transaction = getItem(position);
-            ((ViewHolder) holder).tvAmount.setText(String.valueOf(transaction.getAmount() + transaction.getCurrency().getCode()));
+            ((ViewHolder) holder).tvAmount.setText(
+                    String.valueOf(transaction.getAmount() + transaction.getCurrency().getCode()));
             ((ViewHolder) holder).tvTypeValue.setText(transaction.getType().getValue());
-            ((ViewHolder) holder).tvTransactionsDate.setText(transaction.getSubmittedOnDate().get(2).toString() +
-                    Constants.BACK_SLASH + transaction.getSubmittedOnDate().get(1).toString() +
-                    Constants.BACK_SLASH + transaction.getSubmittedOnDate().get(0).toString());
+            ((ViewHolder) holder).tvTransactionsDate.setText(
+                    transaction.getSubmittedOnDate().get(2).toString() +
+                            Constants.BACK_SLASH + transaction.getSubmittedOnDate().get(
+                            1).toString() +
+                            Constants.BACK_SLASH + transaction.getSubmittedOnDate().get(
+                            0).toString());
         }
 
     }

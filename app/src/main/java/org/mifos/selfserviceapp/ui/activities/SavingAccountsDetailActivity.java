@@ -25,10 +25,6 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
 
     @Inject
     SavingAccountsDetailPresenter mSavingAccountsDetailPresenter;
-
-    private long accountId;
-    private ProgressDialog progressDialog;
-
     @BindView(R.id.tv_clientName)
     TextView tvClientName;
     @BindView(R.id.tv_client_name)
@@ -59,6 +55,8 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
     TextView tvTotalDepositsValue;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private long accountId;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +85,8 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
         tvMiniRequiredBalanceValue.setText(String.valueOf(savingAccount.getMinRequiredBalance()));
         tvSavingProductNameValue.setText(savingAccount.getSavingsProductName());
         tvAccountBalanceValue.setText(String.valueOf(savingAccount.getAccountBalance()));
-        tvNominalInterestRateValue.setText(String.valueOf(savingAccount.getNominalAnnualInterestRate()));
+        tvNominalInterestRateValue.setText(
+                String.valueOf(savingAccount.getNominalAnnualInterestRate()));
         tvSavingAccountNumberValue.setText(String.valueOf(savingAccount.getAccountNo()));
         tvTotalDepositsValue.setText(String.valueOf(savingAccount.getTotalDeposits()));
     }
@@ -109,8 +108,9 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override

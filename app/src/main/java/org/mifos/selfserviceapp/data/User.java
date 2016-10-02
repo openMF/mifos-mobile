@@ -3,8 +3,6 @@ package org.mifos.selfserviceapp.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mifos.selfserviceapp.R.string.username;
-
 /**
  * @author Vishwajeet
  * @since 12/06/16

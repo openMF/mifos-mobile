@@ -26,10 +26,6 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
 
     @Inject
     LoanAccountsDetailPresenter mLoanAccountDetailsPresenter;
-
-    private long loanId;
-    private ProgressDialog progressDialog;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_clientName)
@@ -68,6 +64,8 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
     TextView tvLoanProductDescription;
     @BindView(R.id.tv_loan_product_description)
     TextView tvLoanProductDescriptionValue;
+    private long loanId;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +96,10 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
         tvAnnualInterestRateValue.setText(String.valueOf(loanAccount.getAnnualInterestRate()));
         tvClientNameValue.setText(loanAccount.getClientName());
         tvPrincipalValue.setText(String.valueOf(loanAccount.getPrincipal()));
-        tvPrincipalDisbursedValue.setText(String.valueOf(loanAccount.getSummary().getPrincipalDisbursed()));
-        tvInterestChargedValue.setText(String.valueOf(loanAccount.getSummary().getInterestCharged()));
+        tvPrincipalDisbursedValue.setText(
+                String.valueOf(loanAccount.getSummary().getPrincipalDisbursed()));
+        tvInterestChargedValue.setText(
+                String.valueOf(loanAccount.getSummary().getInterestCharged()));
         tvInterestPaidValue.setText(String.valueOf(loanAccount.getSummary().getInterestPaid()));
     }
 
@@ -120,8 +120,9 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override

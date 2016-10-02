@@ -7,7 +7,7 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
  * @author Vishwajeet
  * @since 18/8/16.
  */
-public interface SavingAccountsDetailView extends MVPView{
+public interface SavingAccountsDetailView extends MVPView {
     /**
      * Should be called when saving account object can successfully accessed
      * from the server to display saving account details on the screen.

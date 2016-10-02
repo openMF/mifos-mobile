@@ -19,12 +19,12 @@ public class Transaction {
         return submittedOnDate;
     }
 
-    public long getOfficeId() {
-        return officeId;
-    }
-
     public void setSubmittedOnDate(List<Long> submittedOnDate) {
         this.submittedOnDate = submittedOnDate;
+    }
+
+    public long getOfficeId() {
+        return officeId;
     }
 
     public void setOfficeId(long officeId) {

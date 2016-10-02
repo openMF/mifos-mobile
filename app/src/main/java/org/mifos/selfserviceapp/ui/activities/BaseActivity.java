@@ -68,10 +68,11 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Displays a toast in current activity. The duration can of two types:
      * <ul>
-     *     <li>SHORT</li>
-     *     <li>LONG</li>
+     * <li>SHORT</li>
+     * <li>LONG</li>
      * </ul>
-     * @param message Message that the toast must show.
+     *
+     * @param message   Message that the toast must show.
      * @param toastType Duration for which the toast must be visible.
      */
     public void showToast(@NonNull String message, @NonNull int toastType) {

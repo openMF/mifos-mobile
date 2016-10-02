@@ -6,7 +6,6 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.Transaction;
 import org.mifos.selfserviceapp.data.TransactionsListResponse;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
@@ -59,16 +58,19 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
                     }
 
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingRecentTransactions(context.getString(R.string.error_recent_transactions_loading));
+                    getMvpView().showErrorFetchingRecentTransactions(
+                            context.getString(R.string.error_recent_transactions_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingRecentTransactions(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingRecentTransactions(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingRecentTransactions(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingRecentTransactions(
+                        context.getString(R.string.error_message_server));
             }
         });
     }
