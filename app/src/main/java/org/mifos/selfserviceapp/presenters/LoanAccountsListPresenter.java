@@ -54,16 +54,19 @@ public class LoanAccountsListPresenter extends BasePresenter<LoanAccountsListVie
                     }
 
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingLoanAccounts(context.getString(R.string.error_loan_accounts_list_loading));
+                    getMvpView().showErrorFetchingLoanAccounts(
+                            context.getString(R.string.error_loan_accounts_list_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingLoanAccounts(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingLoanAccounts(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingLoanAccounts(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingLoanAccounts(
+                        context.getString(R.string.error_message_server));
             }
         });
     }

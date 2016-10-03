@@ -49,8 +49,10 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
         if (holder instanceof RecyclerView.ViewHolder) {
 
             SavingAccount savingAccount = getItem(position);
-            ((ViewHolder) holder).tv_clientSavingAccountNumber.setText(savingAccount.getAccountNo().toString());
-            ((ViewHolder) holder).tv_savingAccountProductName.setText(savingAccount.getProductName());
+            ((ViewHolder) holder).tv_clientSavingAccountNumber.setText(
+                    savingAccount.getAccountNo().toString());
+            ((ViewHolder) holder).tv_savingAccountProductName.setText(
+                    savingAccount.getProductName());
 
         }
 

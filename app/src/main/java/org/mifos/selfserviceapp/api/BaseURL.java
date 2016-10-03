@@ -14,8 +14,9 @@ public class BaseURL {
     private String url;
 
     public String getUrl() {
-        if (url == null)
+        if (url == null) {
             return PROTOCOL_HTTPS + API_ENDPOINT + API_PATH;
+        }
         return url;
     }
 }

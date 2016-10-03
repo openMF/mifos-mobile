@@ -9,7 +9,7 @@ import java.util.List;
  * @author Vishwajeet
  * @since 17/8/16.
  */
-public interface ClientChargeView extends MVPView{
+public interface ClientChargeView extends MVPView {
     /**
      * Should be called if there is any error from client side in loading the client charges
      * from server.

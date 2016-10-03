@@ -60,16 +60,19 @@ public class ClientListPresenter extends BasePresenter<ClientListView> {
                         getMvpView().showClients(clientList);
                     }
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingClients(context.getString(R.string.error_client_loading));
+                    getMvpView().showErrorFetchingClients(
+                            context.getString(R.string.error_client_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingClients(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingClients(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingClients(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingClients(
+                        context.getString(R.string.error_message_server));
             }
         });
     }

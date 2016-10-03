@@ -8,7 +8,7 @@ package org.mifos.selfserviceapp.data.accounts;
 public class SavingAccount {
     private long id;
     private long overdraftLimit;
-    private long  minRequiredBalance;
+    private long minRequiredBalance;
 
     private double accountBalance;
     private double totalDeposits;
@@ -18,6 +18,7 @@ public class SavingAccount {
     private String savingsProductName;
     private String clientName;
     private String savingsProductId;
+    private double nominalAnnualInterestRate;
 
     public double getNominalAnnualInterestRate() {
         return nominalAnnualInterestRate;
@@ -42,8 +43,6 @@ public class SavingAccount {
     public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
     }
-
-    private double nominalAnnualInterestRate;
 
     public String getSavingsProductName() {
         return savingsProductName;

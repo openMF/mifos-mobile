@@ -33,7 +33,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    protected LoanAccountsDetailPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public LoanAccountsDetailPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
     }
@@ -57,16 +57,19 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
                         getMvpView().showLoanAccountsDetail(loanAccount);
                     }
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingLoanAccountsDetail(context.getString(R.string.error_loan_account_details_loading));
+                    getMvpView().showErrorFetchingLoanAccountsDetail(
+                            context.getString(R.string.error_loan_account_details_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingLoanAccountsDetail(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingLoanAccountsDetail(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingLoanAccountsDetail(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingLoanAccountsDetail(
+                        context.getString(R.string.error_message_server));
             }
         });
     }

@@ -18,7 +18,6 @@ import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsListPresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
-import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsListView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -37,11 +36,15 @@ import butterknife.ButterKnife;
  * @since 30/07/16.
  */
 
-public class LoanAccountsListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, LoanAccountsListView {
+public class LoanAccountsListFragment extends Fragment implements
+        RecyclerItemClickListener.OnItemClickListener, LoanAccountsListView {
 
     @Inject
     LoanAccountsListPresenter mLoanAccountsListPresenter;
-
+    @BindView(R.id.rv_loan_accounts_list)
+    RecyclerView rvLoanAccountsList;
+    @BindView(R.id.swipe_loan_container)
+    SwipeRefreshLayout swipeLoanContainer;
     private View rootView;
     private LinearLayoutManager layoutManager;
     private long clientId;
@@ -49,22 +52,27 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
     private ProgressDialog progressDialog;
     private LoanAccountsListAdapter loanAccountsListAdapter;
 
-    @BindView(R.id.rv_loan_accounts_list)
-    RecyclerView rvLoanAccountsList;
-    @BindView(R.id.swipe_loan_container)
-    SwipeRefreshLayout swipeLoanContainer;
+    public static LoanAccountsListFragment newInstance(long clientId) {
+        LoanAccountsListFragment fragment = new LoanAccountsListFragment();
+        Bundle args = new Bundle();
+        args.putLong(Constants.CLIENT_ID, clientId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        if (getArguments() != null)
+        if (getArguments() != null) {
             clientId = getArguments().getLong(Constants.CLIENT_ID);
+        }
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_accounts_list, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -74,7 +82,8 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         rvLoanAccountsList.setLayoutManager(layoutManager);
-        rvLoanAccountsList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
+        rvLoanAccountsList.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), this));
         //  rvLoanAccountsList.setHasFixedSize(true);
 
         swipeLoanContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
@@ -88,14 +97,6 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
 
         mLoanAccountsListPresenter.loadLoanAccountsList(clientId);
         return rootView;
-    }
-
-    public static LoanAccountsListFragment newInstance(long clientId) {
-        LoanAccountsListFragment fragment = new LoanAccountsListFragment();
-        Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -122,8 +123,9 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
     }
 
     @Override
@@ -135,8 +137,9 @@ public class LoanAccountsListFragment extends Fragment implements RecyclerItemCl
     public void showLoanAccounts(List<LoanAccount> loanAccountsList) {
         this.loanAccountsList = loanAccountsList;
         inflateLoanAccountsList();
-        if (swipeLoanContainer.isRefreshing())
+        if (swipeLoanContainer.isRefreshing()) {
             swipeLoanContainer.setRefreshing(false);
+        }
     }
 
     private void inflateLoanAccountsList() {

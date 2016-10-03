@@ -4,13 +4,10 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.Client;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,7 +33,8 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public SavingAccountsDetailPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public SavingAccountsDetailPresenter(DataManager dataManager,
+            @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
     }
@@ -60,16 +58,19 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
                         getMvpView().showSavingAccountsDetail(savingAccount);
                     }
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingSavingAccountsDetail(context.getString(R.string.error_saving_account_details_loading));
+                    getMvpView().showErrorFetchingSavingAccountsDetail(
+                            context.getString(R.string.error_saving_account_details_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingSavingAccountsDetail(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingSavingAccountsDetail(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingSavingAccountsDetail(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingSavingAccountsDetail(
+                        context.getString(R.string.error_message_server));
             }
         });
     }

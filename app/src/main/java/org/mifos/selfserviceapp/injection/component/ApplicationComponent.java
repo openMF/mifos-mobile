@@ -24,6 +24,7 @@ public interface ApplicationComponent {
     Context context();
 
     Application application();
+
     DataManager dataManager();
 
 }

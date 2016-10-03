@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: '../config/quality/quality.gradle'
 apply plugin: 'android-apt'
 
 android {
@@ -19,6 +20,10 @@ android {
         }
     }
     compileOptions.incremental = false
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

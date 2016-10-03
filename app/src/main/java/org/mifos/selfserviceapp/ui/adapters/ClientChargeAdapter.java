@@ -51,7 +51,8 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Charge charge = getItem(position);
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmount.setText(String.valueOf(charge.getAmount() + charge.getCurrency().getCode()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmount.setText(
+                    String.valueOf(charge.getAmount() + charge.getCurrency().getCode()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
             ((ViewHolder) holder).tvDueDate.setText(charge.getDueDate().get(2).toString() +
                     Constants.BACK_SLASH + charge.getDueDate().get(1).toString() +

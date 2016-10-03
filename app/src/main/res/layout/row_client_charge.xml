@@ -8,45 +8,45 @@
     android:orientation="horizontal"
     android:paddingLeft="@dimen/row_padding_left"
     android:paddingRight="@dimen/row_padding_right"
-    >
+>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/row_padding_left">
 
         <TextView
             android:id="@+id/tv_clientName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lines="1"
             android:ellipsize="end"
+            android:lines="1"
             android:text="@string/medium_text"
-            android:textSize="@dimen/text_medium"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
 
         <TextView
             android:id="@+id/tv_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
             android:text="@string/medium_text"
-            android:textSize="@dimen/text_medium"
-            android:textColor="@color/black"
             android:textAlignment="viewStart"
-            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
 
         <TextView
             android:id="@+id/tv_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
             android:text="@string/medium_text"
-            android:textSize="@dimen/text_medium"
-            android:textColor="@color/black"
             android:textAlignment="viewStart"
-            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
 
     </LinearLayout>
 </LinearLayout>

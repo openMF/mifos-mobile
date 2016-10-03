@@ -22,9 +22,8 @@ import retrofit2.Call;
 @Singleton
 public class DataManager {
 
-    private BaseApiManager baseApiManager;
-
     private final PrefManager prefManager;
+    private BaseApiManager baseApiManager;
 
     @Inject
     public DataManager(PrefManager prefManager) {

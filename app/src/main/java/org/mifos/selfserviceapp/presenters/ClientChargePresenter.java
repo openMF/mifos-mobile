@@ -58,16 +58,19 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     }
 
                 } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingClientCharges(context.getString(R.string.error_client_charge_loading));
+                    getMvpView().showErrorFetchingClientCharges(
+                            context.getString(R.string.error_client_charge_loading));
                 } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingClientCharges(context.getString(R.string.error_internal_server));
+                    getMvpView().showErrorFetchingClientCharges(
+                            context.getString(R.string.error_internal_server));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 getMvpView().hideProgress();
-                getMvpView().showErrorFetchingClientCharges(context.getString(R.string.error_message_server));
+                getMvpView().showErrorFetchingClientCharges(
+                        context.getString(R.string.error_message_server));
             }
         });
     }

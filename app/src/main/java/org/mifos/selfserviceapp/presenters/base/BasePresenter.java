@@ -10,9 +10,8 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
  */
 public class BasePresenter<T extends MVPView> implements Presenter<T> {
 
-    private T mMvpView;
-
     protected Context context;
+    private T mMvpView;
 
     protected BasePresenter(Context context) {
         this.context = context;

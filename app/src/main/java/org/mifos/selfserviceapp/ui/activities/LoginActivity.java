@@ -26,15 +26,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Inject
     LoginPresenter loginPresenter;
-
-    private ProgressDialog progress;
-
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
     @BindView(R.id.et_username)
     EditText etUsername;
     @BindView(R.id.et_password)
     EditText etPassword;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +73,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void hideProgress() {
-        if (progress != null && progress.isShowing())
+        if (progress != null && progress.isShowing()) {
             progress.dismiss();
+        }
     }
 
     @Override
