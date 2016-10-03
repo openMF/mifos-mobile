@@ -88,11 +88,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     if (user != null) {
                         final String userName = user.getUserName();
                         getMvpView().onLoginSuccess(userName);
-
-                        final long userID = user.getUserId();
-                        final String authToken = Constants.BASIC +
-                                user.getBase64EncodedAuthenticationKey();
-                        saveAuthenticationTokenForSession(userID, authToken);
+                        dataManager.saveAccessTokenAndUserDetails(user);
                     }
                 } else if (response.code() == 401) {
                     getMvpView().onLoginError(context.getString(R.string.error_unauthorised));
@@ -105,23 +101,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 getMvpView().onLoginError(context.getString(R.string.error_message_server));
             }
         });
-    }
-
-    /**
-     * Save the authentication token from the server and the user ID.
-     * The authentication token would be used for accessing the authenticated
-     * APIs.
-     *
-     * @param userID    - The userID of the user to be saved.
-     * @param authToken - The authentication token to be saved.
-     */
-    private void saveAuthenticationTokenForSession(long userID, String authToken) {
-
-        final PrefManager prefManager = dataManager.getPrefManager();
-        prefManager.setUserId(userID);
-        prefManager.saveToken(authToken);
-        dataManager.authenticateApiManager();
-
     }
 
     /**

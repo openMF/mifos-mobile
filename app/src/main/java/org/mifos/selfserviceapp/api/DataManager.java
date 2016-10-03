@@ -8,6 +8,7 @@ import org.mifos.selfserviceapp.data.accounts.LoanAccount;
 import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
 import org.mifos.selfserviceapp.data.accounts.SavingAccount;
 import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.PrefManager;
 
 import javax.inject.Inject;
@@ -28,16 +29,18 @@ public class DataManager {
     @Inject
     public DataManager(PrefManager prefManager) {
         this.prefManager = prefManager;
-
-        if (prefManager.isAuthenticated()) {
-            baseApiManager = new BaseApiManager(prefManager.getToken());
-        } else {
-            baseApiManager = new BaseApiManager();
-        }
+        baseApiManager = new BaseApiManager(prefManager.getToken());
     }
 
     public Call<User> login(String username, String password) {
         return baseApiManager.getAuthenticationApi().authenticate(username, password);
+    }
+
+    public void saveAccessTokenAndUserDetails(User user) {
+        prefManager.setUserId(user.getUserId());
+        prefManager.saveToken(Constants.BASIC + user.getBase64EncodedAuthenticationKey());
+        prefManager.saveUser(user);
+        BaseApiManager.createService(prefManager.getToken());
     }
 
     public Call<Client> getClients() {
@@ -70,14 +73,5 @@ public class DataManager {
 
     public PrefManager getPrefManager() {
         return prefManager;
-    }
-
-    /**
-     * This method is used to re-initialise the {@link BaseApiManager} with the
-     * authentication token, so that the Header can be added to the subsequent
-     * requests that we make with it.
-     */
-    public void authenticateApiManager() {
-        baseApiManager = new BaseApiManager(prefManager.getToken());
     }
 }
