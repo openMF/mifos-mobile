@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.data.User;
 import org.mifos.selfserviceapp.injection.ActivityContext;
@@ -120,8 +121,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         final PrefManager prefManager = dataManager.getPrefManager();
         prefManager.setUserId(userID);
         prefManager.saveToken(authToken);
-        dataManager.authenticateApiManager();
-
+        BaseApiManager.createService(prefManager.getToken());
     }
 
     /**

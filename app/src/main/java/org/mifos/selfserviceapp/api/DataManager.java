@@ -23,17 +23,12 @@ import retrofit2.Call;
 public class DataManager {
 
     private final PrefManager prefManager;
-    private BaseApiManager baseApiManager;
+    private final BaseApiManager baseApiManager;
 
     @Inject
-    public DataManager(PrefManager prefManager) {
+    public DataManager(PrefManager prefManager, BaseApiManager baseApiManager) {
         this.prefManager = prefManager;
-
-        if (prefManager.isAuthenticated()) {
-            baseApiManager = new BaseApiManager(prefManager.getToken());
-        } else {
-            baseApiManager = new BaseApiManager();
-        }
+        this.baseApiManager = baseApiManager;
     }
 
     public Call<User> login(String username, String password) {
@@ -70,14 +65,5 @@ public class DataManager {
 
     public PrefManager getPrefManager() {
         return prefManager;
-    }
-
-    /**
-     * This method is used to re-initialise the {@link BaseApiManager} with the
-     * authentication token, so that the Header can be added to the subsequent
-     * requests that we make with it.
-     */
-    public void authenticateApiManager() {
-        baseApiManager = new BaseApiManager(prefManager.getToken());
     }
 }
