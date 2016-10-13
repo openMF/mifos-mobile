@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.User;
+import org.mifos.selfserviceapp.objects.User;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
