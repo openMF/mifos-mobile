@@ -75,6 +75,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param message   Message that the toast must show.
      * @param toastType Duration for which the toast must be visible.
      */
+
     public void showToast(@NonNull String message, @NonNull int toastType) {
         Toast.makeText(BaseActivity.this, message, toastType).show();
     }
