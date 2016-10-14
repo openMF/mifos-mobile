@@ -18,49 +18,51 @@ import retrofit2.Retrofit;
  */
 public class BaseApiManager {
 
-    private BaseURL baseUrl = new BaseURL();
-    private final String BASE_URL = baseUrl.getUrl();
+    private static BaseURL baseUrl = new BaseURL();
+    private static final String BASE_URL = baseUrl.getUrl();
 
-    private AuthenticationService authenticationApi;
-    private ClientService clientsApi;
-    private SavingAccountsListService savingAccountsListApi;
-    private LoanAccountsListService loanAccountsListApi;
-    private RecentTransactionsService recentTransactionsApi;
-    private ClientChargeService clientChargeApi;
-    private String authToken = "";
+    private static Retrofit retrofit;
+    private static AuthenticationService authenticationApi;
+    private static ClientService clientsApi;
+    private static SavingAccountsListService savingAccountsListApi;
+    private static LoanAccountsListService loanAccountsListApi;
+    private static RecentTransactionsService recentTransactionsApi;
+    private static ClientChargeService clientChargeApi;
 
     public BaseApiManager() {
-        authenticationApi = createApi(AuthenticationService.class, BASE_URL);
+        String authToken = "";
+        createService(authToken);
     }
 
-    public BaseApiManager(String authToken) {
-        this.authToken = authToken;
-        authenticationApi = createApi(AuthenticationService.class, BASE_URL);
-        clientsApi = createApi(ClientService.class, BASE_URL);
-        savingAccountsListApi = createApi(SavingAccountsListService.class, BASE_URL);
-        loanAccountsListApi = createApi(LoanAccountsListService.class, BASE_URL);
-        recentTransactionsApi = createApi(RecentTransactionsService.class, BASE_URL);
-        clientChargeApi = createApi(ClientChargeService.class, BASE_URL);
+    private static void init() {
+        authenticationApi = createApi(AuthenticationService.class);
+        clientsApi = createApi(ClientService.class);
+        savingAccountsListApi = createApi(SavingAccountsListService.class);
+        loanAccountsListApi = createApi(LoanAccountsListService.class);
+        recentTransactionsApi = createApi(RecentTransactionsService.class);
+        clientChargeApi = createApi(ClientChargeService.class);
     }
 
-    public OkHttpClient getOkHttpClient() {
+    private static <T> T createApi(Class<T> clazz) {
+        return retrofit.create(clazz);
+    }
+
+    public static void createService(String authToken) {
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        return new OkHttpClient.Builder()
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addInterceptor(new ApiRequestInterceptor(authToken))
                 .build();
-    }
 
-    private <T> T createApi(Class<T> clazz, String baseUrl) {
-
-        return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(getOkHttpClient())
-                .build()
-                .create(clazz);
+                .client(okHttpClient)
+                .build();
+        init();
     }
 
     public AuthenticationService getAuthenticationApi() {
@@ -85,13 +87,5 @@ public class BaseApiManager {
 
     public ClientChargeService getClientChargeApi() {
         return clientChargeApi;
-    }
-
-    public String getAuthToken() {
-        return authToken;
-    }
-
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
     }
 }

@@ -1,7 +1,6 @@
 package org.mifos.selfserviceapp.injection.component;
 
 import org.mifos.selfserviceapp.injection.PerActivity;
-import org.mifos.selfserviceapp.injection.module.ActivityDataModule;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.ClientListActivity;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
@@ -21,8 +20,7 @@ import dagger.Component;
  * @since 08/07/16
  */
 @PerActivity
-@Component(dependencies = ApplicationComponent.class,
-        modules = {ActivityModule.class, ActivityDataModule.class})
+@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);

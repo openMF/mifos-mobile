@@ -6,6 +6,8 @@
 package org.mifos.selfserviceapp.api;
 
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -33,7 +35,7 @@ public class ApiRequestInterceptor implements Interceptor {
         Builder builder = chainRequest.newBuilder()
                 .header(HEADER_TENANT, "default");
 
-        if (authToken != null && !authToken.isEmpty()) {
+        if (!TextUtils.isEmpty(authToken)) {
             builder.header(HEADER_AUTH, authToken);
         }
 
