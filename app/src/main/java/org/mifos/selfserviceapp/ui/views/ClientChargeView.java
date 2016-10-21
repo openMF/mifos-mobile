@@ -1,6 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.data.Charge;
+import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 import java.util.List;

@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
+import org.mifos.selfserviceapp.models.accounts.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.LoanAccountsListResponse;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsListView;

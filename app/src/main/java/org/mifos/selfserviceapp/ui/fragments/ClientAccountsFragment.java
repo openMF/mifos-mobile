@@ -17,10 +17,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ClientAccountsFragment extends Fragment {
+
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+
     @BindView(R.id.tabs)
     TabLayout tabLayout;
+
     private long clientId;
 
     public static ClientAccountsFragment newInstance(long clientId) {
@@ -35,30 +38,28 @@ public class ClientAccountsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_client_accounts, container, false);
-        setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
 
         clientId = this.getArguments().getLong(Constants.CLIENT_ID);
-
-        setUpViewPager(viewPager);
-
-        tabLayout.setupWithViewPager(viewPager);
+        setUpViewPagerAndTabLayout();
 
         return view;
     }
 
-    private void setUpViewPager(ViewPager viewPager) {
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
+    private void setUpViewPagerAndTabLayout() {
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(SavingAccountsListFragment.newInstance(clientId),
                 getString(R.string.saving_accounts));
         viewPagerAdapter.addFragment(LoanAccountsListFragment.newInstance(clientId),
                 getString(R.string.loan_accounts));
         viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }

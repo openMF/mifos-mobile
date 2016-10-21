@@ -19,13 +19,13 @@ import okhttp3.Response;
  * @author Vishwajeet
  * @since 21/06/16
  */
-public class ApiRequestInterceptor implements Interceptor {
+public class SelfServiceInterceptor implements Interceptor {
 
     public static final String HEADER_TENANT = "Fineract-Platform-TenantId";
     public static final String HEADER_AUTH = "Authorization";
     private String authToken;
 
-    public ApiRequestInterceptor(String authToken) {
+    public SelfServiceInterceptor(String authToken) {
         this.authToken = authToken;
     }
 
