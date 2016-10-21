@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.utils;
+package org.mifos.selfserviceapp.api.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,15 +16,20 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-public class PrefManager {
+public class PreferencesHelper {
     private static final String USER_ID = "preferences_user_id";
     private static final String TOKEN = "preferences_token";
     private static final String TENANT = "preferences_tenant";
+    private static final String CLIENT_ID = "preferences_client";
     private SharedPreferences sharedPreferences;
 
     @Inject
-    public PrefManager(@ApplicationContext Context context) {
+    public PreferencesHelper(@ApplicationContext Context context) {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public void clear() {
+        sharedPreferences.edit().clear().apply();
     }
 
     public int getInt(String preferenceKey, int preferenceDefaultValue) {
@@ -83,5 +88,13 @@ public class PrefManager {
         if (!TextUtils.isEmpty(tenant)) {
             putString(TENANT, tenant);
         }
+    }
+
+    public void setClientId(long clientId) {
+        putLong(CLIENT_ID, clientId);
+    }
+
+    public long getClientId() {
+        return getLong(CLIENT_ID, 1);
     }
 }

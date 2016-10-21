@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsListPresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;

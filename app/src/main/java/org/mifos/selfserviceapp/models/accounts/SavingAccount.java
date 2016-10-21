@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.data.accounts;
+package org.mifos.selfserviceapp.models.accounts;
 
 /**
  * @author Vishwajeet

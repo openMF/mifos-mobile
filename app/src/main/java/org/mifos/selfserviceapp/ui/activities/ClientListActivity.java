@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.Client;
+import org.mifos.selfserviceapp.models.Client;
 import org.mifos.selfserviceapp.presenters.ClientListPresenter;
 import org.mifos.selfserviceapp.ui.adapters.ClientListAdapter;
 import org.mifos.selfserviceapp.ui.views.ClientListView;
