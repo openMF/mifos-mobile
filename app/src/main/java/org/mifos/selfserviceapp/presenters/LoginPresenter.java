@@ -6,12 +6,12 @@ import android.content.res.Resources;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.User;
+import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
 import org.mifos.selfserviceapp.utils.Constants;
-import org.mifos.selfserviceapp.utils.PrefManager;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 
 import javax.inject.Inject;
 
@@ -118,7 +118,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     private void saveAuthenticationTokenForSession(long userID, String authToken) {
 
-        final PrefManager prefManager = dataManager.getPrefManager();
+        final PreferencesHelper prefManager = dataManager.getPreferencesHelper();
         prefManager.setUserId(userID);
         prefManager.saveToken(authToken);
         BaseApiManager.createService(prefManager.getToken());

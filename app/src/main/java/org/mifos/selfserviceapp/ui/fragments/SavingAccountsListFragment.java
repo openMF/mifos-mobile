@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.SavingAccount;
 import org.mifos.selfserviceapp.presenters.SavingAccountsListPresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;

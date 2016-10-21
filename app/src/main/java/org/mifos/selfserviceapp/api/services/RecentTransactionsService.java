@@ -1,7 +1,7 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
-import org.mifos.selfserviceapp.data.TransactionsListResponse;
+import org.mifos.selfserviceapp.models.TransactionsListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

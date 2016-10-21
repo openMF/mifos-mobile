@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.Charge;
+import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.presenters.ClientChargePresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ClientChargeAdapter;

@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.Charge;
-import org.mifos.selfserviceapp.data.ChargeListResponse;
+import org.mifos.selfserviceapp.models.Charge;
+import org.mifos.selfserviceapp.models.ChargeListResponse;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.Transaction;
+import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.presenters.RecentTransactionsPresenter;
 import org.mifos.selfserviceapp.ui.activities.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
