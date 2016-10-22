@@ -21,8 +21,13 @@ android {
     }
     compileOptions.incremental = false
 
+    dexOptions {
+        incremental true
+    }
+
     lintOptions {
         abortOnError false
+        disable 'InvalidPackage'
     }
 }
 

@@ -21,10 +21,6 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.ClientListActivity"
-            android:label="@string/clients_list"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activities.HomeActivity"
             android:label="@string/accounts"
             android:screenOrientation="portrait" />

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.Client;
+import org.mifos.selfserviceapp.models.client.Client;
 
 import java.util.List;
 
