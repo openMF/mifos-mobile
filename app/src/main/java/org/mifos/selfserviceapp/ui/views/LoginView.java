@@ -30,7 +30,7 @@ public interface LoginView extends MVPView {
      *
      * @param errorMessage Error message that tells the user why login failed.
      */
-    void onLoginError(String errorMessage);
+    void showError(String errorMessage);
 
     /**
      * Should be called when there is a problem with the user input that we
@@ -38,6 +38,13 @@ public interface LoginView extends MVPView {
      *
      * @param errorMessage Error message that tells the user about the problem.
      */
-    void showInputValidationError(String errorMessage);
+    void showMessage(String errorMessage);
+
+    /**
+     * Should be called when the client is fetched successfully from API.
+     *
+     * @param clientId Client Id
+     */
+    void showClient(long clientId);
 
 }

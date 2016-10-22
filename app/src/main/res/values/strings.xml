@@ -32,6 +32,7 @@
     <string name="saving_accounts">Saving Accounts</string>
     <string name="loan_accounts">Loan Accounts</string>
     <string name="clients_list">Chose a client</string>
+    <string name="working">Working</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
@@ -45,6 +46,10 @@
     <string name="error_saving_account_details_loading">Error loading in saving accounts detail</string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
     <string name="error_client_charge_loading">Error loading in client charges</string>
+    <string name="error_client_not_found">Client Not Found</string>
+    <string name="error_fetching_client">Failed to fetch Client</string>
+
+    <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
     <string name="client_name">Client Name</string>
@@ -58,4 +63,5 @@
     <string name="interest_charged">Interest Charged</string>
     <string name="interest_paid">Interest Paid</string>
     <string name="loan_account_details">Loan Account Details</string>
+
 </resources>
