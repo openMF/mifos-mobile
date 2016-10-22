@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.MifosSelfServiceApp;
+import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.injection.component.ActivityComponent;
 import org.mifos.selfserviceapp.injection.component.DaggerActivityComponent;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
@@ -82,6 +83,10 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
      */
     public void showToast(@NonNull String message, @NonNull int toastType) {
         Toast.makeText(BaseActivity.this, message, toastType).show();
+    }
+
+    public void showProgressDialog() {
+        showProgressDialog(getString(R.string.working));
     }
 
     @Override

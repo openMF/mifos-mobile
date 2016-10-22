@@ -1,7 +1,8 @@
 package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.models.ChargeListResponse;
-import org.mifos.selfserviceapp.models.Client;
+import org.mifos.selfserviceapp.models.Page;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.TransactionsListResponse;
 import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.LoanAccount;
@@ -35,8 +36,8 @@ public class DataManager {
         return baseApiManager.getAuthenticationApi().authenticate(username, password);
     }
 
-    public Call<Client> getClients() {
-        return baseApiManager.getClientsApi().getAllClients();
+    public Call<Page<Client>> getClients() {
+        return baseApiManager.getClientsApi().getClients();
     }
 
     public Call<SavingAccountsListResponse> getSavingAccounts(long clientId) {
