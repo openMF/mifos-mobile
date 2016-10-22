@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;

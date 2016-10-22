@@ -54,7 +54,7 @@ public class BaseApiManager {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(new ApiRequestInterceptor(authToken))
+                .addInterceptor(new SelfServiceInterceptor(authToken))
                 .build();
 
         retrofit = new Retrofit.Builder()

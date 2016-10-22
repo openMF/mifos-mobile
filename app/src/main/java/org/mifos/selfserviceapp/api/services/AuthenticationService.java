@@ -1,7 +1,7 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
-import org.mifos.selfserviceapp.data.User;
+import org.mifos.selfserviceapp.models.User;
 
 import retrofit2.Call;
 import retrofit2.http.POST;

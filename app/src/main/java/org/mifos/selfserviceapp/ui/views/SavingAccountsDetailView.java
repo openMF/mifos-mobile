@@ -1,6 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.SavingAccount;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**

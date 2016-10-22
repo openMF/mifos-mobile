@@ -1,14 +1,14 @@
 package org.mifos.selfserviceapp.api;
 
-import org.mifos.selfserviceapp.data.ChargeListResponse;
-import org.mifos.selfserviceapp.data.Client;
-import org.mifos.selfserviceapp.data.TransactionsListResponse;
-import org.mifos.selfserviceapp.data.User;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
-import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
-import org.mifos.selfserviceapp.utils.PrefManager;
+import org.mifos.selfserviceapp.models.ChargeListResponse;
+import org.mifos.selfserviceapp.models.Client;
+import org.mifos.selfserviceapp.models.TransactionsListResponse;
+import org.mifos.selfserviceapp.models.User;
+import org.mifos.selfserviceapp.models.accounts.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.LoanAccountsListResponse;
+import org.mifos.selfserviceapp.models.accounts.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.SavingAccountsListResponse;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,12 +22,12 @@ import retrofit2.Call;
 @Singleton
 public class DataManager {
 
-    private final PrefManager prefManager;
+    private final PreferencesHelper mPreferencesHelper;
     private final BaseApiManager baseApiManager;
 
     @Inject
-    public DataManager(PrefManager prefManager, BaseApiManager baseApiManager) {
-        this.prefManager = prefManager;
+    public DataManager(PreferencesHelper preferencesHelper, BaseApiManager baseApiManager) {
+        this.mPreferencesHelper = preferencesHelper;
         this.baseApiManager = baseApiManager;
     }
 
@@ -63,7 +63,7 @@ public class DataManager {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsDetail(loanId);
     }
 
-    public PrefManager getPrefManager() {
-        return prefManager;
+    public PreferencesHelper getPreferencesHelper() {
+        return mPreferencesHelper;
     }
 }

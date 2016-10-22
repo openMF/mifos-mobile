@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.data;
+package org.mifos.selfserviceapp.models;
 
 import java.util.ArrayList;
 import java.util.List;
