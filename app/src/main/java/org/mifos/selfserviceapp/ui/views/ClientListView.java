@@ -1,6 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.models.Client;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 import java.util.List;
