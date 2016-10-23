@@ -19,4 +19,12 @@ public class Constants {
 
     public static final String BACK_SLASH = "/";
 
+    public static final String SAVINGS_ACCOUNTS = "savingsAccounts";
+
+    public static final String LOAN_ACCOUNTS = "loanAccounts";
+
+    public static final String RECURRING_ACCOUNTS = "recurringdepositaccounts";
+
+    public static final String ACCOUNT_TYPE = "accountType";
+
 }
