@@ -1,6 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.models.accounts.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**
