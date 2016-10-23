@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.LoginView;
 import org.mifos.selfserviceapp.utils.Constants;
 
