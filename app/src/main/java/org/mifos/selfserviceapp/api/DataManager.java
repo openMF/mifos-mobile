@@ -1,15 +1,14 @@
 package org.mifos.selfserviceapp.api;
 
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.models.ChargeListResponse;
 import org.mifos.selfserviceapp.models.Page;
-import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.TransactionsListResponse;
 import org.mifos.selfserviceapp.models.User;
-import org.mifos.selfserviceapp.models.accounts.LoanAccount;
-import org.mifos.selfserviceapp.models.accounts.LoanAccountsListResponse;
-import org.mifos.selfserviceapp.models.accounts.SavingAccount;
-import org.mifos.selfserviceapp.models.accounts.SavingAccountsListResponse;
-import org.mifos.selfserviceapp.api.local.PreferencesHelper;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.client.Client;
+import org.mifos.selfserviceapp.models.client.ClientAccounts;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,13 +22,15 @@ import retrofit2.Call;
 @Singleton
 public class DataManager {
 
-    private final PreferencesHelper mPreferencesHelper;
+    private final PreferencesHelper preferencesHelper;
     private final BaseApiManager baseApiManager;
+    private final long clientId;
 
     @Inject
     public DataManager(PreferencesHelper preferencesHelper, BaseApiManager baseApiManager) {
-        this.mPreferencesHelper = preferencesHelper;
+        this.preferencesHelper = preferencesHelper;
         this.baseApiManager = baseApiManager;
+        clientId = this.preferencesHelper.getClientId();
     }
 
     public Call<User> login(String username, String password) {
@@ -40,12 +41,12 @@ public class DataManager {
         return baseApiManager.getClientsApi().getClients();
     }
 
-    public Call<SavingAccountsListResponse> getSavingAccounts(long clientId) {
-        return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(clientId);
+    public Call<ClientAccounts> getClientAccounts() {
+        return baseApiManager.getClientsApi().getClientAccounts(clientId);
     }
 
-    public Call<LoanAccountsListResponse> getLoanAccounts(long clientId) {
-        return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(clientId);
+    public Call<ClientAccounts> getAccounts(String accountType) {
+        return baseApiManager.getClientsApi().getAccounts(clientId, accountType);
     }
 
     public Call<TransactionsListResponse> getRecentTransactions(long clientId) {
@@ -65,6 +66,6 @@ public class DataManager {
     }
 
     public PreferencesHelper getPreferencesHelper() {
-        return mPreferencesHelper;
+        return preferencesHelper;
     }
 }

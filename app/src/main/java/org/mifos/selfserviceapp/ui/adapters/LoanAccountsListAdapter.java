@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.accounts.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 
 import java.util.ArrayList;
 import java.util.List;

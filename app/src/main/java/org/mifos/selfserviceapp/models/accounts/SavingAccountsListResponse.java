@@ -1,5 +1,7 @@
 package org.mifos.selfserviceapp.models.accounts;
 
+import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+
 import java.util.ArrayList;
 import java.util.List;
 
