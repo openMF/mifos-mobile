@@ -51,4 +51,13 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
 
+
+    <!--Swipe Refresh Colors-->
+    <array name="swipeRefreshColors">
+        <item>@color/blue_light</item>
+        <item>@color/green_light</item>
+        <item>@color/red_light</item>
+        <item>@color/orange_light</item>
+    </array>
+
 </resources>

@@ -34,6 +34,9 @@
     <string name="clients_list">Chose a client</string>
     <string name="working">Working</string>
 
+    <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
+    <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
+
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
     <string name="error_validation_blank">%1$s cannot be blank</string>
@@ -48,6 +51,7 @@
     <string name="error_client_charge_loading">Error loading in client charges</string>
     <string name="error_client_not_found">Client Not Found</string>
     <string name="error_fetching_client">Failed to fetch Client</string>
+    <string name="error_fetching_accounts">Failed to fetch Accounts</string>
 
     <string name="fetching_client">Fetching Client</string>
 

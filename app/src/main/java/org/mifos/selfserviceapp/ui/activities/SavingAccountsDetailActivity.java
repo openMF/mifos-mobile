@@ -6,8 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.accounts.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;
 

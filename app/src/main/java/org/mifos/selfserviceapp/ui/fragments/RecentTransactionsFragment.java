@@ -15,7 +15,7 @@ import android.widget.Toast;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.presenters.RecentTransactionsPresenter;
-import org.mifos.selfserviceapp.ui.activities.BaseActivity;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
 import org.mifos.selfserviceapp.utils.Constants;

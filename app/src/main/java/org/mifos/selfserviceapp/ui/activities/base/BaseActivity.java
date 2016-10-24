@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.ui.activities;
+package org.mifos.selfserviceapp.ui.activities.base;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;

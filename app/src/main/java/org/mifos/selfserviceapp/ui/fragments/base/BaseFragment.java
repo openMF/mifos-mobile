@@ -1,4 +1,4 @@
-package org.mifos.selfserviceapp.ui.fragments;
+package org.mifos.selfserviceapp.ui.fragments.base;
 
 import android.app.Activity;
 import android.content.Context;
