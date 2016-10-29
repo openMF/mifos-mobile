@@ -5,7 +5,9 @@ This guide details how to use issues and pull requests to improve Self Service A
 ## Building Self-Service Android Application.
 
 There are two steps, you have to follow, when you are building the self-service android application.
+
 1. Setting up the [Android Studio](https://github.com/openMF/self-service-app/wiki/Android-Studio-Setup)
+
 2. [Building up Code](https://github.com/openMF/self-service-app/wiki/Building-up-Code) on Android Studio.
 
 ## Configure remotes
@@ -47,14 +49,15 @@ We welcome pull requests with fixes and improvements to Self-Service Android App
 ### Pull request guidelines
 
 If you can, please submit a pull request with the fix or improvements including tests.
-1. Fork the project on GitHub
-2. Create a feature branch
-3. Write tests and code
-4. Run the CheckStyle, PMD, Findbugs code analysis tools with `gradlew check` to make sure you have written quality code.
-5. If you have multiple commits please combine them into one commit by squashing them.  See [this article](http://eli.thegreenplace.net/2014/02/19/squashing-github-pull-requests-into-a-single-commit) and [this Git documentation](http://git-scm.com/book/en/Git-Tools-Rewriting-History#Squashing-Commits) for instructions.
-6. Please follow the commit message [guidelines](https://github.com/openMF/self-service-app/wiki/Commit-Style-Guide) before making PR
-7. Push the commit to your fork
-8. Submit a pull request with a motive for your change and the method you used to achieve it
+
+* Fork the project on GitHub 
+* Create a feature branch
+* Write tests and code
+* Run the CheckStyle, PMD, Findbugs code analysis tools with `gradlew check` to make sure you have written quality code.
+* If you have multiple commits please combine them into one commit by squashing them.  See [this article](http://eli.thegreenplace.net/2014/02/19/squashing-github-pull-requests-into-a-single-commit) and [this Git documentation](http://git-scm.com/book/en/Git-Tools-Rewriting-History#Squashing-Commits) for instructions.
+* Please follow the commit message [guidelines](https://github.com/openMF/self-service-app/wiki/Commit-Style-Guide) before making PR.
+* Push the commit to your fork
+* Submit a pull request with a motive for your change and the method you used to achieve it with `development` branch.
 
 We will accept pull requests if:
 
