@@ -23,8 +23,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/login_text_input_margin_bottom"
-            android:layout_marginTop="@dimen/login_text_input_margin_top">
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin">
             <EditText android:id="@+id/et_username"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -36,8 +36,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/login_text_input_margin_bottom"
-            android:layout_marginTop="@dimen/login_text_input_margin_top">
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin">
             <EditText android:id="@+id/et_password"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"

@@ -9,6 +9,14 @@
     android:paddingLeft="@dimen/row_padding_left"
     android:paddingRight="@dimen/row_padding_right"
 >
+    <org.mifos.selfserviceapp.utils.CircularImageView
+        android:id="@+id/iv_status_indicator"
+        android:layout_width="@dimen/account_status_width"
+        android:layout_height="@dimen/account_status_height"
+        android:layout_gravity="center_vertical"
+        android:src="@color/light_red"
+        android:layout_marginEnd="@dimen/default_margin"/>
+
 
     <LinearLayout
         android:layout_width="0dp"
