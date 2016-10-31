@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/row_padding_left"
-    android:paddingRight="@dimen/row_padding_right"
->
+    android:paddingRight="@dimen/row_padding_right">
+
+    <View
+        android:id="@+id/vw_loanStatus"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:background="@drawable/closed" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -26,7 +31,7 @@
             android:lines="1"
             android:text="@string/medium_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"/>
+            android:textSize="@dimen/text_medium" />
 
         <TextView
             android:id="@+id/tv_loanAccountProductName"
@@ -34,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_small"/>
+            android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 </LinearLayout>

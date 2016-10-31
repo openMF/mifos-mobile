@@ -50,6 +50,14 @@ public class LoanAccount implements Parcelable {
     @SerializedName("status")
     private Status status;
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @SerializedName("loanType")
     private LoanType loanType;
 
