@@ -59,6 +59,34 @@ public class SavingAccount implements Parcelable {
     @SerializedName("depositType")
     private DepositType depositType;
 
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public static Creator<SavingAccount> getCREATOR() {
+        return CREATOR;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public DepositType getDepositType() {
         return depositType;
     }
