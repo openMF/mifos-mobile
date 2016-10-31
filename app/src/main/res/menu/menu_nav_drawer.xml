@@ -7,25 +7,25 @@
         <item
             android:id="@+id/item_accounts"
             android:checked="true"
-            android:icon="@mipmap/ic_account_balance_black_24dp"
+            android:icon="@drawable/ic_account_balance_black_24dp"
             android:title="@string/accounts"/>
 
         <item
             android:id="@+id/item_funds_transfer"
             android:checked="false"
-            android:icon="@mipmap/ic_attach_money_black_24dp"
+            android:icon="@drawable/ic_attach_money_black_24dp"
             android:title="@string/funds_transfer"/>
 
         <item
             android:id="@+id/item_recent_transactions"
             android:checked="false"
-            android:icon="@mipmap/ic_compare_arrows_black_24dp"
+            android:icon="@drawable/ic_compare_arrows_black_24dp"
             android:title="@string/recent_transactions"/>
 
         <item
             android:id="@+id/item_charges"
             android:checked="false"
-            android:icon="@mipmap/ic_label_black_24dp"
+            android:icon="@drawable/ic_label_black_24dp"
             android:title="@string/charges"/>
     </group>
 
@@ -35,13 +35,13 @@
         <item
             android:id="@+id/item_questionnaire"
             android:checked="false"
-            android:icon="@mipmap/ic_question_answer_black_24dp"
+            android:icon="@drawable/ic_question_answer_black_24dp"
             android:title="@string/questionnaire"/>
 
         <item
             android:id="@+id/item_about_us"
             android:checked="false"
-            android:icon="@mipmap/ic_info_black_24dp"
+            android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/about_us"/>
 
     </group>

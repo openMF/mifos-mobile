@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="170dp"
-              android:background="@mipmap/mifos_logo"
+              android:background="@drawable/mifos_logo"
               android:gravity="center_vertical|bottom"
               android:orientation="vertical"
               android:paddingLeft="16dp">
