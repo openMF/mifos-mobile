@@ -21,15 +21,18 @@
     <!-- Dimen values for margins-->
     <dimen name="login_margin_top">24dp</dimen>
     <dimen name="login_margin_bottom">24dp</dimen>
-    <dimen name="login_text_input_margin_top">8dp</dimen>
-    <dimen name="login_text_input_margin_bottom">8dp</dimen>
     <dimen name="recent_transaction_text_view_margin_left">20dp</dimen>
     <dimen name="saving_accounts_text_view_margin_left">50dp</dimen>
     <dimen name="loan_accounts_text_view_margin_left">50dp</dimen>
     <dimen name="client_charge_text_view_margin_left">20dp</dimen>
+    <dimen name="default_margin">8dp</dimen>
 
     <!-- Dimen values for text size -->
     <dimen name="text_large">20sp</dimen>
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_small">14sp</dimen>
+
+    <!-- Dimen values for Account Status-->
+    <dimen name="account_status_width">25dp</dimen>
+    <dimen name="account_status_height">25dp</dimen>
 </resources>
