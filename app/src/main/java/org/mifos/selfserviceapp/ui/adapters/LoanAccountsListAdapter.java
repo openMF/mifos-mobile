@@ -51,6 +51,32 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             LoanAccount loanAccount = getItem(position);
             ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo());
             ((ViewHolder) holder).tv_loanAccountProductName.setText(loanAccount.getProductName());
+            if (loanAccount.getStatus().getPendingApproval()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.pending_approval);
+            } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.waiting_for_disbursal);
+            } else if (loanAccount.getStatus().getActive()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.active);
+            } else if (loanAccount.getStatus().getClosedObligationsMet()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.closed_obligationns_met);
+            } else if (loanAccount.getStatus().getClosedWrittenOff()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.closed_written_of);
+            } else if (loanAccount.getStatus().getClosedRescheduled()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.closed_resheduled);
+            } else if (loanAccount.getStatus().getClosed()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.closed);
+            } else if (loanAccount.getStatus().getOverpaid()) {
+                ((ViewHolder) holder).vw_loanStatus.
+                        setBackgroundResource(R.drawable.overpaid);
+            }
+
 
         }
 
@@ -66,6 +92,9 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView tv_clientLoanAccountNumber;
         @BindView(R.id.tv_loanAccountProductName)
         TextView tv_loanAccountProductName;
+        @BindView(R.id.vw_loanStatus)
+        View vw_loanStatus;
+
 
         public ViewHolder(View v) {
             super(v);

@@ -44,11 +44,63 @@ public class LoanAccount implements Parcelable {
     @SerializedName("principal")
     private double principal;
 
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public LoanType getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(LoanType loanType) {
+        this.loanType = loanType;
+    }
+
+    public Integer getLoanCycle() {
+        return loanCycle;
+    }
+
+    public void setLoanCycle(Integer loanCycle) {
+        this.loanCycle = loanCycle;
+    }
+
+    public Boolean getInArrears() {
+        return inArrears;
+    }
+
+    public void setInArrears(Boolean inArrears) {
+        this.inArrears = inArrears;
+    }
+
+    public static Creator<LoanAccount> getCREATOR() {
+        return CREATOR;
+    }
+
     @SerializedName("annualInterestRate")
     private double annualInterestRate;
 
     @SerializedName("status")
     private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     @SerializedName("loanType")
     private LoanType loanType;
