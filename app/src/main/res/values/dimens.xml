@@ -35,4 +35,8 @@
     <!-- Dimen values for Account Status-->
     <dimen name="account_status_width">25dp</dimen>
     <dimen name="account_status_height">25dp</dimen>
+
+    <!-- Dimen values for Error Image View-->
+    <dimen name="error_imageview_width">50dp</dimen>
+    <dimen name="error_imageview_height">50dp</dimen>
 </resources>

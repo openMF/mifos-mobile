@@ -67,5 +67,5 @@
     <string name="interest_charged">Interest Charged</string>
     <string name="interest_paid">Interest Paid</string>
     <string name="loan_account_details">Loan Account Details</string>
-
+    <string name="msg_no_transaction">There is no transaction to show :)</string>
 </resources>
