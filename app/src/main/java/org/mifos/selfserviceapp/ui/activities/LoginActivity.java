@@ -64,11 +64,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void showError(String errorMessage) {
-        showToast(errorMessage);
-    }
-
-    @Override
     public void showProgress() {
         if (!loginStatus) {
             showProgressDialog(getString(R.string.progress_message_login));
@@ -93,6 +88,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void showMessage(String errorMessage) {
         showToast(errorMessage, Toast.LENGTH_LONG);
+        llLogin.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_login)
