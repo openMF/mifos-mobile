@@ -77,14 +77,14 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                             getMvpView().onLoginSuccess(userName);
                         }
                     } else if (response.code() == 401) {
-                        getMvpView().showError(context.getString(R.string.error_unauthorised));
+                        getMvpView().showMessage(context.getString(R.string.error_unauthorised));
                     }
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
                     getMvpView().hideProgress();
-                    getMvpView().showError(context.getString(R.string.error_message_server));
+                    getMvpView().showMessage(context.getString(R.string.error_message_server));
                 }
             });
         }
@@ -111,7 +111,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
             @Override
             public void onFailure(Throwable t) {
-                getMvpView().showError(context.getString(R.string.error_fetching_client));
+                getMvpView().showMessage(context.getString(R.string.error_fetching_client));
                 getMvpView().hideProgress();
             }
         });
