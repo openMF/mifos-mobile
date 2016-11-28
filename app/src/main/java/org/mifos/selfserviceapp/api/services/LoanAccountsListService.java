@@ -1,8 +1,8 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
+import org.mifos.selfserviceapp.objects.accounts.LoanAccount;
+import org.mifos.selfserviceapp.objects.accounts.LoanAccountsListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

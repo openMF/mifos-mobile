@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import org.mifos.selfserviceapp.api.BaseApiManager;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.injection.ApplicationContext;
-import org.mifos.selfserviceapp.utils.PrefManager;
 
 import javax.inject.Singleton;
 
@@ -38,8 +38,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    PrefManager providePrefManager(@ApplicationContext Context context) {
-        return new PrefManager(context);
+    PreferencesHelper providePrefManager(@ApplicationContext Context context) {
+        return new PreferencesHelper(context);
     }
 
     @Provides
