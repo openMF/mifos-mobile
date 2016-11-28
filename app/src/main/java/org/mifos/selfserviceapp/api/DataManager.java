@@ -1,13 +1,13 @@
 package org.mifos.selfserviceapp.api;
 
-import org.mifos.selfserviceapp.data.ChargeListResponse;
-import org.mifos.selfserviceapp.data.Client;
-import org.mifos.selfserviceapp.data.TransactionsListResponse;
-import org.mifos.selfserviceapp.data.User;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
-import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
+import org.mifos.selfserviceapp.objects.ChargeListResponse;
+import org.mifos.selfserviceapp.objects.Client;
+import org.mifos.selfserviceapp.objects.TransactionsListResponse;
+import org.mifos.selfserviceapp.objects.User;
+import org.mifos.selfserviceapp.objects.accounts.LoanAccount;
+import org.mifos.selfserviceapp.objects.accounts.LoanAccountsListResponse;
+import org.mifos.selfserviceapp.objects.accounts.SavingAccount;
+import org.mifos.selfserviceapp.objects.accounts.SavingAccountsListResponse;
 import org.mifos.selfserviceapp.utils.PrefManager;
 
 import javax.inject.Inject;

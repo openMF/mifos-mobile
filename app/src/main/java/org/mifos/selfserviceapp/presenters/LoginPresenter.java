@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.User;
+import org.mifos.selfserviceapp.objects.User;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
@@ -54,58 +54,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void login(final String username, final String password) {
 
-        final Resources resources = context.getResources();
+       if (validateInputs(username,password))
+                callLogin(username,password);
 
-        if (username == null || username.trim().isEmpty()) {
-            showEmptyInputError(resources.getString(R.string.username));
-            return;
-        } else if (username.length() < 5) {
-            showMinimumInputLengthNotAchievedError(resources.getString(R.string.username),
-                    resources.getInteger(R.integer.username_minimum_length));
-            return;
-        } else if (username.contains(" ")) {
-            getMvpView().showInputValidationError(context.getString(
-                    R.string.error_validation_cannot_contain_spaces,
-                    R.string.username, R.string.not_contain_username));
-            return;
-        } else if (password == null || password.trim().isEmpty()) {
-            showEmptyInputError(context.getString(R.string.password));
-            return;
-        } else if (password.length() < 6) {
-            showMinimumInputLengthNotAchievedError(resources.getString(R.string.password),
-                    resources.getInteger(R.integer.password_minimum_length));
-            return;
-        }
-
-        Call<User> call = dataManager.login(username, password);
-        getMvpView().showProgress();
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Response<User> response) {
-                getMvpView().hideProgress();
-
-                if (response.code() == 200) {
-                    final User user = response.body();
-                    if (user != null) {
-                        final String userName = user.getUserName();
-                        getMvpView().onLoginSuccess(userName);
-
-                        final long userID = user.getUserId();
-                        final String authToken = Constants.BASIC +
-                                user.getBase64EncodedAuthenticationKey();
-                        saveAuthenticationTokenForSession(userID, authToken);
-                    }
-                } else if (response.code() == 401) {
-                    getMvpView().onLoginError(context.getString(R.string.error_unauthorised));
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().onLoginError(context.getString(R.string.error_message_server));
-            }
-        });
     }
 
     /**
@@ -146,5 +97,85 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 R.string.error_validation_minimum_chars,
                 fieldName, minimumLength));
     }
+
+
+    /**
+     * A helper function to validate the inputs
+     * @param username
+     * @param password
+     * @return
+     */
+
+    public Boolean validateInputs(final String username, final String password) {
+
+        final Resources resources = context.getResources();
+
+        if (username == null || username.trim().isEmpty()) {
+            showEmptyInputError(resources.getString(R.string.username));
+            return false;
+        } else if (username.length() < 5) {
+            showMinimumInputLengthNotAchievedError(resources.getString(R.string.username),
+                    resources.getInteger(R.integer.username_minimum_length));
+            return false;
+        } else if (username.contains(" ")) {
+            getMvpView().showInputValidationError(context.getString(
+                    R.string.error_validation_cannot_contain_spaces,
+                    R.string.username, R.string.not_contain_username));
+            return false;
+        } else if (password == null || password.trim().isEmpty()) {
+            showEmptyInputError(context.getString(R.string.password));
+            return false;
+        } else if (password.length() < 6) {
+            showMinimumInputLengthNotAchievedError(resources.getString(R.string.password),
+                    resources.getInteger(R.integer.password_minimum_length));
+            return false;
+        }
+
+        else
+            return  true;
+
+    }
+
+    /**
+     * Function for calling the login api after validating user inputs
+     * @param username
+     * @param password
+     */
+
+    private void callLogin(final String username, final String password)
+    {
+        Call<User> call = dataManager.login(username, password);
+        getMvpView().showProgress();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Response<User> response) {
+                getMvpView().hideProgress();
+
+                if (response.code() == 200) {
+                    final User user = response.body();
+                    if (user != null) {
+                        final String userName = user.getUserName();
+                        getMvpView().onLoginSuccess(userName);
+
+                        final long userID = user.getUserId();
+                        final String authToken = Constants.BASIC +
+                                user.getBase64EncodedAuthenticationKey();
+                        saveAuthenticationTokenForSession(userID, authToken);
+                    }
+                } else if (response.code() == 401) {
+                    getMvpView().onLoginError(context.getString(R.string.error_unauthorised));
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                getMvpView().hideProgress();
+                getMvpView().onLoginError(context.getString(R.string.error_message_server));
+            }
+        });
+
+    }
+
+
 
 }
