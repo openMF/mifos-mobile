@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
-import org.mifos.selfserviceapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -71,7 +69,7 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             ImageView iv = ((ClientChargeAdapter.ViewHolder) holder).circle_color;
             GradientDrawable bgShape = (GradientDrawable) iv.getDrawable();
-            if (charge.getIsActive()) {
+            if (charge.isActive()) {
                 bgShape.setColor(Color.rgb(129, 209, 53));
             } else {
                 bgShape.setColor(Color.rgb(255, 255, 255));
