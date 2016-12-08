@@ -90,13 +90,17 @@ public class Charge {
         return amountWrittenOff;
     }
 
-    public void setAmountWrittenOff(double amountWrittenOff) { this.amountWrittenOff = amountWrittenOff; }
+    public void setAmountWrittenOff(double amountWrittenOff) {
+        this.amountWrittenOff = amountWrittenOff;
+    }
 
     public double getAmountOutstanding() {
         return amountOutstanding;
     }
 
-    public void setAmountOutstanding(double amountOutstanding) { this.amountOutstanding = amountOutstanding; }
+    public void setAmountOutstanding(double amountOutstanding) {
+        this.amountOutstanding = amountOutstanding;
+    }
 
     public List<Long> getDueDate() {
         return dueDate;
@@ -118,13 +122,17 @@ public class Charge {
         return chargeTimeType;
     }
 
-    public void setChargeTimeType(ChargeTimeType chargeTimeType) { this.chargeTimeType = chargeTimeType; }
+    public void setChargeTimeType(ChargeTimeType chargeTimeType) {
+        this.chargeTimeType = chargeTimeType;
+    }
 
     public ChargeCalculationType getChargeCalculationType() {
         return chargeCalculationType;
     }
 
-    public void setChargeCalculationType(ChargeCalculationType chargeCalculationType) { this.chargeCalculationType = chargeCalculationType; }
+    public void setChargeCalculationType(ChargeCalculationType chargeCalculationType) {
+        this.chargeCalculationType = chargeCalculationType;
+    }
 
     public boolean getPenalty() {
         return penalty;
@@ -175,33 +183,45 @@ public class Charge {
             this.code = code;
         }
 
-        public String getName() { return name; }
+        public String getName() {
+            return name;
+        }
 
-        public void setName(String name) { this.name = name; }
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public int getDecimalPlaces() {
             return decimalPlaces;
         }
 
-        public void setDecimalPlaces(int decimalPlaces) { this.decimalPlaces = decimalPlaces; }
+        public void setDecimalPlaces(int decimalPlaces) {
+            this.decimalPlaces = decimalPlaces;
+        }
 
         public String getDisplaySymbol() {
             return displaySymbol;
         }
 
-        public void setDisplaySymbol(String displaySymbol) { this.displaySymbol = displaySymbol; }
+        public void setDisplaySymbol(String displaySymbol) {
+            this.displaySymbol = displaySymbol;
+        }
 
         public String getNameCode() {
             return nameCode;
         }
 
-        public void setNameCode(String NameCode) { this.nameCode = nameCode; }
+        public void setNameCode(String nameCode) {
+            this.nameCode = nameCode;
+        }
 
         public String getDisplayLabel() {
             return displayLabel;
         }
 
-        public void setDisplayLabel(String displayLabel) { this.displayLabel = displayLabel; }
+        public void setDisplayLabel(String displayLabel) {
+            this.displayLabel = displayLabel;
+        }
 
     }
 
