@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
-import org.mifos.selfserviceapp.utils.Constants;
-
+import org.mifos.selfserviceapp.utils.CircularImageView;
+import org.mifos.selfserviceapp.utils.Utils;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,20 +45,44 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return vh;
     }
 
+    // Binds the values for each of the stored variables to the view
+    // Also changes the color of the circle depending on whether the charge is active or not
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Charge charge = getItem(position);
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmount.setText(
-                    String.valueOf(charge.getAmount() + charge.getCurrency().getCode()));
+            Currency c  = Currency.getInstance("" + (charge.getCurrency()).getCode());
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountDue.setText(
+                    String.valueOf(charge.getAmount() + " " + c.getSymbol()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountPaid.setText(
+                    String.valueOf(charge.getAmountPaid() + " " + c.getSymbol()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountWaived.setText(
+                    String.valueOf(charge.getAmountWaived() + " " + c.getSymbol()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountOutstanding.setText(
+                    String.valueOf(charge.getAmountOutstanding() + " " + c.getSymbol()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
-            ((ViewHolder) holder).tvDueDate.setText(charge.getDueDate().get(2).toString() +
-                    Constants.BACK_SLASH + charge.getDueDate().get(1).toString() +
-                    Constants.BACK_SLASH + charge.getDueDate().get(0).toString());
+
+            if (charge.isIsActive()) {
+                ((ViewHolder) holder).circle_status.setImageDrawable(
+                        Utils.setCircularBackground(R.color.deposit_green, context));
+            } else if (charge.isIsPaid()) {
+                ((ViewHolder) holder).circle_status.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_yellow, context));
+            } else {
+                ((ViewHolder) holder).circle_status.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_blue, context));
+            }
+
+            String day = charge.getDueDate().get(2).toString();
+            String month = Utils.getMonth(Integer.parseInt(charge.getDueDate().get(1).toString()));
+            String year = charge.getDueDate().get(0).toString();
+
+            ((ViewHolder) holder).tvDueDate.setText(day + " " + month + " " + year);
         }
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -72,7 +95,16 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.tv_due_date)
         TextView tvDueDate;
         @BindView(R.id.tv_amount)
-        TextView tvAmount;
+        TextView tvAmountDue;
+        @BindView(R.id.tv_amount_paid)
+        TextView tvAmountPaid;
+        @BindView(R.id.tv_amount_waived)
+        TextView tvAmountWaived;
+        @BindView(R.id.tv_amount_outstanding)
+        TextView tvAmountOutstanding;
+
+        @BindView(R.id.circle_status)
+        CircularImageView circle_status;
 
         public ViewHolder(View v) {
             super(v);
