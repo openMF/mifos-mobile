@@ -51,6 +51,8 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return vh;
     }
 
+    // Binds the values for each of the stored variables to the view
+    // Also changes the color of the circle depending on whether the charge is active or not
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RecyclerView.ViewHolder) {
@@ -66,7 +68,6 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ClientChargeAdapter.ViewHolder) holder).tvAmountOutstanding.setText(
                     String.valueOf(charge.getAmountOutstanding() + " " + c.getSymbol()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
-
 
             ImageView iv = ((ClientChargeAdapter.ViewHolder) holder).circle_color;
             GradientDrawable bgShape = (GradientDrawable)iv.getDrawable();
