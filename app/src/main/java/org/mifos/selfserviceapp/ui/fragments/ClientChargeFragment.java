@@ -37,13 +37,18 @@ import butterknife.ButterKnife;
 
 public class ClientChargeFragment extends Fragment implements
         RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
+
     @Inject
     ClientChargePresenter mClientChargePresenter;
+
     ClientChargeAdapter clientChargeAdapter;
+
     @BindView(R.id.rv_client_charge)
     RecyclerView rvClientCharge;
+
     @BindView(R.id.swipe_charge_container)
     SwipeRefreshLayout swipeChargeContainer;
+
     private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
@@ -117,19 +122,12 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void showProgress() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.setMessage(getResources().getText(R.string.progress_message_loading));
-        progressDialog.show();
+        swipeChargeContainer.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+        swipeChargeContainer.setRefreshing(false);
     }
 
     @Override
