@@ -1,10 +1,14 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -12,6 +16,7 @@ import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,12 +56,59 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Charge charge = getItem(position);
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmount.setText(
-                    String.valueOf(charge.getAmount() + charge.getCurrency().getCode()));
+            Currency c  = Currency.getInstance("" + (charge.getCurrency()).getCode());
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountDue.setText(
+                    String.valueOf(charge.getAmount() + " " + c.getSymbol()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountPaid.setText(
+                    String.valueOf(charge.getAmountPaid() + " " + c.getSymbol()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountWaived.setText(
+                    String.valueOf(charge.getAmountWaived() + " " + c.getSymbol()));
+            ((ClientChargeAdapter.ViewHolder) holder).tvAmountOutstanding.setText(
+                    String.valueOf(charge.getAmountOutstanding() + " " + c.getSymbol()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
-            ((ViewHolder) holder).tvDueDate.setText(charge.getDueDate().get(2).toString() +
-                    Constants.BACK_SLASH + charge.getDueDate().get(1).toString() +
-                    Constants.BACK_SLASH + charge.getDueDate().get(0).toString());
+
+
+            ImageView iv = ((ClientChargeAdapter.ViewHolder) holder).circle_color;
+            GradientDrawable bgShape = (GradientDrawable)iv.getDrawable();
+            if(charge.getIsActive()) {
+                bgShape.setColor(Color.rgb(129, 209, 53));
+            } else {
+                bgShape.setColor(Color.rgb(255, 255, 255));
+            }
+
+            String day = charge.getDueDate().get(2).toString() + " ";
+            String month = "";
+            switch(charge.getDueDate().get(1).toString()) {
+                case "1":  month = "January ";
+                    break;
+                case "2":  month = "February ";
+                    break;
+                case "3":  month = "March ";
+                    break;
+                case "4":  month = "April ";
+                    break;
+                case "5":  month = "May ";
+                    break;
+                case "6":  month = "June ";
+                    break;
+                case "7":  month = "July ";
+                    break;
+                case "8":  month = "August ";
+                    break;
+                case "9":  month = "September ";
+                    break;
+                case "10": month = "October ";
+                    break;
+                case "11": month = "November ";
+                    break;
+                case "12": month = "December ";
+                    break;
+                default: month = "Invalid month ";
+                    break;
+            }
+            String year = charge.getDueDate().get(0).toString();
+
+            ((ViewHolder) holder).tvDueDate.setText(day + month + year);
         }
 
     }
@@ -72,7 +124,16 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.tv_due_date)
         TextView tvDueDate;
         @BindView(R.id.tv_amount)
-        TextView tvAmount;
+        TextView tvAmountDue;
+        @BindView(R.id.tv_amount_paid)
+        TextView tvAmountPaid;
+        @BindView(R.id.tv_amount_waived)
+        TextView tvAmountWaived;
+        @BindView(R.id.tv_amount_outstanding)
+        TextView tvAmountOutstanding;
+
+        @BindView(R.id.circle_color)
+        ImageView circle_color;
 
         public ViewHolder(View v) {
             super(v);
