@@ -70,8 +70,8 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
 
             ImageView iv = ((ClientChargeAdapter.ViewHolder) holder).circle_color;
-            GradientDrawable bgShape = (GradientDrawable)iv.getDrawable();
-            if(charge.getIsActive()) {
+            GradientDrawable bgShape = (GradientDrawable) iv.getDrawable();
+            if (charge.getIsActive()) {
                 bgShape.setColor(Color.rgb(129, 209, 53));
             } else {
                 bgShape.setColor(Color.rgb(255, 255, 255));
@@ -79,7 +79,7 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             String day = charge.getDueDate().get(2).toString() + " ";
             String month = "";
-            switch(charge.getDueDate().get(1).toString()) {
+            switch (charge.getDueDate().get(1).toString()) {
                 case "1":  month = "January ";
                     break;
                 case "2":  month = "February ";
