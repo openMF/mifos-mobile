@@ -2,21 +2,48 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:paddingLeft="@dimen/row_padding_left"
     android:paddingRight="@dimen/row_padding_right"
->
+    >
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left">
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="25dp"
+            android:layout_height="25dp">
+            <ImageView
+                android:id="@+id/circle_color"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:src="@drawable/circle_on"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_gravity="right"
+            android:paddingLeft="20dp"
+            android:text="Client Name: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
 
         <TextView
             android:id="@+id/tv_clientName"
@@ -24,7 +51,29 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
+            android:layout_gravity="right"
             android:text="@string/medium_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/row_padding_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_marginLeft="30dp"
+            android:layout_alignParentLeft="true"
+            android:text="Due Date: "
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
@@ -34,7 +83,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
             android:text="@string/medium_text"
-            android:textAlignment="viewStart"
+            android:layout_gravity="right"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_medium"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/row_padding_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_marginLeft="30dp"
+            android:layout_alignParentLeft="true"
+            android:text="Amount Due: "
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
@@ -44,9 +116,111 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
             android:text="@string/medium_text"
-            android:textAlignment="viewStart"
+            android:layout_gravity="right"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_medium"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/row_padding_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_marginLeft="30dp"
+            android:layout_alignParentLeft="true"
+            android:text="Amount Paid: "
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_amount_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
+            android:text="@string/medium_text"
+            android:layout_gravity="right"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_medium"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/row_padding_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_marginLeft="30dp"
+            android:layout_alignParentLeft="true"
+            android:text="Amount Waved: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
+
+        <TextView
+            android:id="@+id/tv_amount_waived"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
+            android:text="@string/medium_text"
+            android:layout_gravity="right"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_medium"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/row_padding_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_marginLeft="30dp"
+            android:layout_alignParentLeft="true"
+            android:text="Amount Outstanding: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
+
+        <TextView
+            android:id="@+id/tv_amount_outstanding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
+            android:text="@string/medium_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"
+            android:gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"/>
+    </RelativeLayout>
+
 </LinearLayout>
