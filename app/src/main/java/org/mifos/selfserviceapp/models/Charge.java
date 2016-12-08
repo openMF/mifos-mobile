@@ -26,7 +26,7 @@ public class Charge {
     private double amountOutstanding = 0.0;
 
     private boolean penalty = false;
-    private boolean isActive = false;
+    private boolean isActive = true;
     private boolean isPaid = false;
     private boolean isWaived = false;
 
@@ -50,7 +50,7 @@ public class Charge {
         return chargeId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(int chargeId) {
         this.clientId = clientId;
     }
 
@@ -134,7 +134,7 @@ public class Charge {
         this.chargeCalculationType = chargeCalculationType;
     }
 
-    public boolean isPenalty() {
+    public boolean getPenalty() {
         return penalty;
     }
 
@@ -142,29 +142,148 @@ public class Charge {
         this.penalty = penalty;
     }
 
-    public boolean isIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
-    public boolean isIsPaid() {
+    public boolean getIsPaid() {
         return isPaid;
     }
 
-    public void setPaid(boolean isPaid) {
+    public void setIsPaid(boolean isPaid) {
         this.isPaid = isPaid;
     }
 
-    public boolean isIsWaived() {
+    public boolean getIsWaived() {
         return isWaived;
     }
 
-    public void setWaived(boolean isWaived) {
+    public void setIsWaived(boolean isWaived) {
         this.isWaived = isWaived;
     }
 
 
+    public static class Currency {
+        private String code;
+        private String name;
+        private int decimalPlaces;
+        private String displaySymbol;
+        private String nameCode;
+        private String displayLabel;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getDecimalPlaces() {
+            return decimalPlaces;
+        }
+
+        public void setDecimalPlaces(int decimalPlaces) {
+            this.decimalPlaces = decimalPlaces;
+        }
+
+        public String getDisplaySymbol() {
+            return displaySymbol;
+        }
+
+        public void setDisplaySymbol(String displaySymbol) {
+            this.displaySymbol = displaySymbol;
+        }
+
+        public String getNameCode() {
+            return nameCode;
+        }
+
+        public void setNameCode(String nameCode) {
+            this.nameCode = nameCode;
+        }
+
+        public String getDisplayLabel() {
+            return displayLabel;
+        }
+
+        public void setDisplayLabel(String displayLabel) {
+            this.displayLabel = displayLabel;
+        }
+
+    }
+
+
+    public static class ChargeTimeType {
+        private int id;
+        private String code;
+        private String value;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
+
+    public static class ChargeCalculationType {
+        private int id;
+        private String code; // example "chargeCalculationType.flat"
+        private String value;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
 }
