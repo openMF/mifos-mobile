@@ -26,9 +26,9 @@ public class Charge {
     private double amountOutstanding = 0.0;
 
     private boolean penalty = false;
-    private boolean isActive = true;
-    private boolean isPaid = false;
-    private boolean isWaived = false;
+    private boolean active = true;
+    private boolean paid = false;
+    private boolean waived = false;
 
     public int getId() {
         return id;
@@ -50,7 +50,7 @@ public class Charge {
         return chargeId;
     }
 
-    public void setClientId(int chargeId) {
+    public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
@@ -134,7 +134,7 @@ public class Charge {
         this.chargeCalculationType = chargeCalculationType;
     }
 
-    public boolean getPenalty() {
+    public boolean isPenalty() {
         return penalty;
     }
 
@@ -142,28 +142,28 @@ public class Charge {
         this.penalty = penalty;
     }
 
-    public boolean getIsActive() {
-        return isActive;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public boolean getIsPaid() {
-        return isPaid;
+    public boolean isPaid() {
+        return paid;
     }
 
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
-    public boolean getIsWaived() {
-        return isWaived;
+    public boolean isWaived() {
+        return waived;
     }
 
-    public void setIsWaived(boolean isWaived) {
-        this.isWaived = isWaived;
+    public void setWaived(boolean waived) {
+        this.waived = waived;
     }
 
 
