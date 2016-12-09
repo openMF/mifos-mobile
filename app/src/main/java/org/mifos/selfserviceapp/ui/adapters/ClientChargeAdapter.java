@@ -69,7 +69,7 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             ImageView iv = ((ClientChargeAdapter.ViewHolder) holder).circle_color;
             GradientDrawable bgShape = (GradientDrawable) iv.getDrawable();
-            if (charge.isActive()) {
+            if (charge.isIsActive()) {
                 bgShape.setColor(Color.rgb(129, 209, 53));
             } else {
                 bgShape.setColor(Color.rgb(255, 255, 255));
