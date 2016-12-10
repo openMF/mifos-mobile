@@ -32,7 +32,7 @@
             android:id="@+id/tv_client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
 
