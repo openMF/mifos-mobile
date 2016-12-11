@@ -5,7 +5,7 @@
               android:background="@drawable/mifos_logo"
               android:gravity="center_vertical|bottom"
               android:orientation="vertical"
-              android:paddingLeft="16dp">
+              android:paddingStart="16dp">
 
     <TextView
         android:id="@+id/tv_user_name"
