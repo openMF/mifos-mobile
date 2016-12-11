@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="@dimen/login_padding_left"
-        android:paddingEnd="@dimen/login_padding_right"
+        android:paddingLeft="@dimen/login_padding_left"
+        android:paddingRight="@dimen/login_padding_right"
         android:paddingTop="@dimen/login_padding_top">
 
         <ImageView android:layout_width="wrap_content"

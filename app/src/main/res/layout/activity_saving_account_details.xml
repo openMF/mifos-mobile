@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -32,7 +32,7 @@
             android:id="@+id/tv_client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
 
@@ -43,7 +43,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -61,7 +61,7 @@
             android:id="@+id/tv_saving_account_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
@@ -73,7 +73,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -91,7 +91,7 @@
             android:id="@+id/tv_nominal_interest_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
@@ -103,7 +103,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -121,7 +121,7 @@
             android:id="@+id/tv_account_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
@@ -133,7 +133,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -151,7 +151,7 @@
             android:id="@+id/tv_total_deposits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
@@ -163,7 +163,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -181,7 +181,7 @@
             android:id="@+id/tv_savings_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
@@ -193,7 +193,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -211,7 +211,7 @@
             android:id="@+id/tv_min_req_bal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/saving_accounts_text_view_margin_left"
+            android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>

@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:paddingStart="@dimen/row_padding_left"
-    android:paddingEnd="@dimen/row_padding_right"
+    android:paddingLeft="@dimen/row_padding_left"
+    android:paddingRight="@dimen/row_padding_right"
 >
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/row_padding_left">
+        android:paddingLeft="@dimen/row_padding_left">
 
         <TextView
             android:id="@+id/tv_clientName"
@@ -32,7 +32,7 @@
             android:id="@+id/tv_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/client_charge_text_view_margin_left"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
             android:text="@string/medium_text"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
@@ -42,7 +42,7 @@
             android:id="@+id/tv_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/client_charge_text_view_margin_left"
+            android:layout_marginLeft="@dimen/client_charge_text_view_margin_left"
             android:text="@string/medium_text"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
