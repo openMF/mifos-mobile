@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -32,7 +32,7 @@
             android:id="@+id/tv_client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -42,7 +42,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -60,7 +60,7 @@
             android:id="@+id/tv_account_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -70,7 +70,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -88,7 +88,7 @@
             android:id="@+id/tv_loan_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -98,7 +98,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -116,7 +116,7 @@
             android:id="@+id/tv_loan_product_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -126,7 +126,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -144,7 +144,7 @@
             android:id="@+id/tv_principal_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -154,7 +154,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -172,7 +172,7 @@
             android:id="@+id/tv_principal_disbursed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -182,7 +182,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -200,7 +200,7 @@
             android:id="@+id/tv_annual_interest_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -210,7 +210,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -228,7 +228,7 @@
             android:id="@+id/tv_interest_charged"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
@@ -238,7 +238,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingEnd="@dimen/row_padding_left"
         android:paddingTop="@dimen/table_row_padding_top">
 
         <TextView
@@ -256,7 +256,7 @@
             android:id="@+id/tv_interest_paid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
+            android:layout_marginStart="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
     </TableRow>
