@@ -1,13 +1,10 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
