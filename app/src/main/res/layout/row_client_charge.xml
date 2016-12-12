@@ -26,13 +26,23 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
-            android:id="@+id/tv_clientName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
             android:layout_gravity="right"
             android:paddingLeft="20dp"
+            android:text="Client Name: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
+
+        <TextView
+            android:id="@+id/tv_clientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_gravity="right"
             android:text="@string/medium_text"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>

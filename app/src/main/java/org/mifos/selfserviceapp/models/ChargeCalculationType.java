@@ -10,26 +10,26 @@ public class ChargeCalculationType {
     private String value;
 
     public int getId() {
-        return id;
-    }
+            return id;
+        }
 
     public void setId(int id) {
-        this.id = id;
-    }
+            this.id = id;
+        }
 
     public String getCode() {
-        return code;
-    }
+            return code;
+        }
 
     public void setCode(String code) {
-        this.code = code;
-    }
+            this.code = code;
+        }
 
     public String getValue() {
-        return value;
-    }
+            return value;
+        }
 
     public void setValue(String value) {
-        this.value = value;
-    }
+            this.value = value;
+        }
 }
