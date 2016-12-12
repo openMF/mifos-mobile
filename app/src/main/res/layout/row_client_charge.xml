@@ -19,20 +19,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <org.mifos.selfserviceapp.utils.CircularImageView
+            android:id="@+id/circle_status"
             android:layout_width="25dp"
-            android:layout_height="25dp">
-            <ImageView
-                android:id="@+id/circle_color"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:src="@drawable/circle_on"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"/>
-        </RelativeLayout>
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"/>
 
         <TextView
             android:layout_width="wrap_content"

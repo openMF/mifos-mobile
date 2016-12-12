@@ -9,16 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
-
+import org.mifos.selfserviceapp.utils.CircularImageView;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.content.ContextCompat;
+import java.text.DateFormatSymbols;
 
 /**
  * @author Vishwajeet
@@ -67,49 +70,32 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String.valueOf(charge.getAmountOutstanding() + " " + c.getSymbol()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
 
-            ImageView iv = ((ClientChargeAdapter.ViewHolder) holder).circle_color;
-            GradientDrawable bgShape = (GradientDrawable) iv.getDrawable();
             if (charge.isIsActive()) {
-                bgShape.setColor(Color.rgb(129, 209, 53));
+                ((ViewHolder) holder).circle_status
+                        .setImageDrawable(setCircularBackground(R.color.deposit_green));
+            } else if (charge.isIsPaid()) {
+                ((ViewHolder) holder).circle_status
+                        .setImageDrawable(setCircularBackground(R.color.light_yellow));
             } else {
-                bgShape.setColor(Color.rgb(255, 255, 255));
+                ((ViewHolder) holder).circle_status
+                        .setImageDrawable(setCircularBackground(R.color.light_blue));
             }
 
-            String day = charge.getDueDate().get(2).toString() + " ";
-            String month = "";
-            switch (charge.getDueDate().get(1).toString()) {
-                case "1":  month = "January ";
-                    break;
-                case "2":  month = "February ";
-                    break;
-                case "3":  month = "March ";
-                    break;
-                case "4":  month = "April ";
-                    break;
-                case "5":  month = "May ";
-                    break;
-                case "6":  month = "June ";
-                    break;
-                case "7":  month = "July ";
-                    break;
-                case "8":  month = "August ";
-                    break;
-                case "9":  month = "September ";
-                    break;
-                case "10": month = "October ";
-                    break;
-                case "11": month = "November ";
-                    break;
-                case "12": month = "December ";
-                    break;
-                default: month = "Invalid month ";
-                    break;
-            }
+            String day = charge.getDueDate().get(2).toString();
+            String month = new DateFormatSymbols().getMonths()
+                            [Integer.parseInt(charge.getDueDate().get(1).toString()) - 1];
             String year = charge.getDueDate().get(0).toString();
 
-            ((ViewHolder) holder).tvDueDate.setText(day + month + year);
+            ((ViewHolder) holder).tvDueDate.setText(day + " " + month + " " + year);
         }
 
+    }
+
+    private LayerDrawable setCircularBackground(int colorId) {
+        Drawable color = new ColorDrawable(ContextCompat.getColor(context, colorId));
+        Drawable image = ContextCompat.getDrawable(context, R.drawable.circular_background);
+        LayerDrawable ld = new LayerDrawable(new Drawable[]{image, color});
+        return ld;
     }
 
     @Override
@@ -131,8 +117,8 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.tv_amount_outstanding)
         TextView tvAmountOutstanding;
 
-        @BindView(R.id.circle_color)
-        ImageView circle_color;
+        @BindView(R.id.circle_status)
+        CircularImageView circle_status;
 
         public ViewHolder(View v) {
             super(v);
