@@ -9,16 +9,12 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.utils.CircularImageView;
+import org.mifos.selfserviceapp.utils.Utils;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.support.v4.content.ContextCompat;
-import java.text.DateFormatSymbols;
 
 /**
  * @author Vishwajeet
@@ -68,19 +64,18 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
 
             if (charge.isIsActive()) {
-                ((ViewHolder) holder).circle_status
-                        .setImageDrawable(setCircularBackground(R.color.deposit_green));
+                ((ViewHolder) holder).circle_status.setImageDrawable(
+                        Utils.setCircularBackground(R.color.deposit_green, context));
             } else if (charge.isIsPaid()) {
-                ((ViewHolder) holder).circle_status
-                        .setImageDrawable(setCircularBackground(R.color.light_yellow));
+                ((ViewHolder) holder).circle_status.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_yellow, context));
             } else {
-                ((ViewHolder) holder).circle_status
-                        .setImageDrawable(setCircularBackground(R.color.light_blue));
+                ((ViewHolder) holder).circle_status.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_blue, context));
             }
 
             String day = charge.getDueDate().get(2).toString();
-            String month = new DateFormatSymbols().getMonths()
-                            [Integer.parseInt(charge.getDueDate().get(1).toString()) - 1];
+            String month = Utils.getMonth(Integer.parseInt(charge.getDueDate().get(1).toString()));
             String year = charge.getDueDate().get(0).toString();
 
             ((ViewHolder) holder).tvDueDate.setText(day + " " + month + " " + year);
@@ -88,12 +83,6 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    private LayerDrawable setCircularBackground(int colorId) {
-        Drawable color = new ColorDrawable(ContextCompat.getColor(context, colorId));
-        Drawable image = ContextCompat.getDrawable(context, R.drawable.circular_background);
-        LayerDrawable ld = new LayerDrawable(new Drawable[]{image, color});
-        return ld;
-    }
 
     @Override
     public int getItemCount() {
