@@ -121,10 +121,14 @@ public class ClientChargeFragment extends Fragment implements
     }
 
     @Override
-    public void showProgress() { swipeChargeContainer.setRefreshing(true); }
+    public void showProgress() {
+        swipeChargeContainer.setRefreshing(true);
+    }
 
     @Override
-    public void hideProgress() { swipeChargeContainer.setRefreshing(false); }
+    public void hideProgress() {
+        swipeChargeContainer.setRefreshing(false);
+    }
 
     @Override
     public void onItemClick(View childView, int position) {
