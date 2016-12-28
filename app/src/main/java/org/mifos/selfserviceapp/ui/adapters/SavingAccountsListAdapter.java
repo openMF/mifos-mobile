@@ -1,10 +1,7 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.support.v4.content.ContextCompat;
+import org.mifos.selfserviceapp.utils.Utils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,23 +61,23 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
 
             if (savingAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).iv_status_indicator
-                        .setImageDrawable(setCircularBackground(R.color.deposit_green));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.deposit_green, context));
 
             } else if (savingAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).iv_status_indicator
-                        .setImageDrawable(setCircularBackground(R.color.light_green));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_green, context));
 
             } else if (savingAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).iv_status_indicator
-                        .setImageDrawable(setCircularBackground(R.color.light_yellow));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_yellow, context));
 
             } else {
 
-                ((ViewHolder) holder).iv_status_indicator
-                        .setImageDrawable(setCircularBackground(R.color.light_blue));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_blue, context));
 
             }
 
@@ -91,13 +88,6 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemCount() {
         return savingAccountsList.size();
-    }
-
-    private LayerDrawable setCircularBackground(int colorId) {
-        Drawable color = new ColorDrawable(ContextCompat.getColor(context, colorId));
-        Drawable image = ContextCompat.getDrawable(context, R.drawable.circular_background);
-        LayerDrawable ld = new LayerDrawable(new Drawable[]{image, color});
-        return ld;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,10 +1,7 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.support.v4.content.ContextCompat;
+import org.mifos.selfserviceapp.utils.Utils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,29 +52,29 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo());
             ((ViewHolder) holder).tv_loanAccountProductName.setText(loanAccount.getProductName());
             if (loanAccount.getStatus().getPendingApproval()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.light_yellow));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.light_yellow, context));
             } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.orange_dark));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.orange_dark, context));
             } else if (loanAccount.getStatus().getActive()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.deposit_green));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.deposit_green, context));
             } else if (loanAccount.getStatus().getClosedObligationsMet()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.blue));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.blue, context));
             } else if (loanAccount.getStatus().getClosedWrittenOff()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.green_dark));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.green_dark, context));
             } else if (loanAccount.getStatus().getClosedRescheduled()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.green_light));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.green_light, context));
             } else if (loanAccount.getStatus().getClosed()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.black));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.black, context));
             } else if (loanAccount.getStatus().getOverpaid()) {
-                ((ViewHolder) holder).iv_status_indicator.
-                        setImageDrawable(setCircularBackground(R.color.red));
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.red, context));
             }
 
         }
@@ -87,13 +84,6 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public int getItemCount() {
         return loanAccountsList.size();
-    }
-
-    private LayerDrawable setCircularBackground(int colorId) {
-        Drawable color = new ColorDrawable(ContextCompat.getColor(context, colorId));
-        Drawable image = ContextCompat.getDrawable(context, R.drawable.circular_background);
-        LayerDrawable ld = new LayerDrawable(new Drawable[]{image, color});
-        return ld;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
