@@ -17,14 +17,14 @@ import android.widget.Toast;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
-import org.mifos.selfserviceapp.presenters.AccountsPresenter;
-import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
-import org.mifos.selfserviceapp.ui.views.AccountsView;
+import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 
@@ -38,14 +38,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Rajan Maurya on 23/10/16.
+ * Created by michaelsosnick on 1/1/17.
  */
 
-public class AccountsFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener, AccountsView,
+public class HomeFragment extends BaseFragment implements
+        SwipeRefreshLayout.OnRefreshListener, HomeView,
         RecyclerItemClickListener.OnItemClickListener {
 
-    public static final String LOG_TAG = AccountsFragment.class.getSimpleName();
+    public static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
     @BindView(R.id.rv_accounts)
     RecyclerView rvAccounts;
@@ -63,7 +63,7 @@ public class AccountsFragment extends BaseFragment implements
     ImageView noAccountIcon;
 
     @Inject
-    AccountsPresenter accountsPresenter;
+    HomePresenter homePresenter;
 
     View rootView;
 
@@ -71,8 +71,8 @@ public class AccountsFragment extends BaseFragment implements
     private List<LoanAccount> loanAccounts;
     private List<SavingAccount> savingAccounts;
 
-    public static AccountsFragment newInstance(String accountType) {
-        AccountsFragment fragment = new AccountsFragment();
+    public static HomeFragment newInstance(String accountType) {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putString(Constants.ACCOUNT_TYPE, accountType);
         fragment.setArguments(args);
@@ -92,11 +92,11 @@ public class AccountsFragment extends BaseFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_accounts, container, false);
+                             @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, rootView);
-        accountsPresenter.attachView(this);
+        homePresenter.attachView(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -115,14 +115,14 @@ public class AccountsFragment extends BaseFragment implements
     void reloadOnError() {
         ll_error.setVisibility(View.GONE);
         rvAccounts.setVisibility(View.VISIBLE);
-        accountsPresenter.loadAccounts(accountType);
+        homePresenter.loadAccounts(accountType);
     }
 
     @Override
     public void onRefresh() {
         ll_error.setVisibility(View.GONE);
         rvAccounts.setVisibility(View.VISIBLE);
-        accountsPresenter.loadAccounts(accountType);
+        homePresenter.loadAccounts(accountType);
     }
 
     @Override
@@ -187,7 +187,7 @@ public class AccountsFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        accountsPresenter.detachView();
+        homePresenter.detachView();
     }
 
     @Override
@@ -211,3 +211,5 @@ public class AccountsFragment extends BaseFragment implements
 
     }
 }
+
+

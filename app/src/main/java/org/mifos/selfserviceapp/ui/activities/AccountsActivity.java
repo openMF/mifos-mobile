@@ -13,7 +13,7 @@ import android.view.View;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
-import org.mifos.selfserviceapp.ui.fragments.HomeScreenFragment;
+import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * @since 14/07/2016
  */
 
-public class HomeActivity extends BaseActivity implements
+public class AccountsActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
@@ -50,17 +50,17 @@ public class HomeActivity extends BaseActivity implements
 
         getActivityComponent().inject(this);
 
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_accounts);
 
         ButterKnife.bind(this);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            toolbar.setTitle("Home");
+            toolbar.setTitle("Accounts3");
         }
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
-        replaceFragment(HomeScreenFragment.newInstance(clientId), false,  R.id.container);
+        replaceFragment(ClientAccountsFragment.newInstance(clientId), false,  R.id.container);
 
         setupNavigationBar();
     }
@@ -76,7 +76,7 @@ public class HomeActivity extends BaseActivity implements
         // select which item to open
         switch (item.getItemId()) {
             case R.id.item_accounts:
-                replaceFragment(HomeScreenFragment.newInstance(clientId),
+                replaceFragment(ClientAccountsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
             case R.id.item_funds_transfer:

@@ -3,10 +3,13 @@ package org.mifos.selfserviceapp.injection.component;
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.activities.AccountsActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.fragments.AccountsFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeScreenFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
@@ -23,7 +26,13 @@ public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);
 
+    void inject(AccountsActivity accountsActivity);
+
     void inject(HomeActivity homeActivity);
+
+    void inject(HomeFragment homeFragment);
+
+    void inject(HomeScreenFragment homeScreenFragment);
 
     void inject(ClientAccountsFragment clientAccountsFragment);
 
