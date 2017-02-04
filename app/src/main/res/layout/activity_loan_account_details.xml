@@ -90,7 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/loan_accounts_text_view_margin_left"
             android:textAlignment="textStart"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:layout_weight="1"/>
     </TableRow>
     <TableRow
         android:layout_width="wrap_content"

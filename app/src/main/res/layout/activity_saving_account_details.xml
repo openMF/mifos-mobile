@@ -184,7 +184,8 @@
             android:layout_marginLeft="@dimen/saving_accounts_text_view_margin_left"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"/>
+            android:textSize="@dimen/text_medium"
+            android:layout_weight="1"/>
 
     </TableRow>
     <TableRow
