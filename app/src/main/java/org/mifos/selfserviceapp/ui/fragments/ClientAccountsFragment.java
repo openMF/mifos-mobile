@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.presenters.AccountsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
@@ -67,16 +69,29 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     private void setUpViewPagerAndTabLayout() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+
         viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SAVINGS_ACCOUNTS),
                 getString(R.string.saving_accounts));
         viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.LOAN_ACCOUNTS),
                 getString(R.string.loan_accounts));
+        viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SHARE_ACCOUNTS),
+                getString(R.string.share_accounts));
+
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private String getFragmentTag(int position) {
         return "android:switcher:" + R.id.viewpager + ":" + position;
+    }
+
+    @Override
+    public void showShareAccounts(List<ShareAccount> shareAccounts) {
+        ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(2))).
+                  showShareAccounts(shareAccounts);
+        ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(2))).
+                hideProgress();
     }
 
     @Override
@@ -95,11 +110,15 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 .hideProgress();
     }
 
+
+
     @Override
     public void showError(String errorMessage) {
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .showError(getString(R.string.error_fetching_accounts));
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(1)))
+                .showError(getString(R.string.error_fetching_accounts));
+        ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(2)))
                 .showError(getString(R.string.error_fetching_accounts));
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
