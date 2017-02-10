@@ -23,6 +23,8 @@ public class Constants {
 
     public static final String LOAN_ACCOUNTS = "loanAccounts";
 
+    public static final String SHARE_ACCOUNTS = "shareAccounts";
+
     public static final String RECURRING_ACCOUNTS = "recurringdepositaccounts";
 
     public static final String ACCOUNT_TYPE = "accountType";

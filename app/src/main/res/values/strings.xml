@@ -31,11 +31,13 @@
     <string name="splash">Splash</string>
     <string name="saving_accounts">Saving Accounts</string>
     <string name="loan_accounts">Loan Accounts</string>
+    <string name="share_accounts">Share Accounts</string>
     <string name="clients_list">Chose a client</string>
     <string name="working">Working</string>
 
     <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
+    <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
