@@ -1,7 +1,7 @@
 ### Status
 
 [![Join the chat at https://gitter.im/openMF/self-service-app](https://badges.gitter.im/openMF/self-service-app.svg)](https://gitter.im/openMF/self-service-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/openMF/self-service-app.svg?branch=master)](https://travis-ci.org/openMF/self-service-app)
+[![Build Status](https://travis-ci.org/openMF/self-service-app.svg?branch=development)](https://travis-ci.org/openMF/self-service-app)
 
 # Self Service Android Application for MifosX
 
