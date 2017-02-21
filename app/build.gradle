@@ -3,15 +3,17 @@ apply from: '../config/quality/quality.gradle'
 apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "org.mifos.selfserviceapp"
-        minSdkVersion 17
-        targetSdkVersion 23
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        // A test runner provided by https://code.google.com/p/android-test-kit/
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -21,10 +23,6 @@ android {
     }
     compileOptions.incremental = false
 
-    dexOptions {
-        incremental true
-    }
-
     lintOptions {
         abortOnError false
         disable 'InvalidPackage'
@@ -32,25 +30,28 @@ android {
 }
 
 dependencies {
-    final RETROFIT_VERSION = '2.0.0-beta3'
-    final DAGGER_VERSION = '2.2'
-    final BUTTER_KNIFE_VERSION = '8.0.1'
-    def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile "com.jakewharton:butterknife:$BUTTER_KNIFE_VERSION"
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
-    compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
 
-    apt daggerCompiler
-    compile "com.google.dagger:dagger:$DAGGER_VERSION"
-    provided 'javax.annotation:jsr250-api:1.0'
+    //Square dependencies
+    compile ('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {
+        // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
+        exclude module: 'okhttp'
+    }
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okHttp3Version"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttp3Version"
 
-    apt "com.jakewharton:butterknife-compiler:$BUTTER_KNIFE_VERSION"
+    //Dagger dependencies
+    apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    provided 'javax.annotation:jsr250-api:1.0'                //Required by Dagger2
+
+    //Butter Knife
+    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    apt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 }

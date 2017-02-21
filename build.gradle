@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -21,4 +21,20 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 11
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+    buildToolsVersion = '24.0.2'
+
+    // App dependencies
+    supportLibraryVersion = '24.2.1'
+    daggerVersion = '2.2'
+    //TODO update retrofit and OkHttp3 version
+    retrofitVersion = '2.0.0-beta3'
+    okHttp3Version = '3.0.0-RC1'
+    butterKnifeVersion = '8.0.1'
 }
