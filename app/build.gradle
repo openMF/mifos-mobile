@@ -43,8 +43,13 @@ dependencies {
         exclude module: 'okhttp'
     }
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     compile "com.squareup.okhttp3:okhttp:$rootProject.okHttp3Version"
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttp3Version"
+
+    //rxjava Dependencies
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.4'
 
     //Dagger dependencies
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"

@@ -13,7 +13,7 @@ import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Call;
+import rx.Observable;
 
 /**
  * @author Vishwajeet
@@ -33,35 +33,35 @@ public class DataManager {
         clientId = this.preferencesHelper.getClientId();
     }
 
-    public Call<User> login(String username, String password) {
+    public Observable<User> login(String username, String password) {
         return baseApiManager.getAuthenticationApi().authenticate(username, password);
     }
 
-    public Call<Page<Client>> getClients() {
+    public Observable<Page<Client>> getClients() {
         return baseApiManager.getClientsApi().getClients();
     }
 
-    public Call<ClientAccounts> getClientAccounts() {
+    public Observable<ClientAccounts> getClientAccounts() {
         return baseApiManager.getClientsApi().getClientAccounts(clientId);
     }
 
-    public Call<ClientAccounts> getAccounts(String accountType) {
+    public Observable<ClientAccounts> getAccounts(String accountType) {
         return baseApiManager.getClientsApi().getAccounts(clientId, accountType);
     }
 
-    public Call<TransactionsListResponse> getRecentTransactions(long clientId) {
+    public Observable<TransactionsListResponse> getRecentTransactions() {
         return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(clientId);
     }
 
-    public Call<ChargeListResponse> getClientCharges(long clientId) {
+    public Observable<ChargeListResponse> getClientCharges(long clientId) {
         return baseApiManager.getClientChargeApi().getClientChargeList(clientId);
     }
 
-    public Call<SavingAccount> getSavingAccountDetails(long accountId) {
+    public Observable<SavingAccount> getSavingAccountDetails(long accountId) {
         return baseApiManager.getSavingAccountsListApi().getSavingAccountsDetail(accountId);
     }
 
-    public Call<LoanAccount> getLoanAccountDetails(long loanId) {
+    public Observable<LoanAccount> getLoanAccountDetails(long loanId) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsDetail(loanId);
     }
 

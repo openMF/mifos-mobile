@@ -3,9 +3,9 @@ package org.mifos.selfserviceapp.api.services;
 import org.mifos.selfserviceapp.api.ApiEndPoints;
 import org.mifos.selfserviceapp.models.TransactionsListResponse;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * @author Vishwajeet
@@ -13,5 +13,5 @@ import retrofit2.http.Path;
  */
 public interface RecentTransactionsService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/transactions")
-    Call<TransactionsListResponse> getRecentTransactionsList(@Path("clientId") long clientId);
+    Observable<TransactionsListResponse> getRecentTransactionsList(@Path("clientId") long clientId);
 }

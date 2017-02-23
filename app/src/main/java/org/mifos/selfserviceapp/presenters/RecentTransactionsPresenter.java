@@ -4,26 +4,26 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.models.Transaction;
-import org.mifos.selfserviceapp.models.TransactionsListResponse;
 import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.models.TransactionsListResponse;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author Vishwajeet
  * @since 10/08/16
  */
 public class RecentTransactionsPresenter extends BasePresenter<RecentTransactionsView> {
-    private DataManager dataManager;
+
+    private final DataManager dataManager;
+    private CompositeSubscription subscriptions;
 
     /**
      * Initialises the RecentTransactionsPresenter by automatically injecting an instance of
@@ -39,40 +39,48 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
     public RecentTransactionsPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
+        subscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    public void attachView(RecentTransactionsView mvpView) {
+        super.attachView(mvpView);
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        subscriptions.unsubscribe();
     }
 
     public void loadRecentTransactions(long clientId) {
-        Call<TransactionsListResponse> call = dataManager.getRecentTransactions(clientId);
+        checkViewAttached();
         getMvpView().showProgress();
-
-        call.enqueue(new Callback<TransactionsListResponse>() {
-            @Override
-            public void onResponse(Response<TransactionsListResponse> response) {
-                getMvpView().hideProgress();
-
-                if (response.code() == 200) {
-                    TransactionsListResponse recentTransaction = response.body();
-                    List<Transaction> recentTransactionsList = response.body().getPageItems();
-                    if (recentTransaction != null) {
-                        getMvpView().showRecentTransactions(recentTransactionsList);
+        subscriptions.add(dataManager.getRecentTransactions()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<TransactionsListResponse>() {
+                    @Override
+                    public void onCompleted() {
                     }
 
-                } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingRecentTransactions(
-                            context.getString(R.string.error_recent_transactions_loading));
-                } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingRecentTransactions(
-                            context.getString(R.string.error_internal_server));
-                }
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showErrorFetchingRecentTransactions(
+                                context.getString(R.string.error_recent_transactions_loading));
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().showErrorFetchingRecentTransactions(
-                        context.getString(R.string.error_message_server));
-            }
-        });
+                    @Override
+                    public void onNext(TransactionsListResponse transactionsListResponse) {
+                        getMvpView().hideProgress();
+                        if (transactionsListResponse != null) {
+                            getMvpView().showRecentTransactions(
+                                    transactionsListResponse.getPageItems());
+                        }
+                    }
+                })
+        );
     }
 }
 

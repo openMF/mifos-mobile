@@ -104,6 +104,7 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
     public void hideProgressDialog() {
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
+            progress = null;
         }
     }
 

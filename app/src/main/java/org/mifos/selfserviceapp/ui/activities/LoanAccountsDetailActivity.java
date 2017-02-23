@@ -128,7 +128,7 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
 
     @Override
     protected void onDestroy() {
-        mLoanAccountDetailsPresenter.detachView();
         super.onDestroy();
+        mLoanAccountDetailsPresenter.detachView();
     }
 }
