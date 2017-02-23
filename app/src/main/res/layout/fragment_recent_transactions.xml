@@ -4,11 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recent_transactions"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recent_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <RelativeLayout
+            android:id="@+id/ll_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_error"
+                android:layout_width="@dimen/error_imageview_width"
+                android:layout_height="@dimen/error_imageview_height"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/default_margin"
+                android:src="@drawable/ic_error_black_24dp"/>
+
+            <TextView
+                android:id="@+id/tv_error_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_error"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/text_large"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

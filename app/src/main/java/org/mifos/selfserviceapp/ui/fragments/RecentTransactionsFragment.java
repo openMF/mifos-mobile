@@ -10,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Transaction;
@@ -44,6 +46,12 @@ public class RecentTransactionsFragment extends Fragment implements
     RecyclerView rvRecentTransactions;
     @BindView(R.id.swipe_transaction_container)
     SwipeRefreshLayout swipeTransactionContainer;
+    @BindView(R.id.ll_error)
+    RelativeLayout ll_error;
+    @BindView(R.id.tv_error_msg)
+    TextView tv_error_msg;
+    @BindView(R.id.iv_error)
+    ImageView iv_error;
     private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
@@ -69,7 +77,7 @@ public class RecentTransactionsFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_recent_transactions, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -83,6 +91,9 @@ public class RecentTransactionsFragment extends Fragment implements
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         rvRecentTransactions.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), this));
+        recentTransactionsListAdapter = new RecentTransactionListAdapter(getContext(),
+                recentTransactionList);
+        rvRecentTransactions.setAdapter(recentTransactionsListAdapter);
 
         swipeTransactionContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
@@ -90,6 +101,7 @@ public class RecentTransactionsFragment extends Fragment implements
             @Override
             public void onRefresh() {
                 mRecentTransactionsPresenter.loadRecentTransactions(clientId);
+                setErrorView(false, null, 0);
             }
         });
 
@@ -126,27 +138,43 @@ public class RecentTransactionsFragment extends Fragment implements
 
     @Override
     public void showErrorFetchingRecentTransactions(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showRecentTransactions(List<Transaction> recentTransactionList) {
-        this.recentTransactionList = recentTransactionList;
-        inflateRecentTransactionList();
+        setErrorView(true, message, R.drawable.ic_error_black_24dp);
         if (swipeTransactionContainer.isRefreshing()) {
             swipeTransactionContainer.setRefreshing(false);
         }
     }
 
-    private void inflateRecentTransactionList() {
-        recentTransactionsListAdapter = new RecentTransactionListAdapter(getContext(),
-                recentTransactionList);
-        rvRecentTransactions.setAdapter(recentTransactionsListAdapter);
+    @Override
+    public void showRecentTransactions(List<Transaction> recentTransactionList) {
+        if (recentTransactionList.size() > 0) {
+            this.recentTransactionList.clear();
+            this.recentTransactionList.addAll(recentTransactionList);
+            recentTransactionsListAdapter.notifyDataSetChanged();
+        } else {
+            setErrorView(true, getString(R.string.msg_no_transaction), R.drawable
+                    .ic_assignment_turned_in_black_24dp);
+        }
+
+        if (swipeTransactionContainer.isRefreshing()) {
+            swipeTransactionContainer.setRefreshing(false);
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mRecentTransactionsPresenter.detachView();
+    }
+
+    private void setErrorView(boolean flag, String message, int imageId) {
+        if (flag) {
+            ll_error.setVisibility(View.VISIBLE);
+            tv_error_msg.setText(message);
+            iv_error.setImageResource(imageId);
+            recentTransactionList.clear();
+            recentTransactionsListAdapter.notifyDataSetChanged();
+        } else {
+            ll_error.setVisibility(View.GONE);
+        }
     }
 }
