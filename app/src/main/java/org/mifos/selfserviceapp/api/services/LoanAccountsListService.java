@@ -3,9 +3,9 @@ package org.mifos.selfserviceapp.api.services;
 import org.mifos.selfserviceapp.api.ApiEndPoints;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * @author Vishwajeet
@@ -14,5 +14,5 @@ import retrofit2.http.Path;
 public interface LoanAccountsListService {
 
     @GET(ApiEndPoints.LOANS + "/{loanId}/")
-    Call<LoanAccount> getLoanAccountsDetail(@Path("loanId") long loanId);
+    Observable<LoanAccount> getLoanAccountsDetail(@Path("loanId") long loanId);
 }

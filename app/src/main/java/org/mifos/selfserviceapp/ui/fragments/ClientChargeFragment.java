@@ -142,8 +142,8 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void onDestroyView() {
-        mClientChargePresenter.detachView();
         super.onDestroyView();
+        mClientChargePresenter.detachView();
     }
 
 }

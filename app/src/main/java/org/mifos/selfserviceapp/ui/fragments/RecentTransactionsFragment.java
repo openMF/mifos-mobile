@@ -146,7 +146,7 @@ public class RecentTransactionsFragment extends Fragment implements
 
     @Override
     public void onDestroyView() {
-        mRecentTransactionsPresenter.detachView();
         super.onDestroyView();
+        mRecentTransactionsPresenter.detachView();
     }
 }
