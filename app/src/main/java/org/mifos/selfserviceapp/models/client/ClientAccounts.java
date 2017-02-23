@@ -3,8 +3,11 @@ package org.mifos.selfserviceapp.models.client;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,17 @@ public class ClientAccounts implements Parcelable {
 
     private List<LoanAccount> loanAccounts = new ArrayList<>();
     private List<SavingAccount> savingsAccounts = new ArrayList<>();
+
+    @SerializedName("shareAccounts")
+    private List<ShareAccount> shareAccounts = new ArrayList<>();
+
+    public List<ShareAccount> getShareAccounts() {
+        return shareAccounts;
+    }
+
+    public void setShareAccounts(List<ShareAccount> shareAccounts) {
+        this.shareAccounts = shareAccounts;
+    }
 
     public ClientAccounts() {
     }

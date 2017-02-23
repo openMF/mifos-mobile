@@ -50,6 +50,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 if (response.isSuccess()) {
                     getMvpView().showSavingsAccounts(response.body().getSavingsAccounts());
                     getMvpView().showLoanAccounts(response.body().getLoanAccounts());
+                    getMvpView().showShareAccounts(response.body().getShareAccounts());
                 }
             }
 

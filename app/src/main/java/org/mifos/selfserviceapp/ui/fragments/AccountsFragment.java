@@ -17,12 +17,14 @@ import android.widget.Toast;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.presenters.AccountsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
+import org.mifos.selfserviceapp.ui.adapters.ShareAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.AccountsView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -70,6 +72,7 @@ public class AccountsFragment extends BaseFragment implements
     private String accountType;
     private List<LoanAccount> loanAccounts;
     private List<SavingAccount> savingAccounts;
+    private List<ShareAccount> shareAccounts;
 
     public static AccountsFragment newInstance(String accountType) {
         AccountsFragment fragment = new AccountsFragment();
@@ -85,6 +88,7 @@ public class AccountsFragment extends BaseFragment implements
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         loanAccounts = new ArrayList<>();
         savingAccounts = new ArrayList<>();
+        shareAccounts = new ArrayList<>();
         if (getArguments() != null) {
             accountType = getArguments().getString(Constants.ACCOUNT_TYPE);
         }
@@ -148,6 +152,19 @@ public class AccountsFragment extends BaseFragment implements
             showEmptyAccounts(getString(R.string.empty_savings_accounts));
         }
     }
+
+    @Override
+    public void showShareAccounts(List<ShareAccount> shareAccounts) {
+        this.shareAccounts = shareAccounts;
+        if (shareAccounts.size() != 0) {
+            ShareAccountsListAdapter shareAccountsListAdapter =
+                    new ShareAccountsListAdapter(getContext(), shareAccounts);
+            rvAccounts.setAdapter(shareAccountsListAdapter);
+        } else {
+            showEmptyAccounts(getString(R.string.empty_share_accounts));
+        }
+    }
+
 
     public void showEmptyAccounts(String emptyAccounts) {
         ll_error.setVisibility(View.VISIBLE);
