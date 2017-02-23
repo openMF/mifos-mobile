@@ -116,7 +116,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
 
     @Override
     protected void onDestroy() {
-        mSavingAccountsDetailPresenter.detachView();
         super.onDestroy();
+        mSavingAccountsDetailPresenter.detachView();
     }
 }

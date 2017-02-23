@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.RxJavaCallAdapterFactory;
 
 /**
  * @author Vishwajeet
@@ -60,6 +61,7 @@ public class BaseApiManager {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
         init();
