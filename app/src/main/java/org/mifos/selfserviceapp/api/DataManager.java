@@ -3,7 +3,7 @@ package org.mifos.selfserviceapp.api;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.models.ChargeListResponse;
 import org.mifos.selfserviceapp.models.Page;
-import org.mifos.selfserviceapp.models.TransactionsListResponse;
+import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
@@ -49,8 +49,9 @@ public class DataManager {
         return baseApiManager.getClientsApi().getAccounts(clientId, accountType);
     }
 
-    public Observable<TransactionsListResponse> getRecentTransactions() {
-        return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(clientId);
+    public Observable<Page<Transaction>> getRecentTransactions(int offset, int limit) {
+        return baseApiManager.getRecentTransactionsApi()
+                .getRecentTransactionsList(clientId, offset, limit);
     }
 
     public Observable<ChargeListResponse> getClientCharges(long clientId) {

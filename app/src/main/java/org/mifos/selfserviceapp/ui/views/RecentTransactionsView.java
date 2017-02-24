@@ -12,6 +12,12 @@ import java.util.List;
 
 public interface RecentTransactionsView extends MVPView {
 
+
+    /**
+     * Use to setup basic UI elements like RecyclerView and SwipeToRefresh etc.
+     */
+    void showUserInterface();
+
     /**
      * Should be called if there is any error from client side in loading the recent transactions
      * from server.
@@ -25,7 +31,25 @@ public interface RecentTransactionsView extends MVPView {
     /**
      * Use to display List of recent transactions for the respective client.
      *
-     * @param recentTransactionsList List containing recent transactions of a particular client
+     * @param transactions List containing recent transactions of a particular client
      */
-    void showRecentTransactions(List<Transaction> recentTransactionsList);
+    void showRecentTransactions(List<Transaction> transactions);
+
+
+    void showLoadMoreRecentTransactions(List<Transaction> transactions);
+
+    void resetUI();
+
+    void showMessage(String message);
+
+    /**
+     * Use to indicate user that there is no transaction to show;
+     */
+    void showEmptyTransaction();
+
+    /**
+     * Use to show and hide the swipe Layout;
+     * @param show Boolean
+     */
+    void showSwipeRefreshLayout(boolean show);
 }
