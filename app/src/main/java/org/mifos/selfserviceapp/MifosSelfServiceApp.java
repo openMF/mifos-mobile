@@ -15,13 +15,20 @@ public class MifosSelfServiceApp extends Application {
 
     ApplicationComponent applicationComponent;
 
+    private static MifosSelfServiceApp instance;
+
     public static MifosSelfServiceApp get(Context context) {
         return (MifosSelfServiceApp) context.getApplicationContext();
+    }
+
+    public static Context getContext() {
+        return instance;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
