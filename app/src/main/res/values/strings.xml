@@ -73,5 +73,16 @@
     <string name="interest_charged">Interest Charged</string>
     <string name="interest_paid">Interest Paid</string>
     <string name="loan_account_details">Loan Account Details</string>
+    <string name="loan_summary">Loan Summary</string>
+    <string name="loan_name">Loan Name</string>
+    <string name="interest">Interest</string>
+    <string name="fees">Fees</string>
+    <string name="penalties">Penalties</string>
+    <string name="total_repayment">Total Expected Repayment</string>
+    <string name="total_paid">Total Paid</string>
+    <string name="interest_waived">Interest Waived</string>
+    <string name="penalties_waived">Penalties Waived</string>
+    <string name="fees_waived">Fee Waived</string>
+    <string name="outstanding_balance">Outstanding Balance</string>
 
 </resources>
