@@ -19,6 +19,94 @@ public class Summary implements Parcelable {
     @SerializedName("interestPaid")
     private double interestPaid;
 
+    @SerializedName("feeChargesCharged")
+    private double feeChargesCharged;
+
+    @SerializedName("penaltyChargesCharged")
+    private double penaltyChargesCharged;
+
+    @SerializedName("penaltyChargesWaived")
+    private double penaltyChargesWaived;
+
+    @SerializedName("totalExpectedRepayment")
+    private double totalExpectedRepayment;
+
+    @SerializedName("interestWaived")
+    private double interestWaived;
+
+    @SerializedName("totalRepayment")
+    private double totalRepayment;
+
+    @SerializedName("feeChargesWaived")
+    private double feeChargesWaived;
+
+    @SerializedName("totalOutstanding")
+    private double totalOutstanding;
+
+    public double getTotalOutstanding() {
+        return totalOutstanding;
+    }
+
+    public void setTotalOutstanding(double totalOutstanding) {
+        this.totalOutstanding = totalOutstanding;
+    }
+
+    public double getFeeChargesWaived() {
+        return feeChargesWaived;
+    }
+
+    public double getFeeChargesCharged() {
+        return feeChargesCharged;
+    }
+
+    public void setFeeChargesCharged(double feeChargesCharged) {
+        this.feeChargesCharged = feeChargesCharged;
+    }
+
+    public void setFeeChargesWaived(double feeChargesWaived) {
+        this.feeChargesWaived = feeChargesWaived;
+    }
+
+    public double getInterestWaived() {
+        return interestWaived;
+    }
+
+    public void setInterestWaived(double interestWaived) {
+        this.interestWaived = interestWaived;
+    }
+
+    public double getTotalRepayment() {
+        return totalRepayment;
+    }
+
+    public void setTotalRepayment(double totalRepayment) {
+        this.totalRepayment = totalRepayment;
+    }
+
+    public double getTotalExpectedRepayment() {
+        return totalExpectedRepayment;
+    }
+
+    public void setTotalExpectedRepayment(double totalExpectedRepayment) {
+        this.totalExpectedRepayment = totalExpectedRepayment;
+    }
+
+    public double getPenaltyChargesCharged() {
+        return penaltyChargesCharged;
+    }
+
+    public void setPenaltyChargesCharged(double penaltyChargesCharged) {
+        this.penaltyChargesCharged = penaltyChargesCharged;
+    }
+
+    public double getPenaltyChargesWaived() {
+        return penaltyChargesWaived;
+    }
+
+    public void setPenaltyChargesWaived(double penaltyChargesWaived) {
+        this.penaltyChargesWaived = penaltyChargesWaived;
+    }
+
     public double getPrincipalDisbursed() {
         return principalDisbursed;
     }

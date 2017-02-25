@@ -27,6 +27,12 @@
             android:checked="false"
             android:icon="@drawable/ic_label_black_24dp"
             android:title="@string/charges"/>
+        <item
+            android:id="@+id/item_loan_summary"
+            android:checked="false"
+            android:icon="@drawable/ic_label_black_24dp"
+            android:title="@string/loan_summary"/>
+
     </group>
 
     <group android:id="@+id/group2"
