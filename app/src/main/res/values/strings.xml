@@ -84,5 +84,12 @@
     <string name="penalties_waived">Penalties Waived</string>
     <string name="fees_waived">Fee Waived</string>
     <string name="outstanding_balance">Outstanding Balance</string>
-
+    <string name="next_installement">Next Installment</string>
+    <string name="due_date">Due Date</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="loan_type">Loan Type</string>
+    <string name="currency">Currency</string>
+    <string name="repayment_schedule">Repayment Schedule</string>
+    <string name="transactions">Transactions</string>
+    <string name="outstanding_balance_str">%1$s %2$s</string>
 </resources>
