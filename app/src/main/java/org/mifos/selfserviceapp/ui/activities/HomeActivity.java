@@ -15,7 +15,6 @@ import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
-import org.mifos.selfserviceapp.ui.fragments.LoanAccountSummaryFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
@@ -88,9 +87,6 @@ public class HomeActivity extends BaseActivity implements
                 break;
             case R.id.item_charges:
                 replaceFragment(ClientChargeFragment.newInstance(clientId), false,  R.id.container);
-                break;
-            case R.id.item_loan_summary:
-                replaceFragment(LoanAccountSummaryFragment.newInstance(29), false,  R.id.container);
                 break;
             case R.id.item_questionnaire:
                 break;

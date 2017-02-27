@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+import java.util.Locale;
+
 public class Summary implements Parcelable {
 
     @SerializedName("principalDisbursed")
@@ -43,6 +46,29 @@ public class Summary implements Parcelable {
     @SerializedName("totalOutstanding")
     private double totalOutstanding;
 
+    @SerializedName("overdueSinceDate")
+    private List<Integer> overdueSinceDate = null;
+
+    @SerializedName("currency")
+    private Currency currency;
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public String getOverdueSinceDate() {
+
+        return String.format(Locale.ENGLISH , "%02d/%02d/%d" ,
+                overdueSinceDate.get(2) , overdueSinceDate.get(1) , overdueSinceDate.get(0));
+    }
+
+    public void setOverdueSinceDate(List<Integer> overdueSinceDate) {
+        this.overdueSinceDate = overdueSinceDate;
+    }
     public double getTotalOutstanding() {
         return totalOutstanding;
     }
