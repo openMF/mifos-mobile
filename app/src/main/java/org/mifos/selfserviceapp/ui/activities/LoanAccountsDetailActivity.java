@@ -1,6 +1,9 @@
 package org.mifos.selfserviceapp.ui.activities;
-
-import android.app.ProgressDialog;
+/*
+~This project is licensed under the open source MPL V2.
+~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+*/
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Vishwajeet
@@ -27,46 +31,29 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
 
     @Inject
     LoanAccountsDetailPresenter mLoanAccountDetailsPresenter;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_clientName)
-    TextView tvClientName;
-    @BindView(R.id.tv_client_name)
-    TextView tvClientNameValue;
-    @BindView(R.id.tv_accountNumber)
-    TextView tvAccountNumber;
+
+    @BindView(R.id.tv_outstanding_balance)
+    TextView tvOutstandingBalanceName;
+
+    @BindView(R.id.tv_next_installment)
+    TextView tvNextInstallmentName;
+
+    @BindView(R.id.tv_due_date)
+    TextView tvDueDateName;
+
     @BindView(R.id.tv_account_number)
-    TextView tvAccountNumberValue;
-    @BindView(R.id.tv_principal)
-    TextView tvPrincipal;
-    @BindView(R.id.tv_principal_value)
-    TextView tvPrincipalValue;
-    @BindView(R.id.tv_loanProductName)
-    TextView tvLoanProductName;
-    @BindView(R.id.tv_loan_product_name)
-    TextView tvLoanProductNameValue;
-    @BindView(R.id.tv_principalDisbursed)
-    TextView tvPrincipalDisbursed;
-    @BindView(R.id.tv_principal_disbursed)
-    TextView tvPrincipalDisbursedValue;
-    @BindView(R.id.tv_annualInterestRate)
-    TextView tvAnnualInterestRate;
-    @BindView(R.id.tv_annual_interest_rate)
-    TextView tvAnnualInterestRateValue;
-    @BindView(R.id.tv_interestCharged)
-    TextView tvInterestCharged;
-    @BindView(R.id.tv_interest_charged)
-    TextView tvInterestChargedValue;
-    @BindView(R.id.tv_interestPaid)
-    TextView tvInterestPaid;
-    @BindView(R.id.tv_interest_paid)
-    TextView tvInterestPaidValue;
-    @BindView(R.id.tv_loanProductDescription)
-    TextView tvLoanProductDescription;
-    @BindView(R.id.tv_loan_product_description)
-    TextView tvLoanProductDescriptionValue;
+    TextView tvAccountNumberName;
+
+    @BindView(R.id.tv_loan_type)
+    TextView tvLoanTypeName;
+
+    @BindView(R.id.tv_currency)
+    TextView tvCurrencyName;
+
     private long loanId;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,17 +78,39 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
 
     @Override
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
-        tvAccountNumberValue.setText(String.valueOf(loanAccount.getAccountNo()));
-        tvLoanProductNameValue.setText(loanAccount.getLoanProductName());
-        tvLoanProductDescriptionValue.setText(loanAccount.getLoanProductDescription());
-        tvAnnualInterestRateValue.setText(String.valueOf(loanAccount.getAnnualInterestRate()));
-        tvClientNameValue.setText(loanAccount.getClientName());
-        tvPrincipalValue.setText(String.valueOf(loanAccount.getPrincipal()));
-        tvPrincipalDisbursedValue.setText(
-                String.valueOf(loanAccount.getSummary().getPrincipalDisbursed()));
-        tvInterestChargedValue.setText(
-                String.valueOf(loanAccount.getSummary().getInterestCharged()));
-        tvInterestPaidValue.setText(String.valueOf(loanAccount.getSummary().getInterestPaid()));
+        //TODO: Calculate nextInstallment value
+        tvOutstandingBalanceName.setText(getResources().getString(R.string.outstanding_balance_str,
+                    loanAccount.getSummary().getCurrency().getDisplaySymbol(),
+                    String.valueOf(loanAccount.getSummary().getTotalOutstanding())));
+        tvNextInstallmentName.setText(String.valueOf(
+                    loanAccount.getSummary().getTotalOutstanding()));
+        tvDueDateName.setText(loanAccount.getSummary().getOverdueSinceDate());
+        tvAccountNumberName.setText(loanAccount.getAccountNo());
+        tvLoanTypeName.setText(loanAccount.getLoanType().getValue());
+        tvCurrencyName.setText(loanAccount.getSummary().getCurrency().getCode());
+    }
+
+    @OnClick(R.id.btn_make_payment)
+    public void onMakePaymentClicked() {
+        Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.btn_loan_summary)
+    public void onLoanSummaryClicked() {
+        Intent loanAccountIntent = new Intent(getApplicationContext(),
+                LoanAccountContainerActivity.class);
+        loanAccountIntent.putExtra(Constants.LOAN_ID , loanId);
+        startActivity(loanAccountIntent);
+    }
+
+    @OnClick(R.id.btn_repayment_schedule)
+    public void onRepaymentScheduleClicked() {
+        Toast.makeText(getApplicationContext(), "clicked" , Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.btn_transactions)
+    public void onTransactionsClicked() {
+        Toast.makeText(getApplicationContext(), "clicked" , Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -111,19 +120,12 @@ public class LoanAccountsDetailActivity extends BaseActivity implements LoanAcco
 
     @Override
     public void showProgress() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.setMessage(getResources().getText(R.string.progress_message_loading));
-        progressDialog.show();
+        showProgressDialog(getResources().getString(R.string.progress_message_loading));
     }
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+        hideProgressDialog();
     }
 
     @Override
