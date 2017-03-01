@@ -72,16 +72,12 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
-            case R.id.item_funds_transfer:
-                break;
             case R.id.item_recent_transactions:
                 replaceFragment(RecentTransactionsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
             case R.id.item_charges:
                 replaceFragment(ClientChargeFragment.newInstance(clientId), false,  R.id.container);
-                break;
-            case R.id.item_questionnaire:
                 break;
             case R.id.item_about_us:
                 break;
