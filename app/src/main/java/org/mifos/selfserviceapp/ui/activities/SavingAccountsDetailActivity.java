@@ -2,7 +2,6 @@ package org.mifos.selfserviceapp.ui.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -54,8 +53,6 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
     TextView tvTotalDeposits;
     @BindView(R.id.tv_total_deposits)
     TextView tvTotalDepositsValue;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     private long accountId;
     private ProgressDialog progressDialog;
 
@@ -67,11 +64,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
         setContentView(R.layout.activity_saving_account_details);
         ButterKnife.bind(this);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setTitle(getString(R.string.saving_account_details));
-        }
-
+        setToolbarTitle(getString(R.string.saving_account_details));
         mSavingAccountsDetailPresenter.attachView(this);
 
         accountId = getIntent().getExtras().getLong(Constants.ACCOUNT_ID);

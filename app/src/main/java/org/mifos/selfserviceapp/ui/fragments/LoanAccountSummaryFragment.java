@@ -6,11 +6,10 @@ package org.mifos.selfserviceapp.ui.fragments;
 */
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +17,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.Toaster;
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by dilpreet on 25/2/17.
  */
 
-public class LoanAccountSummaryFragment extends Fragment implements LoanAccountsDetailView {
+public class LoanAccountSummaryFragment extends BaseFragment implements LoanAccountsDetailView {
 
     @BindView(R.id.tv_loan_product_name)
     TextView tvLoanProductName;
@@ -66,8 +66,14 @@ public class LoanAccountSummaryFragment extends Fragment implements LoanAccounts
     @BindView(R.id.tv_outstanding_balance)
     TextView tvOutstandingBalanceName;
 
-    @BindView(R.id.progress_loan_summary)
-    ProgressBar progressBar;
+    @BindView(R.id.ll_error)
+    View layoutError;
+
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
+
+    @BindView(R.id.ll_loan_summary)
+    LinearLayout llLoanSummary;
 
     @Inject
     LoanAccountsDetailPresenter loanAccountsDetailPresenter;
@@ -97,6 +103,7 @@ public class LoanAccountSummaryFragment extends Fragment implements LoanAccounts
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_account_summary, container, false);
+        setToolbarTitle(getString(R.string.loan_account_details));
 
         ButterKnife.bind(this, rootView);
         loanAccountsDetailPresenter.attachView(this);
@@ -108,6 +115,7 @@ public class LoanAccountSummaryFragment extends Fragment implements LoanAccounts
 
     @Override
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
+        llLoanSummary.setVisibility(View.VISIBLE);
         tvLoanProductName.setText(loanAccount.getLoanProductName());
         tvPrincipalName.setText(String.valueOf(loanAccount.getPrincipal()));
         tvInterestChargedName.setText(String.
@@ -129,21 +137,24 @@ public class LoanAccountSummaryFragment extends Fragment implements LoanAccounts
     @Override
     public void showErrorFetchingLoanAccountsDetail(String message) {
         Toaster.show(rootView, message, Toast.LENGTH_SHORT);
+        layoutError.setVisibility(View.VISIBLE);
+        tvStatus.setText(message);
     }
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        showProgressBar();
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
+        hideProgressBar();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgressBar();
         loanAccountsDetailPresenter.detachView();
     }
 
