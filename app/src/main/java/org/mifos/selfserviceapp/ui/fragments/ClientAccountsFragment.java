@@ -71,11 +71,11 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
 
         viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SAVINGS_ACCOUNTS),
-                getString(R.string.saving_accounts));
+                getString(R.string.savings));
         viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.LOAN_ACCOUNTS),
-                getString(R.string.loan_accounts));
+                getString(R.string.loan));
         viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SHARE_ACCOUNTS),
-                getString(R.string.share_accounts));
+                getString(R.string.share));
 
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(viewPagerAdapter);

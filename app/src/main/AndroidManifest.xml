@@ -30,10 +30,7 @@
             android:label="@string/saving_account_details"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activities.LoanAccountsDetailActivity"
-            android:label="@string/loan_account_details"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.LoanAccountContainerActivity"></activity>
+            android:name=".ui.activities.LoanAccountContainerActivity" />
     </application>
 
 </manifest>
