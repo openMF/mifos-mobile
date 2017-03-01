@@ -11,12 +11,6 @@
             android:title="@string/accounts"/>
 
         <item
-            android:id="@+id/item_funds_transfer"
-            android:checked="false"
-            android:icon="@drawable/ic_attach_money_black_24dp"
-            android:title="@string/funds_transfer"/>
-
-        <item
             android:id="@+id/item_recent_transactions"
             android:checked="false"
             android:icon="@drawable/ic_compare_arrows_black_24dp"
@@ -32,12 +26,6 @@
 
     <group android:id="@+id/group2"
            android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/item_questionnaire"
-            android:checked="false"
-            android:icon="@drawable/ic_question_answer_black_24dp"
-            android:title="@string/questionnaire"/>
 
         <item
             android:id="@+id/item_about_us"
