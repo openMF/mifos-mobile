@@ -29,6 +29,10 @@ public class BaseFragment extends Fragment {
             callback.hideProgressDialog();
     }
 
+    protected void setToolbarTitle(String title) {
+        callback.setToolbarTitle(title);
+    }
+
     protected void showProgressBar() {
         progressBarHandler.show();
     }

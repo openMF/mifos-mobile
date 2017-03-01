@@ -114,6 +114,17 @@ public class LoanAccount implements Parcelable {
     @SerializedName("summary")
     private Summary summary;
 
+    @SerializedName("timeline")
+    Timeline timeline;
+
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(Timeline timeline) {
+        this.timeline = timeline;
+    }
+
     public String getLoanProductName() {
         return loanProductName;
     }

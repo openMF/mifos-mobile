@@ -19,8 +19,8 @@ import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.presenters.AccountsPresenter;
+import org.mifos.selfserviceapp.ui.activities.LoanAccountContainerActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
-import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
@@ -216,7 +216,7 @@ public class AccountsFragment extends BaseFragment implements
                 intent.putExtra(Constants.ACCOUNT_ID, savingAccounts.get(position).getId());
                 break;
             case Constants.LOAN_ACCOUNTS:
-                intent = new Intent(getActivity(), LoanAccountsDetailActivity.class);
+                intent = new Intent(getActivity(), LoanAccountContainerActivity.class);
                 intent.putExtra(Constants.LOAN_ID, loanAccounts.get(position).getId());
                 break;
         }

@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
-import org.mifos.selfserviceapp.ui.fragments.LoanAccountSummaryFragment;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
 public class LoanAccountContainerActivity extends BaseActivity {
@@ -22,6 +22,7 @@ public class LoanAccountContainerActivity extends BaseActivity {
 
         loanId = getIntent().getExtras().getLong(Constants.LOAN_ID);
 
-        replaceFragment(LoanAccountSummaryFragment.newInstance(loanId), false, R.id.container);
+        replaceFragment(LoanAccountsDetailFragment.newInstance(loanId), false, R.id.container);
+        showBackButton();
     }
 }

@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -31,9 +30,6 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
@@ -54,10 +50,7 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setTitle(getString(R.string.accounts));
-        }
+        setToolbarTitle(getString(R.string.accounts));
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
         replaceFragment(ClientAccountsFragment.newInstance(clientId), false,  R.id.container);

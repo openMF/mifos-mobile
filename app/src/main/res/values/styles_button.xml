@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+  -->
+
+<resources>
+
+    <style name="Button" parent="AppTheme.Button" />
+
+    <style name="Button.Base">
+        <item name="android:textSize">17sp</item>>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Button.Base.Weight">
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+
+    <style name="Button.Login" parent="Button.Base">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:text">@string/login</item>
+    </style>
+</resources>
