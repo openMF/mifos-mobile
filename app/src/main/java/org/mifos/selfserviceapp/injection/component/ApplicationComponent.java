@@ -5,9 +5,10 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
+import org.mifos.selfserviceapp.api.local.DatabaseHelper;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.injection.module.ApplicationModule;
-import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 
 import javax.inject.Singleton;
 
@@ -28,5 +29,6 @@ public interface ApplicationComponent {
     DataManager dataManager();
     PreferencesHelper prefManager();
     BaseApiManager baseApiManager();
+    DatabaseHelper databaseHelper();
 
 }

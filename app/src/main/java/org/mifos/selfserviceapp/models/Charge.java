@@ -1,5 +1,13 @@
 package org.mifos.selfserviceapp.models;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import org.mifos.selfserviceapp.api.local.SelfServiceDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,28 +15,46 @@ import java.util.List;
  * @author Vishwajeet
  * @since 16/8/16.
  */
-public class Charge {
+@Table(database = SelfServiceDatabase.class)
+@ModelContainer
+public class Charge extends BaseModel {
 
-    private int id;
-    private int clientId;
-    private int chargeId;
-    private String name;
+    @PrimaryKey
+    Integer id;
 
-    private List<Long> dueDate = new ArrayList<>();
-    private ChargeTimeType chargeTimeType;
-    private ChargeCalculationType chargeCalculationType;
-    private Currency currency;
+    Integer clientId;
+    Integer chargeId;
 
-    private double amount = 0.0;
-    private double amountPaid = 0.0;
-    private double amountWaived = 0.0;
-    private double amountWrittenOff = 0.0;
-    private double amountOutstanding = 0.0;
+    @Column
+    String name;
 
-    private boolean penalty = false;
-    private boolean isActive = false;
-    private boolean isPaid = false;
-    private boolean isWaived = false;
+    List<Long> dueDate = new ArrayList<>();
+    ChargeTimeType chargeTimeType;
+    ChargeCalculationType chargeCalculationType;
+    Currency currency;
+
+    @Column
+    Double amount = 0.0;
+
+    @Column
+    Double amountPaid = 0.0;
+
+    @Column
+    Double amountWaived = 0.0;
+
+    @Column
+    Double amountWrittenOff = 0.0;
+
+    @Column
+    Double amountOutstanding = 0.0;
+
+    Boolean penalty = false;
+
+    @Column
+    Boolean isActive = false;
+
+    Boolean isPaid = false;
+    Boolean isWaived = false;
 
     public int getId() {
         return id;
