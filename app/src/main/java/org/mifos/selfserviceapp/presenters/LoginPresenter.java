@@ -77,6 +77,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         checkViewAttached();
         getMvpView().showProgress();
         if (isCredentialsValid(username, password)) {
+            getMvpView().showProgress();
             subscriptions.add(dataManager.login(username, password)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -117,6 +118,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         }
                     })
             );
+        } else {
+            getMvpView().hideProgress();
         }
     }
 
@@ -166,19 +169,17 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             showEmptyInputError(context.getString(R.string.username));
             return false;
         } else if (username.length() < 5) {
-            showMinimumInputLengthNotAchievedError(username,
+            showMinimumInputLengthNotAchievedError("Username",
                     resources.getInteger(R.integer.username_minimum_length));
             return false;
         } else if (username.contains(" ")) {
-            getMvpView().showMessage(context.getString(
-                    R.string.error_validation_cannot_contain_spaces,
-                    username, context.getString(R.string.not_contain_username)));
+            getMvpView().showMessage("Username cannot contain white spaces");
             return false;
         } else if (password == null || password.trim().isEmpty()) {
-            showEmptyInputError(context.getString(R.string.password));
+            showEmptyInputError("Password cannot be empty");
             return false;
         } else if (password.length() < 6) {
-            showMinimumInputLengthNotAchievedError(resources.getString(R.string.password),
+            showMinimumInputLengthNotAchievedError("Password",
                     resources.getInteger(R.integer.password_minimum_length));
             return false;
         }
