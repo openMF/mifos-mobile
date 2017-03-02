@@ -14,6 +14,7 @@ import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
@@ -80,6 +81,9 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(ClientChargeFragment.newInstance(clientId), false,  R.id.container);
                 break;
             case R.id.item_about_us:
+                break;
+            case R.id.item_help:
+                replaceFragment(HelpFragment.getInstance(), false, R.id.container);
                 break;
         }
 
