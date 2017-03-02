@@ -5,7 +5,8 @@ import android.content.Context;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ActivityContext;
-import org.mifos.selfserviceapp.models.ChargeListResponse;
+import org.mifos.selfserviceapp.models.Charge;
+import org.mifos.selfserviceapp.models.Page;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 
@@ -59,7 +60,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
         subscription.add(dataManager.getClientCharges(clientId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ChargeListResponse>() {
+                .subscribe(new Subscriber<Page<Charge>>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -72,11 +73,35 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     }
 
                     @Override
-                    public void onNext(ChargeListResponse chargeListResponse) {
+                    public void onNext(Page<Charge> chargePage) {
                         getMvpView().hideProgress();
-                        if (chargeListResponse != null) {
-                            getMvpView().showClientCharges(chargeListResponse.getPageItems());
+                        if (chargePage != null) {
+                            getMvpView().showClientCharges(chargePage.getPageItems());
                         }
+                    }
+                })
+        );
+    }
+
+    public void loadClientLocalCharges() {
+        checkViewAttached();
+        subscription.add(dataManager.getClientLocalCharges()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<Page<Charge>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().showErrorFetchingClientCharges(
+                                context.getString(R.string.error_client_charge_loading));
+                    }
+
+                    @Override
+                    public void onNext(Page<Charge> chargePage) {
+                        getMvpView().showClientCharges(chargePage.getPageItems());
                     }
                 })
         );
