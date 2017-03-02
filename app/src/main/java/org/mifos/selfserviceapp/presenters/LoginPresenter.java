@@ -163,22 +163,25 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         final Resources resources = context.getResources();
 
         if (username == null || username.trim().isEmpty()) {
-            showEmptyInputError(context.getString(R.string.username));
+            getMvpView().hideProgress();
+            showEmptyInputError("Username cannot be empty");
             return false;
         } else if (username.length() < 5) {
-            showMinimumInputLengthNotAchievedError(username,
+            getMvpView().hideProgress();
+            showMinimumInputLengthNotAchievedError("Username",
                     resources.getInteger(R.integer.username_minimum_length));
             return false;
         } else if (username.contains(" ")) {
-            getMvpView().showMessage(context.getString(
-                    R.string.error_validation_cannot_contain_spaces,
-                    username, context.getString(R.string.not_contain_username)));
+            getMvpView().hideProgress();
+            getMvpView().showMessage("Username cannot contain spaces");
             return false;
         } else if (password == null || password.trim().isEmpty()) {
-            showEmptyInputError(context.getString(R.string.password));
+            getMvpView().hideProgress();
+            showEmptyInputError("Password cannot be empty");
             return false;
         } else if (password.length() < 6) {
-            showMinimumInputLengthNotAchievedError(resources.getString(R.string.password),
+            getMvpView().hideProgress();
+            showMinimumInputLengthNotAchievedError("Password",
                     resources.getInteger(R.integer.password_minimum_length));
             return false;
         }
