@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.mifos.selfserviceapp">
+          package="org.mifos.selfserviceapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".MifosSelfServiceApp"
@@ -16,21 +16,34 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.HomeActivity"
             android:label="@string/accounts"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.SavingAccountsDetailActivity"
             android:label="@string/saving_account_details"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activities.LoanAccountContainerActivity" />
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.LoanAccountContainerActivity"/>
+
+        <receiver android:name=".ui.widgets.ChargeAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/charge_app_widget_info"/>
+        </receiver>
+
+        <service android:name=".ui.widgets.ChargeWidgetService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>
