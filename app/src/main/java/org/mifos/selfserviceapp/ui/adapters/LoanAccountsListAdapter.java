@@ -1,7 +1,6 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
-import org.mifos.selfserviceapp.utils.Utils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.utils.CircularImageView;
+import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,32 +51,23 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             LoanAccount loanAccount = getItem(position);
             ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo());
             ((ViewHolder) holder).tv_loanAccountProductName.setText(loanAccount.getProductName());
-            if (loanAccount.getStatus().getPendingApproval()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_yellow, context));
-            } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.orange_dark, context));
-            } else if (loanAccount.getStatus().getActive()) {
+
+            if (loanAccount.getStatus().getActive()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.deposit_green, context));
-            } else if (loanAccount.getStatus().getClosedObligationsMet()) {
+            } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.blue, context));
-            } else if (loanAccount.getStatus().getClosedWrittenOff()) {
+            } else if (loanAccount.getStatus().getPendingApproval()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.green_dark, context));
-            } else if (loanAccount.getStatus().getClosedRescheduled()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.green_light, context));
-            } else if (loanAccount.getStatus().getClosed()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.black, context));
-            } else if (loanAccount.getStatus().getOverpaid()) {
+                        Utils.setCircularBackground(R.color.light_yellow, context));
+            } else if (loanAccount.getStatus().getActive() && loanAccount.getInArrears()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.red, context));
+            } else {
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.black, context));
             }
-
         }
 
     }

@@ -54,7 +54,7 @@
             android:lines="1"
             android:layout_marginLeft="30dp"
             android:layout_alignParentLeft="true"
-            android:text="Due Date: "
+            android:text="@string/due_date_in_charges"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
@@ -87,7 +87,7 @@
             android:lines="1"
             android:layout_marginLeft="30dp"
             android:layout_alignParentLeft="true"
-            android:text="Amount Due: "
+            android:text="@string/amount_due"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
@@ -120,7 +120,7 @@
             android:lines="1"
             android:layout_marginLeft="30dp"
             android:layout_alignParentLeft="true"
-            android:text="Amount Paid: "
+            android:text="@string/amount_paid"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
@@ -153,7 +153,7 @@
             android:lines="1"
             android:layout_marginLeft="30dp"
             android:layout_alignParentLeft="true"
-            android:text="Amount Waved: "
+            android:text="@string/amount_waived"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
@@ -186,7 +186,7 @@
             android:lines="1"
             android:layout_marginLeft="30dp"
             android:layout_alignParentLeft="true"
-            android:text="Amount Outstanding: "
+            android:text="@string/amount_outstanding"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 

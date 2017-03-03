@@ -3,7 +3,7 @@ package org.mifos.selfserviceapp.injection.component;
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
-import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.fragments.AccountsFragment;
@@ -35,7 +35,7 @@ public interface ActivityComponent {
 
     void inject(SavingAccountsDetailActivity savingAccountsDetailActivity);
 
-    void inject(LoanAccountsDetailActivity loanAccountsDetailActivity);
+    void inject(LoanAccountsDetailFragment loanAccountsDetailActivity);
 
     void inject(AccountsFragment accountsFragment);
 

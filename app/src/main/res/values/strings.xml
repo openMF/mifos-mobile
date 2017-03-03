@@ -3,7 +3,7 @@
     <string name="login">Login</string>
     <string name="toast_welcome">Welcome %1$s</string>
     <string name="unable_to_connect">Not connected to internet</string>
-    <string name="basic">Basic </string>
+    <string name="basic">Basic</string>
     <string name="username">Username</string>
     <string name="progress_message_login">Logging In</string>
     <string name="progress_message_loading">Loading</string>
@@ -29,9 +29,9 @@
     <string name="small_text">Small Text</string>
     <string name="client_accounts">Client Accounts</string>
     <string name="splash">Splash</string>
-    <string name="saving_accounts">Saving Accounts</string>
-    <string name="loan_accounts">Loan Accounts</string>
-    <string name="share_accounts">Share Accounts</string>
+    <string name="savings">Saving</string>
+    <string name="loan">Loan</string>
+    <string name="share">Share</string>
     <string name="clients_list">Chose a client</string>
     <string name="working">Working</string>
     <string name="status_image">Status Image</string>
@@ -52,7 +52,8 @@
     <string name="error_client_loading">Error loading client list</string>
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
     <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
-    <string name="error_saving_account_details_loading">Error loading in saving accounts detail</string>
+    <string name="error_saving_account_details_loading">Error loading in saving accounts detail
+    </string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
     <string name="error_client_charge_loading">Error loading in client charges</string>
     <string name="error_client_not_found">Client Not Found</string>
@@ -88,5 +89,24 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="next_installement">Next Installment</string>
+    <string name="due_date">Due Date</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="loan_type">Loan Type</string>
+    <string name="currency">Currency</string>
+    <string name="repayment_schedule">Repayment Schedule</string>
+    <string name="transactions">Transactions</string>
+    <string name="outstanding_balance_str">%1$s %2$s</string>
+    <string name="approval_pending">Approval Pending</string>
+    <string name="waiting_for_disburse">Waiting for Disburse</string>
+    <string name="closed_because_of_obligation">Closed because of some Obligations</string>
+    <string name="loan_closed">Loan Closed</string>
+    <string name="due_date_in_charges">Due Date:</string>
+    <string name="amount_due">Amount Due:</string>
+    <string name="amount_paid">Amount Paid:</string>
+    <string name="amount_waived">Amount Waved:</string>
+    <string name="amount_outstanding">Amount Outstanding:</string>
+    <string name="appwidget_text">EXAMPLE</string>
+  <string name="add_widget">Add widget</string>
 
 </resources>

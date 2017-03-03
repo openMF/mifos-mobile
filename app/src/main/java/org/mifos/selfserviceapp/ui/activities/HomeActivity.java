@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,7 +14,6 @@ import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
-import org.mifos.selfserviceapp.ui.fragments.LoanAccountSummaryFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
@@ -31,9 +29,6 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener {
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -55,10 +50,7 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setTitle(getString(R.string.accounts));
-        }
+        setToolbarTitle(getString(R.string.accounts));
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
         replaceFragment(ClientAccountsFragment.newInstance(clientId), false,  R.id.container);
@@ -80,19 +72,12 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
-            case R.id.item_funds_transfer:
-                break;
             case R.id.item_recent_transactions:
                 replaceFragment(RecentTransactionsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
             case R.id.item_charges:
                 replaceFragment(ClientChargeFragment.newInstance(clientId), false,  R.id.container);
-                break;
-            case R.id.item_loan_summary:
-                replaceFragment(LoanAccountSummaryFragment.newInstance(29), false,  R.id.container);
-                break;
-            case R.id.item_questionnaire:
                 break;
             case R.id.item_about_us:
                 break;

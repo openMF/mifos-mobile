@@ -3,6 +3,9 @@ package org.mifos.selfserviceapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
+
 import org.mifos.selfserviceapp.injection.component.ApplicationComponent;
 import org.mifos.selfserviceapp.injection.component.DaggerApplicationComponent;
 import org.mifos.selfserviceapp.injection.module.ApplicationModule;
@@ -29,12 +32,15 @@ public class MifosSelfServiceApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
+        FlowManager.init(new FlowConfig.Builder(this).build());
     }
 
     public ApplicationComponent component() {
+        if (applicationComponent == null) {
+            applicationComponent = DaggerApplicationComponent.builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .build();
+        }
         return applicationComponent;
     }
 
