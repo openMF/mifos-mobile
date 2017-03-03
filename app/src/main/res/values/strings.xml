@@ -85,6 +85,10 @@
     <string name="penalties_waived">Penalties Waived</string>
     <string name="fees_waived">Fee Waived</string>
     <string name="outstanding_balance">Outstanding Balance</string>
+    <string name="title_activity_savings_account_summery_transfers">SavingsAccountSummeryTransfers
+    </string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
     <string name="next_installement">Next Installment</string>
     <string name="due_date">Due Date</string>
     <string name="make_payment">Make Payment</string>
@@ -103,6 +107,6 @@
     <string name="amount_waived">Amount Waved:</string>
     <string name="amount_outstanding">Amount Outstanding:</string>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+  <string name="add_widget">Add widget</string>
 
 </resources>

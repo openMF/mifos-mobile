@@ -24,10 +24,21 @@
         <activity
             android:name=".ui.activities.HomeActivity"
             android:label="@string/accounts"
-            android:screenOrientation="portrait"/>
+
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.SavingAccountsDetailActivity"
             android:label="@string/saving_account_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.LoanAccountsDetailActivity"
+            android:label="@string/loan_account_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.SavingsAccountSummeryTransfers"
+            android:label="@string/title_activity_savings_account_summery_transfers"
+            android:theme="@style/MaterialAppTheme"></activity>
+
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.LoanAccountContainerActivity"/>
 
