@@ -75,8 +75,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void login(final String username, final String password) {
         checkViewAttached();
-        getMvpView().showProgress();
+        
         if (isCredentialsValid(username, password)) {
+            getMvpView().showProgress();
             subscriptions.add(dataManager.login(username, password)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
