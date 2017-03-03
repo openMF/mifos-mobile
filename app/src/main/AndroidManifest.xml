@@ -45,10 +45,6 @@
             android:name=".ui.widgets.ChargeWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <activity
-            android:name=".ui.activities.SavingsAccountSummeryTransfers"
-            android:label="@string/title_activity_savings_account_summery_transfers"
-            android:theme="@style/MaterialAppTheme"></activity>
     </application>
 
 </manifest>
