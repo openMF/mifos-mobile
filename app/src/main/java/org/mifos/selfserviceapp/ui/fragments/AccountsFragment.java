@@ -220,11 +220,25 @@ public class AccountsFragment extends BaseFragment implements
                 intent.putExtra(Constants.LOAN_ID, loanAccounts.get(position).getId());
                 break;
         }
-        startActivity(intent);
+        openActivity(intent);
     }
 
     @Override
     public void onItemLongPress(View childView, int position) {
 
+    }
+
+    /**
+     * This function opens up an activity only if the intent
+     * is not null.
+     *
+     * This will prevent the application from crashing if the
+     * intent is null.
+     * @param intent
+     */
+    private void openActivity(Intent intent) {
+        if (intent != null) {
+            startActivity(intent);
+        }
     }
 }
