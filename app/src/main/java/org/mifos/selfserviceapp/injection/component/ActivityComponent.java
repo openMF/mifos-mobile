@@ -11,6 +11,7 @@ import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountSummaryFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingsAccountFragment;
 
 import dagger.Component;
 
@@ -39,5 +40,7 @@ public interface ActivityComponent {
     void inject(AccountsFragment accountsFragment);
 
     void inject(LoanAccountSummaryFragment loanAccountSummaryFragment);
+
+    void inject(SavingsAccountFragment savingsAccountFragment);
 
 }
