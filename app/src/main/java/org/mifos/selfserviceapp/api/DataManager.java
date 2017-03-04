@@ -77,6 +77,12 @@ public class DataManager {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsDetail(loanId);
     }
 
+    public Observable<LoanAccount> getLoanAccountTransactionDetails(long loanId,
+                                                                    String associations) {
+        return baseApiManager.getLoanAccountsListApi().
+                getLoanAccountsTransactionDetails(loanId, associations);
+    }
+
     public PreferencesHelper getPreferencesHelper() {
         return preferencesHelper;
     }
