@@ -40,4 +40,6 @@ public interface ActivityComponent {
 
     void inject(LoanAccountSummaryFragment loanAccountSummaryFragment);
 
+
+
 }
