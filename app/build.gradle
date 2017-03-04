@@ -3,6 +3,7 @@ apply from: '../config/quality/quality.gradle'
 apply plugin: 'android-apt'
 apply plugin: 'com.neenbedankt.android-apt'
 
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -28,6 +29,7 @@ android {
         abortOnError false
         disable 'InvalidPackage'
     }
+    buildToolsVersion '25.0.0'
 }
 
 dependencies {

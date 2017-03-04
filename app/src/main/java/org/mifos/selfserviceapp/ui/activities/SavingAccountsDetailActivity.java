@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.media.RatingCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -92,7 +91,7 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
                 String.valueOf(savingAccount.getNominalAnnualInterestRate()));
         tvSavingAccountNumberValue.setText(String.valueOf(savingAccount.getAccountNo()));
         tvTotalDepositsValue.setText(String.valueOf(savingAccount.getTotalDeposits()));
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Saving Account of " + savingAccount.getAccountNo());
 
     }
@@ -124,12 +123,12 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
         super.onDestroy();
         mSavingAccountsDetailPresenter.detachView();
     }
-    public void dial(View view){
+    public void dial(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:8000000000"));
         startActivity(intent);
     }
-    public void transfer(View view){
-        Toast.makeText(this,"Clicked", Toast.LENGTH_SHORT).show();
+    public void transfer(View view) {
+        Toast.makeText(this , "Clicked" , Toast.LENGTH_SHORT).show();
     }
 }
