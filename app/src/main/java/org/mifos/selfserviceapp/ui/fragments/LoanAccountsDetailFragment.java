@@ -158,7 +158,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
     @OnClick(R.id.btn_transactions)
     public void onTransactionsClicked() {
-        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+        ((BaseActivity) getActivity()).replaceFragment(LoanAccountTransactionFragment
+                .newInstance(loanId), true, R.id.container);
     }
 
     @Override

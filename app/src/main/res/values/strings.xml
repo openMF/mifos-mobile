@@ -109,5 +109,5 @@
     <string name="mifos_location">Mifos Initiative , Seattle , Washington 98121</string>
     <string name="map_marker_heading">Sydney</string>
     <string name="map_marker_desc">The most populous city in Australia</string>
-
+    <string name="loan_transaction_details">Loan Account Details</string>
 </resources>
