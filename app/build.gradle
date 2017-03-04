@@ -44,6 +44,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
 
     //Square dependencies
     compile ('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {
