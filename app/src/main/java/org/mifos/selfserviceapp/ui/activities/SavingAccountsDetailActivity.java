@@ -1,9 +1,13 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
@@ -53,6 +57,8 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
     TextView tvTotalDeposits;
     @BindView(R.id.tv_total_deposits)
     TextView tvTotalDepositsValue;
+    @BindView(R.id.tv_acc_balance)
+    TextView Account_Balance;
     private long accountId;
     private ProgressDialog progressDialog;
 
@@ -79,10 +85,14 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
         tvMiniRequiredBalanceValue.setText(String.valueOf(savingAccount.getMinRequiredBalance()));
         tvSavingProductNameValue.setText(savingAccount.getSavingsProductName());
         tvAccountBalanceValue.setText(String.valueOf(savingAccount.getAccountBalance()));
+        Account_Balance.setText(String.valueOf(savingAccount.getAccountBalance()));
         tvNominalInterestRateValue.setText(
                 String.valueOf(savingAccount.getNominalAnnualInterestRate()));
         tvSavingAccountNumberValue.setText(String.valueOf(savingAccount.getAccountNo()));
         tvTotalDepositsValue.setText(String.valueOf(savingAccount.getTotalDeposits()));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Saving Account of " + savingAccount.getAccountNo());
+
     }
 
     @Override
@@ -111,5 +121,13 @@ public class SavingAccountsDetailActivity extends BaseActivity implements Saving
     protected void onDestroy() {
         super.onDestroy();
         mSavingAccountsDetailPresenter.detachView();
+    }
+    public void dial(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:8000000000"));
+        startActivity(intent);
+    }
+    public void transfer(View view) {
+        Toast.makeText(this , "Clicked" , Toast.LENGTH_SHORT).show();
     }
 }
