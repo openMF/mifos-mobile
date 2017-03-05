@@ -7,7 +7,8 @@ import org.mifos.selfserviceapp.models.Page;
 import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 
@@ -69,18 +70,20 @@ public class DataManager {
                 });
     }
 
-    public Observable<SavingAccount> getSavingAccountDetails(long accountId) {
-        return baseApiManager.getSavingAccountsListApi().getSavingAccountsDetail(accountId);
+    public Observable<SavingsWithAssociations> getSavingsWithAssociations(long accountId,
+            String associationType) {
+        return baseApiManager
+                .getSavingAccountsListApi().getSavingsWithAssociations(accountId, associationType);
     }
 
     public Observable<LoanAccount> getLoanAccountDetails(long loanId) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsDetail(loanId);
     }
 
-    public Observable<LoanAccount> getLoanAccountTransactionDetails(long loanId,
-                                                                    String associations) {
-        return baseApiManager.getLoanAccountsListApi().
-                getLoanAccountsTransactionDetails(loanId, associations);
+    public Observable<LoanWithAssociations> getLoanWithAssociations(String associationType,
+            long loanId) {
+        return baseApiManager.getLoanAccountsListApi()
+                .getLoanWithAssociations(loanId, associationType);
     }
 
     public PreferencesHelper getPreferencesHelper() {

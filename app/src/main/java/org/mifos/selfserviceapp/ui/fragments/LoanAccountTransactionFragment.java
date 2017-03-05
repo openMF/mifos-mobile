@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.presenters.LoanAccountsTransactionPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
@@ -60,7 +60,6 @@ public class LoanAccountTransactionFragment extends BaseFragment
 
     private long loanId;
     private View rootView;
-    private LinearLayoutManager layoutManager;
 
     public static LoanAccountTransactionFragment newInstance(long loanId) {
         LoanAccountTransactionFragment fragment = new LoanAccountTransactionFragment();
@@ -77,36 +76,45 @@ public class LoanAccountTransactionFragment extends BaseFragment
         if (getArguments() != null) {
             loanId = getArguments().getLong(Constants.LOAN_ID);
         }
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_loan_account_transactions, container, false);
-        setToolbarTitle(getString(R.string.loan_transaction_details));
+        setToolbarTitle(getString(R.string.transactions));
 
         ButterKnife.bind(this, rootView);
         loanAccountsTransactionPresenter.attachView(this);
 
-        layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        rvLoanTransactions.setLayoutManager(layoutManager);
-        rvLoanTransactions.setAdapter(transactionsListAdapter);
-
+        showUserInterface();
         loanAccountsTransactionPresenter.loadLoanAccountDetails(loanId);
 
         return rootView;
     }
 
     @Override
-    public void showLoanAccountsDetail(LoanAccount loanAccount) {
+    public void showUserInterface() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvLoanTransactions.setHasFixedSize(true);
+        rvLoanTransactions.setLayoutManager(layoutManager);
+        rvLoanTransactions.setAdapter(transactionsListAdapter);
+    }
+
+    @Override
+    public void showLoanTransactions(LoanWithAssociations loanWithAssociations) {
         llLoanAccountTrans.setVisibility(View.VISIBLE);
-        tvLoanProductName.setText(loanAccount.getLoanProductName());
-        transactionsListAdapter.setTransactions(loanAccount.getTransactions());
+        tvLoanProductName.setText(loanWithAssociations.getLoanProductName());
+        transactionsListAdapter.setTransactions(loanWithAssociations.getTransactions());
+    }
+
+    @Override
+    public void showEmptyTransactions(LoanWithAssociations loanWithAssociations) {
+        layoutError.setVisibility(View.VISIBLE);
+        tvStatus.setText(R.string.empty_transactions);
     }
 
     @Override

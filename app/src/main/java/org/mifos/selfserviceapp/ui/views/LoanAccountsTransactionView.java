@@ -1,6 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**
@@ -9,7 +9,11 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 public interface LoanAccountsTransactionView extends MVPView {
 
-    void showLoanAccountsDetail(LoanAccount loanAccount);
+    void showUserInterface();
+
+    void showLoanTransactions(LoanWithAssociations loanWithAssociations);
+
+    void showEmptyTransactions(LoanWithAssociations loanWithAssociations);
 
     void showErrorFetchingLoanAccountsDetail(String message);
 }

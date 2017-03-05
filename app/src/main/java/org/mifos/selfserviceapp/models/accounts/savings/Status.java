@@ -34,6 +34,17 @@ public class Status implements Parcelable {
     @SerializedName("closed")
     Boolean closed;
 
+    @SerializedName("prematureClosed")
+    Boolean prematureClosed;
+
+    @SerializedName("transferInProgress")
+    Boolean transferInProgress;
+
+    @SerializedName("transferOnHold")
+    Boolean transferOnHold;
+
+    @SerializedName("matured")
+    Boolean matured;
 
     public Integer getId() {
         return id;
