@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/login_margin_bottom"
             android:layout_marginTop="@dimen/login_margin_top"
+            android:textColor="@color/white"
             android:padding="@dimen/login_padding_button"
             android:text="@string/login"/>
 
