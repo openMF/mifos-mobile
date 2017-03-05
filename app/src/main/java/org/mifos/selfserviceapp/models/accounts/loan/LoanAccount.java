@@ -5,10 +5,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.mifos.selfserviceapp.models.Transaction;
-
-import java.util.List;
-
 /**
  * @author Vishwajeet
  * @since 22/06/16.
@@ -121,16 +117,6 @@ public class LoanAccount implements Parcelable {
     @SerializedName("timeline")
     Timeline timeline;
 
-    @SerializedName("transactions")
-    private List<Transaction> transactions;
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
-    }
     public Timeline getTimeline() {
         return timeline;
     }

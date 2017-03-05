@@ -1,16 +1,13 @@
 package org.mifos.selfserviceapp.presenters;
-/*
-~This project is licensed under the open source MPL V2.
-~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
-*/
+
 import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
-import org.mifos.selfserviceapp.ui.views.LoanAccountsTransactionView;
+import org.mifos.selfserviceapp.ui.views.LoanRepaymentScheduleMvpView;
 import org.mifos.selfserviceapp.utils.Constants;
 
 import javax.inject.Inject;
@@ -21,24 +18,23 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by dilpreet on 4/3/17.
+ * Created by Rajan Maurya on 03/03/17.
  */
-
-public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccountsTransactionView> {
+public class LoanRepaymentSchedulePresenter extends BasePresenter<LoanRepaymentScheduleMvpView> {
 
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
 
     @Inject
-    public LoanAccountsTransactionPresenter(DataManager dataManager,
-                                            @ActivityContext Context context) {
+    public LoanRepaymentSchedulePresenter(@ApplicationContext Context context,
+            DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
     }
 
     @Override
-    public void attachView(LoanAccountsTransactionView mvpView) {
+    public void attachView(LoanRepaymentScheduleMvpView mvpView) {
         super.attachView(mvpView);
     }
 
@@ -48,10 +44,10 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
         subscriptions.unsubscribe();
     }
 
-    public void loadLoanAccountDetails(long loanId) {
+    public void loanLoanWithAssociations(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getLoanWithAssociations(Constants.TRANSACTIONS, loanId)
+        subscriptions.add(dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, loanId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<LoanWithAssociations>() {
@@ -62,21 +58,20 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showErrorFetchingLoanAccountsDetail(
-                                context.getString(R.string.error_loan_account_details_loading));
+                        getMvpView().showError(context
+                                .getString(R.string.error_fetching_repayment_schedule));
                     }
 
                     @Override
                     public void onNext(LoanWithAssociations loanWithAssociations) {
                         getMvpView().hideProgress();
-                        if (!loanWithAssociations.getTransactions().isEmpty()) {
-                            getMvpView().showLoanTransactions(loanWithAssociations);
+                        if (!loanWithAssociations.getRepaymentSchedule().getPeriods().isEmpty()) {
+                            getMvpView().showLoanRepaymentSchedule(loanWithAssociations);
                         } else {
-                            getMvpView().showEmptyTransactions(loanWithAssociations);
+                            getMvpView().showEmptyRepaymentsSchedule(loanWithAssociations);
                         }
                     }
                 })
         );
     }
-
 }

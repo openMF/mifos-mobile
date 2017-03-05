@@ -153,7 +153,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
     @OnClick(R.id.btn_repayment_schedule)
     public void onRepaymentScheduleClicked() {
-        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+        ((BaseActivity) getActivity()).replaceFragment(LoanRepaymentScheduleFragment
+                .newInstance(loanId), true, R.id.container);
     }
 
     @OnClick(R.id.btn_transactions)

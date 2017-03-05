@@ -2,6 +2,7 @@ package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -18,7 +19,8 @@ public interface LoanAccountsListService {
     Observable<LoanAccount> getLoanAccountsDetail(@Path("loanId") long loanId);
 
     @GET(ApiEndPoints.LOANS + "/{loanId}")
-    Observable<LoanAccount> getLoanAccountsTransactionDetails
-            (@Path("loanId") long loanId, @Query("associations") String associations);
+    Observable<LoanWithAssociations> getLoanWithAssociations(
+            @Path("loanId") long loanId,
+            @Query("associations") String associationType);
 
 }
