@@ -15,6 +15,8 @@ public class Constants {
 
     public static final String LOAN_ID = "loanId";
 
+    public static final String SAVINGS_ID = "savingsId";
+
     public static final String BASIC = "Basic ";
 
     public static final String BACK_SLASH = "/";
@@ -28,5 +30,9 @@ public class Constants {
     public static final String RECURRING_ACCOUNTS = "recurringdepositaccounts";
 
     public static final String ACCOUNT_TYPE = "accountType";
+
+    public static final String REPAYMENT_SCHEDULE = "repaymentSchedule";
+
+    public static final String TRANSACTIONS = "transactions";
 
 }

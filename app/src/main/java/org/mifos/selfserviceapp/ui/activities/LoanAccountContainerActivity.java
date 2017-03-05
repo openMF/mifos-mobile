@@ -18,7 +18,7 @@ public class LoanAccountContainerActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loan_account_container);
+        setContentView(R.layout.activity_container);
 
         loanId = getIntent().getExtras().getLong(Constants.LOAN_ID);
 

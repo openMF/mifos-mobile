@@ -35,13 +35,18 @@
     <string name="clients_list">Chose a client</string>
     <string name="working">Working</string>
     <string name="status_image">Status Image</string>
+    <string name="loan_repayment_schedule">Repayment Schedule</string>
+    <string name="last_transaction">Last Transaction </string>
+    <string name="made_on">Made on</string>
+    <string name="make_transfer">Make a Transfer</string>
 
     <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
     <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
     <string name="empty_transactions">Their is no transactions associated with you</string>
-
+    <string name="empty_repayment_schedule">Their is no repayment schedule associated with you</string>
     <string name="no_more_transactions_available">No more transactions available</string>
+    <string name="no_transaction">No Transaction</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
@@ -59,6 +64,7 @@
     <string name="error_client_not_found">Client Not Found</string>
     <string name="error_fetching_client">Failed to fetch Client</string>
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>
+    <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
 
     <string name="fetching_client">Fetching Client</string>
 
@@ -110,4 +116,12 @@
     <string name="map_marker_heading">Sydney</string>
     <string name="map_marker_desc">The most populous city in Australia</string>
     <string name="loan_transaction_details">Loan Account Details</string>
+
+    <!--Customer care details-->
+    <string name="need_help">need help? Contact your support line</string>
+    <string name="help_line_number">8000000000</string>
+
+    <!--Format Strings-->
+    <string name="double_and_String">%1$f%2$s</string>
+
 </resources>

@@ -5,9 +5,10 @@ import android.content.Context;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ActivityContext;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
+import org.mifos.selfserviceapp.utils.Constants;
 
 import javax.inject.Inject;
 
@@ -59,13 +60,13 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
      */
-    public void loadSavingAccountDetails(long accountId) {
+    public void loadSavingsWithAssociations(long accountId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getSavingAccountDetails(accountId)
+        subscriptions.add(dataManager.getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<SavingAccount>() {
+                .subscribe(new Subscriber<SavingsWithAssociations>() {
                     @Override
                     public void onCompleted() {
 
@@ -79,11 +80,9 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
                     }
 
                     @Override
-                    public void onNext(SavingAccount savingAccount) {
+                    public void onNext(SavingsWithAssociations savingAccount) {
                         getMvpView().hideProgress();
-                        if (savingAccount != null) {
-                            getMvpView().showSavingAccountsDetail(savingAccount);
-                        }
+                        getMvpView().showSavingAccountsDetail(savingAccount);
                     }
                 })
         );

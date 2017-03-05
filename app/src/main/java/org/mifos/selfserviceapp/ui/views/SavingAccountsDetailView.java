@@ -1,6 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**
@@ -12,10 +12,10 @@ public interface SavingAccountsDetailView extends MVPView {
      * Should be called when saving account object can successfully accessed
      * from the server to display saving account details on the screen.
      *
-     * @param savingAccount object containing details of each saving account,
+     * @param savingsWithAssociations object containing details of each saving account,
      *                      received from server.
      */
-    void showSavingAccountsDetail(SavingAccount savingAccount);
+    void showSavingAccountsDetail(SavingsWithAssociations savingsWithAssociations);
 
     /**
      * Should be called if there is any error from client side in getting
