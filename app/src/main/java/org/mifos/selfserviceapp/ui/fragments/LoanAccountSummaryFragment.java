@@ -4,11 +4,13 @@ package org.mifos.selfserviceapp.ui.fragments;
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,11 +71,27 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
     @BindView(R.id.ll_error)
     View layoutError;
 
+    @BindView(R.id.tv_account_status)
+    TextView tvAccountStatus;
+
     @BindView(R.id.tv_status)
     TextView tvStatus;
 
     @BindView(R.id.ll_loan_summary)
     LinearLayout llLoanSummary;
+
+    @BindView(R.id.ll_loan_purpose)
+    LinearLayout llLoanPurpose;
+
+    @BindView(R.id.tv_loan_account_number)
+    TextView tvLoanAccountNumber;
+
+    @BindView(R.id.tv_loan_purpose)
+    TextView tvLoanPurpose;
+
+    @BindView(R.id.iv_account_status)
+    ImageView ivAccountStatus;
+
 
     @Inject
     LoanAccountsDetailPresenter loanAccountsDetailPresenter;
@@ -89,6 +107,7 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
         loanAccountSummaryFragment.setArguments(args);
         return loanAccountSummaryFragment;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +122,7 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_account_summary, container, false);
-        setToolbarTitle(getString(R.string.loan_account_details));
+        setToolbarTitle(getString(R.string.loan_summary));
 
         ButterKnife.bind(this, rootView);
         loanAccountsDetailPresenter.attachView(this);
@@ -132,6 +151,20 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
         tvFeesWaivedName.setText(String.valueOf(loanAccount.getSummary().getFeeChargesWaived()));
         tvOutstandingBalanceName.setText(String.
                 valueOf(loanAccount.getSummary().getTotalOutstanding()));
+        tvLoanAccountNumber.setText(loanAccount.getAccountNo());
+        if (loanAccount.getLoanPurposeName() != null) {
+            llLoanPurpose.setVisibility(View.VISIBLE);
+            tvLoanPurpose.setText(loanAccount.getLoanPurposeName());
+        }
+        if (loanAccount.getStatus().getActive()) {
+            tvAccountStatus.setText(R.string.active_uc);
+            ivAccountStatus.setImageResource(R.drawable.ic_check_circle_green_24px
+            );
+        } else {
+            tvAccountStatus.setText(R.string.inactive_uc);
+            ivAccountStatus.setImageResource(R.drawable.ic_report_problem_red_24px);
+        }
+
     }
 
     @Override

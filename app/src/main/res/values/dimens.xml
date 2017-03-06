@@ -42,4 +42,7 @@
 
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_header_padding">8dp</dimen>
+
+    <dimen name="icon_small">15dp</dimen>
+
 </resources>

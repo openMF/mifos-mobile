@@ -108,11 +108,22 @@ public class LoanAccount implements Parcelable {
     @SerializedName("loanCycle")
     private Integer loanCycle;
 
+    public String getLoanPurposeName() {
+        return loanPurposeName;
+    }
+
+    public void setLoanPurposeName(String loanPurposeName) {
+        this.loanPurposeName = loanPurposeName;
+    }
+
     @SerializedName("inArrears")
     Boolean inArrears;
 
     @SerializedName("summary")
     private Summary summary;
+
+    @SerializedName("loanPurposeName")
+    private String loanPurposeName;
 
     @SerializedName("timeline")
     Timeline timeline;
@@ -231,6 +242,7 @@ public class LoanAccount implements Parcelable {
         dest.writeString(this.loanProductName);
         dest.writeString(this.clientName);
         dest.writeString(this.loanProductDescription);
+        dest.writeString(this.loanPurposeName);
         dest.writeDouble(this.principal);
         dest.writeDouble(this.annualInterestRate);
         dest.writeParcelable(this.summary, flags);
@@ -248,6 +260,7 @@ public class LoanAccount implements Parcelable {
         this.loanProductName = in.readString();
         this.clientName = in.readString();
         this.loanProductDescription = in.readString();
+        this.loanPurposeName = in.readString();
         this.principal = in.readDouble();
         this.annualInterestRate = in.readDouble();
         this.summary = in.readParcelable(Summary.class.getClassLoader());
