@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/acc_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/account_balance"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_acc_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_gravity="start"
+                    android:textSize="@dimen/text_medium"
+                    />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="@dimen/default_margin">
+
+                <TextView
+                    android:id="@+id/last_trans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/last_transaction"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_last_transaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_gravity="start"
+                    android:textSize="@dimen/text_medium"/>
+
+            </TableRow>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:layout_marginTop="@dimen/default_margin">
+
+                <TextView
+                    android:id="@+id/made_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/made_on"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_small"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_made_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_gravity="start"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_small" />
+
+            </LinearLayout>
+
+            <TableRow
+                android:layout_marginTop="@dimen/default_margin">
+                <android.support.v4.widget.Space
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/tv_make_a_transfer"
+                    style="@style/Button.Base"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginLeft="12dp"
+                    android:background="@color/primary"
+                    android:padding="10dp"
+                    android:text="@string/make_transfer"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@android:color/white"/>
+            </TableRow>
+        </TableLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/table_row_padding_top"
+            android:background="@color/white"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardElevation="@dimen/cardview_default_elevation"
+            app:cardUseCompatPadding="true">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/table_row_padding_top">
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/account_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/account_status"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                   <LinearLayout
+                       android:layout_height="match_parent"
+                       android:layout_width="match_parent"
+                       android:orientation="horizontal">
+
+                       <org.mifos.selfserviceapp.utils.CircularImageView
+                           android:id="@+id/iv_circle_status"
+                           android:layout_width="25dp"
+                           android:layout_height="25dp"
+                           android:layout_gravity="start"
+                           android:visibility="visible"
+                       />
+
+                       <TextView
+                           android:id="@+id/tv_account_status"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:visibility="visible"
+                           android:layout_gravity="start"
+                           android:textColor="@color/black"/>
+                   </LinearLayout>
+
+                </TableRow>
+                <TableRow
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_savingAccountNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/account_number"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_saving_account_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_nominalInterestRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/nominal_interest_rate"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_nominal_interest_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_accountBalance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/account_balance"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_account_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_totalDeposits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/total_deposits"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_total_deposits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/total_withdrawals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/total_withdrawal"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_total_withdrawals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_minRequiredBalance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/min_required_balance"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_min_req_bal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+            </TableLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/need_help"/>
+
+            <TextView
+                android:id="@+id/tv_help_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:text="@string/help_line_number"
+                android:textColor="@color/blue"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/ll_error"
+        layout="@layout/layout_error"
+        android:visibility="gone"/>
+
+</RelativeLayout>
