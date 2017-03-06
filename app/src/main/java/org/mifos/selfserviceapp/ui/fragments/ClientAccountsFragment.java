@@ -1,13 +1,19 @@
 package org.mifos.selfserviceapp.ui.fragments;
+/*
+~This project is licensed under the open source MPL V2.
+~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+*/
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
@@ -49,7 +55,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setHasOptionsMenu(true);
     }
 
@@ -57,8 +62,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client_accounts, container, false);
+        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, view);
         accountsPresenter.attachView(this);
+        setToolbarTitle(getString(R.string.accounts));
 
         setUpViewPagerAndTabLayout();
 
@@ -80,6 +87,21 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
+                getActivity().invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     private String getFragmentTag(int position) {
@@ -89,7 +111,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     @Override
     public void showShareAccounts(List<ShareAccount> shareAccounts) {
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(2))).
-                  showShareAccounts(shareAccounts);
+                showShareAccounts(shareAccounts);
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(2))).
                 hideProgress();
     }
@@ -109,7 +131,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
     }
-
 
 
     @Override
@@ -135,5 +156,29 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     public void onDestroyView() {
         super.onDestroyView();
         accountsPresenter.detachView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_account, menu);
+        if (viewPager.getCurrentItem() == 0) {
+            menu.findItem(R.id.menu_add_loan).setVisible(false);
+        } else if (viewPager.getCurrentItem() == 1) {
+            menu.findItem(R.id.menu_add_loan).setVisible(true);
+        } else if (viewPager.getCurrentItem() == 2) {
+            menu.findItem(R.id.menu_add_loan).setVisible(false);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_loan:
+                ((BaseActivity) getActivity()).replaceFragment(
+                        LoanApplicationFragment.newInstance(), true, R.id.container);
+                break;
+        }
+        return true;
     }
 }
