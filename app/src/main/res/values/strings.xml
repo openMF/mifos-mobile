@@ -40,6 +40,11 @@
     <string name="made_on">Made on</string>
     <string name="make_transfer">Make a Transfer</string>
 
+    <string name="active">Active</string>
+    <string name="closed">Closed</string>
+    <string name="need_approval">Need Approval</string>
+    <string name="pending">Pending</string>
+
     <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
     <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
@@ -70,7 +75,9 @@
 
     <string name="not_contain_username">Spaces</string>
     <string name="client_name">Client Name</string>
+    <string name="account_status">Account Status</string>
     <string name="saving_product_name">Product Name</string>
+    <string name="total_withdrawal">Total Withdrawals</string>
     <string name="min_required_balance">Min. Required Bal.</string>
     <string name="loan_product_name">Product Name</string>
     <string name="loan_purpose">Loan Purpose</string>

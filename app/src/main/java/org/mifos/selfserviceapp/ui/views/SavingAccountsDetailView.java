@@ -27,4 +27,7 @@ public interface SavingAccountsDetailView extends MVPView {
      *                saving account object
      */
     void showErrorFetchingSavingAccountsDetail(String message);
+
+
+    void showAccountStatus(SavingsWithAssociations savingsWithAssociations);
 }

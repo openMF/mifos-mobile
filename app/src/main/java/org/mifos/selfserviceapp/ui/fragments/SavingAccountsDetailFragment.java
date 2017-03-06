@@ -12,14 +12,17 @@ import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.savings.Status;
 import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
+import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.SymbolsUtils;
 import org.mifos.selfserviceapp.utils.Toaster;
+import org.mifos.selfserviceapp.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -34,11 +37,14 @@ import butterknife.OnClick;
 
 public class SavingAccountsDetailFragment extends BaseFragment implements SavingAccountsDetailView {
 
-    @BindView(R.id.tv_client_name)
-    TextView tvClientName;
+    @BindView(R.id.tv_account_status)
+    TextView tvAccountStatus;
 
-    @BindView(R.id.tv_savings_product_name)
-    TextView tvSavingProductName;
+    @BindView(R.id.iv_circle_status)
+    CircularImageView ivCircularStatus;
+
+    @BindView(R.id.tv_total_withdrawals)
+    TextView tvTotalWithDrawals;
 
     @BindView(R.id.tv_min_req_bal)
     TextView tvMiniRequiredBalance;
@@ -133,10 +139,11 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         String currencySymbol = savingsWithAssociations.getCurrency().getDisplaySymbol();
         Double accountBalance = savingsWithAssociations.getSummary().getAccountBalance();
 
-        tvClientName.setText(savingsWithAssociations.getClientName());
+        tvAccountStatus.setText(savingsWithAssociations.getClientName());
         tvMiniRequiredBalance.setText(getString(R.string.double_and_String,
                 savingsWithAssociations.getMinRequiredOpeningBalance(), currencySymbol));
-        tvSavingProductName.setText(savingsWithAssociations.getSavingsProductName());
+        tvTotalWithDrawals.setText(getString(R.string.double_and_String,
+                savingsWithAssociations.getSummary().getTotalWithdrawals(), currencySymbol));
         tvAccountBalance.setText(
                 getString(R.string.double_and_String, accountBalance, currencySymbol));
         tvAccountBalanceMain.setText(
@@ -158,6 +165,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             tvMadeOnTextView.setVisibility(View.GONE);
         }
 
+        showAccountStatus(savingsWithAssociations);
     }
 
     @Override
@@ -165,6 +173,28 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         layoutAccount.setVisibility(View.GONE);
         layoutError.setVisibility(View.VISIBLE);
         tvStatus.setText(message);
+    }
+
+    @Override
+    public void showAccountStatus(SavingsWithAssociations savingsWithAssociations) {
+        Status status = savingsWithAssociations.getStatus();
+        if (status.getActive()) {
+            ivCircularStatus.setImageDrawable(
+                    Utils.setCircularBackground(R.color.deposit_green, getActivity()));
+            tvAccountStatus.setText(R.string.active);
+        } else if (status.getApproved()) {
+            ivCircularStatus.setImageDrawable(
+                    Utils.setCircularBackground(R.color.blue, getActivity()));
+            tvAccountStatus.setText(R.string.need_approval);
+        } else if (status.getSubmittedAndPendingApproval()) {
+            ivCircularStatus.setImageDrawable(
+                    Utils.setCircularBackground(R.color.light_yellow, getActivity()));
+            tvAccountStatus.setText(R.string.pending);
+        } else {
+            ivCircularStatus.setImageDrawable(
+                    Utils.setCircularBackground(R.color.black, getActivity()));
+            tvAccountStatus.setText(R.string.closed);
+        }
     }
 
     @Override
