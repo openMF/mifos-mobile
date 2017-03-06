@@ -17,127 +17,217 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:padding="@dimen/row_padding_left">
+        android:padding="@dimen/row_padding_left"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tv_loan_product_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_margin"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_large"
-            tools:text="loanProductName"/>
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginTop="@dimen/table_row_padding_top"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/account_short"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_loan_account_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_small"
+                    tools:text="loanAccountNumber" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/loan_product"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_loan_product_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_small"
+                    tools:text="@string/loan_product" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_loan_purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/loan_purpose"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_loan_purpose"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_small"
+                    tools:text="loanPurpose" />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/table_row_padding_top"
             android:background="@color/white"
-            android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardElevation="@dimen/cardview_default_elevation"
             app:cardUseCompatPadding="true">
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="@dimen/row_padding_left">
-                <TableRow>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/principal"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/tv_principal"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tv_principal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_large"
-                            tools:text="@string/principal"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        tools:text="@string/principal" />
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:lines="1"
-                            android:text="@string/principal"
-                            android:textSize="@dimen/text_medium"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/interest"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/tv_interest_charged"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        tools:text="Interest" />
+                </LinearLayout>
 
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tv_interest_charged"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_large"
-                            tools:text="Interest"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/interest"
-                            android:textSize="@dimen/text_medium"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    </LinearLayout>
-                </TableRow>
-                <TableRow
-                    android:layout_marginTop="@dimen/default_margin">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/fees"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/tv_fees"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        tools:text="fees" />
+                </LinearLayout>
 
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tv_fees"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_large"
-                            tools:text="fees"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/fees"
-                            android:textSize="@dimen/text_medium"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/penalties"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/tv_penalties"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tv_penalties"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_large"
-                            tools:text="Penalties"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/penalties"
-                            android:textSize="@dimen/text_medium"/>
-
-                    </LinearLayout>
-                </TableRow>
-            </TableLayout>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        tools:text="Penalties" />
+                </LinearLayout>
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -145,172 +235,234 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/table_row_padding_top"
             android:background="@color/white"
-            android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardElevation="@dimen/cardview_default_elevation"
             app:cardUseCompatPadding="true">
-            <TableLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="@dimen/row_padding_left">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/total_repayment"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_small" />
 
                     <TextView
                         android:id="@+id/tv_total_repayment"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_large"
-
-                        tools:text="repayment"/>
+                        android:textSize="@dimen/text_small"
+                        tools:text="repayment" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/total_paid"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_small" />
 
                     <TextView
                         android:id="@+id/tv_total_paid"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_large"
-                        tools:text="paid"/>
+                        android:textSize="@dimen/text_small"
+                        tools:text="paid" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/interest_waived"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_small" />
 
                     <TextView
                         android:id="@+id/tv_interest_waived"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end"
                         android:textColor="@color/black"
 
-                        android:textSize="@dimen/text_large"
-                        tools:text="@string/interest_waived"/>
+                        android:textSize="@dimen/text_small"
+                        tools:text="@string/interest_waived" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/penalties_waived"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_small" />
 
                     <TextView
                         android:id="@+id/tv_penalties_waived"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_large"
-                        tools:text="penalties_waived"/>
+                        android:textSize="@dimen/text_small"
+                        tools:text="penalties_waived" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/fees_waived"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_small" />
 
                     <TextView
                         android:id="@+id/tv_fees_waived"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_large"
-                        tools:text="fees_waived"/>
+                        android:textSize="@dimen/text_small"
+                        tools:text="fees_waived" />
                 </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/table_row_padding_top"
+            android:background="@color/white"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardElevation="@dimen/cardview_default_elevation"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/row_padding_left">
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/outstanding_balance"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_small" />
 
                     <TextView
                         android:id="@+id/tv_outstanding_balance"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_large"
-                        tools:text="balance"/>
+                        android:textSize="@dimen/text_small"
+                        tools:text="balance" />
                 </LinearLayout>
-            </TableLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/account_status"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_account_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small"
+                            tools:text="@string/inactive_uc" />
+
+                        <ImageView
+                            android:id="@+id/iv_account_status"
+                            android:layout_width="@dimen/icon_small"
+                            android:layout_height="@dimen/icon_small"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
     <include
         android:id="@+id/ll_error"
         layout="@layout/layout_error"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>
 
