@@ -14,6 +14,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.HomeScreenFragment;
+import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -75,8 +76,12 @@ public class HomeActivity extends BaseActivity implements
 
         // select which item to open
         switch (item.getItemId()) {
-            case R.id.item_accounts:
+            case R.id.item_home:
                 replaceFragment(HomeScreenFragment.newInstance(clientId),
+                        false, R.id.container);
+                break;
+            case R.id.item_accounts:
+                replaceFragment(ClientAccountsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
             case R.id.item_funds_transfer:

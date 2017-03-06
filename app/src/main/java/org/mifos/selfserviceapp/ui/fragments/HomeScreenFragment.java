@@ -6,11 +6,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
@@ -34,9 +36,6 @@ public class HomeScreenFragment extends BaseFragment implements HomeView {
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-
-    @BindView(R.id.tabs)
-    TabLayout tabLayout;
 
     @Inject
     HomePresenter homePresenter;
@@ -65,19 +64,15 @@ public class HomeScreenFragment extends BaseFragment implements HomeView {
 
         setUpViewPagerAndTabLayout();
 
-        homePresenter.loadClientAccounts();
+        homePresenter.loadInfo();
 
         return view;
     }
 
     private void setUpViewPagerAndTabLayout() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(HomeFragment.newInstance(Constants.SAVINGS_ACCOUNTS),
-                getString(R.string.saving_accounts));
-        viewPagerAdapter.addFragment(HomeFragment.newInstance(Constants.LOAN_ACCOUNTS),
-                getString(R.string.loan_accounts));
+        viewPagerAdapter.addFragment(HomeFragment.newInstance(), "Home Page");
         viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     private String getFragmentTag(int position) {
@@ -85,19 +80,45 @@ public class HomeScreenFragment extends BaseFragment implements HomeView {
     }
 
     @Override
-    public void showLoanAccounts(List<LoanAccount> loanAccounts) {
-        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(1)))
-                .showLoanAccounts(loanAccounts);
-        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(1)))
+    public void showClientInfo(Client client) {
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .showClientInfo(client);
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
     }
 
     @Override
-    public void showSavingsAccounts(List<SavingAccount> savingAccounts) {
+    public void showInfo(List<LoanAccount> loanAccounts, List<SavingAccount> savingAccounts) {
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
-                .showSavingsAccounts(savingAccounts);
+                .showInfo(loanAccounts, savingAccounts);
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
+    }
+
+    @Override
+    public void showLoanAccountsDetail(LoanAccount loanAccount, TextView tv) {
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .showLoanAccountsDetail(loanAccount, tv);
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .hideProgress();
+    }
+
+    @Override
+    public void showErrorFetchingLoanAccountsDetail(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showSavingAccountsDetail(SavingAccount savingAccount, TextView tv) {
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .showSavingAccountsDetail(savingAccount, tv);
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .hideProgress();
+    }
+
+    @Override
+    public void showErrorFetchingSavingAccountsDetail(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

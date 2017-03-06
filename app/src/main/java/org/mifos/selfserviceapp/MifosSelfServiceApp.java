@@ -15,6 +15,12 @@ public class MifosSelfServiceApp extends Application {
 
     ApplicationComponent applicationComponent;
 
+    private static MifosSelfServiceApp instance;
+
+    public static MifosSelfServiceApp getInstance() {
+        return instance;
+    }
+
     public static MifosSelfServiceApp get(Context context) {
         return (MifosSelfServiceApp) context.getApplicationContext();
     }

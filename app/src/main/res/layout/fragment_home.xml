@@ -4,21 +4,256 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
+
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_accounts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/listPreferredItemHeight"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:scrollHorizontally="false"
+        android:ellipsize="none"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingRight="@dimen/row_padding_right"
+        >
+        <TextView
+            android:id="@+id/tv_client_name"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
+        <ImageView
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_column="0"
+                android:layout_row="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Saving Accounts"
+                android:background="@color/deposit_green"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="0"
+                android:id="@+id/tv_savings"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
 
+            <TextView
+                android:layout_column="0"
+                android:layout_row="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Account 1: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="1"
+                android:id="@+id/tv_saving_one"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <TextView
+                android:layout_column="0"
+                android:layout_row="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Account 2: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="2"
+                android:id="@+id/tv_saving_two"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Account 3: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="3"
+                android:id="@+id/tv_saving_three"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:background="@color/gray_light"
+                android:paddingTop="8dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Loan Balances"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="4"
+                android:id="@+id/tv_loans"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Account 1: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="5"
+                android:id="@+id/tv_loan_one"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:layout_alignParentLeft="true"
+                android:text="Account 2: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="6"
+                android:id="@+id/tv_loan_two"
+                android:scrollHorizontally="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+
+        </GridLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_error"

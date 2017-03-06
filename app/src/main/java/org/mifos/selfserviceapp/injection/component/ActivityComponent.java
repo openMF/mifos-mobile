@@ -3,7 +3,6 @@ package org.mifos.selfserviceapp.injection.component;
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
-import org.mifos.selfserviceapp.ui.activities.AccountsActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
 import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
@@ -25,8 +24,6 @@ import dagger.Component;
 public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);
-
-    void inject(AccountsActivity accountsActivity);
 
     void inject(HomeActivity homeActivity);
 

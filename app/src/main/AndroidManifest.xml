@@ -24,10 +24,6 @@
             android:name=".ui.activities.HomeActivity"
             android:label="Home"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activities.AccountsActivity"
-            android:label="Accounts2"
-            android:screenOrientation="portrait" />
         <activity android:name=".ui.activities.SavingAccountsDetailActivity"
             android:label="@string/saving_account_details"
             android:screenOrientation="portrait"/>
