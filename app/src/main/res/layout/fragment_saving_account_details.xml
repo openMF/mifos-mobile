@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <TableLayout
@@ -132,22 +132,38 @@
                 <TableRow>
 
                     <TextView
-                        android:id="@+id/tv_clientName"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/account_status"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="@string/client_name"
+                        android:text="@string/account_status"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/tv_client_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"/>
+                   <LinearLayout
+                       android:layout_height="match_parent"
+                       android:layout_width="match_parent"
+                       android:orientation="horizontal">
+
+                       <org.mifos.selfserviceapp.utils.CircularImageView
+                           android:id="@+id/iv_circle_status"
+                           android:layout_width="25dp"
+                           android:layout_height="25dp"
+                           android:layout_gravity="start"
+                           android:visibility="visible"
+                       />
+
+                       <TextView
+                           android:id="@+id/tv_account_status"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:visibility="visible"
+                           android:layout_gravity="start"
+                           android:textColor="@color/black"/>
+                   </LinearLayout>
 
                 </TableRow>
                 <TableRow
@@ -246,19 +262,19 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
-                        android:id="@+id/tv_savingProductName"
+                        android:id="@+id/total_withdrawals"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="@string/saving_product_name"
+                        android:text="@string/total_withdrawal"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"/>
 
                     <TextView
-                        android:id="@+id/tv_savings_product_name"
+                        android:id="@+id/tv_total_withdrawals"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
