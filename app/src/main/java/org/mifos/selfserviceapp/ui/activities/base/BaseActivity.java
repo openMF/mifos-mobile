@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -160,6 +161,15 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
                 transaction.addToBackStack(backStateName);
             }
             transaction.commit();
+        }
+    }
+
+    public void clearFragmentBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        for (int i = 0; i < backStackCount; i++) {
+            int backStackId = getSupportFragmentManager().getBackStackEntryAt(i).getId();
+            fm.popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 }

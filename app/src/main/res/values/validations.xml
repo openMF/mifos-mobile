@@ -3,5 +3,5 @@
 
     <integer name="username_minimum_length">5</integer>
     <integer name="password_minimum_length">6</integer>
-
+    <integer name="loan_purpose_maximum_length">500</integer>
 </resources>
