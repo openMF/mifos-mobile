@@ -135,5 +135,6 @@
     <string name="inactive">Inactive</string>
     <string name="active_uc">ACTIVE</string>
     <string name="inactive_uc">INACTIVE</string>
+    <string name="string_and_string">%1$s%2$s</string>
 
 </resources>
