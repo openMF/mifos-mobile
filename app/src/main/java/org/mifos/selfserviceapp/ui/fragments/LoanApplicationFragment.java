@@ -14,14 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.accounts.loan.InterestCalculationPeriodType;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
-import org.mifos.selfserviceapp.models.templates.loans.AmortizationTypeOptions;
-import org.mifos.selfserviceapp.models.templates.loans.InterestTypeOptions;
 import org.mifos.selfserviceapp.models.templates.loans.LoanPurposeOptions;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.ProductOptions;
-import org.mifos.selfserviceapp.models.templates.loans.TransactionProcessingStrategyOptions;
 import org.mifos.selfserviceapp.presenters.LoanApplicationPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
@@ -58,18 +54,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     @BindView(R.id.sp_loan_products)
     Spinner spLoanProducts;
 
-    @BindView(R.id.sp_amortization)
-    Spinner spAmortization;
-
-    @BindView(R.id.sp_interestcalculationperiod)
-    Spinner spInterestcalculationperiod;
-
-    @BindView(R.id.sp_interest_type)
-    Spinner spInterestType;
-
-    @BindView(R.id.sp_repaymentstrategy)
-    Spinner spRepaymentstrategy;
-
     @BindView(R.id.sp_loan_purpose)
     Spinner spLoanPurpose;
 
@@ -92,26 +76,14 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     private List<String> listLoanProducts = new ArrayList<>();
     private List<String> listLoanPurpose = new ArrayList<>();
-    private List<String> listInterestTypeOptions = new ArrayList<>();
-    private List<String> listAmortizationTypeOptions = new ArrayList<>();
-    private List<String> listInterestCalculationPeriodTypeOptions  = new ArrayList<>();
-    private List<String> listTransactionProcessingStrategyOptions = new ArrayList<>();
 
     private ArrayAdapter<String> loanProductAdapter;
     private ArrayAdapter<String> loanPurposeAdapter;
-    private ArrayAdapter<String> amortizationTypeOptionsAdapter;
-    private ArrayAdapter<String> transactionProcessingStrategyOptionsAdapter;
-    private ArrayAdapter<String> interestCalculationPeriodTypeOptionsAdapter;
-    private ArrayAdapter<String> interestTypeOptionsAdapter;
 
     private LoanTemplate loanTemplate;
     private DialogFragment mfDatePicker;
     private int productId;
     private int purposeId;
-    private int interestTypeId;
-    private int transactionProcessingStrategyId;
-    private int amortizationTypeId;
-    private int interestCalculationPeriodTypeId;
     private String disbursementDate;
     private String submittedDate;
     private boolean isDisbursebemntDate = false;
@@ -161,12 +133,15 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loansPayload.setInterestRatePerPeriod(loanTemplate.getInterestRatePerPeriod());
         loansPayload.setExpectedDisbursementDate(disbursementDate);
         loansPayload.setSubmittedOnDate(submittedDate);
+
         loansPayload.setTransactionProcessingStrategyId(
                 loanTemplate.getTransactionProcessingStrategyId());
-        loansPayload.setAmortizationType(amortizationTypeId);
-        loansPayload.setTransactionProcessingStrategyId(transactionProcessingStrategyId);
-        loansPayload.setInterestCalculationPeriodType(interestCalculationPeriodTypeId);
-        loansPayload.setInterestType(interestTypeId);
+        loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
+        loansPayload.setTransactionProcessingStrategyId(
+                loanTemplate.getTransactionProcessingStrategyId());
+        loansPayload.setInterestCalculationPeriodType(
+                loanTemplate.getInterestCalculationPeriodType().getId());
+        loansPayload.setInterestType(loanTemplate.getInterestType().getId());
 
         loanApplicationPresenter.createLoansAccount(loansPayload);
     }
@@ -234,38 +209,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         spLoanPurpose.setAdapter(loanPurposeAdapter);
         spLoanPurpose.setOnItemSelectedListener(this);
 
-        //Inflating AmortizationTypeOptions Spinner
-        amortizationTypeOptionsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, listAmortizationTypeOptions);
-        amortizationTypeOptionsAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spAmortization.setAdapter(amortizationTypeOptionsAdapter);
-        spAmortization.setOnItemSelectedListener(this);
-
-        //Inflating InterestCalculationPeriodTypeOptions Spinner
-        interestCalculationPeriodTypeOptionsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, listInterestCalculationPeriodTypeOptions);
-        interestCalculationPeriodTypeOptionsAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spInterestcalculationperiod.setAdapter(interestCalculationPeriodTypeOptionsAdapter);
-        spInterestcalculationperiod.setOnItemSelectedListener(this);
-
-        //Inflate TransactionProcessingStrategyOptions Spinner
-        transactionProcessingStrategyOptionsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, listTransactionProcessingStrategyOptions);
-        transactionProcessingStrategyOptionsAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spRepaymentstrategy.setAdapter(transactionProcessingStrategyOptionsAdapter);
-        spRepaymentstrategy.setOnItemSelectedListener(this);
-
-        //Inflating InterestTypeOptions Spinner
-        interestTypeOptionsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, listInterestTypeOptions);
-        interestTypeOptionsAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spInterestType.setAdapter(interestTypeOptionsAdapter);
-        spInterestType.setOnItemSelectedListener(this);
-
         inflateSubmissionDate();
         inflateDisbursementDate();
         setSubmissionDisburseDate();
@@ -295,34 +238,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             listLoanPurpose.add(loanPurposeOptions.getName());
         }
         loanPurposeAdapter.notifyDataSetChanged();
-
-        listAmortizationTypeOptions.clear();
-        for (AmortizationTypeOptions amortizationTypeOptions :
-                loanTemplate.getAmortizationTypeOptions()) {
-            listAmortizationTypeOptions.add(amortizationTypeOptions.getValue());
-        }
-        amortizationTypeOptionsAdapter.notifyDataSetChanged();
-
-        listInterestCalculationPeriodTypeOptions.clear();
-        for (InterestCalculationPeriodType interestCalculationPeriodType : loanTemplate
-                .getInterestCalculationPeriodTypeOptions()) {
-            listInterestCalculationPeriodTypeOptions.add(interestCalculationPeriodType.getValue());
-        }
-        interestCalculationPeriodTypeOptionsAdapter.notifyDataSetChanged();
-
-        listTransactionProcessingStrategyOptions.clear();
-        for (TransactionProcessingStrategyOptions transactionProcessingStrategyOptions :
-                loanTemplate.getTransactionProcessingStrategyOptions()) {
-            listTransactionProcessingStrategyOptions.add(transactionProcessingStrategyOptions
-                    .getName());
-        }
-        transactionProcessingStrategyOptionsAdapter.notifyDataSetChanged();
-
-        listInterestTypeOptions.clear();
-        for (InterestTypeOptions interestTypeOptions : loanTemplate.getInterestTypeOptions()) {
-            listInterestTypeOptions.add(interestTypeOptions.getValue());
-        }
-        interestTypeOptionsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -360,26 +275,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             case R.id.sp_loan_purpose:
                 purposeId = loanTemplate.getLoanPurposeOptions().get(position).getId();
                 break;
-
-            case R.id.sp_amortization :
-                amortizationTypeId = loanTemplate.getAmortizationTypeOptions()
-                        .get(position).getId();
-                break;
-
-            case R.id.sp_interestcalculationperiod :
-                interestCalculationPeriodTypeId = loanTemplate
-                        .getInterestCalculationPeriodTypeOptions().get(position).getId();
-                break;
-
-            case R.id.sp_repaymentstrategy :
-                transactionProcessingStrategyId = loanTemplate
-                        .getTransactionProcessingStrategyOptions().get(position).getId();
-                break;
-
-            case R.id.sp_interest_type :
-                interestTypeId = loanTemplate.getInterestTypeOptions().get(position).getId();
-                break;
-
         }
     }
 
