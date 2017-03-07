@@ -61,13 +61,8 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // ignore the current selected item
-        if (item.isChecked()) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return false;
-        }
-
         // select which item to open
+        clearFragmentBackStack();
         switch (item.getItemId()) {
             case R.id.item_accounts:
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),
