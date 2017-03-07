@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
 
-    static LoginActivity loginActivity;
+    static LoginActivity loginActivityInstance;
 
     @BindView(R.id.et_username)
     EditText etUsername;
@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         sp = getApplicationContext().getSharedPreferences(Constants.SHAREDPREF_NAME, MODE_PRIVATE);
         editor = sp.edit();
 
-        loginActivity = this;
+        loginActivityInstance = this;
 
         boolean loginrequest = getIntent().getBooleanExtra("requestlogin", false);
         if (loginrequest) {
@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
 
     public static LoginActivity getInstance() {
-        return loginActivity;
+        return loginActivityInstance;
     }
 
     public void loginRequest(String username, String password) {

@@ -43,14 +43,14 @@ public class Constants {
 
     public static final String SP_KEY_PASSCODESTATUS = "statusPasscode";
 
-    public static int PASSCODE_SET = 12;
+    public static final int PASSCODE_SET = 12;
 
-    public static int PASSCODE_NOT_SET = 15;
+    public static final int PASSCODE_NOT_SET = 15;
 
-    public static String USERNAME = "username";
+    public static final String USERNAME = "username";
 
-    public static String PASSWORD = "pass";
+    public static final String PASSWORD = "pass";
 
-    public static String SHAREDPREF_NAME = "abcde";
+    public static final String SHAREDPREF_NAME = "abcde";
 
 }

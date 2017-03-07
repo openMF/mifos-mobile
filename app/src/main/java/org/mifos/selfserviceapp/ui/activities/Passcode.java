@@ -68,8 +68,8 @@ public class Passcode extends BaseActivity implements PasscordView {
                         editor.commit();
 
                         //AUTHENTICATION SUCCESSFULL ...
-                        String username = sp.getString(Constants.USERNAME, "abcd");
-                        String password = sp.getString(Constants.PASSWORD, "abcd");
+                        String username = sp.getString(Constants.USERNAME, "-100");
+                        String password = sp.getString(Constants.PASSWORD, "-100");
                         Intent i = new Intent(Passcode.this, LoginActivity.class);
                         i.putExtra("requestlogin", true);
                         startActivity(i);
@@ -95,8 +95,8 @@ public class Passcode extends BaseActivity implements PasscordView {
                 public void onClick(View v) {
 
                     String passCodekey = Constants.SP_KEY_PASSCODE;
-                    String stored = sp.getString(passCodekey, "abcd");
-                    if (stored == "abcd") {
+                    String stored = sp.getString(passCodekey, "-1000");
+                    if (stored.equals("-1000")) {
                         String message = "Passcode not set";
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -106,8 +106,8 @@ public class Passcode extends BaseActivity implements PasscordView {
                     if (currentPasscode.equals(stored) && currentPasscode.length() == 4) {
 
                         //AUTHENTICATION SUCCESSFULL ...
-                        String username = sp.getString(Constants.USERNAME, "abcd");
-                        String password = sp.getString(Constants.PASSWORD, "abcd");
+                        String username = sp.getString(Constants.USERNAME, "-2000");
+                        String password = sp.getString(Constants.PASSWORD, "-2000");
 
                         Intent i = new Intent(Passcode.this, LoginActivity.class);
                         i.putExtra("requestlogin", true);
