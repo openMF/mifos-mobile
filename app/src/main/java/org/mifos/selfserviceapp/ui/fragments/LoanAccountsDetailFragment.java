@@ -128,7 +128,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     }
 
     public void showDetails(LoanAccount loanAccount) {
-        //TODO: Calculate nextInstallment value
+
         tvOutstandingBalanceName.setText(getResources()
                 .getString(R.string.outstanding_balance_str,
                         loanAccount.getSummary().getCurrency().getDisplaySymbol(),

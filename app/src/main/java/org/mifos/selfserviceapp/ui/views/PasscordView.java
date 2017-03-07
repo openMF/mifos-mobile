@@ -6,7 +6,7 @@ package org.mifos.selfserviceapp.ui.views;
 
 public interface PasscordView {
 
-   void login(String username , String password );
+    void login(String username, String password);
 
 
 }

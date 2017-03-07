@@ -49,8 +49,8 @@ public class Constants {
 
     public static String USERNAME = "username";
 
-    public static String PASSWORD = "pass" ;
+    public static String PASSWORD = "pass";
 
-    public static String SHAREDPREF_NAME = "abcde" ;
+    public static String SHAREDPREF_NAME = "abcde";
 
 }
