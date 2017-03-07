@@ -66,19 +66,19 @@ public class HomeActivity extends BaseActivity implements
         switch (item.getItemId()) {
             case R.id.item_accounts:
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),
-                        false, R.id.container);
+                        true, R.id.container);
                 break;
             case R.id.item_recent_transactions:
                 replaceFragment(RecentTransactionsFragment.newInstance(clientId),
-                        false, R.id.container);
+                        true, R.id.container);
                 break;
             case R.id.item_charges:
-                replaceFragment(ClientChargeFragment.newInstance(clientId), false,  R.id.container);
+                replaceFragment(ClientChargeFragment.newInstance(clientId), true,  R.id.container);
                 break;
             case R.id.item_about_us:
                 break;
             case R.id.item_help:
-                replaceFragment(HelpFragment.getInstance(), false, R.id.container);
+                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
                 break;
         }
 
