@@ -37,4 +37,20 @@ public class Constants {
 
     public static final String DFRAG_DATE_PICKER = "Date Picker";
 
+    public static final String SP_KEY_CLIENTID = "clientid";
+
+    public static final String SP_KEY_PASSCODE = "passcode";
+
+    public static final String SP_KEY_PASSCODESTATUS = "statusPasscode";
+
+    public static int PASSCODE_SET = 12;
+
+    public static int PASSCODE_NOT_SET = 15;
+
+    public static String USERNAME = "username";
+
+    public static String PASSWORD = "pass" ;
+
+    public static String SHAREDPREF_NAME = "abcde" ;
+
 }

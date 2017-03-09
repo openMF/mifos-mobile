@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import org.mifos.selfserviceapp.R;
@@ -147,7 +148,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         getMvpView().hideProgress();
                         if (clientPage.getPageItems().size() != 0) {
                             long clientId = clientPage.getPageItems().get(0).getId();
+                            SharedPreferences sp =  context.getApplicationContext().getSharedPreferences(Constants.SHAREDPREF_NAME , Context.MODE_PRIVATE);
                             getMvpView().showClient(clientId);
+                            sp.edit().putLong(Constants.SP_KEY_CLIENTID , clientId);
+                            sp.edit().commit();
                             preferencesHelper.setClientId(clientId);
                         } else {
                             getMvpView().showMessage(context

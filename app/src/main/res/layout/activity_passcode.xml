@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/ll_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/login_padding_left"
+        android:paddingEnd="@dimen/login_padding_right"
+        android:paddingTop="@dimen/login_padding_top">
+
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/login_margin_bottom"
+            android:src="@drawable/mifos_logo"/>
+
+        <!-- Username  Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin">
+            <EditText android:id="@+id/et_passcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="4"
+                android:hint="Enter Passcode (4-Digit)"
+                android:inputType="numberPassword"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputLayoutRepasscode"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin">
+
+            <EditText
+                android:id="@+id/et_repasscode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Re-Enter Passcode"
+                android:maxLength="4"
+                android:inputType="numberPassword"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_setbutton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_margin_bottom"
+            android:layout_marginTop="@dimen/login_margin_top"
+            android:textColor="@color/white"
+            android:padding="@dimen/login_padding_button"
+            android:text="SET PASSCODE"/>
+
+    </LinearLayout>
+</ScrollView>
