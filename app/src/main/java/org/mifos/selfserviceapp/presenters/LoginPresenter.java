@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import org.mifos.selfserviceapp.R;
@@ -75,7 +76,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void login(final String username, final String password) {
         checkViewAttached();
-        
+
         if (isCredentialsValid(username, password)) {
             getMvpView().showProgress();
             subscriptions.add(dataManager.login(username, password)
@@ -147,7 +148,14 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         getMvpView().hideProgress();
                         if (clientPage.getPageItems().size() != 0) {
                             long clientId = clientPage.getPageItems().get(0).getId();
+                            Context c = context.getApplicationContext();
+                            int mode = Context.MODE_PRIVATE;
+                            String spName = Constants.SHAREDPREF_NAME;
+                            SharedPreferences sp = c.getSharedPreferences(spName, mode);
                             getMvpView().showClient(clientId);
+                            String keyClientId = Constants.SP_KEY_CLIENTID;
+                            sp.edit().putLong(keyClientId, clientId);
+                            sp.edit().commit();
                             preferencesHelper.setClientId(clientId);
                         } else {
                             getMvpView().showMessage(context
