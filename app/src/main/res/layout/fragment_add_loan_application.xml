@@ -24,8 +24,7 @@
             android:layout_marginTop="@dimen/default_margin"
             android:text="@string/loan_name"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/text_medium" />
 
         <TextView
             android:id="@+id/tv_account_number"
@@ -33,8 +32,7 @@
             android:layout_height="wrap_content"
             android:text="@string/account_number"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/text_medium" />
 
         <TextView
             android:id="@+id/tv_loan_products"
@@ -48,7 +46,6 @@
             android:id="@+id/sp_loan_products"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
             android:paddingTop="10dp"
             android:spinnerMode="dropdown"/>
 
@@ -64,7 +61,6 @@
             android:id="@+id/sp_loan_purpose"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
             android:paddingTop="10dp"
             android:spinnerMode="dropdown"/>
 
@@ -142,70 +138,6 @@
                 android:background="@color/gray_light"
                 android:textSize="20sp"/>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_repaymentstrategy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@string/repaymentstrategy"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/sp_repaymentstrategy"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:paddingTop="10dp"
-            android:spinnerMode="dropdown" />
-
-        <TextView
-            android:id="@+id/tv_amortization"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@string/amortization"
-            android:textSize="16sp"/>
-
-        <Spinner
-            android:id="@+id/sp_amortization"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:paddingTop="10dp"
-            android:spinnerMode="dropdown"/>
-
-        <TextView
-            android:id="@+id/tv_interestcalculationperiod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@string/interestcalculationperiod"
-            android:textSize="16sp"/>
-
-        <Spinner
-            android:id="@+id/sp_interestcalculationperiod"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:paddingTop="10dp"
-            android:spinnerMode="dropdown"/>
-
-        <TextView
-            android:id="@+id/tv_interest_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="@string/loan_interest_type"
-            android:textSize="16sp"/>
-
-        <Spinner
-            android:id="@+id/sp_interest_type"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:paddingTop="10dp"
-            android:spinnerMode="dropdown"/>
 
         <Button
             android:id="@+id/btn_loan_submit"

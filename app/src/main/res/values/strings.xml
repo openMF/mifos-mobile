@@ -136,6 +136,16 @@
     <string name="map_marker_desc">The most populous city in Australia</string>
     <string name="loan_transaction_details">Loan Account Details</string>
     <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
+    <string name="none">None</string>
+    <string name="four_weeks">4 Weeks</string>
+    <string name="three_months">3 Months</string>
+    <string name="six_months">6 Months</string>
+    <string name="filter">Filter</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="filterd">Filtered</string>
+    <string name="select_date">Please select start date and end date</string>
+    <string name="saving_account_transactions_details">Saving Account Transactions</string>
 
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
