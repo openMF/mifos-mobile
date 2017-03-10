@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import okhttp3.ResponseBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -108,5 +110,9 @@ public class DataManager {
 
     public Observable<Page<Charge>> getClientLocalCharges() {
         return databaseHelper.getClientCharges();
+    }
+
+    public Call<ResponseBody> getClientImage(long userId) {
+        return baseApiManager.getClientImageServiceApi().getClientImage(userId);
     }
 }

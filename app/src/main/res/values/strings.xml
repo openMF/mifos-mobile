@@ -148,12 +148,18 @@
     <string name="saving_account_transactions_details">Saving Account Transactions</string>
     <string name="no_internet_connection">No Internet Connection</string>
 
+    <string name="active_since">Active Since</string>
+    <string name="user_details_alert">User Image not loaded, Do you wish to continue?</string>
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
 
     <!--Format Strings-->
     <string name="double_and_String">%1$f%2$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_user_details">UserDetails</string>
+
     <string name="account_short">A/C</string>
     <string name="loan_product">Loan Product</string>
     <string name="inactive">Inactive</string>
