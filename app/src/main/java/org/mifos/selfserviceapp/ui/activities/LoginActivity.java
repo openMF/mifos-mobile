@@ -1,5 +1,6 @@
 package org.mifos.selfserviceapp.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -9,11 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.LoginView;
-import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -46,6 +48,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     private boolean loginStatus;
 
+    int passcodeStatus;
+
+    PreferencesHelper pHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,26 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         loginPresenter.attachView(this);
+        pHelper = new PreferencesHelper(LoginActivity.this);
+        boolean loginrequest = getIntent().getBooleanExtra(Constants.REQUESTLOGIN_KEY, false);
+        if (loginrequest) {
+            String username = pHelper.getString(Constants.USERNAME, " ");
+            String password = pHelper.getString(Constants.PASSWORD, " ");
+            loginRequest(username, password);
+        }
+
+        String passcodeStatusKey = Constants.SP_KEY_PASSCODESTATUS;
+        int keyPasscodeNotSet = Constants.PASSCODE_NOT_SET;
+        passcodeStatus = pHelper.getInt(passcodeStatusKey, keyPasscodeNotSet);
+
+        if (passcodeStatus == Constants.PASSCODE_SET && !loginrequest) {
+            startActivity(new Intent(LoginActivity.this, Passcode.class));
+            finish();
+        }
+    }
+
+    public void loginRequest(String username, String password) {
+        loginPresenter.login(username, password);
     }
 
     @Override
@@ -97,8 +123,18 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
         final String username = etUsername.getEditableText().toString();
         final String password = etPassword.getEditableText().toString();
+
         if (Network.isConnected(this)) {
-            loginPresenter.login(username, password);
+//            loginPresenter.login(username, password);
+
+            pHelper.putString(Constants.USERNAME, username);
+            pHelper.putString(Constants.PASSWORD, password);
+
+            Context c = getApplicationContext();
+            Toast.makeText(c, "PLEASE WAIT ... ", Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(LoginActivity.this, Passcode.class));
+
         } else {
             Toaster.show(llLogin, getString(R.string.no_internet_connection));
         }

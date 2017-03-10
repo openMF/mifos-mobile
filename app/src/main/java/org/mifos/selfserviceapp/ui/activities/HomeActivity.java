@@ -117,6 +117,6 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        preferencesHelper.clear();
+//        pHelper.clear();
     }
 }
