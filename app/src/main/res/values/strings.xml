@@ -137,6 +137,7 @@
     <string name="loan_transaction_details">Loan Account Details</string>
     <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
     <string name="none">None</string>
+    <string name="all">All</string>
     <string name="four_weeks">4 Weeks</string>
     <string name="three_months">3 Months</string>
     <string name="six_months">6 Months</string>
