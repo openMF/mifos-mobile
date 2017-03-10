@@ -1,5 +1,6 @@
 package org.mifos.selfserviceapp.ui.views;
 
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**
@@ -37,8 +38,8 @@ public interface LoginView extends MVPView {
     /**
      * Should be called when the client is fetched successfully from API.
      *
-     * @param clientId Client Id
+     * @param currentClient Current_client
      */
-    void showClient(long clientId);
+    void showClient(Client currentClient);
 
 }
