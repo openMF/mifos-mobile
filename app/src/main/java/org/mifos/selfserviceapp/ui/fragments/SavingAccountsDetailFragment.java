@@ -199,11 +199,13 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     @Override
     public void showProgress() {
+        layoutAccount.setVisibility(View.GONE);
         showProgressBar();
     }
 
     @Override
     public void hideProgress() {
+        layoutAccount.setVisibility(View.VISIBLE);
         hideProgressBar();
     }
 
