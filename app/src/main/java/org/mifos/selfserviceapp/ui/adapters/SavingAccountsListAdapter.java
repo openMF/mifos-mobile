@@ -1,7 +1,6 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
-import org.mifos.selfserviceapp.utils.Utils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.utils.CircularImageView;
+import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

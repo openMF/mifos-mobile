@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.LoginView;
@@ -63,7 +64,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         llLogin.setVisibility(View.GONE);
         loginPresenter.loadClient();
     }
-
     @Override
     public void showProgress() {
         if (!loginStatus) {
@@ -79,9 +79,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void showClient(long clientId) {
+    public void showClient(Client clientCurrent) {
         Intent homeActivityIntent = new Intent(this, HomeActivity.class);
-        homeActivityIntent.putExtra(Constants.CLIENT_ID, clientId);
+        homeActivityIntent.putExtra(Constants.CURRENT_CLIENT, clientCurrent);
+
         startActivity(homeActivityIntent);
         finish();
     }
