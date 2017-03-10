@@ -164,7 +164,6 @@ public class SavingAccountsTransactionFragment extends BaseFragment
                 .DFRAG_DATE_PICKER);
     }
 
-
     @Override
     public void onDatePicked(String date) {
         long timeInMillis = DateHelper.getDateAsLongFromString(date, "dd-MM-yyyy");
@@ -180,12 +179,27 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     @OnClick(R.id.btn_custom_filter)
     public void datePickerFilter() {
-        if (tvStartDate.getText().length() > 0 && tvEndDate.getText().length() > 0 ) {
+        String startDateText = getContext().getResources().getString(R.string.start_date);
+        String endDateText = getContext().getResources().getString(R.string.end_date);
+
+        if (!tvStartDate.getText().equals(startDateText) &&
+                !tvEndDate.getText().equals(endDateText)) {
             filter(startDateFromPicker, endDateFromPicker);
         } else {
             Toast.makeText(getContext(), getResources().getText(R.string.select_date),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @OnClick(R.id.btn_all)
+    public void resetFilter() {
+        radioGroup.clearCheck();
+        tvStartDate.setText(getContext().getResources().
+                getText(R.string.start_date));
+        tvEndDate.setText(getContext().getResources().
+                getText(R.string.end_date));
+        transactionListAdapter.
+                setSavingAccountsTransactionList(transactionsList);
     }
 
     @Override
@@ -202,14 +216,6 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
         switch (group.getCheckedRadioButtonId()) {
-            case R.id.rb_none:
-                tvStartDate.setText(getContext().getResources().
-                        getText(R.string.start_date));
-                tvEndDate.setText(getContext().getResources().
-                        getText(R.string.end_date));
-                transactionListAdapter.
-                        setSavingAccountsTransactionList(transactionsList);
-                break;
             case R.id.rb_four_weeks:
                 filter(DateHelper.subtractWeeks(4), System.currentTimeMillis());
                 break;
