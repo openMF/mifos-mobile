@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TableLayout
