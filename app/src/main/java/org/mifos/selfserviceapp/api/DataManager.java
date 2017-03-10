@@ -11,10 +11,13 @@ import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
+import org.mifos.selfserviceapp.models.payload.LoansPayload;
+import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import okhttp3.ResponseBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import rx.Observable;
@@ -86,6 +89,19 @@ public class DataManager {
             long loanId) {
         return baseApiManager.getLoanAccountsListApi()
                 .getLoanWithAssociations(loanId, associationType);
+    }
+
+    public Observable<LoanTemplate> getLoanTemplate() {
+        return baseApiManager.getLoanAccountsListApi().getLoanTemplate(clientId);
+    }
+
+    public Observable<LoanTemplate> getLoanTemplateByProduct(Integer productId) {
+        return baseApiManager.getLoanAccountsListApi()
+                .getLoanTemplateByProduct(clientId, productId);
+    }
+
+    public Observable<ResponseBody> createLoansAccount(LoansPayload loansPayload) {
+        return baseApiManager.getLoanAccountsListApi().createLoansAccount(loansPayload);
     }
 
     public PreferencesHelper getPreferencesHelper() {

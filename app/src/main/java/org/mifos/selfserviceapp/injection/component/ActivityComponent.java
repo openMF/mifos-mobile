@@ -4,6 +4,8 @@ import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
+import org.mifos.selfserviceapp.ui.fragments.LoanApplicationFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.AccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
@@ -12,7 +14,7 @@ import org.mifos.selfserviceapp.ui.fragments.LoanAccountTransactionFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanRepaymentScheduleFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
-import org.mifos.selfserviceapp.ui.fragments.SavingAccountsDetailFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingAccountsTransactionFragment;
 
 import dagger.Component;
 
@@ -46,4 +48,7 @@ public interface ActivityComponent {
 
     void inject(LoanRepaymentScheduleFragment loanRepaymentScheduleFragment);
 
+    void inject(LoanApplicationFragment loanApplicationFragment);
+
+    void inject(SavingAccountsTransactionFragment savingAccountsTransactionFragment);
 }

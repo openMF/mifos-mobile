@@ -70,7 +70,6 @@ public class HomeActivity extends BaseActivity implements
     private boolean userImageRetrieved;
 
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         //Get current Client
         current_client = (Client) getIntent().getExtras().get(Constants.CURRENT_CLIENT);
@@ -117,6 +116,7 @@ public class HomeActivity extends BaseActivity implements
         }
 
         // select which item to open
+        clearFragmentBackStack();
         switch (item.getItemId()) {
             case R.id.item_accounts:
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),

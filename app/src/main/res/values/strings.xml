@@ -19,7 +19,7 @@
     <string name="saving_account_details">Saving Account Details</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>
     <string name="nominal_interest_rate">Nominal Interest Rate</string>
-    <string name="account_number">Account Number</string>
+    <string name="account_number">Account Number </string>
     <string name="account_balance">Account Balance</string>
     <string name="total_deposits">Total Deposits</string>
     <string name="open_drawer">Open Drawer</string>
@@ -39,6 +39,18 @@
     <string name="last_transaction">Last Transaction </string>
     <string name="made_on">Made on</string>
     <string name="make_transfer">Make a Transfer</string>
+    <string name="select_loan_product">Select Loan Product*</string>
+    <string name="purpose_of_loan">Purpose of Loan*</string>
+    <string name="principal_amount">Principal Amount*</string>
+    <string name="expected_disbursement_date">Expected Disbursement Date</string>
+    <string name="submission_date">Submission Date</string>
+    <string name="apply_for_loan">Apply for Loan</string>
+    <string name="submit_loan">Submit Loan</string>
+    <string name="new_loan_application">New Loan Application for </string>
+    <string name="loan_interest_type">Interest Type</string>
+    <string name="amortization">Amortization</string>
+    <string name="interestcalculationperiod">Interest calculation period</string>
+    <string name="repaymentstrategy">Repayment Strategy</string>
 
     <string name="active">Active</string>
     <string name="closed">Closed</string>
@@ -123,6 +135,18 @@
     <string name="map_marker_heading">Sydney</string>
     <string name="map_marker_desc">The most populous city in Australia</string>
     <string name="loan_transaction_details">Loan Account Details</string>
+    <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
+    <string name="none">None</string>
+    <string name="four_weeks">4 Weeks</string>
+    <string name="three_months">3 Months</string>
+    <string name="six_months">6 Months</string>
+    <string name="filter">Filter</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="filterd">Filtered</string>
+    <string name="select_date">Please select start date and end date</string>
+    <string name="saving_account_transactions_details">Saving Account Transactions</string>
+
     <string name="active_since">Active Since</string>
     <string name="user_details_alert">User Image not loaded, Do you wish to continue?</string>
     <!--Customer care details-->
@@ -135,5 +159,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_user_details">UserDetails</string>
 
+    <string name="account_short">A/C</string>
+    <string name="loan_product">Loan Product</string>
+    <string name="inactive">Inactive</string>
+    <string name="active_uc">ACTIVE</string>
+    <string name="inactive_uc">INACTIVE</string>
+
+    <string name="string_and_string">%1$s%2$s</string>
 
 </resources>
