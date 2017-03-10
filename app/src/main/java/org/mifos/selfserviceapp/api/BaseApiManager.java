@@ -2,6 +2,7 @@ package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.api.services.AuthenticationService;
 import org.mifos.selfserviceapp.api.services.ClientChargeService;
+import org.mifos.selfserviceapp.api.services.ClientImageService;
 import org.mifos.selfserviceapp.api.services.ClientService;
 import org.mifos.selfserviceapp.api.services.LoanAccountsListService;
 import org.mifos.selfserviceapp.api.services.RecentTransactionsService;
@@ -20,9 +21,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class BaseApiManager {
 
+    public static ClientImageService clientImageServiceApi;
     private static BaseURL baseUrl = new BaseURL();
     private static final String BASE_URL = baseUrl.getUrl();
-
     private static Retrofit retrofit;
     private static AuthenticationService authenticationApi;
     private static ClientService clientsApi;
@@ -35,7 +36,6 @@ public class BaseApiManager {
         String authToken = "";
         createService(authToken);
     }
-
     private static void init() {
         authenticationApi = createApi(AuthenticationService.class);
         clientsApi = createApi(ClientService.class);
@@ -43,6 +43,7 @@ public class BaseApiManager {
         loanAccountsListApi = createApi(LoanAccountsListService.class);
         recentTransactionsApi = createApi(RecentTransactionsService.class);
         clientChargeApi = createApi(ClientChargeService.class);
+        clientImageServiceApi = createApi(ClientImageService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -90,5 +91,9 @@ public class BaseApiManager {
 
     public ClientChargeService getClientChargeApi() {
         return clientChargeApi;
+    }
+
+    public ClientImageService getClientImageServiceApi() {
+        return clientImageServiceApi;
     }
 }

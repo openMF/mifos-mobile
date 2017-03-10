@@ -9,6 +9,10 @@ public class Constants {
 
     public static final String CLIENT_NAME = "clientName";
 
+    public static final String CLIENT_IMAGE = "clientImage";
+
+    public static final String CURRENT_CLIENT = "CurrentClient";
+
     public static final String CLIENT_ID = "clientId";
 
     public static final String ACCOUNT_ID = "accountId";

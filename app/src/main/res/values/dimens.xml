@@ -42,4 +42,5 @@
 
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_header_padding">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

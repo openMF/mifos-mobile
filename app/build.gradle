@@ -28,13 +28,14 @@ android {
         abortOnError false
         disable 'InvalidPackage'
     }
+    buildToolsVersion '25.0.0'
 }
 
 dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     apt "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     compile "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
@@ -67,4 +68,5 @@ dependencies {
     //Butter Knife
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     apt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
 }
