@@ -12,7 +12,9 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.LoginView;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
 
@@ -95,8 +97,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
         final String username = etUsername.getEditableText().toString();
         final String password = etPassword.getEditableText().toString();
-
-        loginPresenter.login(username, password);
+        if (Network.isConnected(this)) {
+            loginPresenter.login(username, password);
+        } else {
+            Toaster.show(llLogin, getString(R.string.no_internet_connection));
+        }
     }
 
     @Override

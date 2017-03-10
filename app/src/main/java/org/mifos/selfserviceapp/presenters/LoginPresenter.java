@@ -75,7 +75,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void login(final String username, final String password) {
         checkViewAttached();
-        
         if (isCredentialsValid(username, password)) {
             getMvpView().showProgress();
             subscriptions.add(dataManager.login(username, password)
