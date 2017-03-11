@@ -1,10 +1,10 @@
 package org.mifos.selfserviceapp.utils;
 
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.content.ContextCompat;
-import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 
@@ -24,5 +24,14 @@ public class Utils {
         Drawable image = ContextCompat.getDrawable(context, R.drawable.circular_background);
         LayerDrawable ld = new LayerDrawable(new Drawable[]{image, color});
         return ld;
+    }
+
+    public static String generateFormString(String[][] data) {
+        StringBuilder formString = new StringBuilder();
+        formString.setLength(0);
+        for (String[] aData : data) {
+            formString.append(aData[0]).append(':').append(aData[1]).append('\n');
+        }
+        return formString.toString();
     }
 }
