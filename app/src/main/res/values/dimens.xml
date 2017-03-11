@@ -45,4 +45,5 @@
 
     <dimen name="icon_small">15dp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

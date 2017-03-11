@@ -29,6 +29,17 @@ public class Toaster {
         snackbar.show();
     }
 
+    public static void show(View view, String text, int duration, View.OnClickListener listener) {
+        final Snackbar snackbar = Snackbar.make(view, text, duration);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id
+                .snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        textView.setTextSize(12);
+        snackbar.setAction("OK", listener);
+        snackbar.show();
+    }
+
     public static void show(View view, int res, int duration) {
         show(view, MifosSelfServiceApp.getContext().getResources().getString(res), duration);
     }

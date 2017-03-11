@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:fitsSystemWindows="true">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:id="@+id/ll_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="@dimen/login_padding_left"
-        android:paddingEnd="@dimen/login_padding_right"
+        android:paddingLeft="@dimen/login_padding_right"
+        android:paddingRight="@dimen/login_padding_left"
         android:paddingTop="@dimen/login_padding_top">
 
-        <ImageView android:layout_width="wrap_content"
-                   android:layout_height="@dimen/login_height"
-                   android:layout_gravity="center_horizontal"
-                   android:layout_marginBottom="@dimen/login_margin_bottom"
-                   android:src="@drawable/mifos_logo"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/login_margin_bottom"
+            android:src="@drawable/mifos_logo" />
 
         <!-- Username  Label -->
         <android.support.design.widget.TextInputLayout
@@ -25,11 +26,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin">
-            <EditText android:id="@+id/et_username"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/username"
-                      android:inputType="textEmailAddress"/>
+
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -38,11 +41,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin">
-            <EditText android:id="@+id/et_password"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/password"
-                      android:inputType="textPassword"/>
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -51,9 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/login_margin_bottom"
             android:layout_marginTop="@dimen/login_margin_top"
-            android:textColor="@color/white"
             android:padding="@dimen/login_padding_button"
-            android:text="@string/login"/>
+            android:text="@string/login"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </ScrollView>
