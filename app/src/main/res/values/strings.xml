@@ -42,8 +42,11 @@
     <string name="select_loan_product">Select Loan Product*</string>
     <string name="purpose_of_loan">Purpose of Loan*</string>
     <string name="principal_amount">Principal Amount*</string>
+    <string name="amount">Amount</string>
+    <string name="remark">Remark</string>
     <string name="expected_disbursement_date">Expected Disbursement Date</string>
     <string name="submission_date">Submission Date</string>
+    <string name="transfer_date">Transfer Date</string>
     <string name="apply_for_loan">Apply for Loan</string>
     <string name="submit_loan">Submit Loan</string>
     <string name="new_loan_application">New Loan Application for </string>
@@ -51,6 +54,15 @@
     <string name="amortization">Amortization</string>
     <string name="interestcalculationperiod">Interest calculation period</string>
     <string name="repaymentstrategy">Repayment Strategy</string>
+    <string name="pay_to">Pay To</string>
+    <string name="pay_from">Pay From</string>
+    <string name="cancel">Cancel</string>
+    <string name="review_transfer">Review Transfer</string>
+    <string name="transfer_to">Transfer To</string>
+    <string name="transfer_from">Transfer From</string>
+    <string name="making_transfer">Making Transfer</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="remark_is_mandatory">Remark is mandatory</string>
 
     <string name="active">Active</string>
     <string name="closed">Closed</string>
@@ -82,6 +94,8 @@
     <string name="error_fetching_client">Failed to fetch Client</string>
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>
     <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
+    <string name="error_same_account_transfer">Can\'t transfer with in same account</string>
+    <string name="error_fetching_account_transfer_template">Error to fetching account transfer template</string>
 
     <string name="fetching_client">Fetching Client</string>
 
@@ -117,6 +131,7 @@
     <string name="currency">Currency</string>
     <string name="repayment_schedule">Repayment Schedule</string>
     <string name="transactions">Transactions</string>
+    <string name="transfer">Transfer</string>
     <string name="outstanding_balance_str">%1$s %2$s</string>
     <string name="approval_pending">Approval Pending</string>
     <string name="waiting_for_disburse">Waiting for Disburse</string>
@@ -156,11 +171,18 @@
     <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
 
+    <string name="transferred_Successfully">Transferred Successfully</string>
+
     <string name="account_short">A/C</string>
     <string name="loan_product">Loan Product</string>
     <string name="inactive">Inactive</string>
     <string name="active_uc">ACTIVE</string>
     <string name="inactive_uc">INACTIVE</string>
+
+    <!--Material Dialog-->
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_cancel">Cancel</string>
+    <string name="dialog_action_back">Back</string>
 
     <!--Format Strings-->
     <string name="double_and_String">%1$.2f%2$s</string>
