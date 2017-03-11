@@ -21,7 +21,6 @@ import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.SymbolsUtils;
-import org.mifos.selfserviceapp.utils.Toaster;
 import org.mifos.selfserviceapp.utils.Utils;
 
 import javax.inject.Inject;
@@ -99,8 +98,6 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        setToolbarTitle(getString(R.string.saving_account_details));
         if (getArguments() != null) {
             savingsId = getArguments().getLong(Constants.SAVINGS_ID);
         }
@@ -111,7 +108,8 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_saving_account_details, container, false);
-
+        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+        setToolbarTitle(getString(R.string.saving_account_details));
         ButterKnife.bind(this, rootView);
         mSavingAccountsDetailPresenter.attachView(this);
 
@@ -129,7 +127,8 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     @OnClick(R.id.tv_make_a_transfer)
     void transfer() {
-        Toaster.show(rootView, "Coming Soon");
+        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
+                .newInstance(savingsId, Constants.TRANSFER_PAY_FROM), true, R.id.container);
     }
 
     @Override

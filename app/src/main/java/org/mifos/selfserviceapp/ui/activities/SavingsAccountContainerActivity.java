@@ -41,7 +41,7 @@ public class SavingsAccountContainerActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.item_transactions:
                 replaceFragment(SavingAccountsTransactionFragment.newInstance(savingsId),
-                        false, R.id.container);
+                        true, R.id.container);
                 break;
         }
         return super.onOptionsItemSelected(item);
