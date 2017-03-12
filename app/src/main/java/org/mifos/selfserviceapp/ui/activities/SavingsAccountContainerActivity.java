@@ -18,14 +18,15 @@ import org.mifos.selfserviceapp.utils.Constants;
 public class SavingsAccountContainerActivity extends BaseActivity {
 
     private long savingsId;
+    private long accountId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
-
         savingsId = getIntent().getExtras().getLong(Constants.SAVINGS_ID);
-
-        replaceFragment(SavingAccountsDetailFragment.newInstance(savingsId), false, R.id.container);
+        accountId = getIntent().getExtras().getLong(Constants.ACCOUNT_ID);
+        replaceFragment(SavingAccountsDetailFragment.newInstance(savingsId, accountId), 
+                false, R.id.container);
         showBackButton();
     }
 

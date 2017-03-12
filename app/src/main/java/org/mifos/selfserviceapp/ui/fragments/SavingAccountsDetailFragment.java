@@ -86,11 +86,13 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     private View rootView;
     private long savingsId;
+    private long accountId;
 
-    public static SavingAccountsDetailFragment newInstance(long savingsId) {
+    public static SavingAccountsDetailFragment newInstance(long savingsId, long accountId) {
         SavingAccountsDetailFragment fragment = new SavingAccountsDetailFragment();
         Bundle args = new Bundle();
         args.putLong(Constants.SAVINGS_ID, savingsId);
+        args.putLong(Constants.ACCOUNT_ID, accountId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -100,6 +102,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             savingsId = getArguments().getLong(Constants.SAVINGS_ID);
+            accountId = getArguments().getLong(Constants.ACCOUNT_ID);
         }
     }
 
@@ -123,6 +126,12 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + getString(R.string.help_line_number)));
         startActivity(intent);
+    }
+   
+    @OnClick(R.id.tv_deposit)
+    void deposit() {
+        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
+                 .newInstance(accountId, Constants.TRANSFER_PAY_TO), true, R.id.container);
     }
 
     @OnClick(R.id.tv_make_a_transfer)
