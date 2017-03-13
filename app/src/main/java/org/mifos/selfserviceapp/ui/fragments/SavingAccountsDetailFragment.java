@@ -125,6 +125,12 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         startActivity(intent);
     }
 
+    @OnClick(R.id.tv_deposit)
+    void deposit() {
+        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
+                 .newInstance(savingsId, Constants.TRANSFER_PAY_TO), true, R.id.container);
+    }
+
     @OnClick(R.id.tv_make_a_transfer)
     void transfer() {
         ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
