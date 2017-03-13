@@ -61,6 +61,7 @@
     <string name="transfer_to">Transfer To</string>
     <string name="transfer_from">Transfer From</string>
     <string name="making_transfer">Making Transfer</string>
+    <string name="deposit">Deposit</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="remark_is_mandatory">Remark is mandatory</string>
 

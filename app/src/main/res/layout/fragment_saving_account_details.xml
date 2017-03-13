@@ -103,6 +103,13 @@
                 <android.support.v4.widget.Space
                     android:layout_weight="1"/>
                 <Button
+                    android:id="@+id/tv_deposit"
+                    style="@style/Button.Base"
+                    android:background="@color/primary"
+                    android:text="@string/deposit"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@android:color/white"/>
+                <Button
                     android:id="@+id/tv_make_a_transfer"
                     style="@style/Button.Base"
                     android:layout_gravity="end"
