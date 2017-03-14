@@ -7,10 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
@@ -21,6 +21,7 @@ import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
+import org.mifos.selfserviceapp.utils.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +104,7 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void showErrorFetchingClientCharges(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        Toaster.show(rootView, message);
     }
 
     @Override
