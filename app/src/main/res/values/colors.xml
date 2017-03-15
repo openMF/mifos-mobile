@@ -10,7 +10,7 @@
     <color name="light_grey">#ffd1d1d1</color>
     <color name="transaction_detail_bg">#8ad3da44</color>
     <color name="transaction_detail_table_header_bg">#8ada6134</color>
-    <color name="blue">#ff003fff</color>
+    <color name="blue">#21d621</color>
     <color name="red">#FF0000</color>
 
     <!-- A light Holo shade of blue -->
@@ -30,7 +30,7 @@
     <!-- A dark Holo shade of red -->
     <color name="red_dark">#ffcc0000</color>
     <!-- A Holo shade of purple -->
-    <color name="purple">#ffaa66cc</color>
+    <color name="purple">#aa66cc</color>
     <!-- A light Holo shade of orange -->
     <color name="orange_light">#ffffbb33</color>
     <!-- A dark Holo shade of orange -->

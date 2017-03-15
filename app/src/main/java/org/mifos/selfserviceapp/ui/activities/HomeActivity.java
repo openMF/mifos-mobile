@@ -6,8 +6,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
@@ -118,5 +120,28 @@ public class HomeActivity extends BaseActivity implements
     protected void onDestroy() {
         super.onDestroy();
         preferencesHelper.clear();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(stackCount()==0)
+        {
+            AlertDialog.Builder mBuilder=new AlertDialog.Builder(HomeActivity.this);
+            View mview=getLayoutInflater().inflate(R.layout.dialog_exit,null);
+            Button b1= (Button) mview.findViewById(R.id.exit);
+            Button b2= (Button) mview.findViewById(R.id.cancel);
+            b1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    HomeActivity.this.finish();
+                }
+            });
+            mBuilder.setView(mview);
+            AlertDialog dialog=mBuilder.create();
+            dialog.show();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
