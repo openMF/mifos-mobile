@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -22,8 +24,19 @@ import org.mifos.selfserviceapp.ui.views.BaseActivityCallback;
  */
 public class BaseActivity extends AppCompatActivity implements BaseActivityCallback {
 
+    protected Toolbar toolbar;
     private ActivityComponent activityComponent;
     private ProgressDialog progress;
+
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +117,27 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
     public void hideProgressDialog() {
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
+            progress = null;
         }
+    }
+
+    public void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null && getTitle() != null) {
+            setTitle(title);
+        }
+    }
+
+    protected void setActionBarTitle(int title) {
+        setActionBarTitle(getResources().getString(title));
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        setActionBarTitle(title);
     }
 
     /**
@@ -128,6 +161,15 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
                 transaction.addToBackStack(backStateName);
             }
             transaction.commit();
+        }
+    }
+
+    public void clearFragmentBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        for (int i = 0; i < backStackCount; i++) {
+            int backStackId = getSupportFragmentManager().getBackStackEntryAt(i).getId();
+            fm.popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 }

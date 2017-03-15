@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,6 +15,7 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.HomeScreenFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
@@ -31,9 +31,6 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener {
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -55,10 +52,7 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setTitle("Home");
-        }
+        setToolbarTitle("Home");
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
         replaceFragment(HomeScreenFragment.newInstance(clientId), false,  R.id.container);
@@ -68,13 +62,8 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // ignore the current selected item
-        if (item.isChecked()) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return false;
-        }
-
         // select which item to open
+        clearFragmentBackStack();
         switch (item.getItemId()) {
             case R.id.item_home:
                 replaceFragment(HomeScreenFragment.newInstance(clientId),
@@ -84,8 +73,6 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),
                         false, R.id.container);
                 break;
-            case R.id.item_funds_transfer:
-                break;
             case R.id.item_recent_transactions:
                 replaceFragment(RecentTransactionsFragment.newInstance(clientId),
                         false, R.id.container);
@@ -93,9 +80,10 @@ public class HomeActivity extends BaseActivity implements
             case R.id.item_charges:
                 replaceFragment(ClientChargeFragment.newInstance(clientId), false,  R.id.container);
                 break;
-            case R.id.item_questionnaire:
-                break;
             case R.id.item_about_us:
+                break;
+            case R.id.item_help:
+                replaceFragment(HelpFragment.getInstance(), false, R.id.container);
                 break;
         }
 

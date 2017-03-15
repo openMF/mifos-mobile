@@ -5,7 +5,12 @@
 
 package org.mifos.selfserviceapp.utils;
 
+import android.util.Log;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by ishankhanna on 30/05/14.
@@ -13,6 +18,10 @@ import java.util.List;
  * from MifosX into Simple Strings or Date Formats</p>
  */
 public class DateHelper {
+
+    public static final String LOG_TAG = DateHelper.class.getSimpleName();
+
+    public static final String FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy";
 
     /**
      * the result string uses the list given in a reverse order ([x, y, z] results in "z y x")
@@ -31,6 +40,24 @@ public class DateHelper {
 
         return stringBuilder.toString();
 
+    }
+
+    /**
+     * This Method converting the dd-MM-yyyy format type date string into dd MMMM yyyy
+     * @param format Final Format of date string
+     * @param dateString date string
+     * @return dd MMMM yyyy format date string.
+     */
+    public static String getSpecificFormat(String format, String dateString) {
+        SimpleDateFormat pickerFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat finalFormat = new SimpleDateFormat(format, Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = pickerFormat.parse(dateString);
+        } catch (ParseException e) {
+            Log.d(LOG_TAG, e.getLocalizedMessage());
+        }
+        return finalFormat.format(date);
     }
 
     /**

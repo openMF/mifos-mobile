@@ -4,16 +4,18 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
+import org.mifos.selfserviceapp.utils.Constants;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author Vishwajeet
@@ -21,7 +23,9 @@ import retrofit2.Response;
  */
 
 public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsDetailView> {
-    private DataManager dataManager;
+
+    private final DataManager dataManager;
+    private CompositeSubscription subscriptions;
 
     /**
      * Initialises the SavingAccountsDetailPresenter by automatically injecting an instance of
@@ -37,6 +41,18 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
             @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
+        subscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    public void attachView(SavingAccountsDetailView mvpView) {
+        super.attachView(mvpView);
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        subscriptions.unsubscribe();
     }
 
     /**
@@ -44,34 +60,31 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
      */
-    public void loadSavingAccountDetails(long accountId) {
-        Call<SavingAccount> call = dataManager.getSavingAccountDetails(accountId);
+    public void loadSavingsWithAssociations(long accountId) {
+        checkViewAttached();
         getMvpView().showProgress();
-        call.enqueue(new Callback<SavingAccount>() {
-            @Override
-            public void onResponse(Response<SavingAccount> response) {
-                getMvpView().hideProgress();
+        subscriptions.add(dataManager.getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<SavingsWithAssociations>() {
+                    @Override
+                    public void onCompleted() {
 
-                if (response.code() == 200) {
-                    final SavingAccount savingAccount = response.body();
-                    if (savingAccount != null) {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showErrorFetchingSavingAccountsDetail(
+                                context.getString(R.string.error_saving_account_details_loading));
+                    }
+
+                    @Override
+                    public void onNext(SavingsWithAssociations savingAccount) {
+                        getMvpView().hideProgress();
                         getMvpView().showSavingAccountsDetail(savingAccount);
                     }
-                } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingSavingAccountsDetail(
-                            context.getString(R.string.error_saving_account_details_loading));
-                } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingSavingAccountsDetail(
-                            context.getString(R.string.error_internal_server));
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().showErrorFetchingSavingAccountsDetail(
-                        context.getString(R.string.error_message_server));
-            }
-        });
+                })
+        );
     }
 }

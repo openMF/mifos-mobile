@@ -12,9 +12,10 @@ import org.mifos.selfserviceapp.utils.Constants;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Rajan Maurya on 23/10/16.
@@ -23,11 +24,13 @@ import retrofit2.Response;
 public class AccountsPresenter extends BasePresenter<AccountsView> {
 
     private final DataManager dataManager;
+    private CompositeSubscription subscriptions;
 
     @Inject
     public AccountsPresenter(@ApplicationContext Context context, DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
+        subscriptions = new CompositeSubscription();
     }
 
     @Override
@@ -38,55 +41,70 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     @Override
     public void detachView() {
         super.detachView();
+        subscriptions.unsubscribe();
     }
 
     public void loadClientAccounts() {
-        Call<ClientAccounts> accountsCall = dataManager.getClientAccounts();
+        checkViewAttached();
         getMvpView().showProgress();
-        accountsCall.enqueue(new Callback<ClientAccounts>() {
-            @Override
-            public void onResponse(Response<ClientAccounts> response) {
-                getMvpView().hideProgress();
-                if (response.isSuccess()) {
-                    getMvpView().showSavingsAccounts(response.body().getSavingsAccounts());
-                    getMvpView().showLoanAccounts(response.body().getLoanAccounts());
-                }
-            }
+        subscriptions.add(dataManager.getClientAccounts()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ClientAccounts>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().showError(context.getString(R.string.error_fetching_accounts));
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
+                    }
+
+                    @Override
+                    public void onNext(ClientAccounts clientAccounts) {
+                        getMvpView().hideProgress();
+                        getMvpView().showSavingsAccounts(clientAccounts.getSavingsAccounts());
+                        getMvpView().showLoanAccounts(clientAccounts.getLoanAccounts());
+                        getMvpView().showShareAccounts(clientAccounts.getShareAccounts());
+                    }
+                })
+        );
     }
 
     public void loadAccounts(final String accountType) {
-        final Call<ClientAccounts> accounts = dataManager.getAccounts(accountType);
+        checkViewAttached();
         getMvpView().showProgress();
-        accounts.enqueue(new Callback<ClientAccounts>() {
-            @Override
-            public void onResponse(Response<ClientAccounts> response) {
-                getMvpView().hideProgress();
-                if (response.isSuccess()) {
-                    switch (accountType) {
-                        case Constants.SAVINGS_ACCOUNTS:
-                            getMvpView().showSavingsAccounts(response.body().getSavingsAccounts());
-                            break;
-                        case Constants.LOAN_ACCOUNTS:
-                            getMvpView().showLoanAccounts(response.body().getLoanAccounts());
-                            break;
+        subscriptions.add(dataManager.getAccounts(accountType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ClientAccounts>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().showError(context.getString(R.string.error_fetching_accounts));
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
+                    }
+
+                    @Override
+                    public void onNext(ClientAccounts clientAccounts) {
+                        getMvpView().hideProgress();
+                        switch (accountType) {
+                            case Constants.SAVINGS_ACCOUNTS:
+                                getMvpView().showSavingsAccounts(
+                                        clientAccounts.getSavingsAccounts());
+                                break;
+                            case Constants.LOAN_ACCOUNTS:
+                                getMvpView().showLoanAccounts(clientAccounts.getLoanAccounts());
+                                break;
+                        }
+                    }
+                })
+        );
     }
-
-
 }

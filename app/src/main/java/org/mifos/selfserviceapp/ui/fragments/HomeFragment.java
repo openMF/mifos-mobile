@@ -1,11 +1,8 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,30 +13,24 @@ import android.widget.Toast;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
-import org.mifos.selfserviceapp.presenters.LoanAccountsDetailPresenter;
-import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
-import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
-import org.mifos.selfserviceapp.ui.adapters.LoanAccountsListAdapter;
-import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.Constants;
-import org.mifos.selfserviceapp.utils.PrefManager;
 
-import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import android.widget.Button;
 
 /**
  * Created by michaelsosnick on 1/1/17.
@@ -76,29 +67,44 @@ public class HomeFragment extends BaseFragment implements
     @BindView(R.id.tv_savings)
     TextView tv_savings;
 
-    @BindView(R.id.tv_saving_one)
-    TextView tv_saving_one;
-
-    @BindView(R.id.tv_saving_two)
-    TextView tv_saving_two;
-
-    @BindView(R.id.tv_saving_three)
-    TextView tv_saving_three;
-
     @BindView(R.id.tv_loans)
     TextView tv_loans;
 
-    @BindView(R.id.tv_loan_one)
-    TextView tv_loan_one;
+    @BindView(R.id.tv_shares)
+    TextView tv_shares;
 
-    @BindView(R.id.tv_loan_two)
-    TextView tv_loan_two;
+    @BindView(R.id.application_button)
+    Button application_button;
+
+    @BindView(R.id.saving_button)
+    Button saving_button;
+
+    @BindView(R.id.loan_button)
+    Button loan_button;
+
+    @BindView(R.id.share_button)
+    Button share_button;
+
+    @BindView(R.id.transaction_button)
+    Button transaction_button;
+
+    @BindView(R.id.transfer_button)
+    Button transfer_button;
+
+    @BindView(R.id.payment_button)
+    Button payment_button;
 
     private List<LoanAccount> loanAccounts;
     private List<SavingAccount> savingAccounts;
+    private List<ShareAccount> shareAccounts;
+    private double totalLoans;
+    private long clientId;
 
-    public static HomeFragment newInstance() {
+    public static HomeFragment newInstance(long clientId) {
         HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putLong(Constants.CLIENT_ID, clientId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -108,6 +114,8 @@ public class HomeFragment extends BaseFragment implements
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         loanAccounts = new ArrayList<>();
         savingAccounts = new ArrayList<>();
+        shareAccounts = new ArrayList<>();
+        totalLoans = 0;
     }
 
     @Override
@@ -117,21 +125,57 @@ public class HomeFragment extends BaseFragment implements
 
         ButterKnife.bind(this, rootView);
         homePresenter.attachView(this);
-        homePresenter.loadInfo();
         homePresenter.loadClient();
-
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//
-//
-//        rvSavingAccounts.setLayoutManager(layoutManager);
-//        rvSavingAccounts.setHasFixedSize(true);
-
-//        swipeRefreshLayout.setColorSchemeColors(getActivity()
-//                .getResources().getIntArray(R.array.swipeRefreshColors));
-//        swipeRefreshLayout.setOnRefreshListener(this);
-
+        homePresenter.loadInfo();
         showProgress();
+
+        application_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getActivity()).replaceFragment(
+                        LoanApplicationFragment.newInstance(), false, R.id.container);
+            }
+        });
+
+        transaction_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getActivity()).replaceFragment(
+                        RecentTransactionsFragment.newInstance(clientId), false, R.id.container);
+            }
+        });
+
+        saving_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getActivity()).replaceFragment(
+                        ClientAccountsFragment.newInstance(clientId), false, R.id.container);
+            }
+        });
+
+        loan_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getActivity()).replaceFragment(
+                        ClientAccountsFragment.newInstance(clientId), false, R.id.container);
+            }
+        });
+
+        share_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getActivity()).replaceFragment(
+                        ClientAccountsFragment.newInstance(clientId), false, R.id.container);
+            }
+        });
+//        payment_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((BaseActivity) getActivity()).
+//                      replaceFragment(LoanRepaymentScheduleFragment.
+//                      newInstance(Constants.CLIENT_ID), false, R.id.container);
+//            }
+//        });
 
         return rootView;
     }
@@ -173,77 +217,69 @@ public class HomeFragment extends BaseFragment implements
     @Override
     public void showClientInfo(Client client) {
         tv_client_name.setText("Hello, " + client.getFirstname());
-//         lazy the  load profile picture
-//        if (client.isImagePresent()) {
-
-//            // make the image url
-//            String url = PrefManager.getInstanceUrl()
-//                    + "clients/"
-//                    + client.getId()
-//                    + "/images?maxHeight=120&maxWidth=120";
-            String url = "" + client.getId();
-            tv_saving_three.setText(url);
-//            GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
-//                    .addHeader(MifosInterceptor.HEADER_TENANT, PrefManager.getTenant())
-//                    .addHeader(MifosInterceptor.HEADER_AUTH, PrefManager.getToken())
-//                    .addHeader("Accept", "application/octet-stream")
-//                    .build());
-//
-//            // download the image from the url
-//            Glide.with(mContext)
-//                    .load(glideUrl)
-//                    .asBitmap()
-//                    .placeholder(R.drawable.ic_dp_placeholder)
-//                    .error(R.drawable.ic_dp_placeholder)
-//                    .into(new BitmapImageViewTarget((View) iv_userPicture) {
-//                        @Override
-//                        protected void setResource(Bitmap result) {
-//                            // check a valid bitmap is downloaded
-//                            if (result == null || result.getWidth() == 0)
-//                                return;
-//
-//                            // set to image view
-//                            iv_userPicture.setImageResource(result);
-//                        }
-//                    });
-
-            iv_profile_pic.setImageResource(R.drawable.ic_clients);
-
-//        } else {
-//            iv_profile_pic.setImageResource(R.drawable.ic_clients);
-//            tv_saving_three.setText("not here");
-//
-//        }
+        iv_profile_pic.setImageResource(R.drawable.ic_clients);
     }
 
     @Override
-    public void showInfo(List<LoanAccount> loanAccounts, List<SavingAccount> savingAccounts) {
+    public void showInfo(List<LoanAccount> loanAccounts,
+                         List<SavingAccount> savingAccounts,
+                         List<ShareAccount> shareAccounts) {
 
         this.savingAccounts = savingAccounts;
         this.loanAccounts = loanAccounts;
+        this.shareAccounts = shareAccounts;
 
-        LoanAccount l0 = loanAccounts.get(0);
-        homePresenter.loadLoanAccountDetails(l0.getId(), tv_loan_one);
-        LoanAccount l1 = loanAccounts.get(1);
-        homePresenter.loadLoanAccountDetails(l1.getId(), tv_loan_two);
+        showSavingTotal(savingAccounts);
+        showShareTotal(shareAccounts);
+        showLoanTotal(loanAccounts);
 
-        SavingAccount s0 = savingAccounts.get(0);
-        homePresenter.loadSavingAccountDetails(s0.getId(), tv_saving_one);
-        SavingAccount s1 = savingAccounts.get(1);
-        homePresenter.loadSavingAccountDetails(s1.getId(), tv_saving_two);
-        SavingAccount s2 = savingAccounts.get(2);
-//        homePresenter.loadSavingAccountDetails(s2.getId(), tv_saving_three);
+    }
 
-        if (savingAccounts.size() == 0) {
-            showEmptyAccounts(getString(R.string.empty_savings_accounts));
-        } else if (loanAccounts.size() == 0) {
-            showEmptyAccounts(getString(R.string.empty_loan_accounts));
+
+    @Override
+    public void showSavingTotal(List<SavingAccount> savingAccounts) {
+        double total = 0;
+        for (SavingAccount s: savingAccounts) {
+            total += s.getAccountBalance();
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        tv_savings.setText("Total: " + Double.parseDouble(df.format(total)));
+    }
+
+    @Override
+    public void showShareTotal(List<ShareAccount> shareAccounts) {
+        double total = 0;
+        for (ShareAccount sh: shareAccounts) {
+            total += sh.getTotalApprovedShares();
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        tv_shares.setText("Total: " + Double.parseDouble(df.format(total)));
+    }
+
+    @Override
+    public void showLoanTotal(final List<LoanAccount> loanAccounts) {
+        for (final LoanAccount l : loanAccounts) {
+            Thread t = new Thread () {
+                public void run() {
+                    homePresenter.loadLoanAccountDetails(l.getId());
+                }
+            };
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                continue;
+            }
         }
     }
 
     @Override
-    public void showLoanAccountsDetail(LoanAccount loanAccount, TextView tv) {
-        tv.setText(String.valueOf(loanAccount.getPrincipal()));
+    public void showLoanAccountsDetail(LoanAccount loanAccount) {
+        if (loanAccount.getStatus().getActive()) {
+            this.totalLoans += loanAccount.getSummary().getTotalOutstanding();
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        tv_loans.setText("Total: " + Double.parseDouble(df.format(this.totalLoans)));
     }
 
     @Override
@@ -252,8 +288,7 @@ public class HomeFragment extends BaseFragment implements
     }
 
     @Override
-    public void showSavingAccountsDetail(SavingAccount savingAccount, TextView tv) {
-        tv.setText(String.valueOf(savingAccount.getAccountBalance()));
+    public void showSavingAccountsDetail(SavingsWithAssociations savingAccount) {
     }
 
     @Override

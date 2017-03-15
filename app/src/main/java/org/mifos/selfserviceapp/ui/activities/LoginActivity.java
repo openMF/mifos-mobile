@@ -51,7 +51,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
         loginPresenter.attachView(this);
     }
 

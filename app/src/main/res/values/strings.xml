@@ -3,7 +3,7 @@
     <string name="login">Login</string>
     <string name="toast_welcome">Welcome %1$s</string>
     <string name="unable_to_connect">Not connected to internet</string>
-    <string name="basic">Basic </string>
+    <string name="basic">Basic</string>
     <string name="username">Username</string>
     <string name="progress_message_login">Logging In</string>
     <string name="progress_message_loading">Loading</string>
@@ -19,7 +19,7 @@
     <string name="saving_account_details">Saving Account Details</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>
     <string name="nominal_interest_rate">Nominal Interest Rate</string>
-    <string name="account_number">Account Number</string>
+    <string name="account_number">Account Number </string>
     <string name="account_balance">Account Balance</string>
     <string name="total_deposits">Total Deposits</string>
     <string name="open_drawer">Open Drawer</string>
@@ -29,13 +29,41 @@
     <string name="small_text">Small Text</string>
     <string name="client_accounts">Client Accounts</string>
     <string name="splash">Splash</string>
-    <string name="saving_accounts">Saving Accounts</string>
-    <string name="loan_accounts">Loan Accounts</string>
+    <string name="savings">Saving</string>
+    <string name="loan">Loan</string>
+    <string name="share">Share</string>
     <string name="clients_list">Chose a client</string>
     <string name="working">Working</string>
+    <string name="status_image">Status Image</string>
+    <string name="loan_repayment_schedule">Repayment Schedule</string>
+    <string name="last_transaction">Last Transaction </string>
+    <string name="made_on">Made on</string>
+    <string name="make_transfer">Make a Transfer</string>
+    <string name="select_loan_product">Select Loan Product*</string>
+    <string name="purpose_of_loan">Purpose of Loan*</string>
+    <string name="principal_amount">Principal Amount*</string>
+    <string name="expected_disbursement_date">Expected Disbursement Date</string>
+    <string name="submission_date">Submission Date</string>
+    <string name="apply_for_loan">Apply for Loan</string>
+    <string name="submit_loan">Submit Loan</string>
+    <string name="new_loan_application">New Loan Application for </string>
+    <string name="loan_interest_type">Interest Type</string>
+    <string name="amortization">Amortization</string>
+    <string name="interestcalculationperiod">Interest calculation period</string>
+    <string name="repaymentstrategy">Repayment Strategy</string>
+
+    <string name="active">Active</string>
+    <string name="closed">Closed</string>
+    <string name="need_approval">Need Approval</string>
+    <string name="pending">Pending</string>
 
     <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
+    <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
+    <string name="empty_transactions">Their is no transactions associated with you</string>
+    <string name="empty_repayment_schedule">Their is no repayment schedule associated with you</string>
+    <string name="no_more_transactions_available">No more transactions available</string>
+    <string name="no_transaction">No Transaction</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
@@ -46,18 +74,22 @@
     <string name="error_client_loading">Error loading client list</string>
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
     <string name="error_saving_accounts_list_loading">Error loading in saving accounts list</string>
-    <string name="error_saving_account_details_loading">Error loading in saving accounts detail</string>
+    <string name="error_saving_account_details_loading">Error loading in saving accounts detail
+    </string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
     <string name="error_client_charge_loading">Error loading in client charges</string>
     <string name="error_client_not_found">Client Not Found</string>
     <string name="error_fetching_client">Failed to fetch Client</string>
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>
+    <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
 
     <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
     <string name="client_name">Client Name</string>
+    <string name="account_status">Account Status</string>
     <string name="saving_product_name">Product Name</string>
+    <string name="total_withdrawal">Total Withdrawals</string>
     <string name="min_required_balance">Min. Required Bal.</string>
     <string name="loan_product_name">Product Name</string>
     <string name="loan_purpose">Loan Purpose</string>
@@ -67,5 +99,50 @@
     <string name="interest_charged">Interest Charged</string>
     <string name="interest_paid">Interest Paid</string>
     <string name="loan_account_details">Loan Account Details</string>
+    <string name="loan_summary">Loan Summary</string>
+    <string name="loan_name">Loan Name</string>
+    <string name="interest">Interest</string>
+    <string name="fees">Fees</string>
+    <string name="penalties">Penalties</string>
+    <string name="total_repayment">Total Expected Repayment</string>
+    <string name="total_paid">Total Paid</string>
+    <string name="interest_waived">Interest Waived</string>
+    <string name="penalties_waived">Penalties Waived</string>
+    <string name="fees_waived">Fee Waived</string>
+    <string name="outstanding_balance">Outstanding Balance</string>
+    <string name="next_installement">Next Installment</string>
+    <string name="due_date">Due Date</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="loan_type">Loan Type</string>
+    <string name="currency">Currency</string>
+    <string name="repayment_schedule">Repayment Schedule</string>
+    <string name="transactions">Transactions</string>
+    <string name="outstanding_balance_str">%1$s %2$s</string>
+    <string name="approval_pending">Approval Pending</string>
+    <string name="waiting_for_disburse">Waiting for Disburse</string>
+    <string name="closed_because_of_obligation">Closed because of some Obligations</string>
+    <string name="loan_closed">Loan Closed</string>
+    <string name="due_date_in_charges">Due Date:</string>
+    <string name="amount_due">Amount Due:</string>
+    <string name="amount_paid">Amount Paid:</string>
+    <string name="amount_waived">Amount Waved:</string>
+    <string name="amount_outstanding">Amount Outstanding:</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="help">Help</string>
+    <string name="mifos_initiative">Mifos Initiative</string>
+    <string name="mifos_location">Mifos Initiative , Seattle , Washington 98121</string>
+    <string name="map_marker_heading">Sydney</string>
+    <string name="map_marker_desc">The most populous city in Australia</string>
+    <string name="loan_transaction_details">Loan Account Details</string>
+    <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
+
+    <!--Customer care details-->
+    <string name="need_help">need help? Contact your support line</string>
+    <string name="help_line_number">8000000000</string>
+
+    <!--Format Strings-->
+    <string name="double_and_String">%1$f%2$s</string>
+    <string name="string_and_string">%1$s%2$s</string>
 
 </resources>

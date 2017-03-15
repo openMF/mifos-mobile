@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/login_padding_left"
-        android:paddingRight="@dimen/login_padding_right"
+        android:paddingStart="@dimen/login_padding_left"
+        android:paddingEnd="@dimen/login_padding_right"
         android:paddingTop="@dimen/login_padding_top">
 
         <ImageView android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/login_margin_bottom"
             android:layout_marginTop="@dimen/login_margin_top"
+            android:textColor="@color/white"
             android:padding="@dimen/login_padding_button"
             android:text="@string/login"/>
 

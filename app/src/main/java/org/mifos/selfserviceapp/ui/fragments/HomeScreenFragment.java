@@ -1,24 +1,23 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
-import org.mifos.selfserviceapp.ui.views.AccountsView;
 import org.mifos.selfserviceapp.utils.Constants;
 
 import java.util.List;
@@ -71,7 +70,8 @@ public class HomeScreenFragment extends BaseFragment implements HomeView {
 
     private void setUpViewPagerAndTabLayout() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(HomeFragment.newInstance(), "Home Page");
+        viewPagerAdapter.addFragment(HomeFragment.newInstance(
+                this.getArguments().getLong(Constants.CLIENT_ID)), "Home Page");
         viewPager.setAdapter(viewPagerAdapter);
     }
 
@@ -88,17 +88,43 @@ public class HomeScreenFragment extends BaseFragment implements HomeView {
     }
 
     @Override
-    public void showInfo(List<LoanAccount> loanAccounts, List<SavingAccount> savingAccounts) {
+    public void showInfo(List<LoanAccount> loanAccounts,
+                         List<SavingAccount> savingAccounts,
+                         List<ShareAccount> shareAccounts) {
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
-                .showInfo(loanAccounts, savingAccounts);
+                .showInfo(loanAccounts, savingAccounts, shareAccounts);
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
     }
 
     @Override
-    public void showLoanAccountsDetail(LoanAccount loanAccount, TextView tv) {
+    public void showSavingTotal(List<SavingAccount> savingAccounts) {
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
-                .showLoanAccountsDetail(loanAccount, tv);
+                .showSavingTotal(savingAccounts);
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .hideProgress();
+    }
+
+    @Override
+    public void showShareTotal(List<ShareAccount> shareAccounts) {
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .showShareTotal(shareAccounts);
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .hideProgress();
+    }
+
+    @Override
+    public void showLoanTotal(List<LoanAccount> loanAccounts) {
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .showLoanTotal(loanAccounts);
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .hideProgress();
+    }
+
+    @Override
+    public void showLoanAccountsDetail(LoanAccount loanAccount) {
+        ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
+                .showLoanAccountsDetail(loanAccount);
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
     }
@@ -109,9 +135,9 @@ public class HomeScreenFragment extends BaseFragment implements HomeView {
     }
 
     @Override
-    public void showSavingAccountsDetail(SavingAccount savingAccount, TextView tv) {
+    public void showSavingAccountsDetail(SavingsWithAssociations savingAccount) {
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
-                .showSavingAccountsDetail(savingAccount, tv);
+                .showSavingAccountsDetail(savingAccount);
         ((HomeView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
     }

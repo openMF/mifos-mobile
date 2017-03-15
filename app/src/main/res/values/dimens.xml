@@ -35,4 +35,11 @@
     <!-- Dimen values for Account Status-->
     <dimen name="account_status_width">25dp</dimen>
     <dimen name="account_status_height">25dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_header_padding">8dp</dimen>
 </resources>

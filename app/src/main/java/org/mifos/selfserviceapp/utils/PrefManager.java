@@ -30,8 +30,7 @@ public class PrefManager {
     private static Gson gson = new Gson();
 
     public static SharedPreferences getPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(MifosSelfServiceApp.getInstance()
-                .getApplicationContext());
+        return PreferenceManager.getDefaultSharedPreferences(MifosSelfServiceApp.getContext());
     }
 
     public static void clearPrefs() {

@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+import java.util.Locale;
+
 public class Summary implements Parcelable {
 
     @SerializedName("principalDisbursed")
@@ -18,6 +21,117 @@ public class Summary implements Parcelable {
 
     @SerializedName("interestPaid")
     private double interestPaid;
+
+    @SerializedName("feeChargesCharged")
+    private double feeChargesCharged;
+
+    @SerializedName("penaltyChargesCharged")
+    private double penaltyChargesCharged;
+
+    @SerializedName("penaltyChargesWaived")
+    private double penaltyChargesWaived;
+
+    @SerializedName("totalExpectedRepayment")
+    private double totalExpectedRepayment;
+
+    @SerializedName("interestWaived")
+    private double interestWaived;
+
+    @SerializedName("totalRepayment")
+    private double totalRepayment;
+
+    @SerializedName("feeChargesWaived")
+    private double feeChargesWaived;
+
+    @SerializedName("totalOutstanding")
+    private double totalOutstanding;
+
+    @SerializedName("overdueSinceDate")
+    private List<Integer> overdueSinceDate = null;
+
+    @SerializedName("currency")
+    private Currency currency;
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public String getOverdueSinceDate() {
+
+        return String.format(Locale.ENGLISH , "%02d/%02d/%d" ,
+                overdueSinceDate.get(2) , overdueSinceDate.get(1) , overdueSinceDate.get(0));
+    }
+
+    public void setOverdueSinceDate(List<Integer> overdueSinceDate) {
+        this.overdueSinceDate = overdueSinceDate;
+    }
+    public double getTotalOutstanding() {
+        return totalOutstanding;
+    }
+
+    public void setTotalOutstanding(double totalOutstanding) {
+        this.totalOutstanding = totalOutstanding;
+    }
+
+    public double getFeeChargesWaived() {
+        return feeChargesWaived;
+    }
+
+    public double getFeeChargesCharged() {
+        return feeChargesCharged;
+    }
+
+    public void setFeeChargesCharged(double feeChargesCharged) {
+        this.feeChargesCharged = feeChargesCharged;
+    }
+
+    public void setFeeChargesWaived(double feeChargesWaived) {
+        this.feeChargesWaived = feeChargesWaived;
+    }
+
+    public double getInterestWaived() {
+        return interestWaived;
+    }
+
+    public void setInterestWaived(double interestWaived) {
+        this.interestWaived = interestWaived;
+    }
+
+    public double getTotalRepayment() {
+        return totalRepayment;
+    }
+
+    public void setTotalRepayment(double totalRepayment) {
+        this.totalRepayment = totalRepayment;
+    }
+
+    public double getTotalExpectedRepayment() {
+        return totalExpectedRepayment;
+    }
+
+    public void setTotalExpectedRepayment(double totalExpectedRepayment) {
+        this.totalExpectedRepayment = totalExpectedRepayment;
+    }
+
+    public double getPenaltyChargesCharged() {
+        return penaltyChargesCharged;
+    }
+
+    public void setPenaltyChargesCharged(double penaltyChargesCharged) {
+        this.penaltyChargesCharged = penaltyChargesCharged;
+    }
+
+    public double getPenaltyChargesWaived() {
+        return penaltyChargesWaived;
+    }
+
+    public void setPenaltyChargesWaived(double penaltyChargesWaived) {
+        this.penaltyChargesWaived = penaltyChargesWaived;
+    }
 
     public double getPrincipalDisbursed() {
         return principalDisbursed;

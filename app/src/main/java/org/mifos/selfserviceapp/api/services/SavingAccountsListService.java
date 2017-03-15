@@ -1,11 +1,12 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * @author Vishwajeet
@@ -13,7 +14,9 @@ import retrofit2.http.Path;
  */
 public interface SavingAccountsListService {
 
-    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/")
-    Call<SavingAccount> getSavingAccountsDetail(@Path("accountId") long accountId);
+    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
+    Observable<SavingsWithAssociations> getSavingsWithAssociations(
+            @Path("accountId") long accountId,
+            @Query("associations") String associationType);
 
 }

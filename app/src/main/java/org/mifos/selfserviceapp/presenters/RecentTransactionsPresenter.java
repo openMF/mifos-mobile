@@ -4,26 +4,30 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.models.Transaction;
-import org.mifos.selfserviceapp.models.TransactionsListResponse;
 import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.models.Page;
+import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author Vishwajeet
  * @since 10/08/16
  */
 public class RecentTransactionsPresenter extends BasePresenter<RecentTransactionsView> {
-    private DataManager dataManager;
+
+    private final DataManager dataManager;
+    private CompositeSubscription subscriptions;
+
+    private int limit = 50;
+    private boolean loadmore;
 
     /**
      * Initialises the RecentTransactionsPresenter by automatically injecting an instance of
@@ -39,40 +43,60 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
     public RecentTransactionsPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
+        subscriptions = new CompositeSubscription();
     }
 
-    public void loadRecentTransactions(long clientId) {
-        Call<TransactionsListResponse> call = dataManager.getRecentTransactions(clientId);
+    @Override
+    public void attachView(RecentTransactionsView mvpView) {
+        super.attachView(mvpView);
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        subscriptions.unsubscribe();
+    }
+
+    public void loadRecentTransactions(boolean loadmore, int offset) {
+        this.loadmore = loadmore;
+        loadRecentTransactions(offset, limit);
+    }
+
+    public void loadRecentTransactions(int offset, int limit) {
+        checkViewAttached();
         getMvpView().showProgress();
-
-        call.enqueue(new Callback<TransactionsListResponse>() {
-            @Override
-            public void onResponse(Response<TransactionsListResponse> response) {
-                getMvpView().hideProgress();
-
-                if (response.code() == 200) {
-                    TransactionsListResponse recentTransaction = response.body();
-                    List<Transaction> recentTransactionsList = response.body().getPageItems();
-                    if (recentTransaction != null) {
-                        getMvpView().showRecentTransactions(recentTransactionsList);
+        subscriptions.add(dataManager.getRecentTransactions(offset, limit)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<Page<Transaction>>() {
+                    @Override
+                    public void onCompleted() {
                     }
 
-                } else if (response.code() >= 400 && response.code() < 500) {
-                    getMvpView().showErrorFetchingRecentTransactions(
-                            context.getString(R.string.error_recent_transactions_loading));
-                } else if (response.code() == 500) {
-                    getMvpView().showErrorFetchingRecentTransactions(
-                            context.getString(R.string.error_internal_server));
-                }
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showErrorFetchingRecentTransactions(
+                                context.getString(R.string.error_recent_transactions_loading));
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().showErrorFetchingRecentTransactions(
-                        context.getString(R.string.error_message_server));
-            }
-        });
+                    @Override
+                    public void onNext(Page<Transaction> transactions) {
+                        getMvpView().hideProgress();
+                        if (transactions.getTotalFilteredRecords() == 0) {
+                            getMvpView().showEmptyTransaction();
+                        } else if (loadmore && !transactions.getPageItems().isEmpty()) {
+                            getMvpView()
+                                    .showLoadMoreRecentTransactions(transactions.getPageItems());
+                        } else if (!transactions.getPageItems().isEmpty()) {
+                            getMvpView().showRecentTransactions(transactions.getPageItems());
+                        } else {
+                            getMvpView().showMessage(
+                                    context.getString(R.string.no_more_transactions_available));
+                        }
+                    }
+                })
+        );
     }
 }
 
