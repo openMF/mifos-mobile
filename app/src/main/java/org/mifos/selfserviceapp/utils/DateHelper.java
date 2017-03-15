@@ -8,6 +8,7 @@ package org.mifos.selfserviceapp.utils;
 import android.util.Log;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -106,4 +107,41 @@ public class DateHelper {
         }
         return monthName;
     }
+
+    public static long getDateAsLongFromString(String dateStr, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = null;
+
+        try {
+            date = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            Log.d("TAG", e.getMessage().toString());
+        }
+        return date.getTime();
+    }
+
+
+    public static long getDateAsLongFromList(List<Integer> integersOfDate) {
+        String dateStr = getDateAsString(integersOfDate);
+        return getDateAsLongFromString(dateStr, "dd MMM yyyy");
+    }
+
+    public static long subtractWeeks(int number) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.WEEK_OF_YEAR, -number);
+        return calendar.getTimeInMillis();
+    }
+
+
+    public static long subtractMonths(int number) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -number);
+        return calendar.getTimeInMillis();
+    }
+
+    public static String getDateAsStringFromLong(long timeInMillis) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+        return sdf.format(new Date(timeInMillis));
+    }
+
 }

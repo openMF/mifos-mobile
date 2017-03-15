@@ -12,6 +12,8 @@ import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
+import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 
 import javax.inject.Inject;
@@ -77,6 +79,14 @@ public class DataManager {
             String associationType) {
         return baseApiManager
                 .getSavingAccountsListApi().getSavingsWithAssociations(accountId, associationType);
+    }
+
+    public Observable<AccountOptionsTemplate> getAccountTransferTemplate() {
+        return baseApiManager.getSavingAccountsListApi().getAccountTransferTemplate();
+    }
+
+    public Observable<ResponseBody> makeTransfer(SavingsTransferPayload savingsTransferPayload) {
+        return baseApiManager.getSavingAccountsListApi().makeTransfer(savingsTransferPayload);
     }
 
     public Observable<LoanAccount> getLoanAccountDetails(long loanId) {

@@ -17,6 +17,7 @@ import org.mifos.selfserviceapp.ui.adapters.LoanRepaymentScheduleAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanRepaymentScheduleMvpView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -33,11 +34,14 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
     @BindView(R.id.rv_repayment_schedule)
     RecyclerView rvRepaymentSchedule;
 
-    @BindView(R.id.tv_loan_name)
-    TextView tvLoanName;
+    @BindView(R.id.tv_account_number)
+    TextView tvAccountNumber;
 
-    @BindView(R.id.tv_loan_type)
-    TextView tvLoanType;
+    @BindView(R.id.tv_disbursement_date)
+    TextView tvDisbursementDate;
+
+    @BindView(R.id.tv_number_of_payments)
+    TextView tvNumberOfPayments;
 
     @BindView(R.id.iv_status)
     ImageView ivStatus;
@@ -116,14 +120,20 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         loanRepaymentScheduleAdapter
                 .setPeriods(loanWithAssociations.getRepaymentSchedule().getPeriods());
 
-        tvLoanName.setText(loanWithAssociations.getLoanProductName());
-        tvLoanType.setText(loanWithAssociations.getLoanType().getValue());
+        tvAccountNumber.setText(loanWithAssociations.getAccountNo());
+        tvDisbursementDate.setText(DateHelper.getDateAsString(loanWithAssociations.
+                getTimeline().getExpectedDisbursementDate()));
+        tvNumberOfPayments.setText(String.
+                valueOf(loanWithAssociations.getNumberOfRepayments()));
     }
 
     @Override
     public void showEmptyRepaymentsSchedule(LoanWithAssociations loanWithAssociations) {
-        tvLoanName.setText(loanWithAssociations.getLoanProductName());
-        tvLoanType.setText(loanWithAssociations.getLoanType().getValue());
+        tvAccountNumber.setText(loanWithAssociations.getAccountNo());
+        tvDisbursementDate.setText(DateHelper.getDateAsString(loanWithAssociations.
+                getTimeline().getExpectedDisbursementDate()));
+        tvNumberOfPayments.setText(String.
+                valueOf(loanWithAssociations.getNumberOfRepayments()));
         layoutError.setVisibility(View.VISIBLE);
         tvStatus.setText(R.string.empty_repayment_schedule);
     }
