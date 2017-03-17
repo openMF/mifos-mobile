@@ -109,7 +109,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_saving_account_details, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        setToolbarTitle(getString(R.string.saving_account_details));
+        setToolbarTitle(getString(R.string.saving_account));
         ButterKnife.bind(this, rootView);
         mSavingAccountsDetailPresenter.attachView(this);
 
@@ -145,23 +145,27 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         Double accountBalance = savingsWithAssociations.getSummary().getAccountBalance();
 
         tvAccountStatus.setText(savingsWithAssociations.getClientName());
-        tvMiniRequiredBalance.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getMinRequiredOpeningBalance(), currencySymbol));
-        tvTotalWithDrawals.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getSummary().getTotalWithdrawals(), currencySymbol));
-        tvAccountBalance.setText(
-                getString(R.string.double_and_String, accountBalance, currencySymbol));
-        tvAccountBalanceMain.setText(
-                getString(R.string.double_and_String, accountBalance, currencySymbol));
-        tvNominalInterestRate.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getNominalAnnualInterestRate(), SymbolsUtils.PERCENT));
+        tvMiniRequiredBalance.setText(getResources().getString(R.string.outstanding_balance_str,
+                separator(String.valueOf(savingsWithAssociations.getMinRequiredOpeningBalance())),
+                currencySymbol));
+        tvTotalWithDrawals.setText(getResources().getString(R.string.outstanding_balance_str,
+                separator(String.valueOf(savingsWithAssociations.getSummary().getTotalWithdrawals())),
+                currencySymbol));
+        tvAccountBalance.setText(getResources()
+                .getString(R.string.outstanding_balance_str, separator(String.valueOf(accountBalance)), currencySymbol));
+        tvAccountBalanceMain.setText(getResources().
+                getString(R.string.outstanding_balance_str, separator(String.valueOf(accountBalance)),
+                        currencySymbol));
+        tvNominalInterestRate.setText(getResources().getString(R.string.outstanding_balance_str,
+                separator(String.valueOf(savingsWithAssociations.getNominalAnnualInterestRate()).
+                        replace(",",".")), SymbolsUtils.PERCENT));
         tvSavingAccountNumber.setText(String.valueOf(savingsWithAssociations.getAccountNo()));
-        tvTotalDeposits.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getSummary().getTotalDeposits(), currencySymbol));
+        tvTotalDeposits.setText(getResources().getString(R.string.outstanding_balance_str,
+                separator(String.valueOf(savingsWithAssociations.getSummary().getTotalDeposits())), currencySymbol));
 
         if (!savingsWithAssociations.getTransactions().isEmpty()) {
-            tvLastTransaction.setText(getString(R.string.double_and_String,
-                    savingsWithAssociations.getTransactions().get(0).getAmount(), currencySymbol));
+            tvLastTransaction.setText(getResources().getString(R.string.outstanding_balance_str,
+                    separator(String.valueOf(savingsWithAssociations.getTransactions().get(0).getAmount())), currencySymbol));
             tvMadeOnTransaction.setText(DateHelper.getDateAsString(
                     savingsWithAssociations.getLastActiveTransactionDate()));
         } else {

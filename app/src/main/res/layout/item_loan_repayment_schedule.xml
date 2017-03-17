@@ -16,9 +16,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             android:padding="6dp"
             android:background="@drawable/rectangular_border"/>
         <TextView
@@ -29,7 +30,7 @@
             android:gravity="center"
             android:text="@string/medium_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             android:padding="6dp"
             android:background="@drawable/rectangular_border"/>
         <TextView
@@ -39,8 +40,8 @@
             android:layout_weight="1"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_medium"
-            android:gravity="end"
+            android:textSize="@dimen/text_small"
+            android:gravity="center"
             android:padding="6dp"
             android:background="@drawable/rectangular_border"/>
 </LinearLayout>
