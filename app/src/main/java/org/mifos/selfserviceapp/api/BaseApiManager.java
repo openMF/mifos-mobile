@@ -22,7 +22,6 @@ public class BaseApiManager {
 
     private static BaseURL baseUrl = new BaseURL();
     private static final String BASE_URL = baseUrl.getUrl();
-
     private static Retrofit retrofit;
     private static AuthenticationService authenticationApi;
     private static ClientService clientsApi;
@@ -35,7 +34,6 @@ public class BaseApiManager {
         String authToken = "";
         createService(authToken);
     }
-
     private static void init() {
         authenticationApi = createApi(AuthenticationService.class);
         clientsApi = createApi(ClientService.class);
@@ -91,4 +89,5 @@ public class BaseApiManager {
     public ClientChargeService getClientChargeApi() {
         return clientChargeApi;
     }
+
 }

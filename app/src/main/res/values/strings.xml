@@ -99,6 +99,7 @@
     <string name="error_fetching_account_transfer_template">Error to fetching account transfer template</string>
 
     <string name="fetching_client">Fetching Client</string>
+    <string name="fetching_image">Fetching Image</string>
 
     <string name="not_contain_username">Spaces</string>
     <string name="client_name">Client Name</string>
@@ -151,6 +152,8 @@
     <string name="map_marker_heading">Sydney</string>
     <string name="map_marker_desc">The most populous city in Australia</string>
     <string name="loan_transaction_details">Loan Account Details</string>
+    <string name="active_since">Active Since</string>
+    <string name="user_details_alert">User Image not loaded, Do you wish to continue?</string>
     <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
     <string name="none">None</string>
     <string name="all">All</string>
@@ -172,8 +175,11 @@
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
-
     <string name="transferred_Successfully">Transferred Successfully</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_user_details">UserDetails</string>
 
     <string name="account_short">A/C</string>
     <string name="loan_product">Loan Product</string>

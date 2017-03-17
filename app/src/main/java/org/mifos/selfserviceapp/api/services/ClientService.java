@@ -5,6 +5,8 @@ import org.mifos.selfserviceapp.models.Page;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -26,5 +28,8 @@ public interface ClientService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
     Observable<ClientAccounts> getAccounts(@Path("clientId") long clientId,
             @Query("fields") String accountType);
+
+    @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
+    Call<ResponseBody> getClientImage(@Path("clientId") long clientId);
 
 }

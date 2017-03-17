@@ -6,14 +6,13 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.LoginView;
-import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -56,6 +55,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter.attachView(this);
     }
 
+
     @Override
     public void onLoginSuccess(String userName) {
         loginStatus = true;
@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void showMessage(String errorMessage) {
-        showToast(errorMessage, Toast.LENGTH_LONG);
+        showToast(errorMessage, Toaster.LONG);
         llLogin.setVisibility(View.VISIBLE);
     }
 

@@ -6,6 +6,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    compileOptions.incremental = false
 
     defaultConfig {
         applicationId "org.mifos.selfserviceapp"
