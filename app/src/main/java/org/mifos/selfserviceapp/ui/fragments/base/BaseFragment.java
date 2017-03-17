@@ -59,33 +59,31 @@ public class BaseFragment extends Fragment {
         callback = null;
     }
 
-    public String separator(String inputText){
+    public String separator(String inputText) {
         String textToSeparate = inputText;
         String textToLeaveAsItIs = "";
-        if(inputText.contains(".")){
-            int indexOfPoint = inputText.indexOf(".");
-            textToSeparate = inputText.substring(0,indexOfPoint);
-            textToLeaveAsItIs = inputText.substring(indexOfPoint+1);
+        if (inputText.contains(".")) {
+            int indexOfPoint = inputText.indexOf('.');
+            textToSeparate = inputText.substring(0, indexOfPoint);
+            textToLeaveAsItIs = inputText.substring(indexOfPoint + 1);
         }
         String resultText = "";
-        int coefficientOfNeededGroups = textToSeparate.length()/3;
-        if (coefficientOfNeededGroups > 0){
-            for (int i=0; i<textToSeparate.length(); i++){
+        int coefficientOfNeededGroups = textToSeparate.length() / 3;
+        if (coefficientOfNeededGroups > 0) {
+            for (int i = 0; i < textToSeparate.length(); i++) {
                 resultText += String.valueOf(textToSeparate.charAt(i));
-                for (int k=1; k< coefficientOfNeededGroups+1; k++){
-                    if(i == textToSeparate.length()-k*4+(k-1)){
+                for (int k = 1; k < coefficientOfNeededGroups + 1; k++) {
+                    if (i == textToSeparate.length() - k * 4 + (k - 1)) {
                         resultText += ",";
                     }
                 }
             }
-        }
-        else {
+        } else {
             resultText = textToSeparate;
         }
-        if (textToLeaveAsItIs.equals("")){
+        if (textToLeaveAsItIs.equals("")) {
             return resultText;
-        }
-        else{
+        } else {
             return resultText + "." + textToLeaveAsItIs;
         }
     }
