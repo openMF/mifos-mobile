@@ -161,7 +161,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     private boolean isCredentialsValid(final String username, final String password) {
 
         final Resources resources = context.getResources();
-
+        final String correctUsername = username.replaceFirst("\\s++$", "").trim();
         if (username == null || username.trim().isEmpty()) {
             showEmptyInputError(context.getString(R.string.username));
             return false;
@@ -169,10 +169,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             showMinimumInputLengthNotAchievedError(resources.getString(R.string.username),
                     resources.getInteger(R.integer.username_minimum_length));
             return false;
-        } else if (username.contains(" ")) {
+        } else if (correctUsername.contains(" ")) {
             getMvpView().showMessage(context.getString(
                     R.string.error_validation_cannot_contain_spaces,
-                    username, context.getString(R.string.not_contain_username)));
+                    correctUsername, context.getString(R.string.not_contain_username)));
             return false;
         } else if (password == null || password.trim().isEmpty()) {
             showEmptyInputError(context.getString(R.string.password));
