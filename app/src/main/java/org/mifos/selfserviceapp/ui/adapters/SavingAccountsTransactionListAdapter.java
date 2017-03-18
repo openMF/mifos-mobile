@@ -59,35 +59,31 @@ public class SavingAccountsTransactionListAdapter extends
     }
 
     public String separator(String inputText) {
-        if (inputText.equals("null")) {
-            return inputText;
-        } else {
-            String textToSeparate = inputText;
-            String textToLeaveAsItIs = "";
-            if (inputText.contains(".")) {
-                int indexOfPoint = inputText.indexOf('.');
-                textToSeparate = inputText.substring(0, indexOfPoint);
-                textToLeaveAsItIs = inputText.substring(indexOfPoint + 1);
-            }
-            String resultText = "";
-            int coefficientOfNeededGroups = textToSeparate.length() / 3;
-            if (coefficientOfNeededGroups > 0) {
-                for (int i = 0; i < textToSeparate.length(); i++) {
-                    resultText += String.valueOf(textToSeparate.charAt(i));
-                    for (int k = 1; k < coefficientOfNeededGroups + 1; k++) {
-                        if (i == textToSeparate.length() - k * 4 + (k - 1)) {
-                            resultText += ",";
-                        }
+        String textToSeparate = inputText;
+        String textToLeaveAsItIs = "";
+        if (inputText.contains(".")) {
+            int indexOfPoint = inputText.indexOf('.');
+            textToSeparate = inputText.substring(0, indexOfPoint);
+            textToLeaveAsItIs = inputText.substring(indexOfPoint + 1);
+        }
+        String resultText = "";
+        int coefficientOfNeededGroups = textToSeparate.length() / 3;
+        if (coefficientOfNeededGroups > 0) {
+            for (int i = 0; i < textToSeparate.length(); i++) {
+                resultText += String.valueOf(textToSeparate.charAt(i));
+                for (int k = 1; k < coefficientOfNeededGroups + 1; k++) {
+                    if (i == textToSeparate.length() - k * 4 + (k - 1)) {
+                        resultText += ",";
                     }
                 }
-            } else {
-                resultText = textToSeparate;
             }
-            if (textToLeaveAsItIs.equals("")) {
-                return resultText;
-            } else {
-                return resultText + "." + textToLeaveAsItIs;
-            }
+        } else {
+            resultText = textToSeparate;
+        }
+        if (textToLeaveAsItIs.equals("")) {
+            return resultText;
+        } else {
+            return resultText + "." + textToLeaveAsItIs;
         }
     }
 
