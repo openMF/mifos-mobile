@@ -89,7 +89,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        setToolbarTitle(getString(R.string.saving_account));
+        setToolbarTitle(getString(R.string.saving_account_transactions_details));
         if (getArguments() != null) {
             savingsId = getArguments().getLong(Constants.SAVINGS_ID);
         }

@@ -16,10 +16,9 @@
     <string name="charges">Charges</string>
     <string name="questionnaire">Questionnaire</string>
     <string name="about_us">About Us</string>
-    <string name="saving_account_details">Details</string>
+    <string name="saving_account_details">Saving Account Details</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>
-    <string name="nominal_interest_rate">Nom. Int. Rate*</string>
-    <string name="nominal_interest_rate_explanation">* = Nominal Interest Rate</string>
+    <string name="nominal_interest_rate">Nominal Interest Rate</string>
     <string name="account_number">Account Number </string>
     <string name="account_balance">Account Balance</string>
     <string name="total_deposits">Total Deposits</string>
@@ -106,8 +105,7 @@
     <string name="account_status">Account Status</string>
     <string name="saving_product_name">Product Name</string>
     <string name="total_withdrawal">Total Withdrawals</string>
-    <string name="min_required_balance">Min. Required Bal.**</string>
-    <string name="min_required_balance_explanation">** = Minimal Required Balance</string>
+    <string name="min_required_balance">Min. Required Bal.</string>
     <string name="loan_product_name">Product Name</string>
     <string name="loan_purpose">Loan Purpose</string>
     <string name="principal">Principal</string>
@@ -121,15 +119,12 @@
     <string name="interest">Interest</string>
     <string name="fees">Fees</string>
     <string name="penalties">Penalties</string>
-    <string name="total_repayment">T. Exp. Rep.*</string>
-    <string name="total_repayment_exp">* = Total Expected Repayment</string>
+    <string name="total_repayment">Total Expected Repayment</string>
     <string name="total_paid">Total Paid</string>
     <string name="interest_waived">Interest Waived</string>
     <string name="penalties_waived">Penalties Waived</string>
     <string name="fees_waived">Fee Waived</string>
     <string name="outstanding_balance">Outstanding Balance</string>
-    <string name="outstanding_balance_for_loan_summary">Out. Balance**</string>
-    <string name="outstanding_balance_for_loan_summary_exp">** = Outstanding Balance</string>
     <string name="next_installement">Next Installment</string>
     <string name="due_date">Due Date</string>
     <string name="make_payment">Make Payment</string>
@@ -167,8 +162,7 @@
     <string name="end_date">End Date</string>
     <string name="filterd">Filtered</string>
     <string name="select_date">Please select start date and end date</string>
-    <string name="saving_account">Saving Account</string>
-    <string name="saving_account_transactions_details">Transactions</string>
+    <string name="saving_account_transactions_details">Saving Account Transactions</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="disbursement_date">Disbursement Date</string>
     <string name="no_of_payments">Number of payments</string>
@@ -176,7 +170,7 @@
     <string name="loan_balance">Loan Balance</string>
     <string name="repayment">Repayment</string>
     <!--Customer care details-->
-    <string name="need_help">Do you need help? Contact your support line:</string>
+    <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
 
     <string name="transferred_Successfully">Transferred Successfully</string>

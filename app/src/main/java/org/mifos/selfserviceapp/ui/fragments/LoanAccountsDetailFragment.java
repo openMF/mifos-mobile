@@ -131,12 +131,10 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         //TODO: Calculate nextInstallment value
         tvOutstandingBalanceName.setText(getResources()
                 .getString(R.string.outstanding_balance_str,
-                        separator(String.valueOf(loanAccount.getSummary().getTotalOutstanding())),
-                        loanAccount.getSummary().getCurrency().getDisplaySymbol()));
-        tvNextInstallmentName.setText(getResources()
-                .getString(R.string.outstanding_balance_str,
-                        separator(String.valueOf(loanAccount.getSummary().getTotalOutstanding())),
-                        loanAccount.getSummary().getCurrency().getDisplaySymbol()));
+                        loanAccount.getSummary().getCurrency().getDisplaySymbol(),
+                        String.valueOf(loanAccount.getSummary().getTotalOutstanding())));
+        tvNextInstallmentName.setText(String.valueOf(
+                loanAccount.getSummary().getTotalOutstanding()));
         tvAccountNumberName.setText(loanAccount.getAccountNo());
         tvLoanTypeName.setText(loanAccount.getLoanType().getValue());
         tvCurrencyName.setText(loanAccount.getSummary().getCurrency().getCode());

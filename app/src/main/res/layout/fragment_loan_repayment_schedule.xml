@@ -31,58 +31,61 @@
             android:layout_margin="@dimen/login_padding_button">
             <TableRow>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"
                     android:text="@string/account_number"/>
                 <TextView
                     android:id="@+id/tv_account_number"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="@dimen/text_medium"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
+                    android:gravity="start"
                     tools:text="@string/account_number"/>
             </TableRow>
 
             <TableRow>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"
                     android:text="@string/disbursement_date"/>
                 <TextView
                     android:id="@+id/tv_disbursement_date"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textSize="@dimen/text_medium"
+                    android:gravity="start"
                     tools:text="@string/disbursement_date"/>
             </TableRow>
 
             <TableRow>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"
                     android:text="@string/no_of_payments"/>
                 <TextView
                     android:id="@+id/tv_number_of_payments"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textSize="@dimen/text_medium"
+                    android:gravity="start"
                     tools:text="@string/no_of_payments"/>
             </TableRow>
         </TableLayout>

@@ -41,7 +41,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:text="@string/next_installement"
                     android:textSize="@dimen/text_medium"/>
 
@@ -50,7 +49,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     tools:text="next_installement"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"/>
@@ -62,14 +60,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/due_date"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:textSize="@dimen/text_medium"/>
 
                 <TextView
                     android:id="@+id/tv_due_date"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     tools:text="due_date"
                     android:textColor="@color/black"
@@ -110,7 +106,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:text="@string/account_number"
                     android:textSize="@dimen/text_medium"/>
 
@@ -119,7 +114,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     tools:text="account_number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"/>
@@ -131,14 +125,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/loan_type"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:textSize="@dimen/text_medium"/>
 
                 <TextView
                     android:id="@+id/tv_loan_type"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     tools:text="loan_type"
                     android:textColor="@color/black"
@@ -151,14 +143,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/currency"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:textSize="@dimen/text_medium"/>
 
                 <TextView
                     android:id="@+id/tv_currency"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     tools:text="currency"
                     android:textColor="@color/black"
