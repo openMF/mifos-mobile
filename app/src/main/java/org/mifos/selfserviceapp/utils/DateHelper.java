@@ -110,7 +110,7 @@ public class DateHelper {
     }
 
     public static long getDateAsLongFromString(String dateStr, String pattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         Date date = null;
 
         try {
