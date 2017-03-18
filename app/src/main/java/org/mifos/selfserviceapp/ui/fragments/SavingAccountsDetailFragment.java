@@ -149,26 +149,23 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
                 separator(String.valueOf(savingsWithAssociations.getMinRequiredOpeningBalance())),
                 currencySymbol));
         tvTotalWithDrawals.setText(getResources().getString(R.string.outstanding_balance_str,
-                separator(String.valueOf(savingsWithAssociations.getSummary()
-                        .getTotalWithdrawals())), currencySymbol));
+                separator(String.valueOf(savingsWithAssociations.getSummary().getTotalWithdrawals())),
+                currencySymbol));
         tvAccountBalance.setText(getResources()
-                .getString(R.string.outstanding_balance_str,
-                        separator(String.valueOf(accountBalance)), currencySymbol));
+                .getString(R.string.outstanding_balance_str, separator(String.valueOf(accountBalance)), currencySymbol));
         tvAccountBalanceMain.setText(getResources().
-                getString(R.string.outstanding_balance_str,
-                        separator(String.valueOf(accountBalance)), currencySymbol));
+                getString(R.string.outstanding_balance_str, separator(String.valueOf(accountBalance)),
+                        currencySymbol));
         tvNominalInterestRate.setText(getResources().getString(R.string.outstanding_balance_str,
                 separator(String.valueOf(savingsWithAssociations.getNominalAnnualInterestRate()).
-                        replace(",", ".")), SymbolsUtils.PERCENT));
+                        replace(",",".")), SymbolsUtils.PERCENT));
         tvSavingAccountNumber.setText(String.valueOf(savingsWithAssociations.getAccountNo()));
         tvTotalDeposits.setText(getResources().getString(R.string.outstanding_balance_str,
-                separator(String.valueOf(savingsWithAssociations.getSummary()
-                        .getTotalDeposits())), currencySymbol));
+                separator(String.valueOf(savingsWithAssociations.getSummary().getTotalDeposits())), currencySymbol));
 
         if (!savingsWithAssociations.getTransactions().isEmpty()) {
             tvLastTransaction.setText(getResources().getString(R.string.outstanding_balance_str,
-                    separator(String.valueOf(savingsWithAssociations.getTransactions()
-                            .get(0).getAmount())), currencySymbol));
+                    separator(String.valueOf(savingsWithAssociations.getTransactions().get(0).getAmount())), currencySymbol));
             tvMadeOnTransaction.setText(DateHelper.getDateAsString(
                     savingsWithAssociations.getLastActiveTransactionDate()));
         } else {
