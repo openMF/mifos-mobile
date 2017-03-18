@@ -67,7 +67,7 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
             } else if (savingAccount.getStatus().getApproved()) {
 
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_green, context));
+                        Utils.setCircularBackground(R.color.blue, context));
 
             } else if (savingAccount.getStatus().getSubmittedAndPendingApproval()) {
 
@@ -77,7 +77,7 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
             } else {
 
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_blue, context));
+                        Utils.setCircularBackground(R.color.black, context));
 
             }
 

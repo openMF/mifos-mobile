@@ -100,6 +100,8 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
 
     private View rootView;
 
+    private String currency;
+
     public static LoanAccountSummaryFragment newInstance(long loanId) {
         LoanAccountSummaryFragment loanAccountSummaryFragment = new LoanAccountSummaryFragment();
         Bundle args = new Bundle();
@@ -134,23 +136,29 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
 
     @Override
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
+        currency = loanAccount.getSummary().getCurrency().getDisplaySymbol();
         llLoanSummary.setVisibility(View.VISIBLE);
         tvLoanProductName.setText(loanAccount.getLoanProductName());
-        tvPrincipalName.setText(String.valueOf(loanAccount.getPrincipal()));
-        tvInterestChargedName.setText(String.
-                valueOf(loanAccount.getSummary().getInterestCharged()));
-        tvFeesName.setText(String.valueOf(loanAccount.getSummary().getFeeChargesCharged()));
-        tvPenaltiesName.setText(String.
-                valueOf(loanAccount.getSummary().getPenaltyChargesCharged()));
-        tvTotalRepaymentName.setText(String.
-                valueOf(loanAccount.getSummary().getTotalExpectedRepayment()));
-        tvTotalPaidName.setText(String.valueOf(loanAccount.getSummary().getTotalRepayment()));
-        tvInterestWaivedName.setText(String.valueOf(loanAccount.getSummary().getInterestWaived()));
-        tvPenaltiesWaivedName.setText(String.
-                valueOf(loanAccount.getSummary().getPenaltyChargesWaived()));
-        tvFeesWaivedName.setText(String.valueOf(loanAccount.getSummary().getFeeChargesWaived()));
-        tvOutstandingBalanceName.setText(String.
-                valueOf(loanAccount.getSummary().getTotalOutstanding()));
+        tvPrincipalName.setText(separator(String.valueOf(loanAccount.getPrincipal()))
+                + " " + currency);
+        tvInterestChargedName.setText(separator(String.
+                valueOf(loanAccount.getSummary().getInterestCharged())) + " " + currency);
+        tvFeesName.setText(separator(String.valueOf(loanAccount.getSummary()
+                .getFeeChargesCharged())) + " " + currency);
+        tvPenaltiesName.setText(separator(String.
+                valueOf(loanAccount.getSummary().getPenaltyChargesCharged())) + " " + currency);
+        tvTotalRepaymentName.setText(separator(String.
+                valueOf(loanAccount.getSummary().getTotalExpectedRepayment())) + " " + currency);
+        tvTotalPaidName.setText(separator(String.valueOf(loanAccount.getSummary()
+                .getTotalRepayment())) + " " + currency);
+        tvInterestWaivedName.setText(separator(loanAccount.getSummary()
+                .getInterestWaived() + " " + currency));
+        tvPenaltiesWaivedName.setText(separator(String.
+                valueOf(loanAccount.getSummary().getPenaltyChargesWaived())) + " " + currency);
+        tvFeesWaivedName.setText(separator(String.valueOf(loanAccount.getSummary()
+                .getFeeChargesWaived())) + " " + currency);
+        tvOutstandingBalanceName.setText(separator(String.
+                valueOf(loanAccount.getSummary().getTotalOutstanding())) + " " + currency);
         tvLoanAccountNumber.setText(loanAccount.getAccountNo());
         if (loanAccount.getLoanPurposeName() != null) {
             llLoanPurpose.setVisibility(View.VISIBLE);

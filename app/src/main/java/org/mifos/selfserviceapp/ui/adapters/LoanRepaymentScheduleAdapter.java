@@ -42,16 +42,51 @@ public class LoanRepaymentScheduleAdapter extends
         return new ViewHolder(view);
     }
 
+    public String separator(String inputText) {
+        if (inputText.equals("null")) {
+            return inputText;
+        } else {
+            String textToSeparate = inputText;
+            String textToLeaveAsItIs = "";
+            if (inputText.contains(".")) {
+                int indexOfPoint = inputText.indexOf('.');
+                textToSeparate = inputText.substring(0, indexOfPoint);
+                textToLeaveAsItIs = inputText.substring(indexOfPoint + 1);
+            }
+            String resultText = "";
+            int coefficientOfNeededGroups = textToSeparate.length() / 3;
+            if (coefficientOfNeededGroups > 0) {
+                for (int i = 0; i < textToSeparate.length(); i++) {
+                    resultText += String.valueOf(textToSeparate.charAt(i));
+                    for (int k = 1; k < coefficientOfNeededGroups + 1; k++) {
+                        if (i == textToSeparate.length() - k * 4 + (k - 1)) {
+                            resultText += ",";
+                        }
+                    }
+                }
+            } else {
+                resultText = textToSeparate;
+            }
+            if (textToLeaveAsItIs.equals("")) {
+                return resultText;
+            } else {
+                return resultText + "." + textToLeaveAsItIs;
+            }
+        }
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Periods period = periodses.get(position);
 
-        holder.tvLoanBalance.setText(context.getString(R.string.double_and_String,
-                period.getPrincipalOriginalDue(), currency));
+        holder.tvLoanBalance.setText(
+                separator(String.valueOf(period.getPrincipalOriginalDue()))
+                        + " " + currency);
 
-        holder.tvOutStandingBalance.setText(context.getString(R.string.double_and_String,
-                        period.getPrincipalLoanBalanceOutstanding(), currency));
+        holder.tvOutStandingBalance.setText(
+                separator(String.valueOf(period.getPrincipalLoanBalanceOutstanding()))
+                        + " " + currency);
 
         holder.tvDate.setText(DateHelper.getDateAsString(period.getDueDate()));
     }

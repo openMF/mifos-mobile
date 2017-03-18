@@ -31,6 +31,7 @@
     <dimen name="text_large">20sp</dimen>
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_small">14sp</dimen>
+    <dimen name="text_for_explanation">10sp</dimen>
 
     <!-- Dimen values for Account Status-->
     <dimen name="account_status_width">25dp</dimen>

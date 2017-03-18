@@ -60,7 +60,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
             } else if (shareAccount.getStatus().getApproved()) {
 
                 ((ViewHolder) holder).iv_status_indicator
-                        .setImageDrawable(setCircularBackground(R.color.light_green));
+                        .setImageDrawable(setCircularBackground(R.color.blue));
 
             } else if (shareAccount.getStatus().getSubmittedAndPendingApproval()) {
 
@@ -70,7 +70,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
             } else {
 
                 ((ViewHolder) holder).iv_status_indicator
-                        .setImageDrawable(setCircularBackground(R.color.light_blue));
+                        .setImageDrawable(setCircularBackground(R.color.black));
 
             }
         }
