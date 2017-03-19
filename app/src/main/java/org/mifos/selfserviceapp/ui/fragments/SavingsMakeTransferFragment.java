@@ -185,20 +185,27 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     @Override
     public void makeTransfer() {
-        SavingsTransferPayload savingsTransferPayload = new SavingsTransferPayload();
-        savingsTransferPayload.setFromAccountId(fromAccountOption.getAccountId());
-        savingsTransferPayload.setFromClientId(fromAccountOption.getClientId());
-        savingsTransferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
-        savingsTransferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
-        savingsTransferPayload.setToOfficeId(toAccountOption.getOfficeId());
-        savingsTransferPayload.setToAccountId(toAccountOption.getAccountId());
-        savingsTransferPayload.setToClientId(toAccountOption.getClientId());
-        savingsTransferPayload.setToAccountType(toAccountOption.getAccountType().getId());
-        savingsTransferPayload.setTransferDate(transferDate);
-        savingsTransferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-        savingsTransferPayload.setTransferDescription(etRemark.getText().toString());
 
-        savingsMakeTransferPresenter.makeTransfer(savingsTransferPayload);
+        if (fromAccountOption.getAccountId() != null && toAccountOption.getAccountId() != null) {
+
+            SavingsTransferPayload savingsTransferPayload = new SavingsTransferPayload();
+            savingsTransferPayload.setFromAccountId(fromAccountOption.getAccountId());
+            savingsTransferPayload.setFromClientId(fromAccountOption.getClientId());
+            savingsTransferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
+            savingsTransferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
+            savingsTransferPayload.setToOfficeId(toAccountOption.getOfficeId());
+            savingsTransferPayload.setToAccountId(toAccountOption.getAccountId());
+            savingsTransferPayload.setToClientId(toAccountOption.getClientId());
+            savingsTransferPayload.setToAccountType(toAccountOption.getAccountType().getId());
+            savingsTransferPayload.setTransferDate(transferDate);
+            savingsTransferPayload.setTransferAmount(Double.parseDouble
+                    (etAmount.getText().toString()));
+            savingsTransferPayload.setTransferDescription(etRemark.getText().toString());
+
+            savingsMakeTransferPresenter.makeTransfer(savingsTransferPayload);
+        } else {
+            showToaster(getString(R.string.cannot_make_transfer));
+        }
     }
 
     @Override
