@@ -2,7 +2,6 @@ package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
 import android.content.res.Resources;
-
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
@@ -34,6 +33,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     private final DataManager dataManager;
     private PreferencesHelper preferencesHelper;
     private CompositeSubscription subscriptions;
+
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of

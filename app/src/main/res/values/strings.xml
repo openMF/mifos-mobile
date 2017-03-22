@@ -190,5 +190,6 @@
     <string name="double_and_String">%1$.2f%2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
     <string name="cannot_make_transfer">Cannot make transfer</string>
+    <string name="failed_template_load">failed to load template</string>
 
 </resources>
