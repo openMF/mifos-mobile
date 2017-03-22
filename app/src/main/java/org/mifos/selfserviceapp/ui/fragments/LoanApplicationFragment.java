@@ -119,31 +119,37 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     @OnClick(R.id.btn_loan_submit)
     void onSubmitLoanApplication() {
-        LoansPayload loansPayload = new LoansPayload();
-        loansPayload.setClientId(loanTemplate.getClientId());
-        loansPayload.setLoanPurposeId(purposeId);
-        loansPayload.setProductId(productId);
-        loansPayload.setPrincipal(loanTemplate.getPrincipal());
-        loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
-        loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
-        loansPayload.setLoanType("individual");
-        loansPayload.setNumberOfRepayments(loanTemplate.getNumberOfRepayments());
-        loansPayload.setRepaymentEvery(loanTemplate.getRepaymentEvery());
-        loansPayload.setRepaymentFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
-        loansPayload.setInterestRatePerPeriod(loanTemplate.getInterestRatePerPeriod());
-        loansPayload.setExpectedDisbursementDate(disbursementDate);
-        loansPayload.setSubmittedOnDate(submittedDate);
+        if (loanTemplate != null) {
+            LoansPayload loansPayload = new LoansPayload();
+            loansPayload.setClientId(loanTemplate.getClientId());
+            loansPayload.setLoanPurposeId(purposeId);
+            loansPayload.setProductId(productId);
+            loansPayload.setPrincipal(loanTemplate.getPrincipal());
+            loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
+            loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType()
+                    .getId());
+            loansPayload.setLoanType("individual");
+            loansPayload.setNumberOfRepayments(loanTemplate.getNumberOfRepayments());
+            loansPayload.setRepaymentEvery(loanTemplate.getRepaymentEvery());
+            loansPayload.setRepaymentFrequencyType(loanTemplate.getInterestRateFrequencyType()
+                    .getId());
+            loansPayload.setInterestRatePerPeriod(loanTemplate.getInterestRatePerPeriod());
+            loansPayload.setExpectedDisbursementDate(disbursementDate);
+            loansPayload.setSubmittedOnDate(submittedDate);
 
-        loansPayload.setTransactionProcessingStrategyId(
-                loanTemplate.getTransactionProcessingStrategyId());
-        loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
-        loansPayload.setTransactionProcessingStrategyId(
-                loanTemplate.getTransactionProcessingStrategyId());
-        loansPayload.setInterestCalculationPeriodType(
-                loanTemplate.getInterestCalculationPeriodType().getId());
-        loansPayload.setInterestType(loanTemplate.getInterestType().getId());
+            loansPayload.setTransactionProcessingStrategyId(
+                    loanTemplate.getTransactionProcessingStrategyId());
+            loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
+            loansPayload.setTransactionProcessingStrategyId(
+                    loanTemplate.getTransactionProcessingStrategyId());
+            loansPayload.setInterestCalculationPeriodType(
+                    loanTemplate.getInterestCalculationPeriodType().getId());
+            loansPayload.setInterestType(loanTemplate.getInterestType().getId());
 
-        loanApplicationPresenter.createLoansAccount(loansPayload);
+            loanApplicationPresenter.createLoansAccount(loansPayload);
+        } else {
+            showError(getString(R.string.failed_template_load));
+        }
     }
 
     public void inflateSubmissionDate() {
