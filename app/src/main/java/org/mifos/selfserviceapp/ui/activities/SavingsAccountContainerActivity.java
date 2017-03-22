@@ -1,5 +1,6 @@
 package org.mifos.selfserviceapp.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,7 +9,6 @@ import android.view.MenuItem;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.SavingAccountsDetailFragment;
-import org.mifos.selfserviceapp.ui.fragments.SavingAccountsTransactionFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
 /**
@@ -38,10 +38,12 @@ public class SavingsAccountContainerActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.item_transactions:
-                replaceFragment(SavingAccountsTransactionFragment.newInstance(savingsId),
-                        true, R.id.container);
+                intent = new Intent(this, SavingsAccountTransactionContainerActivity.class);
+                intent.putExtra(Constants.SAVINGS_ID, savingsId);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
