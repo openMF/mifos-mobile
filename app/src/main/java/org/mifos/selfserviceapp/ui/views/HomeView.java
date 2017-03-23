@@ -96,6 +96,4 @@ public interface HomeView extends MVPView {
      *                saving account object
      */
     void showErrorFetchingSavingAccountsDetail(String message);
-
-    void showError(String errorMessage);
 }

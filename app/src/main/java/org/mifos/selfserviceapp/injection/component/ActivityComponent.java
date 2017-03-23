@@ -10,7 +10,6 @@ import org.mifos.selfserviceapp.ui.fragments.LoanApplicationFragment;
 import org.mifos.selfserviceapp.ui.fragments.SavingAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.AccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
-import org.mifos.selfserviceapp.ui.fragments.HomeScreenFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountSummaryFragment;
@@ -34,8 +33,6 @@ public interface ActivityComponent {
     void inject(HomeActivity homeActivity);
 
     void inject(HomeFragment homeFragment);
-
-    void inject(HomeScreenFragment homeScreenFragment);
 
     void inject(ClientAccountsFragment clientAccountsFragment);
 

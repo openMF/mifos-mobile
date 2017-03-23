@@ -46,28 +46,28 @@
             <Button
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
-                android:id="@+id/application_button"
+                android:id="@+id/btn_application"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Apply for a Loan"/>
             <Button
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
-                android:id="@+id/transaction_button"
+                android:id="@+id/btn_transaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transactions"/>
             <Button
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
-                android:id="@+id/payment_button"
+                android:id="@+id/btn_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Loan Payment"/>
             <Button
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
-                android:id="@+id/transfer_button"
+                android:id="@+id/btn_transfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quick Transfer"/>
@@ -82,7 +82,7 @@
             android:rowOrderPreserved="false"
             android:useDefaultMargins="true">
             <Button
-                android:id="@+id/saving_button"
+                android:id="@+id/btn_savings"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
                 android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
 
 
             <Button
-                android:id="@+id/loan_button"
+                android:id="@+id/btn_loans"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
                 android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
 
 
             <Button
-                android:id="@+id/share_button"
+                android:id="@+id/btn_shares"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"
                 android:layout_width="wrap_content"

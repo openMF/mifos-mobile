@@ -82,7 +82,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void showClient(long clientId) {
         Intent accountsActivityIntent = new Intent(this, HomeActivity.class);
         accountsActivityIntent.putExtra(Constants.CLIENT_ID, clientId);
-        accountsActivityIntent.putExtra(Constants.CLIENT_ID, clientId);
         startActivity(accountsActivityIntent);
         finish();
     }

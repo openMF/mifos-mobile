@@ -21,7 +21,6 @@ import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
-import org.mifos.selfserviceapp.utils.Constants;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -73,26 +72,26 @@ public class HomeFragment extends BaseFragment implements
     @BindView(R.id.tv_shares)
     TextView tv_shares;
 
-    @BindView(R.id.application_button)
-    Button application_button;
+    @BindView(R.id.btn_application)
+    Button btn_application;
 
-    @BindView(R.id.saving_button)
-    Button saving_button;
+    @BindView(R.id.btn_savings)
+    Button btn_savings;
 
-    @BindView(R.id.loan_button)
-    Button loan_button;
+    @BindView(R.id.btn_loans)
+    Button btn_loans;
 
-    @BindView(R.id.share_button)
-    Button share_button;
+    @BindView(R.id.btn_shares)
+    Button btn_shares;
 
-    @BindView(R.id.transaction_button)
-    Button transaction_button;
+    @BindView(R.id.btn_transaction)
+    Button btn_transaction;
 
-    @BindView(R.id.transfer_button)
-    Button transfer_button;
+    @BindView(R.id.btn_transfer)
+    Button btn_transfer;
 
-    @BindView(R.id.payment_button)
-    Button payment_button;
+    @BindView(R.id.btn_payment)
+    Button btn_payment;
 
     private List<LoanAccount> loanAccounts;
     private List<SavingAccount> savingAccounts;
@@ -100,11 +99,8 @@ public class HomeFragment extends BaseFragment implements
     private double totalLoans;
     private long clientId;
 
-    public static HomeFragment newInstance(long clientId) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -127,55 +123,8 @@ public class HomeFragment extends BaseFragment implements
         homePresenter.attachView(this);
         homePresenter.loadClient();
         homePresenter.loadInfo();
+        this.clientId = homePresenter.getClientId();
         showProgress();
-
-        application_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(
-                        LoanApplicationFragment.newInstance(), false, R.id.container);
-            }
-        });
-
-        transaction_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(
-                        RecentTransactionsFragment.newInstance(clientId), false, R.id.container);
-            }
-        });
-
-        saving_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(
-                        ClientAccountsFragment.newInstance(clientId), false, R.id.container);
-            }
-        });
-
-        loan_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(
-                        ClientAccountsFragment.newInstance(clientId), false, R.id.container);
-            }
-        });
-
-        share_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(
-                        ClientAccountsFragment.newInstance(clientId), false, R.id.container);
-            }
-        });
-//        payment_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ((BaseActivity) getActivity()).
-//                      replaceFragment(LoanRepaymentScheduleFragment.
-//                      newInstance(Constants.CLIENT_ID), false, R.id.container);
-//            }
-//        });
 
         return rootView;
     }
@@ -187,26 +136,41 @@ public class HomeFragment extends BaseFragment implements
         homePresenter.loadClient();
     }
 
+    @OnClick(R.id.btn_application)
+    public void onApplicationClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(
+                LoanApplicationFragment.newInstance(), false, R.id.container);
+    }
+
+    @OnClick(R.id.btn_transaction)
+    public void onTransactionClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(
+                RecentTransactionsFragment.newInstance(clientId), false, R.id.container);
+    }
+
+    @OnClick(R.id.btn_savings)
+    public void onSavingsClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(
+                ClientAccountsFragment.newInstance(clientId), false, R.id.container);
+    }
+
+    @OnClick(R.id.btn_loans)
+    public void onLoansClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(
+                ClientAccountsFragment.newInstance(clientId), false, R.id.container);
+    }
+
+    @OnClick(R.id.btn_shares)
+    public void onSharesClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(
+                ClientAccountsFragment.newInstance(clientId), false, R.id.container);
+    }
+
     @Override
     public void onRefresh() {
         ll_error.setVisibility(View.GONE);
         homePresenter.loadInfo();
         homePresenter.loadClient();
-    }
-
-
-    public void showEmptyAccounts(String emptyAccounts) {
-        ll_error.setVisibility(View.VISIBLE);
-        noAccountText.setText(emptyAccounts);
-//        iv_userPicture.setImageResource(R.drawable.ic_clients);
-    }
-
-    @Override
-    public void showError(String errorMessage) {
-        ll_error.setVisibility(View.VISIBLE);
-        noAccountText.setText(errorMessage);
-//        iv_userPicture.setImageResource(R.drawable.ic_clients);
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -243,7 +207,8 @@ public class HomeFragment extends BaseFragment implements
             total += s.getAccountBalance();
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        tv_savings.setText("Total: " + Double.parseDouble(df.format(total)));
+        tv_savings.setText(getContext().getString(R.string.total)
+                            + Double.parseDouble(df.format(total)));
     }
 
     @Override
@@ -253,7 +218,8 @@ public class HomeFragment extends BaseFragment implements
             total += sh.getTotalApprovedShares();
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        tv_shares.setText("Total: " + Double.parseDouble(df.format(total)));
+        tv_shares.setText(getContext().getString(R.string.total)
+                            + Double.parseDouble(df.format(total)));
     }
 
     @Override
@@ -279,7 +245,8 @@ public class HomeFragment extends BaseFragment implements
             this.totalLoans += loanAccount.getSummary().getTotalOutstanding();
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        tv_loans.setText("Total: " + Double.parseDouble(df.format(this.totalLoans)));
+        tv_loans.setText(getContext().getString(R.string.total)
+                            + Double.parseDouble(df.format(this.totalLoans)));
     }
 
     @Override

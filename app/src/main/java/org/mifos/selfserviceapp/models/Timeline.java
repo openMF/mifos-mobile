@@ -1,5 +1,11 @@
 package org.mifos.selfserviceapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ishankhanna for mifos android-client on 09/02/14.
  * Created by michaelsosnick on 1/20/17.
@@ -9,12 +15,6 @@ package org.mifos.selfserviceapp.models;
  * This project is licensed under the open source MPL V2.
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
-
-        import android.os.Parcel;
-        import android.os.Parcelable;
-
-        import java.util.ArrayList;
-        import java.util.List;
 
 public class Timeline implements Parcelable {
 

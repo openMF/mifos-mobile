@@ -12,7 +12,7 @@ import android.view.View;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
-import org.mifos.selfserviceapp.ui.fragments.HomeScreenFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
@@ -55,7 +55,7 @@ public class HomeActivity extends BaseActivity implements
         setToolbarTitle("Home");
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
-        replaceFragment(HomeScreenFragment.newInstance(clientId), false,  R.id.container);
+        replaceFragment(HomeFragment.newInstance(), false,  R.id.container);
 
         setupNavigationBar();
     }
@@ -66,7 +66,7 @@ public class HomeActivity extends BaseActivity implements
         clearFragmentBackStack();
         switch (item.getItemId()) {
             case R.id.item_home:
-                replaceFragment(HomeScreenFragment.newInstance(clientId),
+                replaceFragment(HomeFragment.newInstance(),
                         false, R.id.container);
                 break;
             case R.id.item_accounts:

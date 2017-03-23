@@ -184,7 +184,7 @@ public class AccountsFragment extends BaseFragment implements
 
     @Override
     public void showProgress() {
-
+        showSwipeRefreshLayout(true);
     }
 
     @Override

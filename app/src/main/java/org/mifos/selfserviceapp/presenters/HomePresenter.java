@@ -2,7 +2,6 @@ package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
 
-import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.Page;
@@ -45,6 +44,9 @@ public class HomePresenter extends BasePresenter<HomeView> {
         super.detachView();
     }
 
+    public long getClientId() {
+        return dataManager.getClientId();
+    }
 
     /**
      * This method fetching the Client, associated with current Access Token.
@@ -64,7 +66,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
                     }
 
                     @Override
@@ -72,9 +73,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
                         getMvpView().hideProgress();
                         if (pageClient.getPageItems().size() != 0) {
                             getMvpView().showClientInfo(pageClient.getPageItems().get(0));
-                        } else {
-                            getMvpView().showError(context
-                                    .getString(R.string.error_client_not_found));
                         }
                     }
                 })
@@ -96,7 +94,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
                     }
 
                     @Override
@@ -130,7 +127,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
                     }
 
                     @Override
@@ -165,7 +161,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
                     }
 
                     @Override
