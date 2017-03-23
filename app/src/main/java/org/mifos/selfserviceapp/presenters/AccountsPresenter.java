@@ -102,6 +102,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                             case Constants.LOAN_ACCOUNTS:
                                 getMvpView().showLoanAccounts(clientAccounts.getLoanAccounts());
                                 break;
+                            case Constants.SHARE_ACCOUNTS:
+                                getMvpView().showShareAccounts(clientAccounts.getShareAccounts());
+                                break;
                         }
                     }
                 })
