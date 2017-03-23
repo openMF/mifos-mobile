@@ -2,13 +2,13 @@ package org.mifos.selfserviceapp.ui.activities;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
-
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
@@ -17,6 +17,7 @@ import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
 
@@ -42,6 +43,8 @@ public class HomeActivity extends BaseActivity implements
 
     private long clientId;
 
+    boolean doubleBackToExitPressedOnce = false;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -54,6 +57,7 @@ public class HomeActivity extends BaseActivity implements
         setToolbarTitle(getString(R.string.accounts));
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
+
         replaceFragment(ClientAccountsFragment.newInstance(clientId), false,  R.id.container);
 
         setupNavigationBar();
@@ -118,5 +122,28 @@ public class HomeActivity extends BaseActivity implements
     protected void onDestroy() {
         super.onDestroy();
         preferencesHelper.clear();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce && stackCount() == 0) {
+            HomeActivity.this.finish();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toaster.show(findViewById(android.R.id.content) , getString(R.string.exit_message));
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+
+        if (stackCount() != 0) {
+            super.onBackPressed();
+        }
+
+
     }
 }
