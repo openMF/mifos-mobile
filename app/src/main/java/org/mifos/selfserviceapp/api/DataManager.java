@@ -119,4 +119,8 @@ public class DataManager {
     public Observable<Page<Charge>> getClientLocalCharges() {
         return databaseHelper.getClientCharges();
     }
+
+    public long getClientId() {
+        return clientId;
+    }
 }

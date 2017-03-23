@@ -12,6 +12,7 @@ import android.view.View;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
@@ -51,10 +52,10 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        setToolbarTitle(getString(R.string.accounts));
+        setToolbarTitle("Home");
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
-        replaceFragment(ClientAccountsFragment.newInstance(clientId), false,  R.id.container);
+        replaceFragment(HomeFragment.newInstance(), false,  R.id.container);
 
         setupNavigationBar();
     }
@@ -64,6 +65,10 @@ public class HomeActivity extends BaseActivity implements
         // select which item to open
         clearFragmentBackStack();
         switch (item.getItemId()) {
+            case R.id.item_home:
+                replaceFragment(HomeFragment.newInstance(),
+                        false, R.id.container);
+                break;
             case R.id.item_accounts:
                 replaceFragment(ClientAccountsFragment.newInstance(clientId),
                         true, R.id.container);

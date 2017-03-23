@@ -2,9 +2,8 @@ package org.mifos.selfserviceapp.models.client;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
+import org.mifos.selfserviceapp.models.Timeline;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +57,19 @@ public class Client implements Parcelable {
 
     @SerializedName("staffName")
     private String staffName;
+
+    @SerializedName("timeline")
+    private Timeline timeline;
+
+    @SerializedName("imageId")
+    private int imageId;
+
+    @SerializedName("imagePresent")
+    private boolean imagePresent;
+
+    @SerializedName("externalId")
+    private String externalId;
+
 
     public List<Integer> getDobDate() {
         return dobDate;
@@ -131,6 +143,22 @@ public class Client implements Parcelable {
         this.fullname = fullname;
     }
 
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public boolean isImagePresent() {
+        return imagePresent;
+    }
+
+    public void setImagePresent(boolean imagePresent) {
+        this.imagePresent = imagePresent;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
@@ -191,6 +219,11 @@ public class Client implements Parcelable {
         this.officeName = in.readString();
         this.staffId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.staffName = in.readString();
+        this.timeline = in.readParcelable(Timeline.class.getClassLoader());
+        this.fullname = in.readString();
+        this.imageId = in.readInt();
+        this.imagePresent = in.readByte() != 0;
+        this.externalId = in.readString();
     }
 
     public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>() {

@@ -175,6 +175,8 @@
 
     <string name="transferred_Successfully">Transferred Successfully</string>
 
+    <string name="total">Total: </string>
+
     <string name="account_short">A/C</string>
     <string name="loan_product">Loan Product</string>
     <string name="inactive">Inactive</string>

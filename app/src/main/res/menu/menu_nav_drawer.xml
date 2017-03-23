@@ -5,6 +5,12 @@
            android:checkableBehavior="single">
 
         <item
+            android:id="@+id/item_home"
+            android:checked="true"
+            android:icon="@drawable/ic_account_balance_black_24dp"
+            android:title="@string/home"/>
+
+        <item
             android:id="@+id/item_accounts"
             android:checked="true"
             android:icon="@drawable/ic_account_balance_black_24dp"
