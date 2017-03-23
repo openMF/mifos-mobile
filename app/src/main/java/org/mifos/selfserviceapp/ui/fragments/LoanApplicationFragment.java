@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
@@ -242,8 +241,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     @Override
     public void showLoanAccountCreatedSuccessfully() {
-        Toast.makeText(getActivity(), R.string.loan_application_submitted_successfully,
-                Toast.LENGTH_SHORT).show();
+        Toaster.show(rootView, R.string.loan_application_submitted_successfully);
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
