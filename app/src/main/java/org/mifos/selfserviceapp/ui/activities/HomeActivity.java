@@ -12,6 +12,7 @@ import android.view.View;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
@@ -52,10 +53,10 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        setToolbarTitle("Home");
+        setToolbarTitle(getString(R.string.home));
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
-        replaceFragment(HomeFragment.newInstance(), false,  R.id.container);
+        replaceFragment(HomeFragment.newInstance(clientId), true,  R.id.container);
 
         setupNavigationBar();
     }
@@ -66,11 +67,10 @@ public class HomeActivity extends BaseActivity implements
         clearFragmentBackStack();
         switch (item.getItemId()) {
             case R.id.item_home:
-                replaceFragment(HomeFragment.newInstance(),
-                        false, R.id.container);
+                replaceFragment(HomeFragment.newInstance(clientId), true, R.id.container);
                 break;
             case R.id.item_accounts:
-                replaceFragment(ClientAccountsFragment.newInstance(clientId),
+                replaceFragment(ClientAccountsFragment.newInstance(clientId, AccountType.SAVINGS),
                         true, R.id.container);
                 break;
             case R.id.item_recent_transactions:

@@ -4,208 +4,200 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cv_home"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/listPreferredItemHeight"
-        android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:scrollHorizontally="false"
-        android:ellipsize="none"
-        android:paddingBottom="8dp"
-        android:paddingLeft="@dimen/row_padding_left"
-        android:paddingRight="@dimen/row_padding_right"
-        >
-        <TextView
-            android:id="@+id/tv_client_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:layout_marginLeft="10dp"
-            android:lines="1"
-            android:layout_alignParentLeft="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"/>
-        <ImageView
-            android:id="@+id/iv_profile_pic"
-            android:layout_width="125dp"
-            android:layout_height="125dp" />
-        <GridLayout
+        android:background="@color/white"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardUseCompatPadding="true">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:stretchColumns="1">
+
+            <TableRow>
+                <RelativeLayout
+                    android:id="@+id/fl_apply_for_loan"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:background="@color/accent"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/iv_apply_loan"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_horizontal"
+                        android:contentDescription="@string/status_image"
+                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_apply_loan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_apply_loan"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/apply_for_loan"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fl_recent_transaction"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:background="@color/light_yellow"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/iv_recent_transaction"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_horizontal"
+                        android:contentDescription="@string/status_image"
+                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_recent_transaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_recent_transaction"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/recent_transactions"/>
+
+                </RelativeLayout>
+
+            </TableRow>
+
+            <TableRow>
+
+                <RelativeLayout
+                    android:id="@+id/fl_loan_repayment"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:background="@color/light_yellow"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/iv_oan_repayment"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_horizontal"
+                        android:contentDescription="@string/status_image"
+                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_oan_repayment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_oan_repayment"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/loan_repayment"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fl_quick_transfer"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:background="@color/accent"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/iv_quick_transfer"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_horizontal"
+                        android:contentDescription="@string/status_image"
+                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_quick_transfer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_quick_transfer"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/quick_transfer"/>
+
+                </RelativeLayout>
+
+            </TableRow>
+        </TableLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cv_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:layout_below="@+id/cv_home"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:alignmentMode="alignBounds"
-            android:columnCount="2"
-            android:rowOrderPreserved="false"
-            android:useDefaultMargins="true">
-            <Button
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/btn_application"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Apply for a Loan"/>
-            <Button
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/btn_transaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Transactions"/>
-            <Button
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/btn_payment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Loan Payment"/>
-            <Button
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/btn_transfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quick Transfer"/>
-        </GridLayout>
-        <GridLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:alignmentMode="alignBounds"
-            android:columnCount="2"
-            android:rowOrderPreserved="false"
-            android:useDefaultMargins="true">
+            android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_savings"
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:lines="1"
-                android:paddingTop="8dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
                 android:background="@color/green_light"
-                android:text="Saving Accounts"
+                android:text="@string/savings_account"
                 android:textColor="@color/black"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:textSize="@dimen/text_medium"/>
-            <TextView
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/tv_savings"
-                android:scrollHorizontally="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:paddingTop="8dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
-                android:background="@color/gray_light"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"/>
-
 
             <Button
                 android:id="@+id/btn_loans"
                 android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                android:paddingTop="8dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
-                android:text="Loan Balances"
+                android:text="@string/loan_account"
                 android:background="@color/light_grey"
                 android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:textSize="@dimen/text_medium"/>
-            <TextView
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/tv_loans"
-                android:scrollHorizontally="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:layout_marginTop="10dp"
-                android:paddingTop="8dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
-                android:textColor="@color/black"
-                android:background="@color/gray_light"
-                android:textSize="@dimen/text_medium"/>
-
 
             <Button
                 android:id="@+id/btn_shares"
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                android:layout_marginTop="10dp"
-                android:paddingTop="8dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
-                android:text="Shares"
-                android:background="@color/light_blue"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"/>
-            <TextView
-                android:layout_gravity="fill"
-                android:layout_columnWeight="1"
-                android:id="@+id/tv_shares"
-                android:scrollHorizontally="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:layout_marginTop="10dp"
-                android:paddingTop="8dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
-                android:background="@color/gray_light"
+                android:text="@string/share_account"
+                android:background="@color/light_blue"
                 android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:textSize="@dimen/text_medium"/>
 
-        </GridLayout>
+        </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
-    <LinearLayout
-        android:id="@+id/ll_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/noAccountIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_attach_money_black_24dp"/>
-
-        <TextView
-            android:id="@+id/noAccountText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
 </RelativeLayout>
