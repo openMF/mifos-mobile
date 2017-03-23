@@ -141,6 +141,7 @@
 
         <Button
             android:id="@+id/btn_loan_submit"
+            android:background="@color/primary"
             style="@style/Button.Base"
             android:layout_marginTop="10dp"
             android:text="@string/submit_loan"/>
