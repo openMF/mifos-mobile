@@ -1,5 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -200,6 +202,13 @@ public class SavingAccountsTransactionFragment extends BaseFragment
                 getText(R.string.end_date));
         transactionListAdapter.
                 setSavingAccountsTransactionList(transactionsList);
+    }
+
+    @OnClick(R.id.tv_help_line_number)
+    void dialHelpLineNumber() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + getString(R.string.help_line_number)));
+        startActivity(intent);
     }
 
     @Override
