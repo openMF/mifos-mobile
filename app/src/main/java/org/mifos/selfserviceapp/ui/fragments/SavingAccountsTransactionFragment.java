@@ -29,6 +29,7 @@ import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.DatePick;
 import org.mifos.selfserviceapp.utils.MFDatePicker;
+import org.mifos.selfserviceapp.utils.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,8 +155,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     @Override
     public void showFilteredList(List<Transactions> list) {
-        Toast.makeText(getContext(), getContext().getResources().getText(R.string.filterd)
-                , Toast.LENGTH_SHORT).show();
+        Toaster.show(rootView, getString(R.string.filterd));
         transactionListAdapter.
                 setSavingAccountsTransactionList(list);
     }
