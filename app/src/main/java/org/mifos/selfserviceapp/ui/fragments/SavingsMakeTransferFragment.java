@@ -264,6 +264,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
         switch (transferType) {
             case Constants.TRANSFER_PAY_TO:
+                setToolbarTitle(getString(R.string.deposit));
                 toAccountOption = savingsMakeTransferPresenter
                         .searchAccount(accountOptionsTemplate.getToAccountOptions(), accountId);
                 spPayTo.setSelection(accountOptionsTemplate.getToAccountOptions()
@@ -271,6 +272,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
                 spPayTo.setEnabled(false);
                 break;
             case Constants.TRANSFER_PAY_FROM:
+                setToolbarTitle(getString(R.string.transfer));
                 fromAccountOption = savingsMakeTransferPresenter
                         .searchAccount(accountOptionsTemplate.getFromAccountOptions(), accountId);
                 spPayFrom.setSelection(accountOptionsTemplate.getFromAccountOptions()
