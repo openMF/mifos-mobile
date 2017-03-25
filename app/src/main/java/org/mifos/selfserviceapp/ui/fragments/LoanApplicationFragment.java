@@ -25,6 +25,7 @@ import org.mifos.selfserviceapp.ui.views.LoanApplicationMvpView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.MFDatePicker;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import java.util.ArrayList;
@@ -119,31 +120,38 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     @OnClick(R.id.btn_loan_submit)
     void onSubmitLoanApplication() {
-        LoansPayload loansPayload = new LoansPayload();
-        loansPayload.setClientId(loanTemplate.getClientId());
-        loansPayload.setLoanPurposeId(purposeId);
-        loansPayload.setProductId(productId);
-        loansPayload.setPrincipal(loanTemplate.getPrincipal());
-        loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
-        loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
-        loansPayload.setLoanType("individual");
-        loansPayload.setNumberOfRepayments(loanTemplate.getNumberOfRepayments());
-        loansPayload.setRepaymentEvery(loanTemplate.getRepaymentEvery());
-        loansPayload.setRepaymentFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
-        loansPayload.setInterestRatePerPeriod(loanTemplate.getInterestRatePerPeriod());
-        loansPayload.setExpectedDisbursementDate(disbursementDate);
-        loansPayload.setSubmittedOnDate(submittedDate);
+        if (Network.isConnected(getActivity()) == true) {
+            LoansPayload loansPayload = new LoansPayload();
+            loansPayload.setClientId(loanTemplate.getClientId());
+            loansPayload.setLoanPurposeId(purposeId);
+            loansPayload.setProductId(productId);
+            loansPayload.setPrincipal(loanTemplate.getPrincipal());
+            loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
+            loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType()
+                    .getId());
+            loansPayload.setLoanType("individual");
+            loansPayload.setNumberOfRepayments(loanTemplate.getNumberOfRepayments());
+            loansPayload.setRepaymentEvery(loanTemplate.getRepaymentEvery());
+            loansPayload.setRepaymentFrequencyType(loanTemplate.getInterestRateFrequencyType()
+                    .getId());
+            loansPayload.setInterestRatePerPeriod(loanTemplate.getInterestRatePerPeriod());
+            loansPayload.setExpectedDisbursementDate(disbursementDate);
+            loansPayload.setSubmittedOnDate(submittedDate);
 
-        loansPayload.setTransactionProcessingStrategyId(
-                loanTemplate.getTransactionProcessingStrategyId());
-        loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
-        loansPayload.setTransactionProcessingStrategyId(
-                loanTemplate.getTransactionProcessingStrategyId());
-        loansPayload.setInterestCalculationPeriodType(
-                loanTemplate.getInterestCalculationPeriodType().getId());
-        loansPayload.setInterestType(loanTemplate.getInterestType().getId());
+            loansPayload.setTransactionProcessingStrategyId(
+                    loanTemplate.getTransactionProcessingStrategyId());
+            loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
+            loansPayload.setTransactionProcessingStrategyId(
+                    loanTemplate.getTransactionProcessingStrategyId());
+            loansPayload.setInterestCalculationPeriodType(
+                    loanTemplate.getInterestCalculationPeriodType().getId());
+            loansPayload.setInterestType(loanTemplate.getInterestType().getId());
 
-        loanApplicationPresenter.createLoansAccount(loansPayload);
+            loanApplicationPresenter.createLoansAccount(loansPayload);
+
+        } else {
+            showError("failed to load template");
+        }
     }
 
     public void inflateSubmissionDate() {
