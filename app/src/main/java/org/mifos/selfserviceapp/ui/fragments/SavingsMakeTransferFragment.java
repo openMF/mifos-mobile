@@ -1,8 +1,11 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -111,8 +114,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_savings_make_transfer, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        if (transferType == TRANSFER_PAY_FROM) setToolbarTitle(getString(R.string.transfer));
-        else if (transferType == TRANSFER_PAY_TO){
+        if (transferType.equals(TRANSFER_PAY_FROM)) setToolbarTitle(getString(R.string.transfer));
+        else if (transferType.equals(TRANSFER_PAY_TO)){
             setToolbarTitle(getString(R.string.deposit));
         }
 
@@ -127,49 +130,60 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     @OnClick(R.id.btn_review_transfer)
     void reviewTransfer() {
-        if (etAmount.getText().toString().equals("")) {
-            showToaster(getString(R.string.enter_amount));
-            return;
+        if (isNetworkAvailable(getActivity().getApplicationContext())){
+            if (etAmount.getText().toString().equals("")) {
+                showToaster(getString(R.string.enter_amount));
+                return;
+            }
+
+            if (etRemark.getText().toString().equals("")) {
+                showToaster(getString(R.string.remark_is_mandatory));
+                return;
+            }
+
+            if (spPayTo.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().toString())) {
+                showToaster(getString(R.string.error_same_account_transfer));
+                return;
+            }
+
+            final String[][] data = {
+                    {getString(R.string.transfer_to), ""},
+                    {getString(R.string.account_number), spPayTo.getSelectedItem().toString()},
+                    {getString(R.string.transfer_from), ""},
+                    {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
+                    {getString(R.string.transfer_date), transferDate},
+                    {getString(R.string.amount), etAmount.getText().toString()},
+                    {getString(R.string.remark), etRemark.getText().toString()}
+            };
+            new MaterialDialog.Builder().init(getActivity())
+                    .setTitle(R.string.review_transfer)
+                    .setMessage(Utils.generateFormString(data))
+                    .setPositiveButton(R.string.transfer,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    makeTransfer();
+                                }
+                            })
+                    .setNegativeButton(R.string.dialog_action_back,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                    .createMaterialDialog()
+                    .show();
+        }
+        else{
+            Snackbar.make(getView(),"You are not connected to the internet!!",Snackbar.LENGTH_LONG).show();
         }
 
-        if (etRemark.getText().toString().equals("")) {
-            showToaster(getString(R.string.remark_is_mandatory));
-            return;
-        }
+    }
 
-        if (spPayTo.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().toString())) {
-            showToaster(getString(R.string.error_same_account_transfer));
-            return;
-        }
-
-        final String[][] data = {
-                {getString(R.string.transfer_to), ""},
-                {getString(R.string.account_number), spPayTo.getSelectedItem().toString()},
-                {getString(R.string.transfer_from), ""},
-                {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
-                {getString(R.string.transfer_date), transferDate},
-                {getString(R.string.amount), etAmount.getText().toString()},
-                {getString(R.string.remark), etRemark.getText().toString()}
-        };
-        new MaterialDialog.Builder().init(getActivity())
-                .setTitle(R.string.review_transfer)
-                .setMessage(Utils.generateFormString(data))
-                .setPositiveButton(R.string.transfer,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                makeTransfer();
-                            }
-                        })
-                .setNegativeButton(R.string.dialog_action_back,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                .createMaterialDialog()
-                .show();
+    private boolean isNetworkAvailable(Context applicationContext) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return  connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     @OnClick(R.id.btn_cancel_transfer)
