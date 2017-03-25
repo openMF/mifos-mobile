@@ -3,6 +3,8 @@ package org.mifos.selfserviceapp.ui.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +33,18 @@ import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import static org.mifos.selfserviceapp.utils.Constants.TRANSFER_PAY_FROM;
+import static org.mifos.selfserviceapp.utils.Constants.TRANSFER_PAY_TO;
+import static org.mifos.selfserviceapp.utils.Constants.TRANSFER_TYPE;
 
 /**
  * Created by Rajan Maurya on 10/03/17.
@@ -83,7 +91,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         SavingsMakeTransferFragment transferFragment = new SavingsMakeTransferFragment();
         Bundle args = new Bundle();
         args.putLong(Constants.ACCOUNT_ID, accountId);
-        args.putString(Constants.TRANSFER_TYPE, transferType);
+        args.putString(TRANSFER_TYPE, transferType);
         transferFragment.setArguments(args);
         return transferFragment;
     }
@@ -93,7 +101,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             accountId = getArguments().getLong(Constants.ACCOUNT_ID);
-            transferType = getArguments().getString(Constants.TRANSFER_TYPE);
+            transferType = getArguments().getString(TRANSFER_TYPE);
+
         }
     }
 
@@ -102,7 +111,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_savings_make_transfer, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        setToolbarTitle(getString(R.string.transfer));
+        if (transferType == TRANSFER_PAY_FROM) setToolbarTitle(getString(R.string.transfer));
+        else if (transferType == TRANSFER_PAY_TO){
+            setToolbarTitle(getString(R.string.deposit));
+        }
+
         ButterKnife.bind(this, rootView);
         savingsMakeTransferPresenter.attachView(this);
 
