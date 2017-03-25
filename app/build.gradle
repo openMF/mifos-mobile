@@ -43,6 +43,7 @@ android {
         abortOnError false
         disable 'InvalidPackage'
     }
+    buildToolsVersion '25.0.0'
 }
 
 dependencies {
