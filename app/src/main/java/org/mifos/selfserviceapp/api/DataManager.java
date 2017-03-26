@@ -124,4 +124,8 @@ public class DataManager {
     public Call<ResponseBody> getClientImage() {
         return baseApiManager.getClientsApi().getClientImage(clientId);
     }
+
+    public long getClientId() {
+        return clientId;
+    }
 }

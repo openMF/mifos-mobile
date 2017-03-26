@@ -48,10 +48,10 @@ public class LoanRepaymentScheduleAdapter extends
         Periods period = periodses.get(position);
 
         holder.tvLoanBalance.setText(context.getString(R.string.double_and_String,
-                period.getPrincipalOriginalDue(), currency));
+                period.getPrincipalLoanBalanceOutstanding(), currency));
 
         holder.tvOutStandingBalance.setText(context.getString(R.string.double_and_String,
-                        period.getPrincipalLoanBalanceOutstanding(), currency));
+                        period.getPrincipalOriginalDue(), currency));
 
         holder.tvDate.setText(DateHelper.getDateAsString(period.getDueDate()));
     }

@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply from: '../config/quality/quality.gradle'
 apply plugin: 'android-apt'
 apply plugin: 'com.neenbedankt.android-apt'
@@ -68,4 +83,7 @@ dependencies {
     //Butter Knife
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     apt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
+        transitive = true;
+    }
 }

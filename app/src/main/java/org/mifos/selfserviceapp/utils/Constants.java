@@ -43,10 +43,12 @@ public class Constants {
 
     public static final String TRANSFER_TYPE = "transfer_type";
 
-    public static final String TRANSFER_DEPOSIT = "transfer_deposit";
+    public static final String TRANSFER_QUICK = "transfer_quick";
 
     public static final String TRANSFER_PAY_TO = "transfer_pay_to";
 
     public static final String TRANSFER_PAY_FROM = "transfer_pay_from";
+
+    public static final String ACCOUNT_POSITION = "account_position";
 
 }
