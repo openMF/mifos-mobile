@@ -17,6 +17,7 @@
     <string name="questionnaire">Questionnaire</string>
     <string name="about_us">About Us</string>
     <string name="saving_account_details">Saving Account Details</string>
+    <string name="savings_account">Savings Account</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>
     <string name="nominal_interest_rate">Nominal Interest Rate</string>
     <string name="account_number">Account Number </string>
@@ -31,7 +32,9 @@
     <string name="splash">Splash</string>
     <string name="savings">Saving</string>
     <string name="loan">Loan</string>
+    <string name="loan_account">Loan Account</string>
     <string name="share">Share</string>
+    <string name="share_account">Share Account</string>
     <string name="clients_list">Chose a client</string>
     <string name="working">Working</string>
     <string name="status_image">Status Image</string>
@@ -172,14 +175,14 @@
     <string name="date">Date</string>
     <string name="loan_balance">Loan Balance</string>
     <string name="repayment">Repayment</string>
+    <string name="loan_repayment">Loan Repayment</string>
+    <string name="quick_transfer">Quick Transfer</string>
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
     <string name="transferred_Successfully">Transferred Successfully</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_user_details">UserDetails</string>
+    <string name="total">Total: </string>
 
     <string name="account_short">A/C</string>
     <string name="loan_product">Loan Product</string>

@@ -22,6 +22,7 @@ import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.presenters.AccountsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
+import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.AccountsView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -44,10 +45,13 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     @Inject
     AccountsPresenter accountsPresenter;
 
-    public static ClientAccountsFragment newInstance(long clientId) {
+    private AccountType accountType;
+
+    public static ClientAccountsFragment newInstance(long clientId, AccountType accountType) {
         ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
         Bundle args = new Bundle();
         args.putLong(Constants.CLIENT_ID, clientId);
+        args.putSerializable(Constants.ACCOUNT_TYPE, accountType);
         clientAccountsFragment.setArguments(args);
         return clientAccountsFragment;
     }
@@ -56,6 +60,9 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if (getArguments() != null) {
+            accountType = (AccountType) getArguments().getSerializable(Constants.ACCOUNT_TYPE);
+        }
     }
 
     @Override
@@ -86,6 +93,17 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(viewPagerAdapter);
+        switch (accountType) {
+            case SAVINGS:
+                viewPager.setCurrentItem(0);
+                break;
+            case LOAN:
+                viewPager.setCurrentItem(1);
+                break;
+            case SHARE:
+                viewPager.setCurrentItem(2);
+                break;
+        }
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
