@@ -199,4 +199,5 @@
     <string name="double_and_String">%1$.2f%2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
 
+    <string name="title_activity_user_details">User profile</string>
 </resources>

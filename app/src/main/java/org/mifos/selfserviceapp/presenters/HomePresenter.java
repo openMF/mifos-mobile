@@ -15,7 +15,6 @@ import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.Base64toBitmap;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -55,7 +54,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
         subscriptions.unsubscribe();
     }
 
-    public void getImage() throws IOException {
+    public void getImage() {
         checkViewAttached();
         getMvpView().showProgress();
 
@@ -91,6 +90,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 }
 
                 getMvpView().setUserImage(recievedUserImage);
+                getUserName(); //set user name
+
             }
 
             @Override

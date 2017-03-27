@@ -139,6 +139,8 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
                 }
 
                 getMvpView().setUserImage(recievedUserImage);
+                getUserDetails();
+
             }
 
             @Override

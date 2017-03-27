@@ -21,10 +21,10 @@ import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
-import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
@@ -72,7 +72,6 @@ public class HomeActivity extends BaseActivity implements
         header = new HeaderView(navigationViewHeader);
         try {
             homePresenter.getImage(); //set user details.
-            homePresenter.getUserName(); //set user name
 
         } catch (Exception e) {
             Log.d("Error setting image", e.getMessage());

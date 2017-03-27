@@ -65,12 +65,12 @@ public class UserDetails extends BaseActivity implements UserDetailsView {
         setSupportActionBar(toolbar_user_details);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        presenter.getUserDetails();
         try {
             presenter.getImage();
         } catch (IOException e) {
             Log.d("Error setting image", e.getMessage());
         }
+
     }
 
     //Setup on back button pressed event.
@@ -106,25 +106,12 @@ public class UserDetails extends BaseActivity implements UserDetailsView {
         userImage.setImageBitmap(image);
     }
 
-
-    /**
-     * Should be called when a time taking process starts and we want the user
-     * to wait for the process to finish. The UI should gracefully display some
-     * sort of progress bar or animation so that the user knows that the app is
-     * doing some work and has not stalled.
-     * <p>
-     * For example: a network request to the API is made for authenticating
-     * the user.
-     */
     @Override
     public void showProgress() {
         showProgressDialog(getString(R.string.fetching_client));
     }
 
-    /**
-     * Should be called when a time taking process ends and we have some result
-     * for the user.
-     */
+
     @Override
     public void hideProgress() {
         hideProgressDialog();
