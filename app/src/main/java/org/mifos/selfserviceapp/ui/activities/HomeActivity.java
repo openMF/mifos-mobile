@@ -56,7 +56,7 @@ public class HomeActivity extends BaseActivity implements
         setToolbarTitle(getString(R.string.home));
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
-        replaceFragment(HomeFragment.newInstance(clientId), true,  R.id.container);
+        replaceFragment(HomeFragment.newInstance(clientId), false ,  R.id.container);
 
         setupNavigationBar();
     }
