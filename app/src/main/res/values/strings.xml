@@ -196,5 +196,7 @@
     <!--Format Strings-->
     <string name="double_and_String">%1$.2f%2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
+    <string name="exit_question">Are you sure you want to exit?</string>
+    <string name="exit_title">SELF SERVICE</string>
 
 </resources>
