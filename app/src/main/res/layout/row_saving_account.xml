@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/row_padding_left"
+    android:paddingEnd="@dimen/row_padding_right"
+>
+    <org.mifos.selfserviceapp.utils.CircularImageView
+        android:id="@+id/iv_status_indicator"
+        android:layout_width="@dimen/account_status_width"
+        android:layout_height="@dimen/account_status_height"
+        android:layout_gravity="center_vertical"
+        android:src="@color/light_red"
+        android:layout_marginEnd="@dimen/default_margin"/>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/row_padding_left">
+
+        <TextView
+            android:id="@+id/tv_clientSavingAccountNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/medium_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"/>
+
+        <TextView
+            android:id="@+id/tv_savingAccountProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/small_text"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_small"/>
+
+    </LinearLayout>
+</LinearLayout>

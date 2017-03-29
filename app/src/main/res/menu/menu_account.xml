@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+  -->
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_add_loan"
+        app:showAsAction="never"
+        android:title="@string/apply_for_loan"/>
+
+</menu>
