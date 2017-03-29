@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,9 @@ import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.DatePick;
 import org.mifos.selfserviceapp.utils.MFDatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -85,6 +88,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +129,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     @Override
     public void showSavingAccountsDetail(SavingsWithAssociations
-                                                     savingsWithAssociations) {
+                                                 savingsWithAssociations) {
         layoutAccount.setVisibility(View.VISIBLE);
 
         transactionsList = savingsWithAssociations.getTransactions();
@@ -179,13 +183,24 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     @OnClick(R.id.btn_custom_filter)
     public void datePickerFilter() {
-        String startDateText = getContext().getResources().getString(R.string.start_date);
-        String endDateText = getContext().getResources().getString(R.string.end_date);
+        String startDateText = getContext().getResources().getString(R.string.start_date);;
+        String endDateText = getContext().getResources().getString(R.string.end_date);;
 
-        if (!tvStartDate.getText().equals(startDateText) &&
-                !tvEndDate.getText().equals(endDateText)) {
+        Log.d("starttext",startDateText);
+        Log.d("endtext",endDateText);
+
+        int checkDate=0;
+        if(isDateAfter(startDateFromPicker,endDateFromPicker)){
+            checkDate=1;
+        }
+        else{
+            Toast.makeText(getContext(), "Start Date must be smaller than End Date!", Toast.LENGTH_SHORT).show();
+            checkDate=2;
+        }
+        if ((checkDate==1)&&(!tvStartDate.getText().equals(startDateText) &&
+                !tvEndDate.getText().equals(endDateText))) {
             filter(startDateFromPicker, endDateFromPicker);
-        } else {
+        } else if(checkDate!=2){
             Toast.makeText(getContext(), getResources().getText(R.string.select_date),
                     Toast.LENGTH_SHORT).show();
         }
@@ -229,11 +244,31 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     }
 
+    public static boolean isDateAfter(long startDate,long endDate)
+    {
+
+        Log.d("startdate",""+startDate);
+        Log.d("enddate",""+endDate);
+        // long startTimeInMillis = DateHelper.getDateAsLongFromString(startDate, "dd-MM-yyyy");
+        //Log.d("startmilli",""+startTimeInMillis);
+
+        //long endTimeInMillis = DateHelper.getDateAsLongFromString(endDate, "dd-MM-yyyy");
+        //Log.d("endmilli",""+endTimeInMillis);
+
+
+        if (startDate<=endDate)
+            return true;
+        else
+            return false;
+
+
+    }
+
     private void filter(long startDate , long endDate) {
 
         dummyTransactionList = new ArrayList<>(transactionsList);
         savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList ,
-                                                                    startDate , endDate);
+                startDate , endDate);
     }
 
 }
