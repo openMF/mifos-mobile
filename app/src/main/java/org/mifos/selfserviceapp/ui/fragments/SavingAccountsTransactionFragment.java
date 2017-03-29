@@ -76,6 +76,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private List<Transactions> transactionsList, dummyTransactionList;
     private DatePick datePick;
     private DialogFragment mfDatePicker;
+    int checkDate = 0;
 
     public static SavingAccountsTransactionFragment newInstance(long savingsId) {
         SavingAccountsTransactionFragment fragment = new SavingAccountsTransactionFragment();
@@ -182,7 +183,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         String startDateText = getContext().getResources().getString(R.string.start_date);
         String endDateText = getContext().getResources().getString(R.string.end_date);
 
-        int checkDate = 0;
+
         if (isDateAfter(startDateFromPicker, endDateFromPicker)) {
             checkDate = 1;
         } else {
@@ -239,10 +240,12 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     }
 
     public static boolean isDateAfter(long startDate, long endDate) {
-        if (startDate <= endDate)
+        if (startDate <= endDate) {
             return true;
-        else
+        }  else {
             return false;
+        }
+
     }
 
     private void filter(long startDate , long endDate) {
