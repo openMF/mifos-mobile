@@ -182,18 +182,18 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         String startDateText = getContext().getResources().getString(R.string.start_date);
         String endDateText = getContext().getResources().getString(R.string.end_date);
 
-        int checkDate=0;
-        if(isDateAfter(startDateFromPicker,endDateFromPicker)){
-            checkDate=1;
+        int checkDate = 0;
+        if (isDateAfter(startDateFromPicker, endDateFromPicker)) {
+            checkDate = 1;
+        } else {
+            Toast.makeText(getContext(), "Start Date must be smaller than End Date!",
+                    Toast.LENGTH_SHORT).show();
+            checkDate = 2;
         }
-        else{
-            Toast.makeText(getContext(), "Start Date must be smaller than End Date!", Toast.LENGTH_SHORT).show();
-            checkDate=2;
-        }
-        if ((checkDate==1)&&(!tvStartDate.getText().equals(startDateText) &&
+        if ((checkDate == 1) && (!tvStartDate.getText().equals(startDateText) &&
                 !tvEndDate.getText().equals(endDateText))) {
             filter(startDateFromPicker, endDateFromPicker);
-        } else if(checkDate!=2){
+        } else if (checkDate != 2) {
             Toast.makeText(getContext(), getResources().getText(R.string.select_date),
                     Toast.LENGTH_SHORT).show();
         }
@@ -238,9 +238,8 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     }
 
-    public static boolean isDateAfter(long startDate,long endDate)
-    {
-        if (startDate<=endDate)
+    public static boolean isDateAfter(long startDate, long endDate) {
+        if (startDate <= endDate)
             return true;
         else
             return false;
