@@ -166,7 +166,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             showEmptyInputError(context.getString(R.string.username));
             return false;
         } else if (username.length() < 5) {
-            showMinimumInputLengthNotAchievedError(username,
+            showMinimumInputLengthNotAchievedError(resources.getString(R.string.username),
                     resources.getInteger(R.integer.username_minimum_length));
             return false;
         } else if (username.contains(" ")) {
