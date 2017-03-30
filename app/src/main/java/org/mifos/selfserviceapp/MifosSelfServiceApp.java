@@ -3,9 +3,11 @@ package org.mifos.selfserviceapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import io.fabric.sdk.android.Fabric;
 import org.mifos.selfserviceapp.injection.component.ApplicationComponent;
 import org.mifos.selfserviceapp.injection.component.DaggerApplicationComponent;
 import org.mifos.selfserviceapp.injection.module.ApplicationModule;
@@ -31,6 +33,7 @@ public class MifosSelfServiceApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         instance = this;
         FlowManager.init(new FlowConfig.Builder(this).build());
     }
