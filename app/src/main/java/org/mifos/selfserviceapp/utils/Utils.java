@@ -30,7 +30,7 @@ public class Utils {
         StringBuilder formString = new StringBuilder();
         formString.setLength(0);
         for (String[] aData : data) {
-            formString.append(aData[0]).append(':').append(aData[1]).append('\n');
+            formString.append(aData[0]).append(" : ").append(aData[1]).append('\n');
         }
         return formString.toString();
     }
