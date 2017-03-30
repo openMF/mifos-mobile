@@ -171,20 +171,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 .DFRAG_DATE_PICKER);
     }
 
-    @OnClick(R.id.tv_submission_date)
-    public void setTvSubmittedOnDate() {
-        isSubmissionDate = true;
-        mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
-                .DFRAG_DATE_PICKER);
-    }
 
     @Override
     public void onDatePicked(String date) {
-        if (isSubmissionDate) {
-            tvSubmissionDate.setText(date);
-            submittedDate = date;
-            isSubmissionDate = false;
-        }
 
         if (isDisbursebemntDate) {
             tvExpectedDisbursementDate.setText(date);
