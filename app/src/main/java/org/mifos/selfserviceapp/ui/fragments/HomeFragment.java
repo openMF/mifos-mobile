@@ -68,6 +68,7 @@ public class HomeFragment extends BaseFragment {
                 RecentTransactionsFragment.newInstance(clientId), true, R.id.container);
     }
 
+
     @OnClick(R.id.fl_quick_transfer)
     public void onQuickTransferClicked() {
         ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment.newInstance(1,

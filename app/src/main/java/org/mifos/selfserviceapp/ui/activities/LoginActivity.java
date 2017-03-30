@@ -65,6 +65,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
             String username = loginCredentials.getString("username", "not found");
             String password = loginCredentials.getString("password", "not found");
+
             loginPresenter.login(username, password);
 
         }
