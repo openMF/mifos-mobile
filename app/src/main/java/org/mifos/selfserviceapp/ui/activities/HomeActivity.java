@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -81,6 +82,13 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(ClientChargeFragment.newInstance(clientId), true,  R.id.container);
                 break;
             case R.id.item_about_us:
+                break;
+            case R.id.item_share_app:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, R.string.string_share_app);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
                 break;
             case R.id.item_help:
                 replaceFragment(HelpFragment.getInstance(), true, R.id.container);
