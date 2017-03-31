@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -135,7 +136,7 @@ public class HomeActivity extends BaseActivity implements
 
         // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
-        navigationView.setCheckedItem(R.id.item_accounts);
+        setNavigationViewSelectedItem(R.id.item_home);
         setTitle(item.getTitle());
         return true;
     }
@@ -186,8 +187,8 @@ public class HomeActivity extends BaseActivity implements
         };
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
         setupHeaderView(navigationView.getHeaderView(0));
+        setUpBackStackListener();
     }
 
     /**
@@ -291,4 +292,35 @@ public class HomeActivity extends BaseActivity implements
         }
     }
 
+    private void setUpBackStackListener() {
+        getSupportFragmentManager().
+                addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+                        @Override
+                        public void onBackStackChanged() {
+                        Fragment fragment = getSupportFragmentManager().
+                                findFragmentById(R.id.container);
+                        if (fragment instanceof HomeFragment) {
+                            setNavigationViewSelectedItem(R.id.item_home);
+                        } else if (fragment instanceof ClientAccountsFragment) {
+                            setNavigationViewSelectedItem(R.id.item_accounts);
+                        } else if (fragment instanceof RecentTransactionsFragment) {
+                            setNavigationViewSelectedItem(R.id.item_recent_transactions);
+                        } else if (fragment instanceof ClientChargeFragment) {
+                            setNavigationViewSelectedItem(R.id.item_charges);
+                        } else if (fragment instanceof ThirdPartyTransferFragment) {
+                            setNavigationViewSelectedItem(R.id.item_third_party_transfer);
+                        } else if (fragment instanceof BeneficiaryListFragment) {
+                            setNavigationViewSelectedItem(R.id.item_beneficiaries);
+                        } else if (fragment instanceof HelpUCFragment) {
+                            setNavigationViewSelectedItem(R.id.item_help);
+                        } else if (fragment instanceof AboutUsFragment) {
+                            setNavigationViewSelectedItem(R.id.item_help);
+                        }
+                    }
+                });
+    }
+
+    public void setNavigationViewSelectedItem(int id) {
+        navigationView.setCheckedItem(id);
+    }
 }
