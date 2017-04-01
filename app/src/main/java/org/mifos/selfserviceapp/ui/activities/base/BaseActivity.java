@@ -172,4 +172,7 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
             fm.popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
+    public int stackCount(){
+        return getSupportFragmentManager().getBackStackEntryCount();
+    }
 }
