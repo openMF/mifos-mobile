@@ -22,7 +22,7 @@ import org.mifos.selfserviceapp.ui.views.BaseActivityCallback;
  * @author ishan
  * @since 08/07/16
  */
-public class BaseActivity extends AppCompatActivity implements BaseActivityCallback {
+public abstract class BaseActivity extends AppCompatActivity implements BaseActivityCallback {
 
     protected Toolbar toolbar;
     private ActivityComponent activityComponent;

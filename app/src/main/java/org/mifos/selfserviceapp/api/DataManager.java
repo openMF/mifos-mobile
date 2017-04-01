@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -120,7 +121,12 @@ public class DataManager {
         return databaseHelper.getClientCharges();
     }
 
+    public Call<ResponseBody> getClientImage() {
+        return baseApiManager.getClientsApi().getClientImage(clientId);
+    }
+
     public long getClientId() {
         return clientId;
     }
+
 }
