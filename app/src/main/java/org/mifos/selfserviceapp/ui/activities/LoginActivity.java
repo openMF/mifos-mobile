@@ -29,6 +29,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
+
+
     @Inject
     LoginPresenter loginPresenter;
 
@@ -58,6 +60,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void onLoginSuccess(String userName) {
+
+
         loginStatus = true;
         showToast(getString(R.string.toast_welcome, userName));
         llLogin.setVisibility(View.GONE);
