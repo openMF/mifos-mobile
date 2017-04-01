@@ -16,6 +16,8 @@
     <string name="charges">Charges</string>
     <string name="questionnaire">Questionnaire</string>
     <string name="about_us">About Us</string>
+    <string name="share_app">Share App</string>
+    <string name="string_app_share">Download the app from Google Play!</string>
     <string name="saving_account_details">Saving Account Details</string>
     <string name="savings_account">Savings Account</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>

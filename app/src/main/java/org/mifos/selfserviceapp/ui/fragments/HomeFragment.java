@@ -1,7 +1,9 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +68,7 @@ public class HomeFragment extends BaseFragment {
                 RecentTransactionsFragment.newInstance(clientId), true, R.id.container);
     }
 
+
     @OnClick(R.id.fl_quick_transfer)
     public void onQuickTransferClicked() {
         ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment.newInstance(1,
@@ -90,6 +93,33 @@ public class HomeFragment extends BaseFragment {
     public void openAccount(AccountType accountType) {
         ((BaseActivity) getActivity()).replaceFragment(
                 ClientAccountsFragment.newInstance(clientId, accountType), true, R.id.container);
+    }
+
+    // for back button
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                    homeIntent.addCategory(Intent.CATEGORY_HOME);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(homeIntent);
+
+                    return true;
+
+                }
+
+                return false;
+            }
+        });
     }
 }
 
