@@ -21,7 +21,7 @@ import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
-import org.mifos.selfserviceapp.utils.Toaster;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,12 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void showErrorFetchingClientCharges(String message) {
-        Toaster.show(rootView, message);
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(getString(R.string.no_connection))
+                .setContentText(message)
+                .setConfirmText("OK")
+                .show();
+
     }
 
     @Override

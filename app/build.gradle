@@ -82,7 +82,13 @@ dependencies {
     //Butter Knife
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     apt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+    //sweet alert dialog box
+    compile 'cn.pedant.sweetalert:library:1.3'
+
+
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
+
 }
