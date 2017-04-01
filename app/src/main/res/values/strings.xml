@@ -10,6 +10,8 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="accounts">Accounts</string>
+    <string name="share_app">Share App</string>
+    <string name="string_share_app">Download the app from Google Playstore!</string>
     <string name="clients">Clients</string>
     <string name="funds_transfer">Funds Transfer</string>
     <string name="recent_transactions">Recent Transactions</string>
