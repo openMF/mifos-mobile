@@ -203,7 +203,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         transactionListAdapter.
                 setSavingAccountsTransactionList(transactionsList);
     }
-
+    
     @Override
     public void showProgress() {
         showProgressBar();
