@@ -10,6 +10,7 @@
     android:paddingStart="10dp"
     android:weightSum="1">
 
+
     <ImageView
         android:id="@+id/nav_header_mifos_logo"
         android:layout_width="match_parent"
