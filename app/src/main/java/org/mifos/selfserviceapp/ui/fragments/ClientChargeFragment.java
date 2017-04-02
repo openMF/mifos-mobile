@@ -7,20 +7,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.data.Charge;
+import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.presenters.ClientChargePresenter;
-import org.mifos.selfserviceapp.ui.activities.BaseActivity;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ClientChargeAdapter;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
+import org.mifos.selfserviceapp.utils.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +38,18 @@ import butterknife.ButterKnife;
 
 public class ClientChargeFragment extends Fragment implements
         RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
+
     @Inject
     ClientChargePresenter mClientChargePresenter;
+
     ClientChargeAdapter clientChargeAdapter;
+
     @BindView(R.id.rv_client_charge)
     RecyclerView rvClientCharge;
+
     @BindView(R.id.swipe_charge_container)
     SwipeRefreshLayout swipeChargeContainer;
+
     private long clientId;
     private View rootView;
     private LinearLayoutManager layoutManager;
@@ -98,7 +104,7 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void showErrorFetchingClientCharges(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        Toaster.show(rootView, message);
     }
 
     @Override
@@ -117,19 +123,12 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void showProgress() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.setMessage(getResources().getText(R.string.progress_message_loading));
-        progressDialog.show();
+        swipeChargeContainer.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+        swipeChargeContainer.setRefreshing(false);
     }
 
     @Override
@@ -144,8 +143,8 @@ public class ClientChargeFragment extends Fragment implements
 
     @Override
     public void onDestroyView() {
-        mClientChargePresenter.detachView();
         super.onDestroyView();
+        mClientChargePresenter.detachView();
     }
 
 }

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_loan_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:cardElevation="@dimen/cardview_default_elevation"
+            app:cardUseCompatPadding="true">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/login_padding_button">
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:text="@string/account_number"/>
+                <TextView
+                    android:id="@+id/tv_account_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_medium"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    tools:text="@string/account_number"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:text="@string/disbursement_date"/>
+                <TextView
+                    android:id="@+id/tv_disbursement_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_medium"
+                    android:gravity="start"
+                    tools:text="@string/disbursement_date"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:text="@string/no_of_payments"/>
+                <TextView
+                    android:id="@+id/tv_number_of_payments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_medium"
+                    android:gravity="start"
+                    tools:text="@string/no_of_payments"/>
+            </TableRow>
+        </TableLayout>
+        </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/date"
+                    android:textColor="@color/black"
+                    android:gravity="start"
+                    android:textSize="@dimen/text_medium"
+                    android:padding="6dp"
+                    android:background="@drawable/rectangular_border"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/loan_balance"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_medium"
+                    android:padding="6dp"
+                    android:background="@drawable/rectangular_border"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/repayment"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:gravity="end"
+                    android:padding="6dp"
+                    android:background="@drawable/rectangular_border"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_repayment_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            />
+    </LinearLayout>
+
+
+    <include
+        android:id="@+id/ll_error"
+        layout="@layout/layout_error"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -9,8 +9,10 @@ import org.mifos.selfserviceapp.api.services.SavingAccountsListService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 /**
  * @author Vishwajeet
@@ -54,12 +56,13 @@ public class BaseApiManager {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(new ApiRequestInterceptor(authToken))
+                .addInterceptor(new SelfServiceInterceptor(authToken))
                 .build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
         init();

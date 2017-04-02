@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_loan_account_trans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_margin="@dimen/default_margin">
+        <TextView
+            android:id="@+id/tv_loan_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_large"
+            tools:text="loanProductName"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_loan_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/table_row_padding_top"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/ll_error"
+        layout="@layout/layout_error"
+        android:visibility="gone"/>
+</RelativeLayout>

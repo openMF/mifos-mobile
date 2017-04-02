@@ -2,16 +2,21 @@ package org.mifos.selfserviceapp.injection.component;
 
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
-import org.mifos.selfserviceapp.ui.activities.ClientListActivity;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
-import org.mifos.selfserviceapp.ui.activities.LoanAccountsDetailActivity;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountTransactionFragment;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
-import org.mifos.selfserviceapp.ui.activities.SavingAccountsDetailActivity;
+import org.mifos.selfserviceapp.ui.fragments.LoanApplicationFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingAccountsDetailFragment;
+import org.mifos.selfserviceapp.ui.fragments.AccountsFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
-import org.mifos.selfserviceapp.ui.fragments.LoanAccountsListFragment;
+import org.mifos.selfserviceapp.ui.fragments.LoanAccountSummaryFragment;
+import org.mifos.selfserviceapp.ui.fragments.LoanRepaymentScheduleFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
-import org.mifos.selfserviceapp.ui.fragments.SavingAccountsListFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingAccountsTransactionFragment;
+import org.mifos.selfserviceapp.ui.fragments.SavingsMakeTransferFragment;
 
 import dagger.Component;
 
@@ -25,22 +30,31 @@ public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);
 
-    void inject(ClientListActivity clientListActivity);
-
     void inject(HomeActivity homeActivity);
 
+    void inject(HomeFragment homeFragment);
+
     void inject(ClientAccountsFragment clientAccountsFragment);
-
-    void inject(LoanAccountsListFragment loanAccountsListFragment);
-
-    void inject(SavingAccountsListFragment savingAccountsListFragment);
 
     void inject(RecentTransactionsFragment recentTransactionsFragment);
 
     void inject(ClientChargeFragment clientChargeFragment);
 
-    void inject(SavingAccountsDetailActivity savingAccountsDetailActivity);
+    void inject(SavingAccountsDetailFragment savingAccountsDetailActivity);
 
-    void inject(LoanAccountsDetailActivity loanAccountsDetailActivity);
+    void inject(LoanAccountsDetailFragment loanAccountsDetailActivity);
 
+    void inject(AccountsFragment accountsFragment);
+
+    void inject(LoanAccountSummaryFragment loanAccountSummaryFragment);
+
+    void inject(LoanAccountTransactionFragment loanAccountTransactionFragment);
+
+    void inject(LoanRepaymentScheduleFragment loanRepaymentScheduleFragment);
+
+    void inject(LoanApplicationFragment loanApplicationFragment);
+
+    void inject(SavingAccountsTransactionFragment savingAccountsTransactionFragment);
+
+    void inject(SavingsMakeTransferFragment savingsMakeTransferFragment);
 }

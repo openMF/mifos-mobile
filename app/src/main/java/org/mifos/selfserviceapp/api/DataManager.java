@@ -1,19 +1,27 @@
 package org.mifos.selfserviceapp.api;
 
-import org.mifos.selfserviceapp.data.ChargeListResponse;
-import org.mifos.selfserviceapp.data.Client;
-import org.mifos.selfserviceapp.data.TransactionsListResponse;
-import org.mifos.selfserviceapp.data.User;
-import org.mifos.selfserviceapp.data.accounts.LoanAccount;
-import org.mifos.selfserviceapp.data.accounts.LoanAccountsListResponse;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
-import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
-import org.mifos.selfserviceapp.utils.PrefManager;
+import org.mifos.selfserviceapp.api.local.DatabaseHelper;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
+import org.mifos.selfserviceapp.models.Charge;
+import org.mifos.selfserviceapp.models.Page;
+import org.mifos.selfserviceapp.models.Transaction;
+import org.mifos.selfserviceapp.models.User;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
+import org.mifos.selfserviceapp.models.client.Client;
+import org.mifos.selfserviceapp.models.client.ClientAccounts;
+import org.mifos.selfserviceapp.models.payload.LoansPayload;
+import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
+import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Call;
+import okhttp3.ResponseBody;
+import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * @author Vishwajeet
@@ -22,48 +30,97 @@ import retrofit2.Call;
 @Singleton
 public class DataManager {
 
-    private final PrefManager prefManager;
+    private final PreferencesHelper preferencesHelper;
     private final BaseApiManager baseApiManager;
+    private final DatabaseHelper databaseHelper;
+    private final long clientId;
 
     @Inject
-    public DataManager(PrefManager prefManager, BaseApiManager baseApiManager) {
-        this.prefManager = prefManager;
+    public DataManager(PreferencesHelper preferencesHelper, BaseApiManager baseApiManager,
+            DatabaseHelper databaseHelper) {
+        this.preferencesHelper = preferencesHelper;
         this.baseApiManager = baseApiManager;
+        this.databaseHelper = databaseHelper;
+        clientId = this.preferencesHelper.getClientId();
     }
 
-    public Call<User> login(String username, String password) {
+    public Observable<User> login(String username, String password) {
         return baseApiManager.getAuthenticationApi().authenticate(username, password);
     }
 
-    public Call<Client> getClients() {
-        return baseApiManager.getClientsApi().getAllClients();
+    public Observable<Page<Client>> getClients() {
+        return baseApiManager.getClientsApi().getClients();
     }
 
-    public Call<SavingAccountsListResponse> getSavingAccounts(long clientId) {
-        return baseApiManager.getSavingAccountsListApi().getSavingAccountsList(clientId);
+    public Observable<ClientAccounts> getClientAccounts() {
+        return baseApiManager.getClientsApi().getClientAccounts(clientId);
     }
 
-    public Call<LoanAccountsListResponse> getLoanAccounts(long clientId) {
-        return baseApiManager.getLoanAccountsListApi().getLoanAccountsList(clientId);
+    public Observable<ClientAccounts> getAccounts(String accountType) {
+        return baseApiManager.getClientsApi().getAccounts(clientId, accountType);
     }
 
-    public Call<TransactionsListResponse> getRecentTransactions(long clientId) {
-        return baseApiManager.getRecentTransactionsApi().getRecentTransactionsList(clientId);
+    public Observable<Page<Transaction>> getRecentTransactions(int offset, int limit) {
+        return baseApiManager.getRecentTransactionsApi()
+                .getRecentTransactionsList(clientId, offset, limit);
     }
 
-    public Call<ChargeListResponse> getClientCharges(long clientId) {
-        return baseApiManager.getClientChargeApi().getClientChargeList(clientId);
+    public Observable<Page<Charge>> getClientCharges(long clientId) {
+        return baseApiManager.getClientChargeApi().getClientChargeList(clientId)
+                .concatMap(new Func1<Page<Charge>, Observable<? extends Page<Charge>>>() {
+                    @Override
+                    public Observable<? extends Page<Charge>> call(Page<Charge> chargePage) {
+                        return databaseHelper.syncCharges(chargePage);
+                    }
+                });
     }
 
-    public Call<SavingAccount> getSavingAccountDetails(long accountId) {
-        return baseApiManager.getSavingAccountsListApi().getSavingAccountsDetail(accountId);
+    public Observable<SavingsWithAssociations> getSavingsWithAssociations(long accountId,
+            String associationType) {
+        return baseApiManager
+                .getSavingAccountsListApi().getSavingsWithAssociations(accountId, associationType);
     }
 
-    public Call<LoanAccount> getLoanAccountDetails(long loanId) {
+    public Observable<AccountOptionsTemplate> getAccountTransferTemplate() {
+        return baseApiManager.getSavingAccountsListApi().getAccountTransferTemplate();
+    }
+
+    public Observable<ResponseBody> makeTransfer(SavingsTransferPayload savingsTransferPayload) {
+        return baseApiManager.getSavingAccountsListApi().makeTransfer(savingsTransferPayload);
+    }
+
+    public Observable<LoanAccount> getLoanAccountDetails(long loanId) {
         return baseApiManager.getLoanAccountsListApi().getLoanAccountsDetail(loanId);
     }
 
-    public PrefManager getPrefManager() {
-        return prefManager;
+    public Observable<LoanWithAssociations> getLoanWithAssociations(String associationType,
+            long loanId) {
+        return baseApiManager.getLoanAccountsListApi()
+                .getLoanWithAssociations(loanId, associationType);
+    }
+
+    public Observable<LoanTemplate> getLoanTemplate() {
+        return baseApiManager.getLoanAccountsListApi().getLoanTemplate(clientId);
+    }
+
+    public Observable<LoanTemplate> getLoanTemplateByProduct(Integer productId) {
+        return baseApiManager.getLoanAccountsListApi()
+                .getLoanTemplateByProduct(clientId, productId);
+    }
+
+    public Observable<ResponseBody> createLoansAccount(LoansPayload loansPayload) {
+        return baseApiManager.getLoanAccountsListApi().createLoansAccount(loansPayload);
+    }
+
+    public PreferencesHelper getPreferencesHelper() {
+        return preferencesHelper;
+    }
+
+    public Observable<Page<Charge>> getClientLocalCharges() {
+        return databaseHelper.getClientCharges();
+    }
+
+    public long getClientId() {
+        return clientId;
     }
 }

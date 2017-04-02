@@ -6,18 +6,24 @@ import android.content.res.Resources;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.data.User;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.models.Page;
+import org.mifos.selfserviceapp.models.User;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoginView;
 import org.mifos.selfserviceapp.utils.Constants;
-import org.mifos.selfserviceapp.utils.PrefManager;
+import org.mifos.selfserviceapp.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import retrofit2.HttpException;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.plugins.RxJavaPlugins;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author Vishwajeet
@@ -25,7 +31,9 @@ import retrofit2.Response;
  */
 public class LoginPresenter extends BasePresenter<LoginView> {
 
-    private DataManager dataManager;
+    private final DataManager dataManager;
+    private PreferencesHelper preferencesHelper;
+    private CompositeSubscription subscriptions;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -40,6 +48,19 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public LoginPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
+        preferencesHelper = this.dataManager.getPreferencesHelper();
+        subscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    public void attachView(LoginView mvpView) {
+        super.attachView(mvpView);
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        subscriptions.unsubscribe();
     }
 
     /**
@@ -53,59 +74,116 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * @param password Password of the user trying to login.
      */
     public void login(final String username, final String password) {
+        checkViewAttached();
+        if (isCredentialsValid(username, password)) {
+            getMvpView().showProgress();
+            subscriptions.add(dataManager.login(username, password)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<User>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            getMvpView().hideProgress();
+                            String errorMessage;
+                            try {
+                                if (e instanceof HttpException) {
+                                    errorMessage =
+                                            ((HttpException) e).response().errorBody().string();
+                                    getMvpView().showMessage(MFErrorParser.parseError(errorMessage)
+                                            .getDeveloperMessage());
+                                }
+                            } catch (Throwable throwable) {
+                                RxJavaPlugins.getInstance().getErrorHandler().handleError(
+                                        throwable);
+                            }
+                        }
+
+                        @Override
+                        public void onNext(User user) {
+                            getMvpView().hideProgress();
+                            if (user != null) {
+                                final String userName = user.getUserName();
+                                final long userID = user.getUserId();
+                                final String authToken = Constants.BASIC +
+                                        user.getBase64EncodedAuthenticationKey();
+                                saveAuthenticationTokenForSession(userID, authToken);
+                                getMvpView().onLoginSuccess(userName);
+                            }
+                        }
+                    })
+            );
+        }
+    }
+
+    /**
+     * This method fetching the Client, associated with current Access Token.
+     */
+    public void loadClient() {
+        checkViewAttached();
+        getMvpView().showProgress();
+        subscriptions.add(dataManager.getClients()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<Page<Client>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().showMessage(context.getString(R.string.error_fetching_client));
+                        getMvpView().hideProgress();
+                    }
+
+                    @Override
+                    public void onNext(Page<Client> clientPage) {
+                        getMvpView().hideProgress();
+                        if (clientPage.getPageItems().size() != 0) {
+                            long clientId = clientPage.getPageItems().get(0).getId();
+                            getMvpView().showClient(clientId);
+                            preferencesHelper.setClientId(clientId);
+                        } else {
+                            getMvpView().showMessage(context
+                                    .getString(R.string.error_client_not_found));
+                        }
+                    }
+                })
+        );
+    }
+
+
+    private boolean isCredentialsValid(final String username, final String password) {
 
         final Resources resources = context.getResources();
 
         if (username == null || username.trim().isEmpty()) {
-            showEmptyInputError(resources.getString(R.string.username));
-            return;
+            showEmptyInputError(context.getString(R.string.username));
+            return false;
         } else if (username.length() < 5) {
             showMinimumInputLengthNotAchievedError(resources.getString(R.string.username),
                     resources.getInteger(R.integer.username_minimum_length));
-            return;
+            return false;
         } else if (username.contains(" ")) {
-            getMvpView().showInputValidationError(context.getString(
+            getMvpView().showMessage(context.getString(
                     R.string.error_validation_cannot_contain_spaces,
-                    R.string.username, R.string.not_contain_username));
-            return;
+                    username, context.getString(R.string.not_contain_username)));
+            return false;
         } else if (password == null || password.trim().isEmpty()) {
             showEmptyInputError(context.getString(R.string.password));
-            return;
+            return false;
         } else if (password.length() < 6) {
             showMinimumInputLengthNotAchievedError(resources.getString(R.string.password),
                     resources.getInteger(R.integer.password_minimum_length));
-            return;
+            return false;
         }
 
-        Call<User> call = dataManager.login(username, password);
-        getMvpView().showProgress();
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Response<User> response) {
-                getMvpView().hideProgress();
-
-                if (response.code() == 200) {
-                    final User user = response.body();
-                    if (user != null) {
-                        final String userName = user.getUserName();
-                        getMvpView().onLoginSuccess(userName);
-
-                        final long userID = user.getUserId();
-                        final String authToken = Constants.BASIC +
-                                user.getBase64EncodedAuthenticationKey();
-                        saveAuthenticationTokenForSession(userID, authToken);
-                    }
-                } else if (response.code() == 401) {
-                    getMvpView().onLoginError(context.getString(R.string.error_unauthorised));
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                getMvpView().hideProgress();
-                getMvpView().onLoginError(context.getString(R.string.error_message_server));
-            }
-        });
+        return true;
     }
 
     /**
@@ -117,11 +195,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * @param authToken - The authentication token to be saved.
      */
     private void saveAuthenticationTokenForSession(long userID, String authToken) {
-
-        final PrefManager prefManager = dataManager.getPrefManager();
-        prefManager.setUserId(userID);
-        prefManager.saveToken(authToken);
-        BaseApiManager.createService(prefManager.getToken());
+        preferencesHelper.setUserId(userID);
+        preferencesHelper.saveToken(authToken);
+        BaseApiManager.createService(preferencesHelper.getToken());
     }
 
     /**
@@ -130,7 +206,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * @param fieldName Field name of the input that was empty
      */
     private void showEmptyInputError(String fieldName) {
-        getMvpView().showInputValidationError(context.getString(
+        getMvpView().showMessage(context.getString(
                 R.string.error_validation_blank, fieldName));
     }
 
@@ -142,7 +218,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * @param minimumLength Minimum number of characters the field requires.
      */
     private void showMinimumInputLengthNotAchievedError(String fieldName, int minimumLength) {
-        getMvpView().showInputValidationError(context.getString(
+        getMvpView().showMessage(context.getString(
                 R.string.error_validation_minimum_chars,
                 fieldName, minimumLength));
     }

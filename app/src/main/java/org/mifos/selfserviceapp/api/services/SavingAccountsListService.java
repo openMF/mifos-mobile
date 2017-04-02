@@ -1,22 +1,32 @@
 package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
-import org.mifos.selfserviceapp.data.accounts.SavingAccount;
-import org.mifos.selfserviceapp.data.accounts.SavingAccountsListResponse;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
+import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 
-import retrofit2.Call;
+import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * @author Vishwajeet
  * @since 21/6/16.
  */
 public interface SavingAccountsListService {
-    @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts?fields=savingsAccounts")
-    Call<SavingAccountsListResponse> getSavingAccountsList(@Path("clientId") long clientId);
 
-    @GET(ApiEndPoints.SAVINGSACOUNTS + "/{accountId}/")
-    Call<SavingAccount> getSavingAccountsDetail(@Path("accountId") long accountId);
+    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
+    Observable<SavingsWithAssociations> getSavingsWithAssociations(
+            @Path("accountId") long accountId,
+            @Query("associations") String associationType);
 
+    @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template")
+    Observable<AccountOptionsTemplate> getAccountTransferTemplate();
+
+    @POST(ApiEndPoints.ACCOUNT_TRANSFER)
+    Observable<ResponseBody> makeTransfer(@Body SavingsTransferPayload savingsTransferPayload);
 }

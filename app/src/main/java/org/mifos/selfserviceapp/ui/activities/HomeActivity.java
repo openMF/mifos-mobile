@@ -3,20 +3,24 @@ package org.mifos.selfserviceapp.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.utils.Constants;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,12 +33,15 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.navigation_view)
-    NavigationView mNavigationView;
+    NavigationView navigationView;
+
     @BindView(R.id.drawer)
-    DrawerLayout mDrawerLayout;
+    DrawerLayout drawerLayout;
+
+    @Inject
+    PreferencesHelper preferencesHelper;
+
     private long clientId;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -46,50 +53,43 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setTitle(getString(R.string.accounts));
-        }
+        setToolbarTitle(getString(R.string.home));
 
         clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
-        ClientAccountsFragment.newInstance(clientId);
-        replaceFragment(ClientAccountsFragment.newInstance(clientId), R.id.container);
+        replaceFragment(HomeFragment.newInstance(clientId), false ,  R.id.container);
 
         setupNavigationBar();
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // ignore the current selected item
-        if (item.isChecked()) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return false;
-        }
-
         // select which item to open
+        clearFragmentBackStack();
         switch (item.getItemId()) {
-            case R.id.item_accounts:
-                replaceFragment(ClientAccountsFragment.newInstance(clientId), R.id.container);
+            case R.id.item_home:
+                replaceFragment(HomeFragment.newInstance(clientId), true, R.id.container);
                 break;
-            case R.id.item_funds_transfer:
+            case R.id.item_accounts:
+                replaceFragment(ClientAccountsFragment.newInstance(clientId, AccountType.SAVINGS),
+                        true, R.id.container);
                 break;
             case R.id.item_recent_transactions:
-                RecentTransactionsFragment.newInstance(clientId);
-                replaceFragment(RecentTransactionsFragment.newInstance(clientId), R.id.container);
+                replaceFragment(RecentTransactionsFragment.newInstance(clientId),
+                        true, R.id.container);
                 break;
             case R.id.item_charges:
-                ClientChargeFragment.newInstance(clientId);
-                replaceFragment(ClientChargeFragment.newInstance(clientId), R.id.container);
-                break;
-            case R.id.item_questionnaire:
+                replaceFragment(ClientChargeFragment.newInstance(clientId), true,  R.id.container);
                 break;
             case R.id.item_about_us:
+                break;
+            case R.id.item_help:
+                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
                 break;
         }
 
         // close the drawer
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        mNavigationView.setCheckedItem(R.id.item_accounts);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        navigationView.setCheckedItem(R.id.item_accounts);
         setTitle(item.getTitle());
         return true;
     }
@@ -100,10 +100,10 @@ public class HomeActivity extends BaseActivity implements
      */
     private void setupNavigationBar() {
 
-        mNavigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                mDrawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+                drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -115,25 +115,13 @@ public class HomeActivity extends BaseActivity implements
                 super.onDrawerOpened(drawerView);
             }
         };
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }
 
-    /**
-     * Replace the Activity with desired fragment depending upon what user is
-     * selecting in navigation drawer.
-     *
-     * @param fragment    Name of the fragment which is to be replaced
-     * @param containerId id of container where fragment has to be hold
-     */
-    private void replaceFragment(Fragment fragment, int containerId) {
-        invalidateOptionsMenu();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(containerId, fragment);
-        transaction.commit();
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        preferencesHelper.clear();
     }
-
-
 }
