@@ -1,5 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
@@ -165,16 +168,24 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     @OnClick(R.id.tv_expected_disbursement_date)
     public void setTvDisbursementOnDate() {
-        isDisbursebemntDate = true;
-        mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
-                .DFRAG_DATE_PICKER);
+        if (mfDatePicker.isVisible() && mfDatePicker != null) {
+            isDisbursebemntDate = true;
+            mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
+                    .DFRAG_DATE_PICKER);
+        } else {
+            Toast.makeText(getActivity(), "Do Again", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.tv_submission_date)
     public void setTvSubmittedOnDate() {
-        isSubmissionDate = true;
-        mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
-                .DFRAG_DATE_PICKER);
+        if (mfDatePicker.isVisible() || mfDatePicker != null) {
+            isSubmissionDate = true;
+            mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
+                    .DFRAG_DATE_PICKER);
+        } else {
+            Toast.makeText(getActivity(), "Do Again", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -287,4 +298,5 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         hideProgressBar();
         loanApplicationPresenter.detachView();
     }
+
 }
