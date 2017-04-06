@@ -142,10 +142,10 @@
     <string name="closed_because_of_obligation">Closed because of some Obligations</string>
     <string name="loan_closed">Loan Closed</string>
     <string name="due_date_in_charges">Due Date:</string>
-    <string name="amount_due">Amount Due:</string>
-    <string name="amount_paid">Amount Paid:</string>
-    <string name="amount_waived">Amount Waved:</string>
-    <string name="amount_outstanding">Amount Outstanding:</string>
+    <string name="amount_due">Due:</string>
+    <string name="amount_paid">Paid:</string>
+    <string name="amount_waived">Waved:</string>
+    <string name="amount_outstanding">Outstanding:</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="help">Help</string>
