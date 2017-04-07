@@ -3,6 +3,7 @@ package org.mifos.selfserviceapp.ui.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +27,7 @@ import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
 
@@ -56,6 +58,8 @@ public class HomeActivity extends BaseActivity implements
     private CircularImageView ivUserProfilePicture;
 
     private long clientId;
+
+    boolean  doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,4 +184,26 @@ public class HomeActivity extends BaseActivity implements
         preferencesHelper.clear();
         detailsPresenter.detachView();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce && stackCount() == 0) {
+            HomeActivity.this.finish();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toaster.show(findViewById(android.R.id.content) , getString(R.string.exit_message));
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+
+        if (stackCount() != 0) {
+            super.onBackPressed();
+        }
+    }
+
 }
