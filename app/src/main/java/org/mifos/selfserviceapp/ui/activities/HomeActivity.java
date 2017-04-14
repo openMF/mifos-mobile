@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,9 +9,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
+import org.mifos.selfserviceapp.models.client.Client;
+import org.mifos.selfserviceapp.presenters.UserDetailsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
@@ -18,6 +23,8 @@ import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
+import org.mifos.selfserviceapp.ui.views.UserDetailsView;
+import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 
 import javax.inject.Inject;
@@ -31,7 +38,7 @@ import butterknife.ButterKnife;
  */
 
 public class HomeActivity extends BaseActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener, UserDetailsView {
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -41,6 +48,12 @@ public class HomeActivity extends BaseActivity implements
 
     @Inject
     PreferencesHelper preferencesHelper;
+
+    @Inject
+    UserDetailsPresenter detailsPresenter;
+
+    private TextView tvUsername;
+    private CircularImageView ivUserProfilePicture;
 
     private long clientId;
 
@@ -117,11 +130,54 @@ public class HomeActivity extends BaseActivity implements
         };
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        setupHeaderView(navigationView.getHeaderView(0));
+    }
+
+    private void setupHeaderView(View headerView) {
+        tvUsername = (TextView) headerView.findViewById(R.id.tv_user_name);
+        ivUserProfilePicture = (CircularImageView) headerView.findViewById(R.id.iv_user_image);
+
+        detailsPresenter.attachView(this);
+        detailsPresenter.getUserDetails();
+        detailsPresenter.getUserImage();
+
+    }
+
+    @Override
+    public void showUserDetails(Client client) {
+        tvUsername.setText(client.getDisplayName());
+    }
+
+    @Override
+    public void showUserImage(final Bitmap bitmap) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ivUserProfilePicture.setImageBitmap(bitmap);
+            }
+        });
+    }
+
+    @Override
+    public void showProgress() {
+        //empty, no need to show/hide progress in headerview
+    }
+
+    @Override
+    public void hideProgress() {
+        //empty
+    }
+
+    @Override
+    public void showError(String message) {
+        showToast(message, Toast.LENGTH_SHORT);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         preferencesHelper.clear();
+        detailsPresenter.detachView();
     }
 }

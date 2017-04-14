@@ -8,6 +8,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -95,6 +97,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         if (getArguments() != null) {
             savingsId = getArguments().getLong(Constants.SAVINGS_ID);
         }
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -113,6 +116,11 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         return rootView;
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.item_transactions);
+        item.setVisible(false);
+    }
     @Override
     public void showUserInterface() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
