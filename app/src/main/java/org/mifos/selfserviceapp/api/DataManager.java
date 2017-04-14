@@ -52,6 +52,14 @@ public class DataManager {
         return baseApiManager.getClientsApi().getClients();
     }
 
+    public Observable<Client> getCurrentClient() {
+        return baseApiManager.getClientsApi().getClientForId(clientId);
+    }
+
+    public Observable<ResponseBody> getClientImage() {
+        return baseApiManager.getClientsApi().getClientImage(clientId);
+    }
+
     public Observable<ClientAccounts> getClientAccounts() {
         return baseApiManager.getClientsApi().getClientAccounts(clientId);
     }

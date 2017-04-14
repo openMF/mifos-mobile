@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="170dp"
-              android:background="@drawable/mifos_logo"
-              android:gravity="center_vertical|bottom"
-              android:orientation="vertical"
-              android:layout_marginTop='24dp'>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop='24dp'
+    android:background="@color/primary"
+    android:gravity="center_vertical|bottom"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <org.mifos.selfserviceapp.utils.CircularImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/iv_user_image"
+        android:src="@drawable/ic_person_black_24dp"
+        app:border_width="1dp"
+        app:border="true"/>
+x
     <TextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 
 </LinearLayout>
