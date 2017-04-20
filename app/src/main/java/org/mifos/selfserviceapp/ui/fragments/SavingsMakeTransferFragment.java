@@ -127,7 +127,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
 
         if (etAmount.getText().toString().equals(".")
-                | etAmount.getText().toString().equals("0") ) {
+                || etAmount.getText().toString().equals("0") ) {
             showToaster(getString(R.string.enter_amount));
             return;
         }
@@ -276,17 +276,17 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         hideMifosProgressDialog();
         savingsMakeTransferPresenter.detachView();
     }
-    private Validator setValidator()
-    {
+    private Validator setValidator() {
         Validator returnValidator = new Validator(this);
         returnValidator.setValidationListener(new Validator.ValidationListener() {
             @Override
             public void onValidationSucceeded() {
-                final String[][] data = {
+                String[][] data = {
                         {getString(R.string.transfer_to), ""},
                         {getString(R.string.account_number), spPayTo.getSelectedItem().toString()},
                         {getString(R.string.transfer_from), ""},
-                        {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
+                        {getString(R.string.account_number),
+                                spPayFrom.getSelectedItem().toString()},
                         {getString(R.string.transfer_date), transferDate},
                         {getString(R.string.amount), etAmount.getText().toString()},
                         {getString(R.string.remark), etRemark.getText().toString()}
