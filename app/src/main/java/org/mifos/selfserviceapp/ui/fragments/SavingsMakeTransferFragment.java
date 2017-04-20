@@ -14,6 +14,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOption;
@@ -50,12 +54,15 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @BindView(R.id.sp_pay_from)
     Spinner spPayFrom;
 
+    @NotEmpty
     @BindView(R.id.et_amount)
     EditText etAmount;
+
 
     @BindView(R.id.tv_transfer_date)
     TextView tvTransferDate;
 
+    @NotEmpty
     @BindView(R.id.et_remark)
     EditText etRemark;
 
@@ -78,6 +85,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     private AccountOptionsTemplate accountOptionsTemplate;
     private String transferType;
     private long accountId;
+    private Validator validator;
 
     public static SavingsMakeTransferFragment newInstance(long accountId, String transferType) {
         SavingsMakeTransferFragment transferFragment = new SavingsMakeTransferFragment();
@@ -95,11 +103,13 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
             accountId = getArguments().getLong(Constants.ACCOUNT_ID);
             transferType = getArguments().getString(Constants.TRANSFER_TYPE);
         }
+
+        validator = setValidator();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_savings_make_transfer, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setToolbarTitle(getString(R.string.transfer));
@@ -114,18 +124,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     @OnClick(R.id.btn_review_transfer)
     void reviewTransfer() {
-        if (etAmount.getText().toString().equals("")) {
+
+
+        if (etAmount.getText().toString().equals(".")
+                | etAmount.getText().toString().equals("0") ) {
             showToaster(getString(R.string.enter_amount));
-            return;
-        }
-
-        if (etAmount.getText().toString().equals(".")) {
-            showToaster(getString(R.string.invalid_amount));
-            return;
-        }
-
-        if (etRemark.getText().toString().equals("")) {
-            showToaster(getString(R.string.remark_is_mandatory));
             return;
         }
 
@@ -134,34 +137,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
             return;
         }
 
-        final String[][] data = {
-                {getString(R.string.transfer_to), ""},
-                {getString(R.string.account_number), spPayTo.getSelectedItem().toString()},
-                {getString(R.string.transfer_from), ""},
-                {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
-                {getString(R.string.transfer_date), transferDate},
-                {getString(R.string.amount), etAmount.getText().toString()},
-                {getString(R.string.remark), etRemark.getText().toString()}
-        };
-        new MaterialDialog.Builder().init(getActivity())
-                .setTitle(R.string.review_transfer)
-                .setMessage(Utils.generateFormString(data))
-                .setPositiveButton(R.string.transfer,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                makeTransfer();
-                            }
-                        })
-                .setNegativeButton(R.string.dialog_action_back,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                .createMaterialDialog()
-                .show();
+
+        validator.validate(true);
     }
 
     @OnClick(R.id.btn_cancel_transfer)
@@ -299,5 +276,66 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         hideMifosProgressDialog();
         savingsMakeTransferPresenter.detachView();
     }
+    private Validator setValidator()
+    {
+        Validator returnValidator = new Validator(this);
+        returnValidator.setValidationListener(new Validator.ValidationListener() {
+            @Override
+            public void onValidationSucceeded() {
+                final String[][] data = {
+                        {getString(R.string.transfer_to), ""},
+                        {getString(R.string.account_number), spPayTo.getSelectedItem().toString()},
+                        {getString(R.string.transfer_from), ""},
+                        {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
+                        {getString(R.string.transfer_date), transferDate},
+                        {getString(R.string.amount), etAmount.getText().toString()},
+                        {getString(R.string.remark), etRemark.getText().toString()}
+                };
+                new MaterialDialog.Builder().init(getActivity())
+                        .setTitle(R.string.review_transfer)
+                        .setMessage(Utils.generateFormString(data))
+                        .setPositiveButton(R.string.transfer,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        makeTransfer();
+                                    }
+                                })
+                        .setNegativeButton(R.string.dialog_action_back,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .createMaterialDialog()
+                        .show();
+            }
+
+            @Override
+            public void onValidationFailed(List<ValidationError> errors) {
+                for (ValidationError error : errors) {
+                    View view = error.getView();
+                    String message = error.getCollatedErrorMessage(getContext());
+
+
+                    if (view instanceof EditText) {
+                        ((EditText) view).setError(message);
+                    } else {
+
+                        showToaster(message);
+
+                    }
+                }
+            }
+
+
+        });
+
+        return returnValidator;
+
+    }
 }
+
+
 
