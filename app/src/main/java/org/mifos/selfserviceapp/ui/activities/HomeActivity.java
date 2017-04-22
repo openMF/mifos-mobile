@@ -94,6 +94,7 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(ClientChargeFragment.newInstance(clientId), true,  R.id.container);
                 break;
             case R.id.item_about_us:
+                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
                 break;
             case R.id.item_help:
                 replaceFragment(HelpFragment.getInstance(), true, R.id.container);
