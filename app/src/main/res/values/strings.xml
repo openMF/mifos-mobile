@@ -197,5 +197,6 @@
     <string name="double_and_String">%1$.2f%2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
     <string name="invalid_amount">Invalid Amount</string>
+    <string name="exit_message">Press back again to exit</string>
 
 </resources>
