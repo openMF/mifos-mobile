@@ -39,6 +39,7 @@
             android:name=".ui.activities.SavingsAccountContainerActivity"
             android:label="@string/saving_account_details"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.SavingsAccountTransactionContainerActivity"/>
 
         <activity android:name=".ui.activities.LoanAccountContainerActivity"/>
 
