@@ -175,6 +175,8 @@
     <string name="repayment">Repayment</string>
     <string name="loan_repayment">Loan Repayment</string>
     <string name="quick_transfer">Quick Transfer</string>
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
+
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
