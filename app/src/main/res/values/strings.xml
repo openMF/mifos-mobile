@@ -72,6 +72,7 @@
     <string name="closed">Closed</string>
     <string name="need_approval">Need Approval</string>
     <string name="pending">Pending</string>
+    <string name="matured">Matured</string>
 
     <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
