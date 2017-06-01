@@ -46,6 +46,22 @@ public class Status implements Parcelable {
     @SerializedName("matured")
     Boolean matured;
 
+    public Boolean getPrematureClosed() {
+        return prematureClosed;
+    }
+
+    public void setPrematureClosed(Boolean prematureClosed) {
+        this.prematureClosed = prematureClosed;
+    }
+
+    public Boolean getMatured() {
+        return matured;
+    }
+
+    public void setMatured(Boolean matured) {
+        this.matured = matured;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -74,10 +74,13 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.light_yellow, context));
 
+            } else if (savingAccount.getStatus().getMatured()) {
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.red_light, context));
             } else {
 
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_blue, context));
+                        Utils.setCircularBackground(R.color.black, context));
 
             }
 
