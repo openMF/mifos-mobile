@@ -195,6 +195,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             ivCircularStatus.setImageDrawable(
                     Utils.setCircularBackground(R.color.light_yellow, getActivity()));
             tvAccountStatus.setText(R.string.pending);
+        } else if (status.getMatured()) {
+            ivCircularStatus.setImageDrawable(
+                    Utils.setCircularBackground(R.color.red_light, getActivity()));
+            tvAccountStatus.setText(R.string.matured);
         } else {
             ivCircularStatus.setImageDrawable(
                     Utils.setCircularBackground(R.color.black, getActivity()));
