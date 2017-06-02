@@ -52,7 +52,10 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo());
             ((ViewHolder) holder).tv_loanAccountProductName.setText(loanAccount.getProductName());
 
-            if (loanAccount.getStatus().getActive()) {
+            if (loanAccount.getStatus().getActive() && loanAccount.getInArrears()) {
+                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                        Utils.setCircularBackground(R.color.red, context));
+            } else if (loanAccount.getStatus().getActive()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.deposit_green, context));
             } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
@@ -61,9 +64,9 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else if (loanAccount.getStatus().getPendingApproval()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.light_yellow, context));
-            } else if (loanAccount.getStatus().getActive() && loanAccount.getInArrears()) {
+            }  else if (loanAccount.getStatus().getOverpaid()) {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.red, context));
+                        Utils.setCircularBackground(R.color.purple, context));
             } else {
                 ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.black, context));
