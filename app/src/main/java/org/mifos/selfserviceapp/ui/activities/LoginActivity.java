@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @OnClick(R.id.btn_login)
     public void onLoginClicked() {
 
-        final String username = etUsername.getEditableText().toString();
+        final String username = etUsername.getEditableText().toString().trim();
         final String password = etPassword.getEditableText().toString();
         if (Network.isConnected(this)) {
             loginPresenter.login(username, password);
