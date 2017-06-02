@@ -218,6 +218,13 @@ public class SavingAccountsTransactionFragment extends BaseFragment
                 setSavingAccountsTransactionList(transactionsList);
     }
 
+    @OnClick(R.id.tv_help_line_number)
+    void dialHelpLineNumber() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + getString(R.string.help_line_number)));
+        startActivity(intent);
+    }
+
     @Override
     public void showProgress() {
         showProgressBar();
