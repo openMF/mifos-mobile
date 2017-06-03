@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.utils.Constants;
 
@@ -57,7 +58,7 @@ public class HomeFragment extends BaseFragment {
     @OnClick(R.id.fl_apply_for_loan)
     public void onApplicationClicked() {
         ((BaseActivity) getActivity()).replaceFragment(
-                LoanApplicationFragment.newInstance(), true, R.id.container);
+                LoanApplicationFragment.newInstance(LoanState.CREATE), true, R.id.container);
     }
 
     @OnClick(R.id.fl_recent_transaction)

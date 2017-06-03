@@ -3,13 +3,16 @@ package org.mifos.selfserviceapp.api.services;
 import org.mifos.selfserviceapp.api.ApiEndPoints;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithdraw;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
+import org.mifos.selfserviceapp.utils.Constants;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -38,4 +41,12 @@ public interface LoanAccountsListService {
 
     @POST(ApiEndPoints.LOANS)
     Observable<ResponseBody> createLoansAccount(@Body LoansPayload loansPayload);
+
+    @PUT(ApiEndPoints.LOANS + "/{loanId}/")
+    Observable<ResponseBody> updateLoanAccount(@Path("loanId") long loanId,
+                                              @Body LoansPayload loansPayload);
+
+    @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
+    Observable<ResponseBody> withdrawLoanAccount(@Path(Constants.LOAN_ID) long loanid,
+                                                 @Body LoanWithdraw loanWithdraw);
 }
