@@ -50,4 +50,9 @@ public class Constants {
     public static final String BENEFICIARY = "beneficiary";
 
     public static final String BENEFICIARY_STATE = "beneficiary_state";
+
+    public static final String LOAN_STATE = "loanType";
+
+    public static final String LOAN_ACCOUNT = "loanAccount";
+
 }

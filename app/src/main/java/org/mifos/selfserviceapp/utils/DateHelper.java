@@ -43,6 +43,12 @@ public class DateHelper {
 
     }
 
+    public static String getDateAsString(List<Integer> integersOfDate, String pattern) {
+        return DateHelper.getFormatConverter("dd MMM yyyy",
+                pattern, DateHelper.getDateAsString(integersOfDate));
+
+    }
+
     /**
      * This Method converting the dd-MM-yyyy format type date string into dd MMMM yyyy
      * @param format Final Format of date string
@@ -52,6 +58,19 @@ public class DateHelper {
     public static String getSpecificFormat(String format, String dateString) {
         SimpleDateFormat pickerFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         SimpleDateFormat finalFormat = new SimpleDateFormat(format, Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = pickerFormat.parse(dateString);
+        } catch (ParseException e) {
+            Log.d(LOG_TAG, e.getLocalizedMessage());
+        }
+        return finalFormat.format(date);
+    }
+
+    public static String getFormatConverter(String currentFormat, String requiredFormat,
+                                            String dateString) {
+        SimpleDateFormat pickerFormat = new SimpleDateFormat(currentFormat, Locale.ENGLISH);
+        SimpleDateFormat finalFormat = new SimpleDateFormat(requiredFormat, Locale.ENGLISH);
         Date date = null;
         try {
             date = pickerFormat.parse(dateString);

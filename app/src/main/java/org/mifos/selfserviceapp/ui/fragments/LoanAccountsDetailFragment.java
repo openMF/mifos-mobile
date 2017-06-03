@@ -7,6 +7,9 @@ package org.mifos.selfserviceapp.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +21,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -70,6 +74,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @BindView(R.id.btn_make_payment)
     Button btMakePayment;
 
+    private LoanAccount loanAccount;
+    private boolean showLoanUpdateOption = false;
     private long loanId;
 
     View rootView;
@@ -88,6 +94,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         if (getArguments() != null) {
             loanId = getArguments().getLong(Constants.LOAN_ID);
         }
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -109,6 +116,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @Override
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
         llAccountDetail.setVisibility(View.VISIBLE);
+        this.loanAccount = loanAccount;
 
         if (loanAccount.getStatus().getActive()) {
             tvDueDateName.setText(DateHelper.getDateAsString(loanAccount.getTimeline()
@@ -118,6 +126,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             tv_status.setText(R.string.approval_pending);
             llAccountDetail.setVisibility(View.GONE);
             layoutError.setVisibility(View.VISIBLE);
+            showLoanUpdateOption = true;
         } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
             tv_status.setText(R.string.waiting_for_disburse);
             llAccountDetail.setVisibility(View.GONE);
@@ -126,6 +135,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             btMakePayment.setVisibility(View.GONE);
             showDetails(loanAccount);
         }
+
+        getActivity().invalidateOptionsMenu();
     }
 
     public void showDetails(LoanAccount loanAccount) {
@@ -187,5 +198,29 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         super.onDestroyView();
         hideProgressBar();
         mLoanAccountDetailsPresenter.detachView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_loan_details, menu);
+        if (showLoanUpdateOption) {
+            menu.findItem(R.id.menu_update_loan).setVisible(true);
+            menu.findItem(R.id.menu_withdraw_loan).setVisible(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_update_loan) {
+            ((BaseActivity) getActivity()).replaceFragment(LoanApplicationFragment
+                    .newInstance(LoanState.UPDATE, loanAccount), true, R.id.container);
+            return true;
+        } else if (id == R.id.menu_withdraw_loan) {
+            ((BaseActivity) getActivity()).replaceFragment(LoanAccountWithdrawFragment
+                    .newInstance(loanAccount), true, R.id.container);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
