@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,9 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @BindView(R.id.tv_status)
     TextView tv_status;
 
+    @BindView(R.id.btn_make_payment)
+    Button btMakePayment;
+
     private long loanId;
 
     View rootView;
@@ -110,9 +114,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             tvDueDateName.setText(DateHelper.getDateAsString(loanAccount.getTimeline()
                     .getActualDisbursementDate()));
             showDetails(loanAccount);
-        }
-
-        if (loanAccount.getStatus().getPendingApproval()) {
+        } else if (loanAccount.getStatus().getPendingApproval()) {
             tv_status.setText(R.string.approval_pending);
             llAccountDetail.setVisibility(View.GONE);
             layoutError.setVisibility(View.VISIBLE);
@@ -120,9 +122,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             tv_status.setText(R.string.waiting_for_disburse);
             llAccountDetail.setVisibility(View.GONE);
             layoutError.setVisibility(View.VISIBLE);
-        } else if (loanAccount.getStatus().getClosedObligationsMet()) {
-            showDetails(loanAccount);
         } else {
+            btMakePayment.setVisibility(View.GONE);
             showDetails(loanAccount);
         }
     }
