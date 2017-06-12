@@ -67,6 +67,10 @@
     <string name="deposit">Deposit</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="remark_is_mandatory">Remark is mandatory</string>
+    <string name="shares_approved">Approved</string>
+    <string name="shares_pending">Pending</string>
+    <string name="loan_amount_paid">Paid</string>
+    <string name="balance">Balance</string>
 
     <string name="active">Active</string>
     <string name="closed">Closed</string>

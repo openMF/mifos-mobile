@@ -107,6 +107,28 @@ public class LoanAccount extends Account implements Parcelable {
     @SerializedName("loanCycle")
     private Integer loanCycle;
 
+    public double getLoanBalance() {
+        return loanBalance;
+    }
+
+    public void setLoanBalance(double loanBalance) {
+        this.loanBalance = loanBalance;
+    }
+
+    public double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(double amountPaid) {
+        this.amountPaid = amountPaid;
+    }
+
+    @SerializedName("loanBalance")
+    private double loanBalance;
+
+    @SerializedName("amountPaid")
+    private double amountPaid;
+
     public String getLoanPurposeName() {
         return loanPurposeName;
     }
