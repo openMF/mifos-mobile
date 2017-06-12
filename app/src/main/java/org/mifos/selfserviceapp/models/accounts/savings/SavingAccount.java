@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.mifos.selfserviceapp.models.client.DepositType;
 
+import java.util.List;
+
 /**
  * @author Vishwajeet
  * @since 22/06/16
@@ -58,6 +60,17 @@ public class SavingAccount implements Parcelable {
 
     @SerializedName("depositType")
     private DepositType depositType;
+
+    @SerializedName("lastActiveTransactionDate")
+    private List<Integer> lastActiveTransactionDate = null;
+
+    public List<Integer> getLastActiveTransactionDate() {
+        return lastActiveTransactionDate;
+    }
+
+    public void setLastActiveTransactionDate(List<Integer> lastActiveTransactionDate) {
+        this.lastActiveTransactionDate = lastActiveTransactionDate;
+    }
 
     public Integer getProductId() {
         return productId;

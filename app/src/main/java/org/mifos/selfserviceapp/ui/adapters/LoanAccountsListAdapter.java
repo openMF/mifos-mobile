@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -49,30 +50,43 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (holder instanceof ViewHolder) {
 
             LoanAccount loanAccount = getItem(position);
-            ((ViewHolder) holder).tv_clientLoanAccountNumber.setText(loanAccount.getAccountNo());
-            ((ViewHolder) holder).tv_loanAccountProductName.setText(loanAccount.getProductName());
+            ((ViewHolder) holder).tvClientLoanAccountNumber.setText(loanAccount.getAccountNo());
+            ((ViewHolder) holder).tvLoanAccountProductName.setText(loanAccount.getProductName());
+            ((ViewHolder) holder).llAccountDetail.setVisibility(View.GONE);
 
             if (loanAccount.getStatus().getActive() && loanAccount.getInArrears()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.red, context));
+                setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
             } else if (loanAccount.getStatus().getActive()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.deposit_green, context));
+                setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
             } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.blue, context));
             } else if (loanAccount.getStatus().getPendingApproval()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.light_yellow, context));
             }  else if (loanAccount.getStatus().getOverpaid()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.purple, context));
+                setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
             } else {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.black, context));
             }
         }
 
+    }
+
+    private void setLoanAccountsDetails(ViewHolder viewHolder, LoanAccount loanAccount) {
+
+        double amountPaid = loanAccount.getAmountPaid() != 0 ? loanAccount.getAmountPaid() : 0;
+        double amountBalance = loanAccount.getLoanBalance() != 0 ? loanAccount.getLoanBalance() : 0;
+        viewHolder.llAccountDetail.setVisibility(View.VISIBLE);
+        viewHolder.tvAccountBalance.setText(String.valueOf(amountBalance));
+        viewHolder.tvAccountPaid.setText(String.valueOf(amountPaid));
     }
 
     @Override
@@ -82,13 +96,22 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_clientLoanAccountNumber)
-        TextView tv_clientLoanAccountNumber;
+        TextView tvClientLoanAccountNumber;
 
         @BindView(R.id.tv_loanAccountProductName)
-        TextView tv_loanAccountProductName;
+        TextView tvLoanAccountProductName;
 
         @BindView(R.id.iv_status_indicator)
-        CircularImageView iv_status_indicator;
+        CircularImageView ivStatusIndicator;
+
+        @BindView(R.id.ll_account_detail)
+        LinearLayout llAccountDetail;
+
+        @BindView(R.id.tv_account_balance)
+        TextView tvAccountBalance;
+
+        @BindView(R.id.tv_account_paid)
+        TextView tvAccountPaid;
 
         public ViewHolder(View v) {
             super(v);
