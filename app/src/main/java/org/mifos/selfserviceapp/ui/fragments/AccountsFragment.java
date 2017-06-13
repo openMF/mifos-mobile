@@ -27,10 +27,12 @@ import org.mifos.selfserviceapp.ui.adapters.SavingAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.adapters.ShareAccountsListAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.AccountsView;
+import org.mifos.selfserviceapp.utils.ComparatorBasedOnId;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -131,6 +133,7 @@ public class AccountsFragment extends BaseFragment implements
 
     @Override
     public void showLoanAccounts(List<LoanAccount> loanAccounts) {
+        Collections.sort(loanAccounts, new ComparatorBasedOnId());
         this.loanAccounts = loanAccounts;
         if (loanAccounts.size() != 0) {
             LoanAccountsListAdapter loanAccountsListAdapter =
@@ -143,6 +146,7 @@ public class AccountsFragment extends BaseFragment implements
 
     @Override
     public void showSavingsAccounts(List<SavingAccount> savingAccounts) {
+        Collections.sort(savingAccounts, new ComparatorBasedOnId());
         this.savingAccounts = savingAccounts;
         if (savingAccounts.size() != 0) {
             SavingAccountsListAdapter savingAccountsListAdapter =
@@ -155,6 +159,7 @@ public class AccountsFragment extends BaseFragment implements
 
     @Override
     public void showShareAccounts(List<ShareAccount> shareAccounts) {
+        Collections.sort(shareAccounts, new ComparatorBasedOnId());
         this.shareAccounts = shareAccounts;
         if (shareAccounts.size() != 0) {
             ShareAccountsListAdapter shareAccountsListAdapter =
