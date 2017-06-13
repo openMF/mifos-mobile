@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.mifos.selfserviceapp.models.accounts.Account;
 import org.mifos.selfserviceapp.models.client.DepositType;
 
 /**
@@ -12,10 +13,7 @@ import org.mifos.selfserviceapp.models.client.DepositType;
  * @since 22/06/16
  */
 
-public class SavingAccount implements Parcelable {
-
-    @SerializedName("id")
-    private long id;
+public class SavingAccount extends Account implements Parcelable {
 
     @SerializedName("accountNo")
     private String accountNo;
@@ -178,15 +176,6 @@ public class SavingAccount implements Parcelable {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
 
     @Override
     public int describeContents() {
