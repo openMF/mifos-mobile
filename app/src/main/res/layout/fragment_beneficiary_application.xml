@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_margin">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ll_application_beneficiary"
+            style="@style/LinearLayout.Base"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:text="@string/select_account_type"
+                android:textSize="16sp"
+                android:layout_marginLeft="@dimen/default_margin"/>
+            <Spinner
+                android:id="@+id/sp_account_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:spinnerMode="dropdown"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_account_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/account_number"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingBottom="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_office_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/office_name"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingBottom="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_transfer_limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/transfer_limit"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:paddingBottom="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_beneficiary_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/beneficiary_name"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingBottom="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_beneficiary_submit"
+                android:background="@color/primary"
+                style="@style/Button.Base"
+                android:layout_marginTop="10dp"
+                android:text="@string/submit_beneficiary"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <include
+        android:visibility="gone"
+        android:id="@+id/ll_error"
+        layout="@layout/layout_error"/>
+</RelativeLayout>
