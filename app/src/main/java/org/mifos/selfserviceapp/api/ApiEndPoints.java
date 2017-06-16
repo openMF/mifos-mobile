@@ -16,4 +16,6 @@ public class ApiEndPoints {
     public static final String RECURRING_ACCOUNTS = "recurringdepositaccounts";
     public static final String LOANS = "loans";
     public static final  String ACCOUNT_TRANSFER = "accounttransfers";
+    public static final  String BENEFICIARIES = "beneficiaries";
+
 }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/ll_account_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/default_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginTop="@dimen/table_row_padding_top"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/beneficiary_name"
+                android:textSize="@dimen/text_medium"/>
+
+            <TextView
+                android:id="@+id/tv_beneficiary_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="@string/beneficiary_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+        </TableRow>
+        <TableRow
+            android:layout_marginTop="@dimen/default_margin">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_number"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_medium"/>
+
+            <TextView
+                android:id="@+id/tv_account_number"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                tools:text="@string/account_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"/>
+        </TableRow>
+
+
+    </TableLayout>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        android:background="@color/white"
+        android:clickable="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardUseCompatPadding="true">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:padding="@dimen/table_row_padding_top"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/client_name"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_medium"/>
+
+                <TextView
+                    android:id="@+id/tv_client_name"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    tools:text="client_name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"/>
+            </TableRow>
+            <TableRow android:layout_marginTop="@dimen/default_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/account_type"
+                    android:textSize="@dimen/text_medium"/>
+
+                <TextView
+                    android:id="@+id/tv_account_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="account_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"/>
+            </TableRow>
+            <TableRow
+                android:layout_marginTop="@dimen/default_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transfer_limit"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_medium"/>
+
+                <TextView
+                    android:id="@+id/tv_transfer_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    tools:text="transfer_limit"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"/>
+            </TableRow>
+            <TableRow
+                android:layout_marginTop="@dimen/default_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/office_name"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_medium"/>
+
+                <TextView
+                    android:id="@+id/tv_office_name"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    tools:text="office_name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"/>
+            </TableRow>
+        </TableLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

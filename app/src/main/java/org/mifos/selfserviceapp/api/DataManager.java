@@ -9,12 +9,18 @@ import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
+import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
+import org.mifos.selfserviceapp.models.beneficary.BeneficiaryPayload;
+import org.mifos.selfserviceapp.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
 import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
+import org.mifos.selfserviceapp.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -120,6 +126,27 @@ public class DataManager {
         return baseApiManager.getLoanAccountsListApi().createLoansAccount(loansPayload);
     }
 
+    public Observable<List<Beneficiary>> getBeneficiaryList() {
+        return baseApiManager.getBeneficiaryApi().getBeneficiaryList();
+    }
+
+    public Observable<BeneficiaryTemplate> getBeneficiaryTemplate() {
+        return baseApiManager.getBeneficiaryApi().getBeneficiaryTemplate();
+    }
+
+    public Observable<ResponseBody> createBeneficiary(BeneficiaryPayload beneficiaryPayload) {
+        return baseApiManager.getBeneficiaryApi().createBeneficiary(beneficiaryPayload);
+    }
+
+    public Observable<ResponseBody> deleteBeneficiary(long beneficiaryId,
+                                                      BeneficiaryUpdatePayload payload) {
+        return baseApiManager.getBeneficiaryApi().deleteBeneficiary(beneficiaryId, payload);
+    }
+
+    public Observable<ResponseBody> deleteBeneficiary(long beneficiaryId) {
+        return baseApiManager.getBeneficiaryApi().deleteBeneficiary(beneficiaryId);
+    }
+
     public PreferencesHelper getPreferencesHelper() {
         return preferencesHelper;
     }
@@ -127,7 +154,6 @@ public class DataManager {
     public Observable<Page<Charge>> getClientLocalCharges() {
         return databaseHelper.getClientCharges();
     }
-
     public long getClientId() {
         return clientId;
     }

@@ -101,6 +101,11 @@
     <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
     <string name="error_same_account_transfer">Can\'t transfer with in same account</string>
     <string name="error_fetching_account_transfer_template">Error to fetching account transfer template</string>
+    <string name="error_fetching_beneficiaries">Failed to fetch Beneficiaries</string>
+    <string name="error_fetching_beneficiary_template">Failed to fetch Beneficiary Template</string>
+    <string name="error_creating_beneficiary">Failed to create Beneficiary</string>
+    <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
+    <string name="error_deleting_beneficiary">Failed to delete Beneficiary</string>
 
     <string name="fetching_client">Fetching Client</string>
 
@@ -176,6 +181,27 @@
     <string name="loan_repayment">Loan Repayment</string>
     <string name="quick_transfer">Quick Transfer</string>
     <string name="internet_not_connected">Please make sure you are connected to internet</string>
+    <string name="beneficiaries">Beneficiaries</string>
+    <string name="beneficiary_detail">Beneficiary Detail</string>
+    <string name="beneficiary_name">Beneficiary Name</string>
+    <string name="account_type">Account Type</string>
+    <string name="transfer_limit">Transfer Limit</string>
+    <string name="add_beneficiary">Add Beneficiary</string>
+    <string name="office_name">Office Name</string>
+    <string name="select_account_type">Select Account Type*</string>
+    <string name="submit_beneficiary">Submit Beneficiary</string>
+    <string name="enter_office_name">Enter Beneficiary Office Name</string>
+    <string name="enter_beneficiary_name">Enter Beneficiary Name</string>
+    <string name="enter_transfer_limit">Enter Transfer Limit</string>
+    <string name="enter_account_number">Enter Beneficiary Account Number</string>
+    <string name="choose_account_type">Select Account Type from the dropdown</string>
+    <string name="beneficiary_created_successfully">Beneficiary created successfully</string>
+    <string name="beneficiary_updated_successfully">Beneficiary updated successfully</string>
+    <string name="update_beneficiary">Update Beneficiary</string>
+    <string name="delete_beneficiary">Delete Beneficiary</string>
+    <string name="delete_beneficiary_confirmation">Are you sure you want to delete this Beneficiary</string>
+    <string name="delete">Delete</string>
+    <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
 
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>

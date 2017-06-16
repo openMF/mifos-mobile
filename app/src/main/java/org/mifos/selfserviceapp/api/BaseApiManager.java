@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.api;
 
 import org.mifos.selfserviceapp.api.services.AuthenticationService;
+import org.mifos.selfserviceapp.api.services.BeneficiaryService;
 import org.mifos.selfserviceapp.api.services.ClientChargeService;
 import org.mifos.selfserviceapp.api.services.ClientService;
 import org.mifos.selfserviceapp.api.services.LoanAccountsListService;
@@ -30,6 +31,7 @@ public class BaseApiManager {
     private static LoanAccountsListService loanAccountsListApi;
     private static RecentTransactionsService recentTransactionsApi;
     private static ClientChargeService clientChargeApi;
+    private static BeneficiaryService beneficiaryApi;
 
     public BaseApiManager() {
         String authToken = "";
@@ -43,6 +45,7 @@ public class BaseApiManager {
         loanAccountsListApi = createApi(LoanAccountsListService.class);
         recentTransactionsApi = createApi(RecentTransactionsService.class);
         clientChargeApi = createApi(ClientChargeService.class);
+        beneficiaryApi = createApi(BeneficiaryService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -90,5 +93,9 @@ public class BaseApiManager {
 
     public ClientChargeService getClientChargeApi() {
         return clientChargeApi;
+    }
+
+    public BeneficiaryService getBeneficiaryApi() {
+        return beneficiaryApi;
     }
 }
