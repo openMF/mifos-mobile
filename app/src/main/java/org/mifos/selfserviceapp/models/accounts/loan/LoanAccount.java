@@ -5,14 +5,13 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.mifos.selfserviceapp.models.accounts.Account;
+
 /**
  * @author Vishwajeet
  * @since 22/06/16.
  */
-public class LoanAccount implements Parcelable {
-
-    @SerializedName("id")
-    private long id;
+public class LoanAccount extends Account implements Parcelable {
 
     public String getExternalId() {
         return externalId;
@@ -217,15 +216,6 @@ public class LoanAccount implements Parcelable {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
 
     @Override
     public int describeContents() {
