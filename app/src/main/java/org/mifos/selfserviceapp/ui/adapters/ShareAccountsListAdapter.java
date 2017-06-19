@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -48,34 +49,44 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
         if (holder instanceof ViewHolder) {
 
             ShareAccount shareAccount = getItem(position);
-            ((ViewHolder) holder).tv_clientshareAccountsNumber
+            ((ViewHolder) holder).tvClientShareAccountsNumber
                     .setText(shareAccount.getAccountNo());
-            ((ViewHolder) holder).tv_shareAccountsProductName
+            ((ViewHolder) holder).tvShareAccountsProductName
                     .setText(shareAccount.getProductName());
+            ((ViewHolder) holder).llAccountDetail.setVisibility(View.GONE);
+
             if (shareAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).iv_status_indicator
+                ((ViewHolder) holder).ivStatusIndicator
                         .setImageDrawable(setCircularBackground(R.color.deposit_green));
+                setSharingAccountDetail(((ViewHolder) holder), shareAccount);
 
             } else if (shareAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).iv_status_indicator
+                ((ViewHolder) holder).ivStatusIndicator
                         .setImageDrawable(setCircularBackground(R.color.light_green));
 
             } else if (shareAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).iv_status_indicator
+                ((ViewHolder) holder).ivStatusIndicator
                         .setImageDrawable(setCircularBackground(R.color.light_yellow));
 
             } else {
 
-                ((ViewHolder) holder).iv_status_indicator
+                ((ViewHolder) holder).ivStatusIndicator
                         .setImageDrawable(setCircularBackground(R.color.light_blue));
 
             }
         }
     }
 
+    private void setSharingAccountDetail(ViewHolder viewHolder, ShareAccount shareAccount) {
+        viewHolder.llAccountDetail.setVisibility(View.VISIBLE);
+        viewHolder.tvSharesPending.setText(String.valueOf(shareAccount
+                .getTotalPendingForApprovalShares()));
+        viewHolder.tvSharesApproved.setText(String.valueOf(shareAccount
+                .getTotalApprovedShares()));
+    }
     @Override
     public int getItemCount() {
         return shareAccountssList.size();
@@ -90,13 +101,22 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_clientSharingAccountNumber)
-        TextView tv_clientshareAccountsNumber;
+        TextView tvClientShareAccountsNumber;
 
         @BindView(R.id.tv_shareAccountProductName)
-        TextView tv_shareAccountsProductName;
+        TextView tvShareAccountsProductName;
 
         @BindView(R.id.iv_status_indicator)
-        CircularImageView iv_status_indicator;
+        CircularImageView ivStatusIndicator;
+
+        @BindView(R.id.ll_account_detail)
+        LinearLayout llAccountDetail;
+
+        @BindView(R.id.tv_shares_pending)
+        TextView tvSharesPending;
+
+        @BindView(R.id.tv_shares_approved)
+        TextView tvSharesApproved;
 
         public ViewHolder(View v) {
             super(v);

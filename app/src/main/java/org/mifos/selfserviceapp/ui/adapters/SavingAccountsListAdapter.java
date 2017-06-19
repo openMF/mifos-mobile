@@ -1,11 +1,14 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
+
+import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.Utils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -52,40 +55,52 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
 
             SavingAccount savingAccount = getItem(position);
 
-            ((ViewHolder) holder).tv_clientSavingAccountNumber.setText(
+            ((ViewHolder) holder).tvClientSavingAccountNumber.setText(
                     savingAccount.getAccountNo());
 
-            ((ViewHolder) holder).tv_savingAccountProductName.setText(
+            ((ViewHolder) holder).tvSavingAccountProductName.setText(
                     savingAccount.getProductName());
-
+            ((ViewHolder) holder).llAccountDetail.setVisibility(View.GONE);
+            ((ViewHolder) holder).tvLastActive.setVisibility(View.GONE);
 
             if (savingAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.deposit_green, context));
-
+                setSavingAccountsDetails(((ViewHolder) holder), savingAccount);
             } else if (savingAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.light_green, context));
 
             } else if (savingAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.light_yellow, context));
 
             } else if (savingAccount.getStatus().getMatured()) {
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.red_light, context));
+                setSavingAccountsDetails(((ViewHolder) holder), savingAccount);
             } else {
 
-                ((ViewHolder) holder).iv_status_indicator.setImageDrawable(
+                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
                         Utils.setCircularBackground(R.color.black, context));
 
             }
 
         }
 
+    }
+
+    private void setSavingAccountsDetails(ViewHolder viewHolder, SavingAccount savingAccount) {
+        viewHolder.llAccountDetail.setVisibility(View.VISIBLE);
+        viewHolder.tvLastActive.setVisibility(View.VISIBLE);
+        viewHolder.tvAccountBalance.setText( context.getString(R.string.double_and_String,
+                savingAccount.getAccountBalance(), savingAccount.getCurrency().getDisplaySymbol()));
+
+        viewHolder.tvLastActive.setText(DateHelper.getDateAsString(savingAccount
+                .getLastActiveTransactionDate()));
     }
 
     @Override
@@ -96,13 +111,22 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_clientSavingAccountNumber)
-        TextView tv_clientSavingAccountNumber;
+        TextView tvClientSavingAccountNumber;
 
         @BindView(R.id.tv_savingAccountProductName)
-        TextView tv_savingAccountProductName;
+        TextView tvSavingAccountProductName;
 
         @BindView(R.id.iv_status_indicator)
-        CircularImageView iv_status_indicator;
+        CircularImageView ivStatusIndicator;
+
+        @BindView(R.id.ll_account_detail)
+        LinearLayout llAccountDetail;
+
+        @BindView(R.id.tv_last_active)
+        TextView tvLastActive;
+
+        @BindView(R.id.tv_account_balance)
+        TextView tvAccountBalance;
 
         public ViewHolder(View v) {
             super(v);
