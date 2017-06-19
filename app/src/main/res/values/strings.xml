@@ -72,10 +72,13 @@
     <string name="deposit">Deposit</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="remark_is_mandatory">Remark is mandatory</string>
-    <string name="shares_approved">Approved</string>
+    <string name="approved">Approved</string>
     <string name="shares_pending">Pending</string>
     <string name="loan_amount_paid">Paid</string>
     <string name="balance">Balance</string>
+    <string name="rejected">Rejected</string>
+    <string name="waiting">Waiting</string>
+    <string name="overpaid">Overpaid</string>
 
     <string name="active">Active</string>
     <string name="closed">Closed</string>
@@ -238,6 +241,8 @@
     <!--Format Strings-->
     <string name="double_and_String">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
+    <string name="string_and_double">%1$s: %2$.2f</string>
+    <string name="string_and_int">%1$s: %2$d</string>
     <string name="invalid_amount">Invalid Amount</string>
     <string name="exit_message">Press back again to exit</string>
 

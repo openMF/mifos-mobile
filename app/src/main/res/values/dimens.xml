@@ -48,5 +48,6 @@
 
     <dimen name="divider_margin">4dp</dimen>
     <dimen name="side_bar_width">12dp</dimen>
+    <dimen name="pie_chart_height">160dp</dimen>
 
 </resources>
