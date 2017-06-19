@@ -47,4 +47,7 @@ public class Constants {
 
     public static final String ACCOUNT_POSITION = "account_position";
 
+    public static final String BENEFICIARY = "beneficiary";
+
+    public static final String BENEFICIARY_STATE = "beneficiary_state";
 }

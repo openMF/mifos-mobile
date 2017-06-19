@@ -3,6 +3,9 @@ package org.mifos.selfserviceapp.injection.component;
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.fragments.BeneficiaryApplicationFragment;
+import org.mifos.selfserviceapp.ui.fragments.BeneficiaryDetailFragment;
+import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountTransactionFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
@@ -57,4 +60,10 @@ public interface ActivityComponent {
     void inject(SavingAccountsTransactionFragment savingAccountsTransactionFragment);
 
     void inject(SavingsMakeTransferFragment savingsMakeTransferFragment);
+
+    void inject(BeneficiaryListFragment beneficiaryListFragment);
+
+    void inject(BeneficiaryApplicationFragment beneficiaryApplicationFragment);
+
+    void inject(BeneficiaryDetailFragment beneficiaryDetailFragment);
 }

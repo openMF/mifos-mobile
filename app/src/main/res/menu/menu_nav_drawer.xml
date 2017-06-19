@@ -28,6 +28,12 @@
             android:icon="@drawable/ic_label_black_24dp"
             android:title="@string/charges"/>
 
+        <item
+            android:id="@+id/item_beneficiaries"
+            android:checked="false"
+            android:icon="@drawable/ic_label_black_24dp"
+            android:title="@string/beneficiaries"/>
+
     </group>
 
     <group android:id="@+id/group2"
