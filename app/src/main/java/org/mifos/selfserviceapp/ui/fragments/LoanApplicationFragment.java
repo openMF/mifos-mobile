@@ -15,12 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
 import org.mifos.selfserviceapp.models.templates.loans.LoanPurposeOptions;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.ProductOptions;
 import org.mifos.selfserviceapp.presenters.LoanApplicationPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanApplicationMvpView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -93,16 +95,32 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     private LoanTemplate loanTemplate;
     private DialogFragment mfDatePicker;
+    private LoanState loanState;
+    private LoanAccount loanAccountToModify;
     private int productId;
     private int purposeId;
     private String disbursementDate;
     private String submittedDate;
     private boolean isDisbursebemntDate = false;
     private boolean isSubmissionDate = false;
+    private boolean isLoanUpdatePurposesInitialization = true;
 
-    public static LoanApplicationFragment newInstance() {
+
+
+    public static LoanApplicationFragment newInstance(LoanState loanState) {
         LoanApplicationFragment fragment = new LoanApplicationFragment();
         Bundle args = new Bundle();
+        args.putSerializable(Constants.LOAN_STATE, loanState);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static LoanApplicationFragment newInstance(LoanState loanState,
+                                                      LoanAccount loanAccountToModify) {
+        LoanApplicationFragment fragment = new LoanApplicationFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.LOAN_STATE, loanState);
+        args.putParcelable(Constants.LOAN_ACCOUNT, loanAccountToModify);
         fragment.setArguments(args);
         return fragment;
     }
@@ -111,7 +129,16 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
-        setToolbarTitle(getString(R.string.apply_for_loan));
+        if (getArguments() != null) {
+            loanState = (LoanState) getArguments().getSerializable(Constants.LOAN_STATE);
+
+            if (loanState == LoanState.CREATE) {
+                setToolbarTitle(getString(R.string.apply_for_loan));
+            } else {
+                setToolbarTitle(getString(R.string.update_loan));
+                loanAccountToModify = getArguments().getParcelable(Constants.LOAN_ACCOUNT);
+            }
+        }
     }
 
     @Override
@@ -123,18 +150,35 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loanApplicationPresenter.attachView(this);
 
         showUserInterface();
-        loanApplicationPresenter.loadLoanApplicationTemplate();
+        loadLoanTemplate();
 
         return rootView;
     }
 
+    private void loadLoanTemplate() {
+        if (loanState == LoanState.CREATE) {
+            loanApplicationPresenter.loadLoanApplicationTemplate(LoanState.CREATE);
+        } else {
+            loanApplicationPresenter.loadLoanApplicationTemplate(LoanState.UPDATE);
+        }
+    }
+
     @OnClick(R.id.btn_loan_submit)
     void onSubmitLoanApplication() {
+        if (loanState == LoanState.CREATE) {
+            submitNewLoanApplication();
+        } else {
+            submitUpdateLoanApplication();
+        }
+    }
+
+    private void submitNewLoanApplication() {
         LoansPayload loansPayload = new LoansPayload();
         loansPayload.setClientId(loanTemplate.getClientId());
         loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setProductId(productId);
-        loansPayload.setPrincipal(loanTemplate.getPrincipal());
+        loansPayload.setPrincipal(Double.
+                parseDouble(etPrincipalAmount.getText().toString()));
         loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
         loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
         loansPayload.setLoanType("individual");
@@ -148,8 +192,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loansPayload.setTransactionProcessingStrategyId(
                 loanTemplate.getTransactionProcessingStrategyId());
         loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
-        loansPayload.setTransactionProcessingStrategyId(
-                loanTemplate.getTransactionProcessingStrategyId());
         loansPayload.setInterestCalculationPeriodType(
                 loanTemplate.getInterestCalculationPeriodType().getId());
         loansPayload.setInterestType(loanTemplate.getInterestType().getId());
@@ -157,11 +199,34 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loanApplicationPresenter.createLoansAccount(loansPayload);
     }
 
+    private void submitUpdateLoanApplication() {
+        LoansPayload loansPayload = new LoansPayload();
+        loansPayload.setPrincipal(Double.
+                parseDouble(etPrincipalAmount.getText().toString()));
+        loansPayload.setProductId(productId);
+        loansPayload.setLoanPurposeId(purposeId);
+        loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
+        loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
+        loansPayload.setNumberOfRepayments(loanTemplate.getNumberOfRepayments());
+        loansPayload.setRepaymentEvery(loanTemplate.getRepaymentEvery());
+        loansPayload.setRepaymentFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
+        loansPayload.setInterestRatePerPeriod(loanTemplate.getInterestRatePerPeriod());
+        loansPayload.setInterestType(loanTemplate.getInterestType().getId());
+        loansPayload.setInterestCalculationPeriodType(
+                loanTemplate.getInterestCalculationPeriodType().getId());
+        loansPayload.setAmortizationType(loanTemplate.getAmortizationType().getId());
+        loansPayload.setTransactionProcessingStrategyId(
+                loanTemplate.getTransactionProcessingStrategyId());
+        loansPayload.setExpectedDisbursementDate(disbursementDate);
+
+        loanApplicationPresenter.updateLoanAccount(loanAccountToModify.getId(), loansPayload);
+    }
+
     @OnClick(R.id.iv_status)
     void onRetry() {
         llError.setVisibility(View.GONE);
         llAddLoan.setVisibility(View.VISIBLE);
-        loanApplicationPresenter.loadLoanApplicationTemplate();
+        loadLoanTemplate();
     }
 
     public void inflateSubmissionDate() {
@@ -242,6 +307,32 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     }
 
     @Override
+    public void showUpdateLoanTemplate(LoanTemplate loanTemplate) {
+        this.loanTemplate = loanTemplate;
+
+        for (ProductOptions productOption : loanTemplate.getProductOptions()) {
+            listLoanProducts.add(productOption.getName());
+        }
+        loanProductAdapter.notifyDataSetChanged();
+
+        spLoanProducts.setSelection(loanProductAdapter
+                .getPosition(loanAccountToModify.getLoanProductName()));
+        tvAccountNumber.setText(getString(R.string.string_and_string,
+                getString(R.string.account_number) + " ", loanAccountToModify.getAccountNo()));
+        tvNewLoanApplication.setText(getString(R.string.string_and_string,
+                getString(R.string.update_loan_application) + " ",
+                loanAccountToModify.getClientName()));
+        etPrincipalAmount.setText(String.valueOf(loanAccountToModify.getPrincipal()));
+        tvCurrency.setText(loanAccountToModify.getCurrency().getDisplayLabel());
+
+        tvSubmissionDate.setText(DateHelper.getDateAsString(loanAccountToModify.
+                getTimeline().getSubmittedOnDate(), "dd-MM-YYYY"));
+        tvExpectedDisbursementDate.setText(DateHelper.getDateAsString(loanAccountToModify.
+                getTimeline().getExpectedDisbursementDate(), "dd-MM-YYYY"));
+        setSubmissionDisburseDate();
+    }
+
+    @Override
     public void showLoanTemplateByProduct(LoanTemplate loanTemplate) {
         this.loanTemplate = loanTemplate;
         tvAccountNumber.setText(getString(R.string.string_and_string,
@@ -259,8 +350,38 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     }
 
     @Override
+    public void showUpdateLoanTemplateByProduct(LoanTemplate loanTemplate) {
+        this.loanTemplate = loanTemplate;
+        listLoanPurpose.clear();
+        for (LoanPurposeOptions loanPurposeOptions : loanTemplate.getLoanPurposeOptions()) {
+            listLoanPurpose.add(loanPurposeOptions.getName());
+        }
+        loanPurposeAdapter.notifyDataSetChanged();
+
+        if (isLoanUpdatePurposesInitialization &&
+                loanAccountToModify.getLoanPurposeName() != null) {
+            spLoanPurpose.setSelection(loanPurposeAdapter
+                    .getPosition(loanAccountToModify.getLoanPurposeName()));
+            isLoanUpdatePurposesInitialization = false;
+        } else {
+            tvAccountNumber.setText(getString(R.string.string_and_string,
+                    getString(R.string.account_number) + " ", loanTemplate.getClientAccountNo()));
+            tvNewLoanApplication.setText(getString(R.string.string_and_string,
+                    getString(R.string.new_loan_application) + " ", loanTemplate.getClientName()));
+            etPrincipalAmount.setText(String.valueOf(loanTemplate.getPrincipal()));
+            tvCurrency.setText(loanTemplate.getCurrency().getDisplayLabel());
+        }
+    }
+
+    @Override
     public void showLoanAccountCreatedSuccessfully() {
         Toaster.show(rootView, R.string.loan_application_submitted_successfully);
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void showLoanAccountUpdatedSuccessfully() {
+        Toaster.show(rootView, R.string.loan_application_updated_successfully);
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
@@ -293,7 +414,14 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         switch (parent.getId()) {
             case R.id.sp_loan_products:
                 productId = loanTemplate.getProductOptions().get(position).getId();
-                loanApplicationPresenter.loadLoanApplicationTemplateByProduct(productId);
+
+                if (loanState == LoanState.CREATE) {
+                    loanApplicationPresenter.loadLoanApplicationTemplateByProduct(productId,
+                            LoanState.CREATE);
+                } else {
+                    loanApplicationPresenter.loadLoanApplicationTemplateByProduct(productId,
+                            LoanState.UPDATE);
+                }
                 break;
 
             case R.id.sp_loan_purpose:

@@ -51,8 +51,13 @@
     <string name="submission_date">Submission Date</string>
     <string name="transfer_date">Transfer Date</string>
     <string name="apply_for_loan">Apply for Loan</string>
+    <string name="update_loan">Update Loan</string>
+    <string name="withdraw_loan">Withdraw Loan</string>
+    <string name="withdraw_loan_reason">Reason to Withdraw Loan</string>
+    <string name="loan_account_withdrawn_successfully">Loan account successfully withdrawn</string>
     <string name="submit_loan">Submit Loan</string>
     <string name="new_loan_application">New Loan Application for </string>
+    <string name="update_loan_application">Update Loan Application for </string>
     <string name="loan_interest_type">Interest Type</string>
     <string name="amortization">Amortization</string>
     <string name="interestcalculationperiod">Interest calculation period</string>
@@ -107,9 +112,11 @@
     <string name="error_fetching_account_transfer_template">Error to fetching account transfer template</string>
     <string name="error_fetching_beneficiaries">Failed to fetch Beneficiaries</string>
     <string name="error_fetching_beneficiary_template">Failed to fetch Beneficiary Template</string>
+    <string name="error_fetching_template">Failed to fetch template</string>
     <string name="error_creating_beneficiary">Failed to create Beneficiary</string>
     <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
     <string name="error_deleting_beneficiary">Failed to delete Beneficiary</string>
+    <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
 
     <string name="fetching_client">Fetching Client</string>
 
@@ -165,6 +172,8 @@
     <string name="map_marker_desc">Home to large tech industry</string>
     <string name="loan_transaction_details">Loan Account Details</string>
     <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
+    <string name="loan_application_updated_successfully">Loan Application Updated Successfully</string>
+    <string name="loan_application_withdrawn_successfully">Loan Application Withdrawn Successfully</string>
     <string name="none">None</string>
     <string name="all">All</string>
     <string name="four_weeks">4 Weeks</string>

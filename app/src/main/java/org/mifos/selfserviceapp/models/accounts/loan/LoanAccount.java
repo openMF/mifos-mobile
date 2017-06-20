@@ -129,6 +129,18 @@ public class LoanAccount extends Account implements Parcelable {
     @SerializedName("amountPaid")
     private double amountPaid;
 
+    @SerializedName("currency")
+    Currency currency;
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+
     public String getLoanPurposeName() {
         return loanPurposeName;
     }
@@ -248,46 +260,58 @@ public class LoanAccount extends Account implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
         dest.writeLong(this.loanProductId);
+        dest.writeString(this.externalId);
         dest.writeLong(this.numberOfRepayments);
         dest.writeString(this.accountNo);
         dest.writeString(this.productName);
+        dest.writeValue(this.productId);
         dest.writeString(this.loanProductName);
         dest.writeString(this.clientName);
         dest.writeString(this.loanProductDescription);
-        dest.writeString(this.loanPurposeName);
         dest.writeDouble(this.principal);
         dest.writeDouble(this.annualInterestRate);
+        dest.writeParcelable(this.status, flags);
+        dest.writeParcelable(this.loanType, flags);
+        dest.writeValue(this.loanCycle);
+        dest.writeParcelable(this.currency, flags);
+        dest.writeValue(this.inArrears);
         dest.writeParcelable(this.summary, flags);
-    }
-
-    public LoanAccount() {
+        dest.writeString(this.loanPurposeName);
+        dest.writeParcelable(this.timeline, flags);
     }
 
     protected LoanAccount(Parcel in) {
         this.id = in.readLong();
         this.loanProductId = in.readLong();
+        this.externalId = in.readString();
         this.numberOfRepayments = in.readLong();
         this.accountNo = in.readString();
         this.productName = in.readString();
+        this.productId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.loanProductName = in.readString();
         this.clientName = in.readString();
         this.loanProductDescription = in.readString();
-        this.loanPurposeName = in.readString();
         this.principal = in.readDouble();
         this.annualInterestRate = in.readDouble();
+        this.status = in.readParcelable(Status.class.getClassLoader());
+        this.loanType = in.readParcelable(LoanType.class.getClassLoader());
+        this.loanCycle = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.currency = in.readParcelable(Currency.class.getClassLoader());
+        this.inArrears = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.summary = in.readParcelable(Summary.class.getClassLoader());
+        this.loanPurposeName = in.readString();
+        this.timeline = in.readParcelable(Timeline.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<LoanAccount> CREATOR =
-            new Parcelable.Creator<LoanAccount>() {
-                @Override
-                public LoanAccount createFromParcel(Parcel source) {
-                    return new LoanAccount(source);
-                }
+    public static final Creator<LoanAccount> CREATOR = new Creator<LoanAccount>() {
+        @Override
+        public LoanAccount createFromParcel(Parcel source) {
+            return new LoanAccount(source);
+        }
 
-                @Override
-                public LoanAccount[] newArray(int size) {
-                    return new LoanAccount[size];
-                }
-            };
+        @Override
+        public LoanAccount[] newArray(int size) {
+            return new LoanAccount[size];
+        }
+    };
 }

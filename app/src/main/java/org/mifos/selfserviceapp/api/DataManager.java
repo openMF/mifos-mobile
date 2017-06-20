@@ -8,6 +8,7 @@ import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.loan.LoanWithdraw;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
 import org.mifos.selfserviceapp.models.beneficary.BeneficiaryPayload;
@@ -124,6 +125,14 @@ public class DataManager {
 
     public Observable<ResponseBody> createLoansAccount(LoansPayload loansPayload) {
         return baseApiManager.getLoanAccountsListApi().createLoansAccount(loansPayload);
+    }
+
+    public Observable<ResponseBody> updateLoanAccount(long loanId, LoansPayload loansPayload) {
+        return baseApiManager.getLoanAccountsListApi().updateLoanAccount(loanId, loansPayload);
+    }
+
+    public Observable<ResponseBody> withdrawLoanAccount(long loanId, LoanWithdraw loanWithdraw) {
+        return baseApiManager.getLoanAccountsListApi().withdrawLoanAccount(loanId, loanWithdraw);
     }
 
     public Observable<List<Beneficiary>> getBeneficiaryList() {

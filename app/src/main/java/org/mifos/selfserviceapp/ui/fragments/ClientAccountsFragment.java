@@ -23,6 +23,7 @@ import org.mifos.selfserviceapp.presenters.AccountsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.AccountsView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -193,8 +194,8 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_loan:
-                ((BaseActivity) getActivity()).replaceFragment(
-                        LoanApplicationFragment.newInstance(), true, R.id.container);
+                ((BaseActivity) getActivity()).replaceFragment(LoanApplicationFragment.
+                        newInstance(LoanState.CREATE), true, R.id.container);
                 break;
         }
         return true;

@@ -2,11 +2,13 @@ package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
 
+import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
+import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.views.LoanApplicationMvpView;
 import org.mifos.selfserviceapp.utils.MFErrorParser;
 
@@ -43,7 +45,7 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
         super.detachView();
     }
 
-    public void loadLoanApplicationTemplate() {
+    public void loadLoanApplicationTemplate(final LoanState loanState) {
         checkViewAttached();
         getMvpView().showProgress();
         subscriptions.add(dataManager.getLoanTemplate()
@@ -57,19 +59,23 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError("failed to load template");
+                        getMvpView().showError(context.getString(R.string.error_fetching_template));
                     }
 
                     @Override
                     public void onNext(LoanTemplate loanTemplate) {
                         getMvpView().hideProgress();
-                        getMvpView().showLoanTemplate(loanTemplate);
+                        if (loanState == LoanState.CREATE) {
+                            getMvpView().showLoanTemplate(loanTemplate);
+                        } else {
+                            getMvpView().showUpdateLoanTemplate(loanTemplate);
+                        }
                     }
                 })
         );
     }
 
-    public void loadLoanApplicationTemplateByProduct(int productId) {
+    public void loadLoanApplicationTemplateByProduct(int productId, final LoanState loanState) {
         checkViewAttached();
         getMvpView().showProgress();
         subscriptions.add(dataManager.getLoanTemplateByProduct(productId)
@@ -83,13 +89,17 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError("failed to load template");
+                        getMvpView().showError(context.getString(R.string.error_fetching_template));
                     }
 
                     @Override
                     public void onNext(LoanTemplate loanTemplate) {
                         getMvpView().hideProgress();
-                        getMvpView().showLoanTemplateByProduct(loanTemplate);
+                        if (loanState == LoanState.CREATE) {
+                            getMvpView().showLoanTemplateByProduct(loanTemplate);
+                        } else {
+                            getMvpView().showUpdateLoanTemplateByProduct(loanTemplate);
+                        }
                     }
                 })
         );
@@ -117,6 +127,33 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
                     public void onNext(ResponseBody responseBody) {
                         getMvpView().hideProgress();
                         getMvpView().showLoanAccountCreatedSuccessfully();
+                    }
+                })
+        );
+    }
+
+    public void updateLoanAccount(long loanId, LoansPayload loansPayload) {
+        checkViewAttached();
+        getMvpView().showProgress();
+        subscriptions.add(dataManager.updateLoanAccount(loanId, loansPayload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showError(MFErrorParser.errorMessage(e));
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        getMvpView().hideProgress();
+                        getMvpView().showLoanAccountUpdatedSuccessfully();
                     }
                 })
         );
