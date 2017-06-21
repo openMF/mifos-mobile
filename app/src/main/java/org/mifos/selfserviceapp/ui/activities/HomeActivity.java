@@ -25,6 +25,7 @@ import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
+import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -97,6 +98,9 @@ public class HomeActivity extends BaseActivity implements
                 break;
             case R.id.item_charges:
                 replaceFragment(ClientChargeFragment.newInstance(clientId), true,  R.id.container);
+                break;
+            case R.id.item_third_party_transfer:
+                replaceFragment(ThirdPartyTransferFragment.newInstance(), true,  R.id.container);
                 break;
             case R.id.item_beneficiaries:
                 replaceFragment(BeneficiaryListFragment.newInstance(), true,  R.id.container);

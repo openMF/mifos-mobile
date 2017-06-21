@@ -2,7 +2,7 @@ package org.mifos.selfserviceapp.api.services;
 
 import org.mifos.selfserviceapp.api.ApiEndPoints;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
-import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 
 import okhttp3.ResponseBody;
@@ -28,5 +28,5 @@ public interface SavingAccountsListService {
     Observable<AccountOptionsTemplate> getAccountTransferTemplate();
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
-    Observable<ResponseBody> makeTransfer(@Body SavingsTransferPayload savingsTransferPayload);
+    Observable<ResponseBody> makeTransfer(@Body TransferPayload transferPayload);
 }
