@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
+  -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/view_flipper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_make_transfer"
+        style="@style/LinearLayout.Base"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_pay_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="@string/pay_from"
+            android:textSize="16sp"/>
+
+        <Spinner
+            android:id="@+id/sp_pay_from"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:spinnerMode="dropdown"/>
+        <TextView
+        android:id="@+id/tv_pay_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:text="@string/beneficiary"
+        android:textSize="16sp"/>
+
+        <Spinner
+        android:id="@+id/sp_beneficiary"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:spinnerMode="dropdown"/>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/amount"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:paddingBottom="16dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout style="@style/LinearLayout.Width">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
+                android:text="@string/transfer_date"/>
+
+            <TextView
+                android:id="@+id/tv_transfer_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/remark"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingBottom="16dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout style="@style/LinearLayout.Width">
+
+            <Button
+                android:id="@+id/btn_cancel_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:text="@string/cancel"
+                tools:ignore="ButtonStyle"/>
+
+            <Button
+                android:id="@+id/btn_review_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:text="@string/review_transfer"
+                android:layout_weight="0.5"
+                tools:ignore="ButtonStyle"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

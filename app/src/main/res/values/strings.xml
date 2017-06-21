@@ -120,6 +120,7 @@
     <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
     <string name="error_deleting_beneficiary">Failed to delete Beneficiary</string>
     <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
+    <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer template</string>
 
     <string name="fetching_client">Fetching Client</string>
 
@@ -197,6 +198,8 @@
     <string name="loan_repayment">Loan Repayment</string>
     <string name="quick_transfer">Quick Transfer</string>
     <string name="internet_not_connected">Please make sure you are connected to internet</string>
+    <string name="beneficiary">Beneficiary</string>
+    <string name="manage_beneficiaries">Manage Beneficiaries</string>
     <string name="beneficiaries">Beneficiaries</string>
     <string name="beneficiary_detail">Beneficiary Detail</string>
     <string name="beneficiary_name">Beneficiary Name</string>
@@ -218,6 +221,7 @@
     <string name="delete_beneficiary_confirmation">Are you sure you want to delete this Beneficiary</string>
     <string name="delete">Delete</string>
     <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
+    <string name="third_party_transfer">Third Party Transfer</string>
 
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
