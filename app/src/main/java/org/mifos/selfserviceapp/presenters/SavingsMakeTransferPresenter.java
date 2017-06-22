@@ -5,7 +5,7 @@ import android.content.Context;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ApplicationContext;
-import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOption;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
@@ -80,10 +80,10 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
         );
     }
 
-    public void makeTransfer(SavingsTransferPayload savingsTransferPayload) {
+    public void makeTransfer(TransferPayload transferPayload) {
         checkViewAttached();
         getMvpView().showProgressDialog();
-        subscriptions.add(dataManager.makeTransfer(savingsTransferPayload)
+        subscriptions.add(dataManager.makeTransfer(transferPayload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<ResponseBody>() {

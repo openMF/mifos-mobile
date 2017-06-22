@@ -27,12 +27,16 @@
             android:checked="false"
             android:icon="@drawable/ic_label_black_24dp"
             android:title="@string/charges"/>
-
+        <item
+            android:id="@+id/item_third_party_transfer"
+            android:checked="false"
+            android:icon="@drawable/ic_label_black_24dp"
+            android:title="@string/third_party_transfer"/>
         <item
             android:id="@+id/item_beneficiaries"
             android:checked="false"
             android:icon="@drawable/ic_label_black_24dp"
-            android:title="@string/beneficiaries"/>
+            android:title="@string/manage_beneficiaries"/>
 
     </group>
 

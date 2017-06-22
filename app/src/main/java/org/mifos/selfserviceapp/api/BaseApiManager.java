@@ -7,6 +7,7 @@ import org.mifos.selfserviceapp.api.services.ClientService;
 import org.mifos.selfserviceapp.api.services.LoanAccountsListService;
 import org.mifos.selfserviceapp.api.services.RecentTransactionsService;
 import org.mifos.selfserviceapp.api.services.SavingAccountsListService;
+import org.mifos.selfserviceapp.api.services.ThirdPartyTransferService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -32,7 +33,7 @@ public class BaseApiManager {
     private static RecentTransactionsService recentTransactionsApi;
     private static ClientChargeService clientChargeApi;
     private static BeneficiaryService beneficiaryApi;
-
+    private static ThirdPartyTransferService thirdPartyTransferApi;
     public BaseApiManager() {
         String authToken = "";
         createService(authToken);
@@ -46,6 +47,7 @@ public class BaseApiManager {
         recentTransactionsApi = createApi(RecentTransactionsService.class);
         clientChargeApi = createApi(ClientChargeService.class);
         beneficiaryApi = createApi(BeneficiaryService.class);
+        thirdPartyTransferApi = createApi(ThirdPartyTransferService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -97,5 +99,9 @@ public class BaseApiManager {
 
     public BeneficiaryService getBeneficiaryApi() {
         return beneficiaryApi;
+    }
+
+    public ThirdPartyTransferService getThirdPartyTransferApi() {
+        return thirdPartyTransferApi;
     }
 }

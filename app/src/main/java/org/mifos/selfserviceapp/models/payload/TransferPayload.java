@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Rajan Maurya on 10/03/17.
  */
 
-public class SavingsTransferPayload implements Parcelable {
+public class TransferPayload implements Parcelable {
 
     @SerializedName("fromOfficeId")
     Integer fromOfficeId;
@@ -173,10 +173,10 @@ public class SavingsTransferPayload implements Parcelable {
         dest.writeString(this.locale);
     }
 
-    public SavingsTransferPayload() {
+    public TransferPayload() {
     }
 
-    protected SavingsTransferPayload(Parcel in) {
+    protected TransferPayload(Parcel in) {
         this.fromOfficeId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.fromClientId = (Long) in.readValue(Long.class.getClassLoader());
         this.fromAccountType = (Integer) in.readValue(Integer.class.getClassLoader());
@@ -192,16 +192,16 @@ public class SavingsTransferPayload implements Parcelable {
         this.locale = in.readString();
     }
 
-    public static final Parcelable.Creator<SavingsTransferPayload> CREATOR =
-            new Parcelable.Creator<SavingsTransferPayload>() {
+    public static final Parcelable.Creator<TransferPayload> CREATOR =
+            new Parcelable.Creator<TransferPayload>() {
                 @Override
-                public SavingsTransferPayload createFromParcel(Parcel source) {
-                    return new SavingsTransferPayload(source);
+                public TransferPayload createFromParcel(Parcel source) {
+                    return new TransferPayload(source);
                 }
 
                 @Override
-                public SavingsTransferPayload[] newArray(int size) {
-                    return new SavingsTransferPayload[size];
+                public TransferPayload[] newArray(int size) {
+                    return new TransferPayload[size];
                 }
             };
 }

@@ -16,7 +16,7 @@ import org.mifos.selfserviceapp.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
-import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
@@ -100,8 +100,8 @@ public class DataManager {
         return baseApiManager.getSavingAccountsListApi().getAccountTransferTemplate();
     }
 
-    public Observable<ResponseBody> makeTransfer(SavingsTransferPayload savingsTransferPayload) {
-        return baseApiManager.getSavingAccountsListApi().makeTransfer(savingsTransferPayload);
+    public Observable<ResponseBody> makeTransfer(TransferPayload transferPayload) {
+        return baseApiManager.getSavingAccountsListApi().makeTransfer(transferPayload);
     }
 
     public Observable<LoanAccount> getLoanAccountDetails(long loanId) {
@@ -154,6 +154,14 @@ public class DataManager {
 
     public Observable<ResponseBody> deleteBeneficiary(long beneficiaryId) {
         return baseApiManager.getBeneficiaryApi().deleteBeneficiary(beneficiaryId);
+    }
+
+    public Observable<AccountOptionsTemplate> getThirdPartyTransferTemplate() {
+        return baseApiManager.getThirdPartyTransferApi().getAccountTransferTemplate();
+    }
+
+    public Observable<ResponseBody> makeThirdPartyTransfer(TransferPayload transferPayload) {
+        return baseApiManager.getThirdPartyTransferApi().makeTransfer(transferPayload);
     }
 
     public PreferencesHelper getPreferencesHelper() {

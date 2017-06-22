@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.payload.SavingsTransferPayload;
+import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOption;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.presenters.SavingsMakeTransferPresenter;
@@ -190,20 +190,20 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     @Override
     public void makeTransfer() {
-        SavingsTransferPayload savingsTransferPayload = new SavingsTransferPayload();
-        savingsTransferPayload.setFromAccountId(fromAccountOption.getAccountId());
-        savingsTransferPayload.setFromClientId(fromAccountOption.getClientId());
-        savingsTransferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
-        savingsTransferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
-        savingsTransferPayload.setToOfficeId(toAccountOption.getOfficeId());
-        savingsTransferPayload.setToAccountId(toAccountOption.getAccountId());
-        savingsTransferPayload.setToClientId(toAccountOption.getClientId());
-        savingsTransferPayload.setToAccountType(toAccountOption.getAccountType().getId());
-        savingsTransferPayload.setTransferDate(transferDate);
-        savingsTransferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-        savingsTransferPayload.setTransferDescription(etRemark.getText().toString());
+        TransferPayload transferPayload = new TransferPayload();
+        transferPayload.setFromAccountId(fromAccountOption.getAccountId());
+        transferPayload.setFromClientId(fromAccountOption.getClientId());
+        transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
+        transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
+        transferPayload.setToOfficeId(toAccountOption.getOfficeId());
+        transferPayload.setToAccountId(toAccountOption.getAccountId());
+        transferPayload.setToClientId(toAccountOption.getClientId());
+        transferPayload.setToAccountType(toAccountOption.getAccountType().getId());
+        transferPayload.setTransferDate(transferDate);
+        transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
+        transferPayload.setTransferDescription(etRemark.getText().toString());
 
-        savingsMakeTransferPresenter.makeTransfer(savingsTransferPayload);
+        savingsMakeTransferPresenter.makeTransfer(transferPayload);
     }
 
     @Override
