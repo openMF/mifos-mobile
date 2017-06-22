@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <View
-            android:layout_width="12dp"
+            android:layout_width="@dimen/side_bar_width"
             android:id="@+id/circle_status"
             android:layout_height="match_parent"/>
         <LinearLayout
