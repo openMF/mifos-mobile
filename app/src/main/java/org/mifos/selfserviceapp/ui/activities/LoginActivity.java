@@ -1,6 +1,8 @@
 package org.mifos.selfserviceapp.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
@@ -44,7 +46,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
 
-    private boolean loginStatus;
+    private boolean loginStatus = false;
+    SharedPreferences loginCredentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,32 +57,56 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         loginPresenter.attachView(this);
+
+        loginCredentials = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        boolean loginBoolean = loginCredentials.getBoolean("loginStatus", false);
+
+        if (loginBoolean) {
+
+            String username = loginCredentials.getString("username", "not found");
+            String password = loginCredentials.getString("password", "not found");
+            loginPresenter.login(username, password);
+
+        }
+
     }
 
     @Override
     public void onLoginSuccess(String userName) {
+
         loginStatus = true;
+
+        loginCredentials = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor loginCredentialsEditor = loginCredentials.edit();
+        loginCredentialsEditor.putBoolean("loginStatus", true);
+        loginCredentialsEditor.commit();
+
         showToast(getString(R.string.toast_welcome, userName));
         llLogin.setVisibility(View.GONE);
         loginPresenter.loadClient();
+
     }
 
     @Override
     public void showProgress() {
         if (!loginStatus) {
+
             showProgressDialog(getString(R.string.progress_message_login));
         } else {
+
             showProgressDialog(getString(R.string.fetching_client));
         }
     }
 
     @Override
     public void hideProgress() {
+
         hideProgressDialog();
     }
 
     @Override
     public void showClient(long clientId) {
+
         Intent accountsActivityIntent = new Intent(this, HomeActivity.class);
         accountsActivityIntent.putExtra(Constants.CLIENT_ID, clientId);
         startActivity(accountsActivityIntent);
@@ -97,7 +124,15 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
         final String username = etUsername.getEditableText().toString();
         final String password = etPassword.getEditableText().toString();
+
+        SharedPreferences loginCredentials = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor loginCredentialsEditor = loginCredentials.edit();
+        loginCredentialsEditor.putString("username", username);
+        loginCredentialsEditor.putString("password", password);
+        loginCredentialsEditor.commit();
+
         if (Network.isConnected(this)) {
+
             loginPresenter.login(username, password);
         } else {
             Toaster.show(llLogin, getString(R.string.no_internet_connection));
