@@ -2,8 +2,10 @@ package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
 
+import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.utils.DateHelper;
-import org.mifos.selfserviceapp.utils.Utils;
+
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,11 @@ import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
-import org.mifos.selfserviceapp.utils.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +34,12 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
 
     private List<SavingAccount> savingAccountsList = new ArrayList<>();
 
-    public SavingAccountsListAdapter(Context context, List<SavingAccount> savingAccountsList) {
+    @Inject
+    public SavingAccountsListAdapter(@ActivityContext Context context) {
         this.context = context;
+    }
+
+    public void setSavingAccountsList(List<SavingAccount> savingAccountsList) {
         this.savingAccountsList = savingAccountsList;
     }
 
@@ -65,27 +72,27 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
 
             if (savingAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.deposit_green, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.deposit_green));
                 setSavingAccountsDetails(((ViewHolder) holder), savingAccount);
             } else if (savingAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_green, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.light_green));
 
             } else if (savingAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_yellow, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.light_yellow));
 
             } else if (savingAccount.getStatus().getMatured()) {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.red_light, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.red_light));
                 setSavingAccountsDetails(((ViewHolder) holder), savingAccount);
             } else {
 
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.black, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.black));
 
             }
 
@@ -117,7 +124,7 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
         TextView tvSavingAccountProductName;
 
         @BindView(R.id.iv_status_indicator)
-        CircularImageView ivStatusIndicator;
+        View ivStatusIndicator;
 
         @BindView(R.id.ll_account_detail)
         LinearLayout llAccountDetail;
