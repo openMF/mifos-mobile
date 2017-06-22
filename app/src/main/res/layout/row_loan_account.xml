@@ -1,108 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardUseCompatPadding="true">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/row_padding_left"
-    android:paddingEnd="@dimen/row_padding_right">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/listPreferredItemHeight"
         android:orientation="horizontal">
-
-        <org.mifos.selfserviceapp.utils.CircularImageView
-            android:id="@+id/iv_status_indicator"
-            android:layout_width="@dimen/account_status_width"
-            android:layout_height="@dimen/account_status_height"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:src="@color/light_red" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/row_padding_left">
-
-            <TextView
-                android:id="@+id/tv_clientLoanAccountNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="@string/medium_text"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium" />
-
-            <TextView
-                android:id="@+id/tv_loanAccountProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/small_text"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_small" />
-
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ll_account_detail"
-        android:visibility="gone"
-        android:orientation="vertical">
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_light"/>
+            android:id="@+id/iv_status_indicator"
+            android:layout_width="@dimen/side_bar_width"
+            android:layout_height="match_parent" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin">
+            android:padding="@dimen/row_padding_left"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/balance"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_small"/>
-            <TextView
-                android:id="@+id/tv_account_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/medium_text"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"
-                android:layout_margin="4dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/loan_amount_paid"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_small"/>
-            <TextView
-                android:id="@+id/tv_account_paid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/medium_text"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"
-                android:layout_margin="4dp" />
+                <TextView
+                    android:id="@+id/tv_clientLoanAccountNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/medium_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium" />
 
+                <TextView
+                    android:id="@+id/tv_loanAccountProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/small_text"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll_account_detail"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/gray_light"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/divider_margin">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/balance"
+                        android:textColor="@color/gray_dark"
+                        android:layout_marginRight="@dimen/divider_margin"
+                        android:textSize="@dimen/text_small"/>
+                    <TextView
+                        android:id="@+id/tv_account_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medium_text"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loan_amount_paid"
+                        android:layout_marginRight="@dimen/divider_margin"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_small"/>
+                    <TextView
+                        android:id="@+id/tv_account_paid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medium_text"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </android.support.v7.widget.CardView>

@@ -13,26 +13,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
-import org.mifos.selfserviceapp.utils.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
-    private List<ShareAccount> shareAccountssList = new ArrayList<>();
+    private List<ShareAccount> shareAccountsList = new ArrayList<>();
 
-    public ShareAccountsListAdapter(Context context, List<ShareAccount> shareAccountssList) {
+    @Inject
+    public ShareAccountsListAdapter(@ActivityContext Context context) {
         this.context = context;
-        this.shareAccountssList = shareAccountssList;
+    }
+
+    public void setShareAccountsList(List<ShareAccount> shareAccountsList) {
+        this.shareAccountsList = shareAccountsList;
     }
 
     public ShareAccount getItem(int position) {
-        return shareAccountssList.get(position);
+        return shareAccountsList.get(position);
     }
 
     @Override
@@ -57,24 +63,24 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
 
             if (shareAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).ivStatusIndicator
-                        .setImageDrawable(setCircularBackground(R.color.deposit_green));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.deposit_green));
                 setSharingAccountDetail(((ViewHolder) holder), shareAccount);
 
             } else if (shareAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).ivStatusIndicator
-                        .setImageDrawable(setCircularBackground(R.color.light_green));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.light_green));
 
             } else if (shareAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).ivStatusIndicator
-                        .setImageDrawable(setCircularBackground(R.color.light_yellow));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.light_yellow));
 
             } else {
 
-                ((ViewHolder) holder).ivStatusIndicator
-                        .setImageDrawable(setCircularBackground(R.color.light_blue));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.light_blue));
 
             }
         }
@@ -89,7 +95,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
     @Override
     public int getItemCount() {
-        return shareAccountssList.size();
+        return shareAccountsList.size();
     }
 
     private LayerDrawable setCircularBackground(int colorId) {
@@ -100,6 +106,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         @BindView(R.id.tv_clientSharingAccountNumber)
         TextView tvClientShareAccountsNumber;
 
@@ -107,7 +114,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView tvShareAccountsProductName;
 
         @BindView(R.id.iv_status_indicator)
-        CircularImageView ivStatusIndicator;
+        View ivStatusIndicator;
 
         @BindView(R.id.ll_account_detail)
         LinearLayout llAccountDetail;

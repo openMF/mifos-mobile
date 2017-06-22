@@ -69,8 +69,16 @@ public class AccountsFragment extends BaseFragment implements
     @Inject
     AccountsPresenter accountsPresenter;
 
-    View rootView;
+    @Inject
+    LoanAccountsListAdapter loanAccountsListAdapter;
 
+    @Inject
+    SavingAccountsListAdapter savingAccountsListAdapter;
+
+    @Inject
+    ShareAccountsListAdapter shareAccountsListAdapter;
+
+    View rootView;
     private String accountType;
     private List<LoanAccount> loanAccounts;
     private List<SavingAccount> savingAccounts;
@@ -136,8 +144,7 @@ public class AccountsFragment extends BaseFragment implements
         Collections.sort(loanAccounts, new ComparatorBasedOnId());
         this.loanAccounts = loanAccounts;
         if (loanAccounts.size() != 0) {
-            LoanAccountsListAdapter loanAccountsListAdapter =
-                    new LoanAccountsListAdapter(getContext(), loanAccounts);
+            loanAccountsListAdapter.setLoanAccountsList(loanAccounts);
             rvAccounts.setAdapter(loanAccountsListAdapter);
         } else {
             showEmptyAccounts(getString(R.string.empty_loan_accounts));
@@ -149,8 +156,7 @@ public class AccountsFragment extends BaseFragment implements
         Collections.sort(savingAccounts, new ComparatorBasedOnId());
         this.savingAccounts = savingAccounts;
         if (savingAccounts.size() != 0) {
-            SavingAccountsListAdapter savingAccountsListAdapter =
-                    new SavingAccountsListAdapter(getContext(), savingAccounts);
+            savingAccountsListAdapter.setSavingAccountsList(savingAccounts);
             rvAccounts.setAdapter(savingAccountsListAdapter);
         } else {
             showEmptyAccounts(getString(R.string.empty_savings_accounts));
@@ -162,8 +168,7 @@ public class AccountsFragment extends BaseFragment implements
         Collections.sort(shareAccounts, new ComparatorBasedOnId());
         this.shareAccounts = shareAccounts;
         if (shareAccounts.size() != 0) {
-            ShareAccountsListAdapter shareAccountsListAdapter =
-                    new ShareAccountsListAdapter(getContext(), shareAccounts);
+            shareAccountsListAdapter.setShareAccountsList(shareAccounts);
             rvAccounts.setAdapter(shareAccountsListAdapter);
         } else {
             showEmptyAccounts(getString(R.string.empty_share_accounts));

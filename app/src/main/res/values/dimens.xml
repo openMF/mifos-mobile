@@ -46,4 +46,7 @@
 
     <dimen name="icon_small">15dp</dimen>
 
+    <dimen name="divider_margin">4dp</dimen>
+    <dimen name="side_bar_width">12dp</dimen>
+
 </resources>

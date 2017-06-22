@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
-import org.mifos.selfserviceapp.utils.CircularImageView;
-import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +29,12 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final Context context;
     private List<LoanAccount> loanAccountsList = new ArrayList<>();
 
-    public LoanAccountsListAdapter(Context context, List<LoanAccount> loanAccountsList) {
+    @Inject
+    public LoanAccountsListAdapter(@ActivityContext Context context) {
         this.context = context;
+    }
+
+    public void setLoanAccountsList(List<LoanAccount> loanAccountsList) {
         this.loanAccountsList = loanAccountsList;
     }
 
@@ -55,26 +61,26 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             ((ViewHolder) holder).llAccountDetail.setVisibility(View.GONE);
 
             if (loanAccount.getStatus().getActive() && loanAccount.getInArrears()) {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.red, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.red));
                 setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
             } else if (loanAccount.getStatus().getActive()) {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.deposit_green, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.deposit_green));
                 setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
             } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.blue, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.blue));
             } else if (loanAccount.getStatus().getPendingApproval()) {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_yellow, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.light_yellow));
             }  else if (loanAccount.getStatus().getOverpaid()) {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.purple, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.purple));
                 setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
             } else {
-                ((ViewHolder) holder).ivStatusIndicator.setImageDrawable(
-                        Utils.setCircularBackground(R.color.black, context));
+                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.black));
             }
         }
 
@@ -102,7 +108,7 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView tvLoanAccountProductName;
 
         @BindView(R.id.iv_status_indicator)
-        CircularImageView ivStatusIndicator;
+        View ivStatusIndicator;
 
         @BindView(R.id.ll_account_detail)
         LinearLayout llAccountDetail;
