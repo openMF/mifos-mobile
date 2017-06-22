@@ -28,7 +28,7 @@ public class Charge extends BaseModel {
     @Column
     String name;
 
-    List<Long> dueDate = new ArrayList<>();
+    List<Integer> dueDate = new ArrayList<>();
     ChargeTimeType chargeTimeType;
     ChargeCalculationType chargeCalculationType;
     Currency currency;
@@ -128,11 +128,11 @@ public class Charge extends BaseModel {
         this.amountOutstanding = amountOutstanding;
     }
 
-    public List<Long> getDueDate() {
+    public List<Integer> getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(List<Long> dueDate) {
+    public void setDueDate(List<Integer> dueDate) {
         this.dueDate = dueDate;
     }
 
