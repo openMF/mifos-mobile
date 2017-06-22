@@ -1,203 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cv_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardUseCompatPadding="true">
-
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:stretchColumns="1">
-
-            <TableRow>
-                <RelativeLayout
-                    android:id="@+id/fl_apply_for_loan"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:background="@color/accent"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-                    <ImageView
-                        android:id="@+id/iv_apply_loan"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center|center_horizontal"
-                        android:contentDescription="@string/status_image"
-                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
-
-                    <TextView
-                        android:id="@+id/tv_apply_loan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/iv_apply_loan"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/apply_for_loan"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/fl_recent_transaction"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:background="@color/light_yellow"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-                    <ImageView
-                        android:id="@+id/iv_recent_transaction"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center|center_horizontal"
-                        android:contentDescription="@string/status_image"
-                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
-
-                    <TextView
-                        android:id="@+id/tv_recent_transaction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/iv_recent_transaction"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/recent_transactions"/>
-
-                </RelativeLayout>
-
-            </TableRow>
-
-            <TableRow>
-
-                <RelativeLayout
-                    android:id="@+id/fl_loan_repayment"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:background="@color/light_yellow"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-                    <ImageView
-                        android:id="@+id/iv_oan_repayment"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center|center_horizontal"
-                        android:contentDescription="@string/status_image"
-                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
-
-                    <TextView
-                        android:id="@+id/tv_oan_repayment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/iv_oan_repayment"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/loan_repayment"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/fl_quick_transfer"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:background="@color/accent"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-                    <ImageView
-                        android:id="@+id/iv_quick_transfer"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center|center_horizontal"
-                        android:contentDescription="@string/status_image"
-                        android:src="@drawable/ic_assignment_turned_in_black_24dp"/>
-
-                    <TextView
-                        android:id="@+id/tv_quick_transfer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/iv_quick_transfer"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/quick_transfer"/>
-
-                </RelativeLayout>
-
-            </TableRow>
-        </TableLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cv_client"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:layout_below="@+id/cv_home"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardUseCompatPadding="true">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:weightSum="3">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apply \nloan"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:background="@drawable/circular_background_btn"
+                android:id="@+id/btn_apply_for_loan"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loan \nRepayment"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:background="@drawable/circular_background_btn"
+                android:id="@+id/btn_loan_repayment"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick \nTransfer"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:background="@drawable/circular_background_btn"
+                android:id="@+id/btn_quick_transfer"/>
+        </LinearLayout>
+        <android.support.v7.widget.CardView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_savings"
+            android:foreground="?selectableItemBackground"
+            android:clickable="true"
+            android:id="@+id/cv_saving_account"
+            android:layout_margin="@dimen/default_margin">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/green_light"
-                android:text="@string/savings_account"
-                android:textColor="@color/black"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:textSize="@dimen/text_medium"/>
-
-            <Button
-                android:id="@+id/btn_loans"
-                android:layout_gravity="fill"
+                android:padding="@dimen/default_margin"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/savings_account"
+                        android:textSize="@dimen/text_large"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textSize="@dimen/text_small"
+                        android:id="@+id/tv_saving_total_amount"/>
+                </LinearLayout>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pie_chart_height"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:id="@+id/pc_savings_chart"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:foreground="?selectableItemBackground"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv_loan_account"
+            android:layout_margin="@dimen/default_margin">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/loan_account"
-                android:background="@color/light_grey"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:textSize="@dimen/text_medium"/>
-
-            <Button
-                android:id="@+id/btn_shares"
+                android:padding="@dimen/default_margin"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/loan_account"
+                        android:textSize="@dimen/text_large"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textSize="@dimen/text_small"
+                        android:id="@+id/tv_loan_total_amount"/>
+                </LinearLayout>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pie_chart_height"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:id="@+id/pc_loan_chart"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?selectableItemBackground"
+            android:clickable="true"
+            android:id="@+id/cv_share_account"
+            android:layout_margin="@dimen/default_margin">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/share_account"
-                android:background="@color/light_blue"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:textSize="@dimen/text_medium"/>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+                android:padding="@dimen/default_margin"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/share_account"
+                        android:textSize="@dimen/text_large"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textSize="@dimen/text_small"
+                        android:id="@+id/tv_shares_approved"/>
+                </LinearLayout>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pie_chart_height"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:id="@+id/pc_shares_chart"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

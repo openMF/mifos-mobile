@@ -85,4 +85,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
+    //Charts
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }

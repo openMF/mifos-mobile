@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/ll_account_detail"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical">
                 <View
                     android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/shares_approved"
+                        android:text="@string/approved"
                         android:layout_marginRight="@dimen/divider_margin"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_small"/>
