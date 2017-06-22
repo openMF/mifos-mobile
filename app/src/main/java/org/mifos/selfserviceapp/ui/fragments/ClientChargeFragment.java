@@ -19,7 +19,6 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ClientChargeAdapter;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
-import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -42,6 +41,7 @@ public class ClientChargeFragment extends Fragment implements
     @Inject
     ClientChargePresenter mClientChargePresenter;
 
+    @Inject
     ClientChargeAdapter clientChargeAdapter;
 
     @BindView(R.id.rv_client_charge)
@@ -85,8 +85,6 @@ public class ClientChargeFragment extends Fragment implements
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         rvClientCharge.setLayoutManager(layoutManager);
-        rvClientCharge.addItemDecoration(
-                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         rvClientCharge.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
 
         swipeChargeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
@@ -117,7 +115,7 @@ public class ClientChargeFragment extends Fragment implements
     }
 
     private void inflateClientChargeList() {
-        clientChargeAdapter = new ClientChargeAdapter(getContext(), clientChargeList);
+        clientChargeAdapter.setClientChargeList(clientChargeList);
         rvClientCharge.setAdapter(clientChargeAdapter);
     }
 

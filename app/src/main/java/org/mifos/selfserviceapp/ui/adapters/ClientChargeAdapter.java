@@ -1,18 +1,21 @@
 package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.Charge;
-import org.mifos.selfserviceapp.utils.CircularImageView;
-import org.mifos.selfserviceapp.utils.Utils;
+import org.mifos.selfserviceapp.utils.DateHelper;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,12 +26,14 @@ import butterknife.ButterKnife;
 
 public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
-    private final LayoutInflater layoutInflater;
     private List<Charge> clientChargeList = new ArrayList<>();
 
-    public ClientChargeAdapter(Context context, List<Charge> clientChargeList) {
+    @Inject
+    public ClientChargeAdapter(@ActivityContext Context context) {
         this.context = context;
-        layoutInflater = LayoutInflater.from(context);
+    }
+
+    public void setClientChargeList(List<Charge> clientChargeList) {
         this.clientChargeList = clientChargeList;
     }
 
@@ -41,7 +46,7 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerView.ViewHolder vh;
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.row_client_charge, parent, false);
-        vh = new ClientChargeAdapter.ViewHolder(v);
+        vh = new ViewHolder(v);
         return vh;
     }
 
@@ -52,33 +57,28 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Charge charge = getItem(position);
-            Currency c  = Currency.getInstance("" + (charge.getCurrency()).getCode());
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmountDue.setText(
-                    String.valueOf(charge.getAmount() + " " + c.getSymbol()));
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmountPaid.setText(
-                    String.valueOf(charge.getAmountPaid() + " " + c.getSymbol()));
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmountWaived.setText(
-                    String.valueOf(charge.getAmountWaived() + " " + c.getSymbol()));
-            ((ClientChargeAdapter.ViewHolder) holder).tvAmountOutstanding.setText(
-                    String.valueOf(charge.getAmountOutstanding() + " " + c.getSymbol()));
+            ((ViewHolder) holder).tvAmountDue.setText(context.getString(R.string.double_and_String,
+                    charge.getAmount(), charge.getCurrency().getDisplaySymbol()));
+            ((ViewHolder) holder).tvAmountPaid.setText(context.getString(R.string.double_and_String,
+                    charge.getAmountPaid(), charge.getCurrency().getDisplaySymbol()));
+            ((ViewHolder) holder).tvAmountWaived.setText(context.
+                    getString(R.string.double_and_String, charge.getAmountWaived(),
+                            charge.getCurrency().getDisplaySymbol()));
+            ((ViewHolder) holder).tvAmountOutstanding.setText(context.
+                    getString(R.string.double_and_String, charge.getAmountOutstanding(),
+                            charge.getCurrency().getDisplaySymbol()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
+            ((ViewHolder) holder).tvDueDate.setText(DateHelper.getDateAsString(charge.
+                    getDueDate()));
 
-            if (charge.isIsActive()) {
-                ((ViewHolder) holder).circle_status.setImageDrawable(
-                        Utils.setCircularBackground(R.color.deposit_green, context));
-            } else if (charge.isIsPaid()) {
-                ((ViewHolder) holder).circle_status.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_yellow, context));
+            if (charge.isIsPaid() || charge.isIsWaived()) {
+                ((ViewHolder) holder).circle_status.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.black));
             } else {
-                ((ViewHolder) holder).circle_status.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_blue, context));
+                ((ViewHolder) holder).circle_status.setBackgroundColor(ContextCompat.
+                        getColor(context, R.color.deposit_green));
             }
 
-            String day = charge.getDueDate().get(2).toString();
-            String month = Utils.getMonth(Integer.parseInt(charge.getDueDate().get(1).toString()));
-            String year = charge.getDueDate().get(0).toString();
-
-            ((ViewHolder) holder).tvDueDate.setText(day + " " + month + " " + year);
         }
 
     }
@@ -90,21 +90,27 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         @BindView(R.id.tv_clientName)
         TextView tvClientName;
+
         @BindView(R.id.tv_due_date)
         TextView tvDueDate;
+
         @BindView(R.id.tv_amount)
         TextView tvAmountDue;
+
         @BindView(R.id.tv_amount_paid)
         TextView tvAmountPaid;
+
         @BindView(R.id.tv_amount_waived)
         TextView tvAmountWaived;
+
         @BindView(R.id.tv_amount_outstanding)
         TextView tvAmountOutstanding;
 
         @BindView(R.id.circle_status)
-        CircularImageView circle_status;
+        View circle_status;
 
         public ViewHolder(View v) {
             super(v);
