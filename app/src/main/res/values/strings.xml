@@ -86,6 +86,9 @@
     <string name="pending">Pending</string>
     <string name="matured">Matured</string>
 
+    <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a deposit</string>
+    <string name="account_not_active_to_perform_transfer">Account should to be Active to perform a transfer</string>
+
     <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
     <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
