@@ -21,6 +21,7 @@ import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.SymbolsUtils;
+import org.mifos.selfserviceapp.utils.Toaster;
 import org.mifos.selfserviceapp.utils.Utils;
 
 import javax.inject.Inject;
@@ -86,6 +87,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     private View rootView;
     private long savingsId;
+    private Status status;
 
     public static SavingAccountsDetailFragment newInstance(long savingsId) {
         SavingAccountsDetailFragment fragment = new SavingAccountsDetailFragment();
@@ -127,14 +129,22 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     @OnClick(R.id.tv_deposit)
     void deposit() {
-        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
-                 .newInstance(savingsId, Constants.TRANSFER_PAY_TO), true, R.id.container);
+        if (status.getActive()) {
+            ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
+                    .newInstance(savingsId, Constants.TRANSFER_PAY_TO), true, R.id.container);
+        } else {
+            Toaster.show(rootView, getString(R.string.account_not_active_to_perform_deposit));
+        }
     }
 
     @OnClick(R.id.tv_make_a_transfer)
     void transfer() {
-        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
-                .newInstance(savingsId, Constants.TRANSFER_PAY_FROM), true, R.id.container);
+        if (status.getActive()) {
+            ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
+                    .newInstance(savingsId, Constants.TRANSFER_PAY_FROM), true, R.id.container);
+        } else {
+            Toaster.show(rootView, getString(R.string.account_not_active_to_perform_transfer));
+        }
     }
 
     @Override
@@ -182,7 +192,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     @Override
     public void showAccountStatus(SavingsWithAssociations savingsWithAssociations) {
-        Status status = savingsWithAssociations.getStatus();
+        status = savingsWithAssociations.getStatus();
         if (status.getActive()) {
             ivCircularStatus.setImageDrawable(
                     Utils.setCircularBackground(R.color.deposit_green, getActivity()));
