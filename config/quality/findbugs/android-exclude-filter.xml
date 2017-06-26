@@ -27,5 +27,16 @@
         </Not>
     </Match>
 
+    <!-- Ignore DM_DEFAULT_ENCODING in TestDataFactory-->
+    <Match>
+        <Class name="org.mifos.selfserviceapp.TestDataFactory" />
+        <Method name="getObjectTypePojo" />
+        <Bug pattern="DM_DEFAULT_ENCODING" />
+    </Match>
+    <Match>
+        <Class name="org.mifos.selfserviceapp.TestDataFactory" />
+        <Method name="getListTypePojo" />
+        <Bug pattern="DM_DEFAULT_ENCODING" />
+    </Match>
 
 </FindBugsFilter>
