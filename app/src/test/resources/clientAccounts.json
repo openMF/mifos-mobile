@@ -1,0 +1,553 @@
+{
+  "savingsAccounts": [
+    {
+      "id": 21,
+      "accountNo": "000000021",
+      "externalId": "63723612",
+      "productId": 1,
+      "productName": "Voluntary savings",
+      "shortProductName": "VS",
+      "status": {
+        "id": 300,
+        "code": "savingsAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "withdrawnByApplicant": false,
+        "active": true,
+        "closed": false,
+        "prematureClosed": false,
+        "transferInProgress": false,
+        "transferOnHold": false,
+        "matured": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "accountBalance": 118393.150000,
+      "accountType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedOnDate": [
+          2016,
+          10,
+          3
+        ]
+      },
+      "subStatus": {
+        "id": 0,
+        "code": "SavingsAccountSubStatusEnum.none",
+        "value": "None",
+        "none": true,
+        "inactive": false,
+        "dormant": false,
+        "escheat": false
+      },
+      "lastActiveTransactionDate": [
+        2017,
+        6,
+        25
+      ],
+      "depositType": {
+        "id": 100,
+        "code": "depositAccountType.savingsDeposit",
+        "value": "Savings"
+      }
+    },
+    {
+      "id": 22,
+      "accountNo": "000000022",
+      "externalId": "8291847",
+      "productId": 1,
+      "productName": "Voluntary savings",
+      "shortProductName": "VS",
+      "status": {
+        "id": 300,
+        "code": "savingsAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "withdrawnByApplicant": false,
+        "active": true,
+        "closed": false,
+        "prematureClosed": false,
+        "transferInProgress": false,
+        "transferOnHold": false,
+        "matured": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "accountBalance": 19930.520000,
+      "accountType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedOnDate": [
+          2016,
+          10,
+          3
+        ]
+      },
+      "subStatus": {
+        "id": 0,
+        "code": "SavingsAccountSubStatusEnum.none",
+        "value": "None",
+        "none": true,
+        "inactive": false,
+        "dormant": false,
+        "escheat": false
+      },
+      "lastActiveTransactionDate": [
+        2017,
+        6,
+        25
+      ],
+      "depositType": {
+        "id": 100,
+        "code": "depositAccountType.savingsDeposit",
+        "value": "Savings"
+      }
+    },
+    {
+      "id": 23,
+      "accountNo": "000000023",
+      "externalId": "42414",
+      "productId": 1,
+      "productName": "Voluntary savings",
+      "shortProductName": "VS",
+      "status": {
+        "id": 300,
+        "code": "savingsAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "withdrawnByApplicant": false,
+        "active": true,
+        "closed": false,
+        "prematureClosed": false,
+        "transferInProgress": false,
+        "transferOnHold": false,
+        "matured": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "accountBalance": 3117780552329.610000,
+      "accountType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedOnDate": [
+          2016,
+          10,
+          3
+        ]
+      },
+      "subStatus": {
+        "id": 0,
+        "code": "SavingsAccountSubStatusEnum.none",
+        "value": "None",
+        "none": true,
+        "inactive": false,
+        "dormant": false,
+        "escheat": false
+      },
+      "lastActiveTransactionDate": [
+        2017,
+        4,
+        7
+      ],
+      "depositType": {
+        "id": 100,
+        "code": "depositAccountType.savingsDeposit",
+        "value": "Savings"
+      }
+    }
+  ],
+  "loanAccounts": [{
+    "id": 27,
+    "accountNo": "000000027",
+    "externalId": "34478914",
+    "productId": 2,
+    "productName": "For Prepay - Calculate till preclosure date",
+    "shortProductName": "CTPC",
+    "status": {
+      "id": 700,
+      "code": "loanStatusType.overpaid",
+      "value": "Overpaid",
+      "pendingApproval": false,
+      "waitingForDisbursal": false,
+      "active": false,
+      "closedObligationsMet": false,
+      "closedWrittenOff": false,
+      "closedRescheduled": false,
+      "closed": false,
+      "overpaid": true
+    },
+    "loanType": {
+      "id": 1,
+      "code": "accountType.individual",
+      "value": "Individual"
+    },
+    "loanCycle": 1,
+    "timeline": {
+      "submittedOnDate": [
+        2016,
+        10,
+        3
+      ],
+      "submittedByUsername": "mifos",
+      "submittedByFirstname": "App",
+      "submittedByLastname": "Administrator",
+      "approvedOnDate": [
+        2016,
+        11,
+        6
+      ],
+      "approvedByUsername": "mifos",
+      "approvedByFirstname": "App",
+      "approvedByLastname": "Administrator",
+      "expectedDisbursementDate": [
+        2017,
+        9,
+        7
+      ],
+      "actualDisbursementDate": [
+        2016,
+        11,
+        23
+      ],
+      "disbursedByUsername": "mifos",
+      "disbursedByFirstname": "App",
+      "disbursedByLastname": "Administrator",
+      "expectedMaturityDate": [
+        2017,
+        1,
+        9
+      ]
+    },
+    "inArrears": false,
+    "originalLoan": 10000.000000,
+    "amountPaid": 10125.810000
+  },
+    {
+      "id": 28,
+      "accountNo": "000000028",
+      "productId": 4,
+      "productName": "BGS Prepay Loan",
+      "shortProductName": "BPL",
+      "status": {
+        "id": 700,
+        "code": "loanStatusType.overpaid",
+        "value": "Overpaid",
+        "pendingApproval": false,
+        "waitingForDisbursal": false,
+        "active": false,
+        "closedObligationsMet": false,
+        "closedWrittenOff": false,
+        "closedRescheduled": false,
+        "closed": false,
+        "overpaid": true
+      },
+      "loanType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "loanCycle": 1,
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "expectedDisbursementDate": [
+          2017,
+          11,
+          3
+        ],
+        "actualDisbursementDate": [
+          2016,
+          10,
+          3
+        ],
+        "disbursedByUsername": "mifos",
+        "disbursedByFirstname": "App",
+        "disbursedByLastname": "Administrator",
+        "expectedMaturityDate": [
+          2016,
+          11,
+          3
+        ]
+      },
+      "inArrears": false,
+      "originalLoan": 2000.000000,
+      "amountPaid": 3180.000000
+    },
+    {
+      "id": 29,
+      "accountNo": "000000029",
+      "externalId": "342342",
+      "productId": 3,
+      "productName": "For Preclose- Calculate till rest frequency date",
+      "shortProductName": "CTRF",
+      "status": {
+        "id": 300,
+        "code": "loanStatusType.active",
+        "value": "Active",
+        "pendingApproval": false,
+        "waitingForDisbursal": false,
+        "active": true,
+        "closedObligationsMet": false,
+        "closedWrittenOff": false,
+        "closedRescheduled": false,
+        "closed": false,
+        "overpaid": false
+      },
+      "loanType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "loanCycle": 1,
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "expectedDisbursementDate": [
+          2016,
+          10,
+          3
+        ],
+        "actualDisbursementDate": [
+          2016,
+          10,
+          3
+        ],
+        "disbursedByUsername": "mifos",
+        "disbursedByFirstname": "App",
+        "disbursedByLastname": "Administrator",
+        "expectedMaturityDate": [
+          2017,
+          10,
+          3
+        ]
+      },
+      "inArrears": false,
+      "originalLoan": 10000.000000,
+      "loanBalance": 6331.460000,
+      "amountPaid": 4478.450000
+    }
+  ],
+  "shareAccounts": [
+    {
+      "id": 14,
+      "accountNo": "000000014",
+      "totalApprovedShares": 10,
+      "totalPendingForApprovalShares": 0,
+      "productId": 2,
+      "productName": "SPTest",
+      "shortProductName": "SPT",
+      "status": {
+        "id": 300,
+        "code": "shareAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "active": true,
+        "closed": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          11,
+          4
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedDate": [
+          2016,
+          11,
+          4
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedDate": [
+          2016,
+          11,
+          4
+        ],
+        "activatedByUsername": "mifos",
+        "activatedByFirstname": "App",
+        "activatedByLastname": "Administrator"
+      }
+    },
+    {
+      "id": 15,
+      "accountNo": "000000015",
+      "totalApprovedShares": 10,
+      "totalPendingForApprovalShares": 0,
+      "productId": 2,
+      "productName": "SPTest",
+      "shortProductName": "SPT",
+      "status": {
+        "id": 300,
+        "code": "shareAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "active": true,
+        "closed": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          11,
+          4
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedDate": [
+          2016,
+          11,
+          4
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedDate": [
+          2016,
+          11,
+          4
+        ],
+        "activatedByUsername": "mifos",
+        "activatedByFirstname": "App",
+        "activatedByLastname": "Administrator"
+      }
+    }
+  ]
+}
