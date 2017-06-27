@@ -4,7 +4,7 @@ Please Add Screenshots If any UI changes.
 
 Please make sure these boxes are checked before submitting your pull request - thanks!
 
-- [ ] Apply the `MifosStyle.xml` style template to your code in Android Studio.
+- [ ] Apply the `AndroidStyle.xml` style template to your code in Android Studio.
 
 - [ ] Run the unit tests with `./gradlew check` to make sure you didn't break anything
 
