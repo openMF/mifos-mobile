@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Self Service App</string>
+    <string name="app_name">सेल्फ सर्विस ऐप</string>
     <string name="login">Login</string>
     <string name="toast_welcome">Welcome %1$s</string>
     <string name="unable_to_connect">Not connected to internet</string>
