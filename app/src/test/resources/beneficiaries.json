@@ -1,0 +1,28 @@
+[
+  {
+    "id": 3,
+    "name": "Smith R",
+    "officeName": "Head Office",
+    "clientName": "Smith W R",
+    "accountType": {
+      "id": 2,
+      "code": "accountType.savings",
+      "value": "Savings Account"
+    },
+    "accountNumber": "000000021",
+    "transferLimit": 1000
+  },
+  {
+    "id": 5,
+    "name": "Smith",
+    "officeName": "Head Office",
+    "clientName": "Smith W R",
+    "accountType": {
+      "id": 2,
+      "code": "accountType.savings",
+      "value": "Savings Account"
+    },
+    "accountNumber": "000000022",
+    "transferLimit": 1506
+  }
+]
