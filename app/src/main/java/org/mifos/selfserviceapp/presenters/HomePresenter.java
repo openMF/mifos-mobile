@@ -1,24 +1,27 @@
 package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ActivityContext;
-import org.mifos.selfserviceapp.models.accounts.loan.LoanAccountsMetaData;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccountsMetaData;
-import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
-import org.mifos.selfserviceapp.models.accounts.share.ShareAccountsMetaData;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -76,67 +79,96 @@ public class HomePresenter extends BasePresenter<HomeView> {
                                 .getLoanAccounts()));
                         getMvpView().showSavingAccountDetails(getSavingAccountDetails(clientAccounts
                                 .getSavingsAccounts()));
-                        getMvpView().showShareAccountDetails(getShareAccountDetails(clientAccounts
-                                .getShareAccounts()));
                     }
                 })
         );
     }
 
-    private LoanAccountsMetaData getLoanAccountDetails(List<LoanAccount> loanAccountList) {
-        LoanAccountsMetaData accountsMetaData = new LoanAccountsMetaData();
+    public void getUserDetails() {
+        checkViewAttached();
+        subscription.add(dataManager.getCurrentClient()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<Client>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().showError(context.getString(R.string.error_fetching_client));
+                        getMvpView().hideProgress();
+                    }
+
+                    @Override
+                    public void onNext(Client client) {
+                        if (client != null) {
+                            getMvpView().showUserDetails(client);
+                        } else {
+                            getMvpView().showError(context
+                                    .getString(R.string.error_client_not_found));
+                        }
+                    }
+                })
+        );
+    }
+
+    public void getUserImage() {
+        checkViewAttached();
+        subscription.add(dataManager.getClientImage()
+                .observeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody response) {
+                        try {
+
+                            final String encodedString = response.string();
+
+                            final String pureBase64Encoded =
+                                    encodedString.substring(encodedString.indexOf(',') + 1);
+
+                            final byte[] decodedBytes =
+                                    Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+
+                            Bitmap decodedBitmap =
+                                    BitmapFactory.decodeByteArray(decodedBytes, 0,
+                                            decodedBytes.length);
+
+                            getMvpView().showUserImage(decodedBitmap);
+                        } catch (IOException e) {
+                            Log.d("userimage", e.toString());
+                        }
+                    }
+                })
+        );
+    }
+
+    private double getLoanAccountDetails(List<LoanAccount> loanAccountList) {
+        double totalAmount = 0;
         for (LoanAccount loanAccount : loanAccountList) {
-            if (loanAccount.getStatus().getActive()) {
-                accountsMetaData.incActive();
-            } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-                accountsMetaData.incWaitingForDisbursal();
-            } else if (loanAccount.getStatus().getPendingApproval()) {
-                accountsMetaData.incPendingApproval();
-            } else if (loanAccount.getStatus().getOverpaid()) {
-                accountsMetaData.incOverpaid();
-            } else if (loanAccount.getStatus().getClosed()) {
-                accountsMetaData.incClosed();
-            }
-            accountsMetaData.addAmount(loanAccount.getLoanBalance());
+            totalAmount += loanAccount.getLoanBalance();
         }
-        return accountsMetaData;
+        return totalAmount;
     }
 
-    private SavingAccountsMetaData getSavingAccountDetails(List<SavingAccount> savingAccountList) {
-        SavingAccountsMetaData accountsMetaData = new SavingAccountsMetaData();
+    private double getSavingAccountDetails(List<SavingAccount> savingAccountList) {
+        double totalAmount = 0;
         for (SavingAccount savingAccount : savingAccountList) {
-            if (savingAccount.getStatus().getActive()) {
-                accountsMetaData.incActive();
-            } else if (savingAccount.getStatus().getApproved()) {
-                accountsMetaData.incApproved();
-            } else if (savingAccount.getStatus().getSubmittedAndPendingApproval()) {
-                accountsMetaData.incPendingApproval();
-            } else if (savingAccount.getStatus().getMatured()) {
-                accountsMetaData.incMatured();
-            } else if (savingAccount.getStatus().getClosed()) {
-                accountsMetaData.incClosed();
-            }
-            accountsMetaData.addAmount(savingAccount.getAccountBalance());
+            totalAmount += savingAccount.getAccountBalance();
         }
-        return accountsMetaData;
+        return totalAmount;
     }
 
-    private ShareAccountsMetaData getShareAccountDetails(List<ShareAccount> shareAccountList) {
-        ShareAccountsMetaData accountsMetaData = new ShareAccountsMetaData();
-        for (ShareAccount shareAccount : shareAccountList) {
-            if (shareAccount.getStatus().getActive()) {
-                accountsMetaData.incActive();
-            } else if (shareAccount.getStatus().getApproved()) {
-                accountsMetaData.incApproved();
-            } else if (shareAccount.getStatus().getSubmittedAndPendingApproval()) {
-                accountsMetaData.incPendingApproval();
-            } else if (shareAccount.getStatus().getRejected()) {
-                accountsMetaData.incRejected();
-            } else if (shareAccount.getStatus().getClosed()) {
-                accountsMetaData.incClosed();
-            }
-            accountsMetaData.addShare(shareAccount.getTotalApprovedShares());
-        }
-        return accountsMetaData;
-    }
 }

@@ -1,8 +1,8 @@
 package org.mifos.selfserviceapp.ui.views;
 
-import org.mifos.selfserviceapp.models.accounts.loan.LoanAccountsMetaData;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccountsMetaData;
-import org.mifos.selfserviceapp.models.accounts.share.ShareAccountsMetaData;
+import android.graphics.Bitmap;
+
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**
@@ -13,11 +13,13 @@ public interface HomeView extends MVPView {
 
     void showUserInterface();
 
-    void showLoanAccountDetails(LoanAccountsMetaData statusCount);
+    void showLoanAccountDetails(double totalLoanAmount);
 
-    void showSavingAccountDetails(SavingAccountsMetaData statusCount);
+    void showSavingAccountDetails(double totalSavingAmount);
 
-    void showShareAccountDetails(ShareAccountsMetaData statusCount);
+    void showUserDetails(Client client);
+
+    void showUserImage(Bitmap bitmap);
 
     void showError(String errorMessage);
 

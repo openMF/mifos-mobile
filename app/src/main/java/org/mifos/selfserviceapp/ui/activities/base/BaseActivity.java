@@ -28,7 +28,6 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
     private ActivityComponent activityComponent;
     private ProgressDialog progress;
 
-
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
@@ -172,7 +171,9 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
             fm.popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
+
     public int stackCount() {
         return getSupportFragmentManager().getBackStackEntryCount();
     }
+
 }

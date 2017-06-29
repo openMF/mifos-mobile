@@ -225,10 +225,15 @@
     <string name="delete">Delete</string>
     <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
     <string name="third_party_transfer">Third Party Transfer</string>
+    <string name="total_loan">Total Loan</string>
+    <string name="total_saving">Total Savings</string>
+    <string name="accounts_overview">Account Overview</string>
+    <string name="survey">Surveys</string>
 
     <!--Customer care details-->
-    <string name="need_help">need help? Contact your support line</string>
+    <string name="need_help">Contact Us</string>
     <string name="help_line_number">8000000000</string>
+    <string name="contact_email">support@mifos.org</string>
 
     <string name="transferred_Successfully">Transferred Successfully</string>
 
@@ -246,6 +251,8 @@
     <string name="dialog_action_back">Back</string>
 
     <!--Format Strings-->
+    <string name="hello_client">Hello, %1$s</string>
+    <string name="double_amount">%1$.2f</string>
     <string name="double_and_String">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
     <string name="string_and_double">%1$s: %2$.2f</string>

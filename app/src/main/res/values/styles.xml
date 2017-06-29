@@ -10,7 +10,6 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorButtonNormal">@color/accent</item>
-        <item name="android:windowBackground">@android:color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 

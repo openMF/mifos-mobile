@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:background="@color/white"
             android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -52,6 +53,8 @@
             android:layout_marginBottom="@dimen/login_margin_bottom"
             android:layout_marginTop="@dimen/login_margin_top"
             android:textColor="@color/white"
+            android:background="@color/primary"
+            android:foreground="?selectableItemBackground"
             android:padding="@dimen/login_padding_button"
             android:text="@string/login"/>
 
