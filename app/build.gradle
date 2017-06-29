@@ -30,6 +30,7 @@ android {
         versionName "1.0"
         // A test runner provided by https://code.google.com/p/android-test-kit/
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -95,8 +96,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
-    //Charts
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
     // Unit tests dependencies
     testCompile "junit:junit:$rootProject.jUnitVersion"

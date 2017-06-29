@@ -1,19 +1,19 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.PieChart;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.models.accounts.loan.LoanAccountsMetaData;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccountsMetaData;
-import org.mifos.selfserviceapp.models.accounts.share.ShareAccountsMetaData;
+import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
@@ -22,7 +22,6 @@ import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.Constants;
-import org.mifos.selfserviceapp.utils.PieChartUtils;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -39,32 +38,28 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     public static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
-    @BindView(R.id.pc_loan_chart)
-    PieChart pcLoansChart;
-
-    @BindView(R.id.pc_savings_chart)
-    PieChart pcSavingsChart;
-
-    @BindView(R.id.pc_shares_chart)
-    PieChart pcSharesChart;
-
     @BindView(R.id.tv_saving_total_amount)
     TextView tvSavingTotalAmount;
 
     @BindView(R.id.tv_loan_total_amount)
     TextView tvLoanTotalAmount;
 
-    @BindView(R.id.tv_shares_approved)
-    TextView tvSharesTotal;
+    @BindView(R.id.ll_account_detail)
+    LinearLayout llAccountDetail;
+
+    @BindView(R.id.iv_visibility)
+    ImageView ivVisibility;
 
     @Inject
     HomePresenter presenter;
 
     View rootView;
-    private PieChartUtils loanChartUtils;
-    private PieChartUtils savingChartUtils;
-    private PieChartUtils shareChartUtils;
     private long clientId;
+    private View toolbarView;
+    private boolean isDetailVisible;
+    private View toolbarCustomView;
+    private LinearLayout.LayoutParams toolBarLayoutParams;
+    private int toolbarDefaultHeight, insetStartWidth;
 
     public static HomeFragment newInstance(Long clientId) {
         HomeFragment fragment = new HomeFragment();
@@ -88,71 +83,20 @@ public class HomeFragment extends BaseFragment implements HomeView {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ((HomeActivity) getActivity()).getActivityComponent().inject(this);
 
-        setToolbarTitle(getString(R.string.home));
         ButterKnife.bind(this, rootView);
 
         presenter.attachView(this);
         presenter.loadClientAccountDetails();
+        presenter.getUserDetails();
+        presenter.getUserImage();
 
         showUserInterface();
-
         return rootView;
     }
     @Override
     public void showUserInterface() {
-        pcLoansChart.setDrawHoleEnabled(false);
-        pcLoansChart.setDrawEntryLabels(false);
-        pcLoansChart.setTouchEnabled(false);
-        pcLoansChart.getDescription().setEnabled(false);
-        pcLoansChart.setExtraRightOffset(20);
-        loanChartUtils = new PieChartUtils(getActivity(), pcLoansChart.getLegend());
-
-        pcSavingsChart.setDrawHoleEnabled(false);
-        pcSavingsChart.setDrawEntryLabels(false);
-        pcSavingsChart.setTouchEnabled(false);
-        pcSavingsChart.getDescription().setEnabled(false);
-        pcSavingsChart.setExtraRightOffset(20);
-        savingChartUtils = new PieChartUtils(getActivity(), pcSavingsChart.getLegend());
-
-        pcSharesChart.setDrawHoleEnabled(false);
-        pcSharesChart.setDrawEntryLabels(false);
-        pcSharesChart.setTouchEnabled(false);
-        pcSharesChart.getDescription().setEnabled(false);
-        pcSharesChart.setExtraRightOffset(20);
-        shareChartUtils = new PieChartUtils(getActivity(), pcSharesChart.getLegend());
-
-    }
-
-    @OnClick(R.id.btn_apply_for_loan)
-    public void onApplicationClicked() {
-        ((BaseActivity) getActivity()).replaceFragment(
-                LoanApplicationFragment.newInstance(LoanState.CREATE), true, R.id.container);
-    }
-
-    @OnClick(R.id.btn_loan_repayment)
-    public void onTransactionClicked() {
-
-    }
-
-    @OnClick(R.id.btn_quick_transfer)
-    public void onQuickTransferClicked() {
-        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment.newInstance(1,
-                Constants.TRANSFER_QUICK), true, R.id.container);
-    }
-
-    @OnClick(R.id.cv_saving_account)
-    public void onSavingAccountClicked() {
-        openAccount(AccountType.SAVINGS);
-    }
-
-    @OnClick(R.id.cv_loan_account)
-    public void onLoanAccountClicked() {
-        openAccount(AccountType.LOAN);
-    }
-
-    @OnClick(R.id.cv_share_account)
-    public void onShareAccountClicked() {
-        openAccount(AccountType.SHARE);
+        toolbarView = ((HomeActivity) getActivity()).getToolbar().getRootView();
+        isDetailVisible = true;
     }
 
     public void openAccount(AccountType accountType) {
@@ -161,66 +105,76 @@ public class HomeFragment extends BaseFragment implements HomeView {
     }
 
     @Override
-    public void showLoanAccountDetails(LoanAccountsMetaData accountsMetaData) {
-
-        loanChartUtils.addDataSet(accountsMetaData.getWaitingForDisbursal(),
-                getString(R.string.waiting), ContextCompat.getColor(getActivity(), R.color.blue));
-        loanChartUtils.addDataSet(accountsMetaData.getPendingApproval(), getString(R.string.pending)
-                , ContextCompat.getColor(getActivity(), R.color.light_yellow));
-        loanChartUtils.addDataSet(accountsMetaData.getActive(), getString(R.string.active),
-                ContextCompat.getColor(getActivity(), R.color.deposit_green));
-        loanChartUtils.addDataSet(accountsMetaData.getOverpaid(), getString(R.string.overpaid),
-                ContextCompat.getColor(getActivity(), R.color.purple));
-        loanChartUtils.addDataSet(accountsMetaData.getClosed(), getString(R.string.closed),
-                ContextCompat.getColor(getActivity(), R.color.black));
-
-        pcLoansChart.setData(loanChartUtils.getPieData());
-        pcLoansChart.invalidate();
-
-        tvLoanTotalAmount.setText(getString(R.string.string_and_double, getString(R.string.amount),
-                accountsMetaData.getAmount()));
+    public void showLoanAccountDetails(double totalLoanAmount) {
+        tvLoanTotalAmount.setText(getString(R.string.double_amount, totalLoanAmount));
     }
 
     @Override
-    public void showSavingAccountDetails(SavingAccountsMetaData accountsMetaData) {
-        savingChartUtils.addDataSet(accountsMetaData.getPendingApproval(),
-                getString(R.string.pending), ContextCompat.getColor(getActivity(),
-                        R.color.light_yellow));
-        savingChartUtils.addDataSet(accountsMetaData.getActive(), getString(R.string.active),
-                ContextCompat.getColor(getActivity(), R.color.deposit_green));
-        savingChartUtils.addDataSet(accountsMetaData.getApproved(), getString(R.string.approved),
-                ContextCompat.getColor(getActivity(), R.color.light_green));
-        savingChartUtils.addDataSet(accountsMetaData.getMatured(), getString(R.string.matured),
-                ContextCompat.getColor(getActivity(), R.color.red));
-        savingChartUtils.addDataSet(accountsMetaData.getClosed(), getString(R.string.closed),
-                ContextCompat.getColor(getActivity(), R.color.black));
-
-        pcSavingsChart.setData(savingChartUtils.getPieData());
-        pcSavingsChart.invalidate();
-
-        tvSavingTotalAmount.setText(getString(R.string.string_and_double, getString(R.string.amount)
-                , accountsMetaData.getAmount()));
+    public void showSavingAccountDetails(double totalSavingAmount) {
+        tvSavingTotalAmount.setText(getString(R.string.double_amount, totalSavingAmount));
     }
 
     @Override
-    public void showShareAccountDetails(ShareAccountsMetaData accountsMetaData) {
-        shareChartUtils.addDataSet(accountsMetaData.getPendingApproval(),
-                getString(R.string.pending), ContextCompat.getColor(getActivity(),
-                        R.color.light_yellow));
-        shareChartUtils.addDataSet(accountsMetaData.getActive(), getString(R.string.active),
-                ContextCompat.getColor(getActivity(), R.color.deposit_green));
-        shareChartUtils.addDataSet(accountsMetaData.getApproved(), getString(R.string.approved),
-                ContextCompat.getColor(getActivity(), R.color.light_green));
-        shareChartUtils.addDataSet(accountsMetaData.getRejected(), getString(R.string.rejected),
-                ContextCompat.getColor(getActivity(), R.color.red));
-        shareChartUtils.addDataSet(accountsMetaData.getClosed(), getString(R.string.closed),
-                ContextCompat.getColor(getActivity(), R.color.black));
+    public void showUserDetails(Client client) {
+        ((TextView) toolbarView.findViewById(R.id.tv_user_name)).setText(
+                getString(R.string.hello_client, client.getDisplayName()));
+    }
 
-        pcSharesChart.setData(shareChartUtils.getPieData());
-        pcSharesChart.invalidate();
+    @Override
+    public void showUserImage(final Bitmap bitmap) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((ImageView) toolbarView.findViewById(R.id.iv_user_image)).
+                        setImageBitmap(bitmap);
+            }
+        });
+    }
 
-        tvSharesTotal.setText(getString(R.string.string_and_int, getString(R.string.approved),
-                accountsMetaData.getApprovedShares()));
+    @OnClick(R.id.iv_visibility)
+    public void reverseDetailState() {
+        if (isDetailVisible) {
+            isDetailVisible = false;
+            ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_grey));
+            llAccountDetail.setVisibility(View.GONE);
+        } else {
+            isDetailVisible = true;
+            ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray_dark));
+            llAccountDetail.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick(R.id.ll_accounts)
+    public void accountsClicked() {
+        openAccount(AccountType.SAVINGS);
+    }
+
+    @OnClick(R.id.ll_transfer)
+    public void transferClicked() {
+
+    }
+
+    @OnClick(R.id.ll_charges)
+    public void chargesClicked() {
+        ((HomeActivity) getActivity()).replaceFragment(ClientChargeFragment.newInstance(clientId),
+                true,  R.id.container);
+    }
+
+    @OnClick(R.id.ll_apply_for_loan)
+    public void applyForLoan() {
+        ((HomeActivity) getActivity()).replaceFragment(LoanApplicationFragment.
+                        newInstance(LoanState.CREATE), true,  R.id.container);
+    }
+
+    @OnClick(R.id.ll_beneficiaries)
+    public void beneficiaries() {
+        ((HomeActivity) getActivity()).replaceFragment(BeneficiaryListFragment.
+                newInstance(), true,  R.id.container);
+    }
+
+    @OnClick(R.id.ll_surveys)
+    public void surveys() {
+
     }
 
     @Override
@@ -236,6 +190,48 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void hideProgress() {
         hideProgressBar();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setToolbarLayoutForHome();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        setToolBarLayoutForOthers();
+    }
+
+    public void setToolbarLayoutForHome() {
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        toolbarCustomView = mInflater.inflate(R.layout.toolbar_home, null);
+
+        toolBarLayoutParams = (LinearLayout.LayoutParams) ((HomeActivity) getActivity()).
+                getToolbar().getLayoutParams();
+        toolbarDefaultHeight = toolBarLayoutParams.height;
+        insetStartWidth = ((HomeActivity) getActivity()).getToolbar().getContentInsetStart();
+
+        toolBarLayoutParams.height = 300;
+
+        ((HomeActivity) getActivity()).getToolbar().setLayoutParams(toolBarLayoutParams);
+        ((HomeActivity) getActivity()).getToolbar().setContentInsetStartWithNavigation(0);
+        ((HomeActivity) getActivity()).getToolbar().addView(toolbarCustomView);
+
+        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    public void setToolBarLayoutForOthers() {
+
+        toolBarLayoutParams.height = toolbarDefaultHeight;
+
+        ((HomeActivity) getActivity()).getToolbar().removeView(toolbarCustomView);
+        ((HomeActivity) getActivity()).getToolbar().setLayoutParams(toolBarLayoutParams);
+        ((HomeActivity) getActivity()).getToolbar().
+                setContentInsetStartWithNavigation(insetStartWidth);
+
+        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 }
 

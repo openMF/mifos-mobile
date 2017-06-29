@@ -200,7 +200,7 @@ public class HomeActivity extends BaseActivity implements
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        Toaster.show(findViewById(android.R.id.content) , getString(R.string.exit_message));
+        Toaster.show(findViewById(android.R.id.content), getString(R.string.exit_message));
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -213,5 +213,4 @@ public class HomeActivity extends BaseActivity implements
             super.onBackPressed();
         }
     }
-
 }
