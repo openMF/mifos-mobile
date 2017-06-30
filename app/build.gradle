@@ -101,4 +101,19 @@ dependencies {
     // Unit tests dependencies
     testCompile "junit:junit:$rootProject.jUnitVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    androidTestCompile "junit:junit:$rootProject.jUnitVersion"
+    androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    androidTestCompile "org.mockito:mockito-android:$rootProject.mockitoVersion"
+    androidTestCompile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestCompile "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestCompile "com.android.support.test:rules:$rootProject.rulesVersion"
 }
