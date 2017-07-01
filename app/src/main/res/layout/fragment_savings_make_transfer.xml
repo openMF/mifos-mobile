@@ -4,128 +4,241 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/view_flipper"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_flipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_horizontal_margin">
+    android:background="@color/white">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ll_make_transfer"
         style="@style/LinearLayout.Base"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:background="@color/white"
         android:visibility="visible">
 
-        <TextView
-            android:id="@+id/tv_pay_to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="@string/pay_to"
-            android:textSize="16sp"/>
-
-        <Spinner
-            android:id="@+id/sp_pay_to"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:spinnerMode="dropdown"/>
-
-        <TextView
-            android:id="@+id/tv_pay_from"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="@string/pay_from"
-            android:textSize="16sp"/>
-
-        <Spinner
-            android:id="@+id/sp_pay_from"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:spinnerMode="dropdown"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/et_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:hint="@string/amount"
-                android:imeOptions="actionNext"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                android:paddingBottom="16dp"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout style="@style/LinearLayout.Width">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+        <LinearLayout
+            style="@style/LinearLayout.Width">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <org.mifos.selfserviceapp.utils.ProcessView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/process_one"
+                    app:value="1"/>
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/light_grey"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/LinearLayout.Wrap"
+                android:layout_weight="1"
                 android:layout_marginBottom="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="0.5"
-                android:text="@string/transfer_date"/>
-
-            <TextView
-                android:id="@+id/tv_transfer_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="0.5"
-                android:background="@color/gray_light"
-                android:textSize="20sp"/>
+                android:layout_marginLeft="16dp"
+                android:paddingTop="@dimen/default_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_pay_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/pay_to"
+                    android:textSize="16sp"/>
+                <Spinner
+                    android:id="@+id/sp_pay_to"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:prompt="@string/select_pay_to"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:spinnerMode="dialog"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_pay_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/primary"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/continue_str"/>
+            </LinearLayout>
         </LinearLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/et_remark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:hint="@string/remark"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:paddingBottom="16dp"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout style="@style/LinearLayout.Width">
-
-            <Button
-                android:id="@+id/btn_cancel_transfer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <LinearLayout
+            style="@style/LinearLayout.Width">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <org.mifos.selfserviceapp.utils.ProcessView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/process_two"
+                    app:value="2"/>
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/light_grey"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/LinearLayout.Wrap"
+                android:layout_weight="1"
                 android:layout_marginBottom="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="0.5"
-                android:textColor="@color/white"
-                android:text="@string/cancel"
-                tools:ignore="ButtonStyle"/>
-
-            <Button
-                android:id="@+id/btn_review_transfer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/white"
-                android:text="@string/review_transfer"
-                android:layout_weight="0.5"
-                tools:ignore="ButtonStyle"/>
-
+                android:layout_marginLeft="16dp"
+                android:paddingTop="@dimen/default_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_pay_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pay_from"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/tv_select_pay_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_pay_from"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_small"/>
+                <Spinner
+                    android:id="@+id/sp_pay_from"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:visibility="gone"
+                    android:prompt="@string/select_pay_from"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:spinnerMode="dialog"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_pay_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/primary"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/continue_str"/>
+            </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            style="@style/LinearLayout.Width">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <org.mifos.selfserviceapp.utils.ProcessView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/process_three"
+                    app:value="3"/>
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/light_grey"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/LinearLayout.Wrap"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:paddingTop="@dimen/default_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amount"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/tv_select_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_amount"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_small"/>
+                <EditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_amount"
+                    android:imeOptions="actionNext"
+                    android:visibility="gone"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/primary"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/continue_str"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/LinearLayout.Width">
+            <org.mifos.selfserviceapp.utils.ProcessView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/process_four"
+                app:value="4"/>
+            <LinearLayout
+                style="@style/LinearLayout.Wrap"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:paddingTop="@dimen/default_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:text="@string/remark"/>
 
-
-
+                <TextView
+                    android:id="@+id/tv_enter_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_remarks"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_small"/>
+                <EditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/remark"
+                    android:visibility="gone"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"/>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/default_margin"
+                    style="@style/LinearLayout.Width"
+                    android:visibility="gone"
+                    android:id="@+id/ll_review">
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btn_review_transfer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/primary"
+                        android:text="@string/review_transfer"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btn_cancel_transfer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:text="@string/cancel"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

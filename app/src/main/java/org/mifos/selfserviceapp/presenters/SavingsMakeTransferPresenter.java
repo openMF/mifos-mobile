@@ -5,19 +5,16 @@ import android.content.Context;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ApplicationContext;
-import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOption;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.SavingsMakeTransferMvpView;
-import org.mifos.selfserviceapp.utils.MFErrorParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -75,33 +72,6 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
                     public void onNext(AccountOptionsTemplate accountOptionsTemplate) {
                         getMvpView().hideProgress();
                         getMvpView().showSavingsAccountTemplate(accountOptionsTemplate);
-                    }
-                })
-        );
-    }
-
-    public void makeTransfer(TransferPayload transferPayload) {
-        checkViewAttached();
-        getMvpView().showProgressDialog();
-        subscriptions.add(dataManager.makeTransfer(transferPayload)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgressDialog();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        getMvpView().hideProgressDialog();
-                        getMvpView().showTransferredSuccessfully();
                     }
                 })
         );
