@@ -9,4 +9,8 @@
         <attr name="border_color" format="color"></attr>
         <attr name="shadow" format="boolean"></attr>
     </declare-styleable>
+
+    <declare-styleable name="ProcessView">
+        <attr name="value" format="integer"></attr>
+    </declare-styleable>
 </resources>

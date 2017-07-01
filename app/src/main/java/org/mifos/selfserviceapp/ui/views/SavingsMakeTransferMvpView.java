@@ -11,11 +11,7 @@ public interface SavingsMakeTransferMvpView extends MVPView {
 
     void showUserInterface();
 
-    void makeTransfer();
-
     void showSavingsAccountTemplate(AccountOptionsTemplate accountOptionsTemplate);
-
-    void showTransferredSuccessfully();
 
     void showToaster(String message);
 

@@ -1,8 +1,8 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.payload.TransferPayload;
@@ -25,9 +24,8 @@ import org.mifos.selfserviceapp.ui.views.SavingsMakeTransferMvpView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.MFDatePicker;
-import org.mifos.selfserviceapp.utils.MaterialDialog;
+import org.mifos.selfserviceapp.utils.ProcessView;
 import org.mifos.selfserviceapp.utils.Toaster;
-import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +51,38 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @BindView(R.id.et_amount)
     EditText etAmount;
 
-    @BindView(R.id.tv_transfer_date)
-    TextView tvTransferDate;
+    @BindView(R.id.process_one)
+    ProcessView pvOne;
+
+    @BindView(R.id.process_two)
+    ProcessView pvTwo;
+
+    @BindView(R.id.process_three)
+    ProcessView pvThree;
+
+    @BindView(R.id.process_four)
+    ProcessView pvFour;
+
+    @BindView(R.id.btn_pay_to)
+    AppCompatButton btnPayTo;
+
+    @BindView(R.id.btn_pay_from)
+    AppCompatButton btnPayFrom;
+
+    @BindView(R.id.btn_amount)
+    AppCompatButton btnAmount;
+
+    @BindView(R.id.ll_review)
+    LinearLayout llReview;
+
+    @BindView(R.id.tv_select_pay_from)
+    TextView tvSelectPayFrom;
+
+    @BindView(R.id.tv_select_amount)
+    TextView tvEnterAmount;
+
+    @BindView(R.id.tv_enter_remark)
+    TextView tvEnterRemark;
 
     @BindView(R.id.et_remark)
     EditText etRemark;
@@ -73,6 +101,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     private ArrayAdapter<String> payToAdapter;
     private ArrayAdapter<String> payFromAdapter;
 
+    private TransferPayload transferPayload;
     private String transferDate;
     private AccountOption toAccountOption, fromAccountOption;
     private AccountOptionsTemplate accountOptionsTemplate;
@@ -114,83 +143,13 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     @OnClick(R.id.btn_review_transfer)
     void reviewTransfer() {
-        if (etAmount.getText().toString().equals("")) {
-            showToaster(getString(R.string.enter_amount));
-            return;
-        }
-
-        if (etAmount.getText().toString().equals(".")) {
-            showToaster(getString(R.string.invalid_amount));
-            return;
-        }
 
         if (etRemark.getText().toString().equals("")) {
             showToaster(getString(R.string.remark_is_mandatory));
             return;
         }
 
-        if (spPayTo.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().toString())) {
-            showToaster(getString(R.string.error_same_account_transfer));
-            return;
-        }
-
-        final String[][] data = {
-                {getString(R.string.transfer_to), ""},
-                {getString(R.string.account_number), spPayTo.getSelectedItem().toString()},
-                {getString(R.string.transfer_from), ""},
-                {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
-                {getString(R.string.transfer_date), transferDate},
-                {getString(R.string.amount), etAmount.getText().toString()},
-                {getString(R.string.remark), etRemark.getText().toString()}
-        };
-        new MaterialDialog.Builder().init(getActivity())
-                .setTitle(R.string.review_transfer)
-                .setMessage(Utils.generateFormString(data))
-                .setPositiveButton(R.string.transfer,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                makeTransfer();
-                            }
-                        })
-                .setNegativeButton(R.string.dialog_action_back,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                .createMaterialDialog()
-                .show();
-    }
-
-    @OnClick(R.id.btn_cancel_transfer)
-    void cancelTransfer() {
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
-
-    @Override
-    public void showUserInterface() {
-        payFromAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
-                listPayFrom);
-        payFromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPayFrom.setAdapter(payFromAdapter);
-        spPayFrom.setOnItemSelectedListener(this);
-
-        payToAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
-                listPayTo);
-        payToAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPayTo.setAdapter(payToAdapter);
-        spPayTo.setOnItemSelectedListener(this);
-
-        tvTransferDate.setText(MFDatePicker.getDatePickedAsString());
-        transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                tvTransferDate.getText().toString());
-    }
-
-    @Override
-    public void makeTransfer() {
-        TransferPayload transferPayload = new TransferPayload();
+        transferPayload = new TransferPayload();
         transferPayload.setFromAccountId(fromAccountOption.getAccountId());
         transferPayload.setFromClientId(fromAccountOption.getClientId());
         transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
@@ -203,7 +162,32 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
         transferPayload.setTransferDescription(etRemark.getText().toString());
 
-        savingsMakeTransferPresenter.makeTransfer(transferPayload);
+
+        ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
+                newInstance(transferPayload), true, R.id.container);
+    }
+
+    @OnClick(R.id.btn_cancel_transfer)
+    void cancelTransfer() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void showUserInterface() {
+        pvOne.setCurrentActive();
+        payFromAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
+                listPayFrom);
+        payFromAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spPayFrom.setAdapter(payFromAdapter);
+        spPayFrom.setOnItemSelectedListener(this);
+
+        payToAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
+                listPayTo);
+        payToAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spPayTo.setAdapter(payToAdapter);
+        spPayTo.setOnItemSelectedListener(this);
+        transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
+                MFDatePicker.getDatePickedAsString());
     }
 
     @Override
@@ -215,13 +199,6 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
                 accountOptionsTemplate.getToAccountOptions()));
         payToAdapter.notifyDataSetChanged();
         payFromAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showTransferredSuccessfully() {
-        Toast.makeText(getActivity(), getString(R.string.transferred_Successfully),
-                Toast.LENGTH_SHORT).show();
-        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -275,6 +252,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
                 spPayTo.setSelection(accountOptionsTemplate.getToAccountOptions()
                         .indexOf(toAccountOption));
                 spPayTo.setEnabled(false);
+                pvOne.setCurrentCompeleted();
                 break;
             case Constants.TRANSFER_PAY_FROM:
                 setToolbarTitle(getString(R.string.transfer));
@@ -283,6 +261,9 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
                 spPayFrom.setSelection(accountOptionsTemplate.getFromAccountOptions()
                         .indexOf(fromAccountOption));
                 spPayFrom.setEnabled(false);
+                spPayFrom.setVisibility(View.VISIBLE);
+                tvSelectPayFrom.setVisibility(View.GONE);
+                pvTwo.setCurrentCompeleted();
                 break;
         }
     }
@@ -290,6 +271,57 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @OnClick(R.id.btn_pay_to)
+    public void payToSelected() {
+        pvOne.setCurrentCompeleted();
+        pvTwo.setCurrentActive();
+
+        btnPayTo.setVisibility(View.GONE);
+        tvSelectPayFrom.setVisibility(View.GONE);
+        btnPayFrom.setVisibility(View.VISIBLE);
+        spPayFrom.setVisibility(View.VISIBLE);
+        spPayTo.setEnabled(false);
+    }
+
+    @OnClick(R.id.btn_pay_from)
+    public void payFromSelected() {
+        if (spPayTo.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().toString())) {
+            showToaster(getString(R.string.error_same_account_transfer));
+            return;
+        }
+        pvTwo.setCurrentCompeleted();
+        pvThree.setCurrentActive();
+
+        btnPayFrom.setVisibility(View.GONE);
+        tvEnterAmount.setVisibility(View.GONE);
+        etAmount.setVisibility(View.VISIBLE);
+        btnAmount.setVisibility(View.VISIBLE);
+        spPayFrom.setEnabled(false);
+    }
+
+    @OnClick(R.id.btn_amount)
+    public void amountSet() {
+
+        if (etAmount.getText().toString().equals("")) {
+            showToaster(getString(R.string.enter_amount));
+            return;
+        }
+
+        if (etAmount.getText().toString().equals(".")) {
+            showToaster(getString(R.string.invalid_amount));
+            return;
+        }
+
+        pvThree.setCurrentCompeleted();
+        pvFour.setCurrentActive();
+
+        btnAmount.setVisibility(View.GONE);
+        tvEnterRemark.setVisibility(View.GONE);
+        etRemark.setVisibility(View.VISIBLE);
+        llReview.setVisibility(View.VISIBLE);
+        etAmount.setEnabled(false);
     }
 
     @Override

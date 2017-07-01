@@ -1,0 +1,135 @@
+package org.mifos.selfserviceapp.ui.fragments;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.models.payload.TransferPayload;
+import org.mifos.selfserviceapp.presenters.TransferProcessPresenter;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
+import org.mifos.selfserviceapp.ui.views.TransferProcessView;
+import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Toaster;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * Created by dilpreet on 1/7/17.
+ */
+
+public class TransferProcessFragment extends BaseFragment implements TransferProcessView {
+
+    @BindView(R.id.tv_amount)
+    TextView tvAmount;
+
+    @BindView(R.id.tv_pay_to)
+    TextView tvPayTo;
+
+    @BindView(R.id.tv_pay_from)
+    TextView tvPayFrom;
+
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+
+    @BindView(R.id.iv_success)
+    ImageView ivSuccess;
+
+    @BindView(R.id.ll_transfer)
+    LinearLayout llTransfer;
+
+    @BindView(R.id.btn_close)
+    AppCompatButton btnClose;
+
+    @Inject
+    TransferProcessPresenter presenter;
+
+    private View rootView;
+    private TransferPayload payload;
+
+    public static TransferProcessFragment newInstance(TransferPayload payload) {
+        TransferProcessFragment fragment = new TransferProcessFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.PAYLOAD, payload);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getActivity() != null) {
+            payload = getArguments().getParcelable(Constants.PAYLOAD);
+        }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_transfer_process, container, false);
+        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+        setToolbarTitle(getString(R.string.transfer));
+
+        ButterKnife.bind(this, rootView);
+        presenter.attachView(this);
+
+        tvAmount.setText(String.valueOf(payload.getTransferAmount()));
+        tvPayFrom.setText(String.valueOf(payload.getFromAccountId()));
+        tvPayTo.setText(String.valueOf(payload.getToAccountId()));
+        tvDate.setText(payload.getTransferDate());
+
+        return rootView;
+    }
+
+    @OnClick(R.id.btn_start_transfer)
+    public void startTransfer() {
+        presenter.makeSavingsTransfer(payload);
+    }
+
+    @OnClick(R.id.btn_cancel_transfer)
+    public void cancelTransfer() {
+        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @OnClick(R.id.btn_close)
+    public void closeClicked() {
+        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void showTransferredSuccessfully() {
+        Toaster.show(rootView, getString(R.string.transferred_Successfully));
+        ivSuccess.setVisibility(View.VISIBLE);
+        btnClose.setVisibility(View.VISIBLE);
+        llTransfer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String msg) {
+        Toaster.show(rootView, msg);
+    }
+
+    @Override
+    public void showProgress() {
+        showProgressBar();
+    }
+
+    @Override
+    public void hideProgress() {
+        hideProgressBar();
+    }
+}

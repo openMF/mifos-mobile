@@ -55,4 +55,6 @@ public class Constants {
 
     public static final String LOAN_ACCOUNT = "loanAccount";
 
+    public static final String PAYLOAD = "payload";
+
 }
