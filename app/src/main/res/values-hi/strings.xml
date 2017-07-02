@@ -111,19 +111,19 @@
     <string name="error_client_not_found">ग्राहक नहीं मिला</string>
     <string name="error_fetching_client">ग्राहक लाने में विफल</string>
     <string name="error_fetching_accounts">खाते को लाने में विफल</string>
-    <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
-    <string name="error_same_account_transfer">Can\'t transfer with in same account</string>
-    <string name="error_fetching_account_transfer_template">Error to fetching account transfer template</string>
-    <string name="error_fetching_beneficiaries">Failed to fetch Beneficiaries</string>
-    <string name="error_fetching_beneficiary_template">Failed to fetch Beneficiary Template</string>
-    <string name="error_fetching_template">Failed to fetch template</string>
-    <string name="error_creating_beneficiary">Failed to create Beneficiary</string>
-    <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
-    <string name="error_deleting_beneficiary">Failed to delete Beneficiary</string>
-    <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
-    <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer template</string>
+    <string name="error_fetching_repayment_schedule">चुकाने की शेड्यूल प्राप्त करने में विफल</string>
+    <string name="error_same_account_transfer">एक ही खाते में हस्तांतरण नहीं कर सकते</string>
+    <string name="error_fetching_account_transfer_template">खाता ट्रांसफर टेम्पलेट को लाने में त्रुटि</string>
+    <string name="error_fetching_beneficiaries">लाभार्थियों को लाने में असफल</string>
+    <string name="error_fetching_beneficiary_template">लाभार्थी टेम्पलेट लाने में विफल</string>
+    <string name="error_fetching_template">टेम्प्लेट को लाने में विफल</string>
+    <string name="error_creating_beneficiary">लाभार्थी बनाने में विफल</string>
+    <string name="error_updating_beneficiary">लाभार्थी को अपडेट करने में विफल</string>
+    <string name="error_deleting_beneficiary">लाभार्थी को हटाने में विफल</string>
+    <string name="error_loan_account_withdraw">ऋण खाता वापस करने में त्रुटि</string>
+    <string name="error_fetching_third_party_transfer_template">थर्ड पार्टी ट्रांसफर टेम्प्लेट को लाने में त्रुटि</string>
 
-    <string name="fetching_client">Fetching Client</string>
+    <string name="fetching_client">फेचिंग ग्राहक</string>
 
     <string name="not_contain_username">Spaces</string>
     <string name="client_name">Client Name</string>
