@@ -6,11 +6,11 @@ import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.utils.DateHelper;
 
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -67,47 +67,58 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
 
             ((ViewHolder) holder).tvSavingAccountProductName.setText(
                     savingAccount.getProductName());
-            ((ViewHolder) holder).llAccountDetail.setVisibility(View.GONE);
-            ((ViewHolder) holder).tvLastActive.setVisibility(View.GONE);
+            ((ViewHolder) holder).tvAccountBalance.setVisibility(View.GONE);
 
             if (savingAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.deposit_green));
-                setSavingAccountsDetails(((ViewHolder) holder), savingAccount);
+                setSavingAccountsDetails(((ViewHolder) holder), savingAccount,
+                        R.color.deposit_green);
+                setSavingAccountsGeneralDetails(holder, R.color.deposit_green, DateHelper.
+                        getDateAsString(savingAccount.getLastActiveTransactionDate()));
+
             } else if (savingAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.light_green));
+                setSavingAccountsGeneralDetails(holder, R.color.light_green, context.getString(R.
+                        string.string_and_string, context.getString(R.string.approved), DateHelper.
+                        getDateAsString(savingAccount.getTimeLine().getApprovedOnDate())));
 
             } else if (savingAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.light_yellow));
+                setSavingAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(R.
+                        string.string_and_string, context.getString(R.string.submitted), DateHelper.
+                        getDateAsString(savingAccount.getTimeLine().getSubmittedOnDate())));
 
             } else if (savingAccount.getStatus().getMatured()) {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.red_light));
-                setSavingAccountsDetails(((ViewHolder) holder), savingAccount);
+
+                setSavingAccountsDetails(((ViewHolder) holder), savingAccount, R.color.red_light);
+                setSavingAccountsGeneralDetails(holder, R.color.red_light, DateHelper.
+                        getDateAsString(savingAccount.getLastActiveTransactionDate()));
+
             } else {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.black));
+                setSavingAccountsGeneralDetails(holder, R.color.black, context.getString(R.string.
+                        string_and_string, context.getString(R.string.closed), DateHelper.
+                        getDateAsString(savingAccount.getTimeLine().getClosedOnDate())));
 
             }
-
         }
 
     }
 
-    private void setSavingAccountsDetails(ViewHolder viewHolder, SavingAccount savingAccount) {
-        viewHolder.llAccountDetail.setVisibility(View.VISIBLE);
-        viewHolder.tvLastActive.setVisibility(View.VISIBLE);
-        viewHolder.tvAccountBalance.setText( context.getString(R.string.double_and_String,
-                savingAccount.getAccountBalance(), savingAccount.getCurrency().getDisplaySymbol()));
+    private void setSavingAccountsDetails(ViewHolder viewHolder, SavingAccount savingAccount,
+                                          int colorId) {
+        viewHolder.tvAccountBalance.setVisibility(View.VISIBLE);
+        viewHolder.tvAccountBalance.setTextColor(ContextCompat.getColor(context,
+                colorId));
+        viewHolder.tvAccountBalance.setText(context.getString(R.string.string_and_double,
+                savingAccount.getCurrency().getDisplaySymbol(), savingAccount.getAccountBalance()));
+    }
 
-        viewHolder.tvLastActive.setText(DateHelper.getDateAsString(savingAccount
-                .getLastActiveTransactionDate()));
+    private void setSavingAccountsGeneralDetails(RecyclerView.ViewHolder holder, int colorId,
+                                                 String dateStr) {
+        ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
+                getColor(context, colorId));
+        ((ViewHolder) holder).tvLastActive.setText(dateStr);
     }
 
     @Override
@@ -124,10 +135,7 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
         TextView tvSavingAccountProductName;
 
         @BindView(R.id.iv_status_indicator)
-        View ivStatusIndicator;
-
-        @BindView(R.id.ll_account_detail)
-        LinearLayout llAccountDetail;
+        AppCompatImageView ivStatusIndicator;
 
         @BindView(R.id.tv_last_active)
         TextView tvLastActive;

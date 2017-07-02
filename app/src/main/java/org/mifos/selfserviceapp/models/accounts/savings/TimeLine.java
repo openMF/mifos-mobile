@@ -50,6 +50,17 @@ public class TimeLine implements Parcelable {
     @SerializedName("activatedByLastname")
     String activatedByLastname;
 
+    @SerializedName("closedOnDate")
+    List<Integer> closedOnDate;
+
+    public List<Integer> getClosedOnDate() {
+        return closedOnDate;
+    }
+
+    public void setClosedOnDate(List<Integer> closedOnDate) {
+        this.closedOnDate = closedOnDate;
+    }
+
     public List<Integer> getSubmittedOnDate() {
         return submittedOnDate;
     }
