@@ -81,7 +81,12 @@
     <string name="rejected">Rejected</string>
     <string name="waiting">Waiting</string>
     <string name="overpaid">Overpaid</string>
-
+    <string name="inArrears">In Arrears</string>
+    <string name="select_you_want">Select all you want to apply</string>
+    <string name="filter_savings">Filter Savings Accounts</string>
+    <string name="filter_loan">Filter Loan Accounts</string>
+    <string name="filter_share">Filter Share Accounts</string>
+    <string name="search">Search</string>
     <string name="active">Active</string>
     <string name="closed">Closed</string>
     <string name="need_approval">Need Approval</string>
