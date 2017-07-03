@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.models.CheckboxStatus;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
@@ -181,6 +182,54 @@ public class AccountsFragment extends BaseFragment implements
         noAccountText.setText(emptyAccounts);
         noAccountIcon.setImageResource(R.drawable.ic_assignment_turned_in_black_24dp);
         rvAccounts.setVisibility(View.GONE);
+    }
+
+    public void searchSavingsAccount(String input) {
+        savingAccountsListAdapter.setSavingAccountsList(accountsPresenter.
+                searchInSavingsList(savingAccounts, input));
+        rvAccounts.setAdapter(savingAccountsListAdapter);
+    }
+
+    public void searchLoanAccount(String input) {
+        loanAccountsListAdapter.setLoanAccountsList(accountsPresenter.
+                searchInLoanList(loanAccounts, input));
+        rvAccounts.setAdapter(loanAccountsListAdapter);
+    }
+
+    public void searchSharesAccount(String input) {
+        shareAccountsListAdapter.setShareAccountsList(accountsPresenter.
+                searchInSharesList(shareAccounts, input));
+        rvAccounts.setAdapter(shareAccountsListAdapter);
+    }
+
+    public void filterSavingsAccount(List<CheckboxStatus> statusModelList) {
+        List<SavingAccount> filteredSavings = new ArrayList<>();
+        for (CheckboxStatus status : accountsPresenter.getCheckedStatus(statusModelList)) {
+            filteredSavings.addAll(accountsPresenter.getFilteredSavingsAccount(savingAccounts,
+                    status));
+        }
+        savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
+        rvAccounts.setAdapter(savingAccountsListAdapter);
+    }
+
+    public void filterLoanAccount(List<CheckboxStatus> statusModelList) {
+        List<LoanAccount> filteredSavings = new ArrayList<>();
+        for (CheckboxStatus status : accountsPresenter.getCheckedStatus(statusModelList)) {
+            filteredSavings.addAll(accountsPresenter.getFilteredLoanAccount(loanAccounts,
+                    status));
+        }
+        loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
+        rvAccounts.setAdapter(loanAccountsListAdapter);
+    }
+
+    public void filterShareAccount(List<CheckboxStatus> statusModelList) {
+        List<ShareAccount> filteredSavings = new ArrayList<>();
+        for (CheckboxStatus status : accountsPresenter.getCheckedStatus(statusModelList)) {
+            filteredSavings.addAll(accountsPresenter.getFilteredShareAccount(shareAccounts,
+                    status));
+        }
+        shareAccountsListAdapter.setShareAccountsList(filteredSavings);
+        rvAccounts.setAdapter(shareAccountsListAdapter);
     }
 
     @Override
