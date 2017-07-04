@@ -29,6 +29,7 @@ import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.AccountsView;
 import org.mifos.selfserviceapp.utils.ComparatorBasedOnId;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -116,6 +117,8 @@ public class AccountsFragment extends BaseFragment implements
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvAccounts.setLayoutManager(layoutManager);
         rvAccounts.setHasFixedSize(true);
+        rvAccounts.addItemDecoration(new DividerItemDecoration(getActivity(),
+                layoutManager.getOrientation()));
         rvAccounts.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
         swipeRefreshLayout.setColorSchemeColors(getActivity()
                 .getResources().getIntArray(R.array.swipeRefreshColors));

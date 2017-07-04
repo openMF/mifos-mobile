@@ -49,6 +49,8 @@
     <string name="remark">Remark</string>
     <string name="expected_disbursement_date">Expected Disbursement Date</string>
     <string name="submission_date">Submission Date</string>
+    <string name="submitted">Submitted</string>
+    <string name="disbursement">Disbursement</string>
     <string name="transfer_date">Transfer Date</string>
     <string name="apply_for_loan">Apply for Loan</string>
     <string name="update_loan">Update Loan</string>
@@ -254,8 +256,8 @@
     <string name="hello_client">Hello, %1$s</string>
     <string name="double_amount">%1$.2f</string>
     <string name="double_and_String">%1$.2f %2$s</string>
-    <string name="string_and_string">%1$s%2$s</string>
-    <string name="string_and_double">%1$s: %2$.2f</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="string_and_double">%1$s %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
     <string name="invalid_amount">Invalid Amount</string>
     <string name="exit_message">Press back again to exit</string>

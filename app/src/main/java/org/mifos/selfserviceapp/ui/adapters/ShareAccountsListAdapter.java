@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,23 +64,23 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
 
             if (shareAccount.getStatus().getActive()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
                         getColor(context, R.color.deposit_green));
                 setSharingAccountDetail(((ViewHolder) holder), shareAccount);
 
             } else if (shareAccount.getStatus().getApproved()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
                         getColor(context, R.color.light_green));
 
             } else if (shareAccount.getStatus().getSubmittedAndPendingApproval()) {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
                         getColor(context, R.color.light_yellow));
 
             } else {
 
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
+                ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
                         getColor(context, R.color.light_blue));
 
             }
@@ -114,7 +115,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView tvShareAccountsProductName;
 
         @BindView(R.id.iv_status_indicator)
-        View ivStatusIndicator;
+        AppCompatImageView ivStatusIndicator;
 
         @BindView(R.id.ll_account_detail)
         LinearLayout llAccountDetail;

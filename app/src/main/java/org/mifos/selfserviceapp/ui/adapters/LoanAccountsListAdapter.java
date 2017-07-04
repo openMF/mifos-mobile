@@ -2,16 +2,17 @@ package org.mifos.selfserviceapp.ui.adapters;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.utils.DateHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,43 +59,66 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             LoanAccount loanAccount = getItem(position);
             ((ViewHolder) holder).tvClientLoanAccountNumber.setText(loanAccount.getAccountNo());
             ((ViewHolder) holder).tvLoanAccountProductName.setText(loanAccount.getProductName());
-            ((ViewHolder) holder).llAccountDetail.setVisibility(View.GONE);
+            ((ViewHolder) holder).tvAccountBalance.setVisibility(View.GONE);
 
             if (loanAccount.getStatus().getActive() && loanAccount.getInArrears()) {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.red));
-                setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
+
+                setLoanAccountsGeneralDetails(holder, R.color.red, context.getString(R.string.
+                        string_and_string, context.getString(R.string.disbursement), DateHelper
+                        .getDateAsString(loanAccount.getTimeline().getActualDisbursementDate())));
+                setLoanAccountsDetails(((ViewHolder) holder), loanAccount, R.color.red);
+
             } else if (loanAccount.getStatus().getActive()) {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.deposit_green));
-                setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
+
+                setLoanAccountsGeneralDetails(holder, R.color.deposit_green, context.getString(R.
+                        string.string_and_string, context.getString(R.string.disbursement),
+                        DateHelper.getDateAsString(loanAccount.getTimeline().
+                                getActualDisbursementDate())));
+                setLoanAccountsDetails(((ViewHolder) holder), loanAccount, R.color.deposit_green);
+
             } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.blue));
+
+                setLoanAccountsGeneralDetails(holder, R.color.blue, context.getString(R.string.
+                        string_and_string, context.getString(R.string.approved), DateHelper
+                        .getDateAsString(loanAccount.getTimeline().getApprovedOnDate())));
+
             } else if (loanAccount.getStatus().getPendingApproval()) {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.light_yellow));
+
+                setLoanAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(R.
+                                string.string_and_string, context.getString(R.string.
+                                submitted), DateHelper.getDateAsString(loanAccount.
+                                getTimeline().getSubmittedOnDate())));
+
             }  else if (loanAccount.getStatus().getOverpaid()) {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.purple));
-                setLoanAccountsDetails(((ViewHolder) holder), loanAccount);
+
+                setLoanAccountsDetails(((ViewHolder) holder), loanAccount, R.color.purple);
+                setLoanAccountsGeneralDetails(holder, R.color.purple, context.getString(R.string.
+                        string_and_string, context.getString(R.string.disbursement), DateHelper
+                        .getDateAsString(loanAccount.getTimeline().getActualDisbursementDate())));
+
             } else {
-                ((ViewHolder) holder).ivStatusIndicator.setBackgroundColor(ContextCompat.
-                        getColor(context, R.color.black));
+                setLoanAccountsGeneralDetails(holder, R.color.black, context.getString(R.string.
+                        string_and_string, context.getString(R.string.closed), DateHelper
+                        .getDateAsString(loanAccount.getTimeline().getClosedOnDate())));
             }
         }
 
     }
 
-    private void setLoanAccountsDetails(ViewHolder viewHolder, LoanAccount loanAccount) {
+    private void setLoanAccountsDetails(ViewHolder viewHolder, LoanAccount loanAccount, int color) {
 
-        double amountPaid = loanAccount.getAmountPaid() != 0 ? loanAccount.getAmountPaid() : 0;
         double amountBalance = loanAccount.getLoanBalance() != 0 ? loanAccount.getLoanBalance() : 0;
-        viewHolder.llAccountDetail.setVisibility(View.VISIBLE);
+        viewHolder.tvAccountBalance.setVisibility(View.VISIBLE);
         viewHolder.tvAccountBalance.setText(String.valueOf(amountBalance));
-        viewHolder.tvAccountPaid.setText(String.valueOf(amountPaid));
+        viewHolder.tvAccountBalance.setTextColor(ContextCompat.getColor(context, color));
     }
 
+    private void setLoanAccountsGeneralDetails(RecyclerView.ViewHolder holder, int colorId,
+                                                 String dateStr) {
+        ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
+                getColor(context, colorId));
+        ((ViewHolder) holder).tvDate.setText(dateStr);
+    }
     @Override
     public int getItemCount() {
         return loanAccountsList.size();
@@ -108,16 +132,13 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView tvLoanAccountProductName;
 
         @BindView(R.id.iv_status_indicator)
-        View ivStatusIndicator;
+        AppCompatImageView ivStatusIndicator;
 
-        @BindView(R.id.ll_account_detail)
-        LinearLayout llAccountDetail;
+        @BindView(R.id.tv_date)
+        TextView tvDate;
 
         @BindView(R.id.tv_account_balance)
         TextView tvAccountBalance;
-
-        @BindView(R.id.tv_account_paid)
-        TextView tvAccountPaid;
 
         public ViewHolder(View v) {
             super(v);

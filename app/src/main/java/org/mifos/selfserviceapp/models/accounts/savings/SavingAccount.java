@@ -62,6 +62,17 @@ public class SavingAccount extends Account implements Parcelable {
     @SerializedName("lastActiveTransactionDate")
     private List<Integer> lastActiveTransactionDate = null;
 
+    @SerializedName("timeline")
+    private TimeLine timeLine;
+
+    public TimeLine getTimeLine() {
+        return timeLine;
+    }
+
+    public void setTimeLine(TimeLine timeLine) {
+        this.timeLine = timeLine;
+    }
+
     public List<Integer> getLastActiveTransactionDate() {
         return lastActiveTransactionDate;
     }

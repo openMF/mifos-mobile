@@ -49,7 +49,7 @@
     <dimen name="icon_small">15dp</dimen>
 
     <dimen name="divider_margin">3dp</dimen>
-    <dimen name="side_bar_width">12dp</dimen>
+    <dimen name="side_bar_width">5dp</dimen>
     <dimen name="pie_chart_height">160dp</dimen>
 
 </resources>
