@@ -1,0 +1,389 @@
+{
+  "id": 29,
+  "accountNo": "000000029",
+  "externalId": "342342",
+  "status": {
+    "id": 300,
+    "code": "loanStatusType.active",
+    "value": "Active",
+    "pendingApproval": false,
+    "waitingForDisbursal": false,
+    "active": true,
+    "closedObligationsMet": false,
+    "closedWrittenOff": false,
+    "closedRescheduled": false,
+    "closed": false,
+    "overpaid": false
+  },
+  "clientId": 1,
+  "clientAccountNo": "000000001",
+  "clientName": "Smith W R",
+  "clientOfficeId": 1,
+  "loanProductId": 3,
+  "loanProductName": "For Preclose- Calculate till rest frequency date",
+  "isLoanProductLinkedToFloatingRate": false,
+  "loanType": {
+    "id": 1,
+    "code": "accountType.individual",
+    "value": "Individual"
+  },
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 2,
+    "inMultiplesOf": 0,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "principal": 10000.000000,
+  "approvedPrincipal": 10000.000000,
+  "proposedPrincipal": 10000.000000,
+  "termFrequency": 12,
+  "termPeriodFrequencyType": {
+    "id": 2,
+    "code": "termFrequency.periodFrequencyType.months",
+    "value": "Months"
+  },
+  "numberOfRepayments": 12,
+  "repaymentEvery": 1,
+  "repaymentFrequencyType": {
+    "id": 2,
+    "code": "repaymentFrequency.periodFrequencyType.months",
+    "value": "Months"
+  },
+  "interestRatePerPeriod": 1.000000,
+  "interestRateFrequencyType": {
+    "id": 2,
+    "code": "interestRateFrequency.periodFrequencyType.months",
+    "value": "Per month"
+  },
+  "annualInterestRate": 12.000000,
+  "isFloatingInterestRate": false,
+  "amortizationType": {
+    "id": 1,
+    "code": "amortizationType.equal.installments",
+    "value": "Equal installments"
+  },
+  "interestType": {
+    "id": 0,
+    "code": "interestType.declining.balance",
+    "value": "Declining Balance"
+  },
+  "interestCalculationPeriodType": {
+    "id": 1,
+    "code": "interestCalculationPeriodType.same.as.repayment.period",
+    "value": "Same as repayment period"
+  },
+  "allowPartialPeriodInterestCalcualtion": true,
+  "transactionProcessingStrategyId": 1,
+  "transactionProcessingStrategyName": "Penalties, Fees, Interest, Principal order",
+  "syncDisbursementWithMeeting": false,
+  "timeline": {
+    "submittedOnDate": [
+      2016,
+      10,
+      3
+    ],
+    "submittedByUsername": "mifos",
+    "submittedByFirstname": "App",
+    "submittedByLastname": "Administrator",
+    "approvedOnDate": [
+      2016,
+      10,
+      3
+    ],
+    "approvedByUsername": "mifos",
+    "approvedByFirstname": "App",
+    "approvedByLastname": "Administrator",
+    "expectedDisbursementDate": [
+      2016,
+      10,
+      3
+    ],
+    "actualDisbursementDate": [
+      2016,
+      10,
+      3
+    ],
+    "disbursedByUsername": "mifos",
+    "disbursedByFirstname": "App",
+    "disbursedByLastname": "Administrator",
+    "expectedMaturityDate": [
+      2017,
+      10,
+      3
+    ]
+  },
+  "summary": {
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "inMultiplesOf": 0,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "principalDisbursed": 10000.000000,
+    "principalPaid": 3950.330000,
+    "principalWrittenOff": 0.000000,
+    "principalOutstanding": 6049.670000,
+    "principalOverdue": 3331.810000,
+    "interestCharged": 809.910000,
+    "interestPaid": 528.120000,
+    "interestWaived": 0.000000,
+    "interestWrittenOff": 0.000000,
+    "interestOutstanding": 281.790000,
+    "interestOverdue": 186.150000,
+    "feeChargesCharged": 0.000000,
+    "feeChargesDueAtDisbursementCharged": 0.000000,
+    "feeChargesPaid": 0.000000,
+    "feeChargesWaived": 0.000000,
+    "feeChargesWrittenOff": 0.000000,
+    "feeChargesOutstanding": 0.000000,
+    "feeChargesOverdue": 0.000000,
+    "penaltyChargesCharged": 0.000000,
+    "penaltyChargesPaid": 0.000000,
+    "penaltyChargesWaived": 0.000000,
+    "penaltyChargesWrittenOff": 0.000000,
+    "penaltyChargesOutstanding": 0.000000,
+    "penaltyChargesOverdue": 0.000000,
+    "totalExpectedRepayment": 10809.910000,
+    "totalRepayment": 4478.450000,
+    "totalExpectedCostOfLoan": 809.910000,
+    "totalCostOfLoan": 528.120000,
+    "totalWaived": 0.000000,
+    "totalWrittenOff": 0.000000,
+    "totalOutstanding": 6331.460000,
+    "totalOverdue": 3517.960000,
+    "overdueSinceDate": [
+      2017,
+      4,
+      3
+    ]
+  },
+  "transactions": [
+    {
+      "id": 71,
+      "officeId": 1,
+      "officeName": "Head Office",
+      "type": {
+        "id": 1,
+        "code": "loanTransactionType.disbursement",
+        "value": "Disbursement",
+        "disbursement": true,
+        "repaymentAtDisbursement": false,
+        "repayment": false,
+        "contra": false,
+        "waiveInterest": false,
+        "waiveCharges": false,
+        "accrual": false,
+        "writeOff": false,
+        "recoveryRepayment": false,
+        "initiateTransfer": false,
+        "approveTransfer": false,
+        "withdrawTransfer": false,
+        "rejectTransfer": false,
+        "chargePayment": false,
+        "refund": false,
+        "refundForActiveLoans": false
+      },
+      "date": [
+        2016,
+        10,
+        3
+      ],
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 10000.000000,
+      "principalPortion": 0,
+      "interestPortion": 0,
+      "feeChargesPortion": 0,
+      "penaltyChargesPortion": 0,
+      "overpaymentPortion": 0,
+      "unrecognizedIncomePortion": 0,
+      "outstandingLoanBalance": 10000.000000,
+      "submittedOnDate": [
+        2016,
+        10,
+        3
+      ],
+      "manuallyReversed": false
+    },
+    {
+      "id": 41216,
+      "officeId": 1,
+      "officeName": "Head Office",
+      "type": {
+        "id": 10,
+        "code": "loanTransactionType.accrual",
+        "value": "Accrual",
+        "disbursement": false,
+        "repaymentAtDisbursement": false,
+        "repayment": false,
+        "contra": false,
+        "waiveInterest": false,
+        "waiveCharges": false,
+        "accrual": true,
+        "writeOff": false,
+        "recoveryRepayment": false,
+        "initiateTransfer": false,
+        "approveTransfer": false,
+        "withdrawTransfer": false,
+        "rejectTransfer": false,
+        "chargePayment": false,
+        "refund": false,
+        "refundForActiveLoans": false
+      },
+      "date": [
+        2016,
+        10,
+        3
+      ],
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 809.910000,
+      "principalPortion": 0,
+      "interestPortion": 809.910000,
+      "feeChargesPortion": 0,
+      "penaltyChargesPortion": 0,
+      "overpaymentPortion": 0,
+      "unrecognizedIncomePortion": 0,
+      "outstandingLoanBalance": 0,
+      "submittedOnDate": [
+        2017,
+        6,
+        6
+      ],
+      "manuallyReversed": false
+    }
+  ],
+  "feeChargesAtDisbursementCharged": 0.000000,
+  "loanProductCounter": 1,
+  "multiDisburseLoan": false,
+  "canDefineInstallmentAmount": false,
+  "canDisburse": false,
+  "canUseForTopup": false,
+  "isTopup": false,
+  "closureLoanId": 0,
+  "inArrears": true,
+  "isNPA": false,
+  "overdueCharges": [],
+  "daysInMonthType": {
+    "id": 1,
+    "code": "DaysInMonthType.actual",
+    "value": "Actual"
+  },
+  "daysInYearType": {
+    "id": 1,
+    "code": "DaysInYearType.actual",
+    "value": "Actual"
+  },
+  "isInterestRecalculationEnabled": true,
+  "interestRecalculationData": {
+    "id": 14,
+    "loanId": 29,
+    "interestRecalculationCompoundingType": {
+      "id": 0,
+      "code": "interestRecalculationCompoundingMethod.none",
+      "value": "None"
+    },
+    "rescheduleStrategyType": {
+      "id": 3,
+      "code": "loanRescheduleStrategyMethod.reduce.emi.amount",
+      "value": "Reduce EMI amount"
+    },
+    "calendarData": {
+      "id": 18,
+      "calendarInstanceId": 20,
+      "entityId": 14,
+      "entityType": {
+        "id": 6,
+        "code": "calendarEntityType.loan.recalculation.rest.detail",
+        "value": "LOAN_RECALCULATION_REST_DETAIL"
+      },
+      "title": "loan_recalculation_detail_14",
+      "startDate": [
+        2016,
+        10,
+        3
+      ],
+      "endDate": [
+        2017,
+        10,
+        3
+      ],
+      "duration": 0,
+      "type": {
+        "id": 1,
+        "code": "calendarType.collection",
+        "value": "COLLECTION"
+      },
+      "repeating": true,
+      "recurrence": "FREQ\u003dMONTHLY",
+      "frequency": {
+        "id": 3,
+        "code": "calendarFrequencyType.monthly",
+        "value": "MONTHLY"
+      },
+      "interval": -1,
+      "repeatsOnNthDayOfMonth": {
+        "id": 0,
+        "code": "nthDayType.invalid",
+        "value": "INVALID"
+      },
+      "firstReminder": 0,
+      "secondReminder": 0,
+      "humanReadable": "Monthly on day 3",
+      "createdDate": [
+        2016,
+        10,
+        3
+      ],
+      "lastUpdatedDate": [
+        2016,
+        10,
+        3
+      ],
+      "createdByUserId": 1,
+      "createdByUsername": "mifos",
+      "lastUpdatedByUserId": 1,
+      "lastUpdatedByUsername": "mifos"
+    },
+    "recalculationRestFrequencyType": {
+      "id": 1,
+      "code": "interestRecalculationFrequencyType.same.as.repayment.period",
+      "value": "Same as repayment period"
+    },
+    "recalculationRestFrequencyInterval": 0,
+    "recalculationCompoundingFrequencyType": {
+      "id": 0,
+      "code": "interestRecalculationFrequencyType.invalid",
+      "value": "Invalid"
+    },
+    "isCompoundingToBePostedAsTransaction": false,
+    "allowCompoundingOnEod": false
+  },
+  "createStandingInstructionAtDisbursement": false,
+  "paidInAdvance": {
+    "paidInAdvance": 0
+  },
+  "isVariableInstallmentsAllowed": false,
+  "minimumGap": 0,
+  "maximumGap": 0
+}

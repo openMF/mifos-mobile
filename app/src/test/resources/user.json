@@ -1,0 +1,29 @@
+{
+  "username": "selfservice",
+  "userId": 269,
+  "base64EncodedAuthenticationKey": "c2VsZnNlcnZpY2U6cGFzc3dvcmQ=",
+  "authenticated": true,
+  "officeId": 1,
+  "officeName": "Head Office",
+  "staffId": 1,
+  "staffDisplayName": "Mi-Cbs, Mi Cbs",
+  "roles": [
+    {
+      "id": 116,
+      "name": "walouu",
+      "description": "wa",
+      "disabled": false
+    },
+    {
+      "id": 93,
+      "name": "manager5",
+      "description": "an integral part in an organization's growth and evolution.",
+      "disabled": false
+    }
+  ],
+  "permissions": [
+    "ALL_FUNCTIONS",
+    "UPDATERUNNINGBALANCE_JOURNALENTRY"
+    ],
+  "shouldRenewPassword": false
+}
