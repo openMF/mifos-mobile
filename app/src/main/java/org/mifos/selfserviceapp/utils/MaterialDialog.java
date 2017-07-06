@@ -3,7 +3,9 @@ package org.mifos.selfserviceapp.utils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
 import org.mifos.selfserviceapp.R;
 
@@ -16,17 +18,20 @@ public final class MaterialDialog  {
     public static class Builder {
 
         private AlertDialog.Builder mMaterialDialogBuilder;
+        private Context context;
 
         //This is the Default Builder Initialization with Material Style
         public Builder init(Context context) {
             mMaterialDialogBuilder =
                     new AlertDialog.Builder(context, R.style.MaterialAlertDialogStyle);
+            this.context = context;
             return this;
         }
 
         //This method set the custom Material Style
         public Builder init(Context context, int theme) {
             mMaterialDialogBuilder = new AlertDialog.Builder(context, theme);
+            this.context = context;
             return this;
         }
 
@@ -151,6 +156,11 @@ public final class MaterialDialog  {
             return this;
         }
 
+        public Builder addView(View view) {
+            mMaterialDialogBuilder.setView(view);
+            return this;
+        }
+
         //This Method Create the Final Material Dialog
         public Builder createMaterialDialog() {
             mMaterialDialogBuilder.create();
@@ -159,7 +169,11 @@ public final class MaterialDialog  {
 
         //This Method Show the Dialog
         public Builder show() {
-            mMaterialDialogBuilder.show();
+            AlertDialog dialog = mMaterialDialogBuilder.show();
+            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context,
+                    R.color.accent));
+            dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context,
+                    R.color.gray_dark));
             return this;
         }
     }
