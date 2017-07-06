@@ -37,6 +37,11 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setLoanAccountsList(List<LoanAccount> loanAccountsList) {
         this.loanAccountsList = loanAccountsList;
+        notifyDataSetChanged();
+    }
+
+    public List<LoanAccount> getLoanAccountsList() {
+        return loanAccountsList;
     }
 
     public LoanAccount getItem(int position) {

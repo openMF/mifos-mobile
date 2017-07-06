@@ -41,6 +41,11 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
 
     public void setSavingAccountsList(List<SavingAccount> savingAccountsList) {
         this.savingAccountsList = savingAccountsList;
+        notifyDataSetChanged();
+    }
+
+    public List<SavingAccount> getSavingAccountsList() {
+        return savingAccountsList;
     }
 
     public SavingAccount getItem(int position) {

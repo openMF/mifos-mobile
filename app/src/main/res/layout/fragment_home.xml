@@ -2,7 +2,8 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/amount"
+                            tools:text="@string/amount"
                             android:textSize="@dimen/text_headline"
                             android:gravity="center"
                             android:textStyle="bold"
@@ -79,7 +80,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/amount"
+                            tools:text="@string/amount"
                             android:textStyle="bold"
                             android:gravity="center"
                             android:textSize="@dimen/text_headline"
@@ -165,7 +166,7 @@
                     <ImageView
                         android:layout_width="56dp"
                         android:layout_height="56dp"
-                        app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"/>
+                        app:srcCompat="@drawable/ic_charges"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -194,7 +195,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
+                    app:srcCompat="@drawable/ic_loan"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

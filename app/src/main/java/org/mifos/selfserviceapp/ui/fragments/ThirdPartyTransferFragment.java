@@ -1,8 +1,8 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +20,13 @@ import org.mifos.selfserviceapp.models.templates.account.AccountOption;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.presenters.ThirdPartyTransferPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.TransferType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.ThirdPartyTransferView;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.MFDatePicker;
-import org.mifos.selfserviceapp.utils.MaterialDialog;
+import org.mifos.selfserviceapp.utils.ProcessView;
 import org.mifos.selfserviceapp.utils.Toaster;
-import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +53,44 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @BindView(R.id.et_amount)
     EditText etAmount;
 
-    @BindView(R.id.tv_transfer_date)
-    TextView tvTransferDate;
-
     @BindView(R.id.et_remark)
     EditText etRemark;
 
     @BindView(R.id.ll_make_transfer)
     LinearLayout layoutMakeTransfer;
+
+    @BindView(R.id.process_one)
+    ProcessView pvOne;
+
+    @BindView(R.id.process_two)
+    ProcessView pvTwo;
+
+    @BindView(R.id.process_three)
+    ProcessView pvThree;
+
+    @BindView(R.id.process_four)
+    ProcessView pvFour;
+
+    @BindView(R.id.btn_pay_to)
+    AppCompatButton btnPayTo;
+
+    @BindView(R.id.btn_pay_from)
+    AppCompatButton btnPayFrom;
+
+    @BindView(R.id.btn_amount)
+    AppCompatButton btnAmount;
+
+    @BindView(R.id.ll_review)
+    LinearLayout llReview;
+
+    @BindView(R.id.tv_select_beneficary)
+    TextView tvSelectBeneficary;
+
+    @BindView(R.id.tv_select_amount)
+    TextView tvEnterAmount;
+
+    @BindView(R.id.tv_enter_remark)
+    TextView tvEnterRemark;
 
     @Inject
     ThirdPartyTransferPresenter presenter;
@@ -104,19 +134,20 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     public void showUserInterface() {
         payFromAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
                 listPayFrom);
-        payFromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        payFromAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spPayFrom.setAdapter(payFromAdapter);
         spPayFrom.setOnItemSelectedListener(this);
 
         beneficiaryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
                 listBeneficiary);
-        beneficiaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        beneficiaryAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spBeneficiary.setAdapter(beneficiaryAdapter);
         spBeneficiary.setOnItemSelectedListener(this);
 
-        tvTransferDate.setText(MFDatePicker.getDatePickedAsString());
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                tvTransferDate.getText().toString());
+                MFDatePicker.getDatePickedAsString());
+
+        pvOne.setCurrentActive();
     }
 
     @OnClick(R.id.btn_review_transfer)
@@ -142,38 +173,6 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             return;
         }
 
-        final String[][] data = {
-                {getString(R.string.transfer_to), ""},
-                {getString(R.string.account_number), spBeneficiary.getSelectedItem().toString()},
-                {getString(R.string.transfer_from), ""},
-                {getString(R.string.account_number), spPayFrom.getSelectedItem().toString()},
-                {getString(R.string.transfer_date), transferDate},
-                {getString(R.string.amount), etAmount.getText().toString()},
-                {getString(R.string.remark), etRemark.getText().toString()}
-        };
-        new MaterialDialog.Builder().init(getActivity())
-                .setTitle(R.string.review_transfer)
-                .setMessage(Utils.generateFormString(data))
-                .setPositiveButton(R.string.transfer,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                makeTransfer();
-                            }
-                        })
-                .setNegativeButton(R.string.dialog_action_back,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                .createMaterialDialog()
-                .show();
-    }
-
-    @Override
-    public void makeTransfer() {
         TransferPayload transferPayload = new TransferPayload();
         transferPayload.setFromAccountId(fromAccountOption.getAccountId());
         transferPayload.setFromClientId(fromAccountOption.getClientId());
@@ -187,7 +186,14 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
         transferPayload.setTransferDescription(etRemark.getText().toString());
 
-        presenter.makeTransfer(transferPayload);
+        ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
+                newInstance(transferPayload, TransferType.TPT), true, R.id.container);
+
+    }
+
+    @Override
+    public void showToaster(String msg) {
+        Toaster.show(rootView, msg);
     }
 
     @Override
@@ -205,10 +211,57 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         beneficiaryAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showTransferredSuccessfully() {
-        Toaster.show(rootView, getString(R.string.transferred_Successfully));
-        getActivity().getSupportFragmentManager().popBackStack();
+
+    @OnClick(R.id.btn_pay_from)
+    public void payFromSelected() {
+        pvOne.setCurrentCompeleted();
+        pvTwo.setCurrentActive();
+
+        btnPayFrom.setVisibility(View.GONE);
+        tvSelectBeneficary.setVisibility(View.GONE);
+        btnPayTo.setVisibility(View.VISIBLE);
+        spBeneficiary.setVisibility(View.VISIBLE);
+        spPayFrom.setEnabled(false);
+    }
+
+    @OnClick(R.id.btn_pay_to)
+    public void payToSelected() {
+        if (spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
+                toString())) {
+            showToaster(getString(R.string.error_same_account_transfer));
+            return;
+        }
+        pvTwo.setCurrentCompeleted();
+        pvThree.setCurrentActive();
+
+        btnPayTo.setVisibility(View.GONE);
+        tvEnterAmount.setVisibility(View.GONE);
+        etAmount.setVisibility(View.VISIBLE);
+        btnAmount.setVisibility(View.VISIBLE);
+        spBeneficiary.setEnabled(false);
+    }
+
+    @OnClick(R.id.btn_amount)
+    public void amountSet() {
+
+        if (etAmount.getText().toString().equals("")) {
+            showToaster(getString(R.string.enter_amount));
+            return;
+        }
+
+        if (etAmount.getText().toString().equals(".")) {
+            showToaster(getString(R.string.invalid_amount));
+            return;
+        }
+
+        pvThree.setCurrentCompeleted();
+        pvFour.setCurrentActive();
+
+        btnAmount.setVisibility(View.GONE);
+        tvEnterRemark.setVisibility(View.GONE);
+        etRemark.setVisibility(View.VISIBLE);
+        llReview.setVisibility(View.VISIBLE);
+        etAmount.setEnabled(false);
     }
 
     @Override

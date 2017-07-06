@@ -93,6 +93,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
             if (beneficiaryState == BeneficiaryState.UPDATE) {
                 beneficiary = getArguments().getParcelable(Constants.BENEFICIARY);
                 setToolbarTitle(getString(R.string.update_beneficiary));
+            } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
+                beneficiary = getArguments().getParcelable(Constants.BENEFICIARY);
+                setToolbarTitle(getString(R.string.add_beneficiary));
             } else {
                 setToolbarTitle(getString(R.string.add_beneficiary));
             }
@@ -109,7 +112,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         showUserInterface();
 
         presenter.attachView(this);
-        presenter.showBeneficiaryTemplate();
+        presenter.loadBeneficiaryTemplate();
 
         return rootView;
     }
@@ -117,7 +120,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @Override
     public void showUserInterface() {
         accountTypeAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_expandable_list_item_1, listAccountType);
+                android.R.layout.simple_spinner_item, listAccountType);
         accountTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spAccountType.setOnItemSelectedListener(this);
         spAccountType.setAdapter(accountTypeAdapter);
@@ -142,6 +145,10 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
 
             etBeneficiaryName.setText(beneficiary.getName());
             etTransferLimit.setText(String.valueOf(beneficiary.getTransferLimit()));
+        } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
+            spAccountType.setSelection(beneficiary.getAccountType().getId());
+            etAccountNumber.setText(beneficiary.getAccountNumber());
+            etOfficeName.setText(beneficiary.getOfficeName());
         }
     }
 
@@ -162,7 +169,8 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         } else if (etBeneficiaryName.getText().toString().equals("")) {
             Toaster.show(rootView, getString(R.string.enter_beneficiary_name));
             return;
-        } else if (beneficiaryState == BeneficiaryState.CREATE ) {
+        } else if (beneficiaryState == BeneficiaryState.CREATE_MANUAL ||
+                beneficiaryState == BeneficiaryState.CREATE_QR ) {
             submitNewBeneficiaryApplication();
         } else if (beneficiaryState == BeneficiaryState.UPDATE ) {
             submitUpdateBeneficiaryApplication();
@@ -190,6 +198,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @Override
     public void showBeneficiaryCreatedSuccessfully() {
         Toaster.show(rootView, getString(R.string.beneficiary_created_successfully));
+        getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager().popBackStack();
     }
 

@@ -10,8 +10,8 @@
     android:paddingBottom="@dimen/default_padding"
     android:paddingTop="@dimen/default_padding">
     <org.mifos.selfserviceapp.utils.CircularImageView
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
         android:id="@+id/iv_user_image"
         tools:src="@drawable/ic_person_black_24dp"
         app:border_width="1dp"
