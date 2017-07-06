@@ -336,4 +336,15 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 .show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((BaseActivity) getActivity()).hideToolbarElevation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((BaseActivity) getActivity()).setToolbarElevation();
+    }
 }

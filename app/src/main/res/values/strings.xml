@@ -87,6 +87,13 @@
     <string name="filter_loan">Filter Loan Accounts</string>
     <string name="filter_share">Filter Share Accounts</string>
     <string name="search">Search</string>
+    <string name="select_pay_to">Select Account to Pay To </string>
+    <string name="select_pay_from">Select Account to Pay From </string>
+    <string name="enter_remarks">Enter Remarks for transfer</string>
+    <string name="continue_str">Continue</string>
+    <string name="close">Close</string>
+    <string name="transfer_to_savings">Transfer To Savings</string>
+
     <string name="active">Active</string>
     <string name="closed">Closed</string>
     <string name="need_approval">Need Approval</string>

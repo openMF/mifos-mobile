@@ -34,7 +34,16 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            setToolbarElevation();
         }
+    }
+
+    public void hideToolbarElevation() {
+        getSupportActionBar().setElevation(0);
+    }
+
+    public void setToolbarElevation() {
+        getSupportActionBar().setElevation(8f);
     }
 
     @Override
