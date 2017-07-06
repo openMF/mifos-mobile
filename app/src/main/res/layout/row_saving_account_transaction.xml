@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="@dimen/default_margin"
-    android:layout_marginRight="@dimen/default_margin"
-    android:layout_marginTop="@dimen/default_margin"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="@dimen/cardview_default_elevation"
+    android:layout_marginStart="@dimen/divider_margin"
+    android:layout_marginLeft="@dimen/divider_margin"
+    android:layout_marginEnd="@dimen/divider_margin"
+    android:layout_marginRight="@dimen/divider_margin"
     app:cardUseCompatPadding="true">
 
     <LinearLayout

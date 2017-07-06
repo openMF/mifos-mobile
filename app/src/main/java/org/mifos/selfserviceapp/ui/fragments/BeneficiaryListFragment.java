@@ -16,7 +16,6 @@ import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
 import org.mifos.selfserviceapp.presenters.BeneficiaryListPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.BeneficiaryListAdapter;
-import org.mifos.selfserviceapp.ui.enums.BeneficiaryState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.BeneficiariesView;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
@@ -91,8 +90,8 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         fabAddBeneficiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
-                                newInstance(BeneficiaryState.CREATE, null), true, R.id.container);
+                ((BaseActivity) getActivity()).replaceFragment(BeneficiaryAddOptionsFragment.
+                                newInstance(), true, R.id.container);
             }
         });
     }

@@ -5,6 +5,7 @@ package org.mifos.selfserviceapp.ui.enums;
  */
 
 public enum BeneficiaryState {
-    CREATE,
+    CREATE_MANUAL,
+    CREATE_QR,
     UPDATE
 }

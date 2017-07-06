@@ -57,4 +57,9 @@ public class Constants {
 
     public static final String PAYLOAD = "payload";
 
+    public static final int REQUEST_PERMISSION_SETTING = 254;
+
+    public static final int PERMISSIONS_REQUEST_CAMERA = 1;
+
+    public static final String PERMISSIONS_CAMERA_STATUS = "camera_status";
 }

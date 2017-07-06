@@ -72,4 +72,33 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
         );
     }
 
+
+    public void makeTPTTransfer(TransferPayload transferPayload) {
+        checkViewAttached();
+        getMvpView().showProgress();
+        subscriptions.add(dataManager.makeThirdPartyTransfer(transferPayload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showError(MFErrorParser.errorMessage(e));
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        getMvpView().hideProgress();
+                        getMvpView().showTransferredSuccessfully();
+                    }
+                })
+        );
+    }
+
+
 }

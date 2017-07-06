@@ -14,6 +14,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.presenters.TransferProcessPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.TransferType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.TransferProcessView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -57,11 +58,13 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
 
     private View rootView;
     private TransferPayload payload;
+    private TransferType transferType;
 
-    public static TransferProcessFragment newInstance(TransferPayload payload) {
+    public static TransferProcessFragment newInstance(TransferPayload payload, TransferType type) {
         TransferProcessFragment fragment = new TransferProcessFragment();
         Bundle args = new Bundle();
         args.putParcelable(Constants.PAYLOAD, payload);
+        args.putSerializable(Constants.TRANSFER_TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,6 +74,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
             payload = getArguments().getParcelable(Constants.PAYLOAD);
+            transferType = (TransferType) getArguments().getSerializable(Constants.TRANSFER_TYPE);
         }
     }
 
@@ -95,7 +99,11 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
 
     @OnClick(R.id.btn_start_transfer)
     public void startTransfer() {
-        presenter.makeSavingsTransfer(payload);
+        if (transferType == TransferType.SELF) {
+            presenter.makeSavingsTransfer(payload);
+        } else if (transferType == TransferType.TPT) {
+            presenter.makeTPTTransfer(payload);
+        }
     }
 
     @OnClick(R.id.btn_cancel_transfer)

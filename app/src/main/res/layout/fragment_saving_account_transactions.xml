@@ -11,8 +11,7 @@
         android:id="@+id/ll_account"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/default_margin"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -20,16 +19,15 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardElevation="@dimen/cardview_default_elevation"
-            app:cardUseCompatPadding="true">
+            app:cardElevation="4dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/default_margin"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp">
+                    android:layout_height="match_parent">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -46,12 +44,12 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:text="@string/end_date"
                         android:id="@+id/tv_end_date"/>
-                    <Button
+                    <android.support.v7.widget.AppCompatButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_custom_filter"
                         android:text="@string/filter"
-                        android:minHeight="0dp"
+                        app:backgroundTint="@color/primary"
                         android:textColor="@color/white"/>
                 </LinearLayout>
 
@@ -89,12 +87,12 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <Button
+                    <android.support.v7.widget.AppCompatButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_all"
                         android:text="@string/all"
-                        android:minHeight="0dp"
+                        app:backgroundTint="@color/primary"
                         android:textColor="@color/white"/>
                 </LinearLayout>
             </LinearLayout>

@@ -1,143 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin">
-
-            <TableRow>
-                <TextView
-                    android:id="@+id/acc_balance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:text="@string/account_balance"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_large"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tv_acc_balance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_marginStart="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_gravity="start"
-                    android:textSize="@dimen/text_medium"
-                    />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_marginTop="@dimen/default_margin">
-
-                <TextView
-                    android:id="@+id/last_trans"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:text="@string/last_transaction"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_large"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tv_last_transaction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_marginStart="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_gravity="start"
-                    android:textSize="@dimen/text_medium"/>
-
-            </TableRow>
-
-            <LinearLayout
-                style="@style/LinearLayout.Width"
-                android:layout_marginTop="@dimen/default_margin">
-
-                <TextView
-                    android:id="@+id/made_on"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:text="@string/made_on"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tv_made_on"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_gravity="start"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small" />
-
-            </LinearLayout>
-
-            <TableRow
-                android:layout_marginTop="@dimen/default_margin">
-                <android.support.v4.widget.Space
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/tv_deposit"
-                    style="@style/Button.Base"
-                    android:background="@color/primary"
-                    android:text="@string/deposit"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@android:color/white"/>
-                <Button
-                    android:id="@+id/tv_make_a_transfer"
-                    style="@style/Button.Base"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="@dimen/default_margin"
-                    android:layout_marginLeft="12dp"
-                    android:background="@color/primary"
-                    android:padding="10dp"
-                    android:text="@string/make_transfer"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@android:color/white"/>
-            </TableRow>
-        </TableLayout>
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:id="@+id/iv_qr_code"
+            android:layout_gravity="center"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/table_row_padding_top"
             android:background="@color/white"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardElevation="@dimen/cardview_default_elevation"
-            app:cardUseCompatPadding="true">
+            app:cardElevation="4dp">
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/table_row_padding_top">
+                android:padding="@dimen/default_padding">
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/acc_balance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:layout_weight="1"
+                        android:text="@string/account_balance"
+                        android:textSize="@dimen/text_large"/>
+
+                    <TextView
+                        android:id="@+id/tv_acc_balance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_marginLeft="@dimen/default_margin"
+                        android:textSize="@dimen/text_medium"
+                        />
+
+                </TableRow>
+
                 <TableRow>
 
+                    <TextView
+                        android:id="@+id/last_trans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:layout_weight="1"
+                        android:text="@string/last_transaction"
+                        android:textSize="@dimen/text_large"/>
+
+                    <TextView
+                        android:id="@+id/tv_last_transaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_marginLeft="@dimen/default_margin"
+                        android:textSize="@dimen/text_medium"/>
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/made_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:layout_weight="1"
+                        android:text="@string/made_on"
+                        android:textSize="@dimen/text_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_made_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_marginLeft="@dimen/default_margin"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="@dimen/default_margin">
+                    <android.support.v4.widget.Space
+                        android:layout_weight="1"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/tv_deposit"
+                        style="@style/Button.Base"
+                        app:backgroundTint="@color/primary"
+                        android:text="@string/deposit"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/tv_make_a_transfer"
+                        style="@style/Button.Base"
+                        android:layout_gravity="end"
+                        app:backgroundTint="@color/primary"
+                        android:text="@string/make_transfer"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white"/>
+                </TableRow>
+            </TableLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@color/white"
+            app:cardElevation="4dp">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding">
+
+                <TableRow>
                     <TextView
                         android:id="@+id/account_status"
                         android:layout_width="match_parent"
@@ -146,9 +142,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/account_status"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                    <LinearLayout
                        android:layout_height="match_parent"
@@ -184,9 +178,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/account_number"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                     <TextView
                         android:id="@+id/tv_saving_account_number"
@@ -207,9 +199,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/nominal_interest_rate"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                     <TextView
                         android:id="@+id/tv_nominal_interest_rate"
@@ -230,16 +220,14 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/account_balance"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                     <TextView
                         android:id="@+id/tv_account_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textSize="@dimen/text_medium" />
 
                 </TableRow>
                 <TableRow
@@ -253,9 +241,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/total_deposits"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                     <TextView
                         android:id="@+id/tv_total_deposits"
@@ -276,9 +262,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/total_withdrawal"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                     <TextView
                         android:id="@+id/tv_total_withdrawals"
@@ -299,9 +283,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/min_required_balance"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/text_medium"/>
 
                     <TextView
                         android:id="@+id/tv_min_req_bal"
@@ -318,7 +300,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/default_padding"
             android:orientation="horizontal">
 
             <TextView
@@ -331,8 +313,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginLeft="@dimen/default_margin"
                 android:text="@string/help_line_number"
                 android:textColor="@color/blue"/>
         </LinearLayout>
@@ -342,5 +322,5 @@
         android:id="@+id/ll_error"
         layout="@layout/layout_error"
         android:visibility="gone"/>
-
-</RelativeLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
