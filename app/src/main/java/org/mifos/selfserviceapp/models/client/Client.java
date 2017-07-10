@@ -28,7 +28,7 @@ public class Client implements Parcelable {
     @SerializedName("activationDate")
     private List<Integer> activationDate = new ArrayList<>();
 
-    @SerializedName("dobDate")
+    @SerializedName("dateOfBirth")
     private List<Integer> dobDate = new ArrayList<>();
 
     @SerializedName("firstname")
@@ -70,6 +70,68 @@ public class Client implements Parcelable {
     @SerializedName("externalId")
     private String externalId;
 
+    @SerializedName("mobileNo")
+    String mobileNo;
+
+    @SerializedName("clientClassification")
+    private ClientClassification clientClassification;
+
+    @SerializedName("clientType")
+    private ClientType clientType;
+
+    @SerializedName("gender")
+    private Gender gender;
+
+    @SerializedName("groups")
+    private List<Group> groups = new ArrayList<>();
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
+    public ClientClassification getClientClassification() {
+        return clientClassification;
+    }
+
+    public void setClientClassification(ClientClassification clientClassification) {
+        this.clientClassification = clientClassification;
+    }
+
+    public ClientType getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(ClientType clientType) {
+        this.clientType = clientType;
+    }
+
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
+    }
 
     public List<Integer> getDobDate() {
         return dobDate;

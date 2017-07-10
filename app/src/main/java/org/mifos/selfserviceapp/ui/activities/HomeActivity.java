@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -150,6 +151,12 @@ public class HomeActivity extends BaseActivity implements
     private void setupHeaderView(View headerView) {
         tvUsername = (TextView) headerView.findViewById(R.id.tv_user_name);
         ivUserProfilePicture = (CircularImageView) headerView.findViewById(R.id.iv_user_image);
+        ivUserProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
+            }
+        });
 
         detailsPresenter.attachView(this);
         detailsPresenter.getUserDetails();
