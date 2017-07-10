@@ -42,6 +42,8 @@
 
         <activity android:name=".ui.activities.LoanAccountContainerActivity"/>
 
+        <activity android:name=".ui.activities.UserProfileActivity"/>
+
         <receiver android:name=".ui.widgets.ChargeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

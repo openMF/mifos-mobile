@@ -23,6 +23,7 @@ import org.mifos.selfserviceapp.ui.fragments.SavingAccountsTransactionFragment;
 import org.mifos.selfserviceapp.ui.fragments.SavingsMakeTransferFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.fragments.TransferProcessFragment;
+import org.mifos.selfserviceapp.ui.fragments.UserProfileFragment;
 
 import dagger.Component;
 
@@ -75,4 +76,6 @@ public interface ActivityComponent {
     void inject(ThirdPartyTransferFragment thirdPartyTransferFragment);
 
     void inject(TransferProcessFragment transferProcessFragment);
+
+    void inject(UserProfileFragment userProfileFragment);
 }

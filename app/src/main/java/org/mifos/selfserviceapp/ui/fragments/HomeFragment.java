@@ -1,5 +1,6 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.activities.UserProfileActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.LoanState;
@@ -127,6 +129,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void run() {
                 ((ImageView) toolbarView.findViewById(R.id.iv_user_image)).
                         setImageBitmap(bitmap);
+                toolbarView.findViewById(R.id.iv_user_image).
+                        setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                            }
+                        });
             }
         });
     }
