@@ -22,6 +22,7 @@ public class PreferencesHelper {
     private static final String TENANT = "preferences_tenant";
     private static final String CLIENT_ID = "preferences_client";
     private static final String OFFICE_NAME = "preferences_office_name";
+    private static final String PASSCODE = "preferences_passcode";
     private SharedPreferences sharedPreferences;
 
     @Inject
@@ -99,12 +100,20 @@ public class PreferencesHelper {
         }
     }
 
+    public void setPasscode(String passcode) {
+        putString(PASSCODE, passcode);
+    }
+
+    public String getPasscode() {
+        return getString(PASSCODE, "");
+    }
+
     public void setClientId(long clientId) {
         putLong(CLIENT_ID, clientId);
     }
 
     public long getClientId() {
-        return getLong(CLIENT_ID, 1);
+        return getLong(CLIENT_ID, -1);
     }
 
     public void setOfficeName(String officeName) {

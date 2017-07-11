@@ -69,7 +69,7 @@ public class BeneficiaryApplicationPresenterTest {
     public void testShowBeneficiaryTemplate() {
         when(dataManager.getBeneficiaryTemplate()).thenReturn(Observable.just(beneficiaryTemplate));
 
-        presenter.showBeneficiaryTemplate();
+        presenter.loadBeneficiaryTemplate();
 
         verify(view).showProgress();
         verify(view).hideProgress();
@@ -83,7 +83,7 @@ public class BeneficiaryApplicationPresenterTest {
         when(dataManager.getBeneficiaryTemplate()).thenReturn(Observable.<BeneficiaryTemplate>error
                 (new RuntimeException()));
 
-        presenter.showBeneficiaryTemplate();
+        presenter.loadBeneficiaryTemplate();
 
         verify(view).showProgress();
         verify(view).hideProgress();

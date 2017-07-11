@@ -37,8 +37,7 @@ public interface LoginView extends MVPView {
     /**
      * Should be called when the client is fetched successfully from API.
      *
-     * @param clientId Client Id
      */
-    void showClient(long clientId);
+    void showPassCodeActivity();
 
 }

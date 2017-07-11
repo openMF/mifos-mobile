@@ -255,6 +255,14 @@
         enter manually or scan account QR code</string>
     <string name="add">Add</string>
     <string name="scan">Scan</string>
+    <string name="enter_passcode">Enter 4 digit Passcode</string>
+    <string name="error_passcode">Passcode should be of 4 digit</string>
+    <string name="incorrect_passcode">Incorrect Passcode</string>
+    <string name="incorrect_passcode_more_than_three">You have entered incorrect Passcode more than 3 times</string>
+    <string name="skip">Skip</string>
+    <string name="save">Save</string>
+    <string name="passcode_setup">Setup a passcode to login</string>
+    <string name="forgot_passcode">Forgot passcode, login manually</string>
 
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
@@ -301,5 +309,15 @@
 
     <string name="package_name" translatable="false">package</string>
     <string name="permission_denied_camera">Permission Denied to use Camera</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
 
 </resources>

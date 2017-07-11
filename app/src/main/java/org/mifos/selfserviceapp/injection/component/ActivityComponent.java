@@ -4,6 +4,7 @@ import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryAddOptionsFragment;
+import org.mifos.selfserviceapp.ui.activities.PassCodeActivity;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryApplicationFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
@@ -39,6 +40,8 @@ public interface ActivityComponent {
     void inject(LoginActivity loginActivity);
 
     void inject(HomeActivity homeActivity);
+
+    void inject(PassCodeActivity passCodeActivity);
 
     void inject(HomeFragment homeFragment);
 
