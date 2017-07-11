@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities.base;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,13 +17,17 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.injection.component.ActivityComponent;
 import org.mifos.selfserviceapp.injection.component.DaggerActivityComponent;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
+import org.mifos.selfserviceapp.ui.activities.PassCodeActivity;
 import org.mifos.selfserviceapp.ui.views.BaseActivityCallback;
+import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.ForegroundChecker;
 
 /**
  * @author ishan
  * @since 08/07/16
  */
-public class BaseActivity extends AppCompatActivity implements BaseActivityCallback {
+public class BaseActivity extends AppCompatActivity implements BaseActivityCallback,
+        ForegroundChecker.Listener {
 
     protected Toolbar toolbar;
     private ActivityComponent activityComponent;
@@ -146,6 +151,26 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
     @Override
     public void setToolbarTitle(String title) {
         setActionBarTitle(title);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ForegroundChecker.get().addListener(this);
+        ForegroundChecker.get().onActivityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ForegroundChecker.get().onActivityPaused();
+    }
+
+    @Override
+    public void onBecameForeground() {
+        Intent intent = new Intent(this, PassCodeActivity.class);
+        intent.putExtra(Constants.INTIAL_LOGIN, false);
+        startActivity(intent);
     }
 
     /**

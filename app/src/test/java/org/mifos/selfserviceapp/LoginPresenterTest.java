@@ -82,7 +82,7 @@ public class LoginPresenterTest {
 
         verify(view).showProgress();
         verify(view).hideProgress();
-        verify(view).showClient(clientId);
+        verify(view).showPassCodeActivity();
         verify(view, never()).showMessage(context.getString(R.string.error_fetching_client));
     }
 
@@ -96,7 +96,7 @@ public class LoginPresenterTest {
         verify(view).showProgress();
         verify(view).hideProgress();
         verify(view).showMessage(context.getString(R.string.error_client_not_found));
-        verify(view, never()).showClient(clientId);
+        verify(view, never()).showPassCodeActivity();
     }
 
     @Test
@@ -110,7 +110,7 @@ public class LoginPresenterTest {
         verify(view).showProgress();
         verify(view).hideProgress();
         verify(view).showMessage(context.getString(R.string.error_fetching_client));
-        verify(view, never()).showClient(clientId);
+        verify(view, never()).showPassCodeActivity();
     }
 
     @After

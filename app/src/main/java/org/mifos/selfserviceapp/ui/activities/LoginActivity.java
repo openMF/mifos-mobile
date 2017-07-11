@@ -9,11 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.presenters.LoginPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.views.LoginView;
-import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -44,6 +45,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
 
+    @Inject
+    PreferencesHelper preferencesHelper;
+
     private boolean loginStatus;
 
     @Override
@@ -54,6 +58,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         loginPresenter.attachView(this);
+
+        if (!preferencesHelper.getPasscode().isEmpty()) {
+            startPassCodeActivity();
+        }
     }
 
     @Override
@@ -79,11 +87,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void showClient(long clientId) {
-        Intent accountsActivityIntent = new Intent(this, HomeActivity.class);
-        accountsActivityIntent.putExtra(Constants.CLIENT_ID, clientId);
-        startActivity(accountsActivityIntent);
-        finish();
+    public void showPassCodeActivity() {
+        startPassCodeActivity();
     }
 
     @Override
@@ -108,5 +113,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
     protected void onDestroy() {
         super.onDestroy();
         loginPresenter.detachView();
+    }
+
+    private void startPassCodeActivity() {
+        Intent intent = new Intent(LoginActivity.this, PassCodeActivity.class);
+        intent.putExtra(Constants.INTIAL_LOGIN, true);
+        startActivity(intent);
+        finish();
     }
 }

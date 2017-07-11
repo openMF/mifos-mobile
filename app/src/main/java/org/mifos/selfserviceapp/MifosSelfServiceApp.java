@@ -11,6 +11,7 @@ import io.fabric.sdk.android.Fabric;
 import org.mifos.selfserviceapp.injection.component.ApplicationComponent;
 import org.mifos.selfserviceapp.injection.component.DaggerApplicationComponent;
 import org.mifos.selfserviceapp.injection.module.ApplicationModule;
+import org.mifos.selfserviceapp.utils.ForegroundChecker;
 
 /**
  * @author ishan
@@ -36,6 +37,7 @@ public class MifosSelfServiceApp extends Application {
         Fabric.with(this, new Crashlytics());
         instance = this;
         FlowManager.init(new FlowConfig.Builder(this).build());
+        ForegroundChecker.init();
     }
 
     public ApplicationComponent component() {
