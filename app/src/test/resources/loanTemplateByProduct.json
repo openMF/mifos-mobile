@@ -1,0 +1,372 @@
+{
+  "clientId": 1,
+  "clientAccountNo": "000000001",
+  "clientName": "Smith W R",
+  "clientOfficeId": 1,
+  "loanProductId": 1,
+  "loanProductName": "Income Generating Loan",
+  "isLoanProductLinkedToFloatingRate": false,
+  "fundId": 1,
+  "fundName": "Loan from Central Bank",
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 0,
+    "inMultiplesOf": 0,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "principal": 40000.000000,
+  "approvedPrincipal": 40000.000000,
+  "proposedPrincipal": 40000.000000,
+  "termFrequency": 12,
+  "termPeriodFrequencyType": {
+    "id": 2,
+    "code": "repaymentFrequency.periodFrequencyType.months",
+    "value": "Months"
+  },
+  "numberOfRepayments": 12,
+  "repaymentEvery": 1,
+  "repaymentFrequencyType": {
+    "id": 2,
+    "code": "repaymentFrequency.periodFrequencyType.months",
+    "value": "Months"
+  },
+  "interestRatePerPeriod": 10.000000,
+  "interestRateFrequencyType": {
+    "id": 2,
+    "code": "interestRateFrequency.periodFrequencyType.months",
+    "value": "Per month"
+  },
+  "annualInterestRate": 120.000000,
+  "isFloatingInterestRate": false,
+  "amortizationType": {
+    "id": 1,
+    "code": "amortizationType.equal.installments",
+    "value": "Equal installments"
+  },
+  "interestType": {
+    "id": 0,
+    "code": "interestType.declining.balance",
+    "value": "Declining Balance"
+  },
+  "interestCalculationPeriodType": {
+    "id": 1,
+    "code": "interestCalculationPeriodType.same.as.repayment.period",
+    "value": "Same as repayment period"
+  },
+  "allowPartialPeriodInterestCalcualtion": true,
+  "transactionProcessingStrategyId": 1,
+  "timeline": {
+    "expectedDisbursementDate": [
+      2017,
+      7,
+      12
+    ]
+  },
+  "charges": [
+    {
+      "chargeId": 139,
+      "name": "client test charge",
+      "chargeTimeType": {
+        "id": 1,
+        "code": "chargeTimeType.disbursement",
+        "value": "Disbursement"
+      },
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 1000.000000,
+      "amountPaid": 0,
+      "amountWaived": 0,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 1000.000000,
+      "amountOrPercentage": 1000.000000,
+      "penalty": false,
+      "chargePaymentMode": {
+        "id": 0,
+        "code": "chargepaymentmode.regular",
+        "value": "Regular"
+      },
+      "paid": false,
+      "waived": false,
+      "chargePayable": false
+    }
+  ],
+  "productOptions": [
+    {
+      "id": 1,
+      "name": "Income Generating Loan",
+      "includeInBorrowerCycle": false,
+      "useBorrowerCycle": false,
+      "isLinkedToFloatingInterestRates": false,
+      "isFloatingInterestRateCalculationAllowed": false,
+      "allowVariableInstallments": false,
+      "isInterestRecalculationEnabled": false,
+      "canDefineInstallmentAmount": false,
+      "principalVariationsForBorrowerCycle": [],
+      "interestRateVariationsForBorrowerCycle": [],
+      "numberOfRepaymentVariationsForBorrowerCycle": [],
+      "canUseForTopup": false,
+      "holdGuaranteeFunds": false,
+      "accountMovesOutOfNPAOnlyOnArrearsCompletion": false,
+      "syncExpectedWithDisbursementDate": false
+    },
+    {
+      "id": 2,
+      "name": "For Prepay - Calculate till preclosure date",
+      "includeInBorrowerCycle": false,
+      "useBorrowerCycle": false,
+      "isLinkedToFloatingInterestRates": false,
+      "isFloatingInterestRateCalculationAllowed": false,
+      "allowVariableInstallments": false,
+      "isInterestRecalculationEnabled": false,
+      "canDefineInstallmentAmount": false,
+      "principalVariationsForBorrowerCycle": [],
+      "interestRateVariationsForBorrowerCycle": [],
+      "numberOfRepaymentVariationsForBorrowerCycle": [],
+      "canUseForTopup": false,
+      "holdGuaranteeFunds": false,
+      "accountMovesOutOfNPAOnlyOnArrearsCompletion": false,
+      "syncExpectedWithDisbursementDate": false
+    }
+  ],
+  "loanOfficerOptions": [
+    {
+      "id": 42,
+      "firstname": "ERICK",
+      "lastname": "ANDERE",
+      "displayName": "ANDERE, ERICK",
+      "mobileNo": "0791088841",
+      "officeId": 1,
+      "officeName": "Head Office",
+      "isLoanOfficer": true,
+      "isActive": true,
+      "joiningDate": [
+        2015,
+        4,
+        1
+      ]
+    },
+    {
+      "id": 12,
+      "firstname": "Sagar",
+      "lastname": "Ch",
+      "displayName": "Ch, Sagar",
+      "officeId": 1,
+      "officeName": "Head Office",
+      "isLoanOfficer": true,
+      "isActive": true
+    }
+  ],
+  "chargeOptions": [
+    {
+      "id": 53,
+      "name": "1per",
+      "active": true,
+      "penalty": false,
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 1.000000,
+      "chargeTimeType": {
+        "id": 1,
+        "code": "chargeTimeType.disbursement",
+        "value": "Disbursement"
+      },
+      "chargeAppliesTo": {
+        "id": 1,
+        "code": "chargeAppliesTo.loan",
+        "value": "Loan"
+      },
+      "chargeCalculationType": {
+        "id": 2,
+        "code": "chargeCalculationType.percent.of.amount",
+        "value": "% Amount"
+      },
+      "chargePaymentMode": {
+        "id": 0,
+        "code": "chargepaymentmode.regular",
+        "value": "Regular"
+      }
+    }
+  ],
+  "multiDisburseLoan": false,
+  "canDefineInstallmentAmount": false,
+  "canDisburse": false,
+  "canUseForTopup": false,
+  "isTopup": false,
+  "product": {
+    "id": 1,
+    "name": "Income Generating Loan",
+    "shortName": "IGL",
+    "fundId": 1,
+    "fundName": "Loan from Central Bank",
+    "includeInBorrowerCycle": false,
+    "useBorrowerCycle": false,
+    "status": "loanProduct.active",
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 0,
+      "inMultiplesOf": 0,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "principal": 40000.000000,
+    "minPrincipal": 10000.000000,
+    "maxPrincipal": 4000000.000000,
+    "numberOfRepayments": 12,
+    "minNumberOfRepayments": 1,
+    "maxNumberOfRepayments": 24,
+    "repaymentEvery": 1,
+    "repaymentFrequencyType": {
+      "id": 2,
+      "code": "repaymentFrequency.periodFrequencyType.months",
+      "value": "Months"
+    },
+    "interestRatePerPeriod": 10.000000,
+    "minInterestRatePerPeriod": 8.000000,
+    "maxInterestRatePerPeriod": 20.000000,
+    "interestRateFrequencyType": {
+      "id": 2,
+      "code": "interestRateFrequency.periodFrequencyType.months",
+      "value": "Per month"
+    },
+    "annualInterestRate": 120.000000,
+    "isLinkedToFloatingInterestRates": false,
+    "isFloatingInterestRateCalculationAllowed": false,
+    "allowVariableInstallments": false,
+    "minimumGap": 0,
+    "maximumGap": 0,
+    "amortizationType": {
+      "id": 1,
+      "code": "amortizationType.equal.installments",
+      "value": "Equal installments"
+    },
+    "interestType": {
+      "id": 0,
+      "code": "interestType.declining.balance",
+      "value": "Declining Balance"
+    },
+    "interestCalculationPeriodType": {
+      "id": 1,
+      "code": "interestCalculationPeriodType.same.as.repayment.period",
+      "value": "Same as repayment period"
+    },
+    "allowPartialPeriodInterestCalcualtion": true,
+    "transactionProcessingStrategyId": 1,
+    "transactionProcessingStrategyName": "Penalties, Fees, Interest, Principal order",
+    "daysInMonthType": {
+      "id": 1,
+      "code": "DaysInMonthType.actual",
+      "value": "Actual"
+    },
+    "daysInYearType": {
+      "id": 1,
+      "code": "DaysInYearType.actual",
+      "value": "Actual"
+    },
+    "isInterestRecalculationEnabled": false,
+    "canDefineInstallmentAmount": false,
+    "charges": [
+      {
+        "id": 139,
+        "name": "client test charge",
+        "active": true,
+        "penalty": false,
+        "currency": {
+          "code": "USD",
+          "name": "US Dollar",
+          "decimalPlaces": 2,
+          "displaySymbol": "$",
+          "nameCode": "currency.USD",
+          "displayLabel": "US Dollar ($)"
+        },
+        "amount": 1000.000000,
+        "chargeTimeType": {
+          "id": 1,
+          "code": "chargeTimeType.disbursement",
+          "value": "Disbursement"
+        },
+        "chargeAppliesTo": {
+          "id": 1,
+          "code": "chargeAppliesTo.loan",
+          "value": "Loan"
+        },
+        "chargeCalculationType": {
+          "id": 1,
+          "code": "chargeCalculationType.flat",
+          "value": "Flat"
+        },
+        "chargePaymentMode": {
+          "id": 0,
+          "code": "chargepaymentmode.regular",
+          "value": "Regular"
+        },
+        "taxGroup": {
+          "id": 10,
+          "name": "client test 1111 group"
+        }
+      }
+    ],
+    "principalVariationsForBorrowerCycle": [],
+    "interestRateVariationsForBorrowerCycle": [],
+    "numberOfRepaymentVariationsForBorrowerCycle": [],
+    "accountingRule": {
+      "id": 2,
+      "code": "accountingRuleType.cash",
+      "value": "CASH BASED"
+    },
+    "canUseForTopup": false,
+    "multiDisburseLoan": false,
+    "maxTrancheCount": 0,
+    "principalThresholdForLastInstallment": 0.00,
+    "holdGuaranteeFunds": false,
+    "accountMovesOutOfNPAOnlyOnArrearsCompletion": false,
+    "allowAttributeOverrides": {
+      "amortizationType": false,
+      "interestType": false,
+      "transactionProcessingStrategyId": false,
+      "interestCalculationPeriodType": false,
+      "inArrearsTolerance": false,
+      "repaymentEvery": false,
+      "graceOnPrincipalAndInterestPayment": false,
+      "graceOnArrearsAgeing": false
+    },
+    "syncExpectedWithDisbursementDate": false
+  },
+  "overdueCharges": [],
+  "daysInMonthType": {
+    "id": 1,
+    "code": "DaysInMonthType.actual",
+    "value": "Actual"
+  },
+  "daysInYearType": {
+    "id": 1,
+    "code": "DaysInYearType.actual",
+    "value": "Actual"
+  },
+  "isInterestRecalculationEnabled": false,
+  "interestRecalculationData": {},
+  "isVariableInstallmentsAllowed": false,
+  "minimumGap": 0,
+  "maximumGap": 0
+}

@@ -1,0 +1,9 @@
+{
+  "locale": "en_GB",
+  "name": "beneficiary nick name",
+  "officeName": "HEAD OFFICE",
+  "accountNumber": "0000001",
+  "accountType": 1,
+  "transferLimit": 1000
+
+}

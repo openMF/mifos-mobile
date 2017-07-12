@@ -33,7 +33,7 @@ public interface BeneficiaryService {
     Observable<ResponseBody> createBeneficiary(@Body BeneficiaryPayload beneficiaryPayload);
 
     @PUT(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
-    Observable<ResponseBody> deleteBeneficiary(@Path("beneficiaryId") long beneficiaryId,
+    Observable<ResponseBody> updateBeneficiary(@Path("beneficiaryId") long beneficiaryId,
                                                @Body BeneficiaryUpdatePayload payload);
 
     @DELETE(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")

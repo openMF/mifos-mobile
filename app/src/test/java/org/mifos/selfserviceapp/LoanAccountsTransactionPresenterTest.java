@@ -50,10 +50,6 @@ public class LoanAccountsTransactionPresenterTest {
 
         loanWithTransaction = FakeRemoteDataSource.getLoanAccountWithTransaction();
         loanWithEmptyTransactions = FakeRemoteDataSource.getLoanAccountWithEmptyTransaction();
-
-        when(context.getString(R.string.error_loan_account_details_loading)).
-                thenReturn("Error loading in loan accounts detail");
-
     }
 
     @After

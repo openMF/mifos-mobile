@@ -1,0 +1,14 @@
+{
+  "accountTypeOptions": [
+    {
+      "id": 2,
+      "code": "accountType.savings",
+      "value": "Savings Account"
+    },
+    {
+      "id": 1,
+      "code": "accountType.loan",
+      "value": "Loan Account"
+    }
+  ]
+}

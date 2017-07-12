@@ -60,11 +60,6 @@ public class LoginPresenterTest {
         user = FakeRemoteDataSource.getUser();
         clientPage = FakeRemoteDataSource.getClients();
         noClientPage = FakeRemoteDataSource.getNoClients();
-
-        when(context.getString(R.string.error_fetching_client)).
-                thenReturn("Failed to fetch Client");
-        when(context.getString(R.string.error_client_not_found)).
-                thenReturn("Client Not Found");
     }
 
     @Test

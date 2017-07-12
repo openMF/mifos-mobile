@@ -52,9 +52,6 @@ public class LoanRepaymentSchedulePresenterTest {
         loanWithEmptyRepaymentSchedule = FakeRemoteDataSource.
                 getLoanAccountEmptyRepaymentSchedule();
 
-        when(context.getString(R.string.error_fetching_repayment_schedule)).
-                thenReturn("Failed To fetch repayment schedule");
-
     }
 
     @After

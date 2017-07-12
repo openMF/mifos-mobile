@@ -47,8 +47,6 @@ public class LoanAccountDetailPresenterTest {
         presenter.attachView(view);
 
         loanAccount = FakeRemoteDataSource.getLoanAccount();
-        when(context.getString(R.string.error_loan_account_details_loading)).
-                thenReturn("Error loading in loan accounts detail");
     }
 
     @Test
