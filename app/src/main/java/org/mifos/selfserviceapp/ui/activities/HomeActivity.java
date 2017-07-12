@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -195,19 +196,22 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce && stackCount() == 0) {
-            HomeActivity.this.finish();
-            return;
-        }
-        this.doubleBackToExitPressedOnce = true;
-        Toaster.show(findViewById(android.R.id.content), getString(R.string.exit_message));
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment instanceof HomeFragment) {
+            if (doubleBackToExitPressedOnce && stackCount() == 0) {
+                HomeActivity.this.finish();
+                return;
             }
-        }, 2000);
+            this.doubleBackToExitPressedOnce = true;
+            Toaster.show(findViewById(android.R.id.content), getString(R.string.exit_message));
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
 
         if (stackCount() != 0) {
             super.onBackPressed();
