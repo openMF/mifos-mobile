@@ -99,7 +99,7 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
     public void updateBeneficiary(long beneficiaryId, BeneficiaryUpdatePayload payload) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(dataManager.deleteBeneficiary(beneficiaryId, payload)
+        subscription.add(dataManager.updateBeneficiary(beneficiaryId, payload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<ResponseBody>() {

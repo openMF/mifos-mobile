@@ -147,9 +147,9 @@ public class DataManager {
         return baseApiManager.getBeneficiaryApi().createBeneficiary(beneficiaryPayload);
     }
 
-    public Observable<ResponseBody> deleteBeneficiary(long beneficiaryId,
+    public Observable<ResponseBody> updateBeneficiary(long beneficiaryId,
                                                       BeneficiaryUpdatePayload payload) {
-        return baseApiManager.getBeneficiaryApi().deleteBeneficiary(beneficiaryId, payload);
+        return baseApiManager.getBeneficiaryApi().updateBeneficiary(beneficiaryId, payload);
     }
 
     public Observable<ResponseBody> deleteBeneficiary(long beneficiaryId) {

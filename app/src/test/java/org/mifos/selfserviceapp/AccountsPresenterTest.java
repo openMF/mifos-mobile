@@ -53,8 +53,6 @@ public class AccountsPresenterTest {
         loanAccounts = FakeRemoteDataSource.getClientLoanAccount();
         shareAccounts = FakeRemoteDataSource.getClientShareAccount();
 
-        when(context.getString(R.string.error_fetching_accounts)).
-                thenReturn("Failed to fetch Accounts");
     }
 
     @After

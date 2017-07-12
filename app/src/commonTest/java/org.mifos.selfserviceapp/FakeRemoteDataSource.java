@@ -7,8 +7,13 @@ import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
+import org.mifos.selfserviceapp.models.beneficary.BeneficiaryPayload;
+import org.mifos.selfserviceapp.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
+import org.mifos.selfserviceapp.models.payload.LoansPayload;
+import org.mifos.selfserviceapp.models.templates.beneficiary.BeneficiaryTemplate;
+import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 
 import java.util.List;
 
@@ -45,9 +50,39 @@ public class FakeRemoteDataSource {
             }, FakeJsonName.BENEFICIARIES_JSON);
     }
 
+    public static BeneficiaryTemplate getBeneficiaryTemplate() {
+        return mTestDataFactory.getObjectTypePojo(BeneficiaryTemplate.class,
+                FakeJsonName.BENEFICIARY_TEMPLATE_JSON);
+    }
+
+    public static BeneficiaryPayload beneficiaryPayload() {
+        return mTestDataFactory.getObjectTypePojo(BeneficiaryPayload.class,
+                FakeJsonName.BENEFICIARY_PAYLOAD_JSON);
+    }
+
+    public static BeneficiaryUpdatePayload beneficiaryUpdatePayload() {
+        return mTestDataFactory.getObjectTypePojo(BeneficiaryUpdatePayload.class,
+                FakeJsonName.BENEFICIARY_UPDATE_PAYLOAD_JSON);
+    }
+
     public static LoanAccount getLoanAccount() {
         return mTestDataFactory.getObjectTypePojo(LoanAccount.class,
                 FakeJsonName.LOAN_ACCOUNT_JSON);
+    }
+
+    public static LoanTemplate getLoanTemplate() {
+        return mTestDataFactory.getObjectTypePojo(LoanTemplate.class,
+                FakeJsonName.LOAN_TEMPLATE_JSON);
+    }
+
+    public static LoansPayload getLoansPayload() {
+        return mTestDataFactory.getObjectTypePojo(LoansPayload.class,
+                FakeJsonName.LOAN_PAYLOAD_JSON);
+    }
+
+    public static LoanTemplate getLoanTemplateByTemplate() {
+        return mTestDataFactory.getObjectTypePojo(LoanTemplate.class,
+                FakeJsonName.LOAN_TEMPLATE_BY_PRODUCT_JSON);
     }
 
     public static LoanWithAssociations getLoanAccountWithTransaction() {

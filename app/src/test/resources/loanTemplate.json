@@ -1,0 +1,85 @@
+{
+  "clientId": 1,
+  "clientAccountNo": "000000001",
+  "clientName": "Smith W R",
+  "clientOfficeId": 1,
+  "isLoanProductLinkedToFloatingRate": false,
+  "isFloatingInterestRate": false,
+  "timeline": {
+    "expectedDisbursementDate": [
+      2017,
+      7,
+      12
+    ]
+  },
+  "productOptions": [
+    {
+      "id": 1,
+      "name": "Income Generating Loan",
+      "includeInBorrowerCycle": false,
+      "useBorrowerCycle": false,
+      "isLinkedToFloatingInterestRates": false,
+      "isFloatingInterestRateCalculationAllowed": false,
+      "allowVariableInstallments": false,
+      "isInterestRecalculationEnabled": false,
+      "canDefineInstallmentAmount": false,
+      "principalVariationsForBorrowerCycle": [],
+      "interestRateVariationsForBorrowerCycle": [],
+      "numberOfRepaymentVariationsForBorrowerCycle": [],
+      "canUseForTopup": false,
+      "holdGuaranteeFunds": false,
+      "accountMovesOutOfNPAOnlyOnArrearsCompletion": false,
+      "syncExpectedWithDisbursementDate": false
+    },
+    {
+      "id": 2,
+      "name": "For Prepay - Calculate till preclosure date",
+      "includeInBorrowerCycle": false,
+      "useBorrowerCycle": false,
+      "isLinkedToFloatingInterestRates": false,
+      "isFloatingInterestRateCalculationAllowed": false,
+      "allowVariableInstallments": false,
+      "isInterestRecalculationEnabled": false,
+      "canDefineInstallmentAmount": false,
+      "principalVariationsForBorrowerCycle": [],
+      "interestRateVariationsForBorrowerCycle": [],
+      "numberOfRepaymentVariationsForBorrowerCycle": [],
+      "canUseForTopup": false,
+      "holdGuaranteeFunds": false,
+      "accountMovesOutOfNPAOnlyOnArrearsCompletion": false,
+      "syncExpectedWithDisbursementDate": false
+    }
+  ],
+  "loanOfficerOptions": [
+    {
+      "id": 42,
+      "firstname": "ERICK",
+      "lastname": "ANDERE",
+      "displayName": "ANDERE, ERICK",
+      "mobileNo": "0791088841",
+      "officeId": 1,
+      "officeName": "Head Office",
+      "isLoanOfficer": true,
+      "isActive": true,
+      "joiningDate": [
+        2015,
+        4,
+        1
+      ]
+    },
+    {
+      "id": 12,
+      "firstname": "Sagar",
+      "lastname": "Ch",
+      "displayName": "Ch, Sagar",
+      "officeId": 1,
+      "officeName": "Head Office",
+      "isLoanOfficer": true,
+      "isActive": true
+    }
+  ],
+  "canDisburse": false,
+  "isTopup": false,
+  "isInterestRecalculationEnabled": false,
+  "isVariableInstallmentsAllowed": false
+}

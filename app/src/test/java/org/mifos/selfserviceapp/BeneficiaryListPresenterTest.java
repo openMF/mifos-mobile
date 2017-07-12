@@ -50,10 +50,6 @@ public class BeneficiaryListPresenterTest {
         presenter.attachView(view);
 
         beneficiaryList = FakeRemoteDataSource.getBeneficiaries();
-
-        when(context.getString(R.string.error_fetching_beneficiaries)).
-                thenReturn("Failed to fetch Beneficiaries");
-
     }
 
     @After
