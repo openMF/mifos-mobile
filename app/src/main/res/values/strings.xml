@@ -243,6 +243,11 @@
     <string name="total_saving">Total Savings</string>
     <string name="accounts_overview">Account Overview</string>
     <string name="survey">Surveys</string>
+    <string name="activation_date">Activation Date</string>
+    <string name="groups">Groups</string>
+    <string name="user_details">User details</string>
+    <string name="client_type">Client Type</string>
+    <string name="client_classification">Client Classification</string>
 
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
