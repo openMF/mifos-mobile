@@ -16,7 +16,19 @@ public class FakeJsonName {
 
     public static final String BENEFICIARIES_JSON = "beneficiaries.json";
 
+    public static final String BENEFICIARY_TEMPLATE_JSON = "beneficiaryTemplate.json";
+
+    public static final String BENEFICIARY_PAYLOAD_JSON = "beneficiaryPayload.json";
+
+    public static final String BENEFICIARY_UPDATE_PAYLOAD_JSON = "beneficiaryUpdatePayload.json";
+
     public static final String LOAN_ACCOUNT_JSON = "loanAccount.json";
+
+    public static final String LOAN_PAYLOAD_JSON = "loanPayload.json";
+
+    public static final String LOAN_TEMPLATE_JSON = "loanTemplate.json";
+
+    public static final String LOAN_TEMPLATE_BY_PRODUCT_JSON = "loanTemplateByProduct.json";
 
     public static final String LOAN_ACCOUNT_WITH_TRANSACTIONS_JSON =
             "loanAccountWithTransactions.json";
