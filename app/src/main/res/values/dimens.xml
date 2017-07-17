@@ -29,6 +29,7 @@
     <dimen name="client_charge_text_view_margin_left">20dp</dimen>
     <dimen name="default_margin">8dp</dimen>
     <dimen name="margin_top">36dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
 
     <!-- Dimen values for text size -->
     <dimen name="text_headline">24sp</dimen>
