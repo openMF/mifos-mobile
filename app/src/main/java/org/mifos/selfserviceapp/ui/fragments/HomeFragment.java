@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,8 @@ import butterknife.OnClick;
  * Created by michaelsosnick on 1/1/17.
  */
 
-public class HomeFragment extends BaseFragment implements HomeView {
+public class HomeFragment extends BaseFragment implements HomeView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     public static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
@@ -55,6 +57,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @BindView(R.id.iv_visibility)
     ImageView ivVisibility;
+
+    @BindView(R.id.swipe_home_container)
+    SwipeRefreshLayout slHomeContainer;
 
     @Inject
     HomePresenter presenter;
@@ -93,13 +98,27 @@ public class HomeFragment extends BaseFragment implements HomeView {
         ((HomeActivity) getActivity()).getActivityComponent().inject(this);
 
         ButterKnife.bind(this, rootView);
-
         presenter.attachView(this);
-        presenter.loadClientAccountDetails();
+        slHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
+                .color.orange_light, R.color.red_light);
+        slHomeContainer.setOnRefreshListener(this);
+        loadClientData();
 
         showUserInterface();
         return rootView;
     }
+
+    @Override
+    public void onRefresh() {
+        loadClientData();
+    }
+
+    private void loadClientData() {
+        presenter.loadClientAccountDetails();
+        presenter.getUserDetails();
+        presenter.getUserImage();
+    }
+
     @Override
     public void showUserInterface() {
         toolbarView = ((HomeActivity) getActivity()).getToolbar().getRootView();
@@ -231,12 +250,12 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override
     public void showProgress() {
-        showProgressBar();
+        slHomeContainer.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        hideProgressBar();
+        slHomeContainer.setRefreshing(false);
     }
 
     @Override
