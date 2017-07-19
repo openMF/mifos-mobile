@@ -11,4 +11,9 @@
         app:showAsAction="never"
         android:visible="false"
         android:title="@string/withdraw_loan"/>
+    <item
+        android:id="@+id/menu_loan_charges"
+        app:showAsAction="never"
+        android:visible="false"
+        android:title="@string/loan_charges"/>
 </menu>

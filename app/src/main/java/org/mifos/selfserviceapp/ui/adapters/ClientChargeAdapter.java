@@ -68,10 +68,13 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     getString(R.string.double_and_String, charge.getAmountOutstanding(),
                             charge.getCurrency().getDisplaySymbol()));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
-            ((ViewHolder) holder).tvDueDate.setText(DateHelper.getDateAsString(charge.
-                    getDueDate()));
+            if (charge.getDueDate().size() > 0) {
+                ((ViewHolder) holder).tvDueDate.setText(DateHelper.getDateAsString(charge.
+                        getDueDate()));
+            }
 
-            if (charge.isIsPaid() || charge.isIsWaived()) {
+            if (charge.isIsPaid() || charge.isIsWaived() || charge.getPaid() || charge.
+                    getWaived()) {
                 ((ViewHolder) holder).circle_status.setBackgroundColor(ContextCompat.
                         getColor(context, R.color.black));
             } else {

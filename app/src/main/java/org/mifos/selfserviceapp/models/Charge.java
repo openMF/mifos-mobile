@@ -56,6 +56,9 @@ public class Charge extends BaseModel {
     Boolean isPaid = false;
     Boolean isWaived = false;
 
+    Boolean paid = false;
+    Boolean waived = false;
+
     public int getId() {
         return id;
     }
@@ -192,5 +195,19 @@ public class Charge extends BaseModel {
         this.isWaived = isWaived;
     }
 
+    public Boolean getPaid() {
+        return paid;
+    }
 
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
+
+    public Boolean getWaived() {
+        return waived;
+    }
+
+    public void setWaived(Boolean waived) {
+        this.waived = waived;
+    }
 }

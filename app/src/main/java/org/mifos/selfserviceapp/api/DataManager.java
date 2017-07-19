@@ -90,6 +90,14 @@ public class DataManager {
                 });
     }
 
+    public Observable<List<Charge>> getLoanCharges(long loanId) {
+        return baseApiManager.getClientChargeApi().getLoanAccountChargeList(loanId);
+    }
+
+    public Observable<List<Charge>> getSavingsCharges(long savingsId) {
+        return baseApiManager.getClientChargeApi().getSavingsAccountChargeList(savingsId);
+    }
+
     public Observable<SavingsWithAssociations> getSavingsWithAssociations(long accountId,
             String associationType) {
         return baseApiManager

@@ -95,6 +95,8 @@
     <string name="close">Close</string>
     <string name="choose_transfer_type">Choose Transfer Type</string>
     <string name="transfer_to_savings">Transfer To Savings</string>
+    <string name="loan_charges">Loan Charges</string>
+    <string name="savings_charges">Savings Charges</string>
 
     <string name="active">Active</string>
     <string name="closed">Closed</string>
@@ -126,6 +128,7 @@
     </string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
     <string name="error_client_charge_loading">Error loading in client charges</string>
+    <string name="error_no_charge">No charges found.</string>
     <string name="error_client_not_found">Client Not Found</string>
     <string name="error_fetching_client">Failed to fetch Client</string>
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>

@@ -21,6 +21,7 @@ import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.activities.UserProfileActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
@@ -183,8 +184,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @OnClick(R.id.ll_charges)
     public void chargesClicked() {
-        ((HomeActivity) getActivity()).replaceFragment(ClientChargeFragment.newInstance(clientId),
-                true,  R.id.container);
+        ((HomeActivity) getActivity()).replaceFragment(ClientChargeFragment.newInstance(clientId,
+                ChargeType.CLIENT), true,  R.id.container);
     }
 
     @OnClick(R.id.ll_apply_for_loan)
