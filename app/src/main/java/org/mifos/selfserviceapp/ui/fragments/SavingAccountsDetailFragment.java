@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +21,7 @@ import org.mifos.selfserviceapp.models.accounts.savings.Status;
 import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
@@ -113,6 +117,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         if (getArguments() != null) {
             savingsId = getArguments().getLong(Constants.SAVINGS_ID);
         }
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -228,6 +233,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
                     Utils.setCircularBackground(R.color.black, getActivity()));
             tvAccountStatus.setText(R.string.closed);
         }
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -247,5 +253,30 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         super.onDestroyView();
         hideProgressBar();
         mSavingAccountsDetailPresenter.detachView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_saving_account, menu);
+
+        if (status != null && status.getActive()) {
+            menu.findItem(R.id.item_savings_charges).setVisible(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_transactions:
+                ((BaseActivity) getActivity()).replaceFragment(SavingAccountsTransactionFragment.
+                                newInstance(savingsId), true, R.id.container);
+                break;
+            case R.id.item_savings_charges:
+                ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment.
+                        newInstance(savingsId, ChargeType.SAVINGS), true, R.id.container);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

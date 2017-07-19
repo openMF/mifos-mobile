@@ -64,4 +64,7 @@ public class Constants {
     public static final String PERMISSIONS_CAMERA_STATUS = "camera_status";
 
     public static final String INTIAL_LOGIN = "initial_login";
+
+    public static final String CHARGE_TYPE = "charge_type";
+
 }

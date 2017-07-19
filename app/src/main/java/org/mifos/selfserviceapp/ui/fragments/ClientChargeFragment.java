@@ -1,6 +1,5 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Charge;
@@ -17,6 +19,7 @@ import org.mifos.selfserviceapp.presenters.ClientChargePresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ClientChargeAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
+import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
@@ -50,16 +53,26 @@ public class ClientChargeFragment extends BaseFragment implements
     @BindView(R.id.swipe_charge_container)
     SwipeRefreshLayout swipeChargeContainer;
 
-    private long clientId;
+    @BindView(R.id.ll_error)
+    RelativeLayout rlErrorLayout;
+
+    @BindView(R.id.iv_status)
+    ImageView ivError;
+
+    @BindView(R.id.tv_status)
+    TextView tvError;
+
+    private long id;
+    private ChargeType chargeType;
     private View rootView;
     private LinearLayoutManager layoutManager;
-    private ProgressDialog progressDialog;
     private List<Charge> clientChargeList = new ArrayList<>();
 
-    public static ClientChargeFragment newInstance(long clientId) {
+    public static ClientChargeFragment newInstance(long clientId, ChargeType chargeType) {
         ClientChargeFragment clientChargeFragment = new ClientChargeFragment();
         Bundle args = new Bundle();
         args.putLong(Constants.CLIENT_ID, clientId);
+        args.putSerializable(Constants.CHARGE_TYPE, chargeType);
         clientChargeFragment.setArguments(args);
         return clientChargeFragment;
     }
@@ -69,8 +82,9 @@ public class ClientChargeFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null) {
-            clientId = getArguments().getLong(Constants.CLIENT_ID);
             setToolbarTitle(getString(R.string.charges));
+            id = getArguments().getLong(Constants.CLIENT_ID);
+            chargeType = (ChargeType) getArguments().getSerializable(Constants.CHARGE_TYPE);
         }
     }
 
@@ -93,12 +107,24 @@ public class ClientChargeFragment extends BaseFragment implements
         swipeChargeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mClientChargePresenter.loadClientCharges(clientId);
+                loadCharges();
             }
         });
-
-        mClientChargePresenter.loadClientCharges(clientId);
+        loadCharges();
         return rootView;
+    }
+
+    private void loadCharges() {
+        rlErrorLayout.setVisibility(View.GONE);
+        swipeChargeContainer.setVisibility(View.VISIBLE);
+
+        if (chargeType == ChargeType.CLIENT) {
+            mClientChargePresenter.loadClientCharges(id);
+        } else if (chargeType == ChargeType.SAVINGS) {
+            mClientChargePresenter.loadSavingsAccountCharges(id);
+        } else if (chargeType == ChargeType.LOAN) {
+            mClientChargePresenter.loadLoanAccountCharges(id);
+        }
     }
 
     @Override
@@ -116,8 +142,14 @@ public class ClientChargeFragment extends BaseFragment implements
     }
 
     private void inflateClientChargeList() {
-        clientChargeAdapter.setClientChargeList(clientChargeList);
-        rvClientCharge.setAdapter(clientChargeAdapter);
+        if (clientChargeList.size() > 0) {
+            clientChargeAdapter.setClientChargeList(clientChargeList);
+            rvClientCharge.setAdapter(clientChargeAdapter);
+        } else {
+            rlErrorLayout.setVisibility(View.VISIBLE);
+            swipeChargeContainer.setVisibility(View.GONE);
+            tvError.setText(getString(R.string.error_no_charge));
+        }
     }
 
     @Override

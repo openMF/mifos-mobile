@@ -24,6 +24,7 @@ import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
@@ -222,6 +223,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         if (showLoanUpdateOption) {
             menu.findItem(R.id.menu_update_loan).setVisible(true);
             menu.findItem(R.id.menu_withdraw_loan).setVisible(true);
+        } else {
+            menu.findItem(R.id.menu_loan_charges).setVisible(true);
         }
     }
 
@@ -235,6 +238,9 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         } else if (id == R.id.menu_withdraw_loan) {
             ((BaseActivity) getActivity()).replaceFragment(LoanAccountWithdrawFragment
                     .newInstance(loanAccount), true, R.id.container);
+        } else if (id == R.id.menu_loan_charges) {
+            ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment
+                    .newInstance(loanAccount.getId(), ChargeType.LOAN), true, R.id.container);
         }
         return super.onOptionsItemSelected(item);
     }
