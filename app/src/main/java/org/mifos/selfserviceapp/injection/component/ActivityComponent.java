@@ -3,6 +3,7 @@ package org.mifos.selfserviceapp.injection.component;
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.fragments.BeneficiaryAddOptionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryApplicationFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
@@ -66,6 +67,8 @@ public interface ActivityComponent {
     void inject(SavingAccountsTransactionFragment savingAccountsTransactionFragment);
 
     void inject(SavingsMakeTransferFragment savingsMakeTransferFragment);
+
+    void inject(BeneficiaryAddOptionsFragment beneficiaryAddOptionsFragment);
 
     void inject(BeneficiaryListFragment beneficiaryListFragment);
 

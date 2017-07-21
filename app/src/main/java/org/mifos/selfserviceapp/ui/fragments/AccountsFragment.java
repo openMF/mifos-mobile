@@ -190,19 +190,16 @@ public class AccountsFragment extends BaseFragment implements
     public void searchSavingsAccount(String input) {
         savingAccountsListAdapter.setSavingAccountsList(accountsPresenter.
                 searchInSavingsList(savingAccounts, input));
-        rvAccounts.setAdapter(savingAccountsListAdapter);
     }
 
     public void searchLoanAccount(String input) {
         loanAccountsListAdapter.setLoanAccountsList(accountsPresenter.
                 searchInLoanList(loanAccounts, input));
-        rvAccounts.setAdapter(loanAccountsListAdapter);
     }
 
     public void searchSharesAccount(String input) {
         shareAccountsListAdapter.setShareAccountsList(accountsPresenter.
                 searchInSharesList(shareAccounts, input));
-        rvAccounts.setAdapter(shareAccountsListAdapter);
     }
 
     public void filterSavingsAccount(List<CheckboxStatus> statusModelList) {
@@ -212,7 +209,6 @@ public class AccountsFragment extends BaseFragment implements
                     status));
         }
         savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
-        rvAccounts.setAdapter(savingAccountsListAdapter);
     }
 
     public void filterLoanAccount(List<CheckboxStatus> statusModelList) {
@@ -222,7 +218,6 @@ public class AccountsFragment extends BaseFragment implements
                     status));
         }
         loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
-        rvAccounts.setAdapter(loanAccountsListAdapter);
     }
 
     public void filterShareAccount(List<CheckboxStatus> statusModelList) {
@@ -232,7 +227,6 @@ public class AccountsFragment extends BaseFragment implements
                     status));
         }
         shareAccountsListAdapter.setShareAccountsList(filteredSavings);
-        rvAccounts.setAdapter(shareAccountsListAdapter);
     }
 
     @Override
@@ -275,11 +269,13 @@ public class AccountsFragment extends BaseFragment implements
         switch (accountType) {
             case Constants.SAVINGS_ACCOUNTS:
                 intent = new Intent(getActivity(), SavingsAccountContainerActivity.class);
-                intent.putExtra(Constants.SAVINGS_ID, savingAccounts.get(position).getId());
+                intent.putExtra(Constants.SAVINGS_ID, savingAccountsListAdapter.
+                        getSavingAccountsList().get(position).getId());
                 break;
             case Constants.LOAN_ACCOUNTS:
                 intent = new Intent(getActivity(), LoanAccountContainerActivity.class);
-                intent.putExtra(Constants.LOAN_ID, loanAccounts.get(position).getId());
+                intent.putExtra(Constants.LOAN_ID, loanAccountsListAdapter.getLoanAccountsList().
+                        get(position).getId());
                 break;
         }
         openActivity(intent);

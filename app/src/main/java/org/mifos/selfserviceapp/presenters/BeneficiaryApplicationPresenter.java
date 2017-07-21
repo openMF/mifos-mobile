@@ -42,7 +42,7 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
         subscription.clear();
     }
 
-    public void showBeneficiaryTemplate() {
+    public void loadBeneficiaryTemplate() {
         checkViewAttached();
         getMvpView().showProgress();
         subscription.add(dataManager.getBeneficiaryTemplate()

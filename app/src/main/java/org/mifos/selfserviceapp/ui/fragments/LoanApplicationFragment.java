@@ -247,14 +247,14 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 DateHelper.FORMAT_dd_MMMM_yyyy, disbursementDate);
     }
 
-    @OnClick(R.id.tv_expected_disbursement_date)
+    @OnClick(R.id.ll_expected_disbursement_date_edit)
     public void setTvDisbursementOnDate() {
         isDisbursebemntDate = true;
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }
 
-    @OnClick(R.id.tv_submission_date)
+    @OnClick(R.id.ll_submission_date_edit)
     public void setTvSubmittedOnDate() {
         isSubmissionDate = true;
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants

@@ -22,9 +22,9 @@ import org.mifos.selfserviceapp.presenters.UserDetailsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
-import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
@@ -60,7 +60,7 @@ public class HomeActivity extends BaseActivity implements
 
     private TextView tvUsername;
     private CircularImageView ivUserProfilePicture;
-
+    private final int CAMERA_PERMISSION = 10;
     private long clientId;
 
     boolean  doubleBackToExitPressedOnce = false;
@@ -224,4 +224,5 @@ public class HomeActivity extends BaseActivity implements
             super.onBackPressed();
         }
     }
+
 }

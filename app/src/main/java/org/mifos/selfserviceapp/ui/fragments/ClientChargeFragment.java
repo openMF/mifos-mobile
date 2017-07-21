@@ -3,7 +3,6 @@ package org.mifos.selfserviceapp.ui.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,7 @@ import org.mifos.selfserviceapp.models.Charge;
 import org.mifos.selfserviceapp.presenters.ClientChargePresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.ClientChargeAdapter;
+import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
  * @since 17/8/16.
  */
 
-public class ClientChargeFragment extends Fragment implements
+public class ClientChargeFragment extends BaseFragment implements
         RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
 
     @Inject
@@ -70,6 +70,7 @@ public class ClientChargeFragment extends Fragment implements
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null) {
             clientId = getArguments().getLong(Constants.CLIENT_ID);
+            setToolbarTitle(getString(R.string.charges));
         }
     }
 

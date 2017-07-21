@@ -36,6 +36,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void setShareAccountsList(List<ShareAccount> shareAccountsList) {
         this.shareAccountsList = shareAccountsList;
+        notifyDataSetChanged();
     }
 
     public ShareAccount getItem(int position) {

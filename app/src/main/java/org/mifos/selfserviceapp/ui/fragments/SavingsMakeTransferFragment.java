@@ -19,6 +19,7 @@ import org.mifos.selfserviceapp.models.templates.account.AccountOption;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.presenters.SavingsMakeTransferPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.TransferType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.SavingsMakeTransferMvpView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -164,7 +165,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
 
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload), true, R.id.container);
+                newInstance(transferPayload, TransferType.SELF), true, R.id.container);
     }
 
     @OnClick(R.id.btn_cancel_transfer)

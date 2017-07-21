@@ -14,13 +14,11 @@ public interface ThirdPartyTransferView extends MVPView {
 
     void showUserInterface();
 
-    void makeTransfer();
+    void showToaster(String msg);
 
     void showThirdPartyTransferTemplate(AccountOptionsTemplate accountOptionsTemplate);
 
     void showBeneficiaryList(List<Beneficiary> beneficiaries);
-
-    void showTransferredSuccessfully();
 
     void showError(String msg);
 }

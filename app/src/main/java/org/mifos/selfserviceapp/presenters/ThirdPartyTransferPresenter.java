@@ -7,19 +7,16 @@ import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.AccountOptionAndBeneficiary;
 import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
-import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.models.templates.account.AccountOption;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.ThirdPartyTransferView;
-import org.mifos.selfserviceapp.utils.MFErrorParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -97,33 +94,6 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
                                 getBeneficiaryList());
                     }
                 }));
-    }
-
-    public void makeTransfer(TransferPayload transferPayload) {
-        checkViewAttached();
-        getMvpView().showProgress();
-        subscription.add(dataManager.makeThirdPartyTransfer(transferPayload)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        getMvpView().hideProgress();
-                        getMvpView().showTransferredSuccessfully();
-                    }
-                })
-        );
     }
 
     public List<String> getAccountNumbersFromAccountOptions(List<AccountOption> accountOptions) {

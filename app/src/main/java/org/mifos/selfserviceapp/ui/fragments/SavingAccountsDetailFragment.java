@@ -7,19 +7,23 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.accounts.savings.Status;
 import org.mifos.selfserviceapp.presenters.SavingAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
+import org.mifos.selfserviceapp.utils.QrCodeGenerator;
 import org.mifos.selfserviceapp.utils.SymbolsUtils;
 import org.mifos.selfserviceapp.utils.Toaster;
 import org.mifos.selfserviceapp.utils.Utils;
@@ -82,6 +86,12 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @BindView(R.id.tv_status)
     TextView tvStatus;
 
+    @BindView(R.id.iv_qr_code)
+    ImageView ivQrCode;
+
+    @Inject
+    PreferencesHelper preferencesHelper;
+
     @Inject
     SavingAccountsDetailPresenter mSavingAccountsDetailPresenter;
 
@@ -131,7 +141,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     void deposit() {
         if (status.getActive()) {
             ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
-                    .newInstance(savingsId, Constants.TRANSFER_PAY_TO), true, R.id.container);
+                    .newInstance(savingsId, Constants.TRANSFER_PAY_FROM), true, R.id.container);
         } else {
             Toaster.show(rootView, getString(R.string.account_not_active_to_perform_deposit));
         }
@@ -179,6 +189,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             tvMadeOnTransaction.setVisibility(View.GONE);
             tvMadeOnTextView.setVisibility(View.GONE);
         }
+
+        String accountDetails = QrCodeGenerator.getAccountDetailsInString(savingsWithAssociations.
+                getAccountNo(), preferencesHelper.getOfficeName(), AccountType.SAVINGS);
+        ivQrCode.setImageBitmap(QrCodeGenerator.encodeAsBitmap(accountDetails));
 
         showAccountStatus(savingsWithAssociations);
     }

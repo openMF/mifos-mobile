@@ -16,8 +16,7 @@
         <include layout="@layout/toolbar"/>
 
         <FrameLayout
-            style="@style/FrameLayout.Container"
-            android:padding="10dp"/>
+            style="@style/FrameLayout.Container"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

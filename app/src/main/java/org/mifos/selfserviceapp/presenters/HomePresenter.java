@@ -8,6 +8,7 @@ import android.util.Log;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
@@ -35,6 +36,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     private DataManager dataManager;
     private CompositeSubscription subscription;
+    @Inject
+    PreferencesHelper preferencesHelper;
 
     @Inject
     public HomePresenter(DataManager dataManager, @ActivityContext Context context) {
@@ -104,6 +107,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void onNext(Client client) {
                         if (client != null) {
+                            preferencesHelper.setOfficeName(client.getOfficeName());
                             getMvpView().showUserDetails(client);
                         } else {
                             getMvpView().showError(context

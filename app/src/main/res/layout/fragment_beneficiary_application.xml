@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/default_margin">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="@dimen/default_padding">
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
@@ -24,10 +26,11 @@
                 android:layout_marginLeft="@dimen/default_margin"/>
             <Spinner
                 android:id="@+id/sp_account_type"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:spinnerMode="dropdown"/>
+                android:paddingBottom="@dimen/default_margin"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:spinnerMode="dialog"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -90,9 +93,9 @@
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_beneficiary_submit"
-                android:background="@color/primary"
+                app:backgroundTint="@color/primary"
                 style="@style/Button.Base"
                 android:layout_marginTop="10dp"
                 android:text="@string/submit_beneficiary"/>

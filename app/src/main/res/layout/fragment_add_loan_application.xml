@@ -4,11 +4,12 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/default_margin">
-    <ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,25 +24,30 @@
                 android:id="@+id/tv_new_loan_application"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/loan_name"
-                android:textColor="@color/black"
+                android:layout_gravity="center"
                 android:textSize="@dimen/text_medium" />
 
             <TextView
                 android:id="@+id/tv_account_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
                 android:text="@string/account_number"
-                android:textColor="@color/black"
                 android:textSize="@dimen/text_medium" />
-
             <TextView
                 android:id="@+id/tv_loan_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
                 android:text="@string/select_loan_product"
+                android:textColor="@color/light_grey"
                 android:textSize="16sp"/>
 
             <Spinner
@@ -49,14 +55,23 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:spinnerMode="dropdown"/>
-
+                android:prompt="@string/select_loan_product"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:spinnerMode="dialog"/>
             <TextView
                 android:id="@+id/loan_purpose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
                 android:text="@string/purpose_of_loan"
+                android:textColor="@color/light_grey"
                 android:textSize="16sp"/>
 
             <Spinner
@@ -64,11 +79,19 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:spinnerMode="dropdown"/>
-
+                android:prompt="@string/purpose_of_loan"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:spinnerMode="dialog"/>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding">
 
                 <EditText
                     android:id="@+id/et_principal_amount"
@@ -79,77 +102,117 @@
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/default_padding"
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout style="@style/LinearLayout.Width">
+
+            <LinearLayout style="@style/LinearLayout.Width"
+                android:paddingTop="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_weight="0.2"
+                    android:textColor="@color/light_grey"
                     android:text="@string/currency"/>
 
                 <TextView
                     android:id="@+id/tv_currency"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_weight="0.5"
-                    android:background="@color/gray_light"
-                    android:textSize="20sp"/>
+                    android:gravity="end"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:textSize="@dimen/text_large"/>
             </LinearLayout>
 
-            <LinearLayout style="@style/LinearLayout.Width">
+            <LinearLayout style="@style/LinearLayout.Width"
+                android:paddingTop="@dimen/divider_margin"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding">
 
                 <TextView
                     android:layout_width="0dp"
+                    android:textColor="@color/light_grey"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.7"
                     android:text="@string/submission_date"/>
-
-                <TextView
-                    android:id="@+id/tv_submission_date"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="0.5"
-                    android:background="@color/gray_light"
-                    android:textSize="20sp"/>
+                    android:gravity="end"
+                    android:id="@+id/ll_submission_date_edit"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_weight="0.3">
+                    <TextView
+                        android:id="@+id/tv_submission_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_medium"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_edit_black_24dp"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout style="@style/LinearLayout.Width">
+            <LinearLayout style="@style/LinearLayout.Width"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.7"
+                    android:textColor="@color/light_grey"
                     android:text="@string/expected_disbursement_date"/>
 
-                <TextView
-                    android:id="@+id/tv_expected_disbursement_date"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_weight="0.5"
-                    android:background="@color/gray_light"
-                    android:textSize="20sp"/>
+                    android:gravity="end"
+                    android:id="@+id/ll_expected_disbursement_date_edit"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_weight="0.3">
+                    <TextView
+                        android:id="@+id/tv_expected_disbursement_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_medium"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_edit_black_24dp"/>
+                </LinearLayout>
+
             </LinearLayout>
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_loan_submit"
-                android:background="@color/primary"
+                app:backgroundTint="@color/primary"
                 style="@style/Button.Base"
                 android:layout_marginTop="10dp"
-                android:text="@string/submit_loan"/>
+                android:text="@string/submit_loan"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"/>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
     <include
         android:visibility="gone"
         android:id="@+id/ll_error"

@@ -13,19 +13,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.presenters.LoanAccountsDetailPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
+import org.mifos.selfserviceapp.utils.QrCodeGenerator;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -73,6 +77,13 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
     @BindView(R.id.btn_make_payment)
     Button btMakePayment;
+
+    @BindView(R.id.iv_qr_code)
+    ImageView ivQrCode;
+
+    @Inject
+    PreferencesHelper preferencesHelper;
+
 
     private LoanAccount loanAccount;
     private boolean showLoanUpdateOption = false;
@@ -135,6 +146,10 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             btMakePayment.setVisibility(View.GONE);
             showDetails(loanAccount);
         }
+
+        String accountDetails = QrCodeGenerator.getAccountDetailsInString(loanAccount.
+                getAccountNo(), preferencesHelper.getOfficeName(), AccountType.LOAN);
+        ivQrCode.setImageBitmap(QrCodeGenerator.encodeAsBitmap(accountDetails));
 
         getActivity().invalidateOptionsMenu();
     }

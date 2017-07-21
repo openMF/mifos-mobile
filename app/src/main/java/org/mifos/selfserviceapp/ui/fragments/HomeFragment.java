@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.MaterialDialog;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -89,8 +91,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
         presenter.attachView(this);
         presenter.loadClientAccountDetails();
-        presenter.getUserDetails();
-        presenter.getUserImage();
 
         showUserInterface();
         return rootView;
@@ -160,7 +160,25 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @OnClick(R.id.ll_transfer)
     public void transferClicked() {
-
+        String[] transferTypes = {getString(R.string.transfer), getString(R.string.
+                third_party_transfer)};
+        new MaterialDialog.Builder().init(getActivity())
+                .setTitle(R.string.choose_transfer_type)
+                .setItems(transferTypes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            ((HomeActivity) getActivity()).replaceFragment(
+                                    SavingsMakeTransferFragment.newInstance(1, ""), true,
+                                    R.id.container);
+                        } else {
+                            ((HomeActivity) getActivity()).replaceFragment(
+                                    ThirdPartyTransferFragment.newInstance(), true, R.id.container);
+                        }
+                    }
+                })
+                .createMaterialDialog()
+                .show();
     }
 
     @OnClick(R.id.ll_charges)
@@ -205,6 +223,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void onResume() {
         super.onResume();
         setToolbarLayoutForHome();
+        presenter.getUserDetails();
+        presenter.getUserImage();
     }
 
     @Override
@@ -222,7 +242,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         toolbarDefaultHeight = toolBarLayoutParams.height;
         insetStartWidth = ((HomeActivity) getActivity()).getToolbar().getContentInsetStart();
 
-        toolBarLayoutParams.height = 300;
+        toolBarLayoutParams.height = 350;
 
         ((HomeActivity) getActivity()).getToolbar().setLayoutParams(toolBarLayoutParams);
         ((HomeActivity) getActivity()).getToolbar().setContentInsetStartWithNavigation(0);

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- dummy ids are given to ech group to make dividers between each group -->
     <group android:id="@+id/group1"
-           android:checkableBehavior="single">
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/item_home"
@@ -19,29 +19,29 @@
         <item
             android:id="@+id/item_recent_transactions"
             android:checked="false"
-            android:icon="@drawable/ic_compare_arrows_black_24dp"
+            android:icon="@drawable/ic_label_black_24dp"
             android:title="@string/recent_transactions"/>
 
         <item
             android:id="@+id/item_charges"
             android:checked="false"
-            android:icon="@drawable/ic_label_black_24dp"
+            android:icon="@drawable/ic_charges"
             android:title="@string/charges"/>
         <item
             android:id="@+id/item_third_party_transfer"
             android:checked="false"
-            android:icon="@drawable/ic_label_black_24dp"
+            android:icon="@drawable/ic_compare_arrows_black_24dp"
             android:title="@string/third_party_transfer"/>
         <item
             android:id="@+id/item_beneficiaries"
             android:checked="false"
-            android:icon="@drawable/ic_label_black_24dp"
+            android:icon="@drawable/ic_beneficiaries_48px"
             android:title="@string/manage_beneficiaries"/>
 
     </group>
 
     <group android:id="@+id/group2"
-           android:checkableBehavior="single">
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/item_about_us"
