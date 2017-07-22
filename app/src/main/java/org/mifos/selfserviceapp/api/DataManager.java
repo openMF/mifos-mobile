@@ -40,7 +40,7 @@ public class DataManager {
     private final PreferencesHelper preferencesHelper;
     private final BaseApiManager baseApiManager;
     private final DatabaseHelper databaseHelper;
-    private long clientId;
+    protected long clientId;
 
     @Inject
     public DataManager(PreferencesHelper preferencesHelper, BaseApiManager baseApiManager,
