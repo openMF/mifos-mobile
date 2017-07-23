@@ -105,7 +105,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                         @Override
                         public void onNext(User user) {
-                            getMvpView().hideProgress();
                             if (user != null) {
                                 final String userName = user.getUserName();
                                 final long userID = user.getUserId();
@@ -113,6 +112,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                                         user.getBase64EncodedAuthenticationKey();
                                 saveAuthenticationTokenForSession(userID, authToken);
                                 getMvpView().onLoginSuccess(userName);
+                            } else {
+                                getMvpView().hideProgress();
                             }
                         }
                     })
@@ -125,7 +126,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void loadClient() {
         checkViewAttached();
-        getMvpView().showProgress();
         subscriptions.add(dataManager.getClients()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

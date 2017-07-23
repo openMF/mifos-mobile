@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Inject
     PreferencesHelper preferencesHelper;
 
-    private boolean loginStatus;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,19 +66,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void onLoginSuccess(String userName) {
-        loginStatus = true;
-        showToast(getString(R.string.toast_welcome, userName));
-        llLogin.setVisibility(View.GONE);
+        this.userName = userName;
         loginPresenter.loadClient();
     }
 
     @Override
     public void showProgress() {
-        if (!loginStatus) {
-            showProgressDialog(getString(R.string.progress_message_login));
-        } else {
-            showProgressDialog(getString(R.string.fetching_client));
-        }
+        showProgressDialog(getString(R.string.progress_message_login));
     }
 
     @Override
@@ -88,6 +82,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void showPassCodeActivity() {
+        showToast(getString(R.string.toast_welcome, userName));
         startPassCodeActivity();
     }
 
