@@ -30,7 +30,6 @@ import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
-import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -76,7 +75,7 @@ public class HomeActivity extends BaseActivity implements
 
         setToolbarTitle(getString(R.string.home));
 
-        clientId = getIntent().getExtras().getLong(Constants.CLIENT_ID);
+        clientId = preferencesHelper.getClientId();
         replaceFragment(HomeFragment.newInstance(clientId), false ,  R.id.container);
 
         setupNavigationBar();
@@ -197,7 +196,6 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        preferencesHelper.clear();
         detailsPresenter.detachView();
     }
 

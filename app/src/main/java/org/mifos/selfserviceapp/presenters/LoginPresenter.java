@@ -146,8 +146,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         getMvpView().hideProgress();
                         if (clientPage.getPageItems().size() != 0) {
                             long clientId = clientPage.getPageItems().get(0).getId();
-                            getMvpView().showClient(clientId);
                             preferencesHelper.setClientId(clientId);
+                            BaseApiManager.createService(preferencesHelper.getToken());
+                            getMvpView().showPassCodeActivity();
                         } else {
                             getMvpView().showMessage(context
                                     .getString(R.string.error_client_not_found));

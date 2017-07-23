@@ -40,6 +40,9 @@
             android:label="@string/saving_account_details"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activities.PassCodeActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity android:name=".ui.activities.LoanAccountContainerActivity"/>
 
         <activity android:name=".ui.activities.UserProfileActivity"/>
