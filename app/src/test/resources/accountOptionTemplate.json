@@ -1,0 +1,58 @@
+{
+  "fromAccountOptions": [
+    {
+      "accountId": 21,
+      "accountNo": "000000021",
+      "accountType": {
+        "id": 2,
+        "code": "accountType.savings",
+        "value": "Savings Account"
+      },
+      "clientId": 1,
+      "clientName": "Smith W R",
+      "officeId": 1,
+      "officeName": "Head Office"
+    },
+    {
+      "accountId": 22,
+      "accountNo": "000000022",
+      "accountType": {
+        "id": 2,
+        "code": "accountType.savings",
+        "value": "Savings Account"
+      },
+      "clientId": 1,
+      "clientName": "Smith W R",
+      "officeId": 1,
+      "officeName": "Head Office"
+    }
+  ],
+  "toAccountOptions": [
+    {
+      "accountId": 21,
+      "accountNo": "000000021",
+      "accountType": {
+        "id": 2,
+        "code": "accountType.savings",
+        "value": "Savings Account"
+      },
+      "clientId": 1,
+      "clientName": "Smith W R",
+      "officeId": 1,
+      "officeName": "Head Office"
+    },
+    {
+      "accountId": 22,
+      "accountNo": "000000022",
+      "accountType": {
+        "id": 2,
+        "code": "accountType.savings",
+        "value": "Savings Account"
+      },
+      "clientId": 1,
+      "clientName": "Smith W R",
+      "officeId": 1,
+      "officeName": "Head Office"
+    }
+  ]
+}

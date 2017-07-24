@@ -6,6 +6,8 @@ package org.mifos.selfserviceapp;
 
 public class FakeJsonName {
 
+    public static final String ACCOUNT_OPTION_TEMPLATE = "accountOptionTemplate.json";
+
     public static final String CLIENT_ACCOUNTS_JSON = "clientAccounts.json";
 
     public static final String CLIENT_SAVINGS_ACCOUNT_JSON = "clientSavingsAccounts.json";
@@ -48,4 +50,9 @@ public class FakeJsonName {
 
     public static final String USER_JSON = "user.json";
 
+    public static final String TRANSACTIONS_JSON = "transactions.json";
+
+    public static final String TRANFER_PAYLOAD_JSON = "transferPayload.json";
+
+    public static final String SAVINGS_WITH_ASSOCIATIONS = "SavingsAccountWithAssociations.json";
 }

@@ -1,0 +1,231 @@
+{
+  "id": 38,
+  "accountNo": "VS000000038",
+  "depositType": {
+    "id": 100,
+    "code": "depositAccountType.savingsDeposit",
+    "value": "Savings"
+  },
+  "clientId": 1,
+  "clientName": "Smith W R",
+  "savingsProductId": 1,
+  "savingsProductName": "Voluntary savings",
+  "fieldOfficerId": 0,
+  "status": {
+    "id": 300,
+    "code": "savingsAccountStatusType.active",
+    "value": "Active",
+    "submittedAndPendingApproval": false,
+    "approved": false,
+    "rejected": false,
+    "withdrawnByApplicant": false,
+    "active": true,
+    "closed": false,
+    "prematureClosed": false,
+    "transferInProgress": false,
+    "transferOnHold": false,
+    "matured": false
+  },
+  "subStatus": {
+    "id": 0,
+    "code": "SavingsAccountSubStatusEnum.none",
+    "value": "None",
+    "none": true,
+    "inactive": false,
+    "dormant": false,
+    "escheat": false
+  },
+  "timeline": {
+    "submittedOnDate": [
+      2016,
+      10,
+      11
+    ],
+    "submittedByUsername": "mifos",
+    "submittedByFirstname": "App",
+    "submittedByLastname": "Administrator",
+    "approvedOnDate": [
+      2016,
+      10,
+      11
+    ],
+    "approvedByUsername": "mifos",
+    "approvedByFirstname": "App",
+    "approvedByLastname": "Administrator",
+    "activatedOnDate": [
+      2016,
+      10,
+      11
+    ],
+    "activatedByUsername": "mifos",
+    "activatedByFirstname": "App",
+    "activatedByLastname": "Administrator"
+  },
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 2,
+    "inMultiplesOf": 0,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "nominalAnnualInterestRate": 1.000000,
+  "interestCompoundingPeriodType": {
+    "id": 1,
+    "code": "savings.interest.period.savingsCompoundingInterestPeriodType.daily",
+    "value": "Daily"
+  },
+  "interestPostingPeriodType": {
+    "id": 6,
+    "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.biannual",
+    "value": "BiAnnual"
+  },
+  "interestCalculationType": {
+    "id": 1,
+    "code": "savingsInterestCalculationType.dailybalance",
+    "value": "Daily Balance"
+  },
+  "interestCalculationDaysInYearType": {
+    "id": 365,
+    "code": "savingsInterestCalculationDaysInYearType.days365",
+    "value": "365 Days"
+  },
+  "minRequiredOpeningBalance": 1000.000000,
+  "lockinPeriodFrequency": 1,
+  "lockinPeriodFrequencyType": {
+    "id": 1,
+    "code": "savings.lockin.savingsPeriodFrequencyType.weeks",
+    "value": "Weeks"
+  },
+  "withdrawalFeeForTransfers": false,
+  "allowOverdraft": false,
+  "enforceMinRequiredBalance": false,
+  "withHoldTax": false,
+  "lastActiveTransactionDate": [
+    2017,
+    7,
+    2
+  ],
+  "isDormancyTrackingActive": false,
+  "summary": {
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "inMultiplesOf": 0,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "totalDeposits": 25372823.040000,
+    "totalWithdrawals": 55223.000000,
+    "totalInterestEarned": 21138.150000,
+    "totalInterestPosted": 971.890000,
+    "accountBalance": 25315171.930000,
+    "totalPenaltyCharge": 3400.000000,
+    "totalOverdraftInterestDerived": 0,
+    "interestNotPosted": 20166.260000,
+    "lastInterestCalculationDate": [
+      2017,
+      7,
+      21
+    ]
+  },
+  "transactions": [
+    {
+      "id": 13140,
+      "transactionType": {
+        "id": 7,
+        "code": "savingsAccountTransactionType.payCharge",
+        "value": "Pay Charge",
+        "deposit": false,
+        "dividendPayout": false,
+        "withdrawal": false,
+        "interestPosting": false,
+        "feeDeduction": true,
+        "initiateTransfer": false,
+        "approveTransfer": false,
+        "withdrawTransfer": false,
+        "rejectTransfer": false,
+        "overdraftInterest": false,
+        "writtenoff": false,
+        "overdraftFee": true,
+        "withholdTax": false,
+        "escheat": false
+      },
+      "accountId": 38,
+      "accountNo": "VS000000038",
+      "date": [
+        2017,
+        7,
+        21
+      ],
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 170.000000,
+      "runningBalance": 25315171.930000,
+      "reversed": false,
+      "submittedOnDate": [
+        2017,
+        7,
+        21
+      ],
+      "interestedPostedAsOn": false
+    },
+    {
+      "id": 12965,
+      "transactionType": {
+        "id": 7,
+        "code": "savingsAccountTransactionType.payCharge",
+        "value": "Pay Charge",
+        "deposit": false,
+        "dividendPayout": false,
+        "withdrawal": false,
+        "interestPosting": false,
+        "feeDeduction": true,
+        "initiateTransfer": false,
+        "approveTransfer": false,
+        "withdrawTransfer": false,
+        "rejectTransfer": false,
+        "overdraftInterest": false,
+        "writtenoff": false,
+        "overdraftFee": true,
+        "withholdTax": false,
+        "escheat": false
+      },
+      "accountId": 38,
+      "accountNo": "VS000000038",
+      "date": [
+        2017,
+        7,
+        14
+      ],
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 170.000000,
+      "runningBalance": 25315341.930000,
+      "reversed": false,
+      "submittedOnDate": [
+        2017,
+        7,
+        14
+      ],
+      "interestedPostedAsOn": false
+    }
+  ]
+}
