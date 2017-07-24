@@ -3,15 +3,19 @@ package org.mifos.selfserviceapp;
 import com.google.gson.reflect.TypeToken;
 
 import org.mifos.selfserviceapp.models.Page;
+import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
+import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
 import org.mifos.selfserviceapp.models.beneficary.BeneficiaryPayload;
 import org.mifos.selfserviceapp.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
+import org.mifos.selfserviceapp.models.payload.TransferPayload;
+import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
 
@@ -117,5 +121,25 @@ public class FakeRemoteDataSource {
     public static Page<Client> getNoClients() {
         return mTestDataFactory.getListTypePojo(new TypeToken<Page<Client>>() {
         }, FakeJsonName.CLIENTS_NOT_FOUND_JSON);
+    }
+
+    public static Page<Transaction> getTransactions() {
+        return mTestDataFactory.getListTypePojo(new TypeToken<Page<Transaction>>() {
+        }, FakeJsonName.TRANSACTIONS_JSON);
+    }
+
+    public static SavingsWithAssociations getSavingsWithAssociations() {
+        return mTestDataFactory.getObjectTypePojo(SavingsWithAssociations.class,
+                FakeJsonName.SAVINGS_WITH_ASSOCIATIONS);
+    }
+
+    public static AccountOptionsTemplate getAccountOptionsTemplate() {
+        return mTestDataFactory.getObjectTypePojo(AccountOptionsTemplate.class,
+                FakeJsonName.ACCOUNT_OPTION_TEMPLATE);
+    }
+
+    public static TransferPayload getTransferPayload() {
+        return mTestDataFactory.getObjectTypePojo(TransferPayload.class,
+                FakeJsonName.TRANFER_PAYLOAD_JSON);
     }
 }

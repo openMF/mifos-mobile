@@ -1,0 +1,15 @@
+{
+  "fromOfficeId": 1,
+  "fromClientId": 1,
+  "fromAccountType": 2,
+  "fromAccountId": 1,
+  "toOfficeId": 1,
+  "toClientId": 2,
+  "toAccountType": 2,
+  "toAccountId": 2,
+  "dateFormat": "dd MMMM yyyy",
+  "locale": "en",
+  "transferDate": "01 August 2011",
+  "transferAmount": "112.45",
+  "transferDescription": "A description of the transfer"
+}
