@@ -146,7 +146,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     void deposit() {
         if (status.getActive()) {
             ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
-                    .newInstance(savingsId, Constants.TRANSFER_PAY_FROM), true, R.id.container);
+                    .newInstance(savingsId, Constants.TRANSFER_PAY_TO), true, R.id.container);
         } else {
             Toaster.show(rootView, getString(R.string.account_not_active_to_perform_deposit));
         }
