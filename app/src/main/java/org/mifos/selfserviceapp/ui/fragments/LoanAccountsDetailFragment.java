@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
@@ -169,7 +168,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
     @OnClick(R.id.btn_make_payment)
     public void onMakePaymentClicked() {
-        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+        ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
+                .newInstance(loanId, Constants.TRANSFER_PAY_TO), true, R.id.container);
     }
 
     @OnClick(R.id.btn_loan_summary)
