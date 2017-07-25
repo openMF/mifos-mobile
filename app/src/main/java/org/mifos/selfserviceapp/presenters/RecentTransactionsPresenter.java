@@ -57,11 +57,26 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
         subscriptions.unsubscribe();
     }
 
+    /**
+     * Used to call function {@code loadRecentTransactions(int offset, int limit)} which is used for
+     * fetching RecentTransaction from server.
+     * @param loadmore Set {@code false} if calling First time and {@code true} if you need to fetch
+     *                 more {@link Transaction}
+     * @param offset Set {@code 0} if calling first time or set length of {@code totalItemsCount} if
+     *               you need to fetch more {@link Transaction}
+     */
     public void loadRecentTransactions(boolean loadmore, int offset) {
         this.loadmore = loadmore;
         loadRecentTransactions(offset, limit);
     }
 
+    /**
+     * Used to load List of {@link Transaction} from server depending upon the {@code offset} and
+     * the max {@code limit} and notifies the view to display it. And in case of any
+     * error during fetching the required details it notifies the view.
+     * @param offset Starting position for fetching the list of {@link Transaction}
+     * @param limit Maximum size of List of {@link Transaction} which is fetched from server
+     */
     public void loadRecentTransactions(int offset, int limit) {
         checkViewAttached();
         getMvpView().showProgress();

@@ -46,12 +46,20 @@ public class BeneficiaryAddOptionsFragment extends BaseFragment {
         return rootView;
     }
 
+    /**
+     * Opens {@link BeneficiaryApplicationFragment} with {@link BeneficiaryState} as
+     * {@code BeneficiaryState.CREATE_MANUAL}
+     */
     @OnClick(R.id.ll_add_beneficiary_manually)
     public void addManually() {
         ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
                 newInstance(BeneficiaryState.CREATE_MANUAL, null), true, R.id.container);
     }
 
+    /**
+     * It first checks CAMERA runtime permission and if it returns true then it opens
+     * {@link QrCodeReaderFragment} , if it returns false then ask for permissions.
+     */
     @OnClick(R.id.ll_add_beneficiary_qrcode)
     public void addUsingQrCode() {
 
@@ -64,6 +72,9 @@ public class BeneficiaryAddOptionsFragment extends BaseFragment {
         }
     }
 
+    /**
+     * Uses {@link CheckSelfPermissionAndRequest} to check for runtime permissions
+     */
     private void requestPermission() {
         CheckSelfPermissionAndRequest.requestPermission(
                 (BaseActivity) getActivity(),

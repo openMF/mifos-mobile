@@ -26,6 +26,15 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
 
+    /**
+     * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
+     * {@link DataManager} and {@link Context}.
+     *
+     * @param dataManager DataManager class that provides access to the data
+     *                    via the API.
+     * @param context     Context of the view attached to the presenter. In this case
+     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     */
     @Inject
     public LoanAccountWithdrawPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
@@ -44,7 +53,13 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
         subscriptions.clear();
     }
 
-
+    /**
+     * Used for withdrawing a LoanAccount using the given {@code loanId} and notifies the view after
+     * successful withdrawing of a LoanAccount. And in case of any error during withdrawing, it
+     * notifies the view.
+     * @param loanId Id of LoanAccount which you want to delete
+     * @param loanWithdraw {@link LoanWithdraw} for the Withdrawing LoanAccount
+     */
     public void withdrawLoanAccount(long loanId, LoanWithdraw loanWithdraw) {
         checkViewAttached();
         getMvpView().showProgress();

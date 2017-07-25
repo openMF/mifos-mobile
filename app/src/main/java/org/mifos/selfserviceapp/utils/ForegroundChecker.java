@@ -28,6 +28,11 @@ public class ForegroundChecker {
     private Runnable check;
     private long backgroundTimeStart;
 
+    /**
+     * Used to initialize {@code instance} of {@link ForegroundChecker}
+     * @param context Application Content
+     * @return Instance of {@link ForegroundChecker}
+     */
     public static ForegroundChecker init(Context context) {
         if (instance == null) {
             instance = new ForegroundChecker(context);
@@ -35,19 +40,35 @@ public class ForegroundChecker {
         return instance;
     }
 
+    /**
+     * Provides instance of {@link ForegroundChecker}
+     * @return Instance of {@link ForegroundChecker}
+     */
     public static ForegroundChecker get() {
         return instance;
     }
 
+    /**
+     * Initializes {@link ForegroundChecker}
+     * @param context Application Context
+     */
     private ForegroundChecker(Context context) {
         backgroundTimeStart = -1;
         preferencesHelper = new PreferencesHelper(context);
     }
 
+    /**
+     * Returns True if application is in foreground
+     * @return State of Application
+     */
     public boolean isForeground() {
         return foreground;
     }
 
+    /**
+     * Returns True if application is in background
+     * @return State of Application
+     */
     public boolean isBackground() {
         return !foreground;
     }
@@ -56,6 +77,11 @@ public class ForegroundChecker {
         this.listener = listener;
     }
 
+    /**
+     * Called in {@link org.mifos.selfserviceapp.ui.activities.base.BaseActivity}<br>
+     * It calls {@code onBecameForeground()} if {@code secondsInBackground} >=
+     * {@code MIN_BACKGROUND_THRESHOLD}
+     */
     public void onActivityResumed() {
         paused = false;
         boolean wasBackground = !foreground;
@@ -76,6 +102,10 @@ public class ForegroundChecker {
         }
     }
 
+    /**
+     * Called in {@link org.mifos.selfserviceapp.ui.activities.base.BaseActivity}<br>
+     * It executes a Handler after {@code CHECK_DELAY} and then sets {@code foreground} to false
+     */
     public void onActivityPaused() {
         paused = true;
 

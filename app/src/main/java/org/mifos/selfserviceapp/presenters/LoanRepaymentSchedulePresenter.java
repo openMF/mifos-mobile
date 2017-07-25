@@ -25,6 +25,14 @@ public class LoanRepaymentSchedulePresenter extends BasePresenter<LoanRepaymentS
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
 
+    /**
+     * Initialises the AccountsPresenter by automatically injecting an instance of
+     * {@link Context} and {@link DataManager} .
+     *
+     * @param context     Context of the view attached to the presenter.
+     * @param dataManager DataManager class that provides access to the data
+     *                    via the API.
+     */
     @Inject
     public LoanRepaymentSchedulePresenter(@ApplicationContext Context context,
             DataManager dataManager) {
@@ -44,6 +52,12 @@ public class LoanRepaymentSchedulePresenter extends BasePresenter<LoanRepaymentS
         subscriptions.unsubscribe();
     }
 
+    /**
+     * Load details of a particular loan account with its Repayment Schedule as
+     * {@link LoanWithAssociations} from the server and notify the view to display it. Notify the
+     * view, in case there is any error in fetching the details from server.
+     * @param loanId Id of Loan Account
+     */
     public void loanLoanWithAssociations(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();

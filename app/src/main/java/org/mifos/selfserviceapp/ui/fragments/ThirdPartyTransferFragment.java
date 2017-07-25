@@ -130,6 +130,9 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         return rootView;
     }
 
+    /**
+     * Setting up basic components
+     */
     @Override
     public void showUserInterface() {
         payFromAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
@@ -150,6 +153,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         pvOne.setCurrentActive();
     }
 
+    /**
+     * Checks validation of {@code etRemark} and then opens {@link TransferProcessFragment} for
+     * initiating the transfer
+     */
     @OnClick(R.id.btn_review_transfer)
     public void reviewTransfer() {
         if (etAmount.getText().toString().equals("")) {
@@ -191,11 +198,20 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     }
 
+    /**
+     * Shows a {@link android.support.design.widget.Snackbar} with {@code message}
+     * @param msg String to be shown
+     */
     @Override
     public void showToaster(String msg) {
         Toaster.show(rootView, msg);
     }
 
+    /**
+     * Provides with {@code accountOptionsTemplate} fetched from server which is used to update
+     * {@code listPayFrom}
+     * @param accountOptionsTemplate Template for account transfer
+     */
     @Override
     public void showThirdPartyTransferTemplate(AccountOptionsTemplate accountOptionsTemplate) {
         this.accountOptionsTemplate = accountOptionsTemplate;
@@ -205,6 +221,11 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     }
 
+    /**
+     * Provides with {@code beneficiaries} fetched from server which is used to update
+     * {@code listBeneficiary}
+     * @param beneficiaries List of {@link Beneficiary} linked with user's account
+     */
     @Override
     public void showBeneficiaryList(List<Beneficiary> beneficiaries) {
         listBeneficiary.addAll(presenter.getAccountNumbersFromBeneficiaries(beneficiaries));
@@ -212,6 +233,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     }
 
 
+    /**
+     *  Disables {@code spPayFrom} {@link Spinner} and sets {@code pvOne} to completed and make
+     * {@code pvThree} pvTwo
+     */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
         pvOne.setCurrentCompeleted();
@@ -224,6 +249,12 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         spPayFrom.setEnabled(false);
     }
 
+
+    /**
+     * Checks validation of {@code spBeneficiary} {@link Spinner}.<br>
+     *  Disables {@code spBeneficiary} {@link Spinner} and sets {@code pvTwo} to completed and make
+     * {@code pvThree} active
+     */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
         if (spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
@@ -241,6 +272,11 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         spBeneficiary.setEnabled(false);
     }
 
+    /**
+     * Checks validation of {@code etAmount} {@link EditText}.<br>
+     * Disables {@code etAmount} and sets {@code pvThree} to completed and make
+     * {@code pvFour} active
+     */
     @OnClick(R.id.btn_amount)
     public void amountSet() {
 
@@ -269,6 +305,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         etAmount.setEnabled(false);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param msg Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String msg) {
         Toaster.show(rootView, msg);
@@ -286,6 +326,13 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         layoutMakeTransfer.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Callback for {@code spPayFrom} and {@code spBeneficiary}
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {

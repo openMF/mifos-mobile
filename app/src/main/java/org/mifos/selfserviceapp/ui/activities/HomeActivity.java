@@ -83,6 +83,11 @@ public class HomeActivity extends BaseActivity implements
         setupNavigationBar();
     }
 
+    /**
+     * Called whenever any item is selected in {@link NavigationView}
+     * @param item {@link MenuItem} which is selected by the user
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // select which item to open
@@ -151,6 +156,10 @@ public class HomeActivity extends BaseActivity implements
         setupHeaderView(navigationView.getHeaderView(0));
     }
 
+    /**
+     * Used for initializing values for HeaderView of NavigationView
+     * @param headerView Header view of NavigationView
+     */
     private void setupHeaderView(View headerView) {
         tvUsername = (TextView) headerView.findViewById(R.id.tv_user_name);
         ivUserProfilePicture = (CircularImageView) headerView.findViewById(R.id.iv_user_image);
@@ -167,11 +176,19 @@ public class HomeActivity extends BaseActivity implements
 
     }
 
+    /**
+     * Shows Client username in HeaderView of NavigationView
+     * @param client Contains details about the client
+     */
     @Override
     public void showUserDetails(Client client) {
         tvUsername.setText(client.getDisplayName());
     }
 
+    /**
+     * Displays UserProfile Picture in HeaderView in NavigationView
+     * @param bitmap UserProfile Picture
+     */
     @Override
     public void showUserImage(final Bitmap bitmap) {
         runOnUiThread(new Runnable() {
@@ -192,6 +209,10 @@ public class HomeActivity extends BaseActivity implements
         //empty
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message contains information about error occurred
+     */
     @Override
     public void showError(String message) {
         showToast(message, Toast.LENGTH_SHORT);
@@ -203,6 +224,9 @@ public class HomeActivity extends BaseActivity implements
         detailsPresenter.detachView();
     }
 
+    /**
+     * Handling back press
+     */
     @Override
     public void onBackPressed() {
 

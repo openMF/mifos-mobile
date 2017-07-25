@@ -74,11 +74,17 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         }
     }
 
+    /**
+     * Called when Skip button clicked, starts {@link HomeActivity}
+     */
     @OnClick(R.id.btn_skip)
     public void skip() {
         startHomeActivity();
     }
 
+    /**
+     * Saves the passcode by encrypting it which we got from {@link PassCodeView}
+     */
     @OnClick(R.id.btn_save)
     public void savePassCode() {
         if (isPassCodeLengthCorrect()) {
@@ -88,6 +94,10 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
     }
 
 
+    /**
+     * It is a callback for {@link PassCodeView}, provides with the passcode entered by user
+     * @param passcode
+     */
     @Override
     public void passCodeEntered(String passcode) {
 
@@ -117,12 +127,19 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         }
     }
 
+    /**
+     * Clears preferences data and starts {@link LoginActivity}
+     */
     @OnClick(R.id.btn_forgot_passcode)
     public void forgotPassCode() {
         preferencesHelper.clear();
         startLoginActivity();
     }
 
+    /**
+     * Checks for internet availability
+     * @return Returns true if connected else returns false
+     */
     private boolean isInternetAvailable() {
         if (Network.isConnected(this)) {
             return true;
@@ -187,6 +204,9 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         passCodeView.backSpace();
     }
 
+    /**
+     * Changes PasscodeView to text if it was hidden and vice a versa
+     */
     @OnClick(R.id.iv_visibility)
     public void visibilityChange() {
         passCodeView.revertPassCodeVisibility();
@@ -198,6 +218,11 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
                     R.color.gray_dark));
         }
     }
+
+    /**
+     * Checks whether passcode entered is of correct length
+     * @return Returns true if passcode lenght is 4 else shows message
+     */
     private boolean isPassCodeLengthCorrect() {
         if (passCodeView.getPasscode().length() == 4) {
             return true;
@@ -206,6 +231,9 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         return false;
     }
 
+    /**
+     * Starts {@link HomeActivity} only if {@code isInitialScreen} is true and ends this activity
+     */
     private void startHomeActivity() {
         if (isInitialScreen) {
             startActivity(new Intent(PassCodeActivity.this, HomeActivity.class));
@@ -213,6 +241,9 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         finish();
     }
 
+    /**
+     * Starting {@link LoginActivity} by clearing all other activities earlier opened.
+     */
     private void startLoginActivity() {
         Intent i = new Intent(PassCodeActivity.this, LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -220,9 +251,11 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         finish();
     }
 
+    /**
+     * Enables Backpress only when {@code isInitialScreen} is true
+     */
     @Override
     public void onBackPressed() {
-        //enabling back press only for initial login.
         if (isInitialScreen) {
             super.onBackPressed();
         }

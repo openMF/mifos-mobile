@@ -117,6 +117,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         return rootView;
     }
 
+    /**
+     * Setting up {@code accountTypeAdapter} and {@code} spAccountType
+     */
     @Override
     public void showUserInterface() {
         accountTypeAdapter = new ArrayAdapter<String>(getActivity(),
@@ -126,6 +129,12 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         spAccountType.setAdapter(accountTypeAdapter);
     }
 
+    /**
+     * Fetches {@link BeneficiaryTemplate} from server and further updates the UI according to
+     * {@link BeneficiaryState} which is initialized in {@code newInstance()} as
+     * {@code beneficiaryState}
+     * @param beneficiaryTemplate {@link BeneficiaryTemplate} fetched from server
+     */
     @Override
     public void showBeneficiaryTemplate(BeneficiaryTemplate beneficiaryTemplate) {
         this.beneficiaryTemplate = beneficiaryTemplate;
@@ -152,6 +161,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         }
     }
 
+    /**
+     * Used for submitting a new or updating beneficiary application
+     */
     @OnClick(R.id.btn_beneficiary_submit)
     public void submitBeneficiary() {
         if (accountTypeId == -1) {
@@ -178,6 +190,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
 
     }
 
+    /**
+     * Submit a new Beneficiary application
+     */
     private void submitNewBeneficiaryApplication() {
         BeneficiaryPayload beneficiaryPayload = new BeneficiaryPayload();
         beneficiaryPayload.setAccountNumber(etAccountNumber.getText().toString());
@@ -188,6 +203,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         presenter.createBeneficiary(beneficiaryPayload);
     }
 
+    /**
+     * Updates an existing beneficiary application
+     */
     private void submitUpdateBeneficiaryApplication() {
         BeneficiaryUpdatePayload payload = new BeneficiaryUpdatePayload();
         payload.setName(etBeneficiaryName.getText().toString());
@@ -195,6 +213,10 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         presenter.updateBeneficiary(beneficiary.getId(), payload);
     }
 
+    /**
+     * Displays a {@link android.support.design.widget.Snackbar} on successfully creation of
+     * Beneficiary and pops fragments in order to go back to {@link BeneficiaryListFragment}
+     */
     @Override
     public void showBeneficiaryCreatedSuccessfully() {
         Toaster.show(rootView, getString(R.string.beneficiary_created_successfully));
@@ -202,6 +224,10 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    /**
+     * Displays a {@link android.support.design.widget.Snackbar} on successfully updation of
+     * Beneficiary and pops fragments in order to go back to {@link BeneficiaryListFragment}
+     */
     @Override
     public void showBeneficiaryUpdatedSuccessfully() {
         Toaster.show(rootView, getString(R.string.beneficiary_updated_successfully));
@@ -209,6 +235,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         getActivity().getSupportFragmentManager().popBackStack();
 
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -220,6 +247,10 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
 
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param msg Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String msg) {
         Toaster.show(rootView, msg);
