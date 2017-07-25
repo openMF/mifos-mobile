@@ -1,0 +1,95 @@
+{
+  "totalFilteredRecords": 3,
+  "pageItems": [
+    {
+      "id": 96,
+      "officeId": 1,
+      "officeName": "Head Office",
+      "type": {
+        "id": 2,
+        "code": "clientTransactionType.waiveCharge",
+        "value": "WAIVE_CHARGE"
+      },
+      "date": [
+        2017,
+        7,
+        1
+      ],
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 33.000000,
+      "submittedOnDate": [
+        2017,
+        7,
+        1
+      ],
+      "reversed": false
+    },
+    {
+      "id": 95,
+      "officeId": 1,
+      "officeName": "Head Office",
+      "type": {
+        "id": 1,
+        "code": "clientTransactionType.payCharge",
+        "value": "PAY_CHARGE"
+      },
+      "date": [
+        2017,
+        6,
+        30
+      ],
+      "currency": {
+        "code": "KES",
+        "name": "Kenyan Shilling",
+        "decimalPlaces": 2,
+        "displaySymbol": "KSh",
+        "nameCode": "currency.KES",
+        "displayLabel": "Kenyan Shilling (KSh)"
+      },
+      "amount": 66.000000,
+      "submittedOnDate": [
+        2017,
+        7,
+        1
+      ],
+      "reversed": false
+    },
+    {
+      "id": 92,
+      "officeId": 1,
+      "officeName": "Head Office",
+      "type": {
+        "id": 1,
+        "code": "clientTransactionType.payCharge",
+        "value": "PAY_CHARGE"
+      },
+      "date": [
+        2017,
+        6,
+        30
+      ],
+      "currency": {
+        "code": "KES",
+        "name": "Kenyan Shilling",
+        "decimalPlaces": 2,
+        "displaySymbol": "KSh",
+        "nameCode": "currency.KES",
+        "displayLabel": "Kenyan Shilling (KSh)"
+      },
+      "amount": 60.000000,
+      "submittedOnDate": [
+        2017,
+        6,
+        30
+      ],
+      "reversed": true
+    }
+  ]
+}
