@@ -21,6 +21,7 @@ import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.UserDetailsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
+import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
@@ -98,7 +99,8 @@ public class HomeActivity extends BaseActivity implements
                         true, R.id.container);
                 break;
             case R.id.item_charges:
-                replaceFragment(ClientChargeFragment.newInstance(clientId), true,  R.id.container);
+                replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
+                        R.id.container);
                 break;
             case R.id.item_third_party_transfer:
                 replaceFragment(ThirdPartyTransferFragment.newInstance(), true,  R.id.container);
