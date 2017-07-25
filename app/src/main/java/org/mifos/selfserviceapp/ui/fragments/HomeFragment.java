@@ -120,27 +120,47 @@ public class HomeFragment extends BaseFragment implements HomeView,
         }
     }
 
+    /**
+     * Opens {@link ClientAccountsFragment} according to the {@code accountType} provided
+     * @param accountType Enum of {@link AccountType}
+     */
     public void openAccount(AccountType accountType) {
         ((BaseActivity) getActivity()).replaceFragment(
                 ClientAccountsFragment.newInstance(accountType), true, R.id.container);
     }
 
+    /**
+     * Provides {@code totalLoanAmount} fetched from server
+     * @param totalLoanAmount Total Loan amount
+     */
     @Override
     public void showLoanAccountDetails(double totalLoanAmount) {
         tvLoanTotalAmount.setText(getString(R.string.double_amount, totalLoanAmount));
     }
 
+    /**
+     * Provides {@code totalSavingAmount} fetched from server
+     * @param totalSavingAmount Total Saving amount
+     */
     @Override
     public void showSavingAccountDetails(double totalSavingAmount) {
         tvSavingTotalAmount.setText(getString(R.string.double_amount, totalSavingAmount));
     }
 
+    /**
+     * Fetches Client details and display clientName
+     * @param client Details about client
+     */
     @Override
     public void showUserDetails(Client client) {
         ((TextView) toolbarView.findViewById(R.id.tv_user_name)).setText(
                 getString(R.string.hello_client, client.getDisplayName()));
     }
 
+    /**
+     * Provides with Client image fetched from server
+     * @param bitmap Client Image
+     */
     @Override
     public void showUserImage(final Bitmap bitmap) {
         getActivity().runOnUiThread(new Runnable() {
@@ -159,6 +179,9 @@ public class HomeFragment extends BaseFragment implements HomeView,
         });
     }
 
+    /**
+     * Reverses the state of Account Overview section i.e. visible to hidden or vice a versa
+     */
     @OnClick(R.id.iv_visibility)
     public void reverseDetailState() {
         if (isDetailVisible) {
@@ -172,21 +195,34 @@ public class HomeFragment extends BaseFragment implements HomeView,
         }
     }
 
+    /**
+     * Makes Overview state visible
+     */
     private void showOverviewState() {
         ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray_dark));
         llAccountDetail.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hides Overview state
+     */
     private void hideOverviewState() {
         ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_grey));
         llAccountDetail.setVisibility(View.GONE);
     }
 
+
+    /**
+     * Calls {@code openAccount()} for opening {@link ClientAccountsFragment}
+     */
     @OnClick(R.id.ll_accounts)
     public void accountsClicked() {
         openAccount(AccountType.SAVINGS);
     }
 
+    /**
+     * Shows a dialog with options: Normal Transfer and Third Party Transfer
+     */
     @OnClick(R.id.ll_transfer)
     public void transferClicked() {
         String[] transferTypes = {getString(R.string.transfer), getString(R.string.
@@ -210,18 +246,28 @@ public class HomeFragment extends BaseFragment implements HomeView,
                 .show();
     }
 
+    /**
+     * Opens {@link ClientChargeFragment} to display all Charges associated with client's account
+     */
     @OnClick(R.id.ll_charges)
     public void chargesClicked() {
         ((HomeActivity) getActivity()).replaceFragment(ClientChargeFragment.newInstance(clientId,
                 ChargeType.CLIENT), true,  R.id.container);
     }
 
+    /**
+     * Opens {@link LoanApplicationFragment} to apply for a loan
+     */
     @OnClick(R.id.ll_apply_for_loan)
     public void applyForLoan() {
         ((HomeActivity) getActivity()).replaceFragment(LoanApplicationFragment.
                         newInstance(LoanState.CREATE), true,  R.id.container);
     }
 
+    /**
+     * Opens {@link BeneficiaryListFragment} which contains list of Beneficiaries associated with
+     * Client's account
+     */
     @OnClick(R.id.ll_beneficiaries)
     public void beneficiaries() {
         ((HomeActivity) getActivity()).replaceFragment(BeneficiaryListFragment.
@@ -233,21 +279,35 @@ public class HomeFragment extends BaseFragment implements HomeView,
 
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param errorMessage Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String errorMessage) {
         Toaster.show(rootView, errorMessage);
     }
 
+    /**
+     * Shows {@link SwipeRefreshLayout}
+     */
     @Override
     public void showProgress() {
         slHomeContainer.setRefreshing(true);
     }
 
+    /**
+     * Hides {@link SwipeRefreshLayout}
+     */
     @Override
     public void hideProgress() {
         slHomeContainer.setRefreshing(false);
     }
 
+    /**
+     * Add a custom layout in Toolbar and then fetching client's details and image to show using
+     * {@code setToolbarLayoutForHome()}
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -256,12 +316,19 @@ public class HomeFragment extends BaseFragment implements HomeView,
         presenter.getUserImage();
     }
 
+    /**
+     * Removing the custom layout from Toolbar and setting everything to default using
+     * {@code setToolBarLayoutForOthers()}
+     */
     @Override
     public void onPause() {
         super.onPause();
         setToolBarLayoutForOthers();
     }
 
+    /**
+     * Adding a Custom View in toolbar to display User's image and Name
+     */
     public void setToolbarLayoutForHome() {
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         toolbarCustomView = mInflater.inflate(R.layout.toolbar_home, null);
@@ -280,6 +347,9 @@ public class HomeFragment extends BaseFragment implements HomeView,
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+    /**
+     * Removes the custom layout added in Toolbar and setting everything to default
+     */
     public void setToolBarLayoutForOthers() {
 
         toolBarLayoutParams.height = toolbarDefaultHeight;

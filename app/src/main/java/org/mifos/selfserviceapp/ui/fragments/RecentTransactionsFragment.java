@@ -88,6 +88,9 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         return rootView;
     }
 
+    /**
+     * Setting up {@code rvRecentTransactions}
+     */
     @Override
     public void showUserInterface() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -108,6 +111,9 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         swipeTransactionContainer.setOnRefreshListener(this);
     }
 
+    /**
+     * Refreshes the List of {@link Transaction}
+     */
     @Override
     public void onRefresh() {
         resetUI();
@@ -119,11 +125,20 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         Toaster.show(rootView, message, Toaster.LONG);
     }
 
+    /**
+     * Updates {@code recentTransactionsListAdapter} with {@code recentTransactionList} fetched from
+     * server
+     * @param recentTransactionList List of {@link Transaction}
+     */
     @Override
     public void showRecentTransactions(List<Transaction> recentTransactionList) {
         recentTransactionsListAdapter.setTransactions(recentTransactionList);
     }
 
+    /**
+     * Appends more Transactions in {@code recentTransactionList}
+     * @param transactions List of {@link Transaction}
+     */
     @Override
     public void showLoadMoreRecentTransactions(List<Transaction> transactions) {
         this.recentTransactionList.addAll(recentTransactionList);
@@ -136,6 +151,9 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         layoutError.setVisibility(View.GONE);
     }
 
+    /**
+     * Hides {@code rvRecentTransactions} and shows a textview prompting no transactions
+     */
     @Override
     public void showEmptyTransaction() {
         rvRecentTransactions.setVisibility(View.GONE);
@@ -143,6 +161,10 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         tvStatus.setText(getString(R.string.empty_transactions));
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showErrorFetchingRecentTransactions(String message) {
         showMessage(message);

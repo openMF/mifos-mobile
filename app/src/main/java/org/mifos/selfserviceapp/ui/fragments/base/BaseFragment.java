@@ -19,24 +19,42 @@ public class BaseFragment extends Fragment {
         progressBarHandler = new ProgressBarHandler(getActivity());
     }
 
+    /**
+     * Used to show Progress bar. {@code callback} is implemented in
+     * {@link org.mifos.selfserviceapp.ui.activities.base.BaseActivity}
+     * @param message Message you want to display
+     */
     protected void showMifosProgressDialog(String message) {
         if (callback != null)
             callback.showProgressDialog(message);
     }
 
+    /**
+     * Used for hiding the progressbar.
+     */
     protected void hideMifosProgressDialog() {
         if (callback != null)
             callback.hideProgressDialog();
     }
 
+    /**
+     * Used for setting title of Toolbar
+     * @param title String you want to display as title
+     */
     protected void setToolbarTitle(String title) {
         callback.setToolbarTitle(title);
     }
 
+    /**
+     * Displays {@link ProgressBarHandler}
+     */
     protected void showProgressBar() {
         progressBarHandler.show();
     }
 
+    /**
+     * Hides {@link ProgressBarHandler}
+     */
     protected void hideProgressBar() {
         progressBarHandler.hide();
     }

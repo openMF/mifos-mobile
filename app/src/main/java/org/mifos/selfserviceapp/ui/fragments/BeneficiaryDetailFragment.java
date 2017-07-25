@@ -90,6 +90,9 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
         return rootView;
     }
 
+    /**
+     * Used for setting up of User Interface
+     */
     @Override
     public void showUserInterface() {
         tvName.setText(beneficiary.getName());
@@ -139,22 +142,36 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
         return true;
     }
 
+    /**
+     * Shows a {@link android.support.design.widget.Snackbar} on successfull deletion of a
+     * Beneficiary and then pops current fragment
+     */
     @Override
     public void showBeneficiaryDeletedSuccessfully() {
         Toaster.show(rootView, getString(R.string.beneficiary_deleted_successfully));
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param msg Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String msg) {
         Toaster.show(rootView, msg);
     }
 
+    /**
+     * Shows {@link org.mifos.selfserviceapp.utils.ProgressBarHandler}
+     */
     @Override
     public void showProgress() {
         showProgressBar();
     }
 
+    /**
+     * Hides {@link org.mifos.selfserviceapp.utils.ProgressBarHandler}
+     */
     @Override
     public void hideProgress() {
         hideProgressBar();

@@ -132,6 +132,10 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
         return rootView;
     }
 
+    /**
+     * Sets basic information about a Loan Account
+     * @param loanAccount object containing details of each loan account,
+     */
     @Override
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
         llLoanSummary.setVisibility(View.VISIBLE);
@@ -167,6 +171,10 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
 
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showErrorFetchingLoanAccountsDetail(String message) {
         Toaster.show(rootView, message, Toast.LENGTH_SHORT);

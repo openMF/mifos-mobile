@@ -34,6 +34,14 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
 
+    /**
+     * Initialises the AccountsPresenter by automatically injecting an instance of
+     * {@link Context} and {@link DataManager} .
+     *
+     * @param context     Context of the view attached to the presenter.
+     * @param dataManager DataManager class that provides access to the data
+     *                    via the API.
+     */
     @Inject
     public AccountsPresenter(@ApplicationContext Context context, DataManager dataManager) {
         super(context);
@@ -52,6 +60,11 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
         subscriptions.unsubscribe();
     }
 
+    /**
+     * Loads savings, loan and share accounts associated with the Client from the server
+     * and notifies the view to display it. And in case of any error during fetching the required
+     * details it notifies the view.
+     */
     public void loadClientAccounts() {
         checkViewAttached();
         getMvpView().showProgress();
@@ -81,6 +94,12 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
         );
     }
 
+    /**
+     * Loads savings, loan or share account depending upon {@code accountType} provided from the
+     * server and notifies the view to display it.And in case of any error during fetching the
+     * required details it notifies the view.
+     * @param accountType Type of account for which we need to fetch details
+     */
     public void loadAccounts(final String accountType) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -119,6 +138,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
         );
     }
 
+    /**
+     * Filters {@link List} of {@link SavingAccount}
+     * @param accounts {@link List} of {@link SavingAccount}
+     * @param input {@link String} which is used for filtering
+     * @return Returns {@link List} of filtered {@link SavingAccount} according to the {@code input}
+     * provided.
+     */
     public List<SavingAccount> searchInSavingsList(List<SavingAccount> accounts,
                                             final String input) {
         return Observable.from(accounts)
@@ -131,6 +157,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 }).toList().toBlocking().single();
     }
 
+    /**
+     * Filters {@link List} of {@link LoanAccount}
+     * @param accounts {@link List} of {@link LoanAccount}
+     * @param input {@link String} which is used for filtering
+     * @return Returns {@link List} of filtered {@link LoanAccount} according to the {@code input}
+     * provided.
+     */
     public List<LoanAccount> searchInLoanList(List<LoanAccount> accounts,
                                                    final String input) {
         return Observable.from(accounts)
@@ -143,6 +176,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 }).toList().toBlocking().single();
     }
 
+    /**
+     * Filters {@link List} of {@link ShareAccount}
+     * @param accounts {@link List} of {@link ShareAccount}
+     * @param input {@link String} which is used for filtering
+     * @return Returns {@link List} of filtered {@link ShareAccount} according to the {@code input}
+     * provided.
+     */
     public List<ShareAccount> searchInSharesList(List<ShareAccount> accounts,
                                                    final String input) {
         return Observable.from(accounts)
@@ -154,6 +194,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                     }
                 }).toList().toBlocking().single();
     }
+
+    /**
+     * Filters {@link List} of {@link CheckboxStatus}
+     * @param statusModelList {@link List} of {@link CheckboxStatus}
+     * @return Returns {@link List} of {@link CheckboxStatus} which have
+     * {@code checkboxStatus.isChecked()} as true.
+     */
     public List<CheckboxStatus> getCheckedStatus(List<CheckboxStatus> statusModelList) {
         return Observable.from(statusModelList)
                 .filter(new Func1<CheckboxStatus, Boolean>() {
@@ -164,6 +211,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 }).toList().toBlocking().single();
     }
 
+    /**
+     * Filters {@link List} of {@link SavingAccount} according to {@link CheckboxStatus}
+     * @param accounts {@link List} of filtered {@link SavingAccount}
+     * @param status Used for filtering the {@link List}
+     * @return Returns {@link List} of filtered {@link SavingAccount} according to the
+     * {@code status} provided.
+     */
     public List<SavingAccount> getFilteredSavingsAccount(List<SavingAccount> accounts,
                                                          final CheckboxStatus status) {
         return Observable.from(accounts)
@@ -195,6 +249,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 }).toList().toBlocking().single();
     }
 
+    /**
+     * Filters {@link List} of {@link LoanAccount} according to {@link CheckboxStatus}
+     * @param accounts {@link List} of filtered {@link LoanAccount}
+     * @param status Used for filtering the {@link List}
+     * @return Returns {@link List} of filtered {@link LoanAccount} according to the
+     * {@code status} provided.
+     */
     public List<LoanAccount> getFilteredLoanAccount(List<LoanAccount> accounts,
                                                          final CheckboxStatus status) {
         return Observable.from(accounts)
@@ -230,6 +291,13 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 }).toList().toBlocking().single();
     }
 
+    /**
+     * Filters {@link List} of {@link ShareAccount} according to {@link CheckboxStatus}
+     * @param accounts {@link List} of filtered {@link ShareAccount}
+     * @param status Used for filtering the {@link List}
+     * @return Returns {@link List} of filtered {@link ShareAccount} according to the
+     * {@code status} provided.
+     */
     public List<ShareAccount> getFilteredShareAccount(List<ShareAccount> accounts,
                                                         final CheckboxStatus status) {
         return Observable.from(accounts)

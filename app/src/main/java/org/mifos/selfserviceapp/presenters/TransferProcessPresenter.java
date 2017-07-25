@@ -26,6 +26,15 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
     public final DataManager dataManager;
     public CompositeSubscription subscriptions;
 
+    /**
+     * Initialises the RecentTransactionsPresenter by automatically injecting an instance of
+     * {@link DataManager} and {@link Context}.
+     *
+     * @param dataManager DataManager class that provides access to the data
+     *                    via the API.
+     * @param context     Context of the view attached to the presenter. In this case
+     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     */
     @Inject
     public TransferProcessPresenter(DataManager dataManager,
                                     @ActivityContext Context context) {
@@ -45,6 +54,12 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
         subscriptions.clear();
     }
 
+    /**
+     * Used for making a Transfer with the help of {@code transferPayload} provided in function
+     * parameter. It notifies the view after successful making a Transfer. And in case of any error
+     * during transfer, it notifies the view.
+     * @param transferPayload Contains details about the Transfer
+     */
     public void makeSavingsTransfer(TransferPayload transferPayload) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -72,7 +87,12 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
         );
     }
 
-
+    /**
+     * Used for making a Third Party Transfer with the help of {@code transferPayload} provided in
+     * function parameter. It notifies the view after successful making a Third Party Transfer. And
+     * in case of any error during transfer, it notifies the view.
+     * @param transferPayload Contains details about the Third Party Transfer
+     */
     public void makeTPTTransfer(TransferPayload transferPayload) {
         checkViewAttached();
         getMvpView().showProgress();

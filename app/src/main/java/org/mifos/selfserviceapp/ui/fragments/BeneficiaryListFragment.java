@@ -74,6 +74,9 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         return rootView;
     }
 
+    /**
+     * Setup Initial User Interface
+     */
     @Override
     public void showUserInterface() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -96,26 +99,43 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         });
     }
 
+    /**
+     * Refreshes {@code beneficiaryList} by calling {@code loadBeneficiaries()}
+     */
     @Override
     public void onRefresh() {
         beneficiaryListPresenter.loadBeneficiaries();
     }
 
+    /**
+     * Shows {@link SwipeRefreshLayout}
+     */
     @Override
     public void showProgress() {
         showSwipeRefreshLayout(true);
     }
 
+    /**
+     * Hides {@link SwipeRefreshLayout}
+     */
     @Override
     public void hideProgress() {
         showSwipeRefreshLayout(false);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param msg Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Set the {@code beneficiaryList} fetched from server to {@code beneficiaryListAdapter}
+     * @param beneficiaryList
+     */
     @Override
     public void showBeneficiaryList(List<Beneficiary> beneficiaryList) {
         this.beneficiaryList = beneficiaryList;

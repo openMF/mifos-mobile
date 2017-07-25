@@ -113,6 +113,10 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         return rootView;
     }
 
+    /**
+     * Sets client basic details which are fetched from server
+     * @param client instance of {@link Client} which contains information about client
+     */
     @Override
     public void showUserDetails(Client client) {
         collapsingToolbarLayout.setTitle(client.getDisplayName());
@@ -127,6 +131,11 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         tvGender.setText(client.getGender().getName());
     }
 
+    /**
+     * Generate a string for groups which the client is part of.
+     * @param groups {@link List} of {@link Group} which client is a part of.
+     * @return Returns String of groups
+     */
     private String getGroups(List<Group> groups) {
         StringBuilder builder = new StringBuilder();
         for (Group group : groups) {
@@ -135,6 +144,10 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         return builder.toString().substring(0, builder.toString().length() - 2);
     }
 
+    /**
+     * Provides with client Image fetched from the server in {@code bitmap}
+     * @param bitmap User Image
+     */
     @Override
     public void showUserImage(final Bitmap bitmap) {
         getActivity().runOnUiThread(new Runnable() {
@@ -145,6 +158,10 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         });
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String message) {
         Toaster.show(rootView, message);

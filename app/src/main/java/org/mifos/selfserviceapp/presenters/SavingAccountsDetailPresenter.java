@@ -59,6 +59,7 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      * Load details of a particular saving account from the server and notify the view
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
+     * @param accountId Id of Savings Account
      */
     public void loadSavingsWithAssociations(long accountId) {
         checkViewAttached();

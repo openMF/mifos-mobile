@@ -20,6 +20,11 @@ import static android.graphics.Color.WHITE;
 
 public class QrCodeGenerator {
 
+    /**
+     * Generate a QRCode which stores {@code str} in the form of {@link Bitmap}
+     * @param str Data which need to stored in QRCode
+     * @return Returns a {@link Bitmap} of QRCode
+     */
     public static Bitmap encodeAsBitmap(String str) {
         BitMatrix result;
         try {
@@ -45,6 +50,13 @@ public class QrCodeGenerator {
         return bitmap;
     }
 
+    /**
+     * Provides a string which contains json data for creating a {@link Beneficiary}
+     * @param accountNumber Account Number of client
+     * @param officeName Office Name of Client
+     * @param accountType {@link org.mifos.selfserviceapp.ui.enums.AccountType} i.e. SAVINGS or LOAN
+     * @return Returns a string with account details
+     */
     public static String getAccountDetailsInString(String accountNumber, String officeName,
                                                    org.mifos.selfserviceapp.ui.enums.AccountType
                                                            accountType) {

@@ -29,6 +29,15 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
 
+    /**
+     * Initialises the LoginPresenter by automatically injecting an instance of
+     * {@link DataManager} and {@link Context}.
+     *
+     * @param dataManager DataManager class that provides access to the data
+     *                    via the API.
+     * @param context     Context of the view attached to the presenter. In this case
+     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     */
     @Inject
     public LoanAccountsTransactionPresenter(DataManager dataManager,
                                             @ActivityContext Context context) {
@@ -48,6 +57,12 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
         subscriptions.unsubscribe();
     }
 
+    /**
+     * Load details of a particular loan account from the server and notify the view
+     * to display it. Notify the view, in case there is any error in fetching
+     * the details from server.
+     * @param loanId Id of Loan Account
+     */
     public void loadLoanAccountDetails(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();

@@ -116,6 +116,9 @@ public class ClientChargeFragment extends BaseFragment implements
         return rootView;
     }
 
+    /**
+     * Fetches Charges for {@code id} according to {@code chargeType} provided.
+     */
     private void loadCharges() {
         rlErrorLayout.setVisibility(View.GONE);
         swipeChargeContainer.setVisibility(View.VISIBLE);
@@ -129,6 +132,13 @@ public class ClientChargeFragment extends BaseFragment implements
         }
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request. If not connected to
+     * internet then it shows display a message to user to connect to internet other it just
+     * displays the {@code message} in a {@link android.support.design.widget.Snackbar}
+     *
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showErrorFetchingClientCharges(String message) {
         if (!Network.isConnected(getActivity())) {
@@ -141,6 +151,9 @@ public class ClientChargeFragment extends BaseFragment implements
         }
     }
 
+    /**
+     * Tries to fetch charges again.
+     */
     @OnClick(R.id.iv_status)
     void onRetry() {
         rlErrorLayout.setVisibility(View.GONE);
@@ -148,6 +161,11 @@ public class ClientChargeFragment extends BaseFragment implements
         loadCharges();
     }
 
+    /**
+     * Receives {@code clientChargeList} from server and calls {@code inflateClientChargeList()} to
+     * update the {@code clientChargeAdapter} adapter.
+     * @param clientChargeList {@link List} of {@link Charge}
+     */
     @Override
     public void showClientCharges(List<Charge> clientChargeList) {
         this.clientChargeList = clientChargeList;
@@ -157,6 +175,10 @@ public class ClientChargeFragment extends BaseFragment implements
         }
     }
 
+    /**
+     * Updates {@code clientChargeAdapter} with updated {@code clientChargeList} if
+     * {@code clientChargeList} size if greater than 0 else shows the error layout
+     */
     private void inflateClientChargeList() {
         if (clientChargeList.size() > 0) {
             clientChargeAdapter.setClientChargeList(clientChargeList);

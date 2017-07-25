@@ -135,6 +135,9 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         return rootView;
     }
 
+    /**
+     * Opens up Phone Dialer
+     */
     @OnClick(R.id.tv_help_line_number)
     void dialHelpLineNumber() {
         Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -142,6 +145,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         startActivity(intent);
     }
 
+    /**
+     * Opens {@link SavingsMakeTransferFragment} if status is ACTIVE else shows a
+     * {@link android.support.design.widget.Snackbar} that Account should be Active
+     */
     @OnClick(R.id.tv_deposit)
     void deposit() {
         if (status.getActive()) {
@@ -152,6 +159,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         }
     }
 
+    /**
+     * Opens {@link SavingsMakeTransferFragment} if status is ACTIVE else shows a
+     * {@link android.support.design.widget.Snackbar} that Account should be Active
+     */
     @OnClick(R.id.tv_make_a_transfer)
     void transfer() {
         if (status.getActive()) {
@@ -162,6 +173,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         }
     }
 
+    /**
+     * Sets Saving account basic info fetched from the server
+     * @param savingsWithAssociations object containing details of a saving account
+     */
     @Override
     public void showSavingAccountsDetail(SavingsWithAssociations savingsWithAssociations) {
         layoutAccount.setVisibility(View.VISIBLE);
@@ -202,6 +217,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         showAccountStatus(savingsWithAssociations);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showErrorFetchingSavingAccountsDetail(String message) {
         layoutAccount.setVisibility(View.GONE);
@@ -209,6 +228,11 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         tvStatus.setText(message);
     }
 
+    /**
+     * Sets the status of account i.e. {@code tvAccountStatus} and {@code ivCircularStatus} color
+     * according to {@code savingsWithAssociations}
+     * @param savingsWithAssociations object containing details of a saving account
+     */
     @Override
     public void showAccountStatus(SavingsWithAssociations savingsWithAssociations) {
         status = savingsWithAssociations.getStatus();

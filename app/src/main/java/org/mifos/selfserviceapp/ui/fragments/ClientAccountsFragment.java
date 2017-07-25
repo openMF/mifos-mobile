@@ -94,6 +94,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         return view;
     }
 
+    /**
+     * Setting up {@link ViewPagerAdapter} and {@link TabLayout} for Savings, Loans and Share
+     * accounts. {@code accountType} is used for setting the current Fragment
+     */
     private void setUpViewPagerAndTabLayout() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
 
@@ -135,10 +139,21 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         });
     }
 
+    /**
+     * Returns tag of Fragment present at {@code position}
+     * @param position position of Fragment
+     * @return Tag of Fragment
+     */
     private String getFragmentTag(int position) {
         return "android:switcher:" + R.id.viewpager + ":" + position;
     }
 
+    /**
+     * It provides with {@code shareAccounts} fetched from server which is then passed to fragment
+     * implementing {@link AccountsView} i.e. {@link AccountsFragment} which further displays them
+     * in a recyclerView
+     * @param shareAccounts {@link List} of {@link ShareAccount}
+     */
     @Override
     public void showShareAccounts(List<ShareAccount> shareAccounts) {
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(2))).
@@ -147,6 +162,12 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 hideProgress();
     }
 
+    /**
+     * It provides with {@code loanAccounts} fetched from server which is then passed to fragment
+     * implementing {@link AccountsView} i.e. {@link AccountsFragment} which further displays them
+     * in a recyclerView
+     * @param loanAccounts {@link List} of {@link LoanAccount}
+     */
     @Override
     public void showLoanAccounts(List<LoanAccount> loanAccounts) {
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(1)))
@@ -155,6 +176,12 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 .hideProgress();
     }
 
+    /**
+     * It provides with {@code savingAccounts} fetched from server which is then passed to fragment
+     * implementing {@link AccountsView} i.e. {@link AccountsFragment} which further displays them
+     * in a recyclerView
+     * @param savingAccounts {@link List} of {@link SavingAccount}
+     */
     @Override
     public void showSavingsAccounts(List<SavingAccount> savingAccounts) {
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
@@ -164,6 +191,12 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     }
 
 
+    /**
+     * It is called whenever any error occurs while executing a request which passes errorMessage to
+     * fragment implementing {@link AccountsView} i.e. {@link AccountsFragment} which further
+     * displays the errorMessage
+     * @param errorMessage Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String errorMessage) {
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
@@ -243,6 +276,11 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         return true;
     }
 
+    /**
+     * Initializes the search option in {@link Menu} depending upon {@code account}
+     * @param menu Interface for managing the items in a menu.
+     * @param account An enum of {@link AccountType}
+     */
     private void initSearch(Menu menu, final AccountType account) {
         SearchManager manager = (SearchManager) getActivity().
                 getSystemService(Context.SEARCH_SERVICE);
@@ -282,6 +320,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         });
     }
 
+    /**
+     * Displays a filter dialog according to the {@code account} provided in the parameter
+     * @param account An enum of {@link AccountType}
+     */
     private void showFilterDialog(final AccountType account) {
         String title = "";
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
