@@ -203,6 +203,12 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
         if (fragment instanceof HomeFragment) {
             if (doubleBackToExitPressedOnce && stackCount() == 0) {
