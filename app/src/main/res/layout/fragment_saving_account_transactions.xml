@@ -33,6 +33,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:drawableRight="@drawable/ic_edit_wrapper"
+                        android:drawableEnd="@drawable/ic_edit_wrapper"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:text="@string/start_date"
                         android:id="@+id/tv_start_date"/>
@@ -41,6 +43,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:drawableRight="@drawable/ic_edit_wrapper"
+                        android:drawableEnd="@drawable/ic_edit_wrapper"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:text="@string/end_date"
                         android:id="@+id/tv_end_date"/>
@@ -49,8 +53,10 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_custom_filter"
                         android:text="@string/filter"
-                        app:backgroundTint="@color/primary"
-                        android:textColor="@color/white"/>
+                        android:layout_marginLeft="@dimen/divider_margin"
+                        android:layout_marginStart="@dimen/divider_margin"
+                        android:textColor="@color/primary"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
                 </LinearLayout>
 
                 <RadioGroup
@@ -102,13 +108,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/default_margin"
             android:id="@+id/rv_saving_accounts_transaction"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:padding="10dp"
             android:orientation="horizontal">
 
             <TextView

@@ -6,91 +6,81 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="@dimen/cardview_default_elevation"
-    android:layout_marginStart="@dimen/divider_margin"
-    android:layout_marginLeft="@dimen/divider_margin"
-    android:layout_marginEnd="@dimen/divider_margin"
-    android:layout_marginRight="@dimen/divider_margin"
+    android:layout_marginStart="@dimen/default_margin"
+    android:layout_marginLeft="@dimen/default_margin"
+    android:layout_marginEnd="@dimen/default_margin"
+    android:layout_marginRight="@dimen/default_margin"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="@dimen/default_margin"
-    android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal">
 
     <View
         android:layout_width="@dimen/account_status_width"
         android:layout_height="@dimen/account_status_width"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_gravity="center"
         android:id="@+id/v_indicator"/>
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingStart="@dimen/row_padding_left">
+        android:paddingStart="@dimen/row_padding_left"
+        android:paddingLeft="@dimen/row_padding_left">
 
         <TextView
             android:id="@+id/tv_transaction_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
             android:text="@string/medium_text"
-            android:layout_gravity="start"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
         <TextView
             android:id="@+id/tv_transaction_type"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/small_text"
-            android:layout_gravity="start"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_medium"/>
         <TextView
             android:id="@+id/tv_transaction_detail_data"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/small_text"
-            android:layout_gravity="start"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_medium"
             android:visibility="gone"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="0.4"
         android:layout_marginRight="@dimen/default_margin"
-        android:paddingStart="@dimen/row_padding_left">
+        android:layout_marginEnd="@dimen/default_margin">
 
         <TextView
             android:id="@+id/tv_savingAccountAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:layout_gravity="end"
+            android:gravity="end"
             android:text="@string/medium_text"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"/>
 
         <TextView
             android:id="@+id/tv_saving_account_running_balance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:layout_gravity="end"
+            android:gravity="end"
             android:textSize="@dimen/text_small"/>
 
     </LinearLayout>
