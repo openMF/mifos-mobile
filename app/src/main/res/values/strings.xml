@@ -210,6 +210,7 @@
     <string name="end_date">End Date</string>
     <string name="filterd">Filtered</string>
     <string name="select_date">Please select start date and end date</string>
+    <string name="end_date_must_be_greater">End date must be greater than Start date</string>
     <string name="saving_account_transactions_details">Saving Account Transactions</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="disbursement_date">Disbursement Date</string>

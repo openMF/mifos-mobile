@@ -190,13 +190,19 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         String startDateText = getContext().getResources().getString(R.string.start_date);
         String endDateText = getContext().getResources().getString(R.string.end_date);
 
-        if (!tvStartDate.getText().equals(startDateText) &&
+        if (!tvStartDate.getText().equals(startDateText) && isEndDateLargeThanStartDate() &&
                 !tvEndDate.getText().equals(endDateText)) {
             filter(startDateFromPicker, endDateFromPicker);
+        } else if (!isEndDateLargeThanStartDate()) {
+            Toaster.show(rootView, getString(R.string.end_date_must_be_greater));
         } else {
             Toast.makeText(getContext(), getResources().getText(R.string.select_date),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean isEndDateLargeThanStartDate() {
+        return startDateFromPicker <= endDateFromPicker;
     }
 
     @OnClick(R.id.btn_all)
