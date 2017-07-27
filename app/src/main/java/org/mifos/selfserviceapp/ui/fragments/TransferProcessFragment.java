@@ -18,6 +18,7 @@ import org.mifos.selfserviceapp.ui.enums.TransferType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.TransferProcessView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -99,6 +100,10 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
 
     @OnClick(R.id.btn_start_transfer)
     public void startTransfer() {
+        if (!Network.isConnected(getActivity())) {
+            Toaster.show(rootView, getString(R.string.internet_not_connected));
+            return;
+        }
         if (transferType == TransferType.SELF) {
             presenter.makeSavingsTransfer(payload);
         } else if (transferType == TransferType.TPT) {
