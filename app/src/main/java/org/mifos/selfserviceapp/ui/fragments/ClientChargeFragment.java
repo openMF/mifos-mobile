@@ -22,6 +22,7 @@ import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.views.ClientChargeView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -32,6 +33,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Vishwajeet
@@ -129,7 +131,21 @@ public class ClientChargeFragment extends BaseFragment implements
 
     @Override
     public void showErrorFetchingClientCharges(String message) {
-        Toaster.show(rootView, message);
+        if (!Network.isConnected(getActivity())) {
+            ivError.setImageResource(R.drawable.ic_error_black_24dp);
+            tvError.setText(getString(R.string.internet_not_connected));
+            swipeChargeContainer.setVisibility(View.GONE);
+            rlErrorLayout.setVisibility(View.VISIBLE);
+        } else {
+            Toaster.show(rootView, message);
+        }
+    }
+
+    @OnClick(R.id.iv_status)
+    void onRetry() {
+        rlErrorLayout.setVisibility(View.GONE);
+        swipeChargeContainer.setVisibility(View.VISIBLE);
+        loadCharges();
     }
 
     @Override
