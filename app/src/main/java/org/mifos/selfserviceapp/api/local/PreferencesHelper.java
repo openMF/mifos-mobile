@@ -23,6 +23,7 @@ public class PreferencesHelper {
     private static final String CLIENT_ID = "preferences_client";
     private static final String OFFICE_NAME = "preferences_office_name";
     private static final String PASSCODE = "preferences_passcode";
+    private static final String OVERVIEW_STATE = "preferences_overview_state";
     private SharedPreferences sharedPreferences;
 
     @Inject
@@ -122,5 +123,13 @@ public class PreferencesHelper {
 
     public String getOfficeName() {
         return getString(OFFICE_NAME, "");
+    }
+
+    public void setOverviewState(boolean state) {
+        putBoolean(OVERVIEW_STATE, state);
+    }
+
+    public boolean overviewState() {
+        return getBoolean(OVERVIEW_STATE, true);
     }
 }
