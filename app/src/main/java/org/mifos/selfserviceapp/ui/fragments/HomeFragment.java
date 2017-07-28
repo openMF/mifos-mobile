@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
@@ -58,6 +59,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Inject
     HomePresenter presenter;
 
+    @Inject
+    PreferencesHelper preferencesHelper;
+
     View rootView;
     private long clientId;
     private View toolbarView;
@@ -99,7 +103,12 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void showUserInterface() {
         toolbarView = ((HomeActivity) getActivity()).getToolbar().getRootView();
-        isDetailVisible = true;
+        isDetailVisible = preferencesHelper.overviewState();
+        if (isDetailVisible) {
+            showOverviewState();
+        } else {
+            hideOverviewState();
+        }
     }
 
     public void openAccount(AccountType accountType) {
@@ -145,13 +154,23 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void reverseDetailState() {
         if (isDetailVisible) {
             isDetailVisible = false;
-            ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_grey));
-            llAccountDetail.setVisibility(View.GONE);
+            preferencesHelper.setOverviewState(false);
+            hideOverviewState();
         } else {
             isDetailVisible = true;
-            ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray_dark));
-            llAccountDetail.setVisibility(View.VISIBLE);
+            preferencesHelper.setOverviewState(true);
+            showOverviewState();
         }
+    }
+
+    private void showOverviewState() {
+        ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray_dark));
+        llAccountDetail.setVisibility(View.VISIBLE);
+    }
+
+    private void hideOverviewState() {
+        ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_grey));
+        llAccountDetail.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.ll_accounts)
