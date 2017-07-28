@@ -66,6 +66,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     @BindView(R.id.rg_transaction_filter)
     RadioGroup radioGroup;
+    int checkDate = 0;
 
     @Inject
     SavingAccountsTransactionListAdapter transactionListAdapter;
@@ -87,6 +88,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +130,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     @Override
     public void showSavingAccountsDetail(SavingsWithAssociations
-                                                     savingsWithAssociations) {
+                                                 savingsWithAssociations) {
         layoutAccount.setVisibility(View.VISIBLE);
 
         transactionsList = savingsWithAssociations.getTransactions();
@@ -190,10 +192,18 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         String startDateText = getContext().getResources().getString(R.string.start_date);
         String endDateText = getContext().getResources().getString(R.string.end_date);
 
-        if (!tvStartDate.getText().equals(startDateText) &&
-                !tvEndDate.getText().equals(endDateText)) {
-            filter(startDateFromPicker, endDateFromPicker);
+
+        if (isDateAfter(startDateFromPicker, endDateFromPicker)) {
+            checkDate = 1;
         } else {
+            Toast.makeText(getContext(), "Start Date must be smaller than End Date!",
+                    Toast.LENGTH_SHORT).show();
+            checkDate = 2;
+        }
+        if ((checkDate == 1) && (!tvStartDate.getText().equals(startDateText) &&
+                !tvEndDate.getText().equals(endDateText))) {
+            filter(startDateFromPicker, endDateFromPicker);
+        } else if (checkDate != 2) {
             Toast.makeText(getContext(), getResources().getText(R.string.select_date),
                     Toast.LENGTH_SHORT).show();
         }
@@ -237,11 +247,20 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     }
 
+    public static boolean isDateAfter(long startDate, long endDate) {
+        if (startDate <= endDate) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     private void filter(long startDate , long endDate) {
 
         dummyTransactionList = new ArrayList<>(transactionsList);
         savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList ,
-                                                                    startDate , endDate);
+                startDate , endDate);
     }
 
 }
