@@ -137,8 +137,16 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        getMvpView().showMessage(context.getString(R.string.error_fetching_client));
                         getMvpView().hideProgress();
+                        if (((HttpException) e).code() == 401) {
+                            getMvpView().showMessage(context.getString(R.string.
+                                    unauthorized_client));
+                        } else {
+                            getMvpView().showMessage(context.getString(R.string.
+                                    error_fetching_client));
+                        }
+                        preferencesHelper.clear();
+                        BaseApiManager.createService(preferencesHelper.getToken());
                     }
 
                     @Override
