@@ -1,8 +1,10 @@
 package org.mifos.selfserviceapp.utils;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.MifosSelfServiceApp;
@@ -14,6 +16,9 @@ public class Toaster {
     public static final int SHORT = Snackbar.LENGTH_SHORT;
 
     public static void show(View view, String text, int duration) {
+        InputMethodManager imm = (InputMethodManager) MifosSelfServiceApp.getContext().
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         final Snackbar snackbar = Snackbar.make(view, text, duration);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id
