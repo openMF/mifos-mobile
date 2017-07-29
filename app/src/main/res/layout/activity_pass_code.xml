@@ -167,21 +167,12 @@
             <android.support.v7.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:id="@+id/btn_login"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/default_padding"
-                app:backgroundTint="@color/primary"
-                android:textColor="@color/white"/>
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/forgot_passcode"
                 android:textColor="@color/primary"
                 android:id="@+id/btn_forgot_passcode"
                 android:layout_gravity="center"
                 android:visibility="gone"
+                android:layout_marginTop="@dimen/default_padding"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 style="@style/Widget.AppCompat.Button.Borderless"/>
         </LinearLayout>

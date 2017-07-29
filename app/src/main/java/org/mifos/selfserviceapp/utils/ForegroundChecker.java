@@ -1,6 +1,9 @@
 package org.mifos.selfserviceapp.utils;
 
+import android.content.Context;
 import android.os.Handler;
+
+import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 
 /**
  * Created by dilpreet on 18/7/17.
@@ -9,8 +12,9 @@ import android.os.Handler;
 public class ForegroundChecker {
 
     public static final long CHECK_DELAY = 500;
-    public static final int MIN_BACKGROUND_THRESHOLD = 30;
+    public static final int MIN_BACKGROUND_THRESHOLD = 60;
     public static final String TAG = ForegroundChecker.class.getName();
+    private PreferencesHelper preferencesHelper;
 
     public interface Listener {
         public void onBecameForeground();
@@ -24,22 +28,20 @@ public class ForegroundChecker {
     private Runnable check;
     private long backgroundTimeStart;
 
-    public static ForegroundChecker init() {
+    public static ForegroundChecker init(Context context) {
         if (instance == null) {
-            instance = new ForegroundChecker();
+            instance = new ForegroundChecker(context);
         }
         return instance;
     }
 
     public static ForegroundChecker get() {
-        if (instance == null) {
-            init();
-        }
         return instance;
     }
 
-    private ForegroundChecker() {
+    private ForegroundChecker(Context context) {
         backgroundTimeStart = -1;
+        preferencesHelper = new PreferencesHelper(context);
     }
 
     public boolean isForeground() {
@@ -65,10 +67,9 @@ public class ForegroundChecker {
         if (wasBackground) {
 
             int secondsInBackground = (int) ((System.currentTimeMillis() - backgroundTimeStart) /
-                    1000) % 60;
-
+                    1000);
             if (backgroundTimeStart != -1 && secondsInBackground >= MIN_BACKGROUND_THRESHOLD &&
-                    listener != null) {
+                    listener != null && !preferencesHelper.getPasscode().isEmpty()) {
                 listener.onBecameForeground();
             }
 
