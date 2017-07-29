@@ -37,7 +37,7 @@ public class MifosSelfServiceApp extends Application {
         Fabric.with(this, new Crashlytics());
         instance = this;
         FlowManager.init(new FlowConfig.Builder(this).build());
-        ForegroundChecker.init();
+        ForegroundChecker.init(this);
     }
 
     public ApplicationComponent component() {
