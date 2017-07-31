@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
@@ -25,13 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PassCodeActivity extends BaseActivity {
+public class PassCodeActivity extends BaseActivity implements PassCodeView.PassCodeListener {
 
     @BindView(R.id.cl_rootview)
     NestedScrollView clRootview;
-
-    @BindView(R.id.btn_login)
-    AppCompatButton btnLogin;
 
     @BindView(R.id.btn_forgot_passcode)
     AppCompatButton btnForgotPasscode;
@@ -70,8 +68,9 @@ public class PassCodeActivity extends BaseActivity {
             btnSkip.setVisibility(View.GONE);
             btnSave.setVisibility(View.GONE);
             tvPasscodeIntro.setVisibility(View.GONE);
-            btnLogin.setVisibility(View.VISIBLE);
             btnForgotPasscode.setVisibility(View.VISIBLE);
+            //enabling passCodeListener only when user has already setup PassCode
+            passCodeView.setPassCodeListener(this);
         }
     }
 
@@ -88,15 +87,18 @@ public class PassCodeActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.btn_login)
-    public void loginUsingPassCode() {
+
+    @Override
+    public void passCodeEntered(String passcode) {
 
         if (!isInternetAvailable()) {
+            passCodeView.clearPasscodeField();
             return;
         }
 
         if (counter == 3) {
-            Toaster.show(clRootview, R.string.incorrect_passcode_more_than_three);
+            Toast.makeText(getApplicationContext(), R.string.incorrect_passcode_more_than_three,
+                    Toast.LENGTH_SHORT).show();
             preferencesHelper.clear();
             startLoginActivity();
             return;

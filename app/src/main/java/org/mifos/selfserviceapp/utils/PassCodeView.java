@@ -23,6 +23,7 @@ public class PassCodeView extends View {
     private final int PASSWORD_LENGTH = 4;
     private List<String> passwordList;
     private boolean isPasscodeVisible;
+    private PassCodeListener passCodeListener;
 
     public PassCodeView(Context context) {
         super(context);
@@ -39,6 +40,9 @@ public class PassCodeView extends View {
         init();
     }
 
+    public void setPassCodeListener(PassCodeListener passCodeListener) {
+        this.passCodeListener = passCodeListener;
+    }
 
     private void init() {
         emptyCirclePaint = new Paint();
@@ -82,6 +86,11 @@ public class PassCodeView extends View {
             passwordList.add(character);
             invalidate();
         }
+
+        if (passwordList.size() == PASSWORD_LENGTH && passCodeListener != null) {
+            passCodeListener.passCodeEntered(getPasscode());
+        }
+
     }
 
     public String getPasscode() {
@@ -111,5 +120,9 @@ public class PassCodeView extends View {
 
     public boolean passcodeVisible() {
         return isPasscodeVisible;
+    }
+
+    public interface PassCodeListener {
+        void passCodeEntered(String passcode);
     }
 }
