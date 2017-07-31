@@ -17,6 +17,8 @@ import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.models.payload.LoansPayload;
 import org.mifos.selfserviceapp.models.payload.TransferPayload;
+import org.mifos.selfserviceapp.models.register.RegisterPayload;
+import org.mifos.selfserviceapp.models.register.UserVerify;
 import org.mifos.selfserviceapp.models.templates.account.AccountOptionsTemplate;
 import org.mifos.selfserviceapp.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.selfserviceapp.models.templates.loans.LoanTemplate;
@@ -170,6 +172,14 @@ public class DataManager {
 
     public Observable<ResponseBody> makeThirdPartyTransfer(TransferPayload transferPayload) {
         return baseApiManager.getThirdPartyTransferApi().makeTransfer(transferPayload);
+    }
+
+    public Observable<ResponseBody> registerUser(RegisterPayload registerPayload) {
+        return baseApiManager.getRegistrationApi().registerUser(registerPayload);
+    }
+
+    public Observable<ResponseBody> verifyUser(UserVerify userVerify) {
+        return baseApiManager.getRegistrationApi().verifyUser(userVerify);
     }
 
     public PreferencesHelper getPreferencesHelper() {

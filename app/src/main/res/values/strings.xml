@@ -97,12 +97,25 @@
     <string name="transfer_to_savings">Transfer To Savings</string>
     <string name="loan_charges">Loan Charges</string>
     <string name="savings_charges">Savings Charges</string>
-
     <string name="active">Active</string>
     <string name="closed">Closed</string>
     <string name="need_approval">Need Approval</string>
     <string name="pending">Pending</string>
     <string name="matured">Matured</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="register">Register</string>
+    <string name="request_id">Request Id</string>
+    <string name="authentication_token">Authentication Token</string>
+    <string name="verify">Verify</string>
+    <string name="verifying">Verifying</string>
+    <string name="sign_up">Signing up</string>
+    <string name="verified">User has been verified successfully</string>
+    <string name="rb_mobile">mobile</string>
+    <string name="rb_email">email</string>
+    <string name="verification_mode">Verification Mode</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a deposit</string>
     <string name="account_not_active_to_perform_transfer">Account should to be Active to perform a transfer</string>
@@ -154,6 +167,8 @@
     <string name="view_repayment">View Repayment Schedule</string>
     <string name="view_qr_code">View QR Code for this account</string>
     <string name="last_trans">Last Transaction Details</string>
+    <string name="error_username_greater_than_six">Username should be greater than 6 alphabets</string>
+    <string name="error_invalid_email">Invalid email id</string>
 
     <string name="fetching_client">Fetching Client</string>
 
