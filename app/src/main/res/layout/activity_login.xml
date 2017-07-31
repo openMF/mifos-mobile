@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@color/white"
-            android:fitsSystemWindows="true">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:id="@+id/ll_login"
@@ -52,15 +53,23 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/login_margin_bottom"
+            android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginTop="@dimen/login_margin_top"
             android:textColor="@color/white"
-            android:background="@color/primary"
-            android:foreground="?selectableItemBackground"
+            app:backgroundTint="@color/primary"
             android:padding="@dimen/login_padding_button"
             android:text="@string/login"/>
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="@string/create_an_account"/>
+
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
