@@ -15,7 +15,7 @@
     <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="@dimen/default_margin"
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal">
@@ -29,7 +29,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -59,10 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/small_text"
-            android:layout_gravity="start"
+            android:layout_gravity="fill"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_medium"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
