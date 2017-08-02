@@ -115,7 +115,6 @@ public class LoginPresenterTest {
 
         presenter.loadClient();
 
-        verify(view).showProgress();
         verify(view).hideProgress();
         verify(view).showMessage(context.getString(R.string.unauthorized_client));
         verify(view, never()).showPassCodeActivity();
