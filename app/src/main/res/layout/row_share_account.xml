@@ -45,10 +45,11 @@
                         android:text="@string/shares_pending"
                         android:textColor="@color/gray_dark"
                         android:layout_marginRight="@dimen/divider_margin"
+                        android:layout_marginEnd="@dimen/divider_margin"
                         android:textSize="@dimen/text_small"/>
                     <TextView
                         android:id="@+id/tv_shares_pending"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/medium_text"
                         android:layout_weight="1"
@@ -58,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/approved"
                         android:layout_marginRight="@dimen/divider_margin"
-                        android:layout_marginLeft="@dimen/default_margin"
+                        android:layout_marginEnd="@dimen/divider_margin"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_small"/>
                     <TextView

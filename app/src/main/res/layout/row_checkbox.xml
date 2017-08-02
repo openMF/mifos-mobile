@@ -7,6 +7,8 @@
     android:background="?selectableItemBackground"
     android:paddingLeft="@dimen/default_margin"
     android:paddingStart="@dimen/default_margin"
+    android:paddingRight="@dimen/default_margin"
+    android:paddingEnd="@dimen/default_margin"
     android:layout_height="wrap_content">
     <android.support.v7.widget.AppCompatCheckBox
         android:layout_width="wrap_content"

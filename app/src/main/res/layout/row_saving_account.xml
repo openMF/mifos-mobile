@@ -20,11 +20,10 @@
         android:padding="@dimen/row_padding_left">
             <TextView
                 android:id="@+id/tv_clientSavingAccountNumber"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
-                android:layout_weight="1"
                 android:text="@string/medium_text"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium"/>
