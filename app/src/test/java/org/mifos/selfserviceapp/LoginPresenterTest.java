@@ -69,7 +69,6 @@ public class LoginPresenterTest {
         presenter.login("selfservice", "password");
 
         verify(view).showProgress();
-        verify(view).hideProgress();
         verify(view).onLoginSuccess(user.getUserName());
     }
 
@@ -80,7 +79,6 @@ public class LoginPresenterTest {
 
         presenter.loadClient();
 
-        verify(view).showProgress();
         verify(view).hideProgress();
         verify(view).showPassCodeActivity();
         verify(view, never()).showMessage(context.getString(R.string.error_fetching_client));
@@ -93,7 +91,6 @@ public class LoginPresenterTest {
 
         presenter.loadClient();
 
-        verify(view).showProgress();
         verify(view).hideProgress();
         verify(view).showMessage(context.getString(R.string.error_client_not_found));
         verify(view, never()).showPassCodeActivity();
@@ -107,7 +104,6 @@ public class LoginPresenterTest {
 
         presenter.loadClient();
 
-        verify(view).showProgress();
         verify(view).hideProgress();
         verify(view).showMessage(context.getString(R.string.error_fetching_client));
         verify(view, never()).showPassCodeActivity();
