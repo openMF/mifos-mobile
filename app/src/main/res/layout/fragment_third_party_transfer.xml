@@ -38,8 +38,9 @@
             <LinearLayout
                 style="@style/LinearLayout.Wrap"
                 android:layout_weight="1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
                 android:paddingTop="@dimen/default_margin"
                 android:orientation="vertical">
                 <TextView
@@ -87,8 +88,9 @@
             <LinearLayout
                 style="@style/LinearLayout.Wrap"
                 android:layout_weight="1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
                 android:paddingTop="@dimen/default_margin"
                 android:orientation="vertical">
                 <TextView
@@ -202,8 +204,9 @@
             <LinearLayout
                 style="@style/LinearLayout.Wrap"
                 android:layout_weight="1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
                 android:paddingTop="@dimen/default_margin"
                 android:orientation="vertical">
                 <TextView
@@ -242,7 +245,7 @@
                         android:layout_weight="0.5"
                         app:backgroundTint="@color/white"
                         android:text="@string/cancel"/>
-                    <Button
+                    <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btn_review_transfer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

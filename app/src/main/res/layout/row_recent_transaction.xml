@@ -23,16 +23,17 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/listPreferredItemHeight"
         android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding">
 
         <ImageView
             android:id="@+id/iv_transaction"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:elevation="2dp"
-            android:src="@drawable/ic_local_atm_black_24dp"
+            app:srcCompat="@drawable/ic_local_atm_black_24dp"
         />
 
         <LinearLayout
@@ -41,7 +42,8 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingLeft="16dp">
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingStart="@dimen/default_padding">
 
             <TextView
                 android:id="@+id/tv_value"
@@ -51,7 +53,7 @@
                 android:lines="1"
                 android:text="@string/medium_text"
                 android:textColor="@color/black"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_medium"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/small_text"
                     android:textColor="@color/gray_dark"
-                    android:textSize="14sp"/>
+                    android:textSize="@dimen/text_small"/>
 
                 <TextView
                     android:id="@+id/tv_transactionDate"
@@ -74,7 +76,7 @@
                     android:layout_gravity="end"
                     android:textColor="@color/gray_dark"
                     android:gravity="end"
-                    android:textSize="14sp"/>
+                    android:textSize="@dimen/text_small"/>
 
             </LinearLayout>
         </LinearLayout>
