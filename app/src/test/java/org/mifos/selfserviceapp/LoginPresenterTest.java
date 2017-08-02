@@ -98,9 +98,8 @@ public class LoginPresenterTest {
 
     @Test
     public void testLoadClientFails() throws Exception {
-        long clientId = clientPage.getPageItems().get(0).getId();
-        when(dataManager.getClients()).thenReturn(Observable.<Page<Client>>error(new
-                RuntimeException()));
+        when(dataManager.getClients()).thenReturn(Observable.<Page<Client>>error(RetrofitUtils.
+                get404Exception()));
 
         presenter.loadClient();
 
@@ -109,6 +108,18 @@ public class LoginPresenterTest {
         verify(view, never()).showPassCodeActivity();
     }
 
+    @Test
+    public void testLoadClientUnauthorized() throws Exception {
+        when(dataManager.getClients()).thenReturn(Observable.<Page<Client>>error(RetrofitUtils.
+                get401Exception()));
+
+        presenter.loadClient();
+
+        verify(view).showProgress();
+        verify(view).hideProgress();
+        verify(view).showMessage(context.getString(R.string.unauthorized_client));
+        verify(view, never()).showPassCodeActivity();
+    }
     @After
     public void tearDown() throws Exception {
         presenter.detachView();
