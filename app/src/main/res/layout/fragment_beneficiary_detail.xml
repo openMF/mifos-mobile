@@ -11,7 +11,9 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginTop="@dimen/table_row_padding_top"
         android:layout_height="wrap_content">
         <TableRow>

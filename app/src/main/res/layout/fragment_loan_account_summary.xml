@@ -26,6 +26,8 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginTop="@dimen/table_row_padding_top"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
             android:orientation="vertical">
 
             <LinearLayout
@@ -73,6 +75,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_small"

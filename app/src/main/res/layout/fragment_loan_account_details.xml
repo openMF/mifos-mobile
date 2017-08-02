@@ -27,6 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:layout_marginRight="@dimen/default_margin"
                 android:layout_marginTop="@dimen/table_row_padding_top"
                 android:paddingBottom="@dimen/default_margin"
@@ -189,6 +191,8 @@
                 android:layout_marginTop="@dimen/table_row_padding_top"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
                 android:id="@+id/btn_loan_summary"
                 android:textAppearance="?android:textAppearanceMedium"/>
             <android.support.v7.widget.AppCompatButton
