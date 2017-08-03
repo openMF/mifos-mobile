@@ -22,11 +22,12 @@ import org.mifos.selfserviceapp.presenters.UserDetailsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.ChargeType;
+import org.mifos.selfserviceapp.ui.fragments.AboutUsFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HelpUCFragment;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
-import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
@@ -109,9 +110,10 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(BeneficiaryListFragment.newInstance(), true,  R.id.container);
                 break;
             case R.id.item_about_us:
+                replaceFragment(AboutUsFragment.getInstance(), true, R.id.container);
                 break;
             case R.id.item_help:
-                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
+                replaceFragment(HelpUCFragment.getInstance(), true, R.id.container);
                 break;
         }
 
