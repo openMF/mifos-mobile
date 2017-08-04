@@ -40,7 +40,7 @@ public class DataManager {
     private final PreferencesHelper preferencesHelper;
     private final BaseApiManager baseApiManager;
     private final DatabaseHelper databaseHelper;
-    private final long clientId;
+    private long clientId;
 
     @Inject
     public DataManager(PreferencesHelper preferencesHelper, BaseApiManager baseApiManager,
@@ -182,4 +182,9 @@ public class DataManager {
     public long getClientId() {
         return clientId;
     }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
+
 }

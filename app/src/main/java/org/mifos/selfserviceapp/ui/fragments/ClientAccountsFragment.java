@@ -61,10 +61,9 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     private RecyclerView checkBoxRecyclerView;
     private AccountType accountType;
 
-    public static ClientAccountsFragment newInstance(long clientId, AccountType accountType) {
+    public static ClientAccountsFragment newInstance(AccountType accountType) {
         ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
         Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
         args.putSerializable(Constants.ACCOUNT_TYPE, accountType);
         clientAccountsFragment.setArguments(args);
         return clientAccountsFragment;

@@ -155,6 +155,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         if (clientPage.getPageItems().size() != 0) {
                             long clientId = clientPage.getPageItems().get(0).getId();
                             preferencesHelper.setClientId(clientId);
+                            dataManager.setClientId(clientId);
                             BaseApiManager.createService(preferencesHelper.getToken());
                             getMvpView().showPassCodeActivity();
                         } else {
