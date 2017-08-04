@@ -18,7 +18,6 @@ import org.mifos.selfserviceapp.presenters.RecentTransactionsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
-import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.EndlessRecyclerViewScrollListener;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -63,11 +62,8 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
     private List<Transaction> recentTransactionList;
 
 
-    public static RecentTransactionsFragment newInstance(long clientId) {
+    public static RecentTransactionsFragment newInstance() {
         RecentTransactionsFragment recentTransactionsFragment = new RecentTransactionsFragment();
-        Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
-        recentTransactionsFragment.setArguments(args);
         return recentTransactionsFragment;
     }
 
