@@ -78,7 +78,7 @@ public class HomeActivity extends BaseActivity implements
         setToolbarTitle(getString(R.string.home));
 
         clientId = preferencesHelper.getClientId();
-        replaceFragment(HomeFragment.newInstance(clientId), false ,  R.id.container);
+        replaceFragment(HomeFragment.newInstance(), false ,  R.id.container);
 
         setupNavigationBar();
     }
@@ -89,15 +89,14 @@ public class HomeActivity extends BaseActivity implements
         clearFragmentBackStack();
         switch (item.getItemId()) {
             case R.id.item_home:
-                replaceFragment(HomeFragment.newInstance(clientId), true, R.id.container);
+                replaceFragment(HomeFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_accounts:
-                replaceFragment(ClientAccountsFragment.newInstance(clientId, AccountType.SAVINGS),
+                replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
                         true, R.id.container);
                 break;
             case R.id.item_recent_transactions:
-                replaceFragment(RecentTransactionsFragment.newInstance(clientId),
-                        true, R.id.container);
+                replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_charges:
                 replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,

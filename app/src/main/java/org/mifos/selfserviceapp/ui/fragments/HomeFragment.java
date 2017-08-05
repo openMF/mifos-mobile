@@ -27,7 +27,6 @@ import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
-import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -75,20 +74,9 @@ public class HomeFragment extends BaseFragment implements HomeView,
     private LinearLayout.LayoutParams toolBarLayoutParams;
     private int toolbarDefaultHeight, insetStartWidth;
 
-    public static HomeFragment newInstance(Long clientId) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putLong(Constants.CLIENT_ID, clientId);
-        fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            clientId = getArguments().getLong(Constants.CLIENT_ID);
-        }
     }
 
     @Override
@@ -98,6 +86,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
         ((HomeActivity) getActivity()).getActivityComponent().inject(this);
 
         ButterKnife.bind(this, rootView);
+        clientId = preferencesHelper.getClientId();
+
         presenter.attachView(this);
         slHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
@@ -132,7 +122,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
 
     public void openAccount(AccountType accountType) {
         ((BaseActivity) getActivity()).replaceFragment(
-                ClientAccountsFragment.newInstance(clientId, accountType), true, R.id.container);
+                ClientAccountsFragment.newInstance(accountType), true, R.id.container);
     }
 
     @Override
