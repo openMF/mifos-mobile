@@ -2,6 +2,7 @@ package org.mifos.selfserviceapp;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.crashlytics.android.Crashlytics;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -25,6 +26,10 @@ public class MifosSelfServiceApp extends Application {
 
     public static MifosSelfServiceApp get(Context context) {
         return (MifosSelfServiceApp) context.getApplicationContext();
+    }
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     public static Context getContext() {
