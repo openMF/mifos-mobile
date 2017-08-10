@@ -2,7 +2,6 @@ package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
@@ -12,6 +11,7 @@ import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
+import org.mifos.selfserviceapp.utils.ImageUtil;
 
 import java.io.IOException;
 
@@ -110,9 +110,8 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
                             final byte[] decodedBytes =
                                     Base64.decode(pureBase64Encoded, Base64.DEFAULT);
 
-                            Bitmap decodedBitmap =
-                                    BitmapFactory.decodeByteArray(decodedBytes, 0,
-                                            decodedBytes.length);
+                            Bitmap decodedBitmap = ImageUtil.getInstance().
+                                    compressImage(decodedBytes);
 
                             getMvpView().showUserImage(decodedBitmap);
                         } catch (IOException e) {
