@@ -14,7 +14,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:id="@+id/iv_user_image"
-        android:src="@drawable/ic_person_black_24dp"
+        app:srcCompat="@drawable/ic_person_black_24dp"
         app:border_width="1dp"
         app:border="true"/>
 
