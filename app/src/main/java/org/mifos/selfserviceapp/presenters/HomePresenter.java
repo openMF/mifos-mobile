@@ -2,7 +2,6 @@ package org.mifos.selfserviceapp.presenters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
@@ -16,6 +15,7 @@ import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.HomeView;
+import org.mifos.selfserviceapp.utils.ImageUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -146,10 +146,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
                             final byte[] decodedBytes =
                                     Base64.decode(pureBase64Encoded, Base64.DEFAULT);
 
-                            Bitmap decodedBitmap =
-                                    BitmapFactory.decodeByteArray(decodedBytes, 0,
-                                            decodedBytes.length);
-
+                            Bitmap decodedBitmap = ImageUtil.getInstance().
+                                    compressImage(decodedBytes, 256, 256);
                             getMvpView().showUserImage(decodedBitmap);
                         } catch (IOException e) {
                             Log.d("userimage", e.toString());
