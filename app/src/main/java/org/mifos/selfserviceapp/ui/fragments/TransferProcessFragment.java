@@ -61,6 +61,13 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     private TransferPayload payload;
     private TransferType transferType;
 
+    /**
+     * Used for TPT Transfer and own Account Transfer.<br>
+     * Use {@code type} as TransferType.TPT for TPT and TransferType.SELF for self Account Transfer
+     * @param payload Transfer Information
+     * @param type enum of {@link TransferType}
+     * @return Instance of {@link TransferProcessFragment}
+     */
     public static TransferProcessFragment newInstance(TransferPayload payload, TransferType type) {
         TransferProcessFragment fragment = new TransferProcessFragment();
         Bundle args = new Bundle();
@@ -98,6 +105,9 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         return rootView;
     }
 
+    /**
+     * Initiates a transfer depending upon {@code transferType}
+     */
     @OnClick(R.id.btn_start_transfer)
     public void startTransfer() {
         if (!Network.isConnected(getActivity())) {
@@ -111,18 +121,27 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         }
     }
 
+    /**
+     * Cancels the Transfer and pops fragment
+     */
     @OnClick(R.id.btn_cancel_transfer)
     public void cancelTransfer() {
         getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    /**
+     * Closes the transfer fragment
+     */
     @OnClick(R.id.btn_close)
     public void closeClicked() {
         getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    /**
+     * Shows a {@link android.support.design.widget.Snackbar} on succesfull transfer of money
+     */
     @Override
     public void showTransferredSuccessfully() {
         Toaster.show(rootView, getString(R.string.transferred_Successfully));
@@ -131,6 +150,10 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         llTransfer.setVisibility(View.GONE);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param msg Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String msg) {
         Toaster.show(rootView, msg);

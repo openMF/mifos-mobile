@@ -129,6 +129,9 @@ public class AccountsFragment extends BaseFragment implements
         return rootView;
     }
 
+    /**
+     * Used for reloading account of a particular {@code accountType} in case of a network error.
+     */
     @OnClick(R.id.noAccountIcon)
     void reloadOnError() {
         ll_error.setVisibility(View.GONE);
@@ -136,6 +139,10 @@ public class AccountsFragment extends BaseFragment implements
         accountsPresenter.loadAccounts(accountType);
     }
 
+    /**
+     * This method is called when we swipe to refresh the view and is used for reloading account of
+     * a particular {@code accountType}
+     */
     @Override
     public void onRefresh() {
         ll_error.setVisibility(View.GONE);
@@ -143,6 +150,11 @@ public class AccountsFragment extends BaseFragment implements
         accountsPresenter.loadAccounts(accountType);
     }
 
+    /**
+     * Shows {@link List} of {@link LoanAccount} fetched from server using
+     * {@link LoanAccountsListAdapter}
+     * @param loanAccounts {@link List} of {@link LoanAccount}
+     */
     @Override
     public void showLoanAccounts(List<LoanAccount> loanAccounts) {
         Collections.sort(loanAccounts, new ComparatorBasedOnId());
@@ -155,6 +167,11 @@ public class AccountsFragment extends BaseFragment implements
         }
     }
 
+    /**
+     * Shows {@link List} of {@link SavingAccount} fetched from server using
+     * {@link SavingAccountsListAdapter}
+     * @param savingAccounts {@link List} of {@link SavingAccount}
+     */
     @Override
     public void showSavingsAccounts(List<SavingAccount> savingAccounts) {
         Collections.sort(savingAccounts, new ComparatorBasedOnId());
@@ -167,6 +184,11 @@ public class AccountsFragment extends BaseFragment implements
         }
     }
 
+    /**
+     * Shows {@link List} of {@link ShareAccount} fetched from server using
+     * {@link ShareAccountsListAdapter}
+     * @param shareAccounts {@link List} of {@link ShareAccount}
+     */
     @Override
     public void showShareAccounts(List<ShareAccount> shareAccounts) {
         Collections.sort(shareAccounts, new ComparatorBasedOnId());
@@ -180,6 +202,10 @@ public class AccountsFragment extends BaseFragment implements
     }
 
 
+    /**
+     * Shows an error layout when this function is called.
+     * @param emptyAccounts Text to show in {@code noAccountText}
+     */
     public void showEmptyAccounts(String emptyAccounts) {
         ll_error.setVisibility(View.VISIBLE);
         noAccountText.setText(emptyAccounts);
@@ -187,21 +213,41 @@ public class AccountsFragment extends BaseFragment implements
         rvAccounts.setVisibility(View.GONE);
     }
 
+    /**
+     * Used for searching an {@code input} String in {@code savingAccounts} and displaying it in the
+     * recyclerview.
+     * @param input String which is needs to be searched in list
+     */
     public void searchSavingsAccount(String input) {
         savingAccountsListAdapter.setSavingAccountsList(accountsPresenter.
                 searchInSavingsList(savingAccounts, input));
     }
 
+    /**
+     * Used for searching an {@code input} String in {@code loanAccounts} and displaying it in the
+     * recyclerview.
+     * @param input String which is needs to be searched in list
+     */
     public void searchLoanAccount(String input) {
         loanAccountsListAdapter.setLoanAccountsList(accountsPresenter.
                 searchInLoanList(loanAccounts, input));
     }
 
+    /**
+     * Used for searching an {@code input} String in {@code savingAccounts} and displaying it in the
+     * recyclerview.
+     * @param input String which is needs to be searched in list
+     */
     public void searchSharesAccount(String input) {
         shareAccountsListAdapter.setShareAccountsList(accountsPresenter.
                 searchInSharesList(shareAccounts, input));
     }
 
+    /**
+     * Used for filtering {@code savingAccounts} depending upon {@link List} of
+     * {@link CheckboxStatus}
+     * @param statusModelList {@link List} of {@link CheckboxStatus}
+     */
     public void filterSavingsAccount(List<CheckboxStatus> statusModelList) {
         List<SavingAccount> filteredSavings = new ArrayList<>();
         for (CheckboxStatus status : accountsPresenter.getCheckedStatus(statusModelList)) {
@@ -211,6 +257,11 @@ public class AccountsFragment extends BaseFragment implements
         savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
     }
 
+    /**
+     * Used for filtering {@code loanAccounts} depending upon {@link List} of
+     * {@link CheckboxStatus}
+     * @param statusModelList {@link List} of {@link CheckboxStatus}
+     */
     public void filterLoanAccount(List<CheckboxStatus> statusModelList) {
         List<LoanAccount> filteredSavings = new ArrayList<>();
         for (CheckboxStatus status : accountsPresenter.getCheckedStatus(statusModelList)) {
@@ -220,6 +271,11 @@ public class AccountsFragment extends BaseFragment implements
         loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
     }
 
+    /**
+     * Used for filtering {@code shareAccounts} depending upon {@link List} of
+     * {@link CheckboxStatus}
+     * @param statusModelList {@link List} of {@link CheckboxStatus}
+     */
     public void filterShareAccount(List<CheckboxStatus> statusModelList) {
         List<ShareAccount> filteredSavings = new ArrayList<>();
         for (CheckboxStatus status : accountsPresenter.getCheckedStatus(statusModelList)) {
@@ -229,6 +285,10 @@ public class AccountsFragment extends BaseFragment implements
         shareAccountsListAdapter.setShareAccountsList(filteredSavings);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param errorMessage Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String errorMessage) {
         ll_error.setVisibility(View.VISIBLE);
@@ -238,11 +298,17 @@ public class AccountsFragment extends BaseFragment implements
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Shows {@link SwipeRefreshLayout}
+     */
     @Override
     public void showProgress() {
         showSwipeRefreshLayout(true);
     }
 
+    /**
+     * Hides {@link SwipeRefreshLayout}
+     */
     @Override
     public void hideProgress() {
         showSwipeRefreshLayout(false);

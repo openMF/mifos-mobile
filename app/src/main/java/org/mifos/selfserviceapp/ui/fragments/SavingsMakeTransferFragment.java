@@ -109,6 +109,15 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     private String transferType;
     private long accountId;
 
+    /**
+     * Provides an instance of {@link SavingsMakeTransferFragment}, use {@code transferType} as
+     * {@code Constants.TRANSFER_PAY_TO} when we want to deposit and
+     * {@code Constants.TRANSFER_PAY_FROM} when we want to make a transfer
+     * @param accountId Saving account Id
+     * @param transferType Type of transfer i.e. {@code Constants.TRANSFER_PAY_TO} or
+     * {@code Constants.TRANSFER_PAY_FROM}
+     * @return Instance of {@link SavingsMakeTransferFragment}
+     */
     public static SavingsMakeTransferFragment newInstance(long accountId, String transferType) {
         SavingsMakeTransferFragment transferFragment = new SavingsMakeTransferFragment();
         Bundle args = new Bundle();
@@ -142,6 +151,10 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         return rootView;
     }
 
+    /**
+     * Checks validation of {@code etRemark} and then opens {@link TransferProcessFragment} for
+     * initiating the transfer
+     */
     @OnClick(R.id.btn_review_transfer)
     void reviewTransfer() {
 
@@ -168,11 +181,17 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
                 newInstance(transferPayload, TransferType.SELF), true, R.id.container);
     }
 
+    /**
+     * Cancels the transfer by poping current Fragment
+     */
     @OnClick(R.id.btn_cancel_transfer)
     void cancelTransfer() {
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    /**
+     * Setting up basic components
+     */
     @Override
     public void showUserInterface() {
         pvOne.setCurrentActive();
@@ -191,6 +210,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
                 MFDatePicker.getDatePickedAsString());
     }
 
+    /**
+     * Provides with {@code accountOptionsTemplate} fetched from server which is used to update
+     * {@code listPayFrom} and {@code listPayTo}
+     * @param accountOptionsTemplate Template for account transfer
+     */
     @Override
     public void showSavingsAccountTemplate(AccountOptionsTemplate accountOptionsTemplate) {
         this.accountOptionsTemplate = accountOptionsTemplate;
@@ -202,11 +226,19 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         payFromAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Shows a {@link android.support.design.widget.Snackbar} with {@code message}
+     * @param message String to be shown
+     */
     @Override
     public void showToaster(String message) {
         Toaster.show(rootView, message);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String message) {
         Toaster.show(rootView, message);
@@ -234,6 +266,13 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         hideProgressBar();
     }
 
+    /**
+     * Callback for {@code spPayFrom} and {@code spPayTo}
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
@@ -274,6 +313,10 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     }
 
+    /**
+     * Disables {@code spPayTo} {@link Spinner} and sets {@code pvOne} to completed and make
+     * {@code pvTwo} active
+     */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
         pvOne.setCurrentCompeleted();
@@ -286,6 +329,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         spPayTo.setEnabled(false);
     }
 
+    /**
+     * Checks validation of {@code spPayTo} {@link Spinner}.<br>
+     *  Disables {@code spPayFrom} {@link Spinner} and sets {@code pvTwo} to completed and make
+     * {@code pvThree} active
+     */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
         if (spPayTo.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().toString())) {
@@ -302,6 +350,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         spPayFrom.setEnabled(false);
     }
 
+    /**
+     * Checks validation of {@code etAmount} {@link EditText}.<br>
+     * Disables {@code etAmount} and sets {@code pvThree} to completed and make
+     * {@code pvFour} active
+     */
     @OnClick(R.id.btn_amount)
     public void amountSet() {
 

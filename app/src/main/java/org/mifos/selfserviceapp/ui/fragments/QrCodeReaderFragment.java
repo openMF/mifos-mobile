@@ -38,6 +38,10 @@ public class QrCodeReaderFragment extends BaseFragment implements ZXingScannerVi
         return mScannerView;
     }
 
+    /**
+     * Sets the {@link me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler} callback and
+     * opens Camera
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -45,11 +49,19 @@ public class QrCodeReaderFragment extends BaseFragment implements ZXingScannerVi
         mScannerView.startCamera();
     }
 
+    /**
+     * Closes the Camera
+     */
     @Override
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
     }
+
+    /**
+     * Callback for {@link ZXingScannerView} which retrieves data from QRCode
+     * @param result Contains data scanned from QRCode
+     */
     @Override
     public void handleResult(Result result) {
         Gson gson = new Gson();

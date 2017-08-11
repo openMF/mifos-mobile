@@ -93,6 +93,9 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         return rootView;
     }
 
+    /**
+     * Initializes the layout
+     */
     @Override
     public void showUserInterface() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -113,6 +116,10 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         hideProgressBar();
     }
 
+    /**
+     * Fetches {@link LoanWithAssociations} for a loan with {@code loanId}
+     * @param loanWithAssociations Contains details about Repayment Schedule
+     */
     @Override
     public void showLoanRepaymentSchedule(LoanWithAssociations loanWithAssociations) {
         loanRepaymentScheduleAdapter
@@ -127,6 +134,10 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
                 valueOf(loanWithAssociations.getNumberOfRepayments()));
     }
 
+    /**
+     * Shows an empty layout for a loan with {@code loanId} which has no Repayment Schedule
+     * @param loanWithAssociations Contains details about Repayment Schedule
+     */
     @Override
     public void showEmptyRepaymentsSchedule(LoanWithAssociations loanWithAssociations) {
         tvAccountNumber.setText(loanWithAssociations.getAccountNo());
@@ -138,6 +149,10 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         tvStatus.setText(R.string.empty_repayment_schedule);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showError(String message) {
         Toaster.show(rootView, message);

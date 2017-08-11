@@ -43,10 +43,16 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         }
     }
 
+    /**
+     * Used for removing elevation from toolbar
+     */
     public void hideToolbarElevation() {
         getSupportActionBar().setElevation(0);
     }
 
+    /**
+     * Used for setting toolbar elevation
+     */
     public void setToolbarElevation() {
         getSupportActionBar().setElevation(8f);
     }
@@ -56,6 +62,10 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Used for dependency injection
+     * @return {@link ActivityComponent} which is used for injection
+     */
     public ActivityComponent getActivityComponent() {
         if (activityComponent == null) {
             activityComponent = DaggerActivityComponent.builder()
@@ -111,10 +121,17 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         Toast.makeText(BaseActivity.this, message, toastType).show();
     }
 
+    /**
+     * Calls a method {@code showProgressDialog("Working")} which displays ProgressDialog
+     */
     public void showProgressDialog() {
         showProgressDialog(getString(R.string.working));
     }
 
+    /**
+     * Displays a ProgressDialog
+     * @param message Message you want to display in Progress Dialog
+     */
     @Override
     public void showProgressDialog(String message) {
         if (progress == null) {
@@ -126,6 +143,9 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
 
     }
 
+    /**
+     * Hides the progress dialog if it is currently being shown
+     */
     @Override
     public void hideProgressDialog() {
         if (progress != null && progress.isShowing()) {
@@ -134,6 +154,10 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         }
     }
 
+    /**
+     * Used for setting title of Toolbar
+     * @param title String you want to display as title
+     */
     public void setActionBarTitle(String title) {
         if (getSupportActionBar() != null && getTitle() != null) {
             setTitle(title);
@@ -144,10 +168,17 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         setActionBarTitle(getResources().getString(title));
     }
 
+    /**
+     * @return Returns toolbar linked with current activity
+     */
     public Toolbar getToolbar() {
         return toolbar;
     }
 
+    /**
+     * Calls {@code setActionBarTitle()} to set Toolbar title
+     * @param title String you want to set as title
+     */
     @Override
     public void setToolbarTitle(String title) {
         setActionBarTitle(title);
@@ -197,6 +228,9 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         }
     }
 
+    /**
+     * It pops all the fragments which are currently in the backStack
+     */
     public void clearFragmentBackStack() {
         FragmentManager fm = getSupportFragmentManager();
         int backStackCount = getSupportFragmentManager().getBackStackEntryCount();

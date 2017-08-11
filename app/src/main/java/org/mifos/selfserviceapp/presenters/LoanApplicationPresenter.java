@@ -28,6 +28,15 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
 
+    /**
+     * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
+     * {@link DataManager} and {@link Context}.
+     *
+     * @param dataManager DataManager class that provides access to the data
+     *                    via the API.
+     * @param context     Context of the view attached to the presenter. In this case
+     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     */
     @Inject
     public LoanApplicationPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
@@ -45,6 +54,12 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
         super.detachView();
     }
 
+    /**
+     * Loads LoanApplicationTemplate from the server as {@link LoanTemplate} and notifies the view
+     * depending upon the {@code loanState}. And in case of any error during fetching the required
+     * details it notifies the view.
+     * @param loanState State of Loan i.e.  {@code LoanState.CREATE} or  {@code LoanState.UPDATE}
+     */
     public void loadLoanApplicationTemplate(final LoanState loanState) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -75,6 +90,13 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
         );
     }
 
+    /**
+     * Loads LoanApplicationTemplate from the server as {@link LoanTemplate} and notifies the view
+     * depending upon the {@code productId} and {@code loanState}. And in case of any error during
+     * fetching the required details it notifies the view.
+     * @param productId ProductId required for Fetching loan template according to it.
+     * @param loanState State of Loan i.e.  {@code LoanState.CREATE} or  {@code LoanState.UPDATE}
+     */
     public void loadLoanApplicationTemplateByProduct(int productId, final LoanState loanState) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -105,6 +127,12 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
         );
     }
 
+    /**
+     * Used for creating LoanAccount using the {@code loansPayload} and notifies the view after
+     * successful creating of a LoanAccount. And in case of any error during creation, it
+     * notifies the view.
+     * @param loansPayload {@link LoansPayload} required for Loan Creation
+     */
     public void createLoansAccount(LoansPayload loansPayload) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -132,6 +160,13 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
         );
     }
 
+    /**
+     * Used for updating LoanAccount using the {@code loansPayload} and specified {@code loanId} and
+     * notifies the view after successful updation of a LoanAccount. And in case of any error during
+     * updation, it notifies the view.
+     * @param loanId Id of Loan which needs to be updated
+     * @param loansPayload {@link LoansPayload} required for Loan Updation
+     */
     public void updateLoanAccount(long loanId, LoansPayload loansPayload) {
         checkViewAttached();
         getMvpView().showProgress();

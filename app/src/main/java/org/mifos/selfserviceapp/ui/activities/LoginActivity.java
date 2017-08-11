@@ -64,34 +64,54 @@ public class LoginActivity extends BaseActivity implements LoginView {
         }
     }
 
+    /**
+     * Called when Login is user has successfully logged in
+     * @param userName Username of the user that successfully logged in!
+     */
     @Override
     public void onLoginSuccess(String userName) {
         this.userName = userName;
         loginPresenter.loadClient();
     }
 
+    /**
+     * Shows ProgressDialog when called
+     */
     @Override
     public void showProgress() {
         showProgressDialog(getString(R.string.progress_message_login));
     }
 
+    /**
+     * Hides the progressDialog which is being shown
+     */
     @Override
     public void hideProgress() {
         hideProgressDialog();
     }
 
+    /**
+     * Starts {@link PassCodeActivity}
+     */
     @Override
     public void showPassCodeActivity() {
         showToast(getString(R.string.toast_welcome, userName));
         startPassCodeActivity();
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param errorMessage Error message that tells the user about the problem.
+     */
     @Override
     public void showMessage(String errorMessage) {
         showToast(errorMessage, Toast.LENGTH_LONG);
         llLogin.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Called when Login Button is clicked, used for logging in the user
+     */
     @OnClick(R.id.btn_login)
     public void onLoginClicked() {
 
@@ -110,6 +130,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter.detachView();
     }
 
+    /**
+     * Starts {@link PassCodeActivity} with {@code Constans.INTIAL_LOGIN} as true
+     */
     private void startPassCodeActivity() {
         Intent intent = new Intent(LoginActivity.this, PassCodeActivity.class);
         intent.putExtra(Constants.INTIAL_LOGIN, true);

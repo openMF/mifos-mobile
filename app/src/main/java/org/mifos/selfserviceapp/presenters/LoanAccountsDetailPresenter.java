@@ -57,6 +57,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
      * Load details of a particular loan account from the server and notify the view
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
+     * @param loanId Id of Loan Account
      */
     public void loadLoanAccountDetails(long loanId) {
         checkViewAttached();

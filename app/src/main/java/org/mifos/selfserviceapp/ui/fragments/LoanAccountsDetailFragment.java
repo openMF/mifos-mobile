@@ -124,6 +124,11 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         return rootView;
     }
 
+    /**
+     * Shows details about loan account fetched from server is status is Active else shows and
+     * error layout i.e. {@code layoutError} with a msg related to the status.
+     * @param loanAccount object containing details of each loan account,
+     */
     @Override
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
         llAccountDetail.setVisibility(View.VISIBLE);
@@ -154,6 +159,10 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         getActivity().invalidateOptionsMenu();
     }
 
+    /**
+     * Sets basic information about a loan
+     * @param loanAccount object containing details of each loan account,
+     */
     public void showDetails(LoanAccount loanAccount) {
         //TODO: Calculate nextInstallment value
         tvOutstandingBalanceName.setText(getResources()
@@ -167,30 +176,47 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         tvCurrencyName.setText(loanAccount.getSummary().getCurrency().getCode());
     }
 
+    /**
+     * Opens {@link SavingsMakeTransferFragment} to Make a payment for loan account with given
+     * {@code loanId}
+     */
     @OnClick(R.id.btn_make_payment)
     public void onMakePaymentClicked() {
         ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
                 .newInstance(loanId, Constants.TRANSFER_PAY_TO), true, R.id.container);
     }
 
+    /**
+     * Opens {@link LoanAccountSummaryFragment}
+     */
     @OnClick(R.id.btn_loan_summary)
     public void onLoanSummaryClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanAccountSummaryFragment
                 .newInstance(loanId), true, R.id.container);
     }
 
+    /**
+     * Opens {@link LoanRepaymentScheduleFragment}
+     */
     @OnClick(R.id.btn_repayment_schedule)
     public void onRepaymentScheduleClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanRepaymentScheduleFragment
                 .newInstance(loanId), true, R.id.container);
     }
 
+    /**
+     * Opens {@link LoanAccountTransactionFragment}
+     */
     @OnClick(R.id.btn_transactions)
     public void onTransactionsClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanAccountTransactionFragment
                 .newInstance(loanId), true, R.id.container);
     }
 
+    /**
+     * It is called whenever any error occurs while executing a request
+     * @param message Error message that tells the user about the problem.
+     */
     @Override
     public void showErrorFetchingLoanAccountsDetail(String message) {
         llAccountDetail.setVisibility(View.GONE);

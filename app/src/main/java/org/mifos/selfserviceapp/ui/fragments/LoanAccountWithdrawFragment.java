@@ -79,11 +79,17 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
         return rootView;
     }
 
+    /**
+     * Sets Basic Information about that Loan Application
+     */
     private void showUserInterface() {
         tvClientName.setText(loanAccount.getClientName());
         tvAccountNumber.setText(loanAccount.getAccountNo());
     }
 
+    /**
+     * Sends a request to server to withdraw that Loan Account
+     */
     @OnClick(R.id.btn_withdraw_loan)
     public void onLoanWithdraw() {
         LoanWithdraw loanWithdraw = new LoanWithdraw();
@@ -93,12 +99,20 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
         loanAccountWithdrawPresenter.withdrawLoanAccount(loanAccount.getId(), loanWithdraw);
     }
 
+    /**
+     * Receives A confirmation after successfull withdrawing of Loan Application.
+     */
     @Override
     public void showLoanAccountWithdrawSuccess() {
         Toaster.show(rootView, R.string.loan_application_withdrawn_successfully);
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    /**
+     * Shows an error in {@link android.support.design.widget.Snackbar} if any error occurs during
+     * withdrawing of Loan
+     * @param message Error Message displayed
+     */
     @Override
     public void showLoanAccountWithdrawError(String message) {
         Toaster.show(rootView, message);
