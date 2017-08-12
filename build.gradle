@@ -29,10 +29,10 @@ ext {
     minSdkVersion = 11
     targetSdkVersion = 25
     compileSdkVersion = 25
-    buildToolsVersion = '24.0.2'
+    buildToolsVersion = '25.0.3'
 
     // App dependencies
-    supportLibraryVersion = '24.2.1'
+    supportLibraryVersion = '25.3.1'
     daggerVersion = '2.2'
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.6.0'
