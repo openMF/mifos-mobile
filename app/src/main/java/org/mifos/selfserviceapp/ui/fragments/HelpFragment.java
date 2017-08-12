@@ -5,39 +5,56 @@ package org.mifos.selfserviceapp.ui.fragments;
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.mifos.selfserviceapp.R;
+import org.mifos.selfserviceapp.models.FAQ;
+import org.mifos.selfserviceapp.presenters.HelpPresenter;
+import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.ui.adapters.FAQAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
+import org.mifos.selfserviceapp.ui.views.HelpView;
+import org.mifos.selfserviceapp.utils.DividerItemDecoration;
+
+import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by dilpreet on 25/2/17.
- */
+public class HelpFragment extends BaseFragment implements HelpView, BottomNavigationView.
+        OnNavigationItemSelectedListener {
 
-public class HelpFragment extends BaseFragment implements OnMapReadyCallback {
+    @BindView(R.id.rv_faq)
+    RecyclerView rvFaq;
 
+    @BindView(R.id.bnv_help)
+    BottomNavigationView bnvHelp;
 
-    @BindView(R.id.map)
-    MapView mapView;
+    @Inject
+    FAQAdapter faqAdapter;
+
+    @Inject
+    HelpPresenter presenter;
 
     private View rootView;
+    private ArrayList<FAQ> faqArrayList;
 
     public static HelpFragment getInstance() {
         HelpFragment helpFragment = new HelpFragment();
@@ -48,35 +65,91 @@ public class HelpFragment extends BaseFragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_help, container, false);
+        setHasOptionsMenu(true);
 
+        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
+        presenter.attachView(this);
 
-        mapView.onCreate(savedInstanceState);
-        mapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            Log.d(HelpFragment.class.getSimpleName(), e.toString());
-        }
-        mapView.getMapAsync(this);
+        showUserInterface();
+        presenter.loadFaq();
 
         return rootView;
     }
 
+    private void showUserInterface() {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvFaq.setLayoutManager(layoutManager);
+        rvFaq.addItemDecoration(new DividerItemDecoration(getActivity(),
+                layoutManager.getOrientation()));
+
+        bnvHelp.setOnNavigationItemSelectedListener(this);
+    }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void showFaq(ArrayList<FAQ> faqArrayList) {
+        faqAdapter.setFaqArrayList(faqArrayList);
+        rvFaq.setAdapter(faqAdapter);
+        this.faqArrayList = faqArrayList;
+    }
 
-        //Longitude latitude of Mifos
-        LatLng mifos = new LatLng(47.61115, -122.34481);
-        Marker locationMarker = googleMap.addMarker(new MarkerOptions().position(mifos)
-                .title(getActivity().getResources().getString(R.string.map_marker_heading))
-                .snippet(getActivity().getResources().getString(R.string.map_marker_desc)));
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_call:
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + getString(R.string.help_line_number)));
+                startActivity(intent);
+                break;
+            case R.id.menu_email:
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:" + getString(R.string.contact_email)));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query));
+                if (emailIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(emailIntent);
+                }
+                break;
+            case R.id.menu_locations:
+                ((BaseActivity) getActivity()).replaceFragment(LocationsFragment.newInstance(),
+                        true, R.id.container);
+                break;
+        }
+        return true;
+    }
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(mifos).zoom(15).build();
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_help, menu);
 
-        locationMarker.showInfoWindow();
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.
+                SEARCH_SERVICE);
 
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search_faq).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().
+                getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                faqAdapter.updateList(presenter.filterList(faqArrayList, newText));
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void showProgress() {
+        showProgressBar();
+    }
+
+    @Override
+    public void hideProgress() {
+        hideProgressBar();
     }
 }
