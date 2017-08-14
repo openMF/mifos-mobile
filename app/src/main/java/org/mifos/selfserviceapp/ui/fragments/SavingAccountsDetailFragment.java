@@ -5,12 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,9 +53,6 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @BindView(R.id.tv_min_req_bal)
     TextView tvMiniRequiredBalance;
 
-    @BindView(R.id.tv_account_balance)
-    TextView tvAccountBalance;
-
     @BindView(R.id.tv_saving_account_number)
     TextView tvSavingAccountNumber;
 
@@ -90,9 +83,6 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @BindView(R.id.tv_status)
     TextView tvStatus;
 
-    @BindView(R.id.iv_qr_code)
-    ImageView ivQrCode;
-
     @Inject
     PreferencesHelper preferencesHelper;
 
@@ -102,6 +92,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     private View rootView;
     private long savingsId;
     private Status status;
+    private SavingsWithAssociations savingsWithAssociations;
 
     public static SavingAccountsDetailFragment newInstance(long savingsId) {
         SavingAccountsDetailFragment fragment = new SavingAccountsDetailFragment();
@@ -117,7 +108,6 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         if (getArguments() != null) {
             savingsId = getArguments().getLong(Constants.SAVINGS_ID);
         }
-        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -189,8 +179,6 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
                 savingsWithAssociations.getMinRequiredOpeningBalance(), currencySymbol));
         tvTotalWithDrawals.setText(getString(R.string.double_and_String,
                 savingsWithAssociations.getSummary().getTotalWithdrawals(), currencySymbol));
-        tvAccountBalance.setText(
-                getString(R.string.double_and_String, accountBalance, currencySymbol));
         tvAccountBalanceMain.setText(
                 getString(R.string.double_and_String, accountBalance, currencySymbol));
         tvNominalInterestRate.setText(getString(R.string.double_and_String,
@@ -210,10 +198,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             tvMadeOnTextView.setVisibility(View.GONE);
         }
 
-        String accountDetails = QrCodeGenerator.getAccountDetailsInString(savingsWithAssociations.
-                getAccountNo(), preferencesHelper.getOfficeName(), AccountType.SAVINGS);
-        ivQrCode.setImageBitmap(QrCodeGenerator.encodeAsBitmap(accountDetails));
-
+        this.savingsWithAssociations = savingsWithAssociations;
         showAccountStatus(savingsWithAssociations);
     }
 
@@ -279,28 +264,25 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         mSavingAccountsDetailPresenter.detachView();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_saving_account, menu);
-
-        if (status != null && status.getActive()) {
-            menu.findItem(R.id.item_savings_charges).setVisible(true);
-        }
+    @OnClick(R.id.ll_savings_transactions)
+    public void transactionsClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(SavingAccountsTransactionFragment.
+                newInstance(savingsId), true, R.id.container);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_transactions:
-                ((BaseActivity) getActivity()).replaceFragment(SavingAccountsTransactionFragment.
-                                newInstance(savingsId), true, R.id.container);
-                break;
-            case R.id.item_savings_charges:
-                ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment.
-                        newInstance(savingsId, ChargeType.SAVINGS), true, R.id.container);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+    @OnClick(R.id.ll_savings_charges)
+    public void chargeClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment.
+                newInstance(savingsId, ChargeType.SAVINGS), true, R.id.container);
     }
+
+    @OnClick(R.id.ll_savings_qr_code)
+    public void qrCodeClicked() {
+        String accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
+                savingsWithAssociations.getAccountNo(), preferencesHelper.getOfficeName(),
+                AccountType.SAVINGS);
+        ((BaseActivity) getActivity()).replaceFragment(QrCodeDisplayFragment.
+                newInstance(accountDetailsInJson), true, R.id.container);
+    }
+
 }

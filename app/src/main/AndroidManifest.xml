@@ -60,6 +60,16 @@
         <service android:name=".ui.widgets.ChargeWidgetService"
                  android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="org.mifos.selfserviceapp.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileproviderpath" />
+        </provider>
+
     </application>
 
 </manifest>

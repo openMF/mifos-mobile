@@ -30,4 +30,12 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="circleLayout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/circular_background_img</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">@dimen/layout_padding_8dp</item>
+    </style>
+
 </resources>
