@@ -13,6 +13,7 @@
             android:id="@+id/rv_beneficiaries"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:background="@color/white"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/default_margin"
             android:layout_weight="1"/>
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="bottom|end"
         app:srcCompat="@drawable/ic_add_white_24dp"
-        android:layout_margin="@dimen/default_margin"
+        android:layout_margin="@dimen/margin_16dp"
         android:id="@+id/fab_add_beneficiary"
         android:clickable="true"/>
 </android.support.design.widget.CoordinatorLayout>
