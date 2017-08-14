@@ -144,6 +144,16 @@
     <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
     <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer template</string>
     <string name="unauthorized_client">You are not authorized</string>
+    <string name="qr_code">QR Code</string>
+    <string name="share_qr_code">Share QR Code</string>
+    <string name="monitor">Monitor</string>
+    <string name="choose_option">Choose option</string>
+    <string name="view_transactions">View Transactions</string>
+    <string name="view_charges">View Charges</string>
+    <string name="view_loan_summary">View Loan summary</string>
+    <string name="view_repayment">View Repayment Schedule</string>
+    <string name="view_qr_code">View QR Code for this account</string>
+    <string name="last_trans">Last Transaction Details</string>
 
     <string name="fetching_client">Fetching Client</string>
 

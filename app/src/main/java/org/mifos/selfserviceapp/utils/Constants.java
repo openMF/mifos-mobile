@@ -67,4 +67,6 @@ public class Constants {
 
     public static final String CHARGE_TYPE = "charge_type";
 
+    public static final String QR_DATA = "qrcode_data";
+
 }
