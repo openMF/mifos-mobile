@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
+import org.mifos.selfserviceapp.utils.MaterialDialog;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -119,6 +121,16 @@ public class HomeActivity extends BaseActivity implements
             case R.id.item_help:
                 replaceFragment(HelpUCFragment.getInstance(), true, R.id.container);
                 break;
+            case R.id.item_share:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
+                        getString(R.string.share_msg), getApplication().getPackageName()));
+                startActivity(Intent.createChooser(i, getString(R.string.choose)));
+                break;
+            case R.id.item_logout:
+                showLogoutDialog();
+                break;
         }
 
         // close the drawer
@@ -126,6 +138,29 @@ public class HomeActivity extends BaseActivity implements
         navigationView.setCheckedItem(R.id.item_accounts);
         setTitle(item.getTitle());
         return true;
+    }
+
+    /**
+     * Asks users to confirm whether he want to logout or not
+     */
+    private void showLogoutDialog() {
+        new MaterialDialog.Builder().init(HomeActivity.this)
+                .setMessage(R.string.dialog_logout)
+                .setPositiveButton(getString(R.string.dialog_action_i_am_sure),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                preferencesHelper.clear();
+                                Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.
+                                        FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                finish();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.cancel))
+                .createMaterialDialog()
+                .show();
     }
 
     /**

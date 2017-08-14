@@ -271,6 +271,10 @@
     <string name="amount_greater_than_zero">Amount should be greater than zero</string>
     <string name="about_us_under_construction">About Us Under Construction</string>
     <string name="help_under_construction">Help Under Construction</string>
+    <string name="logout">Logout</string>
+    <string name="share_msg">Download Self Service app here: https://play.google.com/store/apps/details?id=
+    </string>
+    <string name="choose">Choose application</string>
 
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
@@ -288,6 +292,7 @@
     <string name="inactive_uc">INACTIVE</string>
 
     <!--Material Dialog-->
+    <string name="dialog_logout">Are you sure you want to logout?</string>
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_action_cancel">Cancel</string>
     <string name="dialog_action_back">Back</string>
