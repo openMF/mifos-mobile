@@ -34,4 +34,13 @@ public class Utils {
         }
         return formString.toString();
     }
+
+    public static String formatTransactionType(String type) {
+        StringBuilder builder = new StringBuilder();
+        for (String str : type.toLowerCase().split("_")) {
+            builder.append(String.valueOf(str.charAt(0)).toUpperCase() + str.substring(1,
+                    str.length()) + " ");
+        }
+        return builder.toString();
+    }
 }

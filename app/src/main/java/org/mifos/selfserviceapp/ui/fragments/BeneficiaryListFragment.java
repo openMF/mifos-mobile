@@ -18,6 +18,7 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.BeneficiaryListAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.BeneficiariesView;
+import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 
 import java.util.List;
@@ -83,6 +84,8 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvBeneficiaries.setLayoutManager(layoutManager);
         rvBeneficiaries.setHasFixedSize(true);
+        rvBeneficiaries.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.
+                getOrientation()));
         rvBeneficiaries.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
         rvBeneficiaries.setAdapter(beneficiaryListAdapter);
 
