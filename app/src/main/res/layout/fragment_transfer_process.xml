@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/amount"
                     android:layout_marginTop="@dimen/row_padding_left"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="center"
                     android:textColor="@color/primary"/>
                 <TextView
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     tools:text="@string/amount"
                     android:id="@+id/tv_amount"
-                    android:textSize="24dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:gravity="center"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -48,7 +48,8 @@
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
                     android:layout_marginTop="@dimen/login_padding_left"
-                    android:textSize="24dp"/>
+                    android:textColor="@color/gray_dark"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -57,7 +58,7 @@
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -67,7 +68,7 @@
                     android:layout_marginTop="@dimen/divider_margin"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textSize="@dimen/text_medium"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -81,7 +82,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -91,7 +92,7 @@
                     android:layout_marginTop="@dimen/divider_margin"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textSize="@dimen/text_medium"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -105,7 +106,7 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -115,7 +116,7 @@
                     android:layout_marginTop="@dimen/divider_margin"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textSize="@dimen/text_medium"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

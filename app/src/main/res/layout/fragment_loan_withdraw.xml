@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/client_name"
-            android:textSize="@dimen/text_large"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
         <TextView
             android:id="@+id/tv_client_name"
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_weight="1"
             tools:text="@string/client_name"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_large"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/account_number"
-            android:textSize="@dimen/text_large"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
         <TextView
             android:id="@+id/tv_account_number"
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             tools:text="@string/account_number"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_large"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
     </LinearLayout>
 
     <EditText
@@ -65,5 +65,5 @@
         android:textColor="@color/white"
         android:layout_marginTop="@dimen/default_margin"
         android:foreground="?android:attr/selectableItemBackground"
-        android:textSize="@dimen/text_medium"/>
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 </LinearLayout>

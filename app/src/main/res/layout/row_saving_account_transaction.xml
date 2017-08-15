@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@string/medium_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <TextView
             android:id="@+id/tv_transaction_type"
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_medium"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
         <TextView
             android:id="@+id/tv_transaction_detail_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_medium"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:visibility="gone"/>
     </LinearLayout>
     <LinearLayout
@@ -60,7 +60,7 @@
             android:gravity="end"
             android:text="@string/medium_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <TextView
             android:id="@+id/tv_saving_account_running_balance"
@@ -69,7 +69,7 @@
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
             android:gravity="end"
-            android:textSize="@dimen/text_small"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
     </LinearLayout>
 </LinearLayout>

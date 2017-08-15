@@ -35,7 +35,7 @@
                     android:lines="1"
                     tools:text="@string/medium_text"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_large"/>
+                   android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
                 <TextView
                     android:id="@+id/tv_due_date"
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     tools:text="@string/medium_text"
                     android:gravity="right"
-                    android:textSize="@dimen/text_medium"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,14 +59,14 @@
                     android:lines="1"
                     android:text="@string/amount_due"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <TextView
                     android:id="@+id/tv_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/medium_text"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             </LinearLayout>
 
             <LinearLayout
@@ -81,14 +81,14 @@
                     android:lines="1"
                     android:text="@string/amount_paid"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <TextView
                     android:id="@+id/tv_amount_paid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/medium_text"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             </LinearLayout>
 
             <LinearLayout
@@ -104,14 +104,14 @@
                     android:lines="1"
                     android:text="@string/amount_waived"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <TextView
                     android:id="@+id/tv_amount_waived"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/medium_text"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             </LinearLayout>
 
             <LinearLayout
@@ -127,14 +127,14 @@
                     android:lines="1"
                     android:text="@string/amount_outstanding"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <TextView
                     android:id="@+id/tv_amount_outstanding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/medium_text"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

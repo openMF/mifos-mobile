@@ -24,14 +24,14 @@
                 android:lines="1"
                 android:text="@string/medium_text"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:id="@+id/tv_shareAccountProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/small_text"
                 android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_small"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -46,14 +46,14 @@
                         android:textColor="@color/gray_dark"
                         android:layout_marginRight="@dimen/divider_margin"
                         android:layout_marginEnd="@dimen/divider_margin"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_shares_pending"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/medium_text"
                         android:layout_weight="1"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -61,14 +61,13 @@
                         android:layout_marginRight="@dimen/divider_margin"
                         android:layout_marginEnd="@dimen/divider_margin"
                         android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_shares_approved"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/medium_text"
-                        android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

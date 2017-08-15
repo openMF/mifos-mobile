@@ -173,7 +173,7 @@
                 android:layout_gravity="center"
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/default_padding"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 style="@style/Widget.AppCompat.Button.Borderless"/>
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
