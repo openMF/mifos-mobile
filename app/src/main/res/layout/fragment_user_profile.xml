@@ -65,14 +65,14 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/account_number"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                     <TextView
                         android:id="@+id/tv_account_number"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         tools:text="@string/medium_text"/>
                     <TextView
@@ -81,13 +81,13 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/activation_date"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_activation_date"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         tools:text="@string/medium_text"/>
                     <TextView
@@ -96,13 +96,13 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/office_name"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_office_name"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         tools:text="@string/medium_text"/>
                     <TextView
@@ -111,13 +111,13 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/groups"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_groups"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         tools:text="@string/medium_text"/>
                     <TextView
@@ -126,13 +126,13 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/client_type"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_client_type"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         tools:text="@string/medium_text"/>
                     <TextView
@@ -141,13 +141,13 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/client_classification"
-                        android:textSize="@dimen/text_small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                     <TextView
                         android:id="@+id/tv_client_classification"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         tools:text="@string/medium_text"/>
                 </LinearLayout>
@@ -169,13 +169,13 @@
                         android:layout_width="wrap_content"
                         android:textColor="@color/light_grey"
                         android:text="@string/user_details"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                     <TextView
                         android:id="@+id/tv_phone_number"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_8dp"
                         android:drawableLeft="@drawable/ic_phone_wrapper"
                         android:drawableStart="@drawable/ic_phone_wrapper"
@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_8dp"
                         android:drawableLeft="@drawable/ic_cake_wrapper"
                         android:drawableStart="@drawable/ic_cake_wrapper"
@@ -197,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/text_medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:paddingTop="@dimen/layout_padding_8dp"
                         android:drawableLeft="@drawable/ic_beneficiary_wrapper"
                         android:drawableStart="@drawable/ic_beneficiary_wrapper"

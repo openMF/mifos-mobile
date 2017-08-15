@@ -42,7 +42,7 @@
                 android:lines="1"
                 android:text="@string/medium_text"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/small_text"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <TextView
                     android:id="@+id/tv_transactionDate"
@@ -65,7 +65,7 @@
                     android:layout_gravity="end"
                     android:textColor="@color/gray_dark"
                     android:gravity="end"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -26,14 +26,14 @@
                 android:lines="1"
                 android:text="@string/medium_text"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:id="@+id/tv_savingAccountProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/small_text"
                 android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_small"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             <TextView
                 android:id="@+id/tv_last_active"
                 android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                 android:text="@string/small_text"
                 android:layout_marginTop="@dimen/default_margin"
                 android:textColor="@color/light_grey"
-                android:textSize="@dimen/text_small"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
     </LinearLayout>
 
     <TextView
@@ -52,5 +52,5 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/login_padding_right"
         android:layout_marginRight="@dimen/login_padding_right"
-        android:textSize="@dimen/text_large" />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 </LinearLayout>

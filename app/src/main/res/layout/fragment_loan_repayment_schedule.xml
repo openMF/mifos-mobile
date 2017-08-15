@@ -36,14 +36,14 @@
                     android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:text="@string/account_number"/>
                 <TextView
                     android:id="@+id/tv_account_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_gravity="start"
                     android:gravity="start"
                     tools:text="@string/account_number"/>
@@ -56,7 +56,7 @@
                     android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:text="@string/disbursement_date"/>
                 <TextView
                     android:id="@+id/tv_disbursement_date"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_weight="1"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="start"
                     tools:text="@string/disbursement_date"/>
             </TableRow>
@@ -76,7 +76,7 @@
                     android:layout_gravity="start"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:text="@string/no_of_payments"/>
                 <TextView
                     android:id="@+id/tv_number_of_payments"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_weight="1"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="start"
                     tools:text="@string/no_of_payments"/>
             </TableRow>
@@ -106,7 +106,7 @@
                     android:text="@string/date"
                     android:textColor="@color/black"
                     android:gravity="start"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:padding="6dp"
                     android:background="@drawable/rectangular_border"/>
                 <TextView
@@ -116,7 +116,7 @@
                     android:text="@string/loan_balance"
                     android:textColor="@color/black"
                     android:gravity="center"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:padding="6dp"
                     android:background="@drawable/rectangular_border"/>
                 <TextView
@@ -125,7 +125,7 @@
                     android:layout_weight="1"
                     android:text="@string/repayment"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_medium"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="end"
                     android:padding="6dp"
                     android:background="@drawable/rectangular_border"/>

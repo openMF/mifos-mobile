@@ -24,7 +24,7 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_large"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             tools:text="loanProductName"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_loan_transactions"
