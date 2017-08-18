@@ -27,7 +27,7 @@ import org.mifos.selfserviceapp.ui.fragments.AboutUsFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
-import org.mifos.selfserviceapp.ui.fragments.HelpUCFragment;
+import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
@@ -119,7 +119,7 @@ public class HomeActivity extends BaseActivity implements
                 replaceFragment(AboutUsFragment.getInstance(), true, R.id.container);
                 break;
             case R.id.item_help:
-                replaceFragment(HelpUCFragment.getInstance(), true, R.id.container);
+                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
                 break;
             case R.id.item_share:
                 Intent i = new Intent(Intent.ACTION_SEND);

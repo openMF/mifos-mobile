@@ -3,33 +3,38 @@
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_margin="@dimen/activity_vertical_margin"
-    tools:context="org.mifos.selfserviceapp.ui.fragments.HelpFragment">
-
-
+    android:background="@color/white"
+    android:paddingTop="@dimen/default_margin">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mifos_initiative"
-        android:textSize="@dimen/text_medium"
-        android:textColor="@color/primary"
-        android:textStyle="bold"/>
+        android:text="@string/faq"
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/margin_4dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/mifos_location"
-        android:textSize="@dimen/text_medium"
-        android:textColor="@color/black"/>
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:id="@+id/rv_faq"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bnv_help"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@drawable/bottom_nav_item_color_state"
+        app:itemTextColor="@drawable/bottom_nav_item_color_state"
+        app:menu="@menu/menu_help_bottom_bar" />
 </LinearLayout>
