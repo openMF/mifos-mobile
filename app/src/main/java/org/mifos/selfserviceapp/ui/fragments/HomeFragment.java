@@ -218,6 +218,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
     @OnClick(R.id.ll_accounts)
     public void accountsClicked() {
         openAccount(AccountType.SAVINGS);
+        ((HomeActivity) getActivity()).setNavigationViewSelectedItem(R.id.item_accounts);
     }
 
     /**
