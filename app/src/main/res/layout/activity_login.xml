@@ -27,8 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_margin"
+            android:id="@+id/til_username"
             android:layout_marginTop="@dimen/default_margin">
-            <EditText android:id="@+id/et_username"
+            <EditText
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/username"
@@ -39,9 +40,10 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/til_password"
             android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin">
-            <EditText android:id="@+id/et_password"
+            <EditText
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/password"
