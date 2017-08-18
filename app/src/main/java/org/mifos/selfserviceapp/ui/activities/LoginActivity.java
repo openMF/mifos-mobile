@@ -2,9 +2,9 @@ package org.mifos.selfserviceapp.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -36,11 +36,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
 
-    @BindView(R.id.et_username)
-    EditText etUsername;
+    @BindView(R.id.til_username)
+    TextInputLayout tilUsername;
 
-    @BindView(R.id.et_password)
-    EditText etPassword;
+    @BindView(R.id.til_password)
+    TextInputLayout tilPassword;
 
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
@@ -109,14 +109,27 @@ public class LoginActivity extends BaseActivity implements LoginView {
         llLogin.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showUsernameError(String error) {
+        tilUsername.setError(error);
+    }
+
+    @Override
+    public void showPasswordError(String error) {
+        tilPassword.setError(error);
+    }
+
     /**
      * Called when Login Button is clicked, used for logging in the user
      */
     @OnClick(R.id.btn_login)
     public void onLoginClicked() {
 
-        final String username = etUsername.getEditableText().toString();
-        final String password = etPassword.getEditableText().toString();
+        final String username = tilUsername.getEditText().getEditableText().toString();
+        final String password = tilPassword.getEditText().getEditableText().toString();
+        tilUsername.setErrorEnabled(false);
+        tilPassword.setErrorEnabled(false);
+
         if (Network.isConnected(this)) {
             loginPresenter.login(username, password);
         } else {

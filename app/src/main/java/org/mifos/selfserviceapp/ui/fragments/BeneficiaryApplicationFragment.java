@@ -2,12 +2,12 @@ package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -47,17 +47,17 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @BindView(R.id.ll_application_beneficiary)
     LinearLayout llApplicationBeneficiary;
 
-    @BindView(R.id.et_account_number)
-    EditText etAccountNumber;
+    @BindView(R.id.til_account_number)
+    TextInputLayout tilAccountNumber;
 
-    @BindView(R.id.et_office_name)
-    EditText etOfficeName;
+    @BindView(R.id.til_office_name)
+    TextInputLayout tilOfficeName;
 
-    @BindView(R.id.et_transfer_limit)
-    EditText etTransferLimit;
+    @BindView(R.id.til_transfer_limit)
+    TextInputLayout tilTransferLimit;
 
-    @BindView(R.id.et_beneficiary_name)
-    EditText etBeneficiaryName;
+    @BindView(R.id.til_beneficiary_name)
+    TextInputLayout tilBeneficiaryName;
 
     @Inject
     BeneficiaryApplicationPresenter presenter;
@@ -147,17 +147,17 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
             spAccountType.setSelection(accountTypeAdapter.getPosition(beneficiary
                     .getAccountType().getValue()));
             spAccountType.setEnabled(false);
-            etAccountNumber.setText(beneficiary.getAccountNumber());
-            etAccountNumber.setEnabled(false);
-            etOfficeName.setText(beneficiary.getOfficeName());
-            etOfficeName.setEnabled(false);
+            tilAccountNumber.getEditText().setText(beneficiary.getAccountNumber());
+            tilAccountNumber.setEnabled(false);
+            tilOfficeName.getEditText().setText(beneficiary.getOfficeName());
+            tilOfficeName.setEnabled(false);
 
-            etBeneficiaryName.setText(beneficiary.getName());
-            etTransferLimit.setText(String.valueOf(beneficiary.getTransferLimit()));
+            tilBeneficiaryName.getEditText().setText(beneficiary.getName());
+            tilTransferLimit.getEditText().setText(String.valueOf(beneficiary.getTransferLimit()));
         } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
             spAccountType.setSelection(beneficiary.getAccountType().getId());
-            etAccountNumber.setText(beneficiary.getAccountNumber());
-            etOfficeName.setText(beneficiary.getOfficeName());
+            tilAccountNumber.getEditText().setText(beneficiary.getAccountNumber());
+            tilOfficeName.getEditText().setText(beneficiary.getOfficeName());
         }
     }
 
@@ -166,22 +166,36 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      */
     @OnClick(R.id.btn_beneficiary_submit)
     public void submitBeneficiary() {
+
+        tilAccountNumber.setErrorEnabled(false);
+        tilOfficeName.setErrorEnabled(false);
+        tilTransferLimit.setErrorEnabled(false);
+        tilBeneficiaryName.setErrorEnabled(false);
+
         if (accountTypeId == -1) {
             Toaster.show(rootView, getString(R.string.choose_account_type));
             return;
-        } else if (etAccountNumber.getText().toString().equals("")) {
-            Toaster.show(rootView, getString(R.string.enter_account_number));
+        } else if (tilAccountNumber.getEditText().getText().toString().equals("")) {
+            tilAccountNumber.setError(getString(R.string.enter_account_number));
             return;
-        } else if (etOfficeName.getText().toString().equals("")) {
-            Toaster.show(rootView, getString(R.string.enter_office_name));
+        } else if (tilOfficeName.getEditText().getText().toString().equals("")) {
+            tilOfficeName.setError(getString(R.string.enter_office_name));
             return;
-        } else if (etTransferLimit.getText().toString().equals("")) {
-            Toaster.show(rootView, getString(R.string.enter_transfer_limit));
+        } else if (tilTransferLimit.getEditText().getText().toString().equals("")) {
+            tilTransferLimit.setError(getString(R.string.enter_transfer_limit));
             return;
-        } else if (etBeneficiaryName.getText().toString().equals("")) {
-            Toaster.show(rootView, getString(R.string.enter_beneficiary_name));
+        } else if (tilTransferLimit.getEditText().getText().toString().equals(".")) {
+            tilTransferLimit.setError(getString(R.string.invalid_amount));
             return;
-        } else if (beneficiaryState == BeneficiaryState.CREATE_MANUAL ||
+        } else if (tilTransferLimit.getEditText().getText().toString().matches("^0*")) {
+            tilTransferLimit.setError(getString(R.string.amount_greater_than_zero));
+            return;
+        } else if (tilBeneficiaryName.getEditText().getText().toString().equals("")) {
+            tilBeneficiaryName.setError(getString(R.string.enter_beneficiary_name));
+            return;
+        }
+
+        if (beneficiaryState == BeneficiaryState.CREATE_MANUAL ||
                 beneficiaryState == BeneficiaryState.CREATE_QR ) {
             submitNewBeneficiaryApplication();
         } else if (beneficiaryState == BeneficiaryState.UPDATE ) {
@@ -195,11 +209,12 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      */
     private void submitNewBeneficiaryApplication() {
         BeneficiaryPayload beneficiaryPayload = new BeneficiaryPayload();
-        beneficiaryPayload.setAccountNumber(etAccountNumber.getText().toString());
-        beneficiaryPayload.setOfficeName(etOfficeName.getText().toString());
+        beneficiaryPayload.setAccountNumber(tilAccountNumber.getEditText().getText().toString());
+        beneficiaryPayload.setOfficeName(tilOfficeName.getEditText().getText().toString());
         beneficiaryPayload.setAccountType(accountTypeId);
-        beneficiaryPayload.setName(etBeneficiaryName.getText().toString());
-        beneficiaryPayload.setTransferLimit(Integer.parseInt(etTransferLimit.getText().toString()));
+        beneficiaryPayload.setName(tilBeneficiaryName.getEditText().getText().toString());
+        beneficiaryPayload.setTransferLimit(Integer.parseInt(tilTransferLimit.getEditText().
+                getText().toString()));
         presenter.createBeneficiary(beneficiaryPayload);
     }
 
@@ -208,8 +223,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      */
     private void submitUpdateBeneficiaryApplication() {
         BeneficiaryUpdatePayload payload = new BeneficiaryUpdatePayload();
-        payload.setName(etBeneficiaryName.getText().toString());
-        payload.setTransferLimit(Integer.parseInt(etTransferLimit.getText().toString()));
+        payload.setName(tilBeneficiaryName.getEditText().getText().toString());
+        payload.setTransferLimit(Integer.parseInt(tilTransferLimit.getEditText().getText().
+                toString()));
         presenter.updateBeneficiary(beneficiary.getId(), payload);
     }
 

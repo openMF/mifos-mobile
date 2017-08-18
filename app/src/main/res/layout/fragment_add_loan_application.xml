@@ -89,12 +89,12 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/til_principal_amount"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/default_padding">
 
                 <EditText
-                    android:id="@+id/et_principal_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"

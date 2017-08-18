@@ -22,23 +22,23 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:text="@string/select_account_type"
-                android:textSize="16sp"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginStart="@dimen/default_margin"/>
+                android:textSize="16sp"/>
             <Spinner
                 android:id="@+id/sp_account_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/default_margin"
+                android:paddingTop="@dimen/default_margin"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:spinnerMode="dialog"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/til_account_number"
+                android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:id="@+id/et_account_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -50,10 +50,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/til_office_name"
+                android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:id="@+id/et_office_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -65,10 +66,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/til_transfer_limit"
+                android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:id="@+id/et_transfer_limit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -81,10 +83,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/til_beneficiary_name"
+                android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:id="@+id/et_beneficiary_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
