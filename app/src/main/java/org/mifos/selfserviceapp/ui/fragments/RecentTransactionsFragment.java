@@ -18,6 +18,7 @@ import org.mifos.selfserviceapp.presenters.RecentTransactionsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
+import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.EndlessRecyclerViewScrollListener;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -97,6 +98,8 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRecentTransactions.setLayoutManager(layoutManager);
         rvRecentTransactions.setHasFixedSize(true);
+        rvRecentTransactions.addItemDecoration(new DividerItemDecoration(getActivity(),
+                layoutManager.getOrientation()));
         recentTransactionsListAdapter.setTransactions(recentTransactionList);
         rvRecentTransactions.setAdapter(recentTransactionsListAdapter);
         rvRecentTransactions.addOnScrollListener(

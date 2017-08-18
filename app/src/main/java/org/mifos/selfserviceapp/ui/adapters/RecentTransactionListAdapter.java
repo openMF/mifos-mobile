@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.Transaction;
-import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.DateHelper;
+import org.mifos.selfserviceapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +46,9 @@ public class RecentTransactionListAdapter extends
 
         holder.tvAmount.setText(String.valueOf(transaction.getAmount() +
                 transaction.getCurrency().getCode()));
-        holder.tvTypeValue.setText(transaction.getType().getValue());
-        holder.tvTransactionsDate.setText(
-                transaction.getSubmittedOnDate().get(2).toString() +
-                        Constants.BACK_SLASH + transaction.getSubmittedOnDate().get(
-                        1).toString() +
-                        Constants.BACK_SLASH + transaction.getSubmittedOnDate().get(
-                        0).toString());
+        holder.tvTypeValue.setText(Utils.formatTransactionType(transaction.getType().getValue()));
+        holder.tvTransactionsDate.setText(DateHelper.getDateAsString(transaction.
+                getSubmittedOnDate()));
     }
 
     public void setTransactions(List<Transaction> transactions) {

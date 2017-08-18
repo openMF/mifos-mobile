@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/row_padding_left"
-        android:paddingStart="@dimen/default_padding"
-        android:paddingRight="@dimen/row_padding_right"
-        android:paddingEnd="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/default_margin">
+<LinearLayout android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/row_padding_left"
+    android:paddingStart="@dimen/default_padding"
+    android:paddingRight="@dimen/row_padding_right"
+    android:paddingEnd="@dimen/default_padding"
+    android:layout_marginTop="@dimen/default_margin"
+    android:layout_marginBottom="@dimen/default_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <TextView
             android:layout_width="match_parent"
@@ -53,4 +48,3 @@
                 android:textSize="@dimen/text_small"/>
         </LinearLayout>
     </LinearLayout>
-</android.support.v7.widget.CardView>
