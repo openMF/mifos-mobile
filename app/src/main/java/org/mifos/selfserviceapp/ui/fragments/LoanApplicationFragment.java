@@ -1,13 +1,13 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -61,8 +61,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     @BindView(R.id.sp_loan_purpose)
     Spinner spLoanPurpose;
 
-    @BindView(R.id.et_principal_amount)
-    EditText etPrincipalAmount;
+    @BindView(R.id.til_principal_amount)
+    TextInputLayout tilPrincipalAmount;
 
     @BindView(R.id.tv_currency)
     TextView tvCurrency;
@@ -182,6 +182,20 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      */
     @OnClick(R.id.btn_loan_submit)
     void onSubmitLoanApplication() {
+        if (tilPrincipalAmount.getEditText().getText().toString().equals("")) {
+            tilPrincipalAmount.setError(getString(R.string.enter_amount));
+            return;
+        }
+
+        if (tilPrincipalAmount.getEditText().getText().toString().equals(".")) {
+            tilPrincipalAmount.setError(getString(R.string.invalid_amount));
+            return;
+        }
+
+        if (tilPrincipalAmount.getEditText().getText().toString().matches("^0*")) {
+            tilPrincipalAmount.setError(getString(R.string.amount_greater_than_zero));
+            return;
+        }
         if (loanState == LoanState.CREATE) {
             submitNewLoanApplication();
         } else {
@@ -198,7 +212,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setProductId(productId);
         loansPayload.setPrincipal(Double.
-                parseDouble(etPrincipalAmount.getText().toString()));
+                parseDouble(tilPrincipalAmount.getEditText().getText().toString()));
         loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
         loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
         loansPayload.setLoanType("individual");
@@ -225,7 +239,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private void submitUpdateLoanApplication() {
         LoansPayload loansPayload = new LoansPayload();
         loansPayload.setPrincipal(Double.
-                parseDouble(etPrincipalAmount.getText().toString()));
+                parseDouble(tilPrincipalAmount.getEditText().getText().toString()));
         loansPayload.setProductId(productId);
         loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
@@ -379,7 +393,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         tvNewLoanApplication.setText(getString(R.string.string_and_string,
                 getString(R.string.update_loan_application) + " ",
                 loanAccountToModify.getClientName()));
-        etPrincipalAmount.setText(String.valueOf(loanAccountToModify.getPrincipal()));
+        tilPrincipalAmount.getEditText().setText(String.valueOf(loanAccountToModify.
+                getPrincipal()));
         tvCurrency.setText(loanAccountToModify.getCurrency().getDisplayLabel());
 
         tvSubmissionDate.setText(DateHelper.getDateAsString(loanAccountToModify.
@@ -401,7 +416,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 getString(R.string.account_number) + " ", loanTemplate.getClientAccountNo()));
         tvNewLoanApplication.setText(getString(R.string.string_and_string,
                 getString(R.string.new_loan_application) + " ", loanTemplate.getClientName()));
-        etPrincipalAmount.setText(String.valueOf(loanTemplate.getPrincipal()));
+        tilPrincipalAmount.getEditText().setText(String.valueOf(loanTemplate.getPrincipal()));
         tvCurrency.setText(loanTemplate.getCurrency().getDisplayLabel());
 
         listLoanPurpose.clear();
@@ -435,7 +450,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                     getString(R.string.account_number) + " ", loanTemplate.getClientAccountNo()));
             tvNewLoanApplication.setText(getString(R.string.string_and_string,
                     getString(R.string.new_loan_application) + " ", loanTemplate.getClientName()));
-            etPrincipalAmount.setText(String.valueOf(loanTemplate.getPrincipal()));
+            tilPrincipalAmount.getEditText().setText(String.valueOf(loanTemplate.getPrincipal()));
             tvCurrency.setText(loanTemplate.getCurrency().getDisplayLabel());
         }
     }
