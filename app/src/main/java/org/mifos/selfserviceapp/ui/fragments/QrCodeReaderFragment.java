@@ -5,8 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.zxing.Result;
 
 import org.mifos.selfserviceapp.R;
@@ -65,9 +67,15 @@ public class QrCodeReaderFragment extends BaseFragment implements ZXingScannerVi
     @Override
     public void handleResult(Result result) {
         Gson gson = new Gson();
-        Beneficiary beneficiary = gson.fromJson(result.getText(), Beneficiary.class);
-        getActivity().getSupportFragmentManager().popBackStack();
-        ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
-                newInstance(BeneficiaryState.CREATE_QR, beneficiary), true, R.id.container);
+        try {
+            Beneficiary beneficiary = gson.fromJson(result.getText(), Beneficiary.class);
+            getActivity().getSupportFragmentManager().popBackStack();
+            ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
+                    newInstance(BeneficiaryState.CREATE_QR, beneficiary), true, R.id.container);
+        } catch (JsonSyntaxException e) {
+            Toast.makeText(getActivity(), getString(R.string.invalid_qr),
+                    Toast.LENGTH_SHORT).show();
+            mScannerView.resumeCameraPreview(this);
+        }
     }
 }

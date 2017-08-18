@@ -258,6 +258,8 @@
     <string name="select_mode">Select Mode</string>
     <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
         enter manually or scan account QR code</string>
+    <string name="invalid_qr">You can\'t make action into your account, please scan other user
+        Savings and Loans Account QRCode</string>
     <string name="add">Add</string>
     <string name="scan">Scan</string>
     <string name="enter_passcode">Enter 4 digit Passcode</string>
