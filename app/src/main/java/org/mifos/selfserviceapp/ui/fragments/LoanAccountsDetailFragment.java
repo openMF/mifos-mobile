@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -77,9 +76,6 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
     @BindView(R.id.btn_make_payment)
     Button btMakePayment;
-
-    @BindView(R.id.iv_qr_code)
-    ImageView ivQrCode;
 
     @Inject
     PreferencesHelper preferencesHelper;
@@ -152,10 +148,6 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             showDetails(loanAccount);
         }
 
-        String accountDetails = QrCodeGenerator.getAccountDetailsInString(loanAccount.
-                getAccountNo(), preferencesHelper.getOfficeName(), AccountType.LOAN);
-        ivQrCode.setImageBitmap(QrCodeGenerator.encodeAsBitmap(accountDetails));
-
         getActivity().invalidateOptionsMenu();
     }
 
@@ -189,7 +181,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     /**
      * Opens {@link LoanAccountSummaryFragment}
      */
-    @OnClick(R.id.btn_loan_summary)
+    @OnClick(R.id.ll_summary)
     public void onLoanSummaryClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanAccountSummaryFragment
                 .newInstance(loanId), true, R.id.container);
@@ -198,7 +190,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     /**
      * Opens {@link LoanRepaymentScheduleFragment}
      */
-    @OnClick(R.id.btn_repayment_schedule)
+    @OnClick(R.id.ll_repayment)
     public void onRepaymentScheduleClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanRepaymentScheduleFragment
                 .newInstance(loanId), true, R.id.container);
@@ -207,10 +199,24 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     /**
      * Opens {@link LoanAccountTransactionFragment}
      */
-    @OnClick(R.id.btn_transactions)
+    @OnClick(R.id.ll_loan_transactions)
     public void onTransactionsClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanAccountTransactionFragment
                 .newInstance(loanId), true, R.id.container);
+    }
+
+    @OnClick(R.id.ll_loan_charges)
+    public void chargesClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment
+                .newInstance(loanAccount.getId(), ChargeType.LOAN), true, R.id.container);
+    }
+
+    @OnClick(R.id.ll_loan_qr_code)
+    public void onQrCodeClicked() {
+        String accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanAccount.
+                getAccountNo(), preferencesHelper.getOfficeName(), AccountType.LOAN);
+        ((BaseActivity) getActivity()).replaceFragment(QrCodeDisplayFragment.
+                newInstance(accountDetailsInJson), true, R.id.container);
     }
 
     /**
@@ -249,8 +255,6 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         if (showLoanUpdateOption) {
             menu.findItem(R.id.menu_update_loan).setVisible(true);
             menu.findItem(R.id.menu_withdraw_loan).setVisible(true);
-        } else {
-            menu.findItem(R.id.menu_loan_charges).setVisible(true);
         }
     }
 
@@ -264,9 +268,6 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         } else if (id == R.id.menu_withdraw_loan) {
             ((BaseActivity) getActivity()).replaceFragment(LoanAccountWithdrawFragment
                     .newInstance(loanAccount), true, R.id.container);
-        } else if (id == R.id.menu_loan_charges) {
-            ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment
-                    .newInstance(loanAccount.getId(), ChargeType.LOAN), true, R.id.container);
         }
         return super.onOptionsItemSelected(item);
     }
