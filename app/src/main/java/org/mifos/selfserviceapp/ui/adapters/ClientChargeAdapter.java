@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.Charge;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,16 +58,18 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Charge charge = getItem(position);
-            ((ViewHolder) holder).tvAmountDue.setText(context.getString(R.string.double_and_String,
-                    charge.getAmount(), charge.getCurrency().getDisplaySymbol()));
-            ((ViewHolder) holder).tvAmountPaid.setText(context.getString(R.string.double_and_String,
-                    charge.getAmountPaid(), charge.getCurrency().getDisplaySymbol()));
-            ((ViewHolder) holder).tvAmountWaived.setText(context.
-                    getString(R.string.double_and_String, charge.getAmountWaived(),
-                            charge.getCurrency().getDisplaySymbol()));
-            ((ViewHolder) holder).tvAmountOutstanding.setText(context.
-                    getString(R.string.double_and_String, charge.getAmountOutstanding(),
-                            charge.getCurrency().getDisplaySymbol()));
+            ((ViewHolder) holder).tvAmountDue.setText(context.getString(R.string.string_and_string,
+                    charge.getCurrency().getDisplaySymbol(), CurrencyUtil.formatCurrency(context,
+                            charge.getAmount())));
+            ((ViewHolder) holder).tvAmountPaid.setText(context.getString(R.string.string_and_string,
+                    charge.getCurrency().getDisplaySymbol(), CurrencyUtil.formatCurrency(context,
+                            charge.getAmountPaid())));
+            ((ViewHolder) holder).tvAmountWaived.setText(context.getString(R.string.
+                            string_and_string, charge.getCurrency().getDisplaySymbol(),
+                            CurrencyUtil.formatCurrency(context, charge.getAmountWaived())));
+            ((ViewHolder) holder).tvAmountOutstanding.setText(context.getString(R.string.
+                            string_and_string, charge.getCurrency().getDisplaySymbol(),
+                            CurrencyUtil.formatCurrency(context, charge.getAmountOutstanding())));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
             if (charge.getDueDate().size() > 0) {
                 ((ViewHolder) holder).tvDueDate.setText(DateHelper.getDateAsString(charge.

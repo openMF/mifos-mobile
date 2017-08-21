@@ -190,7 +190,6 @@
     <string name="repayment_schedule">Repayment Schedule</string>
     <string name="transactions">Transactions</string>
     <string name="transfer">Transfer</string>
-    <string name="outstanding_balance_str">%1$s %2$s</string>
     <string name="approval_pending">Approval Pending</string>
     <string name="waiting_for_disburse">Waiting for Disburse</string>
     <string name="closed_because_of_obligation">Closed because of some Obligations</string>
@@ -317,6 +316,11 @@
         permission?</string>
     <string name="dialog_message_camera_permission_never_ask_again">You have denied permission to
         use camera, without this permission you will not be able to add beneficiaries using QR Code.
+        Please enable it in settings</string>
+    <string name="dialog_message_phone_state_permission_denied_prompt">This permission is required
+        to show currency according to your country.Are you sure you want to deny it?</string>
+    <string name="dialog_message_phone_state_permission_never_ask_again">You have denied permission
+        to fetch Phone State, without this permission currency might not be shown in proper format.
         Please enable it in settings</string>
     <string name="msg_setting_activity_not_found">Something went wrong finding Settings activity.
         \nGo to \'Settings\' and grant permission manually.

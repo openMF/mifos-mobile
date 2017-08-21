@@ -22,6 +22,7 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -140,21 +141,27 @@ public class LoanAccountSummaryFragment extends BaseFragment implements LoanAcco
     public void showLoanAccountsDetail(LoanAccount loanAccount) {
         llLoanSummary.setVisibility(View.VISIBLE);
         tvLoanProductName.setText(loanAccount.getLoanProductName());
-        tvPrincipalName.setText(String.valueOf(loanAccount.getPrincipal()));
-        tvInterestChargedName.setText(String.
-                valueOf(loanAccount.getSummary().getInterestCharged()));
-        tvFeesName.setText(String.valueOf(loanAccount.getSummary().getFeeChargesCharged()));
-        tvPenaltiesName.setText(String.
-                valueOf(loanAccount.getSummary().getPenaltyChargesCharged()));
-        tvTotalRepaymentName.setText(String.
-                valueOf(loanAccount.getSummary().getTotalExpectedRepayment()));
-        tvTotalPaidName.setText(String.valueOf(loanAccount.getSummary().getTotalRepayment()));
-        tvInterestWaivedName.setText(String.valueOf(loanAccount.getSummary().getInterestWaived()));
-        tvPenaltiesWaivedName.setText(String.
-                valueOf(loanAccount.getSummary().getPenaltyChargesWaived()));
-        tvFeesWaivedName.setText(String.valueOf(loanAccount.getSummary().getFeeChargesWaived()));
-        tvOutstandingBalanceName.setText(String.
-                valueOf(loanAccount.getSummary().getTotalOutstanding()));
+        tvPrincipalName.setText(CurrencyUtil.formatCurrency(getActivity(),
+                loanAccount.getPrincipal()));
+        tvInterestChargedName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.
+                getSummary().getInterestCharged()));
+        tvFeesName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.getSummary().
+                getFeeChargesCharged()));
+        tvPenaltiesName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.getSummary().
+                getPenaltyChargesCharged()));
+        tvTotalRepaymentName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.
+                getSummary().getTotalExpectedRepayment()));
+        tvTotalPaidName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.getSummary().
+                getTotalRepayment()));
+        tvInterestWaivedName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.
+                getSummary().getInterestWaived()));
+        tvPenaltiesWaivedName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.
+                getSummary().getPenaltyChargesWaived()));
+        tvFeesWaivedName.setText(CurrencyUtil.formatCurrency(getActivity(), loanAccount.getSummary()
+                .getFeeChargesWaived()));
+        tvOutstandingBalanceName.setText(getResources().getString(R.string.string_and_string,
+                loanAccount.getSummary().getCurrency().getDisplaySymbol(), CurrencyUtil.
+                formatCurrency(getActivity(), loanAccount.getSummary().getTotalOutstanding())));
         tvLoanAccountNumber.setText(loanAccount.getAccountNo());
         if (loanAccount.getLoanPurposeName() != null) {
             llLoanPurpose.setVisibility(View.VISIBLE);
