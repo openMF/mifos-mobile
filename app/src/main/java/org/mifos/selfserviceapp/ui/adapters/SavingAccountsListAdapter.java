@@ -3,6 +3,7 @@ package org.mifos.selfserviceapp.ui.adapters;
 import android.content.Context;
 
 import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 
 import android.support.v4.content.ContextCompat;
@@ -115,8 +116,9 @@ public class SavingAccountsListAdapter extends RecyclerView.Adapter<RecyclerView
         viewHolder.tvAccountBalance.setVisibility(View.VISIBLE);
         viewHolder.tvAccountBalance.setTextColor(ContextCompat.getColor(context,
                 colorId));
-        viewHolder.tvAccountBalance.setText(context.getString(R.string.string_and_double,
-                savingAccount.getCurrency().getDisplaySymbol(), savingAccount.getAccountBalance()));
+        viewHolder.tvAccountBalance.setText(context.getString(R.string.string_and_string,
+                savingAccount.getCurrency().getDisplaySymbol(), CurrencyUtil.formatCurrency(context,
+                        savingAccount.getAccountBalance())));
     }
 
     private void setSavingAccountsGeneralDetails(RecyclerView.ViewHolder holder, int colorId,

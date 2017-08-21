@@ -61,7 +61,11 @@ public class Constants {
 
     public static final int PERMISSIONS_REQUEST_CAMERA = 1;
 
+    public static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 2;
+
     public static final String PERMISSIONS_CAMERA_STATUS = "camera_status";
+
+    public static final String PERMISSIONS_READ_PHONE_STATE_STATUS = "read_phone_status";
 
     public static final String INTIAL_LOGIN = "initial_login";
 

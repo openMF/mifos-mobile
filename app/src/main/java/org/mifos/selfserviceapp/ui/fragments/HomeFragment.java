@@ -27,6 +27,7 @@ import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -135,7 +136,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @Override
     public void showLoanAccountDetails(double totalLoanAmount) {
-        tvLoanTotalAmount.setText(getString(R.string.double_amount, totalLoanAmount));
+        tvLoanTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalLoanAmount));
     }
 
     /**
@@ -144,7 +145,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @Override
     public void showSavingAccountDetails(double totalSavingAmount) {
-        tvSavingTotalAmount.setText(getString(R.string.double_amount, totalSavingAmount));
+        tvSavingTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalSavingAmount));
     }
 
     /**
