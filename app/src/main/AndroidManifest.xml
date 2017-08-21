@@ -47,6 +47,8 @@
 
         <activity android:name=".ui.activities.UserProfileActivity"/>
 
+        <activity android:name=".ui.activities.RegistrationActivity"/>
+
         <receiver android:name=".ui.widgets.ChargeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="org.mifos.selfserviceapp.ui.activities.RegistrationActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/login_padding_top"
+        android:orientation="vertical">
+
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/login_margin_bottom"
+            android:src="@drawable/mifos_logo"/>
+        <FrameLayout
+            style="@style/FrameLayout.Container"
+            android:layout_margin="@dimen/default_padding"/>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

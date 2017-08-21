@@ -14,6 +14,8 @@ import org.mifos.selfserviceapp.ui.fragments.LoanAccountWithdrawFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.activities.LoginActivity;
 import org.mifos.selfserviceapp.ui.fragments.LoanApplicationFragment;
+import org.mifos.selfserviceapp.ui.fragments.RegistrationFragment;
+import org.mifos.selfserviceapp.ui.fragments.RegistrationVerificationFragment;
 import org.mifos.selfserviceapp.ui.fragments.SavingAccountsDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.AccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
@@ -87,4 +89,9 @@ public interface ActivityComponent {
     void inject(UserProfileFragment userProfileFragment);
 
     void inject(HelpFragment helpFragment);
+
+    void inject(RegistrationFragment registrationFragment);
+
+    void inject(RegistrationVerificationFragment registrationVerificationFragment);
+
 }
