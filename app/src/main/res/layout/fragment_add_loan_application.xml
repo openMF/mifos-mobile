@@ -28,7 +28,7 @@
                 android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/loan_name"
                 android:layout_gravity="center"
-                android:textSize="@dimen/text_medium" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:id="@+id/tv_account_number"
@@ -37,7 +37,7 @@
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:text="@string/account_number"
-                android:textSize="@dimen/text_medium" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
             <TextView
                 android:id="@+id/tv_loan_products"
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:text="@string/select_loan_product"
                 android:textColor="@color/light_grey"
-                android:textSize="16sp"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <Spinner
                 android:id="@+id/sp_loan_products"
@@ -72,7 +72,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:text="@string/purpose_of_loan"
                 android:textColor="@color/light_grey"
-                android:textSize="16sp"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <Spinner
                 android:id="@+id/sp_loan_purpose"
@@ -128,7 +128,7 @@
                     android:gravity="end"
                     android:layout_marginRight="@dimen/default_padding"
                     android:layout_marginEnd="@dimen/default_padding"
-                    android:textSize="@dimen/text_large"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
             </LinearLayout>
 
             <LinearLayout style="@style/LinearLayout.Width"
@@ -157,7 +157,7 @@
                         android:id="@+id/tv_submission_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
@@ -191,7 +191,7 @@
                         android:id="@+id/tv_expected_disbursement_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_medium"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"

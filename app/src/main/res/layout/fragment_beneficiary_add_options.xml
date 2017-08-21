@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_beneficiary_option"
                 android:layout_marginTop="@dimen/default_padding"
-                android:textSize="@dimen/text_small"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,7 +50,8 @@
                         android:text="@string/add"
                         android:gravity="center"
                         android:layout_marginTop="@dimen/default_margin"
-                        android:textSize="@dimen/text_large"/>
+                        android:textColor="@color/gray_dark"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -72,7 +73,8 @@
                         android:text="@string/scan"
                         android:gravity="center"
                         android:layout_marginTop="@dimen/default_margin"
-                        android:textSize="@dimen/text_large"/>
+                        android:textColor="@color/gray_dark"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

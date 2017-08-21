@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:text="@string/pay_to"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <Spinner
                     android:id="@+id/sp_pay_to"
                     android:layout_width="fill_parent"
@@ -99,14 +99,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/pay_from"
                     android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <TextView
                     android:id="@+id/tv_select_pay_from"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/select_pay_from"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                 <Spinner
                     android:id="@+id/sp_pay_from"
                     android:layout_width="fill_parent"
@@ -157,14 +157,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/amount"
                     android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <TextView
                     android:id="@+id/tv_select_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/enter_amount"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                 <EditText
                     android:id="@+id/et_amount"
                     android:layout_width="match_parent"
@@ -212,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/enter_remarks"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                 <EditText
                     android:id="@+id/et_remark"
                     android:layout_width="match_parent"

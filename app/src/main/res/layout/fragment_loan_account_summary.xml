@@ -43,7 +43,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@string/account_short"
-                    android:textSize="@dimen/text_small" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 <TextView
                     android:id="@+id/tv_loan_account_number"
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     tools:text="loanAccountNumber" />
             </LinearLayout>
 
@@ -68,7 +68,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@string/loan_product"
-                    android:textSize="@dimen/text_small" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 <TextView
                     android:id="@+id/tv_loan_product_name"
@@ -78,7 +78,7 @@
                     android:layout_marginStart="@dimen/default_margin"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     tools:text="@string/loan_product" />
             </LinearLayout>
 
@@ -97,7 +97,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@string/loan_purpose"
-                    android:textSize="@dimen/text_small" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 <TextView
                     android:id="@+id/tv_loan_purpose"
@@ -106,7 +106,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     tools:text="loanPurpose" />
             </LinearLayout>
 
@@ -141,7 +141,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/principal"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_principal"
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="@string/principal" />
                 </LinearLayout>
 
@@ -167,7 +167,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/interest"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_interest_charged"
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="Interest" />
                 </LinearLayout>
 
@@ -193,7 +193,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/fees"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_fees"
@@ -201,7 +201,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="fees" />
                 </LinearLayout>
 
@@ -219,7 +219,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/penalties"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_penalties"
@@ -227,7 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="Penalties" />
                 </LinearLayout>
             </LinearLayout>
@@ -261,7 +261,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/total_repayment"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_total_repayment"
@@ -269,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="repayment" />
                 </LinearLayout>
 
@@ -286,7 +286,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/total_paid"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_total_paid"
@@ -294,7 +294,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="paid" />
                 </LinearLayout>
 
@@ -311,7 +311,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/interest_waived"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_interest_waived"
@@ -320,7 +320,7 @@
                         android:layout_weight="1"
                         android:textColor="@color/black"
 
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="@string/interest_waived" />
                 </LinearLayout>
 
@@ -337,7 +337,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/penalties_waived"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_penalties_waived"
@@ -345,7 +345,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="penalties_waived" />
                 </LinearLayout>
 
@@ -362,7 +362,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@string/fees_waived"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_fees_waived"
@@ -370,7 +370,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="fees_waived" />
                 </LinearLayout>
 
@@ -407,7 +407,7 @@
                         android:lines="1"
                         android:text="@string/outstanding_balance"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/tv_outstanding_balance"
@@ -415,7 +415,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         tools:text="balance" />
                 </LinearLayout>
 
@@ -433,7 +433,7 @@
                         android:lines="1"
                         android:text="@string/account_status"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -447,7 +447,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_small"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             tools:text="@string/inactive_uc" />
 
                         <ImageView

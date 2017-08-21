@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/pay_from"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <Spinner
                     android:id="@+id/sp_pay_from"
@@ -99,14 +99,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/beneficiary"
                     android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <TextView
                     android:id="@+id/tv_select_beneficary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/select_beneficiary"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                 <Spinner
                     android:id="@+id/sp_beneficiary"
                     android:layout_width="match_parent"
@@ -158,14 +158,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/amount"
                     android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <TextView
                     android:id="@+id/tv_select_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/enter_amount"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <EditText
                     android:id="@+id/et_amount"
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/remark"
                     android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                 <EditText
                     android:id="@+id/et_remark"
                     android:layout_width="match_parent"
@@ -231,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/enter_remarks"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <LinearLayout style="@style/LinearLayout.Width"
                     android:id="@+id/ll_review"

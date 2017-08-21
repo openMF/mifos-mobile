@@ -311,7 +311,7 @@ public class HomeActivity extends BaseActivity implements
                             setNavigationViewSelectedItem(R.id.item_third_party_transfer);
                         } else if (fragment instanceof BeneficiaryListFragment) {
                             setNavigationViewSelectedItem(R.id.item_beneficiaries);
-                        } else if (fragment instanceof HelpUCFragment) {
+                        } else if (fragment instanceof HelpFragment) {
                             setNavigationViewSelectedItem(R.id.item_help);
                         } else if (fragment instanceof AboutUsFragment) {
                             setNavigationViewSelectedItem(R.id.item_help);

@@ -33,7 +33,7 @@
             android:lines="1"
             android:text="@string/medium_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <TextView
             android:id="@+id/tv_charge_amount"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/small_text"
             android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_small"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
     </LinearLayout>
 </LinearLayout>
