@@ -13,16 +13,16 @@
     <dimen name="default_padding">16dp</dimen>
     <dimen name="row_padding_left">16dp</dimen>
     <dimen name="row_padding_right">16dp</dimen>
-    <dimen name="login_padding_left">24dp</dimen>
-    <dimen name="login_padding_right">24dp</dimen>
+    <dimen name="login_padding_left">30dp</dimen>
+    <dimen name="login_padding_right">30dp</dimen>
     <dimen name="login_padding_top">56dp</dimen>
     <dimen name="login_padding_button">12dp</dimen>
     <dimen name="ticker">24dp</dimen>
     <dimen name="table_row_padding_top">15dp</dimen>
 
     <!-- Dimen values for margins-->
-    <dimen name="login_margin_top">24dp</dimen>
-    <dimen name="login_margin_bottom">24dp</dimen>
+    <dimen name="login_margin_top">30dp</dimen>
+    <dimen name="login_margin_bottom">30dp</dimen>
     <dimen name="recent_transaction_text_view_margin_left">20dp</dimen>
     <dimen name="saving_accounts_text_view_margin_left">50dp</dimen>
     <dimen name="loan_accounts_text_view_margin_left">50dp</dimen>
