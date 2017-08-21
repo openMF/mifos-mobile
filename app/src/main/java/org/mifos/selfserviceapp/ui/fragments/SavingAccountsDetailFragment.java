@@ -22,6 +22,7 @@ import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.SavingAccountsDetailView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.QrCodeGenerator;
 import org.mifos.selfserviceapp.utils.SymbolsUtils;
@@ -175,12 +176,16 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         Double accountBalance = savingsWithAssociations.getSummary().getAccountBalance();
 
         tvAccountStatus.setText(savingsWithAssociations.getClientName());
-        tvMiniRequiredBalance.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getMinRequiredOpeningBalance(), currencySymbol));
-        tvTotalWithDrawals.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getSummary().getTotalWithdrawals(), currencySymbol));
-        tvAccountBalanceMain.setText(
-                getString(R.string.double_and_String, accountBalance, currencySymbol));
+        if (savingsWithAssociations.getMinRequiredOpeningBalance() != null) {
+            tvMiniRequiredBalance.setText(getString(R.string.string_and_string, currencySymbol,
+                    CurrencyUtil.formatCurrency(getActivity(), savingsWithAssociations.
+                    getMinRequiredOpeningBalance())));
+        }
+        tvTotalWithDrawals.setText(getString(R.string.string_and_string,
+                currencySymbol, CurrencyUtil.formatCurrency(getActivity(), savingsWithAssociations.
+                        getSummary().getTotalWithdrawals())));
+        tvAccountBalanceMain.setText(getString(R.string.string_and_string,
+                currencySymbol, CurrencyUtil.formatCurrency(getActivity(), accountBalance)));
         tvNominalInterestRate.setText(getString(R.string.double_and_String,
                 savingsWithAssociations.getNominalAnnualInterestRate(), SymbolsUtils.PERCENT));
         tvSavingAccountNumber.setText(String.valueOf(savingsWithAssociations.getAccountNo()));

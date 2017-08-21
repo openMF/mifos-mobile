@@ -27,6 +27,7 @@ import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.QrCodeGenerator;
 import org.mifos.selfserviceapp.utils.Toaster;
@@ -157,10 +158,9 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
      */
     public void showDetails(LoanAccount loanAccount) {
         //TODO: Calculate nextInstallment value
-        tvOutstandingBalanceName.setText(getResources()
-                .getString(R.string.outstanding_balance_str,
-                        loanAccount.getSummary().getCurrency().getDisplaySymbol(),
-                        String.valueOf(loanAccount.getSummary().getTotalOutstanding())));
+        tvOutstandingBalanceName.setText(getResources().getString(R.string.string_and_string,
+                loanAccount.getSummary().getCurrency().getDisplaySymbol(), CurrencyUtil.
+                formatCurrency(getActivity(), loanAccount.getSummary().getTotalOutstanding())));
         tvNextInstallmentName.setText(String.valueOf(
                 loanAccount.getSummary().getTotalOutstanding()));
         tvAccountNumberName.setText(loanAccount.getAccountNo());

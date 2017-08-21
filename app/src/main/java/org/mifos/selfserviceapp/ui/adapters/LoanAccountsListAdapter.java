@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.injection.ActivityContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         double amountBalance = loanAccount.getLoanBalance() != 0 ? loanAccount.getLoanBalance() : 0;
         viewHolder.tvAccountBalance.setVisibility(View.VISIBLE);
-        viewHolder.tvAccountBalance.setText(String.valueOf(amountBalance));
+        viewHolder.tvAccountBalance.setText(CurrencyUtil.formatCurrency(context, amountBalance));
         viewHolder.tvAccountBalance.setTextColor(ContextCompat.getColor(context, color));
     }
 

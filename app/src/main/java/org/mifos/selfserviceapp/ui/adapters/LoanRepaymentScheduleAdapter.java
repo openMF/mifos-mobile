@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.loan.Periods;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 
 import java.util.ArrayList;
@@ -47,8 +48,9 @@ public class LoanRepaymentScheduleAdapter extends
 
         Periods period = periodses.get(position);
 
-        holder.tvLoanBalance.setText(context.getString(R.string.double_and_String,
-                period.getPrincipalLoanBalanceOutstanding(), currency));
+        holder.tvLoanBalance.setText(context.getString(R.string.string_and_string,
+                currency, CurrencyUtil.formatCurrency(context, period.
+                        getPrincipalLoanBalanceOutstanding())));
 
         holder.tvOutStandingBalance.setText(context.getString(R.string.double_and_String,
                         period.getPrincipalOriginalDue(), currency));

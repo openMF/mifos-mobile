@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.models.accounts.savings.TransactionType;
 import org.mifos.selfserviceapp.models.accounts.savings.Transactions;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.DateHelper;
 
 import java.util.ArrayList;
@@ -64,13 +65,13 @@ public class SavingAccountsTransactionListAdapter extends
 
         Transactions transaction = getItem(position);
 
-        ((ViewHolder) holder).tvSavingAccountAmount.setText(
-                transaction.getCurrency().getDisplaySymbol() +
-                transaction.getAmount());
+        ((ViewHolder) holder).tvSavingAccountAmount.setText(context.getString(R.string.
+                string_and_string, transaction.getCurrency().getDisplaySymbol(), CurrencyUtil.
+                formatCurrency(context, transaction.getAmount())));
 
-        ((ViewHolder) holder).tvSavingAccountRunningBalance.setText(
-                transaction.getCurrency().getDisplaySymbol() +
-                transaction.getRunningBalance());
+        ((ViewHolder) holder).tvSavingAccountRunningBalance.setText(context.getString(R.string.
+                string_and_string, transaction.getCurrency().getDisplaySymbol(), CurrencyUtil.
+                formatCurrency(context, transaction.getRunningBalance())));
 
         ((ViewHolder) holder).tvTransactionType.setText(transaction.
                 getTransactionType().getValue());

@@ -1,5 +1,6 @@
 package org.mifos.selfserviceapp.ui.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
+import org.mifos.selfserviceapp.utils.CheckSelfPermissionAndRequest;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.EncryptionUtil;
 import org.mifos.selfserviceapp.utils.Network;
@@ -72,6 +74,26 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
             //enabling passCodeListener only when user has already setup PassCode
             passCodeView.setPassCodeListener(this);
         }
+
+        if (!CheckSelfPermissionAndRequest.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE)) {
+            requestPermission();
+        }
+    }
+
+    /**
+     * Uses {@link CheckSelfPermissionAndRequest} to check for runtime permissions
+     */
+    private void requestPermission() {
+        CheckSelfPermissionAndRequest.requestPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE,
+                Constants.PERMISSIONS_REQUEST_READ_PHONE_STATE,
+                getResources().getString(
+                        R.string.dialog_message_phone_state_permission_denied_prompt),
+                getResources().getString(R.string.
+                        dialog_message_phone_state_permission_never_ask_again),
+                Constants.PERMISSIONS_READ_PHONE_STATE_STATUS);
     }
 
     /**

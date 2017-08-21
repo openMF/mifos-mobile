@@ -18,6 +18,7 @@ import org.mifos.selfserviceapp.ui.enums.TransferType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.TransferProcessView;
 import org.mifos.selfserviceapp.utils.Constants;
+import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.Network;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -97,7 +98,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
 
-        tvAmount.setText(String.valueOf(payload.getTransferAmount()));
+        tvAmount.setText(CurrencyUtil.formatCurrency(getActivity(), payload.getTransferAmount()));
         tvPayFrom.setText(String.valueOf(payload.getFromAccountId()));
         tvPayTo.setText(String.valueOf(payload.getToAccountId()));
         tvDate.setText(payload.getTransferDate());
