@@ -64,7 +64,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    app:backgroundTint="@color/primary"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
             </LinearLayout>
@@ -122,7 +121,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:visibility="gone"
-                    app:backgroundTint="@color/primary"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
             </LinearLayout>
@@ -180,7 +178,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:visibility="gone"
-                    app:backgroundTint="@color/primary"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
             </LinearLayout>
@@ -231,7 +228,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        app:backgroundTint="@color/primary"
                         android:text="@string/review_transfer"/>
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btn_cancel_transfer"

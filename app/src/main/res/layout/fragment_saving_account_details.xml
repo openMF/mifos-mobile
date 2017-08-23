@@ -153,7 +153,6 @@
                         android:id="@+id/tv_deposit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:backgroundTint="@color/primary"
                         android:text="@string/deposit"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@android:color/white"/>
@@ -162,7 +161,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        app:backgroundTint="@color/primary"
                         android:text="@string/make_transfer"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@android:color/white"/>
