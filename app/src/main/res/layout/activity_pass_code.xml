@@ -162,7 +162,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/save"
                 android:id="@+id/btn_save"
-                app:backgroundTint="@color/primary"
                 android:textColor="@color/white"/>
             <android.support.v7.widget.AppCompatButton
                 android:layout_width="match_parent"

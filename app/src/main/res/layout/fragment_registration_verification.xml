@@ -35,6 +35,5 @@
         android:layout_marginBottom="@dimen/login_margin_bottom"
         android:layout_marginTop="@dimen/login_margin_top"
         android:textColor="@color/white"
-        app:backgroundTint="@color/primary"
         android:text="@string/verify"/>
 </LinearLayout>

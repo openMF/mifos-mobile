@@ -202,7 +202,6 @@
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_loan_submit"
-                app:backgroundTint="@color/primary"
                 style="@style/Button.Base"
                 android:layout_marginTop="10dp"
                 android:text="@string/submit_loan"

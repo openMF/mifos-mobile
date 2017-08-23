@@ -143,7 +143,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        app:backgroundTint="@color/primary"
                         android:text="@string/transfer"/>
                 </LinearLayout>
                     <android.support.v7.widget.AppCompatButton
@@ -154,7 +153,6 @@
                         android:layout_gravity="center"
                         android:visibility="gone"
                         android:layout_margin="@dimen/row_padding_left"
-                        app:backgroundTint="@color/primary"
                         android:text="@string/close"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
