@@ -23,4 +23,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/margin_16dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:id="@+id/fab_create_loan"
+        app:layout_behavior="org.mifos.selfserviceapp.utils.ScrollFabBehavior"
+        app:srcCompat="@drawable/ic_add_white_24dp"/>
+
 </android.support.design.widget.CoordinatorLayout>
