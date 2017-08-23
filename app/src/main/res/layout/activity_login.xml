@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/til_password"
             android:layout_marginBottom="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin">
+            android:layout_marginTop="@dimen/default_margin"
+            app:passwordToggleEnabled="true">
             <EditText
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -59,7 +60,6 @@
             android:layout_marginTop="@dimen/login_margin_top"
             android:textColor="@color/white"
             app:backgroundTint="@color/primary"
-            android:padding="@dimen/login_padding_button"
             android:text="@string/login"/>
 
         <android.support.v7.widget.AppCompatButton
