@@ -98,7 +98,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_all"
                         android:text="@string/all"
-                        app:backgroundTint="@color/primary"
                         android:textColor="@color/white"/>
                 </LinearLayout>
             </LinearLayout>

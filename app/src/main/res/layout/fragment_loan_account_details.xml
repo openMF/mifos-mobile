@@ -122,7 +122,6 @@
                     android:layout_width="wrap_content"
                     android:text="@string/make_payment"
                     android:layout_gravity="end"
-                    app:backgroundTint="@color/primary"
                     android:id="@+id/btn_make_payment"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@android:color/white"/>

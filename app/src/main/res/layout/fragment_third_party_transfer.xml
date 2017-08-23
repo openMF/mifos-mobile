@@ -63,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    app:backgroundTint="@color/primary"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
             </LinearLayout>
@@ -123,7 +122,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:visibility="gone"
-                    app:backgroundTint="@color/primary"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
             </LinearLayout>
@@ -184,7 +182,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:visibility="gone"
-                    app:backgroundTint="@color/primary"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
             </LinearLayout>
@@ -252,7 +249,6 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/white"
-                        app:backgroundTint="@color/primary"
                         android:text="@string/review_transfer"
                         android:layout_weight="0.5"
                         tools:ignore="ButtonStyle"/>
