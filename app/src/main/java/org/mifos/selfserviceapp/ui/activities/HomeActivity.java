@@ -147,7 +147,7 @@ public class HomeActivity extends BaseActivity implements
     private void showLogoutDialog() {
         new MaterialDialog.Builder().init(HomeActivity.this)
                 .setMessage(R.string.dialog_logout)
-                .setPositiveButton(getString(R.string.dialog_action_i_am_sure),
+                .setPositiveButton(getString(R.string.logout),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
