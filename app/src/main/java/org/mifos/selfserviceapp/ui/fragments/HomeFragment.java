@@ -20,11 +20,11 @@ import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.activities.LoanApplicationActivity;
 import org.mifos.selfserviceapp.ui.activities.UserProfileActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.ChargeType;
-import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.CurrencyUtil;
@@ -262,8 +262,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @OnClick(R.id.ll_apply_for_loan)
     public void applyForLoan() {
-        ((HomeActivity) getActivity()).replaceFragment(LoanApplicationFragment.
-                        newInstance(LoanState.CREATE), true,  R.id.container);
+        startActivity(new Intent(getActivity(), LoanApplicationActivity.class));
     }
 
     /**

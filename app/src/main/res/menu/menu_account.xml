@@ -40,9 +40,5 @@
         android:title="@string/share_account"
         android:visible="false"
         android:icon="@drawable/ic_filter_list_white_36dp"/>
-    <item
-        android:id="@+id/menu_add_loan"
-        app:showAsAction="never"
-        android:title="@string/apply_for_loan"/>
 
 </menu>

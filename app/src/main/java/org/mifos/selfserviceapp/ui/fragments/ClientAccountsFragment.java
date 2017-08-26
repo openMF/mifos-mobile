@@ -7,7 +7,9 @@ package org.mifos.selfserviceapp.ui.fragments;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,11 +28,11 @@ import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.models.accounts.share.ShareAccount;
 import org.mifos.selfserviceapp.presenters.AccountsPresenter;
+import org.mifos.selfserviceapp.ui.activities.LoanApplicationActivity;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.CheckBoxAdapter;
 import org.mifos.selfserviceapp.ui.adapters.ViewPagerAdapter;
 import org.mifos.selfserviceapp.ui.enums.AccountType;
-import org.mifos.selfserviceapp.ui.enums.LoanState;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.AccountsView;
 import org.mifos.selfserviceapp.utils.Constants;
@@ -43,6 +45,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ClientAccountsFragment extends BaseFragment implements AccountsView {
 
@@ -51,6 +54,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
+
+
+    @BindView(R.id.fab_create_loan)
+    FloatingActionButton fabCreateLoan;
 
     @Inject
     AccountsPresenter accountsPresenter;
@@ -127,6 +134,18 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             public void onPageScrolled(int position, float positionOffset,
                     int positionOffsetPixels) {
                 getActivity().invalidateOptionsMenu();
+                fabCreateLoan.setVisibility(View.VISIBLE);
+                if (position == 0 && positionOffset == 0) {
+                    fabCreateLoan.setVisibility(View.GONE);
+                } else if (position < 1) {
+                    fabCreateLoan.setScaleX(positionOffset);
+                    fabCreateLoan.setScaleY(positionOffset);
+                } else if (position < 2) {
+                    fabCreateLoan.setScaleX(1 - positionOffset);
+                    fabCreateLoan.setScaleY(1 - positionOffset);
+                } else {
+                    fabCreateLoan.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -191,6 +210,13 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     }
 
 
+
+    @OnClick(R.id.fab_create_loan)
+    public void createLoan() {
+        startActivity(new Intent(getActivity(), LoanApplicationActivity.class));
+    }
+
+
     /**
      * It is called whenever any error occurs while executing a request which passes errorMessage to
      * fragment implementing {@link AccountsView} i.e. {@link AccountsFragment} which further
@@ -226,7 +252,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_account, menu);
         if (viewPager.getCurrentItem() == 0) {
-            menu.findItem(R.id.menu_add_loan).setVisible(false);
             menu.findItem(R.id.menu_filter_savings).setVisible(true);
             menu.findItem(R.id.menu_filter_loan).setVisible(false);
             menu.findItem(R.id.menu_filter_shares).setVisible(false);
@@ -235,7 +260,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             menu.findItem(R.id.menu_search_share).setVisible(false);
             initSearch(menu, AccountType.SAVINGS);
         } else if (viewPager.getCurrentItem() == 1) {
-            menu.findItem(R.id.menu_add_loan).setVisible(true);
             menu.findItem(R.id.menu_filter_savings).setVisible(false);
             menu.findItem(R.id.menu_filter_loan).setVisible(true);
             menu.findItem(R.id.menu_filter_shares).setVisible(false);
@@ -244,7 +268,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             menu.findItem(R.id.menu_search_share).setVisible(false);
             initSearch(menu, AccountType.LOAN);
         } else if (viewPager.getCurrentItem() == 2) {
-            menu.findItem(R.id.menu_add_loan).setVisible(false);
             menu.findItem(R.id.menu_filter_savings).setVisible(false);
             menu.findItem(R.id.menu_filter_loan).setVisible(false);
             menu.findItem(R.id.menu_filter_shares).setVisible(true);
@@ -267,10 +290,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 break;
             case R.id.menu_filter_shares:
                 showFilterDialog(AccountType.SHARE);
-                break;
-            case R.id.menu_add_loan:
-                ((BaseActivity) getActivity()).replaceFragment(LoanApplicationFragment.
-                        newInstance(LoanState.CREATE), true, R.id.container);
                 break;
         }
         return true;
