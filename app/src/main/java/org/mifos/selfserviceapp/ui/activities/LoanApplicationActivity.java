@@ -13,9 +13,10 @@ public class LoanApplicationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_application);
-
-        replaceFragment(LoanApplicationFragment.newInstance(LoanState.CREATE), false,
-                R.id.container);
+        if (savedInstanceState == null) {
+            replaceFragment(LoanApplicationFragment.newInstance(LoanState.CREATE), false,
+                    R.id.container);
+        }
         showBackButton();
     }
 }

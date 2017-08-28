@@ -21,6 +21,7 @@ import org.mifos.selfserviceapp.presenters.UserDetailsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -84,6 +85,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     UserDetailsPresenter presenter;
 
     private View rootView;
+    private Bitmap userBitmap;
+    private Client client;
 
     public static UserProfileFragment newInstance() {
         UserProfileFragment fragment = new UserProfileFragment();
@@ -106,11 +109,29 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
                 R.color.white));
         collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(getActivity(),
                 R.color.white));
-
-        presenter.getUserDetails();
-        presenter.getUserImage();
-
+        if (savedInstanceState == null) {
+            presenter.getUserDetails();
+            presenter.getUserImage();
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.USER_PROFILE, userBitmap);
+        outState.putParcelable(Constants.USER_DETAILS, client);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            client = savedInstanceState.getParcelable(Constants.USER_DETAILS);
+            userBitmap = savedInstanceState.getParcelable(Constants.USER_PROFILE);
+            showUserImage(userBitmap);
+            showUserDetails(client);
+        }
     }
 
     /**
@@ -119,6 +140,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
      */
     @Override
     public void showUserDetails(Client client) {
+        this.client = client;
         collapsingToolbarLayout.setTitle(client.getDisplayName());
         tvAccountNumber.setText(client.getAccountNo());
         tvActivationDate.setText(DateHelper.getDateAsString(client.getActivationDate()));
@@ -153,6 +175,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                userBitmap = bitmap;
                 ivProfile.setImageBitmap(bitmap);
             }
         });

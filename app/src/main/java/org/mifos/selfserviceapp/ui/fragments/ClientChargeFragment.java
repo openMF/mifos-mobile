@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -112,8 +113,26 @@ public class ClientChargeFragment extends BaseFragment implements
                 loadCharges();
             }
         });
-        loadCharges();
+        if (savedInstanceState == null) {
+            loadCharges();
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Constants.CHARGES, new ArrayList<Parcelable>(
+                clientChargeList));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            List<Charge> charges = savedInstanceState.getParcelableArrayList(Constants.CHARGES);
+            showClientCharges(charges);
+        }
     }
 
     /**

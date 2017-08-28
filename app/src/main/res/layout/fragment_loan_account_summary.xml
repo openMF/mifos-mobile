@@ -3,14 +3,15 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
-
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/ll_loan_summary"
@@ -468,4 +469,4 @@
         android:visibility="gone" />
 
 </RelativeLayout>
-
+</android.support.v4.widget.NestedScrollView>

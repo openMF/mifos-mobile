@@ -60,6 +60,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
 
     private long loanId;
     private View rootView;
+    private LoanWithAssociations loanWithAssociations;
 
     public static LoanAccountTransactionFragment newInstance(long loanId) {
         LoanAccountTransactionFragment fragment = new LoanAccountTransactionFragment();
@@ -90,9 +91,25 @@ public class LoanAccountTransactionFragment extends BaseFragment
         loanAccountsTransactionPresenter.attachView(this);
 
         showUserInterface();
-        loanAccountsTransactionPresenter.loadLoanAccountDetails(loanId);
-
+        if (savedInstanceState == null) {
+            loanAccountsTransactionPresenter.loadLoanAccountDetails(loanId);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showLoanTransactions((LoanWithAssociations) savedInstanceState.
+                    getParcelable(Constants.LOAN_ACCOUNT));
+        }
     }
 
     /**
@@ -114,6 +131,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
      */
     @Override
     public void showLoanTransactions(LoanWithAssociations loanWithAssociations) {
+        this.loanWithAssociations = loanWithAssociations;
         llLoanAccountTrans.setVisibility(View.VISIBLE);
         tvLoanProductName.setText(loanWithAssociations.getLoanProductName());
         transactionsListAdapter.setTransactions(loanWithAssociations.getTransactions());

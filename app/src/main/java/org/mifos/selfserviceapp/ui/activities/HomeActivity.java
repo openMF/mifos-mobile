@@ -34,6 +34,7 @@ import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
 import org.mifos.selfserviceapp.utils.Toaster;
 
@@ -66,6 +67,8 @@ public class HomeActivity extends BaseActivity implements
     private CircularImageView ivUserProfilePicture;
     private final int CAMERA_PERMISSION = 10;
     private long clientId;
+    private Bitmap userProfileBitmap;
+    private Client client;
 
     boolean  doubleBackToExitPressedOnce = false;
 
@@ -81,9 +84,27 @@ public class HomeActivity extends BaseActivity implements
         setToolbarTitle(getString(R.string.home));
 
         clientId = preferencesHelper.getClientId();
-        replaceFragment(HomeFragment.newInstance(), false ,  R.id.container);
 
         setupNavigationBar();
+        replaceFragment(HomeFragment.newInstance(), false, R.id.container);
+
+        if (savedInstanceState == null) {
+            detailsPresenter.attachView(this);
+            detailsPresenter.getUserDetails();
+            detailsPresenter.getUserImage();
+        } else {
+            client = savedInstanceState.getParcelable(Constants.USER_DETAILS);
+            userProfileBitmap = savedInstanceState.getParcelable(Constants.USER_PROFILE);
+            showUserImage(userProfileBitmap);
+            showUserDetails(client);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
+        outState.putParcelable(Constants.USER_DETAILS, client);
     }
 
     /**
@@ -205,10 +226,6 @@ public class HomeActivity extends BaseActivity implements
             }
         });
 
-        detailsPresenter.attachView(this);
-        detailsPresenter.getUserDetails();
-        detailsPresenter.getUserImage();
-
     }
 
     /**
@@ -217,6 +234,7 @@ public class HomeActivity extends BaseActivity implements
      */
     @Override
     public void showUserDetails(Client client) {
+        this.client = client;
         tvUsername.setText(client.getDisplayName());
     }
 
@@ -229,6 +247,7 @@ public class HomeActivity extends BaseActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                userProfileBitmap = bitmap;
                 ivUserProfilePicture.setImageBitmap(bitmap);
             }
         });

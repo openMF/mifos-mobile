@@ -27,6 +27,7 @@ import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
 import org.mifos.selfserviceapp.utils.Toaster;
@@ -58,6 +59,12 @@ public class HomeFragment extends BaseFragment implements HomeView,
     @BindView(R.id.iv_visibility)
     ImageView ivVisibility;
 
+    @BindView(R.id.iv_user_image)
+    ImageView ivUserImage;
+
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
+
     @BindView(R.id.swipe_home_container)
     SwipeRefreshLayout slHomeContainer;
 
@@ -68,12 +75,12 @@ public class HomeFragment extends BaseFragment implements HomeView,
     PreferencesHelper preferencesHelper;
 
     View rootView;
+    private double totalLoanAmount, totalSavingAmount;
+    private Bitmap userProfileBitmap;
+    private Client client;
     private long clientId;
     private View toolbarView;
     private boolean isDetailVisible;
-    private View toolbarCustomView;
-    private LinearLayout.LayoutParams toolBarLayoutParams;
-    private int toolbarDefaultHeight, insetStartWidth;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -85,7 +92,6 @@ public class HomeFragment extends BaseFragment implements HomeView,
             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ((HomeActivity) getActivity()).getActivityComponent().inject(this);
-
         ButterKnife.bind(this, rootView);
         clientId = preferencesHelper.getClientId();
 
@@ -93,10 +99,32 @@ public class HomeFragment extends BaseFragment implements HomeView,
         slHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
         slHomeContainer.setOnRefreshListener(this);
-        loadClientData();
+        if (savedInstanceState == null) {
+            loadClientData();
+        }
 
         showUserInterface();
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putDouble(Constants.TOTAL_LOAN, totalLoanAmount);
+        outState.putDouble(Constants.TOTAL_SAVINGS, totalSavingAmount);
+        outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
+        outState.putParcelable(Constants.USER_DETAILS, client);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showUserDetails((Client) savedInstanceState.getParcelable(Constants.USER_DETAILS));
+            showUserImage((Bitmap) savedInstanceState.getParcelable(Constants.USER_PROFILE));
+            showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN));
+            showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS));
+        }
     }
 
     @Override
@@ -136,6 +164,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @Override
     public void showLoanAccountDetails(double totalLoanAmount) {
+        this.totalLoanAmount = totalLoanAmount;
         tvLoanTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalLoanAmount));
     }
 
@@ -145,6 +174,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @Override
     public void showSavingAccountDetails(double totalSavingAmount) {
+        this.totalSavingAmount = totalSavingAmount;
         tvSavingTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalSavingAmount));
     }
 
@@ -154,8 +184,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @Override
     public void showUserDetails(Client client) {
-        ((TextView) toolbarView.findViewById(R.id.tv_user_name)).setText(
-                getString(R.string.hello_client, client.getDisplayName()));
+        this.client = client;
+        tvUserName.setText(getString(R.string.hello_client, client.getDisplayName()));
     }
 
     /**
@@ -167,19 +197,16 @@ public class HomeFragment extends BaseFragment implements HomeView,
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((ImageView) toolbarView.findViewById(R.id.iv_user_image)).
-                        setImageBitmap(bitmap);
-                toolbarView.findViewById(R.id.iv_user_image).
-                        setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
-                            }
-                        });
+                userProfileBitmap = bitmap;
+                ivUserImage.setImageBitmap(bitmap);
             }
         });
     }
 
+    @OnClick(R.id.iv_user_image)
+    public void userImageClicked() {
+        startActivity(new Intent(getActivity(), UserProfileActivity.class));
+    }
     /**
      * Reverses the state of Account Overview section i.e. visible to hidden or vice a versa
      */
@@ -305,63 +332,6 @@ public class HomeFragment extends BaseFragment implements HomeView,
         slHomeContainer.setRefreshing(false);
     }
 
-    /**
-     * Add a custom layout in Toolbar and then fetching client's details and image to show using
-     * {@code setToolbarLayoutForHome()}
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        setToolbarLayoutForHome();
-        presenter.getUserDetails();
-        presenter.getUserImage();
-    }
-
-    /**
-     * Removing the custom layout from Toolbar and setting everything to default using
-     * {@code setToolBarLayoutForOthers()}
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        setToolBarLayoutForOthers();
-    }
-
-    /**
-     * Adding a Custom View in toolbar to display User's image and Name
-     */
-    public void setToolbarLayoutForHome() {
-        LayoutInflater mInflater = LayoutInflater.from(getActivity());
-        toolbarCustomView = mInflater.inflate(R.layout.toolbar_home, null);
-
-        toolBarLayoutParams = (LinearLayout.LayoutParams) ((HomeActivity) getActivity()).
-                getToolbar().getLayoutParams();
-        toolbarDefaultHeight = toolBarLayoutParams.height;
-        insetStartWidth = ((HomeActivity) getActivity()).getToolbar().getContentInsetStart();
-
-        toolBarLayoutParams.height = 350;
-
-        ((HomeActivity) getActivity()).getToolbar().setLayoutParams(toolBarLayoutParams);
-        ((HomeActivity) getActivity()).getToolbar().setContentInsetStartWithNavigation(0);
-        ((HomeActivity) getActivity()).getToolbar().addView(toolbarCustomView);
-
-        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
-    /**
-     * Removes the custom layout added in Toolbar and setting everything to default
-     */
-    public void setToolBarLayoutForOthers() {
-
-        toolBarLayoutParams.height = toolbarDefaultHeight;
-
-        ((HomeActivity) getActivity()).getToolbar().removeView(toolbarCustomView);
-        ((HomeActivity) getActivity()).getToolbar().setLayoutParams(toolBarLayoutParams);
-        ((HomeActivity) getActivity()).getToolbar().
-                setContentInsetStartWithNavigation(insetStartWidth);
-
-        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
-    }
 }
 
 

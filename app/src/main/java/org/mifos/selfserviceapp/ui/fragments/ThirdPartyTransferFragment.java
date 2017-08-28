@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.enums.TransferType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.ThirdPartyTransferView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DateHelper;
 import org.mifos.selfserviceapp.utils.MFDatePicker;
 import org.mifos.selfserviceapp.utils.ProcessView;
@@ -97,7 +99,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     private List<String> listBeneficiary = new ArrayList<>();
     private List<String> listPayFrom = new ArrayList<>();
-
+    private List<Beneficiary> beneficiaries;
     private ArrayAdapter<String> beneficiaryAdapter;
     private ArrayAdapter<String> payFromAdapter;
     private AccountOption fromAccountOption;
@@ -124,10 +126,31 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         showUserInterface();
 
         presenter.attachView(this);
-        presenter.loadTransferTemplate();
-
+        if (savedInstanceState == null) {
+            presenter.loadTransferTemplate();
+        }
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.TEMPLATE, accountOptionsTemplate);
+        outState.putParcelableArrayList(Constants.BENEFICIARY, new ArrayList<Parcelable>(
+                beneficiaries));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showThirdPartyTransferTemplate((AccountOptionsTemplate) savedInstanceState.
+                    getParcelable(Constants.TEMPLATE));
+            List<Beneficiary> tempBeneficiaries = savedInstanceState.getParcelableArrayList(
+                    Constants.BENEFICIARY);
+            showBeneficiaryList(tempBeneficiaries);
+        }
     }
 
     /**
@@ -228,6 +251,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @Override
     public void showBeneficiaryList(List<Beneficiary> beneficiaries) {
+        this.beneficiaries = beneficiaries;
         listBeneficiary.addAll(presenter.getAccountNumbersFromBeneficiaries(beneficiaries));
         beneficiaryAdapter.notifyDataSetChanged();
     }

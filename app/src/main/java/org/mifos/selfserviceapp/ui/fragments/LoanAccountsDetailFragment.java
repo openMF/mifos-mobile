@@ -116,10 +116,28 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
         ButterKnife.bind(this, rootView);
         mLoanAccountDetailsPresenter.attachView(this);
-        mLoanAccountDetailsPresenter.loadLoanAccountDetails(loanId);
+        if (savedInstanceState == null) {
+            mLoanAccountDetailsPresenter.loadLoanAccountDetails(loanId);
+        }
 
         return rootView;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.LOAN_ACCOUNT, loanAccount);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showLoanAccountsDetail((LoanAccount) savedInstanceState.
+                    getParcelable(Constants.LOAN_ACCOUNT));
+        }
+    }
+
 
     /**
      * Shows details about loan account fetched from server is status is Active else shows and
@@ -184,7 +202,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @OnClick(R.id.ll_summary)
     public void onLoanSummaryClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanAccountSummaryFragment
-                .newInstance(loanId), true, R.id.container);
+                .newInstance(loanAccount), true, R.id.container);
     }
 
     /**

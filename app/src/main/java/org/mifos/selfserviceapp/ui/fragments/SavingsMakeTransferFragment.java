@@ -146,9 +146,25 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         savingsMakeTransferPresenter.attachView(this);
 
         showUserInterface();
-        savingsMakeTransferPresenter.loanAccountTransferTemplate();
-
+        if (savedInstanceState == null) {
+            savingsMakeTransferPresenter.loanAccountTransferTemplate();
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.TEMPLATE, accountOptionsTemplate);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showSavingsAccountTemplate((AccountOptionsTemplate) savedInstanceState.
+                    getParcelable(Constants.TEMPLATE));
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -160,9 +161,30 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loanApplicationPresenter.attachView(this);
 
         showUserInterface();
-        loadLoanTemplate();
+        if (savedInstanceState == null) {
+            loadLoanTemplate();
+        }
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.TEMPLATE, loanTemplate);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            LoanTemplate template = savedInstanceState.getParcelable(Constants.TEMPLATE);
+            if (loanState == LoanState.CREATE) {
+                showLoanTemplate(template);
+            } else {
+                showUpdateLoanTemplate(template);
+            }
+        }
     }
 
     /**

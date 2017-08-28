@@ -121,9 +121,25 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         ButterKnife.bind(this, rootView);
         mSavingAccountsDetailPresenter.attachView(this);
 
-        mSavingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
-
+        if (savedInstanceState == null) {
+            mSavingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.SAVINGS_ACCOUNTS, savingsWithAssociations);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showSavingAccountsDetail((SavingsWithAssociations) savedInstanceState.
+                    getParcelable(Constants.SAVINGS_ACCOUNTS));
+        }
     }
 
     /**
