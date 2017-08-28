@@ -10,7 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +31,7 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.FAQAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HelpView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -72,9 +75,25 @@ public class HelpFragment extends BaseFragment implements HelpView, BottomNaviga
         presenter.attachView(this);
 
         showUserInterface();
-        presenter.loadFaq();
+        if (savedInstanceState == null) {
+            presenter.loadFaq();
+        }
 
         return rootView;
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Constants.HELP, new ArrayList<Parcelable>(faqArrayList));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            ArrayList<FAQ> faqs = savedInstanceState.getParcelableArrayList(Constants.HELP);
+            showFaq(faqs);
+        }
     }
 
     private void showUserInterface() {

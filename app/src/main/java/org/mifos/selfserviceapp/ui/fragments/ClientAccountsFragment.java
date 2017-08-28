@@ -96,7 +96,9 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
         setUpViewPagerAndTabLayout();
 
-        accountsPresenter.loadClientAccounts();
+        if (savedInstanceState == null) {
+            accountsPresenter.loadClientAccounts();
+        }
 
         return view;
     }

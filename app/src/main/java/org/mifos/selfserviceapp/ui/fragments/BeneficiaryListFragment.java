@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,9 +19,11 @@ import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.BeneficiaryListAdapter;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.BeneficiariesView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.RecyclerItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -70,9 +73,28 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         showUserInterface();
 
         beneficiaryListPresenter.attachView(this);
-        beneficiaryListPresenter.loadBeneficiaries();
+        if (savedInstanceState == null) {
+            beneficiaryListPresenter.loadBeneficiaries();
+        }
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Constants.BENEFICIARY, new ArrayList<Parcelable>(
+                beneficiaryList));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            List<Beneficiary> beneficiaries = savedInstanceState.getParcelableArrayList(Constants.
+                    BENEFICIARY);
+            showBeneficiaryList(beneficiaries);
+        }
     }
 
     /**

@@ -14,6 +14,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_dark"
+            android:padding="@dimen/default_padding">
+            <org.mifos.selfserviceapp.utils.CircularImageView
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:id="@+id/iv_user_image"
+                tools:src="@drawable/ic_person_black_24dp"
+                app:border_width="1dp"
+                android:layout_margin="@dimen/margin_16dp"
+                app:border="true"/>
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:text="@string/medium_text"
+                android:textSize="@dimen/text_headline"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

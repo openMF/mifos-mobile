@@ -112,9 +112,25 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         showUserInterface();
 
         presenter.attachView(this);
-        presenter.loadBeneficiaryTemplate();
-
+        if (savedInstanceState == null) {
+            presenter.loadBeneficiaryTemplate();
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.TEMPLATE, beneficiaryTemplate);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showBeneficiaryTemplate((BeneficiaryTemplate) savedInstanceState.
+                    getParcelable(Constants.TEMPLATE));
+        }
     }
 
     /**
