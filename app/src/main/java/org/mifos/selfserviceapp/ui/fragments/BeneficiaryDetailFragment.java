@@ -99,9 +99,9 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
         tvName.setText(beneficiary.getName());
         tvAccountNumber.setText(beneficiary.getAccountNumber());
         tvClientName.setText(beneficiary.getClientName());
-        tvAccountType.setText(CurrencyUtil.formatCurrency(getActivity(), beneficiary.
-                getAccountType().getValue()));
-        tvTransferLimit.setText(String.valueOf(beneficiary.getTransferLimit()));
+        tvAccountType.setText(beneficiary.getAccountType().getValue());
+        tvTransferLimit.setText(CurrencyUtil.formatCurrency(getActivity(), beneficiary.
+                getTransferLimit()));
         tvOfficeName.setText(beneficiary.getOfficeName());
     }
 
