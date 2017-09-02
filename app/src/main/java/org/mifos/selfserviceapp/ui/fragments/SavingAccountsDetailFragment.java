@@ -189,8 +189,8 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         tvNominalInterestRate.setText(getString(R.string.double_and_String,
                 savingsWithAssociations.getNominalAnnualInterestRate(), SymbolsUtils.PERCENT));
         tvSavingAccountNumber.setText(String.valueOf(savingsWithAssociations.getAccountNo()));
-        tvTotalDeposits.setText(getString(R.string.double_and_String,
-                savingsWithAssociations.getSummary().getTotalDeposits(), currencySymbol));
+        tvTotalDeposits.setText(getString(R.string.string_and_double,
+                currencySymbol , savingsWithAssociations.getSummary().getTotalDeposits()));
 
         if (!savingsWithAssociations.getTransactions().isEmpty()) {
             tvLastTransaction.setText(getString(R.string.double_and_String,
