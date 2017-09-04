@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     View rootView;
     private long loanId;
+    private LoanWithAssociations loanWithAssociations;
 
     public static LoanRepaymentScheduleFragment newInstance(long loanId) {
         LoanRepaymentScheduleFragment loanRepaymentScheduleFragment =
@@ -88,9 +90,25 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         loanRepaymentSchedulePresenter.attachView(this);
 
         showUserInterface();
-        loanRepaymentSchedulePresenter.loanLoanWithAssociations(loanId);
-
+        if (savedInstanceState == null) {
+            loanRepaymentSchedulePresenter.loanLoanWithAssociations(loanId);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showLoanRepaymentSchedule((LoanWithAssociations) savedInstanceState.
+                    getParcelable(Constants.LOAN_ACCOUNT));
+        }
     }
 
     /**
@@ -122,6 +140,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
      */
     @Override
     public void showLoanRepaymentSchedule(LoanWithAssociations loanWithAssociations) {
+        this.loanWithAssociations = loanWithAssociations;
         loanRepaymentScheduleAdapter
                 .setCurrency(loanWithAssociations.getCurrency().getDisplaySymbol());
         loanRepaymentScheduleAdapter

@@ -2,6 +2,7 @@ package org.mifos.selfserviceapp.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,10 +125,59 @@ public class AccountsFragment extends BaseFragment implements
         swipeRefreshLayout.setColorSchemeColors(getActivity()
                 .getResources().getIntArray(R.array.swipeRefreshColors));
         swipeRefreshLayout.setOnRefreshListener(this);
-        showProgress();
+        if (savedInstanceState == null) {
+            showProgress();
+        }
 
         return rootView;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(Constants.ACCOUNT_TYPE, accountType);
+        switch (accountType) {
+            case Constants.SAVINGS_ACCOUNTS:
+                outState.putParcelableArrayList(Constants.SAVINGS_ACCOUNTS, new ArrayList
+                        <Parcelable>(savingAccounts));
+                break;
+            case Constants.LOAN_ACCOUNTS:
+                outState.putParcelableArrayList(Constants.LOAN_ACCOUNTS, new ArrayList
+                        <Parcelable>(loanAccounts));
+                break;
+            case Constants.SHARE_ACCOUNTS:
+                outState.putParcelableArrayList(Constants.SHARE_ACCOUNTS, new ArrayList
+                        <Parcelable>(shareAccounts));
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            accountType = savedInstanceState.getString(Constants.ACCOUNT_TYPE);
+            switch (accountType) {
+                case Constants.SAVINGS_ACCOUNTS:
+                    List<SavingAccount> savingAccountList = savedInstanceState.
+                            getParcelableArrayList(Constants.SAVINGS_ACCOUNTS);
+                    showSavingsAccounts(savingAccountList);
+                    break;
+                case Constants.LOAN_ACCOUNTS:
+                    List<LoanAccount> loanAccountList = savedInstanceState.getParcelableArrayList(
+                            Constants.LOAN_ACCOUNTS);
+                    showLoanAccounts(loanAccountList);
+                    break;
+                case Constants.SHARE_ACCOUNTS:
+                    List<ShareAccount> shareAccountList = savedInstanceState.getParcelableArrayList(
+                            Constants.SHARE_ACCOUNTS);
+                    showShareAccounts(shareAccountList);
+                    break;
+            }
+        }
+    }
+
 
     /**
      * Used for reloading account of a particular {@code accountType} in case of a network error.

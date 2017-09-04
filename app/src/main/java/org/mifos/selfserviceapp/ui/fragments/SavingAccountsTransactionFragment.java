@@ -77,6 +77,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private long savingsId;
     private long startDateFromPicker , endDateFromPicker;
     private List<Transactions> transactionsList, dummyTransactionList;
+    private SavingsWithAssociations savingsWithAssociations;
     private DatePick datePick;
     private DialogFragment mfDatePicker;
 
@@ -109,9 +110,25 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         savingAccountsTransactionPresenter.attachView(this);
 
         showUserInterface();
-        savingAccountsTransactionPresenter.loadSavingsWithAssociations(savingsId);
-
+        if (savedInstanceState == null) {
+            savingAccountsTransactionPresenter.loadSavingsWithAssociations(savingsId);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.SAVINGS_ACCOUNTS, savingsWithAssociations);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            showSavingAccountsDetail((SavingsWithAssociations) savedInstanceState.
+                    getParcelable(Constants.SAVINGS_ACCOUNTS));
+        }
     }
 
     /**
@@ -138,7 +155,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     public void showSavingAccountsDetail(SavingsWithAssociations
                                                      savingsWithAssociations) {
         layoutAccount.setVisibility(View.VISIBLE);
-
+        this.savingsWithAssociations = savingsWithAssociations;
         transactionsList = savingsWithAssociations.getTransactions();
         transactionListAdapter.setContext(getContext());
         transactionListAdapter.

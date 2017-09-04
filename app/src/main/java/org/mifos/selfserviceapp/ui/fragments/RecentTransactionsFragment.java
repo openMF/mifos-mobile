@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,7 @@ import org.mifos.selfserviceapp.presenters.RecentTransactionsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
+import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
 import org.mifos.selfserviceapp.utils.EndlessRecyclerViewScrollListener;
 import org.mifos.selfserviceapp.utils.Toaster;
@@ -84,9 +86,27 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         recentTransactionsPresenter.attachView(this);
 
         showUserInterface();
-        recentTransactionsPresenter.loadRecentTransactions(false, 0);
-
+        if (savedInstanceState == null) {
+            recentTransactionsPresenter.loadRecentTransactions(false, 0);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Constants.RECENT_TRANSACTIONS, new ArrayList<Parcelable>(
+                recentTransactionList));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            List<Transaction> transactions = savedInstanceState.getParcelableArrayList(Constants.
+                    RECENT_TRANSACTIONS);
+            showRecentTransactions(transactions);
+        }
     }
 
     /**
@@ -135,6 +155,7 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
      */
     @Override
     public void showRecentTransactions(List<Transaction> recentTransactionList) {
+        this.recentTransactionList = recentTransactionList;
         recentTransactionsListAdapter.setTransactions(recentTransactionList);
     }
 

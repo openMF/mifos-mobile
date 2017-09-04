@@ -1,11 +1,15 @@
 package org.mifos.selfserviceapp.models.accounts.share;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Timeline {
+public class Timeline implements Parcelable {
 
     @SerializedName("submittedOnDate")
     @Expose
@@ -140,4 +144,57 @@ public class Timeline {
         this.activatedByLastname = activatedByLastname;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeList(this.submittedOnDate);
+        dest.writeString(this.submittedByUsername);
+        dest.writeString(this.submittedByFirstname);
+        dest.writeString(this.submittedByLastname);
+        dest.writeList(this.approvedDate);
+        dest.writeString(this.approvedByUsername);
+        dest.writeString(this.approvedByFirstname);
+        dest.writeString(this.approvedByLastname);
+        dest.writeList(this.activatedDate);
+        dest.writeString(this.activatedByUsername);
+        dest.writeString(this.activatedByFirstname);
+        dest.writeString(this.activatedByLastname);
+    }
+
+    public Timeline() {
+    }
+
+    protected Timeline(Parcel in) {
+        this.submittedOnDate = new ArrayList<Integer>();
+        in.readList(this.submittedOnDate, Integer.class.getClassLoader());
+        this.submittedByUsername = in.readString();
+        this.submittedByFirstname = in.readString();
+        this.submittedByLastname = in.readString();
+        this.approvedDate = new ArrayList<Integer>();
+        in.readList(this.approvedDate, Integer.class.getClassLoader());
+        this.approvedByUsername = in.readString();
+        this.approvedByFirstname = in.readString();
+        this.approvedByLastname = in.readString();
+        this.activatedDate = new ArrayList<Integer>();
+        in.readList(this.activatedDate, Integer.class.getClassLoader());
+        this.activatedByUsername = in.readString();
+        this.activatedByFirstname = in.readString();
+        this.activatedByLastname = in.readString();
+    }
+
+    public static final Parcelable.Creator<Timeline> CREATOR = new Parcelable.Creator<Timeline>() {
+        @Override
+        public Timeline createFromParcel(Parcel source) {
+            return new Timeline(source);
+        }
+
+        @Override
+        public Timeline[] newArray(int size) {
+            return new Timeline[size];
+        }
+    };
 }
