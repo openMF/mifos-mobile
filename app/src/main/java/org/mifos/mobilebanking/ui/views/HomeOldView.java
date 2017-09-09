@@ -21,6 +21,8 @@ public interface HomeOldView extends MVPView {
 
     void showUserImage(Bitmap bitmap);
 
+    void showNotificationCount(int count);
+
     void showError(String errorMessage);
 
 }

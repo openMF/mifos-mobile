@@ -4,7 +4,11 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.mifos.mobilebanking.models.Charge;
 import org.mifos.mobilebanking.models.Page;
+import org.mifos.mobilebanking.models.notification.MifosNotification;
+import org.mifos.mobilebanking.models.notification.MifosNotification_Table;
+import org.mifos.mobilebanking.utils.NotificationComparator;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,4 +52,49 @@ public class DatabaseHelper {
             }
         });
     }
+
+    public Observable<List<MifosNotification>> getNotifications() {
+        return Observable.defer(new Func0<Observable<List<MifosNotification>>>() {
+            @Override
+            public Observable<List<MifosNotification>> call() {
+                deleteOldNotifications();
+                List<MifosNotification> notifications = SQLite.select()
+                        .from(MifosNotification.class)
+                        .queryList();
+                Collections.sort(notifications, new NotificationComparator());
+                return  Observable.just(notifications);
+            }
+        });
+    }
+
+    public Observable<Integer> getUnreadNotificationsCount() {
+        return Observable.defer(new Func0<Observable<Integer>>() {
+            @Override
+            public Observable<Integer> call() {
+                deleteOldNotifications();
+                int count = SQLite.select()
+                        .from(MifosNotification.class)
+                        .where(MifosNotification_Table.read.eq(false))
+                        .queryList().size();
+                return Observable.just(count);
+            }
+        });
+    }
+
+    private void deleteOldNotifications() {
+        Observable.defer(new Func0<Observable<Void>>() {
+            @Override
+            public Observable<Void> call() {
+                long thirtyDaysInSeconds = 2592000;
+                long thirtyDaysFromCurrentTimeInSeconds = (System.currentTimeMillis() / 1000) -
+                        thirtyDaysInSeconds;
+                SQLite.delete(MifosNotification.class)
+                        .where(MifosNotification_Table.timeStamp.
+                                lessThan(thirtyDaysFromCurrentTimeInSeconds * 1000))
+                        .execute();
+                return null;
+            }
+        });
+    }
+
 }

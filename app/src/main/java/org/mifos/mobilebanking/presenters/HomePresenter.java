@@ -142,4 +142,26 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 })
         );
     }
+
+    public void getUnreadNotificationsCount() {
+        subscription.add(dataManager.getUnreadNotificationsCount()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        getMvpView().showNotificationCount(integer);
+                    }
+                }));
+    }
 }

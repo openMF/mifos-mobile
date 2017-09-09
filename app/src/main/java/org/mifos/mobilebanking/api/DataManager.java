@@ -3,6 +3,8 @@ package org.mifos.mobilebanking.api;
 import org.mifos.mobilebanking.api.local.DatabaseHelper;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.models.Charge;
+import org.mifos.mobilebanking.models.notification.MifosNotification;
+import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 import org.mifos.mobilebanking.models.Page;
 import org.mifos.mobilebanking.models.Transaction;
 import org.mifos.mobilebanking.models.User;
@@ -15,6 +17,7 @@ import org.mifos.mobilebanking.models.beneficary.BeneficiaryPayload;
 import org.mifos.mobilebanking.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.client.ClientAccounts;
+import org.mifos.mobilebanking.models.notification.NotificationUserDetail;
 import org.mifos.mobilebanking.models.payload.LoansPayload;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.models.register.RegisterPayload;
@@ -189,6 +192,28 @@ public class DataManager {
     public Observable<Page<Charge>> getClientLocalCharges() {
         return databaseHelper.getClientCharges();
     }
+
+    public Observable<List<MifosNotification>> getNotifications() {
+        return databaseHelper.getNotifications();
+    }
+
+    public Observable<Integer> getUnreadNotificationsCount() {
+        return databaseHelper.getUnreadNotificationsCount();
+    }
+
+    public Observable<ResponseBody> registerNotification(NotificationRegisterPayload payload) {
+        return baseApiManager.getNotificationApi().registerNotification(payload);
+    }
+
+    public Observable<ResponseBody> updateRegisterNotification(long id, NotificationRegisterPayload
+                                                                       payload) {
+        return baseApiManager.getNotificationApi().updateRegisterNotification(id, payload);
+    }
+
+    public Observable<NotificationUserDetail> getUserNotificationId(long id) {
+        return baseApiManager.getNotificationApi().getUserNotificationId(id);
+    }
+
     public long getClientId() {
         return clientId;
     }

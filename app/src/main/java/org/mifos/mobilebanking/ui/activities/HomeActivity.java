@@ -1,8 +1,11 @@
 package org.mifos.mobilebanking.ui.activities;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,9 +13,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +37,7 @@ import org.mifos.mobilebanking.ui.fragments.ClientAccountsFragment;
 import org.mifos.mobilebanking.ui.fragments.ClientChargeFragment;
 import org.mifos.mobilebanking.ui.fragments.HelpFragment;
 import org.mifos.mobilebanking.ui.fragments.HomeOldFragment;
+import org.mifos.mobilebanking.ui.fragments.NotificationFragment;
 import org.mifos.mobilebanking.ui.fragments.RecentTransactionsFragment;
 import org.mifos.mobilebanking.ui.fragments.SettingsFragment;
 import org.mifos.mobilebanking.ui.fragments.ThirdPartyTransferFragment;
@@ -41,6 +47,10 @@ import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.MaterialDialog;
 import org.mifos.mobilebanking.utils.TextDrawable;
 import org.mifos.mobilebanking.utils.Toaster;
+import org.mifos.mobilebanking.utils.gcm.RegistrationIntentService;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import javax.inject.Inject;
 
@@ -69,12 +79,12 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     private TextView tvUsername;
     private CircularImageView ivCircularUserProfilePicture;
     private ImageView ivTextDrawableUserProfilePicture;
-    private final int CAMERA_PERMISSION = 10;
     private long clientId;
     private Bitmap userProfileBitmap;
     private Client client;
-
-    boolean doubleBackToExitPressedOnce = false;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private boolean isReceiverRegistered;
+    boolean  doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +98,11 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         setToolbarTitle(getString(R.string.home));
         replaceFragment(HomeOldFragment.newInstance(), false, R.id.container);
 
+        if (getIntent() != null && getIntent().getBooleanExtra(getString(R.string.notification),
+                false)) {
+            replaceFragment(NotificationFragment.newInstance(), true, R.id.container);
+        }
+
         if (savedInstanceState == null) {
             detailsPresenter.attachView(this);
             detailsPresenter.getUserDetails();
@@ -99,6 +114,13 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             showUserImage(userProfileBitmap);
             showUserDetails(client);
         }
+
+        if (checkPlayServices() && !preferencesHelper.sentTokenToServerState()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+
     }
 
     @Override
@@ -106,6 +128,23 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         super.onSaveInstanceState(outState);
         outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
         outState.putParcelable(Constants.USER_DETAILS, client);
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(registerReceiver);
+        isReceiverRegistered = false;
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
+                    new IntentFilter(Constants.REGISTER_ON_SERVER));
+            isReceiverRegistered = true;
+        }
     }
 
     /**
@@ -394,4 +433,33 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // Click Header to view full profile of User
         startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
     }
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(HomeActivity.class.getName(), "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private BroadcastReceiver registerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String token = intent.getStringExtra(Constants.TOKEN);
+            detailsPresenter.registerNotification(token);
+        }
+    };
+
 }
