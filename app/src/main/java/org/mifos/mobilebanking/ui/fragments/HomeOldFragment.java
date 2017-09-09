@@ -1,13 +1,20 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -80,6 +87,8 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     private long clientId;
     private View toolbarView;
     private boolean isDetailVisible;
+    private boolean isReceiverRegistered = false;
+    private TextView tvNotificationCount;
 
     public static HomeOldFragment newInstance() {
         HomeOldFragment fragment = new HomeOldFragment();
@@ -95,6 +104,8 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         clientId = preferencesHelper.getClientId();
 
         presenter.attachView(this);
+        setHasOptionsMenu(true);
+
         slHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
         slHomeContainer.setOnRefreshListener(this);
@@ -105,6 +116,52 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         setToolbarTitle(getString(R.string.home));
         showUserInterface();
         return rootView;
+    }
+
+    private BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getActivity().invalidateOptionsMenu();
+        }
+    };
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.menu_notifications);
+        View count = menuItem.getActionView();
+        tvNotificationCount = (TextView) count.findViewById(R.id.tv_notification_indicator);
+        count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getActivity()).replaceFragment(NotificationFragment.newInstance(),
+                        true, R.id.container);
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver();
+        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(notificationReceiver);
+        isReceiverRegistered = false;
+        super.onPause();
+    }
+
+    private void registerReceiver() {
+        if (!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(notificationReceiver,
+                    new IntentFilter(Constants.NOTIFY_HOME_FRAGMENT));
+            isReceiverRegistered = true;
+        }
     }
 
     @Override
@@ -142,6 +199,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     public void showUserInterface() {
         toolbarView = ((HomeActivity) getActivity()).getToolbar().getRootView();
         isDetailVisible = preferencesHelper.overviewState();
+        presenter.getUnreadNotificationsCount();
         if (isDetailVisible) {
             showOverviewState();
         } else {
@@ -218,6 +276,15 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
                 ivUserImage.setImageBitmap(bitmap);
             }
         });
+    }
+
+    @Override
+    public void showNotificationCount(int count) {
+        if (count > 0) {
+            tvNotificationCount.setText(String.valueOf(count));
+        } else {
+            tvNotificationCount.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.iv_user_image)

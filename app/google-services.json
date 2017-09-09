@@ -1,0 +1,113 @@
+{
+  "project_info": {
+    "project_number": "337161660676",
+    "firebase_url": "https://self-demo.firebaseio.com",
+    "project_id": "self-demo",
+    "storage_bucket": "self-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337161660676:android:f36173e948059ccb",
+        "android_client_info": {
+          "package_name": "gcm.play.android.samples.com.gcmquickstart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337161660676-uocdejo0hea1873ogb217npkig2vckn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFsz8Wi2r0zFsdSwi3y3kD36gVK0GGuR8"
+        },
+        {
+          "current_key": "AIzaSyBTp5YmiUs1P1SME3gZmJ0VS9j5fNvxJAk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337161660676:android:a2809e4e9e74652e",
+        "android_client_info": {
+          "package_name": "org.mifos.selfserviceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337161660676-uocdejo0hea1873ogb217npkig2vckn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFsz8Wi2r0zFsdSwi3y3kD36gVK0GGuR8"
+        },
+        {
+          "current_key": "AIzaSyBTp5YmiUs1P1SME3gZmJ0VS9j5fNvxJAk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337161660676:android:e4264440ced727da",
+        "android_client_info": {
+          "package_name": "org.mifos.mobilebanking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337161660676-uocdejo0hea1873ogb217npkig2vckn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFsz8Wi2r0zFsdSwi3y3kD36gVK0GGuR8"
+        },
+        {
+          "current_key": "AIzaSyBTp5YmiUs1P1SME3gZmJ0VS9j5fNvxJAk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

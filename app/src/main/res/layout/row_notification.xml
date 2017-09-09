@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:clickable="true"
+    android:foreground="?selectableItemBackground"
+    android:background="@color/white"
+    android:padding="@dimen/layout_padding_8dp">
+
+    <ImageView
+        android:layout_width="@dimen/icon_medium"
+        android:layout_height="@dimen/icon_medium"
+        android:layout_margin="@dimen/default_margin"
+        android:id="@+id/iv_notification_icon"
+        app:srcCompat="@drawable/ic_notifications"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/medium_text"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:id="@+id/tv_notification_text"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/small_text"
+            android:gravity="end|right"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:id="@+id/tv_notification_time"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_action_ok"
+            android:id="@+id/btn_dismiss_notification"
+            android:textColor="@color/primary"
+            android:layout_gravity="right|end"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+    </LinearLayout>
+
+</LinearLayout>
