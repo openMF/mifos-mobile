@@ -16,6 +16,8 @@ public interface HomeView extends MVPView {
 
     void showUserImage(Bitmap bitmap);
 
+    void showNotificationCount(int count);
+
     void showError(String errorMessage);
 
     void showUserImageNotFound();

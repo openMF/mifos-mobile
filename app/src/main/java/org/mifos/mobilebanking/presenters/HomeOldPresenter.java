@@ -180,6 +180,28 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
         );
     }
 
+    public void getUnreadNotificationsCount() {
+        subscription.add(dataManager.getUnreadNotificationsCount()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        getMvpView().showNotificationCount(integer);
+                    }
+                }));
+    }
+
     /**
      * Returns total Loan balance
      * @param loanAccountList {@link List} of {@link LoanAccount} associated with the client

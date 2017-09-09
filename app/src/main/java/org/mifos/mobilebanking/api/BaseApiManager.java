@@ -5,6 +5,7 @@ import org.mifos.mobilebanking.api.services.BeneficiaryService;
 import org.mifos.mobilebanking.api.services.ClientChargeService;
 import org.mifos.mobilebanking.api.services.ClientService;
 import org.mifos.mobilebanking.api.services.LoanAccountsListService;
+import org.mifos.mobilebanking.api.services.NotificationService;
 import org.mifos.mobilebanking.api.services.RecentTransactionsService;
 import org.mifos.mobilebanking.api.services.RegistrationService;
 import org.mifos.mobilebanking.api.services.SavingAccountsListService;
@@ -13,7 +14,6 @@ import org.mifos.mobilebanking.api.services.ThirdPartyTransferService;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 
 /**
  * @author Vishwajeet
@@ -34,6 +34,8 @@ public class BaseApiManager {
     private static BeneficiaryService beneficiaryApi;
     private static ThirdPartyTransferService thirdPartyTransferApi;
     private static RegistrationService registrationApi;
+    private static NotificationService notificationApi;
+
     public BaseApiManager() {
         String authToken = "";
         createService(authToken);
@@ -49,6 +51,7 @@ public class BaseApiManager {
         beneficiaryApi = createApi(BeneficiaryService.class);
         thirdPartyTransferApi = createApi(ThirdPartyTransferService.class);
         registrationApi = createApi(RegistrationService.class);
+        notificationApi = createApi(NotificationService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -100,5 +103,9 @@ public class BaseApiManager {
 
     public RegistrationService getRegistrationApi() {
         return registrationApi;
+    }
+
+    public NotificationService getNotificationApi() {
+        return notificationApi;
     }
 }

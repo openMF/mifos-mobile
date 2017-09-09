@@ -88,4 +88,10 @@ public class Constants {
     public static final String TOTAL_LOAN = "total_loan";
 
     public static final String TOTAL_SAVINGS = "total_savings";
+
+    public static final String TOKEN = "token";
+
+    public static final String REGISTER_ON_SERVER = "RegisterOnServer";
+
+    public static final String NOTIFY_HOME_FRAGMENT = "NotifyHomeFragment";
 }

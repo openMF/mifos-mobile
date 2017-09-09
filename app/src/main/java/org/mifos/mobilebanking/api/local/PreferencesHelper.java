@@ -25,6 +25,9 @@ public class PreferencesHelper {
     private static final String USER_NAME = "preferences_user_name";
     private static final String PASSCODE = "preferences_passcode";
     private static final String OVERVIEW_STATE = "preferences_overview_state";
+    private static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    private static final String GCM_TOKEN = "gcm_token";
+
     private SharedPreferences sharedPreferences;
 
     @Inject
@@ -140,5 +143,22 @@ public class PreferencesHelper {
 
     public boolean overviewState() {
         return getBoolean(OVERVIEW_STATE, true);
+    }
+
+    public void saveGcmToken(String token) {
+        putString(GCM_TOKEN, token);
+    }
+
+
+    public String getGcmToken() {
+        return getString(GCM_TOKEN, "");
+    }
+
+    public void setSentTokenToServer(boolean sentTokenToServer) {
+        putBoolean(SENT_TOKEN_TO_SERVER, sentTokenToServer);
+    }
+
+    public boolean sentTokenToServerState() {
+        return getBoolean(SENT_TOKEN_TO_SERVER, false);
     }
 }
