@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:clickable="true"
+    style="@android:style/Widget.ActionButton">
+
+    <ImageView
+        android:id="@+id/iv_notification_icon"
+        app:srcCompat="@drawable/ic_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_notification_indicator"
+        android:layout_width="wrap_content"
+        android:textSize="10sp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:gravity="top|end"
+        android:layout_alignTop="@id/iv_notification_icon"
+        android:layout_alignRight="@id/iv_notification_icon"
+        android:background="@drawable/notification_circle"/>
+</RelativeLayout>

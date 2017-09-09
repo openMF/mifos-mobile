@@ -7,17 +7,21 @@ import android.util.Log;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
+import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.injection.ApplicationContext;
 import org.mifos.mobilebanking.models.client.Client;
+import org.mifos.mobilebanking.models.notification.NotificationUserDetail;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.views.UserDetailsView;
 import org.mifos.mobilebanking.utils.ImageUtil;
+import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
 
 import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,6 +35,9 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
 
     private final DataManager dataManager;
     private CompositeSubscription subscriptions;
+
+    @Inject
+    PreferencesHelper preferencesHelper;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -138,5 +145,83 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
                     }
                 })
         );
+    }
+
+    public void registerNotification(final String token) {
+        checkViewAttached();
+        final NotificationRegisterPayload payload = new
+                NotificationRegisterPayload(preferencesHelper.getClientId(), token);
+        subscriptions.add(dataManager.registerNotification(payload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(UserDetailsPresenter.class.getSimpleName(), e.toString());
+                        if (e instanceof HttpException && ((HttpException) e).code() == 500) {
+                            getUserNotificationId(payload, token);
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        preferencesHelper.setSentTokenToServer(true);
+                        preferencesHelper.saveGcmToken(token);
+                    }
+                }));
+    }
+
+    private void getUserNotificationId(final NotificationRegisterPayload payload, final String
+            token) {
+        checkViewAttached();
+        subscriptions.add(dataManager.getUserNotificationId(preferencesHelper.getClientId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<NotificationUserDetail>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(UserDetailsPresenter.class.getSimpleName(), e.toString());
+                    }
+
+                    @Override
+                    public void onNext(NotificationUserDetail userDetail) {
+                        updateRegistrationNotification(userDetail.getId(), payload, token);
+                    }
+                }));
+    }
+
+    private void updateRegistrationNotification(long id, NotificationRegisterPayload payload,
+                                               final String token) {
+        checkViewAttached();
+        subscriptions.add(dataManager.updateRegisterNotification(id, payload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(UserDetailsPresenter.class.getSimpleName(), e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        preferencesHelper.setSentTokenToServer(true);
+                        preferencesHelper.saveGcmToken(token);
+                    }
+                }));
     }
 }

@@ -18,6 +18,6 @@ public class ApiEndPoints {
     public static final  String ACCOUNT_TRANSFER = "accounttransfers";
     public static final  String BENEFICIARIES = "beneficiaries";
     public static final String REGISTRATION = "registration";
-
+    public static final String DEVICE = "device";
 
 }

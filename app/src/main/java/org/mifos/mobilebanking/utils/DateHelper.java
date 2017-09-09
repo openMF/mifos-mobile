@@ -163,4 +163,9 @@ public class DateHelper {
         return sdf.format(new Date(timeInMillis));
     }
 
+    public static String getDateAndTimeAsStringFromLong(long timeInMillis) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a dd MMM yyyy");
+        return sdf.format(new Date(timeInMillis));
+    }
+
 }
