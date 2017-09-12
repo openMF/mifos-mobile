@@ -79,6 +79,7 @@
                     android:id="@+id/ll_account_detail"
                     android:orientation="horizontal">
                     <LinearLayout
+                        android:id="@+id/ll_total_savings"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -106,6 +107,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/gray_dark"/>
                     <LinearLayout
+                        android:id="@+id/ll_total_loan"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
