@@ -83,7 +83,7 @@ public class LoanTemplate implements Parcelable {
     InterestRateFrequencyType interestRateFrequencyType;
 
     @SerializedName("annualInterestRate")
-    Integer annualInterestRate;
+    Double annualInterestRate;
 
     @SerializedName("isFloatingInterestRate")
     Boolean isFloatingInterestRate;
@@ -358,11 +358,11 @@ public class LoanTemplate implements Parcelable {
         this.interestRateFrequencyType = interestRateFrequencyType;
     }
 
-    public Integer getAnnualInterestRate() {
+    public Double getAnnualInterestRate() {
         return annualInterestRate;
     }
 
-    public void setAnnualInterestRate(Integer annualInterestRate) {
+    public void setAnnualInterestRate(Double annualInterestRate) {
         this.annualInterestRate = annualInterestRate;
     }
 
@@ -747,7 +747,7 @@ public class LoanTemplate implements Parcelable {
         this.interestRatePerPeriod = (Double) in.readValue(Double.class.getClassLoader());
         this.interestRateFrequencyType = in.readParcelable(InterestRateFrequencyType.class
                 .getClassLoader());
-        this.annualInterestRate = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.annualInterestRate = (Double) in.readValue(Double.class.getClassLoader());
         this.isFloatingInterestRate = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.amortizationType = in.readParcelable(AmortizationType.class.getClassLoader());
         this.interestType = in.readParcelable(InterestType.class.getClassLoader());
