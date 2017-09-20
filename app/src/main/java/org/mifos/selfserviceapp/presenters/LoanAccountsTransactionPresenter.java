@@ -54,7 +54,7 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**
