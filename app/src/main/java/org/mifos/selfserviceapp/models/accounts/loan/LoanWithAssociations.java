@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.mifos.selfserviceapp.models.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -172,7 +173,7 @@ public class LoanWithAssociations implements Parcelable {
     Integer maximumGap;
 
     @SerializedName("transactions")
-    private List<Transaction> transactions;
+    private List<Transaction> transactions = new ArrayList<>();
 
     public List<Transaction> getTransactions() {
         return transactions;

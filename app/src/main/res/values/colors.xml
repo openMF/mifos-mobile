@@ -52,7 +52,6 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
-
     <!--Swipe Refresh Colors-->
     <array name="swipeRefreshColors">
         <item>@color/blue_light</item>

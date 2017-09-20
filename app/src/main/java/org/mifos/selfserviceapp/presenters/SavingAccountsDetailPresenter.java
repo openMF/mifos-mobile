@@ -52,7 +52,7 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**
