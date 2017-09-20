@@ -51,7 +51,7 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
-
+    <color name="icon_image_background">#E9E2E2</color>
 
     <!--Swipe Refresh Colors-->
     <array name="swipeRefreshColors">

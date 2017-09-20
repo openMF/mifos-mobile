@@ -64,10 +64,11 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
 
     private List<Transaction> recentTransactionList;
 
-
     public static RecentTransactionsFragment newInstance() {
-        RecentTransactionsFragment recentTransactionsFragment = new RecentTransactionsFragment();
-        return recentTransactionsFragment;
+        RecentTransactionsFragment fragment = new RecentTransactionsFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
