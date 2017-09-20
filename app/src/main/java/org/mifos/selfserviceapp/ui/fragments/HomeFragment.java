@@ -1,7 +1,7 @@
 package org.mifos.selfserviceapp.ui.fragments;
 
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
@@ -169,6 +168,14 @@ public class HomeFragment extends BaseFragment implements HomeView,
     }
 
     /**
+     * Open LOAN tab under ClientAccountsFragment
+     */
+    @OnClick(R.id.ll_total_loan)
+    public void onClickLoan() {
+        openAccount(AccountType.LOAN);
+        ((HomeActivity) getActivity()).setNavigationViewSelectedItem(R.id.item_accounts);
+    }
+    /**
      * Provides {@code totalSavingAmount} fetched from server
      * @param totalSavingAmount Total Saving amount
      */
@@ -176,6 +183,15 @@ public class HomeFragment extends BaseFragment implements HomeView,
     public void showSavingAccountDetails(double totalSavingAmount) {
         this.totalSavingAmount = totalSavingAmount;
         tvSavingTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalSavingAmount));
+    }
+
+    /**
+     * Open SAVINGS tab under ClientAccountsFragment
+     */
+    @OnClick(R.id.ll_total_savings)
+    public void onClickSavings() {
+        openAccount(AccountType.SAVINGS);
+        ((HomeActivity) getActivity()).setNavigationViewSelectedItem(R.id.item_accounts);
     }
 
     /**
