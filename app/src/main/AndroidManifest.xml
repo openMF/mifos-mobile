@@ -39,7 +39,8 @@
             android:label="@string/saving_account_details"/>
 
         <activity android:name=".ui.activities.PassCodeActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTask"/>
 
         <activity android:name=".ui.activities.LoanAccountContainerActivity"/>
 
