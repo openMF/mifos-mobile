@@ -102,6 +102,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
             loadClientData();
         }
 
+        setToolbarTitle(getString(R.string.home));
         showUserInterface();
         return rootView;
     }
