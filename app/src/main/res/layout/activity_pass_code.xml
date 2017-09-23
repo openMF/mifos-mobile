@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/one"
                         android:id="@+id/btn_one"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <android.support.v7.widget.AppCompatButton
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/two"
                         android:id="@+id/btn_two"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <android.support.v7.widget.AppCompatButton
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/three"
                         android:id="@+id/btn_three"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     </TableRow>
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/four"
                         android:id="@+id/btn_four"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <android.support.v7.widget.AppCompatButton
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/five"
                         android:id="@+id/btn_five"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <android.support.v7.widget.AppCompatButton
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/six"
                         android:id="@+id/btn_six"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                 </TableRow>
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/seven"
                         android:id="@+id/btn_seven"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <android.support.v7.widget.AppCompatButton
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/eight"
                         android:id="@+id/btn_eight"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <android.support.v7.widget.AppCompatButton
@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nine"
                         android:id="@+id/btn_nine"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                 </TableRow>
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/zero"
                         android:id="@+id/btn_zero"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/primary"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
                     <ImageView

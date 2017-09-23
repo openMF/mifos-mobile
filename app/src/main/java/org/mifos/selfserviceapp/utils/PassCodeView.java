@@ -54,7 +54,7 @@ public class PassCodeView extends View {
         fillCirclePaint = new Paint();
         fillCirclePaint.setColor(ContextCompat.getColor(getContext(), R.color.primary));
         fillCirclePaint.setAntiAlias(true);
-        fillCirclePaint.setTextSize(getResources().getDimension(R.dimen.text_medium));
+        fillCirclePaint.setTextSize(getResources().getDimension(R.dimen.text_large));
         fillCirclePaint.setStyle(Paint.Style.FILL);
 
         passwordList = new ArrayList<>();
