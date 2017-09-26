@@ -333,7 +333,7 @@ public class HomeActivity extends BaseActivity implements
                         } else if (fragment instanceof HelpFragment) {
                             setNavigationViewSelectedItem(R.id.item_help);
                         } else if (fragment instanceof AboutUsFragment) {
-                            setNavigationViewSelectedItem(R.id.item_help);
+                            setNavigationViewSelectedItem(R.id.item_about_us);
                         }
                     }
                 });
