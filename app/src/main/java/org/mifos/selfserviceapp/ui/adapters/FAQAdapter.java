@@ -78,6 +78,12 @@ public class FAQAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void updateView(int position) {
+        if (alreadySelectedPosition == position) {
+            faqArrayList.get(alreadySelectedPosition).setSelected(false);
+            notifyItemChanged(alreadySelectedPosition);
+            alreadySelectedPosition = -1;
+            return;
+        }
         if (alreadySelectedPosition != -1) {
             faqArrayList.get(alreadySelectedPosition).setSelected(false);
             notifyItemChanged(alreadySelectedPosition);
