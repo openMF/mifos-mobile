@@ -56,6 +56,8 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
 
     private int counter = 0;
     private boolean isInitialScreen;
+    private boolean isPassCodeVerified;
+    private String strPassCodeEntered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         ButterKnife.bind(this);
 
         isInitialScreen = getIntent().getBooleanExtra(Constants.INTIAL_LOGIN, false);
+        isPassCodeVerified = false;
+        strPassCodeEntered = "";
 
         if (!preferencesHelper.getPasscode().isEmpty()) {
             btnSkip.setVisibility(View.GONE);
@@ -110,8 +114,23 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
     @OnClick(R.id.btn_save)
     public void savePassCode() {
         if (isPassCodeLengthCorrect()) {
-            preferencesHelper.setPasscode(EncryptionUtil.getHash(passCodeView.getPasscode()));
-            startHomeActivity();
+            if (isPassCodeVerified) {
+                if (strPassCodeEntered.compareTo(passCodeView.getPasscode()) == 0) {
+                    preferencesHelper.setPasscode(EncryptionUtil.getHash(passCodeView.
+                            getPasscode()));
+                    startHomeActivity();
+                } else {
+                    Toaster.show(clRootview, R.string.passcode_does_not_match);
+                    passCodeView.clearPasscodeField();
+                }
+            } else {
+                btnSkip.setVisibility(View.INVISIBLE);
+                btnSave.setText(getString(R.string.save));
+                tvPasscodeIntro.setText(getString(R.string.reenter_passcode));
+                strPassCodeEntered = passCodeView.getPasscode();
+                passCodeView.clearPasscodeField();
+                isPassCodeVerified = true;
+            }
         }
     }
 

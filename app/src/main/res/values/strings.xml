@@ -293,7 +293,10 @@
     <string name="skip">Skip</string>
     <string name="save">Save</string>
     <string name="passcode_setup">Setup a passcode to login</string>
+    <string name="reenter_passcode">Please re-enter your passcode</string>
+    <string name="passcode_does_not_match">Passcode does not match.</string>
     <string name="forgot_passcode">Forgot passcode, login manually</string>
+    <string name="proceed">Proceed</string>
     <string name="amount_greater_than_zero">Amount should be greater than zero</string>
     <string name="about_us_under_construction">About Us Under Construction</string>
     <string name="help_under_construction">Help Under Construction</string>
