@@ -241,6 +241,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_weight="0.5"
                         app:backgroundTint="@color/white"
+                        android:textColor="@color/primary"
                         android:text="@string/cancel"/>
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btn_review_transfer"
