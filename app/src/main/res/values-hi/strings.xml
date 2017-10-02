@@ -343,6 +343,9 @@
     <string name="call_now">कॉल करें</string>
     <string name="leave_email">एक ईमेल छोड़ दो</string>
     <string name="find_locations">स्थान ढूंढें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="language">भाषा</string>
+    <string name="choose_language">अपनी भाषा चुनिए</string>
 
     <string name="permission_denied_camera">कैमरे का उपयोग करने के लिए अनुमति अस्वीकृत</string>
     <string name="no_withdrawals">No withdrawals</string>

@@ -12,6 +12,7 @@
         <item name="colorButtonNormal">@color/primary</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="buttonStyle">@style/AppTheme.Button</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
