@@ -1,6 +1,7 @@
 package org.mifos.selfserviceapp.ui.activities.base;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import org.mifos.selfserviceapp.ui.activities.PassCodeActivity;
 import org.mifos.selfserviceapp.ui.views.BaseActivityCallback;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.ForegroundChecker;
+import org.mifos.selfserviceapp.utils.LanguageHelper;
 
 /**
  * @author ishan
@@ -203,6 +205,11 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         Intent intent = new Intent(this, PassCodeActivity.class);
         intent.putExtra(Constants.INTIAL_LOGIN, false);
         startActivity(intent);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LanguageHelper.onAttach(base));
     }
 
     /**

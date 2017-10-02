@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import org.mifos.selfserviceapp.ui.views.BaseActivityCallback;
+import org.mifos.selfserviceapp.utils.LanguageHelper;
 import org.mifos.selfserviceapp.utils.ProgressBarHandler;
 
 public class BaseFragment extends Fragment {
@@ -61,7 +62,7 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        super.onAttach(context);
+        super.onAttach(LanguageHelper.onAttach(context));
         Activity activity = context instanceof Activity ? (Activity) context : null;
         try {
             callback = (BaseActivityCallback) activity;

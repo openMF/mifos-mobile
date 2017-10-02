@@ -33,6 +33,7 @@ import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
 import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
+import org.mifos.selfserviceapp.ui.fragments.SettingsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
@@ -50,9 +51,8 @@ import butterknife.ButterKnife;
  * @author Vishwajeet
  * @since 14/07/2016
  */
-
-public class HomeActivity extends BaseActivity implements
-        NavigationView.OnNavigationItemSelectedListener, UserDetailsView, View.OnClickListener {
+public class HomeActivity extends BaseActivity implements UserDetailsView, NavigationView.
+        OnNavigationItemSelectedListener, SettingsFragment.LanguageCallback, View.OnClickListener {
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -141,6 +141,9 @@ public class HomeActivity extends BaseActivity implements
             case R.id.item_beneficiaries:
                 replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
                 break;
+            case R.id.item_settings:
+                replaceFragment(SettingsFragment.newInstance(this), true, R.id.container);
+                break;
             case R.id.item_about_us:
                 replaceFragment(AboutUsFragment.getInstance(), true, R.id.container);
                 break;
@@ -164,6 +167,14 @@ public class HomeActivity extends BaseActivity implements
         setNavigationViewSelectedItem(R.id.item_home);
         setTitle(item.getTitle());
         return true;
+    }
+
+
+    @Override
+    public void updateNavDrawer() {
+        //update drawer
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(R.menu.menu_nav_drawer);
     }
 
     /**
