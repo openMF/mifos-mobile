@@ -373,6 +373,7 @@
     <string name="leave_email">Leave an email</string>
     <string name="find_locations">Find Locations</string>
     <string name="no_withdrawals">No withdrawals</string>
+    <string name="clear_filters">Clear Filters</string>
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>
