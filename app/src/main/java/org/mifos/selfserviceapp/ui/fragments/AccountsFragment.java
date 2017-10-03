@@ -86,6 +86,23 @@ public class AccountsFragment extends BaseFragment implements
     private List<LoanAccount> loanAccounts;
     private List<SavingAccount> savingAccounts;
     private List<ShareAccount> shareAccounts;
+    private List<CheckboxStatus> currentFilterList;
+
+    /**
+     * Method to get the current filter list for the fragment
+     * @return currentFilterList
+     */
+    public List<CheckboxStatus> getCurrentFilterList() {
+        return currentFilterList;
+    }
+
+    /**
+     * Method to set current filter list value
+     * @param currentFilterList
+     */
+    public void setCurrentFilterList(List<CheckboxStatus> currentFilterList) {
+        this.currentFilterList = currentFilterList;
+    }
 
     public static AccountsFragment newInstance(String accountType) {
         AccountsFragment fragment = new AccountsFragment();
@@ -197,7 +214,16 @@ public class AccountsFragment extends BaseFragment implements
     public void onRefresh() {
         ll_error.setVisibility(View.GONE);
         rvAccounts.setVisibility(View.VISIBLE);
+        clearFilter();
         accountsPresenter.loadAccounts(accountType);
+    }
+
+    /**
+     * Method to clear the current filters and set
+     * currentFilterList = null
+     */
+    public void clearFilter() {
+        currentFilterList = null;
     }
 
     /**

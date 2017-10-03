@@ -174,6 +174,8 @@ public final class MaterialDialog  {
                     R.color.accent));
             dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context,
                     R.color.gray_dark));
+            dialog.getButton(dialog.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(context,
+                    R.color.black));
             return this;
         }
     }

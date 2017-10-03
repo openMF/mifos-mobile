@@ -355,16 +355,37 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         checkBoxRecyclerView.setAdapter(checkBoxAdapter);
 
         if (account == AccountType.SAVINGS) {
-            checkBoxAdapter.setStatusList(StatusUtils.
-                    getSavingsAccountStatusList(getActivity()));
+            if (((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                    getFragmentTag(0))).getCurrentFilterList() == null) {
+                checkBoxAdapter.setStatusList(StatusUtils.
+                        getSavingsAccountStatusList(getActivity()));
+            } else {
+                checkBoxAdapter.setStatusList(((AccountsFragment) getChildFragmentManager()
+                        .findFragmentByTag(getFragmentTag(0))).getCurrentFilterList());
+            }
+
             title = getString(R.string.filter_savings);
         } else if (account == AccountType.LOAN) {
-            checkBoxAdapter.setStatusList(StatusUtils.
-                    getLoanAccountStatusList(getActivity()));
+            if (((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                    getFragmentTag(1))).getCurrentFilterList() == null) {
+                checkBoxAdapter.setStatusList(StatusUtils.
+                        getSavingsAccountStatusList(getActivity()));
+            } else {
+                checkBoxAdapter.setStatusList(((AccountsFragment) getChildFragmentManager()
+                        .findFragmentByTag(getFragmentTag(1))).getCurrentFilterList());
+            }
+
             title = getString(R.string.filter_loan);
         } else if (account == AccountType.SHARE) {
-            checkBoxAdapter.setStatusList(StatusUtils.
-                    getShareAccountStatusList(getActivity()));
+            if (((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                    getFragmentTag(2))).getCurrentFilterList() == null) {
+                checkBoxAdapter.setStatusList(StatusUtils.
+                        getSavingsAccountStatusList(getActivity()));
+            } else {
+                checkBoxAdapter.setStatusList(((AccountsFragment) getChildFragmentManager()
+                        .findFragmentByTag(getFragmentTag(2))).getCurrentFilterList());
+            }
+
             title = getString(R.string.filter_share);
         }
 
@@ -379,16 +400,54 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
                         if (account == AccountType.SAVINGS) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
-                                    getFragmentTag(0))).filterSavingsAccount(checkBoxAdapter.
-                                    getStatusList());
+                                    getFragmentTag(0)))
+                                    .setCurrentFilterList(checkBoxAdapter.getStatusList());
+
+                            ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                                    getFragmentTag(0)))
+                                    .filterSavingsAccount(checkBoxAdapter.getStatusList());
                         } else if (account == AccountType.LOAN) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
-                                    getFragmentTag(1))).filterLoanAccount(checkBoxAdapter.
-                                    getStatusList());
+                                    getFragmentTag(1)))
+                                    .setCurrentFilterList(checkBoxAdapter.getStatusList());
+
+                            ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                                    getFragmentTag(1)))
+                                    .filterLoanAccount(checkBoxAdapter.getStatusList());
                         } else if (account == AccountType.SHARE) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
-                                    getFragmentTag(2))).filterShareAccount(checkBoxAdapter.
-                                    getStatusList());
+                                    getFragmentTag(2)))
+                                    .setCurrentFilterList(checkBoxAdapter.getStatusList());
+
+                            ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                                    getFragmentTag(2)))
+                                    .filterShareAccount(checkBoxAdapter.getStatusList());
+                        }
+
+                    }
+                })
+                .setNeutralButton(R.string.clear_filters, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (account == AccountType.SAVINGS) {
+                            ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                                    getFragmentTag(0))).clearFilter();
+                            checkBoxAdapter.setStatusList(StatusUtils.
+                                    getSavingsAccountStatusList(getActivity()));
+                            accountsPresenter.loadAccounts(Constants.SAVINGS_ACCOUNTS);
+                        } else if (account == AccountType.LOAN) {
+                            ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                                    getFragmentTag(1))).clearFilter();
+                            checkBoxAdapter.setStatusList(StatusUtils.
+                                    getLoanAccountStatusList(getActivity()));
+                            accountsPresenter.loadAccounts(Constants.LOAN_ACCOUNTS);
+                        } else if (account == AccountType.SHARE) {
+                            ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
+                                    getFragmentTag(2))).clearFilter();
+                            checkBoxAdapter.setStatusList(StatusUtils.
+                                    getShareAccountStatusList(getActivity()));
+                            accountsPresenter.loadAccounts(Constants.SHARE_ACCOUNTS);
                         }
 
                     }
