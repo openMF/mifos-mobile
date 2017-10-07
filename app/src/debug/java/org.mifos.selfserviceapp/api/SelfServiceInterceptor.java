@@ -33,7 +33,7 @@ public class SelfServiceInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request chainRequest = chain.request();
         Builder builder = chainRequest.newBuilder()
-                .header(HEADER_TENANT, "default");
+                .header(HEADER_TENANT, "mobile");
 
         if (!TextUtils.isEmpty(authToken)) {
             builder.header(HEADER_AUTH, authToken);
