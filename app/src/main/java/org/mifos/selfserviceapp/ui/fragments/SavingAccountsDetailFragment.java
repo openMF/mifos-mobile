@@ -197,9 +197,15 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
                     CurrencyUtil.formatCurrency(getActivity(), savingsWithAssociations.
                     getMinRequiredOpeningBalance())));
         }
-        tvTotalWithDrawals.setText(getString(R.string.string_and_string,
-                currencySymbol, CurrencyUtil.formatCurrency(getActivity(), savingsWithAssociations.
-                        getSummary().getTotalWithdrawals())));
+
+        if (savingsWithAssociations.getSummary().getTotalWithdrawals() != null) {
+            tvTotalWithDrawals.setText(getString(R.string.string_and_string, currencySymbol,
+                    CurrencyUtil.formatCurrency(getActivity(), savingsWithAssociations.
+                            getSummary().getTotalWithdrawals())));
+        } else {
+            tvTotalWithDrawals.setText(R.string.no_withdrawals);
+        }
+
         tvAccountBalanceMain.setText(getString(R.string.string_and_string,
                 currencySymbol, CurrencyUtil.formatCurrency(getActivity(), accountBalance)));
         tvNominalInterestRate.setText(getString(R.string.double_and_String,

@@ -346,6 +346,7 @@
     <string name="find_locations">स्थान ढूंढें</string>
 
     <string name="permission_denied_camera">कैमरे का उपयोग करने के लिए अनुमति अस्वीकृत</string>
+    <string name="no_withdrawals">No withdrawals</string>
 
     <string-array name="faq_qs">
         <item>मैं नए ऋण खाते के लिए आवेदन कैसे करूं?</item>
