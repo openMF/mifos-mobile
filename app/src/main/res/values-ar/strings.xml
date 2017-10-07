@@ -66,7 +66,7 @@
     <string name="pay_to">Pay To</string>
     <string name="pay_from">Pay From</string>
     <string name="cancel">Cancel</string>
-    <string name="review_transfer">Review Transfer</string>
+    <string name="review_transfer">Review</string>
     <string name="transfer_to">Transfer To</string>
     <string name="transfer_from">Transfer From</string>
     <string name="making_transfer">Making Transfer</string>

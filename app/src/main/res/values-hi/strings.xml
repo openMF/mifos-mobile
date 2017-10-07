@@ -149,8 +149,7 @@
     <string name="add">जोड़ें</string>
     <string name="scan">स्कैन</string>
     <string name="select_mode">मोड का चयन करें</string>
-    <string name="share_msg">यहां सेल्फ सर्विस ऐप डाउनलोड करें: https://play.google.com/store/apps/details?id=
-    </string>
+    <string name="share_msg">यहां सेल्फ सर्विस ऐप डाउनलोड करें: https://play.google.com/store/apps/details?id=</string>
     <string name="enter_passcode">4 अंकों का पासकोड दर्ज करें</string>
     <string name="error_passcode">पासकोड 4 अंकों का होनी चाहिए</string>
     <string name="incorrect_passcode">पासकोड गलत है</string>
