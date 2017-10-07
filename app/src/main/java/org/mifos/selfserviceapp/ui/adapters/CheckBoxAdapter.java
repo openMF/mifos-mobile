@@ -52,6 +52,7 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int[][] states = {{android.R.attr.state_checked}, {}};
         int[] colors = {statusModel.getColor(), statusModel.getColor()};
 
+        ((ViewHolder) holder).cbStatusSelect.setChecked(statusModel.isChecked());
         ((ViewHolder) holder).cbStatusSelect.setSupportButtonTintList(new ColorStateList(states,
                 colors));
         ((ViewHolder) holder).tvStatus.setText(statusModel.getStatus());
