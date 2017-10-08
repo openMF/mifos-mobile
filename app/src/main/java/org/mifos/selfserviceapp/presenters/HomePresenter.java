@@ -117,7 +117,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getMvpView().showUserImageNotFound();
                     }
 
                     @Override

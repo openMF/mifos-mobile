@@ -42,6 +42,15 @@
                         android:layout_width="65dp"
                         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
+                    <org.mifos.selfserviceapp.utils.CircularImageView
+                        android:id="@+id/iv_circular_user_image"
+                        android:layout_gravity="center"
+                        android:layout_height="65dp"
+                        android:layout_margin="@dimen/margin_16dp"
+                        android:layout_width="65dp"
+                        android:visibility="gone"
+                        tools:src="@drawable/ic_person_black_24dp"/>
+
                     <TextView
                         style="@style/Base.TextAppearance.AppCompat.Medium"
                         android:gravity="center"
