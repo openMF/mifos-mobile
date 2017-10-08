@@ -375,6 +375,7 @@
     <string name="no_withdrawals">No withdrawals</string>
     <string name="clear_filters">Clear Filters</string>
     <string name="manage_accounts">Manage Accounts</string>
+    <string name="more">More</string>
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>

@@ -33,13 +33,13 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
+                        android:clickable="true"
+                        android:foreground="?selectableItemBackground"
                         android:id="@+id/iv_user_image"
                         android:layout_gravity="center"
                         android:layout_height="65dp"
                         android:layout_margin="@dimen/margin_16dp"
                         android:layout_width="65dp"
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
                         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
                     <TextView
@@ -180,6 +180,8 @@
                         android:paddingTop="24dp">
 
                         <LinearLayout
+                            android:clickable="true"
+                            android:foreground="?selectableItemBackground"
                             android:gravity="center"
                             android:id="@+id/ll_accounts"
                             android:layout_height="wrap_content"
@@ -191,11 +193,8 @@
 
                             <ImageView
                                 style="@style/circleLayout_dashboard_manage_account"
-                                android:clickable="true"
                                 android:contentDescription="@string/accounts"
-                                android:foreground="?selectableItemBackground"
                                 android:gravity="center"
-                                android:id="@+id/iv_accounts"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:padding="@dimen/layout_padding_16dp"
@@ -218,7 +217,10 @@
                             android:layout_width="0.2dp"/>
 
                         <LinearLayout
+                            android:clickable="true"
+                            android:foreground="?selectableItemBackground"
                             android:gravity="center"
+                            android:id="@+id/ll_transfer"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_width="0dp"
@@ -228,11 +230,8 @@
 
                             <ImageView
                                 style="@style/circleLayout_dashboard_manage_account"
-                                android:clickable="true"
                                 android:contentDescription="@string/transfer"
-                                android:foreground="?selectableItemBackground"
                                 android:gravity="center"
-                                android:id="@+id/iv_transfer"
                                 android:layout_height="match_parent"
                                 android:layout_width="wrap_content"
                                 android:padding="@dimen/layout_padding_16dp"
@@ -255,6 +254,8 @@
                             android:layout_width="0.2dp"/>
 
                         <LinearLayout
+                            android:clickable="true"
+                            android:foreground="?selectableItemBackground"
                             android:gravity="center"
                             android:id="@+id/ll_apply_for_loan"
                             android:layout_height="wrap_content"
@@ -266,11 +267,8 @@
 
                             <ImageView
                                 style="@style/circleLayout_dashboard_manage_account"
-                                android:clickable="true"
                                 android:contentDescription="@string/apply_for_loan"
-                                android:foreground="?selectableItemBackground"
                                 android:gravity="center"
-                                android:id="@+id/iv_apply_for_loan"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:padding="@dimen/layout_padding_16dp"
@@ -311,9 +309,9 @@
                         android:layout_marginTop="@dimen/layout_padding_8dp"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
+                        android:text="@string/more"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
-                        tools:text="More"/>
+                        android:textSize="14sp"/>
 
                     <LinearLayout
                         android:layout_height="wrap_content"
@@ -323,8 +321,10 @@
                         android:paddingTop="24dp">
 
                         <LinearLayout
-                            android:id="@+id/ll_beneficiaries"
+                            android:clickable="true"
+                            android:foreground="?selectableItemBackground"
                             android:gravity="center"
+                            android:id="@+id/ll_beneficiaries"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_width="0dp"
@@ -339,8 +339,6 @@
                                 android:layout_width="wrap_content"
                                 android:padding="@dimen/layout_padding_16dp"
                                 android:tint="@color/black"
-                                android:clickable="true"
-                                android:foreground="?selectableItemBackground"
                                 app:srcCompat="@drawable/ic_supervisor_account_black_24dp"/>
 
                             <TextView
@@ -359,8 +357,11 @@
                             android:layout_width="0.2dp"/>
 
                         <LinearLayout
-                            android:id="@+id/ll_charges"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
                             android:gravity="center"
+                            android:id="@+id/ll_charges"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_width="0dp"
@@ -375,8 +376,6 @@
                                 android:layout_width="wrap_content"
                                 android:padding="@dimen/layout_padding_16dp"
                                 android:tint="@color/black"
-                                android:clickable="true"
-                                android:foreground="?selectableItemBackground"
                                 app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"/>
 
                             <TextView
@@ -395,8 +394,10 @@
                             android:layout_width="0.2dp"/>
 
                         <LinearLayout
-                            android:id="@+id/ll_surveys"
+                            android:clickable="true"
+                            android:foreground="?selectableItemBackground"
                             android:gravity="center"
+                            android:id="@+id/ll_surveys"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_width="0dp"
@@ -411,8 +412,6 @@
                                 android:layout_width="wrap_content"
                                 android:padding="@dimen/layout_padding_16dp"
                                 android:tint="@color/black"
-                                android:clickable="true"
-                                android:foreground="?selectableItemBackground"
                                 app:srcCompat="@drawable/ic_surveys_48px"/>
 
                             <TextView
@@ -436,8 +435,9 @@
                 android:layout_marginTop="@dimen/divider_margin"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding">
+                android:paddingBottom="@dimen/layout_padding_8dp"
+                android:paddingTop="@dimen/layout_padding_8dp">
+
                 <TextView
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
@@ -447,13 +447,16 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:text="@string/need_help"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"/>
+
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/row_padding_right"
                     android:layout_marginRight="@dimen/row_padding_right"
                     android:layout_width="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:gravity="end"
                         android:layout_height="wrap_content"
@@ -461,15 +464,20 @@
                         android:layout_width="match_parent"
                         android:text="@string/help_line_number"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/divider_margin"
                         android:layout_width="match_parent"
                         android:text="@string/contact_email"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/black"/>
+
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
