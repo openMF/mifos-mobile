@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +25,10 @@ import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
+import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
+import org.mifos.selfserviceapp.utils.TextDrawable;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -45,6 +48,9 @@ public class HomeFragment extends BaseFragment implements HomeView,
 
     @BindView(R.id.iv_user_image)
     ImageView ivUserImage;
+
+    @BindView(R.id.iv_circular_user_image)
+    CircularImageView ivCircularUserImage;
 
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
@@ -90,6 +96,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
         }
 
         setToolbarTitle(getString(R.string.home));
+        showUserImageTextDrawable();
+
         return rootView;
     }
 
@@ -145,6 +153,25 @@ public class HomeFragment extends BaseFragment implements HomeView,
         tvUserName.setText(getString(R.string.hello_client, client.getDisplayName()));
     }
 
+    @Override
+    public void showUserImageTextDrawable() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextDrawable drawable = TextDrawable.builder()
+                        .beginConfig()
+                        .width(65)
+                        .height(65)
+                        .toUpperCase()
+                        .endConfig()
+                        .buildRound(preferencesHelper.getUserName().substring(0, 1),
+                                ContextCompat.getColor(getActivity(), R.color.primary_dark));
+                ivUserImage.setImageDrawable(drawable);
+                ivCircularUserImage.setVisibility(View.GONE);
+            }
+        });
+    }
+
     /**
      * Provides with Client image fetched from server
      *
@@ -156,7 +183,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
             @Override
             public void run() {
                 userProfileBitmap = bitmap;
-                ivUserImage.setImageBitmap(bitmap);
+                ivCircularUserImage.setImageBitmap(bitmap);
+                ivUserImage.setVisibility(View.GONE);
             }
         });
     }
@@ -249,6 +277,11 @@ public class HomeFragment extends BaseFragment implements HomeView,
         Toaster.show(rootView, errorMessage);
     }
 
+    @Override
+    public void showUserImageNotFound() {
+        showUserImageTextDrawable();
+    }
+
     /**
      * Shows {@link SwipeRefreshLayout}
      */
@@ -263,5 +296,11 @@ public class HomeFragment extends BaseFragment implements HomeView,
     @Override
     public void hideProgress() {
         slHomeContainer.setRefreshing(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
     }
 }

@@ -13,8 +13,12 @@ public interface HomeView extends MVPView {
 
     void showUserDetails(Client client);
 
+    void showUserImageTextDrawable();
+
     void showUserImage(Bitmap bitmap);
 
     void showError(String errorMessage);
+
+    void showUserImageNotFound();
 
 }
