@@ -3,7 +3,6 @@ package org.mifos.selfserviceapp.ui.fragments;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +17,7 @@ import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.presenters.RecentTransactionsPresenter;
 import org.mifos.selfserviceapp.ui.activities.base.BaseActivity;
 import org.mifos.selfserviceapp.ui.adapters.RecentTransactionListAdapter;
+import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.RecentTransactionsView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.DividerItemDecoration;
@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * @author Vishwwajeet
  * @since 09/08/16
  */
-public class RecentTransactionsFragment extends Fragment implements RecentTransactionsView,
+public class RecentTransactionsFragment extends BaseFragment implements RecentTransactionsView,
         SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_recent_transactions)
@@ -87,6 +87,7 @@ public class RecentTransactionsFragment extends Fragment implements RecentTransa
         recentTransactionsPresenter.attachView(this);
 
         showUserInterface();
+        setToolbarTitle(getString(R.string.recent_transactions));
         if (savedInstanceState == null) {
             recentTransactionsPresenter.loadRecentTransactions(false, 0);
         }

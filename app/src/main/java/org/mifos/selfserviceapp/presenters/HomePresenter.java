@@ -9,16 +9,12 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.injection.ActivityContext;
-import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
-import org.mifos.selfserviceapp.models.accounts.savings.SavingAccount;
 import org.mifos.selfserviceapp.models.client.Client;
-import org.mifos.selfserviceapp.models.client.ClientAccounts;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.HomeView;
 import org.mifos.selfserviceapp.utils.ImageUtil;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -67,41 +63,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
     }
 
     /**
-     * Fetches Client account details as {@link ClientAccounts} from the server and notifies the
-     * view to display the {@link List} of {@link LoanAccount} and {@link SavingAccount}. And in
-     * case of any error during fetching the required details it notifies the view.
-     */
-    public void loadClientAccountDetails() {
-        checkViewAttached();
-        getMvpView().showProgress();
-        subscription.add(dataManager.getClientAccounts()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ClientAccounts>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        getMvpView().showError(context.getString(R.string.error_fetching_accounts));
-                    }
-
-                    @Override
-                    public void onNext(ClientAccounts clientAccounts) {
-                        getMvpView().hideProgress();
-                        getMvpView().showLoanAccountDetails(getLoanAccountDetails(clientAccounts
-                                .getLoanAccounts()));
-                        getMvpView().showSavingAccountDetails(getSavingAccountDetails(clientAccounts
-                                .getSavingsAccounts()));
-                    }
-                })
-        );
-    }
-
-    /**
      * Fetches Details about Client from the server as {@link Client} and notifies the view to
      * display the details. And in case of any error during fetching the required details it
      * notifies the view.
@@ -125,8 +86,10 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onNext(Client client) {
+                        getMvpView().hideProgress();
                         if (client != null) {
                             preferencesHelper.setOfficeName(client.getOfficeName());
+                            preferencesHelper.setUserName(client.getDisplayName());
                             getMvpView().showUserDetails(client);
                         } else {
                             getMvpView().showError(context
@@ -179,33 +142,4 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 })
         );
     }
-
-    /**
-     * Returns total Loan balance
-     * @param loanAccountList {@link List} of {@link LoanAccount} associated with the client
-     * @return Returns {@code totalAmount} which is calculated by adding all {@link LoanAccount}
-     * balance.
-     */
-    private double getLoanAccountDetails(List<LoanAccount> loanAccountList) {
-        double totalAmount = 0;
-        for (LoanAccount loanAccount : loanAccountList) {
-            totalAmount += loanAccount.getLoanBalance();
-        }
-        return totalAmount;
-    }
-
-    /**
-     * Returns total Savings balance
-     * @param savingAccountList {@link List} of {@link SavingAccount} associated with the client
-     * @return Returns {@code totalAmount} which is calculated by adding all {@link SavingAccount}
-     * balance.
-     */
-    private double getSavingAccountDetails(List<SavingAccount> savingAccountList) {
-        double totalAmount = 0;
-        for (SavingAccount savingAccount : savingAccountList) {
-            totalAmount += savingAccount.getAccountBalance();
-        }
-        return totalAmount;
-    }
-
 }

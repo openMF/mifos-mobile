@@ -70,7 +70,7 @@ public class HomeActivity extends BaseActivity implements
     private Bitmap userProfileBitmap;
     private Client client;
 
-    boolean  doubleBackToExitPressedOnce = false;
+    boolean doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +81,11 @@ public class HomeActivity extends BaseActivity implements
 
         ButterKnife.bind(this);
 
-        setToolbarTitle(getString(R.string.home));
-
         clientId = preferencesHelper.getClientId();
 
         setupNavigationBar();
+        hideToolbarElevation();
+        setToolbarTitle(getString(R.string.home));
         replaceFragment(HomeFragment.newInstance(), false, R.id.container);
 
         if (savedInstanceState == null) {
@@ -109,18 +109,21 @@ public class HomeActivity extends BaseActivity implements
 
     /**
      * Called whenever any item is selected in {@link NavigationView}
+     *
      * @param item {@link MenuItem} which is selected by the user
-     * @return
      */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // select which item to open
         clearFragmentBackStack();
+        setToolbarElevation();
         switch (item.getItemId()) {
             case R.id.item_home:
+                hideToolbarElevation();
                 replaceFragment(HomeFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_accounts:
+                hideToolbarElevation();
                 replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
                         true, R.id.container);
                 break;
@@ -132,10 +135,10 @@ public class HomeActivity extends BaseActivity implements
                         R.id.container);
                 break;
             case R.id.item_third_party_transfer:
-                replaceFragment(ThirdPartyTransferFragment.newInstance(), true,  R.id.container);
+                replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_beneficiaries:
-                replaceFragment(BeneficiaryListFragment.newInstance(), true,  R.id.container);
+                replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_about_us:
                 replaceFragment(AboutUsFragment.getInstance(), true, R.id.container);
@@ -214,6 +217,7 @@ public class HomeActivity extends BaseActivity implements
 
     /**
      * Used for initializing values for HeaderView of NavigationView
+     *
      * @param headerView Header view of NavigationView
      */
     private void setupHeaderView(View headerView) {
@@ -230,6 +234,7 @@ public class HomeActivity extends BaseActivity implements
 
     /**
      * Shows Client username in HeaderView of NavigationView
+     *
      * @param client Contains details about the client
      */
     @Override
@@ -240,6 +245,7 @@ public class HomeActivity extends BaseActivity implements
 
     /**
      * Displays UserProfile Picture in HeaderView in NavigationView
+     *
      * @param bitmap UserProfile Picture
      */
     @Override
@@ -265,6 +271,7 @@ public class HomeActivity extends BaseActivity implements
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message contains information about error occurred
      */
     @Override
@@ -314,13 +321,16 @@ public class HomeActivity extends BaseActivity implements
     private void setUpBackStackListener() {
         getSupportFragmentManager().
                 addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-                        @Override
-                        public void onBackStackChanged() {
+                    @Override
+                    public void onBackStackChanged() {
                         Fragment fragment = getSupportFragmentManager().
                                 findFragmentById(R.id.container);
+                        setToolbarElevation();
                         if (fragment instanceof HomeFragment) {
+                            hideToolbarElevation();
                             setNavigationViewSelectedItem(R.id.item_home);
                         } else if (fragment instanceof ClientAccountsFragment) {
+                            hideToolbarElevation();
                             setNavigationViewSelectedItem(R.id.item_accounts);
                         } else if (fragment instanceof RecentTransactionsFragment) {
                             setNavigationViewSelectedItem(R.id.item_recent_transactions);
