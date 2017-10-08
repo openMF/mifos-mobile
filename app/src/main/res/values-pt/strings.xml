@@ -251,5 +251,6 @@
     <string name="invalid_amount">Invalid Amount</string>
     <string name="exit_message">Press back again to exit</string>
     <string name="no_withdrawals">No withdrawals</string>
+    <string name="manage_accounts">Manage Accounts</string>
 
 </resources>
