@@ -10,6 +10,7 @@
     <!-- Dimen values for padding -->
     <dimen name="layout_padding_4dp">4dp</dimen>
     <dimen name="layout_padding_8dp">8dp</dimen>
+    <dimen name="layout_padding_16dp">16dp</dimen>
     <dimen name="default_padding">16dp</dimen>
     <dimen name="row_padding_left">16dp</dimen>
     <dimen name="row_padding_right">16dp</dimen>
@@ -41,6 +42,11 @@
     <!-- Dimen values for Account Status-->
     <dimen name="account_status_width">25dp</dimen>
     <dimen name="account_status_height">25dp</dimen>
+
+    <!-- Dimen values for Account Status-->
+    <dimen name="dashboard_status_width">55dp</dimen>
+    <dimen name="dashboard_status_height">55dp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
