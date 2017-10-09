@@ -154,11 +154,17 @@ public class HomeFragment extends BaseFragment implements HomeView,
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                String userName;
+                if (!preferencesHelper.getUserName().isEmpty()) {
+                    userName = preferencesHelper.getUserName();
+                } else {
+                    userName = getString(R.string.app_name);
+                }
                 TextDrawable drawable = TextDrawable.builder()
                         .beginConfig()
                         .toUpperCase()
                         .endConfig()
-                        .buildRound(preferencesHelper.getUserName().substring(0, 1),
+                        .buildRound(userName.substring(0, 1),
                                 ContextCompat.getColor(getActivity(), R.color.primary_dark));
                 ivUserImage.setImageDrawable(drawable);
                 ivCircularUserImage.setVisibility(View.GONE);

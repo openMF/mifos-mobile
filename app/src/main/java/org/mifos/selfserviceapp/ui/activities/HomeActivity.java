@@ -264,13 +264,19 @@ public class HomeActivity extends BaseActivity implements
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    String userName;
+                    if (!preferencesHelper.getUserName().isEmpty()) {
+                        userName = preferencesHelper.getUserName();
+                    } else {
+                        userName = getString(R.string.app_name);
+                    }
                     ivCircularUserProfilePicture.setVisibility(View.GONE);
                     ivTextDrawableUserProfilePicture.setVisibility(View.VISIBLE);
                     TextDrawable drawable = TextDrawable.builder()
                             .beginConfig()
                             .toUpperCase()
                             .endConfig()
-                            .buildRound(preferencesHelper.getUserName().substring(0, 1),
+                            .buildRound(userName.substring(0, 1),
                                     ContextCompat.getColor(
                                             HomeActivity.this, R.color.primary_dark));
                     ivTextDrawableUserProfilePicture.setImageDrawable(drawable);
