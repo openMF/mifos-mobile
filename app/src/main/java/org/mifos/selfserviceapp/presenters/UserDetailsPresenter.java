@@ -111,7 +111,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getMvpView().showUserImage(null);
                     }
 
                     @Override

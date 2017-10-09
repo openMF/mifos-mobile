@@ -90,7 +90,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                         if (client != null) {
                             preferencesHelper.setOfficeName(client.getOfficeName());
                             preferencesHelper.setUserName(client.getDisplayName());
-                            getMvpView().showUserDetails(client);
+                            getMvpView().showUserDetails(preferencesHelper.getUserName());
                         } else {
                             getMvpView().showError(context
                                     .getString(R.string.error_client_not_found));
