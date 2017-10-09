@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop='24dp'
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primary"
     android:gravity="center_vertical|bottom"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    android:layout_marginTop='24dp'
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_user_image"
+        android:layout_height="65dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="65dp"
+        app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <org.mifos.selfserviceapp.utils.CircularImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:id="@+id/iv_circular_user_image"
+        android:layout_height="65dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/iv_user_image"
-        app:srcCompat="@drawable/ic_person_black_24dp"
+        android:layout_width="65dp"
+        app:border="true"
         app:border_width="1dp"
-        app:border="true"/>
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <TextView
+        android:ellipsize="end"
         android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:ellipsize="end"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
         android:lines="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"/>
 
 </LinearLayout>
