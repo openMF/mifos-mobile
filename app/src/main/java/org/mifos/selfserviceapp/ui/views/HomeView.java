@@ -2,7 +2,6 @@ package org.mifos.selfserviceapp.ui.views;
 
 import android.graphics.Bitmap;
 
-import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 /**
@@ -11,7 +10,7 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 public interface HomeView extends MVPView {
 
-    void showUserDetails(Client client);
+    void showUserDetails(String userName);
 
     void showUserImageTextDrawable();
 
