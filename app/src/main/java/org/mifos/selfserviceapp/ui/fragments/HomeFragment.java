@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
-import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanApplicationActivity;
@@ -67,7 +66,6 @@ public class HomeFragment extends BaseFragment implements HomeView,
     View rootView;
 
     private Bitmap userProfileBitmap;
-    private Client client;
     private long clientId;
 
     public static HomeFragment newInstance() {
@@ -105,15 +103,14 @@ public class HomeFragment extends BaseFragment implements HomeView,
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
-        outState.putParcelable(Constants.USER_DETAILS, client);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            showUserDetails((Client) savedInstanceState.getParcelable(Constants.USER_DETAILS));
             showUserImage((Bitmap) savedInstanceState.getParcelable(Constants.USER_PROFILE));
+            showUserDetails(preferencesHelper.getUserName());
         }
     }
 
@@ -145,12 +142,11 @@ public class HomeFragment extends BaseFragment implements HomeView,
     /**
      * Fetches Client details and display clientName
      *
-     * @param client Details about client
+     * @param userName of the client
      */
     @Override
-    public void showUserDetails(Client client) {
-        this.client = client;
-        tvUserName.setText(getString(R.string.hello_client, client.getDisplayName()));
+    public void showUserDetails(String userName) {
+        tvUserName.setText(getString(R.string.hello_client, userName));
     }
 
     @Override
@@ -160,8 +156,6 @@ public class HomeFragment extends BaseFragment implements HomeView,
             public void run() {
                 TextDrawable drawable = TextDrawable.builder()
                         .beginConfig()
-                        .width(65)
-                        .height(65)
                         .toUpperCase()
                         .endConfig()
                         .buildRound(preferencesHelper.getUserName().substring(0, 1),
@@ -179,14 +173,16 @@ public class HomeFragment extends BaseFragment implements HomeView,
      */
     @Override
     public void showUserImage(final Bitmap bitmap) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                userProfileBitmap = bitmap;
-                ivCircularUserImage.setImageBitmap(bitmap);
-                ivUserImage.setVisibility(View.GONE);
-            }
-        });
+        if (bitmap != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    userProfileBitmap = bitmap;
+                    ivCircularUserImage.setImageBitmap(bitmap);
+                    ivUserImage.setVisibility(View.GONE);
+                }
+            });
+        }
     }
 
     @OnClick(R.id.iv_user_image)
