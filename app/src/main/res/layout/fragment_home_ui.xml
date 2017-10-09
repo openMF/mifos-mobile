@@ -456,7 +456,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:text="@string/need_help"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textSize="14sp"
                     android:textColor="@color/black"/>
 
                 <LinearLayout
@@ -472,7 +472,8 @@
                         android:layout_marginTop="@dimen/divider_margin"
                         android:layout_width="match_parent"
                         android:text="@string/help_line_number"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:autoLink="phone"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
 
@@ -482,6 +483,7 @@
                         android:layout_marginTop="@dimen/divider_margin"
                         android:layout_width="match_parent"
                         android:text="@string/contact_email"
+                        android:autoLink="email"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/black"/>
 
