@@ -9,11 +9,13 @@ import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ import org.mifos.selfserviceapp.ui.views.UserDetailsView;
 import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
+import org.mifos.selfserviceapp.utils.TextDrawable;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -49,7 +52,7 @@ import butterknife.ButterKnife;
  */
 
 public class HomeActivity extends BaseActivity implements
-        NavigationView.OnNavigationItemSelectedListener, UserDetailsView {
+        NavigationView.OnNavigationItemSelectedListener, UserDetailsView, View.OnClickListener {
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -64,7 +67,8 @@ public class HomeActivity extends BaseActivity implements
     UserDetailsPresenter detailsPresenter;
 
     private TextView tvUsername;
-    private CircularImageView ivUserProfilePicture;
+    private CircularImageView ivCircularUserProfilePicture;
+    private ImageView ivTextDrawableUserProfilePicture;
     private final int CAMERA_PERMISSION = 10;
     private long clientId;
     private Bitmap userProfileBitmap;
@@ -74,13 +78,9 @@ public class HomeActivity extends BaseActivity implements
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getActivityComponent().inject(this);
-
         setContentView(R.layout.activity_home);
-
         ButterKnife.bind(this);
-
         clientId = preferencesHelper.getClientId();
 
         setupNavigationBar();
@@ -92,6 +92,7 @@ public class HomeActivity extends BaseActivity implements
             detailsPresenter.attachView(this);
             detailsPresenter.getUserDetails();
             detailsPresenter.getUserImage();
+            showUserImage(null);
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS);
             userProfileBitmap = savedInstanceState.getParcelable(Constants.USER_PROFILE);
@@ -221,15 +222,13 @@ public class HomeActivity extends BaseActivity implements
      * @param headerView Header view of NavigationView
      */
     private void setupHeaderView(View headerView) {
-        tvUsername = (TextView) headerView.findViewById(R.id.tv_user_name);
-        ivUserProfilePicture = (CircularImageView) headerView.findViewById(R.id.iv_user_image);
-        ivUserProfilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
-            }
-        });
+        tvUsername = ButterKnife.findById(headerView, R.id.tv_user_name);
+        ivCircularUserProfilePicture = ButterKnife.findById(headerView,
+                R.id.iv_circular_user_image);
+        ivTextDrawableUserProfilePicture = ButterKnife.findById(headerView, R.id.iv_user_image);
 
+        ivTextDrawableUserProfilePicture.setOnClickListener(this);
+        ivCircularUserProfilePicture.setOnClickListener(this);
     }
 
     /**
@@ -240,6 +239,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void showUserDetails(Client client) {
         this.client = client;
+        preferencesHelper.setUserName(client.getDisplayName());
         tvUsername.setText(client.getDisplayName());
     }
 
@@ -250,13 +250,33 @@ public class HomeActivity extends BaseActivity implements
      */
     @Override
     public void showUserImage(final Bitmap bitmap) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                userProfileBitmap = bitmap;
-                ivUserProfilePicture.setImageBitmap(bitmap);
-            }
-        });
+        if (bitmap != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    userProfileBitmap = bitmap;
+                    ivCircularUserProfilePicture.setImageBitmap(bitmap);
+                    ivCircularUserProfilePicture.setVisibility(View.VISIBLE);
+                    ivTextDrawableUserProfilePicture.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ivCircularUserProfilePicture.setVisibility(View.GONE);
+                    ivTextDrawableUserProfilePicture.setVisibility(View.VISIBLE);
+                    TextDrawable drawable = TextDrawable.builder()
+                            .beginConfig()
+                            .toUpperCase()
+                            .endConfig()
+                            .buildRound(preferencesHelper.getUserName().substring(0, 1),
+                                    ContextCompat.getColor(
+                                            HomeActivity.this, R.color.primary_dark));
+                    ivTextDrawableUserProfilePicture.setImageDrawable(drawable);
+                }
+            });
+        }
     }
 
     @Override
@@ -351,5 +371,11 @@ public class HomeActivity extends BaseActivity implements
 
     public void setNavigationViewSelectedItem(int id) {
         navigationView.setCheckedItem(id);
+    }
+
+    @Override
+    public void onClick(View v) {
+        // Click Header to view full profile of User
+        startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
     }
 }
