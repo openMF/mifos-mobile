@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -47,14 +48,14 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
      * Used for removing elevation from toolbar
      */
     public void hideToolbarElevation() {
-        getSupportActionBar().setElevation(0);
+        ViewCompat.setElevation(toolbar, 0);
     }
 
     /**
      * Used for setting toolbar elevation
      */
     public void setToolbarElevation() {
-        getSupportActionBar().setElevation(8f);
+        ViewCompat.setElevation(toolbar, 8f);
     }
 
     @Override

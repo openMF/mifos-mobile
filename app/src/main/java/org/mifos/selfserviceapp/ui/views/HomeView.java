@@ -11,16 +11,14 @@ import org.mifos.selfserviceapp.ui.views.base.MVPView;
 
 public interface HomeView extends MVPView {
 
-    void showUserInterface();
-
-    void showLoanAccountDetails(double totalLoanAmount);
-
-    void showSavingAccountDetails(double totalSavingAmount);
-
     void showUserDetails(Client client);
+
+    void showUserImageTextDrawable();
 
     void showUserImage(Bitmap bitmap);
 
     void showError(String errorMessage);
+
+    void showUserImageNotFound();
 
 }

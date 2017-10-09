@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.mifos.selfserviceapp.R;
@@ -26,9 +25,10 @@ import org.mifos.selfserviceapp.ui.enums.AccountType;
 import org.mifos.selfserviceapp.ui.enums.ChargeType;
 import org.mifos.selfserviceapp.ui.fragments.base.BaseFragment;
 import org.mifos.selfserviceapp.ui.views.HomeView;
+import org.mifos.selfserviceapp.utils.CircularImageView;
 import org.mifos.selfserviceapp.utils.Constants;
-import org.mifos.selfserviceapp.utils.CurrencyUtil;
 import org.mifos.selfserviceapp.utils.MaterialDialog;
+import org.mifos.selfserviceapp.utils.TextDrawable;
 import org.mifos.selfserviceapp.utils.Toaster;
 
 import javax.inject.Inject;
@@ -46,20 +46,11 @@ public class HomeFragment extends BaseFragment implements HomeView,
 
     public static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
-    @BindView(R.id.tv_saving_total_amount)
-    TextView tvSavingTotalAmount;
-
-    @BindView(R.id.tv_loan_total_amount)
-    TextView tvLoanTotalAmount;
-
-    @BindView(R.id.ll_account_detail)
-    LinearLayout llAccountDetail;
-
-    @BindView(R.id.iv_visibility)
-    ImageView ivVisibility;
-
     @BindView(R.id.iv_user_image)
     ImageView ivUserImage;
+
+    @BindView(R.id.iv_circular_user_image)
+    CircularImageView ivCircularUserImage;
 
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
@@ -74,44 +65,45 @@ public class HomeFragment extends BaseFragment implements HomeView,
     PreferencesHelper preferencesHelper;
 
     View rootView;
-    private double totalLoanAmount, totalSavingAmount;
+
     private Bitmap userProfileBitmap;
     private Client client;
     private long clientId;
-    private View toolbarView;
-    private boolean isDetailVisible;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_home_ui, container, false);
         ((HomeActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
         clientId = preferencesHelper.getClientId();
 
         presenter.attachView(this);
+
         slHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
         slHomeContainer.setOnRefreshListener(this);
+
         if (savedInstanceState == null) {
             loadClientData();
         }
 
         setToolbarTitle(getString(R.string.home));
-        showUserInterface();
+        showUserImageTextDrawable();
+
         return rootView;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble(Constants.TOTAL_LOAN, totalLoanAmount);
-        outState.putDouble(Constants.TOTAL_SAVINGS, totalSavingAmount);
         outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
         outState.putParcelable(Constants.USER_DETAILS, client);
     }
@@ -122,8 +114,6 @@ public class HomeFragment extends BaseFragment implements HomeView,
         if (savedInstanceState != null) {
             showUserDetails((Client) savedInstanceState.getParcelable(Constants.USER_DETAILS));
             showUserImage((Bitmap) savedInstanceState.getParcelable(Constants.USER_PROFILE));
-            showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN));
-            showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS));
         }
     }
 
@@ -133,24 +123,18 @@ public class HomeFragment extends BaseFragment implements HomeView,
     }
 
     private void loadClientData() {
-        presenter.loadClientAccountDetails();
-        presenter.getUserDetails();
-        presenter.getUserImage();
-    }
-
-    @Override
-    public void showUserInterface() {
-        toolbarView = ((HomeActivity) getActivity()).getToolbar().getRootView();
-        isDetailVisible = preferencesHelper.overviewState();
-        if (isDetailVisible) {
-            showOverviewState();
+        if (!preferencesHelper.getUserName().isEmpty()) {
+            tvUserName.setText(getString(R.string.hello_client, preferencesHelper.getUserName()));
+            hideProgress();
         } else {
-            hideOverviewState();
+            presenter.getUserDetails();
         }
+        presenter.getUserImage();
     }
 
     /**
      * Opens {@link ClientAccountsFragment} according to the {@code accountType} provided
+     *
      * @param accountType Enum of {@link AccountType}
      */
     public void openAccount(AccountType accountType) {
@@ -159,44 +143,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
     }
 
     /**
-     * Provides {@code totalLoanAmount} fetched from server
-     * @param totalLoanAmount Total Loan amount
-     */
-    @Override
-    public void showLoanAccountDetails(double totalLoanAmount) {
-        this.totalLoanAmount = totalLoanAmount;
-        tvLoanTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalLoanAmount));
-    }
-
-    /**
-     * Open LOAN tab under ClientAccountsFragment
-     */
-    @OnClick(R.id.ll_total_loan)
-    public void onClickLoan() {
-        openAccount(AccountType.LOAN);
-        ((HomeActivity) getActivity()).setNavigationViewSelectedItem(R.id.item_accounts);
-    }
-    /**
-     * Provides {@code totalSavingAmount} fetched from server
-     * @param totalSavingAmount Total Saving amount
-     */
-    @Override
-    public void showSavingAccountDetails(double totalSavingAmount) {
-        this.totalSavingAmount = totalSavingAmount;
-        tvSavingTotalAmount.setText(CurrencyUtil.formatCurrency(getContext(), totalSavingAmount));
-    }
-
-    /**
-     * Open SAVINGS tab under ClientAccountsFragment
-     */
-    @OnClick(R.id.ll_total_savings)
-    public void onClickSavings() {
-        openAccount(AccountType.SAVINGS);
-        ((HomeActivity) getActivity()).setNavigationViewSelectedItem(R.id.item_accounts);
-    }
-
-    /**
      * Fetches Client details and display clientName
+     *
      * @param client Details about client
      */
     @Override
@@ -205,8 +153,28 @@ public class HomeFragment extends BaseFragment implements HomeView,
         tvUserName.setText(getString(R.string.hello_client, client.getDisplayName()));
     }
 
+    @Override
+    public void showUserImageTextDrawable() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextDrawable drawable = TextDrawable.builder()
+                        .beginConfig()
+                        .width(65)
+                        .height(65)
+                        .toUpperCase()
+                        .endConfig()
+                        .buildRound(preferencesHelper.getUserName().substring(0, 1),
+                                ContextCompat.getColor(getActivity(), R.color.primary_dark));
+                ivUserImage.setImageDrawable(drawable);
+                ivCircularUserImage.setVisibility(View.GONE);
+            }
+        });
+    }
+
     /**
      * Provides with Client image fetched from server
+     *
      * @param bitmap Client Image
      */
     @Override
@@ -215,7 +183,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
             @Override
             public void run() {
                 userProfileBitmap = bitmap;
-                ivUserImage.setImageBitmap(bitmap);
+                ivCircularUserImage.setImageBitmap(bitmap);
+                ivUserImage.setVisibility(View.GONE);
             }
         });
     }
@@ -224,38 +193,6 @@ public class HomeFragment extends BaseFragment implements HomeView,
     public void userImageClicked() {
         startActivity(new Intent(getActivity(), UserProfileActivity.class));
     }
-    /**
-     * Reverses the state of Account Overview section i.e. visible to hidden or vice a versa
-     */
-    @OnClick(R.id.iv_visibility)
-    public void reverseDetailState() {
-        if (isDetailVisible) {
-            isDetailVisible = false;
-            preferencesHelper.setOverviewState(false);
-            hideOverviewState();
-        } else {
-            isDetailVisible = true;
-            preferencesHelper.setOverviewState(true);
-            showOverviewState();
-        }
-    }
-
-    /**
-     * Makes Overview state visible
-     */
-    private void showOverviewState() {
-        ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray_dark));
-        llAccountDetail.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * Hides Overview state
-     */
-    private void hideOverviewState() {
-        ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_grey));
-        llAccountDetail.setVisibility(View.GONE);
-    }
-
 
     /**
      * Calls {@code openAccount()} for opening {@link ClientAccountsFragment}
@@ -298,7 +235,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
     @OnClick(R.id.ll_charges)
     public void chargesClicked() {
         ((HomeActivity) getActivity()).replaceFragment(ClientChargeFragment.newInstance(clientId,
-                ChargeType.CLIENT), true,  R.id.container);
+                ChargeType.CLIENT), true, R.id.container);
     }
 
     /**
@@ -316,7 +253,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
     @OnClick(R.id.ll_beneficiaries)
     public void beneficiaries() {
         ((HomeActivity) getActivity()).replaceFragment(BeneficiaryListFragment.
-                newInstance(), true,  R.id.container);
+                newInstance(), true, R.id.container);
     }
 
     @OnClick(R.id.ll_surveys)
@@ -324,13 +261,25 @@ public class HomeFragment extends BaseFragment implements HomeView,
 
     }
 
+    @OnClick(R.id.ll_recent_transactions)
+    public void showRecentTransactions() {
+        ((HomeActivity) getActivity()).replaceFragment(RecentTransactionsFragment.newInstance(),
+                true, R.id.container);
+    }
+
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param errorMessage Error message that tells the user about the problem.
      */
     @Override
     public void showError(String errorMessage) {
         Toaster.show(rootView, errorMessage);
+    }
+
+    @Override
+    public void showUserImageNotFound() {
+        showUserImageTextDrawable();
     }
 
     /**
@@ -349,6 +298,9 @@ public class HomeFragment extends BaseFragment implements HomeView,
         slHomeContainer.setRefreshing(false);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }
-
-

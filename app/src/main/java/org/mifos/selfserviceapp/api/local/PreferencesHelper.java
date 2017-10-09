@@ -22,6 +22,7 @@ public class PreferencesHelper {
     private static final String TENANT = "preferences_tenant";
     private static final String CLIENT_ID = "preferences_client";
     private static final String OFFICE_NAME = "preferences_office_name";
+    private static final String USER_NAME = "preferences_user_name";
     private static final String PASSCODE = "preferences_passcode";
     private static final String OVERVIEW_STATE = "preferences_overview_state";
     private SharedPreferences sharedPreferences;
@@ -119,6 +120,14 @@ public class PreferencesHelper {
 
     public void setOfficeName(String officeName) {
         putString(OFFICE_NAME, officeName);
+    }
+
+    public String getUserName() {
+        return getString(USER_NAME, "");
+    }
+
+    public void setUserName(String userName) {
+        putString(USER_NAME, userName);
     }
 
     public String getOfficeName() {
