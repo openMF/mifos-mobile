@@ -13,6 +13,7 @@ import org.mifos.selfserviceapp.injection.component.ApplicationComponent;
 import org.mifos.selfserviceapp.injection.component.DaggerApplicationComponent;
 import org.mifos.selfserviceapp.injection.module.ApplicationModule;
 import org.mifos.selfserviceapp.utils.ForegroundChecker;
+import org.mifos.selfserviceapp.utils.LanguageHelper;
 
 /**
  * @author ishan
@@ -43,6 +44,11 @@ public class MifosSelfServiceApp extends Application {
         instance = this;
         FlowManager.init(new FlowConfig.Builder(this).build());
         ForegroundChecker.init(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LanguageHelper.onAttach(base, "en"));
     }
 
     public ApplicationComponent component() {
