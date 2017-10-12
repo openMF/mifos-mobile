@@ -185,6 +185,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
                 public void run() {
                     userProfileBitmap = bitmap;
                     ivCircularUserImage.setImageBitmap(bitmap);
+                    ivCircularUserImage.setVisibility(View.VISIBLE);
                     ivUserImage.setVisibility(View.GONE);
                 }
             });
