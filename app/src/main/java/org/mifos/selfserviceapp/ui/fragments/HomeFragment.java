@@ -167,6 +167,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
                         .buildRound(userName.substring(0, 1),
                                 ContextCompat.getColor(getActivity(), R.color.primary_dark));
                 ivUserImage.setImageDrawable(drawable);
+                ivUserImage.setVisibility(View.VISIBLE);
                 ivCircularUserImage.setVisibility(View.GONE);
             }
         });
@@ -185,6 +186,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
                 public void run() {
                     userProfileBitmap = bitmap;
                     ivCircularUserImage.setImageBitmap(bitmap);
+                    ivCircularUserImage.setVisibility(View.VISIBLE);
                     ivUserImage.setVisibility(View.GONE);
                 }
             });
@@ -193,6 +195,11 @@ public class HomeFragment extends BaseFragment implements HomeView,
 
     @OnClick(R.id.iv_user_image)
     public void userImageClicked() {
+        startActivity(new Intent(getActivity(), UserProfileActivity.class));
+    }
+
+    @OnClick(R.id.iv_circular_user_image)
+    void userCirCularImageClick() {
         startActivity(new Intent(getActivity(), UserProfileActivity.class));
     }
 
