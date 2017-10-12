@@ -53,7 +53,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscription.unsubscribe();
+        subscription.clear();
     }
 
     public void loadClientCharges(long clientId) {

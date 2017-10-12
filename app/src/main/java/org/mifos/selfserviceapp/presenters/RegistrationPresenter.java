@@ -3,7 +3,7 @@ package org.mifos.selfserviceapp.presenters;
 import android.content.Context;
 
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.register.RegisterPayload;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.RegistrationView;
@@ -36,7 +36,7 @@ public class RegistrationPresenter extends BasePresenter<RegistrationView> {
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    protected RegistrationPresenter(DataManager dataManager, @ActivityContext Context context) {
+    protected RegistrationPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
@@ -54,7 +54,6 @@ public class RegistrationPresenter extends BasePresenter<RegistrationView> {
     }
 
     public void registerUser(RegisterPayload registerPayload) {
-
         checkViewAttached();
         getMvpView().showProgress();
         subscriptions.add(dataManager.registerUser(registerPayload)

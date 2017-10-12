@@ -178,4 +178,10 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
     public void hideProgress() {
         hideProgressBar();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }

@@ -169,4 +169,10 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     public void hideProgress() {
         hideProgressBar();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }

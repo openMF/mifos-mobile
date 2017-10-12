@@ -44,12 +44,6 @@ import butterknife.OnClick;
 public class ClientChargeFragment extends BaseFragment implements
         RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
 
-    @Inject
-    ClientChargePresenter mClientChargePresenter;
-
-    @Inject
-    ClientChargeAdapter clientChargeAdapter;
-
     @BindView(R.id.rv_client_charge)
     RecyclerView rvClientCharge;
 
@@ -64,6 +58,12 @@ public class ClientChargeFragment extends BaseFragment implements
 
     @BindView(R.id.tv_status)
     TextView tvError;
+
+    @Inject
+    ClientChargePresenter clientChargePresenter;
+
+    @Inject
+    ClientChargeAdapter clientChargeAdapter;
 
     private long id;
     private ChargeType chargeType;
@@ -97,7 +97,7 @@ public class ClientChargeFragment extends BaseFragment implements
         rootView = inflater.inflate(R.layout.fragment_client_charge, container, false);
         ButterKnife.bind(this, rootView);
 
-        mClientChargePresenter.attachView(this);
+        clientChargePresenter.attachView(this);
 
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -143,11 +143,11 @@ public class ClientChargeFragment extends BaseFragment implements
         swipeChargeContainer.setVisibility(View.VISIBLE);
 
         if (chargeType == ChargeType.CLIENT) {
-            mClientChargePresenter.loadClientCharges(id);
+            clientChargePresenter.loadClientCharges(id);
         } else if (chargeType == ChargeType.SAVINGS) {
-            mClientChargePresenter.loadSavingsAccountCharges(id);
+            clientChargePresenter.loadSavingsAccountCharges(id);
         } else if (chargeType == ChargeType.LOAN) {
-            mClientChargePresenter.loadLoanAccountCharges(id);
+            clientChargePresenter.loadLoanAccountCharges(id);
         }
     }
 
@@ -232,7 +232,7 @@ public class ClientChargeFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mClientChargePresenter.detachView();
+        clientChargePresenter.detachView();
     }
 
 }

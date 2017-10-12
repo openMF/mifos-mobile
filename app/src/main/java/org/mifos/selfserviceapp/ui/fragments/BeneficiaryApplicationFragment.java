@@ -297,4 +297,10 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     public void hideProgress() {
         hideProgressBar();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }

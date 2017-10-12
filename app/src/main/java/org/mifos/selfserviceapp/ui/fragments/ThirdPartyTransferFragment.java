@@ -374,4 +374,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }

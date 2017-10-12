@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.AccountOptionAndBeneficiary;
 import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
 import org.mifos.selfserviceapp.models.templates.account.AccountOption;
@@ -45,7 +45,8 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public ThirdPartyTransferPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public ThirdPartyTransferPresenter(DataManager dataManager,
+            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscription = new CompositeSubscription();

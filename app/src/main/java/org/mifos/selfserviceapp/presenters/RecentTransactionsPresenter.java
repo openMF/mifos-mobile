@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.Page;
 import org.mifos.selfserviceapp.models.Transaction;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
@@ -40,7 +40,8 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
      */
 
     @Inject
-    public RecentTransactionsPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public RecentTransactionsPresenter(DataManager dataManager,
+            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
@@ -54,7 +55,7 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**
