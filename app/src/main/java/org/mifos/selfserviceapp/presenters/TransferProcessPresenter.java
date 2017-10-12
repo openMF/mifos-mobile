@@ -3,7 +3,7 @@ package org.mifos.selfserviceapp.presenters;
 import android.content.Context;
 
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.payload.TransferPayload;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.TransferProcessView;
@@ -37,7 +37,7 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
      */
     @Inject
     public TransferProcessPresenter(DataManager dataManager,
-                                    @ActivityContext Context context) {
+                                    @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();

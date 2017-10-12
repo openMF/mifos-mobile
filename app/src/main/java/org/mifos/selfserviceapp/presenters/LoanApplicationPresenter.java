@@ -52,6 +52,7 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     @Override
     public void detachView() {
         super.detachView();
+        subscriptions.clear();
     }
 
     /**

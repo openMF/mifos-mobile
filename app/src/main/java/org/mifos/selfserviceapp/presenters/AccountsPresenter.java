@@ -57,7 +57,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**

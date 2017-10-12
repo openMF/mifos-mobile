@@ -7,7 +7,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithAssociations;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsTransactionView;
@@ -40,7 +40,7 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
      */
     @Inject
     public LoanAccountsTransactionPresenter(DataManager dataManager,
-                                            @ActivityContext Context context) {
+                                            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();

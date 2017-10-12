@@ -157,4 +157,10 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
     public void hideProgress() {
         hideMifosProgressDialog();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }

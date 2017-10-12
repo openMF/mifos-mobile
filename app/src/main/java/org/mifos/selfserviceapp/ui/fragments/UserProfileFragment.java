@@ -201,4 +201,10 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     public void hideProgress() {
         hideProgressBar();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+    }
 }

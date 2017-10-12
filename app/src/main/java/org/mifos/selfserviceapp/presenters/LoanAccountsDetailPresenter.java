@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanAccount;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountsDetailView;
@@ -36,7 +36,8 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public LoanAccountsDetailPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public LoanAccountsDetailPresenter(DataManager dataManager,
+            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
@@ -50,7 +51,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**

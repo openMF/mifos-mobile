@@ -8,7 +8,7 @@ import android.util.Log;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.client.Client;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.HomeView;
@@ -45,7 +45,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public HomePresenter(DataManager dataManager, @ActivityContext Context context) {
+    public HomePresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscription = new CompositeSubscription();

@@ -3,7 +3,7 @@ package org.mifos.selfserviceapp.presenters;
 import android.content.Context;
 
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.register.UserVerify;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.RegistrationVerificationView;
@@ -37,7 +37,7 @@ public class RegistrationVerificationPresenter extends BasePresenter<Registratio
      */
     @Inject
     protected RegistrationVerificationPresenter(DataManager dataManager,
-                                                @ActivityContext Context context) {
+                                                @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
@@ -55,7 +55,6 @@ public class RegistrationVerificationPresenter extends BasePresenter<Registratio
     }
 
     public void verifyUser(UserVerify userVerify) {
-
         checkViewAttached();
         getMvpView().showProgress();
         subscriptions.add(dataManager.verifyUser(userVerify)
