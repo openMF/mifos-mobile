@@ -3,7 +3,7 @@ package org.mifos.selfserviceapp.presenters;
 import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.FAQ;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.HelpView;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class HelpPresenter extends BasePresenter<HelpView> {
 
     @Inject
-    protected HelpPresenter(@ActivityContext Context context) {
+    protected HelpPresenter(@ApplicationContext Context context) {
         super(context);
     }
 

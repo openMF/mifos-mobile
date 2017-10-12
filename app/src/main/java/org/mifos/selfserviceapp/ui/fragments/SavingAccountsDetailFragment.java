@@ -88,7 +88,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     PreferencesHelper preferencesHelper;
 
     @Inject
-    SavingAccountsDetailPresenter mSavingAccountsDetailPresenter;
+    SavingAccountsDetailPresenter savingAccountsDetailPresenter;
 
     private View rootView;
     private long savingsId;
@@ -119,10 +119,10 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setToolbarTitle(getString(R.string.saving_account_details));
         ButterKnife.bind(this, rootView);
-        mSavingAccountsDetailPresenter.attachView(this);
+        savingAccountsDetailPresenter.attachView(this);
 
         if (savedInstanceState == null) {
-            mSavingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
+            savingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
         }
         return rootView;
     }
@@ -288,7 +288,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     public void onDestroyView() {
         super.onDestroyView();
         hideProgressBar();
-        mSavingAccountsDetailPresenter.detachView();
+        savingAccountsDetailPresenter.detachView();
     }
 
     @OnClick(R.id.ll_savings_transactions)

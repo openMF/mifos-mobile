@@ -314,4 +314,9 @@ public class SavingAccountsTransactionFragment extends BaseFragment
                                                                     startDate , endDate);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        savingAccountsTransactionPresenter.detachView();
+    }
 }

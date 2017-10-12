@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.accounts.loan.LoanWithdraw;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.LoanAccountWithdrawView;
@@ -36,7 +36,8 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public LoanAccountWithdrawPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public LoanAccountWithdrawPresenter(DataManager dataManager,
+            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();

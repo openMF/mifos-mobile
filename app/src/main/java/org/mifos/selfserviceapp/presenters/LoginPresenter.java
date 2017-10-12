@@ -7,7 +7,7 @@ import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.BaseApiManager;
 import org.mifos.selfserviceapp.api.DataManager;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.Page;
 import org.mifos.selfserviceapp.models.User;
 import org.mifos.selfserviceapp.models.client.Client;
@@ -45,7 +45,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public LoginPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public LoginPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         preferencesHelper = this.dataManager.getPreferencesHelper();
@@ -60,7 +60,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**

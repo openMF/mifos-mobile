@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.beneficary.BeneficiaryPayload;
 import org.mifos.selfserviceapp.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.selfserviceapp.models.templates.beneficiary.BeneficiaryTemplate;
@@ -39,7 +39,7 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
      */
     @Inject
     public BeneficiaryApplicationPresenter(DataManager dataManager,
-                                           @ActivityContext Context context) {
+                                           @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscription = new CompositeSubscription();

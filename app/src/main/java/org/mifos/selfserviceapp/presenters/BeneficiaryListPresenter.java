@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.beneficary.Beneficiary;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.BeneficiariesView;
@@ -37,7 +37,7 @@ public class BeneficiaryListPresenter extends BasePresenter<BeneficiariesView> {
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public BeneficiaryListPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public BeneficiaryListPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscription = new CompositeSubscription();

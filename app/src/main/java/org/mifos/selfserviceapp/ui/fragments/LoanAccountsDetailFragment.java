@@ -46,7 +46,7 @@ import butterknife.OnClick;
 public class LoanAccountsDetailFragment extends BaseFragment implements LoanAccountsDetailView {
 
     @Inject
-    LoanAccountsDetailPresenter mLoanAccountDetailsPresenter;
+    LoanAccountsDetailPresenter loanAccountDetailsPresenter;
 
     @BindView(R.id.tv_outstanding_balance)
     TextView tvOutstandingBalanceName;
@@ -115,9 +115,9 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         setToolbarTitle(getString(R.string.loan_account_details));
 
         ButterKnife.bind(this, rootView);
-        mLoanAccountDetailsPresenter.attachView(this);
+        loanAccountDetailsPresenter.attachView(this);
         if (savedInstanceState == null) {
-            mLoanAccountDetailsPresenter.loadLoanAccountDetails(loanId);
+            loanAccountDetailsPresenter.loadLoanAccountDetails(loanId);
         }
 
         return rootView;
@@ -263,7 +263,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     public void onDestroyView() {
         super.onDestroyView();
         hideProgressBar();
-        mLoanAccountDetailsPresenter.detachView();
+        loanAccountDetailsPresenter.detachView();
     }
 
     @Override

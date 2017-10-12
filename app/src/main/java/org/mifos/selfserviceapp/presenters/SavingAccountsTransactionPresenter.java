@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.selfserviceapp.models.accounts.savings.Transactions;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
@@ -45,7 +45,7 @@ public class SavingAccountsTransactionPresenter extends
      */
     @Inject
     public SavingAccountsTransactionPresenter(DataManager dataManager,
-                                              @ActivityContext Context context) {
+                                              @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
@@ -59,7 +59,7 @@ public class SavingAccountsTransactionPresenter extends
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**

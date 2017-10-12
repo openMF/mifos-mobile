@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.DataManager;
-import org.mifos.selfserviceapp.injection.ActivityContext;
+import org.mifos.selfserviceapp.injection.ApplicationContext;
 import org.mifos.selfserviceapp.presenters.base.BasePresenter;
 import org.mifos.selfserviceapp.ui.views.BeneficiaryDetailView;
 
@@ -35,7 +35,7 @@ public class BeneficiaryDetailPresenter extends BasePresenter<BeneficiaryDetailV
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    public BeneficiaryDetailPresenter(DataManager manager, @ActivityContext Context context) {
+    public BeneficiaryDetailPresenter(DataManager manager, @ApplicationContext Context context) {
         super(context);
         this.manager = manager;
         subscription = new CompositeSubscription();

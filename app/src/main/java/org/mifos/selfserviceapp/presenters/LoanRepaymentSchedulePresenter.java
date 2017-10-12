@@ -49,7 +49,7 @@ public class LoanRepaymentSchedulePresenter extends BasePresenter<LoanRepaymentS
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.unsubscribe();
+        subscriptions.clear();
     }
 
     /**
