@@ -33,13 +33,14 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
                         android:id="@+id/iv_user_image"
                         android:layout_gravity="center"
                         android:layout_height="65dp"
                         android:layout_margin="@dimen/margin_16dp"
                         android:layout_width="65dp"
+                        android:visibility="visible"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:clickable="true"
                         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
                     <org.mifos.selfserviceapp.utils.CircularImageView
@@ -49,6 +50,8 @@
                         android:layout_margin="@dimen/margin_16dp"
                         android:layout_width="65dp"
                         android:visibility="gone"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:clickable="true"
                         tools:src="@drawable/ic_person_black_24dp"/>
 
                     <TextView

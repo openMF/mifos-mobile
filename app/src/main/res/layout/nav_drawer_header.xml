@@ -16,6 +16,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_width="65dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <org.mifos.selfserviceapp.utils.CircularImageView
@@ -28,6 +30,8 @@
         app:border="true"
         app:border_width="1dp"
         android:visibility="gone"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <TextView
