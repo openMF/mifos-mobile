@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.mifos.selfserviceapp.R;
 import org.mifos.selfserviceapp.api.local.PreferencesHelper;
 import org.mifos.selfserviceapp.presenters.HomePresenter;
+import org.mifos.selfserviceapp.ui.activities.AccountOverviewActivity;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
 import org.mifos.selfserviceapp.ui.activities.LoanApplicationActivity;
 import org.mifos.selfserviceapp.ui.activities.UserProfileActivity;
@@ -201,6 +202,14 @@ public class HomeFragment extends BaseFragment implements HomeView,
     @OnClick(R.id.iv_circular_user_image)
     void userCirCularImageClick() {
         startActivity(new Intent(getActivity(), UserProfileActivity.class));
+    }
+
+    /**
+     * Calls for opening Account Overview
+     */
+    @OnClick(R.id.ll_account_overview)
+    void onAccountOverview() {
+        startActivity(new Intent(getActivity(), AccountOverviewActivity.class));
     }
 
     /**

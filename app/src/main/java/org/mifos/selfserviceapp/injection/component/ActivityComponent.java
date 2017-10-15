@@ -3,6 +3,7 @@ package org.mifos.selfserviceapp.injection.component;
 import org.mifos.selfserviceapp.injection.PerActivity;
 import org.mifos.selfserviceapp.injection.module.ActivityModule;
 import org.mifos.selfserviceapp.ui.activities.HomeActivity;
+import org.mifos.selfserviceapp.ui.fragments.AccountOverviewFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryAddOptionsFragment;
 import org.mifos.selfserviceapp.ui.activities.PassCodeActivity;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryApplicationFragment;
@@ -94,4 +95,5 @@ public interface ActivityComponent {
 
     void inject(RegistrationVerificationFragment registrationVerificationFragment);
 
+    void inject(AccountOverviewFragment accountOverviewFragment);
 }
