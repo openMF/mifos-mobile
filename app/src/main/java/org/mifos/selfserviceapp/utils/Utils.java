@@ -2,6 +2,7 @@ package org.mifos.selfserviceapp.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.Menu;
 
 import org.mifos.selfserviceapp.R;
 
@@ -24,6 +26,17 @@ import java.text.DateFormatSymbols;
 public class Utils {
     public static String getMonth(int month) {
         return new DateFormatSymbols().getMonths()[month - 1];
+    }
+
+    public static void setToolbarIconColor(Context context, Menu menu, int color) {
+        for (int i = 0; i < menu.size(); i++) {
+            Drawable drawable = menu.getItem(i).getIcon();
+            if (drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(
+                        ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN);
+            }
+        }
     }
 
     public static LayerDrawable setCircularBackground(int colorId, Context context) {

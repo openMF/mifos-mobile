@@ -408,6 +408,11 @@
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
+    <string name="total_saving_balance">Total Savings Balance</string>
+    <string name="total_loan_balance">Total Loan Balance</string>
+    <string name="total_loan_savings_description">Above Loan and Savings accout balance are
+        calculated on behalf of your all savings and loan accounts.
+    </string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>

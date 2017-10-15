@@ -50,6 +50,8 @@
 
         <activity android:name=".ui.activities.LoanApplicationActivity"/>
 
+        <activity android:name=".ui.activities.AccountOverviewActivity"/>
+
         <receiver android:name=".ui.widgets.ChargeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
