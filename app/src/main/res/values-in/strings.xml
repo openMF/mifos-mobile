@@ -253,5 +253,10 @@
     <string name="no_withdrawals">No withdrawals</string>
     <string name="manage_accounts">Manage Accounts</string>
     <string name="more">More</string>
+    <string name="total_saving_balance">Total Savings Balance</string>
+    <string name="total_loan_balance">Total Loan Balance</string>
+    <string name="total_loan_savings_description">Above Loan and Savings accout balance are
+        calculated on behalf of your all savings and loan accounts.
+    </string>
 
 </resources>
