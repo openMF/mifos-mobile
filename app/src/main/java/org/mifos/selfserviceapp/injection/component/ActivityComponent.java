@@ -10,6 +10,7 @@ import org.mifos.selfserviceapp.ui.fragments.BeneficiaryApplicationFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryDetailFragment;
 import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeOldFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountTransactionFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountWithdrawFragment;
 import org.mifos.selfserviceapp.ui.fragments.LoanAccountsDetailFragment;
@@ -96,4 +97,6 @@ public interface ActivityComponent {
     void inject(RegistrationVerificationFragment registrationVerificationFragment);
 
     void inject(AccountOverviewFragment accountOverviewFragment);
+
+    void inject(HomeOldFragment homeOldFragment);
 }
