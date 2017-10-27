@@ -75,7 +75,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin">
+        android:layout_marginTop="@dimen/default_margin"
+        app:passwordToggleEnabled="true">
         <EditText android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
