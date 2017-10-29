@@ -34,6 +34,13 @@ public class Toaster {
         snackbar.show();
     }
 
+    public static void cancelTransfer(View view, String text, String buttonText,
+                                      View.OnClickListener listener) {
+        final Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
+        snackbar.setAction(buttonText, listener);
+        snackbar.show();
+    }
+
     public static void show(View view, int res, int duration) {
         show(view, MifosSelfServiceApp.getContext().getResources().getString(res), duration);
     }

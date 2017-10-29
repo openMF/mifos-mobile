@@ -339,6 +339,8 @@
     <string name="zero">0</string>
 
     <string name="faq">अक्सर पूछे जाने वाले प्रश्न</string>
+    <string name="cancel_transfer">क्या आप वाकई हस्तांतरण रद्द करना चाहते हैं?</string>
+    <string name="yes">हाँ</string>
     <string name="user_query">उपयोगकर्ता क्वेरी</string>
     <string name="call_now">कॉल करें</string>
     <string name="leave_email">एक ईमेल छोड़ दो</string>
@@ -351,6 +353,11 @@
     <string name="no_withdrawals">No withdrawals</string>
     <string name="manage_accounts">Manage Accounts</string>
     <string name="more">More</string>
+    <string name="total_saving_balance">Total Savings Balance</string>
+    <string name="total_loan_balance">Total Loan Balance</string>
+    <string name="total_loan_savings_description">Above Loan and Savings accout balance are
+        calculated on behalf of your all savings and loan accounts.
+    </string>
 
     <string-array name="faq_qs">
         <item>मैं नए ऋण खाते के लिए आवेदन कैसे करूं?</item>

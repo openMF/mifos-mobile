@@ -368,6 +368,8 @@
     <string name="zero">0</string>
 
     <string name="faq">Frequently Asked Questions</string>
+    <string name="cancel_transfer">Are you sure you want to cancel the Transfer?</string>
+    <string name="yes">Yes</string>
     <string name="user_query">User Query</string>
     <string name="call_now">Call now</string>
     <string name="leave_email">Leave an email</string>
@@ -408,6 +410,11 @@
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
+    <string name="total_saving_balance">Total Savings Balance</string>
+    <string name="total_loan_balance">Total Loan Balance</string>
+    <string name="total_loan_savings_description">Above Loan and Savings accout balance are
+        calculated on behalf of your all savings and loan accounts.
+    </string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>
