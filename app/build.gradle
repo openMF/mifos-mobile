@@ -90,6 +90,7 @@ dependencies {
     compile "com.android.support:preference-v7:$rootProject.supportLibraryVersion"
     compile "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
 
     //Square dependencies
     compile ('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {
