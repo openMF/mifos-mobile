@@ -65,8 +65,9 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     /**
      * Used for TPT Transfer and own Account Transfer.<br>
      * Use {@code type} as TransferType.TPT for TPT and TransferType.SELF for self Account Transfer
+     *
      * @param payload Transfer Information
-     * @param type enum of {@link TransferType}
+     * @param type    enum of {@link TransferType}
      * @return Instance of {@link TransferProcessFragment}
      */
     public static TransferProcessFragment newInstance(TransferPayload payload, TransferType type) {
@@ -127,8 +128,14 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
      */
     @OnClick(R.id.btn_cancel_transfer)
     public void cancelTransfer() {
-        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().getSupportFragmentManager().popBackStack();
+        Toaster.cancelTransfer(rootView, getString(R.string.cancel_transfer),
+                getString(R.string.yes), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                });
     }
 
     /**
@@ -153,6 +160,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param msg Error message that tells the user about the problem.
      */
     @Override

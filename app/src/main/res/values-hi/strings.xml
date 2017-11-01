@@ -356,6 +356,8 @@
     <string name="total_loan_savings_description">Above Loan and Savings accout balance are
         calculated on behalf of your all savings and loan accounts.
     </string>
+    <string name="cancel_transfer">क्या आप वाकई हस्तांतरण रद्द करना चाहते हैं?</string>
+    <string name="yes">हाँ</string>
 
     <string-array name="faq_qs">
         <item>मैं नए ऋण खाते के लिए आवेदन कैसे करूं?</item>
@@ -380,6 +382,7 @@
         <item>ऋण खाते के लिए भुगतान करने के लिए, खाता अनुभाग पर जाएं, ऋण चुनें और आवश्यक ऋण खाता खोलें
             और भुगतान करें विकल्प पर क्लिक करें।</item>
     </string-array>
+
 
 
 </resources>
