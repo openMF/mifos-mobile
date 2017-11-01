@@ -258,5 +258,7 @@
     <string name="total_loan_savings_description">Above Loan and Savings accout balance are
         calculated on behalf of your all savings and loan accounts.
     </string>
+    <string name="cancel_transfer">Are you sure you want to cancel the transfer?</string>
+    <string name="yes">Yes</string>
 
 </resources>
