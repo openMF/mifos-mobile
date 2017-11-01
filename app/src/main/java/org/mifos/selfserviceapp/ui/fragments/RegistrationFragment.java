@@ -51,6 +51,9 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
     @BindView(R.id.et_password)
     EditText etPassword;
 
+    @BindView(R.id.et_confirm_password)
+    EditText etConfirmPassword;
+
     @BindView(R.id.rg_verification_mode)
     RadioGroup rgVerificationMode;
 
@@ -92,6 +95,11 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             payload.setFirstName(etFirstName.getText().toString());
             payload.setLastName(etLastName.getText().toString());
             payload.setMobileNumber(etPhoneNumber.getText().toString());
+            if (!etPassword.getText().toString().equals(etConfirmPassword.getText().toString())) {
+                Toaster.show(rootView, getString(R.string.error_password_not_match));
+            } else {
+                payload.setPassword(etPassword.getText().toString());
+            }
             payload.setPassword(etPassword.getText().toString());
             payload.setUsername(etUsername.getText().toString());
 
