@@ -260,5 +260,7 @@
     </string>
     <string name="cancel_transfer">Are you sure you want to cancel the transfer?</string>
     <string name="yes">Yes</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="error_password_not_match">Password doesnot match.</string>
 
 </resources>
