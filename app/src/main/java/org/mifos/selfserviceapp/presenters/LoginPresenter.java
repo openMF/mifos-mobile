@@ -172,7 +172,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
         final Resources resources = context.getResources();
         final String correctUsername = username.replaceFirst("\\s++$", "").trim();
-        if (username == null || username.trim().isEmpty()) {
+        if (username == null || username.matches("\\s*") || username.isEmpty()) {
             getMvpView().showUsernameError(context.getString(R.string.error_validation_blank,
                     context.getString(R.string.username)));
             return false;
@@ -186,7 +186,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     R.string.error_validation_cannot_contain_spaces,
                     correctUsername, context.getString(R.string.not_contain_username)));
             return false;
-        } else if (password == null || password.trim().isEmpty()) {
+        } else if (password == null || password.matches("\\s*") || password.isEmpty()) {
             getMvpView().showPasswordError(context.getString(R.string.error_validation_blank,
                     context.getString(R.string.password)));
             return false;
