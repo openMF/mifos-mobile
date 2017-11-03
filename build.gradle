@@ -2,13 +2,13 @@
 
 buildscript {
     repositories {
-        maven { url 'https://maven.google.com' }
+        google()
         jcenter()
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'io.fabric.tools:gradle:1.+'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -17,8 +17,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url 'https://maven.google.com' }
+        google()
         maven { url "https://www.jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
     }
 }
 
@@ -35,11 +36,11 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '26.1.0'
-    daggerVersion = '2.2'
+    daggerVersion = '2.5'
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.6.0'
     butterKnifeVersion = '8.0.1'
-    dbflowVersion = '3.1.1';
+    dbflowVersion = '4.1.2'
     playServicesVersion = '10.0.1'
 
     jUnitVersion = '4.12'
