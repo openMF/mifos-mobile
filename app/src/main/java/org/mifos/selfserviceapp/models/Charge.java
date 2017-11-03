@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -19,7 +18,6 @@ import java.util.List;
  * @since 16/8/16.
  */
 @Table(database = SelfServiceDatabase.class)
-@ModelContainer
 public class Charge extends BaseModel implements Parcelable {
 
     @PrimaryKey
