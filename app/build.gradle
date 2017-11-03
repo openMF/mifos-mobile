@@ -15,8 +15,6 @@ repositories {
 }
 
 apply from: '../config/quality/quality.gradle'
-apply plugin: 'android-apt'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -80,7 +78,7 @@ dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    apt "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     compile "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
 
@@ -107,13 +105,13 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.4'
 
     //Dagger dependencies
-    apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     provided 'javax.annotation:jsr250-api:1.0'                //Required by Dagger2
 
     //Butter Knife
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    apt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
