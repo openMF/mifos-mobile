@@ -31,7 +31,7 @@ import org.mifos.selfserviceapp.ui.fragments.BeneficiaryListFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientAccountsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ClientChargeFragment;
 import org.mifos.selfserviceapp.ui.fragments.HelpFragment;
-import org.mifos.selfserviceapp.ui.fragments.HomeFragment;
+import org.mifos.selfserviceapp.ui.fragments.HomeOldFragment;
 import org.mifos.selfserviceapp.ui.fragments.RecentTransactionsFragment;
 import org.mifos.selfserviceapp.ui.fragments.SettingsFragment;
 import org.mifos.selfserviceapp.ui.fragments.ThirdPartyTransferFragment;
@@ -84,9 +84,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         clientId = preferencesHelper.getClientId();
 
         setupNavigationBar();
-        hideToolbarElevation();
+        setToolbarElevation();
         setToolbarTitle(getString(R.string.home));
-        replaceFragment(HomeFragment.newInstance(), false, R.id.container);
+        replaceFragment(HomeOldFragment.newInstance(), false, R.id.container);
 
         if (savedInstanceState == null) {
             detailsPresenter.attachView(this);
@@ -121,7 +121,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         switch (item.getItemId()) {
             case R.id.item_home:
                 hideToolbarElevation();
-                replaceFragment(HomeFragment.newInstance(), true, R.id.container);
+                replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_accounts:
                 hideToolbarElevation();
@@ -334,7 +334,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         }
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (fragment instanceof HomeFragment) {
+        if (fragment instanceof HomeOldFragment) {
             if (doubleBackToExitPressedOnce && stackCount() == 0) {
                 HomeActivity.this.finish();
                 return;
@@ -363,8 +363,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                         Fragment fragment = getSupportFragmentManager().
                                 findFragmentById(R.id.container);
                         setToolbarElevation();
-                        if (fragment instanceof HomeFragment) {
-                            hideToolbarElevation();
+                        if (fragment instanceof HomeOldFragment) {
                             setNavigationViewSelectedItem(R.id.item_home);
                         } else if (fragment instanceof ClientAccountsFragment) {
                             hideToolbarElevation();
