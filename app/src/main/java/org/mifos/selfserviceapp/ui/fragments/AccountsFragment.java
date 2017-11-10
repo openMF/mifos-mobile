@@ -283,6 +283,7 @@ public class AccountsFragment extends BaseFragment implements
      * @param emptyAccounts Text to show in {@code noAccountText}
      */
     public void showEmptyAccounts(String emptyAccounts) {
+        hideProgress();
         ll_error.setVisibility(View.VISIBLE);
         noAccountText.setText(emptyAccounts);
         noAccountIcon.setImageResource(R.drawable.ic_assignment_turned_in_black_24dp);
@@ -367,6 +368,7 @@ public class AccountsFragment extends BaseFragment implements
      */
     @Override
     public void showError(String errorMessage) {
+        hideProgress();
         ll_error.setVisibility(View.VISIBLE);
         rvAccounts.setVisibility(View.GONE);
         noAccountText.setText(errorMessage);
