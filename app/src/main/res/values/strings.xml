@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Self Service App</string>
+    <string name="app_name">Mifos Mobile</string>
     <string name="login">Login</string>
     <string name="toast_welcome">Welcome %1$s</string>
     <string name="unable_to_connect">Not connected to internet</string>

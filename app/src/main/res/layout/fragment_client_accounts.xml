@@ -32,7 +32,7 @@
         android:clickable="true"
         android:visibility="gone"
         android:id="@+id/fab_create_loan"
-        app:layout_behavior="org.mifos.selfserviceapp.utils.ScrollFabBehavior"
+        app:layout_behavior="org.mifos.mobilebanking.utils.ScrollFabBehavior"
         app:srcCompat="@drawable/ic_add_white_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
