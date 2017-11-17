@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Self Service App</string>
+    <string name="app_name">Mifos Mobile</string>
     <string name="login">लॉग इन करें</string>
     <string name="toast_welcome">स्वागत हे %1$s</string>
     <string name="unable_to_connect">इंटरनेट से कनेक्ट नहीं है</string>
