@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="org.mifos.selfserviceapp.ui.activities.RegistrationActivity">
+    tools:context="org.mifos.mobilebanking.ui.activities.RegistrationActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
