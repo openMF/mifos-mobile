@@ -360,6 +360,10 @@
     <string name="yes">हाँ</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="error_password_not_match">Password doesnot match.</string>
+    <string name="app_version">Version %1$s</string>
+    <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
+    <string name="all_rights_reserved">All rights reserved.</string>
+    <string name="licenses">Licenses</string>
 
     <string-array name="faq_qs">
         <item>मैं नए ऋण खाते के लिए आवेदन कैसे करूं?</item>

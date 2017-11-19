@@ -145,7 +145,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 replaceFragment(SettingsFragment.newInstance(this), true, R.id.container);
                 break;
             case R.id.item_about_us:
-                replaceFragment(AboutUsFragment.getInstance(), true, R.id.container);
+                replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_help:
                 replaceFragment(HelpFragment.getInstance(), true, R.id.container);
