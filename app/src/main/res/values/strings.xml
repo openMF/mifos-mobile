@@ -421,6 +421,7 @@
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
+    <string name="please_wait">Please Wait…</string>
 
 
     <string-array name="languages" translatable="false">
