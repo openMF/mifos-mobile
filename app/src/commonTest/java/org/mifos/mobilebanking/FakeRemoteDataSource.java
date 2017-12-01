@@ -15,6 +15,7 @@ import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.client.ClientAccounts;
 import org.mifos.mobilebanking.models.payload.LoansPayload;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
+import org.mifos.mobilebanking.models.register.RegisterPayload;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.mobilebanking.models.templates.loans.LoanTemplate;
@@ -141,5 +142,10 @@ public class FakeRemoteDataSource {
     public static TransferPayload getTransferPayload() {
         return mTestDataFactory.getObjectTypePojo(TransferPayload.class,
                 FakeJsonName.TRANFER_PAYLOAD_JSON);
+    }
+
+    public static RegisterPayload getRegisterPayload() {
+        return mTestDataFactory.getObjectTypePojo(RegisterPayload.class,
+                FakeJsonName.REGISTER);
     }
 }
