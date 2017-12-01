@@ -267,5 +267,6 @@
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
     <string name="please_wait">Please Wait...</string>
+    <string name="fail_register">Failed to register</string>
 
 </resources>

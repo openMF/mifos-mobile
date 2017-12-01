@@ -2,12 +2,12 @@ package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
 
+import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.injection.ApplicationContext;
 import org.mifos.mobilebanking.models.register.RegisterPayload;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.views.RegistrationView;
-import org.mifos.mobilebanking.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
@@ -36,7 +36,7 @@ public class RegistrationPresenter extends BasePresenter<RegistrationView> {
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    protected RegistrationPresenter(DataManager dataManager, @ApplicationContext Context context) {
+    public RegistrationPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
@@ -68,7 +68,7 @@ public class RegistrationPresenter extends BasePresenter<RegistrationView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
+                        getMvpView().showError(context.getString(R.string.fail_register));
                     }
 
                     @Override

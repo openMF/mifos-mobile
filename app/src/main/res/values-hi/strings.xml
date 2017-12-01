@@ -296,6 +296,7 @@
     <string name="inactive">िष्क्रिय</string>
     <string name="active_uc">सक्रिय</string>
     <string name="inactive_uc">निष्क्रिय</string>
+    <string name="fail_register">रजिस्टर करने में विफल</string>
 
     <!--Material Dialog-->
     <string name="dialog_logout">क्या आप लॉग आउट करना चाहते हैं?</string>
