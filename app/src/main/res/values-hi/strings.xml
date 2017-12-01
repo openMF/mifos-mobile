@@ -281,6 +281,7 @@
     <string name="about_us_under_construction">"हमारे बारे में" निर्माणाधीन</string>
     <string name="beneficiary_deleted_successfully">लाभार्थी सफलतापूर्वक हटा दिया गया</string>
     <string name="third_party_transfer">तृतीय पक्ष हस्तांतरण</string>
+    <string name="please_wait">कृपया प्रतीक्षा करें...</string>
 
     <!--Customer care details-->
     <string name="need_help">हमसे संपर्क करें</string>
@@ -295,6 +296,7 @@
     <string name="inactive">िष्क्रिय</string>
     <string name="active_uc">सक्रिय</string>
     <string name="inactive_uc">निष्क्रिय</string>
+    <string name="fail_register">रजिस्टर करने में विफल</string>
 
     <!--Material Dialog-->
     <string name="dialog_logout">क्या आप लॉग आउट करना चाहते हैं?</string>

@@ -55,4 +55,6 @@ public class FakeJsonName {
     public static final String TRANFER_PAYLOAD_JSON = "transferPayload.json";
 
     public static final String SAVINGS_WITH_ASSOCIATIONS = "SavingsAccountWithAssociations.json";
+
+    public static final String REGISTER = "register.json";
 }
