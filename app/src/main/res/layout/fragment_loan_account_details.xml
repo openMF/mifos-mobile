@@ -38,6 +38,7 @@
                     android:id="@+id/tv_outstanding_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     tools:text="outstanding_balance"/>
 
                 <TextView
