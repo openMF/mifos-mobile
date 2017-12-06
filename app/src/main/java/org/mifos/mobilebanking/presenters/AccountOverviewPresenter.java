@@ -89,7 +89,7 @@ public class AccountOverviewPresenter extends BasePresenter<AccountOverviewMvpVi
      * @return Returns {@code totalAmount} which is calculated by adding all {@link LoanAccount}
      * balance.
      */
-    private double getLoanAccountDetails(List<LoanAccount> loanAccountList) {
+    public double getLoanAccountDetails(List<LoanAccount> loanAccountList) {
         double totalAmount = 0;
         for (LoanAccount loanAccount : loanAccountList) {
             totalAmount += loanAccount.getLoanBalance();
@@ -104,7 +104,7 @@ public class AccountOverviewPresenter extends BasePresenter<AccountOverviewMvpVi
      * @return Returns {@code totalAmount} which is calculated by adding all {@link SavingAccount}
      * balance.
      */
-    private double getSavingAccountDetails(List<SavingAccount> savingAccountList) {
+    public double getSavingAccountDetails(List<SavingAccount> savingAccountList) {
         double totalAmount = 0;
         for (SavingAccount savingAccount : savingAccountList) {
             totalAmount += savingAccount.getAccountBalance();
