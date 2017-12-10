@@ -172,6 +172,9 @@ public class LoanWithAssociations implements Parcelable {
     @SerializedName("maximumGap")
     Integer maximumGap;
 
+    @SerializedName("loanPurposeName")
+    private String loanPurposeName;
+
     @SerializedName("transactions")
     private List<Transaction> transactions = new ArrayList<>();
 
@@ -608,6 +611,14 @@ public class LoanWithAssociations implements Parcelable {
 
     public void setMaximumGap(Integer maximumGap) {
         this.maximumGap = maximumGap;
+    }
+
+    public String getLoanPurposeName() {
+        return loanPurposeName;
+    }
+
+    public void setLoanPurposeName(String loanPurposeName) {
+        this.loanPurposeName = loanPurposeName;
     }
 
     @Override

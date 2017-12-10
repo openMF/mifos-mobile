@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
+import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.models.accounts.loan.LoanWithdraw;
 import org.mifos.mobilebanking.presenters.LoanAccountWithdrawPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
@@ -44,13 +45,14 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     LoanAccountWithdrawPresenter loanAccountWithdrawPresenter;
 
     View rootView;
-    private LoanAccount loanAccount;
+    private LoanAccount loanWithAssociations;
 
 
-    public static LoanAccountWithdrawFragment newInstance(LoanAccount loanAccount) {
+    public static LoanAccountWithdrawFragment newInstance(LoanWithAssociations
+                                                                  loanWithAssociations) {
         LoanAccountWithdrawFragment fragment = new LoanAccountWithdrawFragment();
         Bundle args = new Bundle();
-        args.putParcelable(Constants.LOAN_ACCOUNT, loanAccount);
+        args.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,9 +60,10 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+        ((BaseActivity) getActivity()).getActivityComponent().inject(
+                this);
         if (getArguments() != null) {
-            loanAccount = getArguments().getParcelable(Constants.LOAN_ACCOUNT);
+            loanWithAssociations = getArguments().getParcelable(Constants.LOAN_ACCOUNT);
         }
     }
 
@@ -83,8 +86,8 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
      * Sets Basic Information about that Loan Application
      */
     private void showUserInterface() {
-        tvClientName.setText(loanAccount.getClientName());
-        tvAccountNumber.setText(loanAccount.getAccountNo());
+        tvClientName.setText(loanWithAssociations.getClientName());
+        tvAccountNumber.setText(loanWithAssociations.getAccountNo());
     }
 
     /**
@@ -96,7 +99,8 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
         loanWithdraw.setNote(etWithdrawReason.getText().toString());
         loanWithdraw.setWithdrawnOnDate(DateHelper
                 .getDateAsStringFromLong(System.currentTimeMillis()));
-        loanAccountWithdrawPresenter.withdrawLoanAccount(loanAccount.getId(), loanWithdraw);
+        loanAccountWithdrawPresenter.withdrawLoanAccount(loanWithAssociations.getId(),
+                loanWithdraw);
     }
 
     /**
@@ -111,6 +115,7 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     /**
      * Shows an error in {@link android.support.design.widget.Snackbar} if any error occurs during
      * withdrawing of Loan
+     *
      * @param message Error Message displayed
      */
     @Override
