@@ -63,4 +63,7 @@ public class FakeJsonName {
     public static final String SAVING_CHARGE = "savingCharge.json";
 
     public static final String LOAN_CHARGE = "loanCharge.json";
+
+    public static final String USER_VERIFY_JSON = "userVerify.json";
+
 }
