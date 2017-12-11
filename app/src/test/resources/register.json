@@ -1,0 +1,10 @@
+{
+  "username" : "user1",
+  "firstName" : "first",
+  "lastName" : "last",
+  "email" : "xyz@gmail.com",
+  "mobileNumber" : "999254",
+  "accountNumber" : "000000001",
+  "password" : "xxxxxxx",
+  "authenticationMode" :"email"
+}

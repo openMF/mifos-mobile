@@ -1,0 +1,117 @@
+{
+  "totalFilteredRecords": 3,
+  "pageItems": [
+    {
+      "id": 3,
+      "clientId": 1,
+      "chargeId": 4,
+      "name": "Test Charge",
+      "chargeTimeType": {
+        "id": 2,
+        "code": "chargeTimeType.specifiedDueDate",
+        "value": "Specified due date"
+      },
+      "dueDate": [
+        2017,
+        12,
+        28
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "AFN",
+        "name": "Afghanistan Afghani",
+        "decimalPlaces": 2,
+        "nameCode": "currency.AFN",
+        "displayLabel": "Afghanistan Afghani [AFN]"
+      },
+      "amount": 50.000000,
+      "amountPaid": 0,
+      "amountWaived": 0,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 50.000000,
+      "penalty": false,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": false
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "chargeId": 4,
+      "name": "Test Charge",
+      "chargeTimeType": {
+        "id": 2,
+        "code": "chargeTimeType.specifiedDueDate",
+        "value": "Specified due date"
+      },
+      "dueDate": [
+        2017,
+        12,
+        22
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "AFN",
+        "name": "Afghanistan Afghani",
+        "decimalPlaces": 2,
+        "nameCode": "currency.AFN",
+        "displayLabel": "Afghanistan Afghani [AFN]"
+      },
+      "amount": 50.000000,
+      "amountPaid": 5.000000,
+      "amountWaived": 45.000000,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 0.000000,
+      "penalty": false,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": true
+    },
+    {
+      "id": 1,
+      "clientId": 1,
+      "chargeId": 3,
+      "name": "client charges",
+      "chargeTimeType": {
+        "id": 2,
+        "code": "chargeTimeType.specifiedDueDate",
+        "value": "Specified due date"
+      },
+      "dueDate": [
+        2017,
+        11,
+        29
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 1.000000,
+      "amountPaid": 0,
+      "amountWaived": 0,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 1.000000,
+      "penalty": false,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": false
+    }
+  ]
+}

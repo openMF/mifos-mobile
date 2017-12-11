@@ -2,12 +2,12 @@ package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
 
+import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.injection.ApplicationContext;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.views.TransferProcessView;
-import org.mifos.mobilebanking.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
@@ -75,7 +75,7 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
+                        getMvpView().showError(context.getString(R.string.transfer_error));
                     }
 
                     @Override
@@ -108,7 +108,7 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
+                        getMvpView().showError(context.getString(R.string.transfer_error));
                     }
 
                     @Override
