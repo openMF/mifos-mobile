@@ -146,10 +146,10 @@ public class FakeRemoteDataSource {
                 FakeJsonName.TRANFER_PAYLOAD_JSON);
     }
 
-
     public static Page<Charge> getCharge() {
         return mTestDataFactory.getListTypePojo(new TypeToken<Page<Charge>>() {
         }, FakeJsonName.CHARGE);
+
 
     }
 }
