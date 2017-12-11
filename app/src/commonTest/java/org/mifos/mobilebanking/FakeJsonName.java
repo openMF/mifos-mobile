@@ -56,5 +56,6 @@ public class FakeJsonName {
 
     public static final String SAVINGS_WITH_ASSOCIATIONS = "SavingsAccountWithAssociations.json";
 
-    public static final String REGISTER = "register.json";
+    public static final String  CHARGE = "charge.json";
+
 }

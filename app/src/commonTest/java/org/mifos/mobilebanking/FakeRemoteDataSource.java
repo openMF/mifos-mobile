@@ -2,6 +2,7 @@ package org.mifos.mobilebanking;
 
 import com.google.gson.reflect.TypeToken;
 
+import org.mifos.mobilebanking.models.Charge;
 import org.mifos.mobilebanking.models.Page;
 import org.mifos.mobilebanking.models.Transaction;
 import org.mifos.mobilebanking.models.User;
@@ -32,7 +33,7 @@ public class FakeRemoteDataSource {
 
     public static ClientAccounts getClientAccounts() {
         return mTestDataFactory.getListTypePojo(new TypeToken<ClientAccounts>() {
-            }, FakeJsonName.CLIENT_ACCOUNTS_JSON);
+        }, FakeJsonName.CLIENT_ACCOUNTS_JSON);
     }
 
     public static ClientAccounts getClientSavingsAccount() {
@@ -52,7 +53,7 @@ public class FakeRemoteDataSource {
 
     public static List<Beneficiary> getBeneficiaries() {
         return mTestDataFactory.getListTypePojo(new TypeToken<List<Beneficiary>>() {
-            }, FakeJsonName.BENEFICIARIES_JSON);
+        }, FakeJsonName.BENEFICIARIES_JSON);
     }
 
     public static BeneficiaryTemplate getBeneficiaryTemplate() {
@@ -104,6 +105,7 @@ public class FakeRemoteDataSource {
         return mTestDataFactory.getObjectTypePojo(LoanWithAssociations.class,
                 FakeJsonName.LOAN_ACCOUNT_WITH_REPAYMENT_SCHEDULE_JSON);
     }
+
     public static LoanWithAssociations getLoanAccountEmptyRepaymentSchedule() {
         return mTestDataFactory.getObjectTypePojo(LoanWithAssociations.class,
                 FakeJsonName.LOAN_ACCOUNT_WITH_EMPTY_REPAYMENT_SCHEDULE_JSON);
@@ -116,7 +118,7 @@ public class FakeRemoteDataSource {
 
     public static Page<Client> getClients() {
         return mTestDataFactory.getListTypePojo(new TypeToken<Page<Client>>() {
-            }, FakeJsonName.CLIENTS_JSON);
+        }, FakeJsonName.CLIENTS_JSON);
     }
 
     public static Page<Client> getNoClients() {
@@ -144,8 +146,10 @@ public class FakeRemoteDataSource {
                 FakeJsonName.TRANFER_PAYLOAD_JSON);
     }
 
-    public static RegisterPayload getRegisterPayload() {
-        return mTestDataFactory.getObjectTypePojo(RegisterPayload.class,
-                FakeJsonName.REGISTER);
+    public static Page<Charge> getCharge() {
+        return mTestDataFactory.getListTypePojo(new TypeToken<Page<Charge>>() {
+        }, FakeJsonName.CHARGE);
+
+
     }
 }
