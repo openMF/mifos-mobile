@@ -36,7 +36,7 @@ public class RegistrationPresenter extends BasePresenter<RegistrationView> {
      *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
      */
     @Inject
-    protected RegistrationPresenter(DataManager dataManager, @ApplicationContext Context context) {
+    public RegistrationPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         subscriptions = new CompositeSubscription();
