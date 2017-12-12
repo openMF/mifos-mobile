@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "chargeId": 1,
+    "name": "loan charge",
+    "chargeTimeType": {
+      "id": 1,
+      "code": "chargeTimeType.disbursement",
+      "value": "Disbursement"
+    },
+    "chargeCalculationType": {
+      "id": 1,
+      "code": "chargeCalculationType.flat",
+      "value": "Flat"
+    },
+    "percentage": 0,
+    "amountPercentageAppliedTo": 0,
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "amount": 2.000000,
+    "amountPaid": 2.000000,
+    "amountWaived": 0,
+    "amountWrittenOff": 0,
+    "amountOutstanding": 0.000000,
+    "amountOrPercentage": 2.000000,
+    "penalty": false,
+    "chargePaymentMode": {
+      "id": 0,
+      "code": "chargepaymentmode.regular",
+      "value": "Regular"
+    },
+    "paid": true,
+    "waived": false,
+    "chargePayable": false
+  }
+]

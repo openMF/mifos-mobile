@@ -1,0 +1,82 @@
+[
+  {
+    "id": 2,
+    "chargeId": 2,
+    "accountId": 2,
+    "name": "savings charge",
+    "chargeTimeType": {
+      "id": 11,
+      "code": "chargeTimeType.weeklyFee",
+      "value": "Weekly Fee"
+    },
+    "dueDate": [
+      2017,
+      12,
+      11
+    ],
+    "feeInterval": 1,
+    "chargeCalculationType": {
+      "id": 1,
+      "code": "chargeCalculationType.flat",
+      "value": "Flat"
+    },
+    "percentage": 0,
+    "amountPercentageAppliedTo": 0,
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "amount": 2.000000,
+    "amountPaid": 0,
+    "amountWaived": 0,
+    "amountWrittenOff": 0,
+    "amountOutstanding": 2.000000,
+    "amountOrPercentage": 2.000000,
+    "penalty": false,
+    "isActive": true
+  },
+  {
+    "id": 1,
+    "chargeId": 2,
+    "accountId": 2,
+    "name": "savings charge",
+    "chargeTimeType": {
+      "id": 11,
+      "code": "chargeTimeType.weeklyFee",
+      "value": "Weekly Fee"
+    },
+    "dueDate": [
+      2017,
+      12,
+      14
+    ],
+    "feeInterval": 1,
+    "chargeCalculationType": {
+      "id": 1,
+      "code": "chargeCalculationType.flat",
+      "value": "Flat"
+    },
+    "percentage": 0,
+    "amountPercentageAppliedTo": 0,
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "amount": 2.000000,
+    "amountPaid": 4.000000,
+    "amountWaived": 0,
+    "amountWrittenOff": 0,
+    "amountOutstanding": 2.000000,
+    "amountOrPercentage": 2.000000,
+    "penalty": false,
+    "isActive": true
+  }
+]
