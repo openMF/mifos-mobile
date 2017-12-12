@@ -1,7 +1,9 @@
 package org.mifos.mobilebanking.ui.views;
 
-import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
+import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.ui.views.base.MVPView;
+
+import java.text.ParseException;
 
 /**
  * @author Vishwajeet
@@ -12,10 +14,10 @@ public interface LoanAccountsDetailView extends MVPView {
      * Should be called when loan account object can successfully accessed
      * from the server to display loan account details on the screen.
      *
-     * @param loanAccount object containing details of each loan account,
+     * @param loanWithAssociations object containing details of each loan account,
      *                    received from server.
      */
-    void showLoanAccountsDetail(LoanAccount loanAccount);
+    void showLoanAccountsDetail(LoanWithAssociations loanWithAssociations) throws ParseException;
 
     /**
      * Should be called if there is any error from client side in getting
