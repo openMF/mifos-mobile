@@ -175,6 +175,17 @@ public class LoanWithAssociations implements Parcelable {
     @SerializedName("transactions")
     private List<Transaction> transactions = new ArrayList<>();
 
+    @SerializedName("loanPurposeName")
+    String loanPurposeName;
+
+    public String getLoanPurposeName(){
+        return loanPurposeName;
+    }
+
+    public void setLoanPurposeName(String loanPurposeName){
+        this.loanPurposeName = loanPurposeName;
+    }
+
     public List<Transaction> getTransactions() {
         return transactions;
     }

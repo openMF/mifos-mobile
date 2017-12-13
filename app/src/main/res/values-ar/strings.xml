@@ -266,5 +266,10 @@
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
+    <string name="transfer_error">Unable to complete transfer, please try again later</string>
+
+
+    <string name="not_applicable">Not Applicable</string>
+
 
 </resources>
