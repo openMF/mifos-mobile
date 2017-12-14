@@ -5,9 +5,10 @@ import android.content.Context;
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.injection.ApplicationContext;
-import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
+import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.views.LoanAccountsDetailView;
+import org.mifos.mobilebanking.utils.Constants;
 
 import javax.inject.Inject;
 
@@ -63,10 +64,10 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
     public void loadLoanAccountDetails(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getLoanAccountDetails(loanId)
+        subscriptions.add(dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, loanId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<LoanAccount>() {
+                .subscribe(new Subscriber<LoanWithAssociations>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -79,10 +80,10 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
                     }
 
                     @Override
-                    public void onNext(LoanAccount loanAccount) {
+                    public void onNext(LoanWithAssociations loanWithAssociations) {
                         getMvpView().hideProgress();
-                        if (loanAccount != null) {
-                            getMvpView().showLoanAccountsDetail(loanAccount);
+                        if (loanWithAssociations != null) {
+                            getMvpView().showLoanAccountsDetail(loanWithAssociations);
                         }
                     }
                 })

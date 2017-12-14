@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
+import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.models.payload.LoansPayload;
 import org.mifos.mobilebanking.models.templates.loans.LoanPurposeOptions;
 import org.mifos.mobilebanking.models.templates.loans.LoanTemplate;
@@ -97,7 +98,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private LoanTemplate loanTemplate;
     private DialogFragment mfDatePicker;
     private LoanState loanState;
-    private LoanAccount loanAccountToModify;
+    private LoanWithAssociations loanWithAssociations;
     private int productId;
     private int purposeId;
     private String disbursementDate;
@@ -123,15 +124,15 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     /**
      * Used when we want to update a Loan Application
      * @param loanState {@link LoanState} is set to {@code LoanState.UPDATE}
-     * @param loanAccountToModify {@link LoanAccount} to modify
+     * @param loanWithAssociations {@link LoanAccount} to modify
      * @return Instance of {@link LoanApplicationFragment}
      */
     public static LoanApplicationFragment newInstance(LoanState loanState,
-                                                      LoanAccount loanAccountToModify) {
+                                                      LoanWithAssociations loanWithAssociations) {
         LoanApplicationFragment fragment = new LoanApplicationFragment();
         Bundle args = new Bundle();
         args.putSerializable(Constants.LOAN_STATE, loanState);
-        args.putParcelable(Constants.LOAN_ACCOUNT, loanAccountToModify);
+        args.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations);
         fragment.setArguments(args);
         return fragment;
     }
@@ -147,7 +148,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 setToolbarTitle(getString(R.string.apply_for_loan));
             } else {
                 setToolbarTitle(getString(R.string.update_loan));
-                loanAccountToModify = getArguments().getParcelable(Constants.LOAN_ACCOUNT);
+                loanWithAssociations = getArguments().getParcelable(Constants.LOAN_ACCOUNT);
             }
         }
     }
@@ -278,7 +279,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 loanTemplate.getTransactionProcessingStrategyId());
         loansPayload.setExpectedDisbursementDate(disbursementDate);
 
-        loanApplicationPresenter.updateLoanAccount(loanAccountToModify.getId(), loansPayload);
+        loanApplicationPresenter.updateLoanAccount(loanWithAssociations.getId(), loansPayload);
     }
 
     /**
@@ -409,19 +410,19 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loanProductAdapter.notifyDataSetChanged();
 
         spLoanProducts.setSelection(loanProductAdapter
-                .getPosition(loanAccountToModify.getLoanProductName()));
+                .getPosition(loanWithAssociations.getLoanProductName()));
         tvAccountNumber.setText(getString(R.string.string_and_string,
-                getString(R.string.account_number) + " ", loanAccountToModify.getAccountNo()));
+                getString(R.string.account_number) + " ", loanWithAssociations.getAccountNo()));
         tvNewLoanApplication.setText(getString(R.string.string_and_string,
                 getString(R.string.update_loan_application) + " ",
-                loanAccountToModify.getClientName()));
-        tilPrincipalAmount.getEditText().setText(String.valueOf(loanAccountToModify.
+                loanWithAssociations.getClientName()));
+        tilPrincipalAmount.getEditText().setText(String.valueOf(loanWithAssociations.
                 getPrincipal()));
-        tvCurrency.setText(loanAccountToModify.getCurrency().getDisplayLabel());
+        tvCurrency.setText(loanWithAssociations.getCurrency().getDisplayLabel());
 
-        tvSubmissionDate.setText(DateHelper.getDateAsString(loanAccountToModify.
+        tvSubmissionDate.setText(DateHelper.getDateAsString(loanWithAssociations.
                 getTimeline().getSubmittedOnDate(), "dd-MM-YYYY"));
-        tvExpectedDisbursementDate.setText(DateHelper.getDateAsString(loanAccountToModify.
+        tvExpectedDisbursementDate.setText(DateHelper.getDateAsString(loanWithAssociations.
                 getTimeline().getExpectedDisbursementDate(), "dd-MM-YYYY"));
         setSubmissionDisburseDate();
     }
@@ -463,9 +464,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loanPurposeAdapter.notifyDataSetChanged();
 
         if (isLoanUpdatePurposesInitialization &&
-                loanAccountToModify.getLoanPurposeName() != null) {
+                loanWithAssociations.getLoanPurposeName() != null) {
             spLoanPurpose.setSelection(loanPurposeAdapter
-                    .getPosition(loanAccountToModify.getLoanPurposeName()));
+                    .getPosition(loanWithAssociations.getLoanPurposeName()));
             isLoanUpdatePurposesInitialization = false;
         } else {
             tvAccountNumber.setText(getString(R.string.string_and_string,
