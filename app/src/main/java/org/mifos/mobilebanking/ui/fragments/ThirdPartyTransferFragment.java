@@ -329,6 +329,11 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         etAmount.setEnabled(false);
     }
 
+    @OnClick(R.id.btn_cancel_transfer)
+    public void cancelTransfer() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+    
     /**
      * It is called whenever any error occurs while executing a request
      * @param msg Error message that tells the user about the problem.
