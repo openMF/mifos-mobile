@@ -170,12 +170,12 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
 
     @Override
     public void showProgress() {
-        showProgressBar();
+        showMifosProgressDialog(getString(R.string.please_wait));
     }
 
     @Override
     public void hideProgress() {
-        hideProgressBar();
+        hideMifosProgressDialog();
     }
 
     @Override
