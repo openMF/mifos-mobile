@@ -267,5 +267,6 @@
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
+    <string name="please_wait">Please Wait...</string>
 
 </resources>
