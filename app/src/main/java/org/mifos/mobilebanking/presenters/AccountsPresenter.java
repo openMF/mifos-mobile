@@ -224,9 +224,6 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Func1<SavingAccount, Boolean>() {
                     @Override
                     public Boolean call(SavingAccount account) {
-                        if (status.getStatus().compareTo(context.getString(R.string.none)) == 0) {
-                            return true;
-                        }
                         if (status.getStatus().compareTo(context.getString(R.string.active)) == 0 &&
                                 account.getStatus().getActive()) {
                             return true;
@@ -262,9 +259,6 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Func1<LoanAccount, Boolean>() {
                     @Override
                     public Boolean call(LoanAccount account) {
-                        if (status.getStatus().compareTo(context.getString(R.string.none)) == 0) {
-                            return true;
-                        }
                         if (status.getStatus().compareTo(context.getString(R.string.inArrears)) == 0
                                 && account.getInArrears()) {
                             return true;
@@ -304,9 +298,6 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Func1<ShareAccount, Boolean>() {
                     @Override
                     public Boolean call(ShareAccount account) {
-                        if (status.getStatus().compareTo(context.getString(R.string.none)) == 0) {
-                            return true;
-                        }
                         if (status.getStatus().compareTo(context.getString(R.string.active)) == 0 &&
                                 account.getStatus().getActive()) {
                             return true;

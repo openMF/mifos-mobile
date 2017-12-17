@@ -26,8 +26,6 @@ public class StatusUtils {
                 getColor(context, R.color.red_light)));
         arrayList.add(new CheckboxStatus(context.getString(R.string.closed), ContextCompat.
                 getColor(context, R.color.black)));
-        arrayList.add(new CheckboxStatus(context.getString(R.string.none), ContextCompat.
-                getColor(context, R.color.primary)));
 
         return arrayList;
     }
@@ -46,8 +44,6 @@ public class StatusUtils {
                 getColor(context, R.color.purple)));
         arrayList.add(new CheckboxStatus(context.getString(R.string.closed), ContextCompat.
                 getColor(context, R.color.black)));
-        arrayList.add(new CheckboxStatus(context.getString(R.string.none), ContextCompat.
-                getColor(context, R.color.primary)));
 
         return arrayList;
     }
@@ -62,8 +58,6 @@ public class StatusUtils {
                 .getColor(context, R.color.light_yellow)));
         arrayList.add(new CheckboxStatus(context.getString(R.string.closed), ContextCompat.
                 getColor(context, R.color.light_blue)));
-        arrayList.add(new CheckboxStatus(context.getString(R.string.none), ContextCompat.
-                getColor(context, R.color.primary)));
 
         return arrayList;
     }
