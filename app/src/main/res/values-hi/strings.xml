@@ -282,6 +282,7 @@
     <string name="about_us_under_construction">"हमारे बारे में" निर्माणाधीन</string>
     <string name="beneficiary_deleted_successfully">लाभार्थी सफलतापूर्वक हटा दिया गया</string>
     <string name="third_party_transfer">तृतीय पक्ष हस्तांतरण</string>
+    <string name="please_wait">कृपया प्रतीक्षा करें...</string>
 
     <!--Customer care details-->
     <string name="need_help">हमसे संपर्क करें</string>
