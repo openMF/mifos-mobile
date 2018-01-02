@@ -38,7 +38,9 @@
                     android:id="@+id/tv_outstanding_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="outstanding_balance"/>
+                    tools:text="outstanding_balance"
+                    android:textStyle="bold"
+                />
 
                 <TextView
                     android:layout_width="match_parent"

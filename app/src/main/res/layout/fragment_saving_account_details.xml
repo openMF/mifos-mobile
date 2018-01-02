@@ -30,11 +30,30 @@
 
                     <TextView
                         android:ellipsize="end"
+                        android:id="@+id/acc_balance"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/account_balance"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="@color/black"/>
+?
+                    <TextView
+                        android:id="@+id/tv_acc_balance"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textAppearance="?android:textAppearanceMediumInverse"
+                        />
+
+                    <TextView
+                        android:ellipsize="end"
                         android:id="@+id/account_status"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:lines="1"
                         android:text="@string/account_status"
+                        android:layout_marginTop="@dimen/default_margin"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/black"/>
 
@@ -78,24 +97,6 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:textAppearanceSmall"/>
-
-
-                    <TextView
-                        android:ellipsize="end"
-                        android:id="@+id/acc_balance"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
-                        android:layout_width="match_parent"
-                        android:text="@string/account_balance"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/tv_acc_balance"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:textAppearance="?android:textAppearanceSmall"
-                    />
 
                     <TextView
                         android:ellipsize="end"
