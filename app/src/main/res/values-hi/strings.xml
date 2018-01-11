@@ -110,6 +110,7 @@
     <string name="empty_repayment_schedule">आपके साथ संबद्ध कोई भी पुनर्भुगतान शेड्यूल नहीं है</string>
     <string name="no_more_transactions_available">कोई और लेनदेन उपलब्ध नहीं है</string>
     <string name="no_transaction">कोई लेनदेन नहीं</string>
+    <string name="transfer_error">स्थानांतरण पूर्ण करने में असमर्थ, कृपया बाद में फिर से प्रयास करेंं</string>
 
     <string name="error_unauthorised">अमान्य उपयोगकर्ता नाम / पासवर्ड</string>
     <string name="error_message_server">सर्वर से प्रतिक्रिया लोड करने में त्रुटि</string>
@@ -388,7 +389,7 @@
         <item>ऋण खाते के लिए भुगतान करने के लिए, खाता अनुभाग पर जाएं, ऋण चुनें और आवश्यक ऋण खाता खोलें
             और भुगतान करें विकल्प पर क्लिक करें।</item>
     </string-array>
-
+    <string name="please_wait">कृपया प्रतीक्षा करें</string>
 
 
 </resources>
