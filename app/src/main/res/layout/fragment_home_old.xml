@@ -353,6 +353,7 @@
                         android:layout_marginTop="@dimen/divider_margin"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                     <TextView
+                        android:autoLink="email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contact_email"
