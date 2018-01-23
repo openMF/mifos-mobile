@@ -120,11 +120,11 @@
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a deposit</string>
     <string name="account_not_active_to_perform_transfer">Account should to be Active to perform a transfer</string>
 
-    <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
-    <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
-    <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
-    <string name="empty_transactions">Their is no transactions associated with you</string>
-    <string name="empty_repayment_schedule">Their is no repayment schedule associated with you</string>
+    <string name="empty_savings_accounts">There is no SavingsAccount associated with you</string>
+    <string name="empty_loan_accounts">There is no LoanAccount associated with you</string>
+    <string name="empty_share_accounts">There is no ShareAccount associated with you</string>
+    <string name="empty_transactions">There is no transactions associated with you</string>
+    <string name="empty_repayment_schedule">There is no repayment schedule associated with you</string>
     <string name="no_more_transactions_available">No more transactions available</string>
     <string name="no_transaction">No Transaction</string>
 
