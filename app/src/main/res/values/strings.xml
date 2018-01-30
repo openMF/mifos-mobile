@@ -405,7 +405,7 @@
             beneficiary, after filling in the other required detail you will be able to create a
             Beneficiary using QR Code</item>
         <item>To make a payment for a loan account, navigate to the Accounts Sections, choose LOAN</item>
-            then open your required Loan Account and click on Make Payment option.
+        then open your required Loan Account and click on Make Payment option.
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
@@ -425,6 +425,7 @@
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
     <string name="please_wait">Please Wait...</string>
     <string name="message">message</string>
+    <string name="no_notification">No Notification</string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>
