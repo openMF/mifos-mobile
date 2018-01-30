@@ -192,7 +192,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getMvpView().showNotificationCount(0);
                     }
 
                     @Override

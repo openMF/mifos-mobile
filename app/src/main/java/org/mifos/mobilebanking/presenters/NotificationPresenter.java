@@ -54,7 +54,9 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
     }
 
     public void loadNotifications() {
+
         checkViewAttached();
+        getMvpView().showProgress();
         subscription.add(manager.getNotifications()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -71,6 +73,7 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
 
                     @Override
                     public void onNext(List<MifosNotification> notificationModels) {
+                        getMvpView().hideProgress();
                         getMvpView().showNotifications(notificationModels);
                     }
                 }));
