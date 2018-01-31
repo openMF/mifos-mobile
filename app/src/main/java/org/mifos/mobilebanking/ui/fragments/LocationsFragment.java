@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -68,21 +69,33 @@ public class LocationsFragment extends BaseFragment implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
 
         addMarker(googleMap);
+        addAnimationToHeadquarter(googleMap);
 
     }
 
     private void addMarker(GoogleMap googleMap) {
-        for (LatLng latLng: getLatLngList()) {
-            googleMap.addMarker(new MarkerOptions().position(latLng));
+        for (LatLng latLng : getLatLngList()) {
+            googleMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.mifos_initiative)));
         }
+    }
+
+    private void addAnimationToHeadquarter(GoogleMap googleMap) {
+
+        List<LatLng> latLngs = getLatLngList();
+        //index 0 will be the Headquarter
+        LatLng headquarterLatLng = latLngs.get(0);
+
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(headquarterLatLng, 16.0f));
+
+
     }
 
     private List<LatLng> getLatLngList() {
         ArrayList<LatLng> latLngs = new ArrayList<>();
         latLngs.add(new LatLng(47.61115, -122.34481));
-        latLngs.add(new LatLng(28.6466758, 76.8123806));
-        latLngs.add(new LatLng(52.1557846, 4.1118158));
-        latLngs.add(new LatLng(37.4024713, -122.3219762));
+        //latLngs.add(new LatLng(28.6466758, 76.8123806));
+        //latLngs.add(new LatLng(52.1557846, 4.1118158));
+        //latLngs.add(new LatLng(37.4024713, -122.3219762));
         return latLngs;
     }
 }
