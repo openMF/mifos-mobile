@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -21,9 +22,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,7 +30,6 @@ import butterknife.ButterKnife;
  */
 
 public class LocationsFragment extends BaseFragment implements OnMapReadyCallback {
-
 
     @BindView(R.id.map)
     MapView mapView;
@@ -67,23 +64,24 @@ public class LocationsFragment extends BaseFragment implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        addMarker(googleMap);
+        LatLng headquarterLatLng = new LatLng(47.61115, -122.34481);
+
+        addMarker(googleMap, headquarterLatLng);
+        addAnimationToHeadquarter(googleMap, headquarterLatLng);
 
     }
 
-    private void addMarker(GoogleMap googleMap) {
-        for (LatLng latLng: getLatLngList()) {
-            googleMap.addMarker(new MarkerOptions().position(latLng));
-        }
+    private void addMarker(GoogleMap googleMap, LatLng headquarterLatLng) {
+
+        googleMap.addMarker(new MarkerOptions().position(headquarterLatLng)
+                .title(getString(R.string.mifos_initiative)));
+
     }
 
-    private List<LatLng> getLatLngList() {
-        ArrayList<LatLng> latLngs = new ArrayList<>();
-        latLngs.add(new LatLng(47.61115, -122.34481));
-        latLngs.add(new LatLng(28.6466758, 76.8123806));
-        latLngs.add(new LatLng(52.1557846, 4.1118158));
-        latLngs.add(new LatLng(37.4024713, -122.3219762));
-        return latLngs;
+    private void addAnimationToHeadquarter(GoogleMap googleMap, LatLng headquarterLatLng) {
+
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(headquarterLatLng, 16.0f));
     }
+
 }
 
