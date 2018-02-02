@@ -1,16 +1,16 @@
 **Summary:**
 
-Summarize your issue in one sentence (what goes wrong, what did you expect to happen)
+Summarize your issue in one sentence (what goes wrong, what did you expect to happen).
 
 **Steps to reproduce:**
 
 How can we reproduce the issue?
 
-**Expected behavior:**
+**Expected behaviour:**
 
 What did you expect the app to do?
 
-**Observed behavior:**
+**Observed behaviour:**
 
 What did you see instead?  Describe your issue in detail here.
 
