@@ -28,6 +28,7 @@ import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.LoanApplicationMvpView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
+import org.mifos.mobilebanking.utils.DatePickerLimit;
 import org.mifos.mobilebanking.utils.MFDatePicker;
 import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.Toaster;
@@ -95,7 +96,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private ArrayAdapter<String> loanPurposeAdapter;
 
     private LoanTemplate loanTemplate;
-    private DialogFragment mfDatePicker;
+    private MFDatePicker mfDatePicker;
     private LoanState loanState;
     private LoanAccount loanAccountToModify;
     private int productId;
@@ -324,6 +325,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     @OnClick(R.id.ll_expected_disbursement_date_edit)
     public void setTvDisbursementOnDate() {
         isDisbursebemntDate = true;
+        mfDatePicker.setDatePickerLimit(DatePickerLimit.CURRENT_MIN);
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }

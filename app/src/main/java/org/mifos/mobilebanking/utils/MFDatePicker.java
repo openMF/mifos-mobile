@@ -28,9 +28,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     static Calendar calendar;
     private String startDateString;
     private long startDate;
-    private boolean isStartOrEnd;
-
-
+    private DatePickerLimit mDatePickerLimit;
 
     static {
 
@@ -51,7 +49,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     OnDatePickListener onDatePickListener;
 
     public MFDatePicker() {
-        isStartOrEnd = true;
+        mDatePickerLimit = DatePickerLimit.CURRENT_MAX;
     }
 
     public static MFDatePicker newInsance(Fragment fragment) {
@@ -74,11 +72,17 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
-        if (isStartOrEnd) {
+
+        if (mDatePickerLimit == DatePickerLimit.CURRENT_MAX) {
             dialog.getDatePicker().setMaxDate(new Date().getTime());
-        } else {
+            dialog.setTitle(null);
+        } else if (mDatePickerLimit == DatePickerLimit.IN_RANGE) {
             dialog.getDatePicker().setMaxDate(new Date().getTime());
             dialog.getDatePicker().setMinDate(startDate);
+            dialog.setTitle(null);
+        } else if (mDatePickerLimit == DatePickerLimit.CURRENT_MIN) {
+            dialog.getDatePicker().setMinDate(new Date().getTime());
+            dialog.setTitle(null);
         }
         return dialog;
     }
@@ -103,8 +107,8 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         public void onDatePicked(String date);
     }
 
-    public void isStartOrEndDate(boolean startOrEnd) {
-        isStartOrEnd = startOrEnd;
+    public void setDatePickerLimit( DatePickerLimit datePickerLimit) {
+        mDatePickerLimit = datePickerLimit;
     }
 
 }

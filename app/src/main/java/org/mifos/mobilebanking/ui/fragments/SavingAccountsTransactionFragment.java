@@ -26,6 +26,7 @@ import org.mifos.mobilebanking.ui.views.SavingAccountsTransactionView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.DatePick;
+import org.mifos.mobilebanking.utils.DatePickerLimit;
 import org.mifos.mobilebanking.utils.MFDatePicker;
 import org.mifos.mobilebanking.utils.Toaster;
 
@@ -211,7 +212,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @OnClick(R.id.tv_end_date)
     public void endDatePick() {
         datePick = DatePick.END;
-        mfDatePicker.isStartOrEndDate(false);
+        mfDatePicker.setDatePickerLimit(DatePickerLimit.IN_RANGE);
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }
