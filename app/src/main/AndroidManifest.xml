@@ -26,6 +26,7 @@
 
         <activity
             android:name="org.mifos.mobilebanking.ui.activities.LoginActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,30 +37,40 @@
 
         <activity
             android:name="org.mifos.mobilebanking.ui.activities.HomeActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/home"/>
         <activity
             android:name="org.mifos.mobilebanking.ui.activities.SavingsAccountContainerActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/saving_account_details"/>
 
         <activity android:name="org.mifos.mobilebanking.ui.activities.PassCodeActivity"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:launchMode="singleTask"/>
 
-        <activity android:name="org.mifos.mobilebanking.ui.activities.LoanAccountContainerActivity"/>
+        <activity android:name="org.mifos.mobilebanking.ui.activities.LoanAccountContainerActivity"
+            android:configChanges="orientation|screenSize"/>
 
-        <activity android:name="org.mifos.mobilebanking.ui.activities.UserProfileActivity"/>
+        <activity android:name="org.mifos.mobilebanking.ui.activities.UserProfileActivity"
+            android:configChanges="orientation|screenSize"/>
 
-        <activity android:name="org.mifos.mobilebanking.ui.activities.RegistrationActivity"/>
+        <activity android:name="org.mifos.mobilebanking.ui.activities.RegistrationActivity"
+            android:configChanges="orientation|screenSize"/>
 
-        <activity android:name="org.mifos.mobilebanking.ui.activities.LoanApplicationActivity"/>
+        <activity android:name="org.mifos.mobilebanking.ui.activities.LoanApplicationActivity"
+            android:configChanges="orientation|screenSize"/>
 
-        <activity android:name="org.mifos.mobilebanking.ui.activities.AccountOverviewActivity"/>
+        <activity android:name="org.mifos.mobilebanking.ui.activities.AccountOverviewActivity"
+            android:configChanges="orientation|screenSize"/>
 
         <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-                  android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:configChanges="orientation|screenSize"/>
 
         <activity android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-                  android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:configChanges="orientation|screenSize"/>
 
         <receiver android:name="org.mifos.mobilebanking.ui.widgets.ChargeAppWidget">
             <intent-filter>
@@ -72,7 +83,7 @@
         </receiver>
 
         <service android:name="org.mifos.mobilebanking.ui.widgets.ChargeWidgetService"
-                 android:permission="android.permission.BIND_REMOTEVIEWS" />
+                                   android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
