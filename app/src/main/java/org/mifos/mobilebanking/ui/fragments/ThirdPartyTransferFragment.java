@@ -27,6 +27,7 @@ import org.mifos.mobilebanking.ui.views.ThirdPartyTransferView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
 
@@ -263,14 +264,18 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
-        pvOne.setCurrentCompeleted();
-        pvTwo.setCurrentActive();
+        if (!Network.isConnected(getActivity())) {
+            Toaster.show(rootView, getString(R.string.internet_not_connected), Toaster.LONG);
+        } else {
+            pvOne.setCurrentCompeleted();
+            pvTwo.setCurrentActive();
 
-        btnPayFrom.setVisibility(View.GONE);
-        tvSelectBeneficary.setVisibility(View.GONE);
-        btnPayTo.setVisibility(View.VISIBLE);
-        spBeneficiary.setVisibility(View.VISIBLE);
-        spPayFrom.setEnabled(false);
+            btnPayFrom.setVisibility(View.GONE);
+            tvSelectBeneficary.setVisibility(View.GONE);
+            btnPayTo.setVisibility(View.VISIBLE);
+            spBeneficiary.setVisibility(View.VISIBLE);
+            spPayFrom.setEnabled(false);
+        }
     }
 
 
