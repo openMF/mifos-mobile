@@ -314,7 +314,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             return;
         }
 
-        if (etAmount.getText().toString().matches("^0*")) {
+        if (Double.parseDouble(etAmount.getText().toString()) == 0) {
             showToaster(getString(R.string.amount_greater_than_zero));
             return;
         }
