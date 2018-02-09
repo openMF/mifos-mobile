@@ -84,6 +84,9 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @BindView(R.id.tv_status)
     TextView tvStatus;
 
+    @BindView(R.id.tv_minRequiredBalance)
+    TextView tvMinRequiredBalanceLabel;
+
     @Inject
     PreferencesHelper preferencesHelper;
 
@@ -196,6 +199,9 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             tvMiniRequiredBalance.setText(getString(R.string.string_and_string, currencySymbol,
                     CurrencyUtil.formatCurrency(getActivity(), savingsWithAssociations.
                     getMinRequiredOpeningBalance())));
+        } else {
+            tvMinRequiredBalanceLabel.setVisibility(View.GONE);
+            tvMiniRequiredBalance.setVisibility(View.GONE);
         }
 
         if (savingsWithAssociations.getSummary().getTotalWithdrawals() != null) {
