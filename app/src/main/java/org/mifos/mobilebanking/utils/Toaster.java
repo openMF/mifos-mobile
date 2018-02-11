@@ -9,16 +9,21 @@ import android.widget.TextView;
 
 import org.mifos.mobilebanking.MifosSelfServiceApp;
 
+import java.util.ArrayList;
+
 public class Toaster {
 
     public static final int INDEFINITE = Snackbar.LENGTH_INDEFINITE;
     public static final int LONG = Snackbar.LENGTH_LONG;
     public static final int SHORT = Snackbar.LENGTH_SHORT;
+    private static ArrayList<Snackbar> snackbarsQueue = new ArrayList<>();
 
     public static void show(View view, String text, int duration) {
+
         InputMethodManager imm = (InputMethodManager) MifosSelfServiceApp.getContext().
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
         final Snackbar snackbar = Snackbar.make(view, text, duration);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id
@@ -28,10 +33,39 @@ public class Toaster {
         snackbar.setAction("OK", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                snackbar.dismiss();
+
             }
         });
-        snackbar.show();
+
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onShown(Snackbar sb) {
+                super.onShown(sb);
+            }
+
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+
+                super.onDismissed(transientBottomBar, event);
+
+                if (!snackbarsQueue.isEmpty()) {
+
+                    snackbarsQueue.remove(0);
+
+                    if (!snackbarsQueue.isEmpty()) {
+
+                        snackbarsQueue.get(0).show();
+                    }
+                }
+            }
+        });
+
+        snackbarsQueue.add(snackbar);
+
+        if (!snackbarsQueue.get(0).isShown()) {
+
+            snackbarsQueue.get(0).show();
+        }
     }
 
     public static void show(View view, int res, int duration) {
