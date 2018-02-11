@@ -367,6 +367,7 @@ public class AccountsFragment extends BaseFragment implements
      */
     @Override
     public void showError(String errorMessage) {
+        swipeRefreshLayout.setRefreshing(false);
         ll_error.setVisibility(View.VISIBLE);
         rvAccounts.setVisibility(View.GONE);
         noAccountText.setText(errorMessage);
@@ -390,13 +391,8 @@ public class AccountsFragment extends BaseFragment implements
         showSwipeRefreshLayout(false);
     }
 
-    public void showSwipeRefreshLayout(final boolean show) {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(show);
-            }
-        });
+    public void showSwipeRefreshLayout(boolean show) {
+        swipeRefreshLayout.setRefreshing(show);
     }
 
     @Override
