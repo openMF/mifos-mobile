@@ -1,6 +1,6 @@
-Fixes #{Issue Number}
+Fixes #Issue_Number
 
-Please Add Screenshots If any UI changes.
+Please Add Screenshots If there are any UI changes.
 
 Please make sure these boxes are checked before submitting your pull request - thanks!
 
