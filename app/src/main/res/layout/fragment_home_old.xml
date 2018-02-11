@@ -345,6 +345,7 @@
                     android:layout_marginRight="@dimen/row_padding_right"
                     android:orientation="vertical">
                     <TextView
+                        android:autoLink="phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/help_line_number"
