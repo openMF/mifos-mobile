@@ -79,7 +79,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private List<Transactions> transactionsList, dummyTransactionList;
     private SavingsWithAssociations savingsWithAssociations;
     private DatePick datePick;
-    private DialogFragment mfDatePicker;
+    private MFDatePicker mfDatePicker;
 
     public static SavingAccountsTransactionFragment newInstance(long savingsId) {
         SavingAccountsTransactionFragment fragment = new SavingAccountsTransactionFragment();
@@ -211,6 +211,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @OnClick(R.id.tv_end_date)
     public void endDatePick() {
         datePick = DatePick.END;
+        mfDatePicker.isStartOrEndDate(false);
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }
@@ -225,6 +226,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         long timeInMillis = DateHelper.getDateAsLongFromString(date, "dd-MM-yyyy");
         if (datePick == DatePick.START) {
             startDateFromPicker = timeInMillis;
+            tvEndDate.setEnabled(true);
             tvStartDate.setText(DateHelper.getDateAsStringFromLong(timeInMillis));
 
         } else {
@@ -273,6 +275,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
                 getText(R.string.end_date));
         transactionListAdapter.
                 setSavingAccountsTransactionList(transactionsList);
+        tvEndDate.setEnabled(false);
     }
 
     @Override
