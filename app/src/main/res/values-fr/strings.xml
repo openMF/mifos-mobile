@@ -61,8 +61,8 @@
     <string name="update_loan_application">Update Loan Application for </string>
     <string name="loan_interest_type">Interest Type</string>
     <string name="amortization">Amortization</string>
-    <string name="interestcalculationperiod">Interest calculation period</string>
-    <string name="repaymentstrategy">Repayment Strategy</string>
+    <string name="interest_calculation_period">Interest calculation period</string>
+    <string name="repayment_strategy">Repayment Strategy</string>
     <string name="pay_to">Pay To</string>
     <string name="pay_from">Pay From</string>
     <string name="cancel">Cancel</string>
@@ -87,9 +87,9 @@
     <string name="pending">Pending</string>
     <string name="matured">Matured</string>
 
-    <string name="empty_savings_accounts">Their is no SavingsAccount associated with you</string>
-    <string name="empty_loan_accounts">Their is no LoanAccount associated with you</string>
-    <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
+    <string name="empty_savings_accounts">Their is no Savings Account associated with you</string>
+    <string name="empty_loan_accounts">Their is no Loan Account associated with you</string>
+    <string name="empty_share_accounts">Their is no Share Account associated with you</string>
     <string name="empty_transactions">Their is no transactions associated with you</string>
     <string name="empty_repayment_schedule">Their is no repayment schedule associated with you</string>
     <string name="no_more_transactions_available">No more transactions available</string>
@@ -150,7 +150,7 @@
     <string name="penalties_waived">Penalties Waived</string>
     <string name="fees_waived">Fee Waived</string>
     <string name="outstanding_balance">Outstanding Balance</string>
-    <string name="next_installement">Next Installment</string>
+    <string name="next_installment">Next Installment</string>
     <string name="due_date">Due Date</string>
     <string name="make_payment">Make Payment</string>
     <string name="loan_type">Loan Type</string>
@@ -187,7 +187,7 @@
     <string name="filter">Filter</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
-    <string name="filterd">Filtered</string>
+    <string name="filtered">Filtered</string>
     <string name="select_date">Please select start date and end date</string>
     <string name="saving_account_transactions_details">Saving Account Transactions</string>
     <string name="no_internet_connection">No Internet Connection</string>
@@ -228,7 +228,7 @@
     <string name="need_help">need help? Contact your support line</string>
     <string name="help_line_number">8000000000</string>
 
-    <string name="transferred_Successfully">Transferred Successfully</string>
+    <string name="transferred_successfully">Transferred Successfully</string>
 
     <string name="total">Total: </string>
 
@@ -244,7 +244,7 @@
     <string name="dialog_action_back">Back</string>
 
     <!--Format Strings-->
-    <string name="double_and_String">%1$.2f %2$s</string>
+    <string name="double_and_string">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
     <string name="string_and_double">%1$s: %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
@@ -261,7 +261,7 @@
     <string name="cancel_transfer">Are you sure you want to cancel the transfer?</string>
     <string name="yes">Yes</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="error_password_not_match">Password doesnot match.</string>
+    <string name="error_password_not_match">Password does not match.</string>
     <string name="app_version">Version %1$s</string>
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
