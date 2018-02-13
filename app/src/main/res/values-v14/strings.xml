@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="confirm_password">Confirm Password</string>
-    <string name="error_password_not_match">Password doesnot match.</string>
+    <string name="error_password_not_match">Password does not match.</string>
     <string name="app_version">Version %1$s</string>
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>

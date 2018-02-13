@@ -62,8 +62,8 @@
     <string name="update_loan_application">Update Loan Application for </string>
     <string name="loan_interest_type">Interest Type</string>
     <string name="amortization">Amortization</string>
-    <string name="interestcalculationperiod">Interest calculation period</string>
-    <string name="repaymentstrategy">Repayment Strategy</string>
+    <string name="interest_calculation_period">Interest calculation period</string>
+    <string name="repayment_strategy">Repayment Strategy</string>
     <string name="pay_to">Pay To</string>
     <string name="pay_from">Pay From</string>
     <string name="cancel">Cancel</string>
@@ -81,7 +81,7 @@
     <string name="rejected">Rejected</string>
     <string name="waiting">Waiting</string>
     <string name="overpaid">Overpaid</string>
-    <string name="inArrears">In Arrears</string>
+    <string name="in_arrears">In Arrears</string>
     <string name="select_you_want">Select all you want to apply</string>
     <string name="filter_savings">Filter Savings Accounts</string>
     <string name="filter_loan">Filter Loan Accounts</string>
@@ -141,7 +141,7 @@
     </string>
     <string name="error_recent_transactions_loading">Error loading in Recent Transactions</string>
     <string name="error_client_charge_loading">Error loading in client charges</string>
-    <string name="error_no_charge">No charges found.</string>
+    <string name="error_no_charge">No charges found</string>
     <string name="error_client_not_found">Client Not Found</string>
     <string name="error_fetching_client">Failed to fetch Client</string>
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>
@@ -197,7 +197,7 @@
     <string name="penalties_waived">Penalties Waived</string>
     <string name="fees_waived">Fee Waived</string>
     <string name="outstanding_balance">Outstanding Balance</string>
-    <string name="next_installement">Next Installment</string>
+    <string name="next_installment">Next Installment</string>
     <string name="due_date">Due Date</string>
     <string name="make_payment">Make Payment</string>
     <string name="loan_type">Loan Type</string>
@@ -233,7 +233,7 @@
     <string name="filter">Filter</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
-    <string name="filterd">Filtered</string>
+    <string name="filtered">Filtered</string>
     <string name="select_date">Please select start date and end date</string>
     <string name="end_date_must_be_greater">End date must be greater than Start date</string>
     <string name="saving_account_transactions_details">Saving Account Transactions</string>
@@ -310,7 +310,7 @@
     <string name="help_line_number">8000000000</string>
     <string name="contact_email">support@mifos.org</string>
 
-    <string name="transferred_Successfully">Transferred Successfully</string>
+    <string name="transferred_successfully">Transferred Successfully</string>
 
     <string name="total">Total: </string>
 
@@ -347,7 +347,7 @@
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>
     <string name="double_amount">%1$.2f</string>
-    <string name="double_and_String">%1$.2f %2$s</string>
+    <string name="double_and_string">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s %2$s</string>
     <string name="string_and_double">%1$s %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
@@ -383,7 +383,7 @@
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>
-        <item>Where can I view my profile informaton?</item>
+        <item>Where can I view my profile information?</item>
         <item>Where can I see my Savings Accounts Transactions?</item>
         <item>What is the use of QR Code?</item>
         <item>How to create a beneficiary using QR Code?</item>
@@ -411,13 +411,13 @@
     <string name="language_type" translatable="false">language_type</string>
     <string name="total_saving_balance">Total Savings Balance</string>
     <string name="total_loan_balance">Total Loan Balance</string>
-    <string name="total_loan_savings_description">Above Loan and Savings accout balance are
+    <string name="total_loan_savings_description">Above Loan and Savings account balance are
         calculated on behalf of your all savings and loan accounts.
     </string>
     <string name="cancel_transfer">Are you sure you want to cancel the transfer?</string>
     <string name="yes">Yes</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="error_password_not_match">Password doesnot match.</string>
+    <string name="error_password_not_match">Password does not match.</string>
     <string name="app_version">Version %1$s</string>
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>

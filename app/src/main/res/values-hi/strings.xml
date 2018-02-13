@@ -69,8 +69,8 @@
     <string name="update_loan_application">ऋण आवेदन अपडेट करें:</string>
     <string name="loan_interest_type">ब्याज प्रकार</string>
     <string name="amortization">ऋणपरिशोध</string>
-    <string name="interestcalculationperiod">ब्याज गणना अवधि</string>
-    <string name="repaymentstrategy">चुकौती रणनीति</string>
+    <string name="interest_calculation_period">ब्याज गणना अवधि</string>
+    <string name="repayment_strategy">चुकौती रणनीति</string>
     <string name="pay_to">को भुगतान करें</string>
     <string name="pay_from">से भुगतान करें</string>
     <string name="cancel">रद्द करें</string>
@@ -201,7 +201,7 @@
     <string name="penalties_waived">दंड पर छूट</string>
     <string name="fees_waived">फीस पर छूट</string>
     <string name="outstanding_balance">बकाया राशि</string>
-    <string name="next_installement">अगली किस्त</string>
+    <string name="next_installment">अगली किस्त</string>
     <string name="due_date">नियत तारीख</string>
     <string name="make_payment">भुगतान करो</string>
     <string name="loan_type">ऋण प्रकार</string>
@@ -238,7 +238,7 @@
     <string name="filter">फिल्टर</string>
     <string name="start_date">आरंभ करने की तिथि</string>
     <string name="end_date">अंतिम तिथि</string>
-    <string name="filterd">फ़िल्टर दकर िया गया</string>
+    <string name="filtered">फ़िल्टर दकर िया गया</string>
     <string name="select_date">प्रारंभ तिथि और समाप्ति तिथि का चयन करें</string>
     <string name="saving_account_transactions_details">बचत खाते का लेनदेन</string>
     <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
@@ -287,7 +287,7 @@
     <string name="need_help">हमसे संपर्क करें</string>
     <string name="help_line_number">8000000000</string>
 
-    <string name="transferred_Successfully">सफलतापूर्वक ट्रांसफर किया गया</string>
+    <string name="transferred_successfully">सफलतापूर्वक ट्रांसफर किया गया</string>
 
     <string name="total">कुल: </string>
 
@@ -321,7 +321,7 @@
 
     <!--Format Strings-->
     <string name="hello_client">नमस्ते, %1$s</string>
-    <string name="double_and_String">%1$.2f %2$s</string>
+    <string name="double_and_string">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
     <string name="string_and_double">%1$s: %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
