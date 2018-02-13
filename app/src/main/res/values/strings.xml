@@ -394,21 +394,22 @@
     </string-array>
 
     <string-array name="faq_ans">
-        <item>To apply for loan account, click on \"Apply for Loan\" given on the Home Screen</item>
+        <item>To apply for loan account, click on \"Apply for Loan\" given on the Home Screen.</item>
         <item>You can view your profile information by clicking on the User Image present on Home
-            Screen</item>
+            Screen.</item>
         <item>To view your savings account transactions, navigate to the Accounts Sections, click on
             the required savings account, click on three dots present on top right and select
-            Transactions option</item>
+            Transactions option.</item>
         <item>QrCode for any loan or savings accounts can be shared with other users which will
             allow them to create a beneficiary.</item>
         <item>In order to create a Beneficiary, goto Beneficiary option from Home Screen then click
             on the circular button present on bottom right, choose the option to Scan which opens
             your device camera, scan the QR Code of other person for which you want to create a
             beneficiary, after filling in the other required detail you will be able to create a
-            Beneficiary using QR Code</item>
-        <item>To make a payment for a loan account, navigate to the Accounts Sections, choose LOAN</item>
-        then open your required Loan Account and click on Make Payment option.
+            Beneficiary using QR Code.</item>
+        <item>To make a payment for a loan account, navigate to the Accounts Sections, choose LOAN
+            then open your required Loan Account and click on Make Payment option.</item>
+
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
