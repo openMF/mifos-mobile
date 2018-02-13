@@ -26,6 +26,11 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     public static final String TAG = "MFDatePicker";
     static String dateSet;
     static Calendar calendar;
+    private String startDateString;
+    private long startDate;
+    private boolean isStartOrEnd;
+
+
 
     static {
 
@@ -46,7 +51,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     OnDatePickListener onDatePickListener;
 
     public MFDatePicker() {
-
+        isStartOrEnd = true;
     }
 
     public static MFDatePicker newInsance(Fragment fragment) {
@@ -69,7 +74,12 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
-        dialog.getDatePicker().setMaxDate(new Date().getTime());
+        if (isStartOrEnd) {
+            dialog.getDatePicker().setMaxDate(new Date().getTime());
+        } else {
+            dialog.getDatePicker().setMaxDate(new Date().getTime());
+            dialog.getDatePicker().setMinDate(startDate);
+        }
         return dialog;
     }
 
@@ -79,7 +89,9 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         Date date = calendar.getTime();
-        onDatePickListener.onDatePicked(DateFormat.format("dd-MM-yyyy", date).toString());
+        onDatePickListener.onDatePicked(startDateString = DateFormat.
+                format("dd-MM-yyyy", date).toString());
+        startDate = DateHelper.getDateAsLongFromString(startDateString, "dd-MM-yyyy");
 
     }
 
@@ -91,5 +103,8 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         public void onDatePicked(String date);
     }
 
+    public void isStartOrEndDate(boolean startOrEnd) {
+        isStartOrEnd = startOrEnd;
+    }
 
 }
