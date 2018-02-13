@@ -152,7 +152,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
      */
     @Override
     public void showTransferredSuccessfully() {
-        Toaster.show(rootView, getString(R.string.transferred_Successfully));
+        Toaster.show(rootView, getString(R.string.transferred_successfully));
         ivSuccess.setVisibility(View.VISIBLE);
         btnClose.setVisibility(View.VISIBLE);
         llTransfer.setVisibility(View.GONE);
