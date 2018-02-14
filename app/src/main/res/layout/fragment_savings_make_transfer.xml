@@ -173,7 +173,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_amount"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:visibility="gone"
                         android:inputType="numberDecimal"
                         android:maxLines="1"/>
@@ -221,7 +221,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/remark"
                         android:visibility="gone"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="text"/>
                     <LinearLayout
                         android:layout_marginTop="@dimen/default_margin"
