@@ -47,6 +47,7 @@
                         android:drawableEnd="@drawable/ic_edit_wrapper"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:text="@string/end_date"
+                        android:enabled="false"
                         android:id="@+id/tv_end_date"/>
                     <android.support.v7.widget.AppCompatButton
                         android:layout_width="wrap_content"
