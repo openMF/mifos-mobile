@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/principal_amount"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:layout_marginRight="@dimen/default_padding"
