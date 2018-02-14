@@ -110,6 +110,11 @@ public class ClientChargeFragment extends BaseFragment implements
         swipeChargeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
+                if (rlErrorLayout.getVisibility() == View.VISIBLE) {
+                    rlErrorLayout.setVisibility(View.GONE);
+                    rvClientCharge.setVisibility(View.VISIBLE);
+                }
                 loadCharges();
             }
         });
@@ -139,8 +144,11 @@ public class ClientChargeFragment extends BaseFragment implements
      * Fetches Charges for {@code id} according to {@code chargeType} provided.
      */
     private void loadCharges() {
-        rlErrorLayout.setVisibility(View.GONE);
-        swipeChargeContainer.setVisibility(View.VISIBLE);
+
+        if (rlErrorLayout.getVisibility() == View.VISIBLE) {
+            rlErrorLayout.setVisibility(View.GONE);
+            rvClientCharge.setVisibility(View.VISIBLE);
+        }
 
         if (chargeType == ChargeType.CLIENT) {
             clientChargePresenter.loadClientCharges(id);
@@ -161,10 +169,10 @@ public class ClientChargeFragment extends BaseFragment implements
     @Override
     public void showErrorFetchingClientCharges(String message) {
         if (!Network.isConnected(getActivity())) {
+            rvClientCharge.setVisibility(View.GONE);
+            rlErrorLayout.setVisibility(View.VISIBLE);
             ivError.setImageResource(R.drawable.ic_error_black_24dp);
             tvError.setText(getString(R.string.internet_not_connected));
-            swipeChargeContainer.setVisibility(View.GONE);
-            rlErrorLayout.setVisibility(View.VISIBLE);
         } else {
             Toaster.show(rootView, message);
         }
@@ -176,7 +184,7 @@ public class ClientChargeFragment extends BaseFragment implements
     @OnClick(R.id.iv_status)
     void onRetry() {
         rlErrorLayout.setVisibility(View.GONE);
-        swipeChargeContainer.setVisibility(View.VISIBLE);
+        rvClientCharge.setVisibility(View.VISIBLE);
         loadCharges();
     }
 
@@ -204,7 +212,7 @@ public class ClientChargeFragment extends BaseFragment implements
             rvClientCharge.setAdapter(clientChargeAdapter);
         } else {
             rlErrorLayout.setVisibility(View.VISIBLE);
-            swipeChargeContainer.setVisibility(View.GONE);
+            rvClientCharge.setVisibility(View.GONE);
             tvError.setText(getString(R.string.error_no_charge));
         }
     }
