@@ -63,7 +63,6 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(),
-                R.style.MaterialDatePickerTheme,
                 this,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
