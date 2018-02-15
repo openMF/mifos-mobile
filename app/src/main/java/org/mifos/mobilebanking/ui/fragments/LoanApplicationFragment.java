@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,8 @@ import butterknife.OnClick;
  * Created by Rajan Maurya on 06/03/17.
  */
 public class LoanApplicationFragment extends BaseFragment implements LoanApplicationMvpView,
-        MFDatePicker.OnDatePickListener, AdapterView.OnItemSelectedListener {
+        MFDatePicker.OnDatePickListener, AdapterView.OnItemSelectedListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.tv_new_loan_application)
     TextView tvNewLoanApplication;
@@ -82,6 +84,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     @BindView(R.id.iv_status)
     ImageView ivReload;
+
+    @BindView(R.id.swipe_add_loan_container)
+    SwipeRefreshLayout swipeAddLoanContainer;
 
     @Inject
     LoanApplicationPresenter loanApplicationPresenter;
@@ -165,6 +170,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             loadLoanTemplate();
         }
 
+        swipeAddLoanContainer.setColorSchemeResources(R.color.blue_light,
+                R.color.green_light, R.color.orange_light, R.color.red_light);
+        swipeAddLoanContainer.setOnRefreshListener(this);
         return rootView;
     }
 
@@ -517,12 +525,14 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     public void showProgress() {
         llAddLoan.setVisibility(View.GONE);
         showProgressBar();
+        swipeAddLoanContainer.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        llAddLoan.setVisibility(View.VISIBLE);
         hideProgressBar();
+        swipeAddLoanContainer.setRefreshing(false);
+        llAddLoan.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -556,5 +566,12 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         super.onDestroyView();
         hideProgressBar();
         loanApplicationPresenter.detachView();
+    }
+
+    @Override
+    public void onRefresh() {
+
+        llError.setVisibility(View.GONE);
+        loanApplicationPresenter.loadLoanApplicationTemplate(LoanState.CREATE);
     }
 }
