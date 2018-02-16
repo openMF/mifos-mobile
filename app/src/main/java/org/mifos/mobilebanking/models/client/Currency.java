@@ -58,6 +58,9 @@ public class Currency implements Parcelable {
     }
 
     public String getDisplaySymbol() {
+        if (displaySymbol == null) {
+            return code;
+        }
         return displaySymbol;
     }
 
