@@ -246,6 +246,9 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
         if (!tvStartDate.getText().equals(startDateText) && isEndDateLargeThanStartDate() &&
                 !tvEndDate.getText().equals(endDateText)) {
+            if (radioGroup.getCheckedRadioButtonId() != -1) {
+                radioGroup.clearCheck();
+            }
             filter(startDateFromPicker, endDateFromPicker);
         } else if (!isEndDateLargeThanStartDate()) {
             Toaster.show(rootView, getString(R.string.end_date_must_be_greater));
