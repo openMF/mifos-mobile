@@ -192,7 +192,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             return;
         }
 
-        if (etRemark.getText().toString().equals("")) {
+        if (etRemark.getText().toString().trim().equals("")) {
             Toaster.show(rootView, getString(R.string.remark_is_mandatory));
             return;
         }
