@@ -195,9 +195,12 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     , resources.getString(R.string.password), resources.getInteger(R.integer.
                             password_minimum_length)));
             return false;
+        } else {
+            getMvpView().showMessage(context
+                    .getString(R.string.error_unauthorised));
+            return false;
         }
 
-        return true;
     }
 
     /**
