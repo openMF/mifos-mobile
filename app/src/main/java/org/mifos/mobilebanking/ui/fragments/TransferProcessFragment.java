@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -159,6 +160,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     public void showTransferredSuccessfully() {
         Toaster.show(rootView, getString(R.string.transferred_successfully));
         ivSuccess.setVisibility(View.VISIBLE);
+        ((Animatable) ivSuccess.getDrawable()).start();
         btnClose.setVisibility(View.VISIBLE);
         llTransfer.setVisibility(View.GONE);
         SavingsAccountContainerActivity.transferSuccess = true;
