@@ -25,7 +25,7 @@
                     android:id="@+id/iv_success"
                     android:visibility="gone"
                     android:layout_marginTop="@dimen/login_margin_top"
-                    app:srcCompat="@drawable/ic_success"/>
+                    app:srcCompat="@drawable/animated_check"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
