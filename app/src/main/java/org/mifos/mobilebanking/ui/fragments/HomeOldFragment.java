@@ -436,6 +436,11 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
      */
     @Override
     public void showError(String errorMessage) {
+        int checkedItem = ((HomeActivity) getActivity()).getCheckedItem();
+        if (checkedItem == R.id.item_about_us || checkedItem == R.id.item_help ||
+                checkedItem == R.id.item_settings) {
+            return;
+        }
         Toaster.show(rootView, errorMessage);
     }
 
