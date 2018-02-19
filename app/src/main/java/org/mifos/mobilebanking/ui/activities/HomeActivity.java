@@ -84,6 +84,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     private Client client;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private boolean isReceiverRegistered;
+    private int menuItem;
     boolean  doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -155,6 +156,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // select which item to open
         clearFragmentBackStack();
         setToolbarElevation();
+        menuItem = item.getItemId();
         switch (item.getItemId()) {
             case R.id.item_home:
                 hideToolbarElevation();
@@ -452,6 +454,10 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             detailsPresenter.registerNotification(token);
         }
     };
+
+    public int getCheckedItem() {
+        return menuItem;
+    }
 
     public void hideKeyboard(View view) {
         InputMethodManager inputManager = (InputMethodManager) this
