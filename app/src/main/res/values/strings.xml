@@ -304,6 +304,7 @@
     <string name="share_msg">Download Self Service app here: https://play.google.com/store/apps/details?id=
     </string>
     <string name="choose">Choose application</string>
+    <string name="not_available">NA</string>
 
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
