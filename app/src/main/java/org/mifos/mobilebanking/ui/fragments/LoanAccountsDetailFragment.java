@@ -164,6 +164,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
             layoutError.setVisibility(View.VISIBLE);
         } else {
             btMakePayment.setVisibility(View.GONE);
+            tvDueDateName.setText(R.string.not_available);
             showDetails(loanAccount);
         }
 
