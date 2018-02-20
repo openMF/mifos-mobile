@@ -107,6 +107,10 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
                                 getAccountOptionsTemplate());
                         getMvpView().showBeneficiaryList(accountOptionAndBeneficiary.
                                 getBeneficiaryList());
+                        if (accountOptionAndBeneficiary.getBeneficiaryList().isEmpty()) {
+                            getMvpView().showError(context.
+                                    getString(R.string.no_beneficiary_found));
+                        }
                     }
                 }));
     }
