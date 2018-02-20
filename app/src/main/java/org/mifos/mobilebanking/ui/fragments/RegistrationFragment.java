@@ -98,6 +98,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             payload.setMobileNumber(etPhoneNumber.getText().toString());
             if (!etPassword.getText().toString().equals(etConfirmPassword.getText().toString())) {
                 Toaster.show(rootView, getString(R.string.error_password_not_match));
+                return;
             } else {
                 payload.setPassword(etPassword.getText().toString());
             }
@@ -150,6 +151,11 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher( etEmail.getText().toString()).matches()) {
             Toaster.show(rootView, getString(R.string.error_invalid_email));
+            return false;
+        } else if (etPassword.getText().toString().trim().length() < 6) {
+            Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
+                        getString(R.string.password), getResources().
+                            getInteger(R.integer.password_minimum_length)));
             return false;
         }
 
