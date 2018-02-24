@@ -154,7 +154,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getMvpView().showUserImage(null);
                     }
 
                     @Override
