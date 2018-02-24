@@ -12,6 +12,7 @@
         <EditText android:id="@+id/et_account_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="@string/account_number" />
     </android.support.design.widget.TextInputLayout>
 
@@ -33,6 +34,7 @@
         <EditText android:id="@+id/et_first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="@string/first_name" />
     </android.support.design.widget.TextInputLayout>
 
@@ -43,6 +45,7 @@
         <EditText android:id="@+id/et_last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="@string/last_name" />
     </android.support.design.widget.TextInputLayout>
 
