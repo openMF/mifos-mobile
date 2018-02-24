@@ -25,6 +25,7 @@
         android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:gravity="top|end"
+        android:visibility="gone"
         android:layout_alignTop="@id/iv_notification_icon"
         android:layout_alignRight="@id/iv_notification_icon"
         android:background="@drawable/notification_circle"/>

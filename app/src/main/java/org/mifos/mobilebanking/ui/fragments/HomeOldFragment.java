@@ -27,6 +27,7 @@ import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.presenters.HomeOldPresenter;
 import org.mifos.mobilebanking.ui.activities.HomeActivity;
 import org.mifos.mobilebanking.ui.activities.LoanApplicationActivity;
+import org.mifos.mobilebanking.ui.activities.NotificationActivity;
 import org.mifos.mobilebanking.ui.activities.UserProfileActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.enums.AccountType;
@@ -132,11 +133,12 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         MenuItem menuItem = menu.findItem(R.id.menu_notifications);
         View count = menuItem.getActionView();
         tvNotificationCount = (TextView) count.findViewById(R.id.tv_notification_indicator);
+        presenter.getUnreadNotificationsCount();
         count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(NotificationFragment.newInstance(),
-                        true, R.id.container);
+
+                startActivity(new Intent(getContext(), NotificationActivity.class));
             }
         });
         super.onCreateOptionsMenu(menu, inflater);
@@ -199,7 +201,6 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     public void showUserInterface() {
         toolbarView = ((HomeActivity) getActivity()).getToolbar().getRootView();
         isDetailVisible = preferencesHelper.overviewState();
-        presenter.getUnreadNotificationsCount();
         if (isDetailVisible) {
             showOverviewState();
         } else {
@@ -209,6 +210,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     /**
      * Opens {@link ClientAccountsFragment} according to the {@code accountType} provided
+     *
      * @param accountType Enum of {@link AccountType}
      */
     public void openAccount(AccountType accountType) {
@@ -218,6 +220,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     /**
      * Provides {@code totalLoanAmount} fetched from server
+     *
      * @param totalLoanAmount Total Loan amount
      */
     @Override
@@ -234,8 +237,10 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         openAccount(AccountType.LOAN);
         ((HomeActivity) getActivity()).setNavigationViewSelectedItem(R.id.item_accounts);
     }
+
     /**
      * Provides {@code totalSavingAmount} fetched from server
+     *
      * @param totalSavingAmount Total Saving amount
      */
     @Override
@@ -255,6 +260,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     /**
      * Fetches Client details and display clientName
+     *
      * @param client Details about client
      */
     @Override
@@ -265,6 +271,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     /**
      * Provides with Client image fetched from server
+     *
      * @param bitmap Client Image
      */
     @Override
@@ -280,7 +287,9 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     @Override
     public void showNotificationCount(int count) {
+
         if (count > 0) {
+            tvNotificationCount.setVisibility(View.VISIBLE);
             tvNotificationCount.setText(String.valueOf(count));
         } else {
             tvNotificationCount.setVisibility(View.GONE);
@@ -291,6 +300,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     public void userImageClicked() {
         startActivity(new Intent(getActivity(), UserProfileActivity.class));
     }
+
     /**
      * Reverses the state of Account Overview section i.e. visible to hidden or vice a versa
      */
@@ -365,7 +375,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     @OnClick(R.id.ll_charges)
     public void chargesClicked() {
         ((HomeActivity) getActivity()).replaceFragment(ClientChargeFragment.newInstance(clientId,
-                ChargeType.CLIENT), true,  R.id.container);
+                ChargeType.CLIENT), true, R.id.container);
     }
 
     /**
@@ -383,7 +393,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     @OnClick(R.id.ll_beneficiaries)
     public void beneficiaries() {
         ((HomeActivity) getActivity()).replaceFragment(BeneficiaryListFragment.
-                newInstance(), true,  R.id.container);
+                newInstance(), true, R.id.container);
     }
 
     @OnClick(R.id.ll_surveys)
