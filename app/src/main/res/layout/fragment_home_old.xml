@@ -22,12 +22,21 @@
                 android:layout_height="wrap_content"
                 android:background="@color/primary_dark"
                 android:padding="@dimen/default_padding">
+
+                <ImageView
+                    android:id="@+id/iv_user_image"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:visibility="invisible"
+                    android:layout_margin="@dimen/margin_16dp" />
+
                 <org.mifos.mobilebanking.utils.CircularImageView
                     android:layout_width="84dp"
                     android:layout_height="84dp"
-                    android:id="@+id/iv_user_image"
+                    android:id="@+id/iv_circular_user_image"
                     tools:src="@drawable/ic_person_black_24dp"
                     app:border_width="1dp"
+                    android:visibility="gone"
                     android:layout_margin="@dimen/margin_16dp"
                     app:border="true"/>
                 <TextView

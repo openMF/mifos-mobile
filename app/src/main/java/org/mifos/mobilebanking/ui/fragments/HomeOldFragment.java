@@ -33,9 +33,11 @@ import org.mifos.mobilebanking.ui.enums.AccountType;
 import org.mifos.mobilebanking.ui.enums.ChargeType;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.HomeOldView;
+import org.mifos.mobilebanking.utils.CircularImageView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.CurrencyUtil;
 import org.mifos.mobilebanking.utils.MaterialDialog;
+import org.mifos.mobilebanking.utils.TextDrawable;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
@@ -67,6 +69,9 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     @BindView(R.id.iv_user_image)
     ImageView ivUserImage;
+
+    @BindView(R.id.iv_circular_user_image)
+    CircularImageView ivCircularUserImage;
 
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
@@ -272,8 +277,36 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                userProfileBitmap = bitmap;
-                ivUserImage.setImageBitmap(bitmap);
+
+                if (bitmap != null) {
+
+                    userProfileBitmap = bitmap;
+                    ivUserImage.setVisibility(View.GONE);
+                    ivCircularUserImage.setVisibility(View.VISIBLE);
+                    ivCircularUserImage.setImageBitmap(bitmap);
+
+                } else {
+
+                    String userName;
+                    if (!preferencesHelper.getUserName().isEmpty()) {
+
+                        userName = preferencesHelper.getUserName();
+                    } else {
+
+                        userName = getString(R.string.app_name);
+                    }
+                    TextDrawable drawable = TextDrawable.builder()
+                            .beginConfig()
+                            .toUpperCase()
+                            .endConfig()
+                            .buildRound(userName.substring(0, 1),
+                                    ContextCompat.getColor(
+                                            getContext(), R.color.primary));
+                    ivUserImage.setVisibility(View.VISIBLE);
+                    ivUserImage.setImageDrawable(drawable);
+                    ivCircularUserImage.setVisibility(View.GONE);
+
+                }
             }
         });
     }
@@ -287,7 +320,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         }
     }
 
-    @OnClick(R.id.iv_user_image)
+    @OnClick({R.id.iv_user_image, R.id.iv_circular_user_image})
     public void userImageClicked() {
         startActivity(new Intent(getActivity(), UserProfileActivity.class));
     }
