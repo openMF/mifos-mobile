@@ -46,6 +46,9 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     @BindView(R.id.tv_date)
     TextView tvDate;
 
+    @BindView(R.id.tv_remark)
+    TextView tvRemark;
+
     @BindView(R.id.iv_success)
     ImageView ivSuccess;
 
@@ -103,6 +106,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         tvPayFrom.setText(String.valueOf(payload.getFromAccountId()));
         tvPayTo.setText(String.valueOf(payload.getToAccountId()));
         tvDate.setText(payload.getTransferDate());
+        tvRemark.setText(payload.getTransferDescription());
 
         return rootView;
     }
