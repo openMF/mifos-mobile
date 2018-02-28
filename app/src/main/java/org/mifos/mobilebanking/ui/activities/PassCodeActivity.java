@@ -146,8 +146,9 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
             passCodeView.clearPasscodeField();
             return;
         }
-
-        if (counter == 3) {
+        String passwordEntered = EncryptionUtil.getHash(passCodeView.getPasscode());
+        boolean isPassCodeCorrect = preferencesHelper.getPasscode().equals(passwordEntered);
+        if (counter == 3 && !isPassCodeCorrect) {
             Toast.makeText(getApplicationContext(), R.string.incorrect_passcode_more_than_three,
                     Toast.LENGTH_SHORT).show();
             preferencesHelper.clear();
@@ -156,8 +157,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         }
 
         if (isPassCodeLengthCorrect()) {
-            String passwordEntered = EncryptionUtil.getHash(passCodeView.getPasscode());
-            if (preferencesHelper.getPasscode().equals(passwordEntered)) {
+            if (isPassCodeCorrect) {
                 BaseApiManager.createService(preferencesHelper.getBaseUrl(),
                         preferencesHelper.getTenant(), preferencesHelper.getToken());
                 startHomeActivity();
