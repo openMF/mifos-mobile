@@ -16,6 +16,7 @@ import org.mifos.mobilebanking.presenters.RegistrationPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.RegistrationView;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
@@ -103,7 +104,11 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             payload.setPassword(etPassword.getText().toString());
             payload.setUsername(etUsername.getText().toString());
 
-            presenter.registerUser(payload);
+            if (Network.isConnected(getContext())) {
+                presenter.registerUser(payload);
+            } else {
+                Toaster.show(rootView, getString(R.string.no_internet_connection));
+            }
         }
 
     }
