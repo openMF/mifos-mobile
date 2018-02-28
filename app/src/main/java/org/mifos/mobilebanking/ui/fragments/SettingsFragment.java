@@ -16,7 +16,7 @@ import org.mifos.mobilebanking.utils.LanguageHelper;
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener {
 
-    private String[] languages;
+    private String[] languages,themes;
     private LanguageCallback languageCallback;
 
 
@@ -30,6 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_preference);
         languages = getActivity().getResources().getStringArray(R.array.languages);
+        themes = getActivity().getResources().getStringArray(R.array.theme);
     }
 
     @Override

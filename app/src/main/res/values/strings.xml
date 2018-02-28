@@ -437,4 +437,14 @@
         <item>hi</item>
     </string-array>
 
+    <string-array name="theme" translatable="false">
+        <item>Day</item>
+        <item>Night</item>
+    </string-array>
+
+    <string-array name="theme_value" translatable="false">
+        <item>day</item>
+        <item>night</item>
+    </string-array>
+
 </resources>
