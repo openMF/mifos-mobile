@@ -54,7 +54,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
     @Inject
     PreferencesHelper preferencesHelper;
 
-    private int counter = 0;
+    private int counter = 1;
     private boolean isInitialScreen;
     private boolean isPassCodeVerified;
     private String strPassCodeEntered;
