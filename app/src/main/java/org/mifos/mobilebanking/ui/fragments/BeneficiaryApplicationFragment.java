@@ -23,6 +23,7 @@ import org.mifos.mobilebanking.ui.enums.BeneficiaryState;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.BeneficiaryApplicationView;
 import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import java.util.ArrayList;
@@ -142,6 +143,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
                 android.R.layout.simple_spinner_item, listAccountType);
         accountTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spAccountType.setOnItemSelectedListener(this);
+        if (!Network.isConnected(getContext())) {
+            spAccountType.setEnabled(false);
+        }
         spAccountType.setAdapter(accountTypeAdapter);
     }
 
