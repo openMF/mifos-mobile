@@ -44,6 +44,7 @@
                     android:gravity="start"
                     android:hint="@string/account_number"
                     android:imeOptions="actionNext"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
