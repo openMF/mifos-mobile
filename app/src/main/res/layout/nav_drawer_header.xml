@@ -4,27 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primary"
     android:gravity="center_vertical|bottom"
-    android:layout_height="wrap_content"
-    android:layout_marginTop='24dp'
+    android:layout_height="192dp"
     android:layout_width="match_parent"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_user_image"
         android:layout_height="65dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_width="65dp"
         android:background="?selectableItemBackgroundBorderless"
         android:clickable="true"
+        android:focusable="true"
         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <org.mifos.mobilebanking.utils.CircularImageView
         android:id="@+id/iv_circular_user_image"
         android:layout_height="65dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_width="65dp"
         app:border="true"
@@ -38,13 +36,9 @@
         android:ellipsize="end"
         android:id="@+id/tv_user_name"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
         android:lines="1"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"/>
-
 </LinearLayout>
