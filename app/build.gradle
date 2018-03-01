@@ -111,6 +111,9 @@ dependencies {
     implementation "com.google.zxing:core:$rootProject.zxingcoreVersion"
     implementation "me.dm7.barcodescanner:zxing:$rootProject.zxingbarcodescannerVersion"
 
+    //sweet error dependency
+    implementation "com.github.therajanmaurya:Sweet-Error:$rootProject.sweeterrorVersion"
+
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"

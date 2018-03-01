@@ -27,9 +27,10 @@
         android:id="@+id/fab_add_beneficiary"
         android:clickable="true"/>
 
-  <include
-      layout="@layout/layout_error"
-      android:visibility="gone"
-      android:id="@+id/view_error"/>
+    <include
+        layout="@layout/layout_sweet_exception_handler"
+        android:visibility="gone"
+        android:id="@+id/layout_error"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

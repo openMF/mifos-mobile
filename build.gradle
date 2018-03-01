@@ -54,4 +54,6 @@ ext {
     zxingbarcodescannerVersion = '1.8.4'
     rxjavaVersion = '2.1.9'
     rxandroidVersion = '2.0.2'
+    sweeterrorVersion = '1.0.0'
+
 }
