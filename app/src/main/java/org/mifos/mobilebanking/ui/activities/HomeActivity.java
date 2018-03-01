@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -249,6 +250,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                hideKeyboard(drawerView);
             }
         };
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -452,5 +454,12 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             detailsPresenter.registerNotification(token);
         }
     };
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputManager = (InputMethodManager) this
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager
+                .RESULT_UNCHANGED_SHOWN);
+    }
 
 }
