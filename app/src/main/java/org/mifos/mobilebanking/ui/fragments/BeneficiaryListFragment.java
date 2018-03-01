@@ -10,8 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
@@ -22,6 +23,7 @@ import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.BeneficiariesView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DividerItemDecoration;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dilpreet on 14/6/17.
@@ -48,11 +51,8 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     @BindView(R.id.fab_add_beneficiary)
     FloatingActionButton fabAddBeneficiary;
 
-    @BindView(R.id.view_error)
-    View viewError;
-
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @Inject
     BeneficiaryListPresenter beneficiaryListPresenter;
@@ -62,6 +62,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
 
     private View rootView;
     private List<Beneficiary> beneficiaryList;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static BeneficiaryListFragment newInstance() {
         BeneficiaryListFragment fragment = new BeneficiaryListFragment();
@@ -76,6 +77,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
         setToolbarTitle(getString(R.string.beneficiaries));
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
 
         showUserInterface();
 
@@ -131,13 +133,20 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         });
     }
 
+
+    @OnClick(R.id.btn_try_again)
+    public void retryClicked() {
+        beneficiaryListPresenter.loadBeneficiaries();
+    }
+
     /**
      * Refreshes {@code beneficiaryList} by calling {@code loadBeneficiaries()}
      */
+
     @Override
     public void onRefresh() {
-        if (viewError.getVisibility() == View.VISIBLE) {
-            viewError.setVisibility(View.GONE);
+        if (layoutError.getVisibility() == View.VISIBLE) {
+            layoutError.setVisibility(View.GONE);
             rvBeneficiaries.setVisibility(View.VISIBLE);
         }
         beneficiaryListPresenter.loadBeneficiaries();
@@ -165,10 +174,14 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
      */
     @Override
     public void showError(String msg) {
-        rvBeneficiaries.setVisibility(View.GONE);
-        viewError.setVisibility(View.VISIBLE);
-        tvStatus.setText(msg);
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+
+        if (!Network.isConnected(getActivity())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(rvBeneficiaries, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(msg,
+                    rvBeneficiaries, layoutError);
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -178,7 +191,11 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     @Override
     public void showBeneficiaryList(List<Beneficiary> beneficiaryList) {
         this.beneficiaryList = beneficiaryList;
-        beneficiaryListAdapter.setBeneficiaryList(beneficiaryList);
+        if (beneficiaryList.size() != 0) {
+            beneficiaryListAdapter.setBeneficiaryList(beneficiaryList);
+        } else {
+            showEmptyBeneficiary();
+        }
     }
 
     @Override
@@ -206,4 +223,15 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         super.onDestroyView();
         beneficiaryListPresenter.detachView();
     }
+
+    /**
+     * Shows an error layout when this function is called.
+     */
+    public void showEmptyBeneficiary() {
+        sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.beneficiary),
+                getString(R.string.beneficiary),
+                R.drawable.ic_beneficiaries_48px, rvBeneficiaries, layoutError);
+        rvBeneficiaries.setVisibility(View.GONE);
+    }
+
 }

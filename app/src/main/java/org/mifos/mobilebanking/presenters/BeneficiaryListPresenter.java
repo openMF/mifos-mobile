@@ -70,7 +70,7 @@ public class BeneficiaryListPresenter extends BasePresenter<BeneficiariesView> {
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showError(context
-                                .getString(R.string.error_fetching_beneficiaries));
+                                .getString(R.string.beneficiaries));
                     }
 
                     @Override
