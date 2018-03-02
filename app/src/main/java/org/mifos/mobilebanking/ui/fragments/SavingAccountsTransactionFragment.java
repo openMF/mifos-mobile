@@ -180,7 +180,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
      */
     @Override
     public void showFilteredList(List<Transactions> list) {
-        Toaster.show(rootView, getString(R.string.filterd));
+        Toaster.show(rootView, getString(R.string.filtered));
         transactionListAdapter.
                 setSavingAccountsTransactionList(list);
     }

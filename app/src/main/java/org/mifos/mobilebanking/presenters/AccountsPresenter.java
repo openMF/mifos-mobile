@@ -224,8 +224,8 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Func1<SavingAccount, Boolean>() {
                     @Override
                     public Boolean call(SavingAccount account) {
-                        if (status.getStatus().compareTo(context.getString(R.string.active)) == 0 &&
-                                account.getStatus().getActive()) {
+                        if (status.getStatus().compareTo(context.getString(R.string.
+                                        active)) == 0 && account.getStatus().getActive()) {
                             return true;
                         } else if (status.getStatus().compareTo(context.getString(R.string.
                                 approved)) == 0 && account.getStatus().getApproved()) {
@@ -259,8 +259,8 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Func1<LoanAccount, Boolean>() {
                     @Override
                     public Boolean call(LoanAccount account) {
-                        if (status.getStatus().compareTo(context.getString(R.string.inArrears)) == 0
-                                && account.getInArrears()) {
+                        if (status.getStatus().compareTo(context.getString(R.string.in_arrears))
+                                == 0 && account.getInArrears()) {
                             return true;
                         } else if (status.getStatus().compareTo(context.getString(R.string.
                                 active)) == 0 && account.getStatus().getActive()) {
