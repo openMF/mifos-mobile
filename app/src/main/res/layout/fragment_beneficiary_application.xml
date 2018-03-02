@@ -44,6 +44,7 @@
                     android:gravity="start"
                     android:hint="@string/account_number"
                     android:imeOptions="actionNext"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
@@ -60,6 +61,7 @@
                     android:gravity="start"
                     android:hint="@string/office_name"
                     android:imeOptions="actionNext"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
@@ -92,7 +94,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/beneficiary_name"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
