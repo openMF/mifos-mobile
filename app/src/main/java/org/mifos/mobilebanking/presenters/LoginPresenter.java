@@ -190,7 +190,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         } else if (correctUsername.contains(" ")) {
             getMvpView().showUsernameError(context.getString(
                     R.string.error_validation_cannot_contain_spaces,
-                    correctUsername, context.getString(R.string.not_contain_username)));
+                    resources.getString(R.string.username),
+                    context.getString(R.string.not_contain_username)));
             return false;
         } else if (password == null || password.isEmpty()) {
             getMvpView().showPasswordError(context.getString(R.string.error_validation_blank,
