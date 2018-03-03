@@ -103,7 +103,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
                 payload.setPassword(etPassword.getText().toString());
             }
             payload.setPassword(etPassword.getText().toString());
-            payload.setUsername(etUsername.getText().toString());
+            payload.setUsername(etUsername.getText().toString().replace(" ", ""));
 
             if (Network.isConnected(getContext())) {
                 presenter.registerUser(payload);
@@ -124,7 +124,16 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.
                     username)));
             return false;
-        } else if (etFirstName.getText().toString().trim().length() == 0) {
+        } else if (etUsername.getText().toString().trim().length() < 5) {
+            Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
+                    getString(R.string.username),
+                    getResources().getInteger(R.integer.username_minimum_length)));
+            return false;
+        } else if (etUsername.getText().toString().trim().contains(" ")) {
+            Toaster.show(rootView, getString(R.string.error_validation_cannot_contain_spaces,
+                    getString(R.string.username), getString(R.string.not_contain_username)));
+            return false;
+        } else if (etFirstName.getText().length() == 0) {
             Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.
                     first_name)));
             return false;
