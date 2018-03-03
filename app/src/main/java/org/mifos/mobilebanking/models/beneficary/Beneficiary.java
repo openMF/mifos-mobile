@@ -32,7 +32,7 @@ public class Beneficiary implements Parcelable {
     private String accountNumber;
 
     @SerializedName("transferLimit")
-    private Integer transferLimit;
+    private Double transferLimit;
 
     public Integer getId() {
         return id;
@@ -82,11 +82,11 @@ public class Beneficiary implements Parcelable {
         this.accountNumber = accountNumber;
     }
 
-    public Integer getTransferLimit() {
+    public Double getTransferLimit() {
         return transferLimit;
     }
 
-    public void setTransferLimit(Integer transferLimit) {
+    public void setTransferLimit(Double transferLimit) {
         this.transferLimit = transferLimit;
     }
 
@@ -116,7 +116,7 @@ public class Beneficiary implements Parcelable {
         this.clientName = in.readString();
         this.accountType = in.readParcelable(AccountType.class.getClassLoader());
         this.accountNumber = in.readString();
-        this.transferLimit = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.transferLimit = (Double) in.readValue(Double.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Beneficiary> CREATOR =

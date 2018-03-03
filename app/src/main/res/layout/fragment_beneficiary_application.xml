@@ -80,6 +80,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
+                    android:maxLength="9"
                     android:paddingBottom="16dp"/>
             </android.support.design.widget.TextInputLayout>
 
