@@ -186,7 +186,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     R.string.error_validation_cannot_contain_spaces,
                     correctUsername, context.getString(R.string.not_contain_username)));
             return false;
-        } else if (password == null || password.matches("\\s*") || password.isEmpty()) {
+        } else if (password == null || password.isEmpty()) {
             getMvpView().showPasswordError(context.getString(R.string.error_validation_blank,
                     context.getString(R.string.password)));
             return false;
