@@ -134,6 +134,12 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.
                     password)));
             return false;
+        } else if (etPassword.getText().toString().trim().length()
+                                        < etPassword.getText().toString().length()) {
+            Toaster.show(rootView,
+                    getString(R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
+                    getString(R.string.password)));
+            return false;
         } else if (etUsername.getText().length() < 6) {
             Toaster.show(rootView, getString(R.string.error_username_greater_than_six));
             return false;
