@@ -13,10 +13,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by dilpreet on 14/6/17.
@@ -25,7 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 public class BeneficiaryListPresenter extends BasePresenter<BeneficiariesView> {
 
     private DataManager dataManager;
-    private CompositeSubscription subscription;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -40,13 +40,13 @@ public class BeneficiaryListPresenter extends BasePresenter<BeneficiariesView> {
     public BeneficiaryListPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void detachView() {
         super.detachView();
-        subscription.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -57,12 +57,12 @@ public class BeneficiaryListPresenter extends BasePresenter<BeneficiariesView> {
     public void loadBeneficiaries() {
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(dataManager.getBeneficiaryList()
+        compositeDisposable.add(dataManager.getBeneficiaryList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Beneficiary>>() {
+                .subscribeWith(new DisposableObserver<List<Beneficiary>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

@@ -14,11 +14,12 @@ import org.mifos.mobilebanking.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+
 
 /**
  * Created by Rajan Maurya on 06/03/17.
@@ -26,7 +27,7 @@ import rx.subscriptions.CompositeSubscription;
 public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
@@ -41,7 +42,7 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     public LoanApplicationPresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -64,12 +65,12 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     public void loadLoanApplicationTemplate(final LoanState loanState) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getLoanTemplate()
+        compositeDisposable.add(dataManager.getLoanTemplate()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<LoanTemplate>() {
+                .subscribeWith(new DisposableObserver<LoanTemplate>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override
@@ -101,12 +102,12 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     public void loadLoanApplicationTemplateByProduct(int productId, final LoanState loanState) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getLoanTemplateByProduct(productId)
+        compositeDisposable.add(dataManager.getLoanTemplateByProduct(productId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<LoanTemplate>() {
+                .subscribeWith(new DisposableObserver<LoanTemplate>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override
@@ -137,12 +138,12 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     public void createLoansAccount(LoansPayload loansPayload) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.createLoansAccount(loansPayload)
+        compositeDisposable.add(dataManager.createLoansAccount(loansPayload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -171,12 +172,12 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
     public void updateLoanAccount(long loanId, LoansPayload loansPayload) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.updateLoanAccount(loanId, loansPayload)
+        compositeDisposable.add(dataManager.updateLoanAccount(loanId, loansPayload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

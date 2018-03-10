@@ -18,12 +18,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by Rajan Maurya on 23/10/16.
@@ -32,7 +33,7 @@ import rx.subscriptions.CompositeSubscription;
 public class AccountsPresenter extends BasePresenter<AccountsView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the AccountsPresenter by automatically injecting an instance of
@@ -46,7 +47,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public AccountsPresenter(@ApplicationContext Context context, DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -68,12 +69,12 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public void loadClientAccounts() {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getClientAccounts()
+        compositeDisposable.add(dataManager.getClientAccounts()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ClientAccounts>() {
+                .subscribeWith(new DisposableObserver<ClientAccounts>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -103,12 +104,12 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public void loadAccounts(final String accountType) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getAccounts(accountType)
+        compositeDisposable.add(dataManager.getAccounts(accountType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ClientAccounts>() {
+                .subscribeWith(new DisposableObserver<ClientAccounts>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -148,9 +149,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public List<SavingAccount> searchInSavingsList(List<SavingAccount> accounts,
                                             final String input) {
         return Observable.from(accounts)
-                .filter(new Func1<SavingAccount, Boolean>() {
+                .filter(new Function<SavingAccount, Boolean>() {
                     @Override
-                    public Boolean call(SavingAccount savingAccount) {
+                    public Boolean apply(SavingAccount savingAccount) {
                         return savingAccount.getProductName().toLowerCase().contains(input.
                                 toLowerCase());
                     }
@@ -167,9 +168,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public List<LoanAccount> searchInLoanList(List<LoanAccount> accounts,
                                                    final String input) {
         return Observable.from(accounts)
-                .filter(new Func1<LoanAccount, Boolean>() {
+                .filter(new Function<LoanAccount, Boolean>() {
                     @Override
-                    public Boolean call(LoanAccount loanAccount) {
+                    public Boolean apply(LoanAccount loanAccount) {
                         return loanAccount.getProductName().toLowerCase().contains(input.
                                 toLowerCase());
                     }
@@ -186,9 +187,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public List<ShareAccount> searchInSharesList(List<ShareAccount> accounts,
                                                    final String input) {
         return Observable.from(accounts)
-                .filter(new Func1<ShareAccount, Boolean>() {
+                .filter(new Function<ShareAccount, Boolean>() {
                     @Override
-                    public Boolean call(ShareAccount shareAccount) {
+                    public Boolean apply(ShareAccount shareAccount) {
                         return shareAccount.getProductName().toLowerCase().contains(input.
                                 toLowerCase());
                     }
@@ -203,9 +204,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<CheckboxStatus> getCheckedStatus(List<CheckboxStatus> statusModelList) {
         return Observable.from(statusModelList)
-                .filter(new Func1<CheckboxStatus, Boolean>() {
+                .filter(new Function<CheckboxStatus, Boolean>() {
                     @Override
-                    public Boolean call(CheckboxStatus checkboxStatus) {
+                    public Boolean apply(CheckboxStatus checkboxStatus) {
                         return checkboxStatus.isChecked();
                     }
                 }).toList().toBlocking().single();
@@ -221,9 +222,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public List<SavingAccount> getFilteredSavingsAccount(List<SavingAccount> accounts,
                                                          final CheckboxStatus status) {
         return Observable.from(accounts)
-                .filter(new Func1<SavingAccount, Boolean>() {
+                .filter(new Function<SavingAccount, Boolean>() {
                     @Override
-                    public Boolean call(SavingAccount account) {
+                    public Boolean apply(SavingAccount account) {
                         if (status.getStatus().compareTo(context.getString(R.string.
                                         active)) == 0 && account.getStatus().getActive()) {
                             return true;
@@ -256,9 +257,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public List<LoanAccount> getFilteredLoanAccount(List<LoanAccount> accounts,
                                                          final CheckboxStatus status) {
         return Observable.from(accounts)
-                .filter(new Func1<LoanAccount, Boolean>() {
+                .filter(new Function<LoanAccount, Boolean>() {
                     @Override
-                    public Boolean call(LoanAccount account) {
+                    public Boolean apply(LoanAccount account) {
                         if (status.getStatus().compareTo(context.getString(R.string.in_arrears))
                                 == 0 && account.getInArrears()) {
                             return true;
@@ -295,9 +296,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
     public List<ShareAccount> getFilteredShareAccount(List<ShareAccount> accounts,
                                                         final CheckboxStatus status) {
         return Observable.from(accounts)
-                .filter(new Func1<ShareAccount, Boolean>() {
+                .filter(new Function<ShareAccount, Boolean>() {
                     @Override
-                    public Boolean call(ShareAccount account) {
+                    public Boolean apply(ShareAccount account) {
                         if (status.getStatus().compareTo(context.getString(R.string.active)) == 0 &&
                                 account.getStatus().getActive()) {
                             return true;

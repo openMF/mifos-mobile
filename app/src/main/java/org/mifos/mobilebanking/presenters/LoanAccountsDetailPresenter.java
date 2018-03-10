@@ -11,10 +11,11 @@ import org.mifos.mobilebanking.ui.views.LoanAccountsDetailView;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * @author Vishwajeet
@@ -24,7 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetailView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
@@ -40,7 +41,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
             @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -63,12 +64,12 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
     public void loadLoanAccountDetails(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getLoanAccountDetails(loanId)
+        compositeDisposable.add(dataManager.getLoanAccountDetails(loanId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<LoanAccount>() {
+                .subscribeWith(new DisposableObserver<LoanAccount>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override

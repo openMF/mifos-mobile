@@ -14,10 +14,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * @author Vishwajeet
@@ -26,7 +27,7 @@ import rx.subscriptions.CompositeSubscription;
 public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscription;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the ClientChargePresenter by automatically injecting an instance of
@@ -42,7 +43,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
     public ClientChargePresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -53,18 +54,18 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscription.clear();
+        compositeDisposable.clear();
     }
 
     public void loadClientCharges(long clientId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(dataManager.getClientCharges(clientId)
+        compositeDisposable.add(dataManager.getClientCharges(clientId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Page<Charge>>() {
+                .subscribeWith(new DisposableObserver<Page<Charge>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override
@@ -88,12 +89,12 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
     public void loadLoanAccountCharges(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(dataManager.getLoanCharges(loanId)
+        compositeDisposable.add(dataManager.getLoanCharges(loanId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Charge>>() {
+                .subscribeWith(new DisposableObserver<List<Charge>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override
@@ -115,12 +116,12 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
     public void loadSavingsAccountCharges(long savingsId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(dataManager.getSavingsCharges(savingsId)
+        compositeDisposable.add(dataManager.getSavingsCharges(savingsId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Charge>>() {
+                .subscribeWith(new DisposableObserver<List<Charge>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override
@@ -141,12 +142,12 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
 
     public void loadClientLocalCharges() {
         checkViewAttached();
-        subscription.add(dataManager.getClientLocalCharges()
+        compositeDisposable.add(dataManager.getClientLocalCharges()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Page<Charge>>() {
+                .subscribeWith(new DisposableObserver<Page<Charge>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override

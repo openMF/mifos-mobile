@@ -5,11 +5,11 @@ import org.mifos.mobilebanking.models.Page;
 import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.client.ClientAccounts;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * @author Vishwajeet

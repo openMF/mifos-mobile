@@ -10,11 +10,11 @@ import org.mifos.mobilebanking.ui.views.BeneficiaryDetailView;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by dilpreet on 16/6/17.
@@ -23,7 +23,7 @@ import rx.subscriptions.CompositeSubscription;
 public class BeneficiaryDetailPresenter extends BasePresenter<BeneficiaryDetailView> {
 
     private DataManager manager;
-    private CompositeSubscription subscription;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -38,13 +38,13 @@ public class BeneficiaryDetailPresenter extends BasePresenter<BeneficiaryDetailV
     public BeneficiaryDetailPresenter(DataManager manager, @ApplicationContext Context context) {
         super(context);
         this.manager = manager;
-        subscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void detachView() {
         super.detachView();
-        subscription.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -56,12 +56,12 @@ public class BeneficiaryDetailPresenter extends BasePresenter<BeneficiaryDetailV
     public void deleteBeneficiary(long beneficiaryId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(manager.deleteBeneficiary(beneficiaryId)
+        compositeDisposable.add(manager.deleteBeneficiary(beneficiaryId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

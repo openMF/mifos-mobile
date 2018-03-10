@@ -31,9 +31,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.functions.Func1;
+
 
 /**
  * @author Vishwajeet
@@ -87,9 +89,9 @@ public class DataManager {
 
     public Observable<Page<Charge>> getClientCharges(long clientId) {
         return baseApiManager.getClientChargeApi().getClientChargeList(clientId)
-                .concatMap(new Func1<Page<Charge>, Observable<? extends Page<Charge>>>() {
+                .concatMap(new Function<Page<Charge>, ObservableSource<? extends Page<Charge>>>() {
                     @Override
-                    public Observable<? extends Page<Charge>> call(Page<Charge> chargePage) {
+                    public Observable<? extends Page<Charge>> apply(Page<Charge> chargePage) {
                         return databaseHelper.syncCharges(chargePage);
                     }
                 });

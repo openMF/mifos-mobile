@@ -12,10 +12,10 @@ import org.mifos.mobilebanking.ui.views.RecentTransactionsView;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Vishwajeet
@@ -24,7 +24,7 @@ import rx.subscriptions.CompositeSubscription;
 public class RecentTransactionsPresenter extends BasePresenter<RecentTransactionsView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposables;
 
     private int limit = 50;
     private boolean loadmore;
@@ -44,7 +44,7 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
             @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposables = new CompositeDisposable();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposables.clear();
     }
 
     /**
@@ -81,12 +81,12 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
     public void loadRecentTransactions(int offset, int limit) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getRecentTransactions(offset, limit)
+        compositeDisposables.add(dataManager.getRecentTransactions(offset, limit)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Page<Transaction>>() {
+                .subscribeWith(new DisposableObserver<Page<Transaction>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override
@@ -115,4 +115,3 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
         );
     }
 }
-

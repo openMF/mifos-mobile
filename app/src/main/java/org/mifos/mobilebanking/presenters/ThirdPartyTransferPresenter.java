@@ -17,14 +17,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by dilpreet on 21/6/17.
@@ -33,7 +34,7 @@ import rx.subscriptions.CompositeSubscription;
 public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransferView> {
 
     private DataManager dataManager;
-    private CompositeSubscription subscription;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the RecentTransactionsPresenter by automatically injecting an instance of
@@ -49,7 +50,7 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
             @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -60,7 +61,7 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
     @Override
     public void detachView() {
         super.detachView();
-        subscription.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -73,12 +74,12 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
         checkViewAttached();
         getMvpView().showProgress();
 
-        subscription.add(Observable.zip(dataManager.getThirdPartyTransferTemplate(),
+        compositeDisposable.add(Observable.zip(dataManager.getThirdPartyTransferTemplate(),
                 dataManager.getBeneficiaryList(),
-                new Func2<AccountOptionsTemplate, List<Beneficiary>, AccountOptionAndBeneficiary>()
+                new BiFunction<AccountOptionsTemplate, List<Beneficiary>, AccountOptionAndBeneficiary>()
                 {
                     @Override
-                    public AccountOptionAndBeneficiary call(AccountOptionsTemplate
+                    public AccountOptionAndBeneficiary apply(AccountOptionsTemplate
                                                                     accountOptionsTemplate,
                                                             List<Beneficiary> beneficiaries) {
                         return new AccountOptionAndBeneficiary(accountOptionsTemplate,
@@ -87,9 +88,9 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<AccountOptionAndBeneficiary>() {
+                .subscribeWith(new DisposableObserver<AccountOptionAndBeneficiary>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -119,16 +120,17 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
     public List<String> getAccountNumbersFromAccountOptions(List<AccountOption> accountOptions) {
         final List<String> accountNumbers = new ArrayList<>();
         Observable.from(accountOptions)
-                .flatMap(new Func1<AccountOption, Observable<String>>() {
+                .flatMap(new Function<AccountOption, Observable<String>>() {
                     @Override
-                    public Observable<String> call(AccountOption accountOption) {
+                    public Observable<String> apply(AccountOption accountOption) {
                         return Observable.just(accountOption.getAccountNo());
                     }
                 })
-                .subscribe(new Action1<String>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void accept(String s) throws Exception {
                         accountNumbers.add(s);
+
                     }
                 });
         return accountNumbers;
@@ -142,16 +144,17 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
     public List<String> getAccountNumbersFromBeneficiaries(final List<Beneficiary> beneficiaries) {
         final List<String> accountNumbers = new ArrayList<>();
         Observable.from(beneficiaries)
-                .flatMap(new Func1<Beneficiary, Observable<String>>() {
+                .flatMap(new Function<Beneficiary, Observable<String>>() {
                     @Override
-                    public Observable<String> call(Beneficiary beneficiary) {
+                    public Observable<String> apply(Beneficiary beneficiary) {
                         return Observable.just(beneficiary.getAccountNumber());
                     }
                 })
-                .subscribe(new Action1<String>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void accept(String s) throws Exception {
                         accountNumbers.add(s);
+
                     }
                 });
         return accountNumbers;
@@ -169,15 +172,15 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
     public AccountOption searchAccount(List<AccountOption> accountOptions, final String accountNo) {
         final AccountOption[] account = {new AccountOption()};
         Observable.from(accountOptions)
-                .filter(new Func1<AccountOption, Boolean>() {
+                .filter(new Function<AccountOption, Boolean>() {
                     @Override
-                    public Boolean call(AccountOption accountOption) {
+                    public Boolean apply(AccountOption accountOption) {
                         return accountOption.getAccountNo().equals(accountNo);
                     }
                 })
-                .subscribe(new Action1<AccountOption>() {
+                .subscribe(new Consumer<AccountOption>() {
                     @Override
-                    public void call(AccountOption accountOption) {
+                    public void accept(AccountOption accountOption) throws Exception {
                         account[0] = accountOption;
                     }
                 });

@@ -10,12 +10,14 @@ import org.mifos.mobilebanking.utils.NotificationComparator;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import rx.Observable;
-import rx.functions.Func0;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+
 
 /**
  * Created by Rajan Maurya on 02/03/17.
@@ -28,7 +30,7 @@ public class DatabaseHelper {
     }
 
     public Observable<Page<Charge>> syncCharges(final Page<Charge> charges) {
-        return Observable.defer(new Func0<Observable<Page<Charge>>>() {
+        return Observable.defer(new Callable<ObservableSource<? extends Page<Charge>>>() {
             @Override
             public Observable<Page<Charge>> call() {
                 for (Charge charge : charges.getPageItems()) {
@@ -40,7 +42,7 @@ public class DatabaseHelper {
     }
 
     public Observable<Page<Charge>> getClientCharges() {
-        return Observable.defer(new Func0<Observable<Page<Charge>>>() {
+        return Observable.defer(new Callable<ObservableSource<? extends Page<Charge>>>() {
             @Override
             public Observable<Page<Charge>> call() {
                 List<Charge> charges = SQLite.select()
@@ -54,7 +56,7 @@ public class DatabaseHelper {
     }
 
     public Observable<List<MifosNotification>> getNotifications() {
-        return Observable.defer(new Func0<Observable<List<MifosNotification>>>() {
+        return Observable.defer(new Callable<Observable<List<MifosNotification>>>() {
             @Override
             public Observable<List<MifosNotification>> call() {
                 deleteOldNotifications();
@@ -68,7 +70,7 @@ public class DatabaseHelper {
     }
 
     public Observable<Integer> getUnreadNotificationsCount() {
-        return Observable.defer(new Func0<Observable<Integer>>() {
+        return Observable.defer(new Callable<Observable<Integer>>() {
             @Override
             public Observable<Integer> call() {
                 deleteOldNotifications();
@@ -82,7 +84,7 @@ public class DatabaseHelper {
     }
 
     private void deleteOldNotifications() {
-        Observable.defer(new Func0<Observable<Void>>() {
+        Observable.defer(new Callable<Observable<Void>>() {
             @Override
             public Observable<Void> call() {
                 long thirtyDaysInSeconds = 2592000;

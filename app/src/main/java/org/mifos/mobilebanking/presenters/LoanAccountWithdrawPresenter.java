@@ -11,11 +11,11 @@ import org.mifos.mobilebanking.ui.views.LoanAccountWithdrawView;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by dilpreet on 7/6/17.
@@ -24,7 +24,7 @@ import rx.subscriptions.CompositeSubscription;
 public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithdrawView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
@@ -40,7 +40,7 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
             @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -64,12 +64,12 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
     public void withdrawLoanAccount(long loanId, LoanWithdraw loanWithdraw) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.withdrawLoanAccount(loanId, loanWithdraw)
+        compositeDisposable.add(dataManager.withdrawLoanAccount(loanId, loanWithdraw)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
