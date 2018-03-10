@@ -4,10 +4,10 @@ import org.mifos.mobilebanking.api.ApiEndPoints;
 import org.mifos.mobilebanking.models.register.RegisterPayload;
 import org.mifos.mobilebanking.models.register.UserVerify;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import rx.Observable;
 
 /**
  * Created by dilpreet on 31/7/17.
