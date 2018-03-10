@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 
 import org.mifos.mobilebanking.models.mifoserror.MifosError;
 
+import io.reactivex.plugins.RxJavaPlugins;
 import retrofit2.HttpException;
-import rx.plugins.RxJavaPlugins;
 
 public class MFErrorParser {
 
@@ -26,7 +26,7 @@ public class MFErrorParser {
                         .get(0).getDefaultUserMessage();
             }
         } catch (Throwable throwable) {
-            RxJavaPlugins.getInstance().getErrorHandler().handleError(throwable);
+            RxJavaPlugins.getErrorHandler();
         }
         return errorMessage;
     }

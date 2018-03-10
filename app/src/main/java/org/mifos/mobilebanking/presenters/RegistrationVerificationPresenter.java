@@ -11,11 +11,12 @@ import org.mifos.mobilebanking.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+
 
 /**
  * Created by dilpreet on 31/7/17.
@@ -24,7 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 public class RegistrationVerificationPresenter extends BasePresenter<RegistrationVerificationView> {
 
     private DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposables;
 
     /**
      * Initialises the RecentTransactionsPresenter by automatically injecting an instance of
@@ -40,7 +41,7 @@ public class RegistrationVerificationPresenter extends BasePresenter<Registratio
                                              @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposables = new CompositeDisposable();
     }
 
     @Override
@@ -51,18 +52,18 @@ public class RegistrationVerificationPresenter extends BasePresenter<Registratio
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposables.clear();
     }
 
     public void verifyUser(UserVerify userVerify) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.verifyUser(userVerify)
+        compositeDisposables.add(dataManager.verifyUser(userVerify)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

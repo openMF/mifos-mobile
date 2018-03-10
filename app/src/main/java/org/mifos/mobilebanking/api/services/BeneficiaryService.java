@@ -8,6 +8,7 @@ import org.mifos.mobilebanking.models.templates.beneficiary.BeneficiaryTemplate;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -15,7 +16,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * Created by dilpreet on 14/6/17.

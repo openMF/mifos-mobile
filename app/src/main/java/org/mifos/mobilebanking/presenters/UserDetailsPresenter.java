@@ -20,12 +20,12 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by naman on 07/04/17.
@@ -34,7 +34,7 @@ import rx.subscriptions.CompositeSubscription;
 public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposables;
 
     @Inject
     PreferencesHelper preferencesHelper;
@@ -52,7 +52,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     public UserDetailsPresenter(@ApplicationContext Context context, DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposables = new CompositeDisposable();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposables.clear();
     }
 
     /**
@@ -73,12 +73,12 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
      */
     public void getUserDetails() {
         checkViewAttached();
-        subscriptions.add(dataManager.getCurrentClient()
+        compositeDisposables.add(dataManager.getCurrentClient()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Client>() {
+                .subscribeWith(new DisposableObserver<Client>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -107,12 +107,12 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
      */
     public void getUserImage() {
         checkViewAttached();
-        subscriptions.add(dataManager.getClientImage()
+        compositeDisposables.add(dataManager.getClientImage()
                 .observeOn(Schedulers.newThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -151,12 +151,12 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
         checkViewAttached();
         final NotificationRegisterPayload payload = new
                 NotificationRegisterPayload(preferencesHelper.getClientId(), token);
-        subscriptions.add(dataManager.registerNotification(payload)
+        compositeDisposables.add(dataManager.registerNotification(payload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -179,12 +179,12 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     private void getUserNotificationId(final NotificationRegisterPayload payload, final String
             token) {
         checkViewAttached();
-        subscriptions.add(dataManager.getUserNotificationId(preferencesHelper.getClientId())
+        compositeDisposables.add(dataManager.getUserNotificationId(preferencesHelper.getClientId())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<NotificationUserDetail>() {
+                .subscribeWith(new DisposableObserver<NotificationUserDetail>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -203,12 +203,12 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     private void updateRegistrationNotification(long id, NotificationRegisterPayload payload,
                                                final String token) {
         checkViewAttached();
-        subscriptions.add(dataManager.updateRegisterNotification(id, payload)
+        compositeDisposables.add(dataManager.updateRegisterNotification(id, payload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
