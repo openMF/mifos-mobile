@@ -6,9 +6,9 @@ import org.mifos.mobilebanking.models.Page;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * @author Vishwajeet

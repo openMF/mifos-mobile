@@ -4,10 +4,10 @@ import org.mifos.mobilebanking.api.ApiEndPoints;
 import org.mifos.mobilebanking.models.Page;
 import org.mifos.mobilebanking.models.Transaction;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * @author Vishwajeet

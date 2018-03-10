@@ -18,11 +18,11 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by dilpreet on 19/6/17.
@@ -31,7 +31,7 @@ import rx.subscriptions.CompositeSubscription;
 public class HomePresenter extends BasePresenter<HomeView> {
 
     private DataManager dataManager;
-    private CompositeSubscription subscription;
+    private CompositeDisposable compositeDisposable;
     @Inject
     PreferencesHelper preferencesHelper;
 
@@ -48,7 +48,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     public HomePresenter(DataManager dataManager, @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscription.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -69,12 +69,12 @@ public class HomePresenter extends BasePresenter<HomeView> {
      */
     public void getUserDetails() {
         checkViewAttached();
-        subscription.add(dataManager.getCurrentClient()
+        compositeDisposable.add(dataManager.getCurrentClient()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Client>() {
+                .subscribeWith(new DisposableObserver<Client>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -106,12 +106,12 @@ public class HomePresenter extends BasePresenter<HomeView> {
      */
     public void getUserImage() {
         checkViewAttached();
-        subscription.add(dataManager.getClientImage()
+        compositeDisposable.add(dataManager.getClientImage()
                 .observeOn(Schedulers.newThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -144,12 +144,12 @@ public class HomePresenter extends BasePresenter<HomeView> {
     }
 
     public void getUnreadNotificationsCount() {
-        subscription.add(dataManager.getUnreadNotificationsCount()
+        compositeDisposable.add(dataManager.getUnreadNotificationsCount()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.computation())
-                .subscribe(new Subscriber<Integer>() {
+                .subscribeWith(new DisposableObserver<Integer>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

@@ -18,12 +18,12 @@ import org.mifos.mobilebanking.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.plugins.RxJavaPlugins;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author Vishwajeet
@@ -33,7 +33,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     private final DataManager dataManager;
     private PreferencesHelper preferencesHelper;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -49,7 +49,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         super(context);
         this.dataManager = dataManager;
         preferencesHelper = this.dataManager.getPreferencesHelper();
-        subscriptions = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -77,12 +77,12 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         checkViewAttached();
         if (isCredentialsValid(username, password)) {
             getMvpView().showProgress();
-            subscriptions.add(dataManager.login(username, password)
+            compositeDisposable.add(dataManager.login(username, password)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(new Subscriber<User>() {
+                    .subscribeWith(new DisposableObserver<User>() {
                         @Override
-                        public void onCompleted() {
+                        public void onComplete() {
 
                         }
 
@@ -98,8 +98,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                                             .getDeveloperMessage());
                                 }
                             } catch (Throwable throwable) {
-                                RxJavaPlugins.getInstance().getErrorHandler().handleError(
-                                        throwable);
+                                RxJavaPlugins.getErrorHandler();
                             }
                         }
 
@@ -126,12 +125,12 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void loadClient() {
         checkViewAttached();
-        subscriptions.add(dataManager.getClients()
+        compositeDisposable.add(dataManager.getClients()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Page<Client>>() {
+                .subscribeWith(new DisposableObserver<Page<Client>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

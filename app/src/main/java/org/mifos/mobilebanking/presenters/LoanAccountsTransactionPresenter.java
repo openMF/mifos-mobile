@@ -15,10 +15,11 @@ import org.mifos.mobilebanking.utils.Constants;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by dilpreet on 4/3/17.
@@ -27,7 +28,7 @@ import rx.subscriptions.CompositeSubscription;
 public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccountsTransactionView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -43,7 +44,7 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
                                             @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -66,12 +67,12 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
     public void loadLoanAccountDetails(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getLoanWithAssociations(Constants.TRANSACTIONS, loanId)
+        compositeDisposable.add(dataManager.getLoanWithAssociations(Constants.TRANSACTIONS, loanId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<LoanWithAssociations>() {
+                .subscribeWith(new DisposableObserver<LoanWithAssociations>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                     }
 
                     @Override

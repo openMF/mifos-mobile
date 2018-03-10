@@ -12,10 +12,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by dilpreet on 14/9/17.
@@ -24,7 +24,7 @@ import rx.subscriptions.CompositeSubscription;
 public class NotificationPresenter extends BasePresenter<NotificationView> {
 
     private DataManager manager;
-    private CompositeSubscription subscription;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -39,7 +39,7 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
     public NotificationPresenter(DataManager manager, @ActivityContext Context context) {
         super(context);
         this.manager = manager;
-        subscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -50,19 +50,19 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
     @Override
     public void detachView() {
         super.detachView();
-        subscription.clear();
+        compositeDisposable.clear();
     }
 
     public void loadNotifications() {
 
         checkViewAttached();
         getMvpView().showProgress();
-        subscription.add(manager.getNotifications()
+        compositeDisposable.add(manager.getNotifications()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<MifosNotification>>() {
+                .subscribeWith(new DisposableObserver<List<MifosNotification>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

@@ -12,10 +12,11 @@ import org.mifos.mobilebanking.utils.Constants;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * @author Vishwajeet
@@ -25,7 +26,7 @@ import rx.subscriptions.CompositeSubscription;
 public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsDetailView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposables;
 
     /**
      * Initialises the SavingAccountsDetailPresenter by automatically injecting an instance of
@@ -41,7 +42,7 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
             @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
-        subscriptions = new CompositeSubscription();
+        compositeDisposables = new CompositeDisposable();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
     @Override
     public void detachView() {
         super.detachView();
-        subscriptions.clear();
+        compositeDisposables.clear();
     }
 
     /**
@@ -64,12 +65,12 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
     public void loadSavingsWithAssociations(long accountId) {
         checkViewAttached();
         getMvpView().showProgress();
-        subscriptions.add(dataManager.getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
+        compositeDisposables.add(dataManager.getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<SavingsWithAssociations>() {
+                .subscribeWith(new DisposableObserver<SavingsWithAssociations>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

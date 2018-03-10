@@ -15,10 +15,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * @author Rajan Maurya
@@ -27,14 +28,14 @@ import rx.subscriptions.CompositeSubscription;
 public class AccountOverviewPresenter extends BasePresenter<AccountOverviewMvpView> {
 
     private final DataManager dataManager;
-    private CompositeSubscription compositeSubscription;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public AccountOverviewPresenter(@ApplicationContext Context context,
             DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
-        compositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class AccountOverviewPresenter extends BasePresenter<AccountOverviewMvpVi
     @Override
     public void detachView() {
         super.detachView();
-        compositeSubscription.clear();
+        compositeDisposable.clear();
     }
 
     /**
@@ -56,12 +57,12 @@ public class AccountOverviewPresenter extends BasePresenter<AccountOverviewMvpVi
     public void loadClientAccountDetails() {
         checkViewAttached();
         getMvpView().showProgress();
-        compositeSubscription.add(dataManager.getClientAccounts()
+        compositeDisposable.add(dataManager.getClientAccounts()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ClientAccounts>() {
+                .subscribeWith(new DisposableObserver<ClientAccounts>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
