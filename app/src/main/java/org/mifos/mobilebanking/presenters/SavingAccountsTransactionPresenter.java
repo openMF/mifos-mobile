@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -72,7 +72,8 @@ public class SavingAccountsTransactionPresenter extends
     public void loadSavingsWithAssociations(long accountId) {
         checkViewAttached();
         getMvpView().showProgress();
-        compositeDisposables.add(dataManager.getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
+        compositeDisposables.add(dataManager.getSavingsWithAssociations(accountId,
+                                                                        Constants.TRANSACTIONS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserver<SavingsWithAssociations>() {
@@ -106,16 +107,16 @@ public class SavingAccountsTransactionPresenter extends
      */
     public void filterTransactionList(List<Transactions> savingAccountsTransactionList,
                                       final long startDate , final long lastDate) {
-        List<Transactions> list = Observable.from(savingAccountsTransactionList)
-                .filter(new Function<Transactions, Boolean>() {
+        List<Transactions> list = Observable.fromIterable(savingAccountsTransactionList)
+                .filter(new Predicate<Transactions>() {
                     @Override
-                    public Boolean apply(Transactions transactions) {
+                    public boolean test(Transactions transactions) {
                         return startDate <= DateHelper.getDateAsLongFromList(transactions.getDate())
                                 && lastDate >= DateHelper.
                                 getDateAsLongFromList(transactions.getDate());
                     }
                 })
-                .toList().toBlocking().single();
+                .toList().blockingGet();
 
         getMvpView().showFilteredList(list);
     }
