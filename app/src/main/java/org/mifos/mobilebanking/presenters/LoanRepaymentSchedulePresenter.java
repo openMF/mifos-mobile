@@ -62,7 +62,8 @@ public class LoanRepaymentSchedulePresenter extends BasePresenter<LoanRepaymentS
     public void loanLoanWithAssociations(long loanId) {
         checkViewAttached();
         getMvpView().showProgress();
-        compositeDisposable.add(dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, loanId)
+        compositeDisposable.add(dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE,
+                                                                    loanId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserver<LoanWithAssociations>() {
