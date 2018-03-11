@@ -145,7 +145,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                                     error_fetching_client));
                         }
                         preferencesHelper.clear();
-                        BaseApiManager.createService(preferencesHelper.getToken());
+                        reInitializeService();
                     }
 
                     @Override
@@ -155,7 +155,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                             long clientId = clientPage.getPageItems().get(0).getId();
                             preferencesHelper.setClientId(clientId);
                             dataManager.setClientId(clientId);
-                            BaseApiManager.createService(preferencesHelper.getToken());
+                            reInitializeService();
                             getMvpView().showPassCodeActivity();
                         } else {
                             getMvpView().showMessage(context
@@ -210,7 +210,11 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     private void saveAuthenticationTokenForSession(long userID, String authToken) {
         preferencesHelper.setUserId(userID);
         preferencesHelper.saveToken(authToken);
-        BaseApiManager.createService(preferencesHelper.getToken());
+        reInitializeService();
     }
 
+    private void reInitializeService() {
+        BaseApiManager.createService(preferencesHelper.getBaseUrl(), preferencesHelper.getTenant(),
+                preferencesHelper.getToken());
+    }
 }

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mifos.mobilebanking.api.BaseURL;
 import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.models.Page;
@@ -53,6 +54,7 @@ public class LoginPresenterTest {
     @Before
     public void setUp() throws Exception {
 
+        when(mockHelper.getBaseUrl()).thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT);
         when(dataManager.getPreferencesHelper()).thenReturn(mockHelper);
 
         presenter = new LoginPresenter(dataManager, context);

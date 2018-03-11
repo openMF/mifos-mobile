@@ -20,20 +20,22 @@ import okhttp3.Response;
  * @since 21/06/16
  */
 public class SelfServiceInterceptor implements Interceptor {
-
     public static final String HEADER_TENANT = "Fineract-Platform-TenantId";
     public static final String HEADER_AUTH = "Authorization";
+    public static final String DEFAULT_TENANT = "default";
     private String authToken;
+    private String tenant;
 
-    public SelfServiceInterceptor(String authToken) {
+    public SelfServiceInterceptor(String tenant, String authToken) {
         this.authToken = authToken;
+        this.tenant = tenant;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request chainRequest = chain.request();
         Builder builder = chainRequest.newBuilder()
-                .header(HEADER_TENANT, "default");
+                .header(HEADER_TENANT, tenant);
 
         if (!TextUtils.isEmpty(authToken)) {
             builder.header(HEADER_AUTH, authToken);

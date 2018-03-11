@@ -158,7 +158,8 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
         if (isPassCodeLengthCorrect()) {
             String passwordEntered = EncryptionUtil.getHash(passCodeView.getPasscode());
             if (preferencesHelper.getPasscode().equals(passwordEntered)) {
-                BaseApiManager.createService(preferencesHelper.getToken());
+                BaseApiManager.createService(preferencesHelper.getBaseUrl(),
+                        preferencesHelper.getTenant(), preferencesHelper.getToken());
                 startHomeActivity();
             } else {
                 counter++;

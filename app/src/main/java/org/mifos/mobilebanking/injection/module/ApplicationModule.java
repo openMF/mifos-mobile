@@ -44,7 +44,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    BaseApiManager provideBaseApiManager() {
-        return new BaseApiManager();
+    BaseApiManager provideBaseApiManager(PreferencesHelper preferencesHelper) {
+        return new BaseApiManager(preferencesHelper);
     }
 }

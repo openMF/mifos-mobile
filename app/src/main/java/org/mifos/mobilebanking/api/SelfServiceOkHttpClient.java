@@ -21,9 +21,11 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 public class SelfServiceOkHttpClient {
     private String authToken;
+    private String tenant;
 
-    public SelfServiceOkHttpClient(String authToken) {
+    public SelfServiceOkHttpClient(String tenant, String authToken) {
         this.authToken = authToken;
+        this.tenant = tenant;
     }
 
     public OkHttpClient getMifosOkHttpClient() {
@@ -97,7 +99,7 @@ public class SelfServiceOkHttpClient {
 
         //Interceptor :> Full Body Logger and ApiRequest Header
         builder.addInterceptor(logger);
-        builder.addInterceptor(new SelfServiceInterceptor(authToken));
+        builder.addInterceptor(new SelfServiceInterceptor(tenant, authToken));
 
         return builder.build();
 

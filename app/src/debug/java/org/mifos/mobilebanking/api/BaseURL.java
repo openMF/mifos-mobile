@@ -19,4 +19,12 @@ public class BaseURL {
         }
         return url;
     }
+
+    public String getDefaultBaseUrl() {
+        return PROTOCOL_HTTPS + API_ENDPOINT;
+    }
+
+    public String getUrl(String endpoint) {
+        return endpoint + API_PATH;
+    }
 }

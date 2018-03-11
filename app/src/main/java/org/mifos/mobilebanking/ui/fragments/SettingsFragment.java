@@ -1,12 +1,17 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.ui.activities.HomeActivity;
+import org.mifos.mobilebanking.utils.ConfigurationPreference;
+import org.mifos.mobilebanking.utils.ConfigurationDialogFragmentCompat;
 import org.mifos.mobilebanking.utils.LanguageHelper;
 
 /**
@@ -16,20 +21,14 @@ import org.mifos.mobilebanking.utils.LanguageHelper;
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener {
 
-    private String[] languages;
-    private LanguageCallback languageCallback;
-
-
-    public static SettingsFragment newInstance(LanguageCallback languageCallback) {
+    public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
-        fragment.setLanguageCallback(languageCallback);
         return fragment;
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_preference);
-        languages = getActivity().getResources().getStringArray(R.array.languages);
     }
 
     @Override
@@ -44,8 +43,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         getPreferenceScreen().getSharedPreferences().
                 unregisterOnSharedPreferenceChangeListener(this);
     }
-    public void setLanguageCallback(LanguageCallback languageCallback) {
-        this.languageCallback = languageCallback;
+
+    @Override
+    public void onDisplayPreferenceDialog(Preference preference) {
+        DialogFragment dialogFragment = null;
+        if (preference instanceof ConfigurationPreference) {
+            dialogFragment = new ConfigurationDialogFragmentCompat();
+            Bundle bundle = new Bundle(1);
+            bundle.putString("key", preference.getKey());
+            dialogFragment.setArguments(bundle);
+        }
+
+        if (dialogFragment != null) {
+            dialogFragment.setTargetFragment(this, 0);
+            dialogFragment.show(this.getFragmentManager(),
+                    "android.support.v7.preference.PreferenceFragment.DIALOG");
+        } else {
+            super.onDisplayPreferenceDialog(preference);
+        }
     }
 
     @Override
@@ -54,14 +69,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         if (preference instanceof ListPreference) {
             ListPreference listPreference = (ListPreference) preference;
             LanguageHelper.setLocale(getContext(), listPreference.getValue());
-            languageCallback.updateNavDrawer();
-            //refresh settings fragment
-            setPreferenceScreen(null);
-            addPreferencesFromResource(R.xml.settings_preference);
+            Intent i = new Intent(getActivity(), HomeActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            getActivity().finish();
         }
     }
 
-    public interface LanguageCallback {
-        void updateNavDrawer();
-    }
 }
