@@ -209,26 +209,26 @@ public class Timeline implements Parcelable {
     }
 
     protected Timeline(Parcel in) {
-        this.submittedOnDate = new ArrayList<Integer>();
+        this.submittedOnDate = new ArrayList<>();
         in.readList(this.submittedOnDate, Integer.class.getClassLoader());
         this.submittedByUsername = in.readString();
         this.submittedByFirstname = in.readString();
         this.submittedByLastname = in.readString();
-        this.approvedOnDate = new ArrayList<Integer>();
+        this.approvedOnDate = new ArrayList<>();
         in.readList(this.approvedOnDate, Integer.class.getClassLoader());
         this.approvedByUsername = in.readString();
         this.approvedByFirstname = in.readString();
         this.approvedByLastname = in.readString();
-        this.expectedDisbursementDate = new ArrayList<Integer>();
+        this.expectedDisbursementDate = new ArrayList<>();
         in.readList(this.expectedDisbursementDate, Integer.class.getClassLoader());
-        this.actualDisbursementDate = new ArrayList<Integer>();
+        this.actualDisbursementDate = new ArrayList<>();
         in.readList(this.actualDisbursementDate, Integer.class.getClassLoader());
         this.disbursedByUsername = in.readString();
         this.disbursedByFirstname = in.readString();
         this.disbursedByLastname = in.readString();
-        this.closedOnDate = new ArrayList<Integer>();
+        this.closedOnDate = new ArrayList<>();
         in.readList(this.closedOnDate, Integer.class.getClassLoader());
-        this.expectedMaturityDate = new ArrayList<Integer>();
+        this.expectedMaturityDate = new ArrayList<>();
         in.readList(this.expectedMaturityDate, Integer.class.getClassLoader());
     }
 

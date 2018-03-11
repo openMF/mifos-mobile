@@ -142,11 +142,11 @@ public class Transaction implements Parcelable {
         this.officeId = (Long) in.readValue(Long.class.getClassLoader());
         this.officeName = in.readString();
         this.type = in.readParcelable(Type.class.getClassLoader());
-        this.date = new ArrayList<Integer>();
+        this.date = new ArrayList<>();
         in.readList(this.date, Integer.class.getClassLoader());
         this.currency = in.readParcelable(Currency.class.getClassLoader());
         this.amount = (Double) in.readValue(Double.class.getClassLoader());
-        this.submittedOnDate = new ArrayList<Integer>();
+        this.submittedOnDate = new ArrayList<>();
         in.readList(this.submittedOnDate, Integer.class.getClassLoader());
         this.reversed = (Boolean) in.readValue(Boolean.class.getClassLoader());
     }

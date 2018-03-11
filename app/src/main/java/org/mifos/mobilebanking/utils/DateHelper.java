@@ -134,7 +134,7 @@ public class DateHelper {
         try {
             date = sdf.parse(dateStr);
         } catch (ParseException e) {
-            Log.d("TAG", e.getMessage().toString());
+            Log.d("TAG", e.getMessage());
         }
         return date.getTime();
     }
