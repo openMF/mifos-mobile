@@ -5,7 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import org.mifos.mobilebanking.api.BaseURL;
+import org.mifos.mobilebanking.api.SelfServiceInterceptor;
 import org.mifos.mobilebanking.injection.ApplicationContext;
+
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,7 +23,6 @@ import javax.inject.Singleton;
 public class PreferencesHelper {
     private static final String USER_ID = "preferences_user_id";
     private static final String TOKEN = "preferences_token";
-    private static final String TENANT = "preferences_tenant";
     private static final String CLIENT_ID = "preferences_client";
     private static final String OFFICE_NAME = "preferences_office_name";
     private static final String USER_NAME = "preferences_user_name";
@@ -27,6 +30,8 @@ public class PreferencesHelper {
     private static final String OVERVIEW_STATE = "preferences_overview_state";
     private static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     private static final String GCM_TOKEN = "gcm_token";
+    private static final String TENANT = "preferences_base_tenant";
+    private static final String BASE_URL = "preferences_base_url_key";
 
     private SharedPreferences sharedPreferences;
 
@@ -36,7 +41,14 @@ public class PreferencesHelper {
     }
 
     public void clear() {
-        sharedPreferences.edit().clear().apply();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //prevent deletion of url and tenant
+        for (Map.Entry<String, ?> entry: sharedPreferences.getAll().entrySet()) {
+            if (!(entry.getKey().equals(BASE_URL) || entry.getKey().equals(TENANT))) {
+                editor.remove(entry.getKey());
+            }
+        }
+        editor.apply();
     }
 
     public int getInt(String preferenceKey, int preferenceDefaultValue) {
@@ -96,13 +108,7 @@ public class PreferencesHelper {
     }
 
     public String getTenant() {
-        return getString(TENANT, "default");
-    }
-
-    public void setTenant(String tenant) {
-        if (!TextUtils.isEmpty(tenant)) {
-            putString(TENANT, tenant);
-        }
+        return getString(TENANT, SelfServiceInterceptor.DEFAULT_TENANT);
     }
 
     public void setPasscode(String passcode) {
@@ -160,5 +166,16 @@ public class PreferencesHelper {
 
     public boolean sentTokenToServerState() {
         return getBoolean(SENT_TOKEN_TO_SERVER, false);
+    }
+
+    public void updateConfiguration(String baseUrl, String tenant) {
+        sharedPreferences.edit()
+                .putString(BASE_URL, baseUrl)
+                .putString(TENANT, tenant)
+                .apply();
+    }
+
+    public String getBaseUrl() {
+        return getString(BASE_URL, new BaseURL().getDefaultBaseUrl());
     }
 }

@@ -9,4 +9,8 @@
         android:title="@string/language"
         android:key="@string/language_type" />
 
+    <org.mifos.mobilebanking.utils.ConfigurationPreference
+        android:key="@string/pref_configuration"
+        android:title="@string/pref_base_url_title"
+        android:summary="@string/pref_base_url_desc"/>
 </android.support.v7.preference.PreferenceScreen>
