@@ -311,9 +311,9 @@ public class CalendarData implements Parcelable {
         this.entityId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.entityType = in.readParcelable(EntityType.class.getClassLoader());
         this.title = in.readString();
-        this.startDate = new ArrayList<Integer>();
+        this.startDate = new ArrayList<>();
         in.readList(this.startDate, Integer.class.getClassLoader());
-        this.endDate = new ArrayList<Integer>();
+        this.endDate = new ArrayList<>();
         in.readList(this.endDate, Integer.class.getClassLoader());
         this.duration = (Double) in.readValue(Double.class.getClassLoader());
         this.type = in.readParcelable(Type.class.getClassLoader());
@@ -326,9 +326,9 @@ public class CalendarData implements Parcelable {
         this.firstReminder = (Integer) in.readValue(Integer.class.getClassLoader());
         this.secondReminder = (Integer) in.readValue(Integer.class.getClassLoader());
         this.humanReadable = in.readString();
-        this.createdDate = new ArrayList<Integer>();
+        this.createdDate = new ArrayList<>();
         in.readList(this.createdDate, Integer.class.getClassLoader());
-        this.lastUpdatedDate = new ArrayList<Integer>();
+        this.lastUpdatedDate = new ArrayList<>();
         in.readList(this.lastUpdatedDate, Integer.class.getClassLoader());
         this.createdByUserId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.createdByUsername = in.readString();

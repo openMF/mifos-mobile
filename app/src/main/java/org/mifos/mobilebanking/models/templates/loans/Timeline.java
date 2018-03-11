@@ -46,7 +46,7 @@ public class Timeline implements Parcelable {
     }
 
     protected Timeline(Parcel in) {
-        this.expectedDisbursementDate = new ArrayList<Integer>();
+        this.expectedDisbursementDate = new ArrayList<>();
         in.readList(this.expectedDisbursementDate, Integer.class.getClassLoader());
     }
 

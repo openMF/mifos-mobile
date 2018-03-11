@@ -53,7 +53,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Client client = getItem(position);
             ((ViewHolder) holder).tv_clientName.setText(client.getFirstname() + " " + client
                     .getLastname());
-            ((ViewHolder) holder).tv_clientAccountNumber.setText(client.getAccountNo().toString());
+            ((ViewHolder) holder).tv_clientAccountNumber.setText(client.getAccountNo());
 
         }
     }

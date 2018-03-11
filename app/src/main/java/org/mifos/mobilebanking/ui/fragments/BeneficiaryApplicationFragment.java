@@ -139,7 +139,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      */
     @Override
     public void showUserInterface() {
-        accountTypeAdapter = new ArrayAdapter<String>(getActivity(),
+        accountTypeAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, listAccountType);
         accountTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spAccountType.setOnItemSelectedListener(this);
