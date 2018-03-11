@@ -23,6 +23,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -76,7 +77,8 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
 
         compositeDisposable.add(Observable.zip(dataManager.getThirdPartyTransferTemplate(),
                 dataManager.getBeneficiaryList(),
-                new BiFunction<AccountOptionsTemplate, List<Beneficiary>, AccountOptionAndBeneficiary>()
+                new BiFunction<AccountOptionsTemplate, List<Beneficiary>,
+                                AccountOptionAndBeneficiary>()
                 {
                     @Override
                     public AccountOptionAndBeneficiary apply(AccountOptionsTemplate
@@ -119,7 +121,7 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
      */
     public List<String> getAccountNumbersFromAccountOptions(List<AccountOption> accountOptions) {
         final List<String> accountNumbers = new ArrayList<>();
-        Observable.from(accountOptions)
+        Observable.fromIterable(accountOptions)
                 .flatMap(new Function<AccountOption, Observable<String>>() {
                     @Override
                     public Observable<String> apply(AccountOption accountOption) {
@@ -143,7 +145,7 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
      */
     public List<String> getAccountNumbersFromBeneficiaries(final List<Beneficiary> beneficiaries) {
         final List<String> accountNumbers = new ArrayList<>();
-        Observable.from(beneficiaries)
+        Observable.fromIterable(beneficiaries)
                 .flatMap(new Function<Beneficiary, Observable<String>>() {
                     @Override
                     public Observable<String> apply(Beneficiary beneficiary) {
@@ -171,10 +173,10 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
      */
     public AccountOption searchAccount(List<AccountOption> accountOptions, final String accountNo) {
         final AccountOption[] account = {new AccountOption()};
-        Observable.from(accountOptions)
-                .filter(new Function<AccountOption, Boolean>() {
+        Observable.fromIterable(accountOptions)
+                .filter(new Predicate<AccountOption>() {
                     @Override
-                    public Boolean apply(AccountOption accountOption) {
+                    public boolean test(AccountOption accountOption) {
                         return accountOption.getAccountNo().equals(accountNo);
                     }
                 })
