@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding_16dp"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_base_url"
+            android:nextFocusDown="@id/et_tenant"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="@dimen/layout_padding_8dp"
+            android:id="@+id/et_base_url"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_tenant"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="@dimen/layout_padding_8dp"
+            android:id="@+id/et_tenant"/>
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>

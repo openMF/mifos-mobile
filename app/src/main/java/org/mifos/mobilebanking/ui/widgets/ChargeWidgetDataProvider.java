@@ -42,8 +42,8 @@ public class ChargeWidgetDataProvider implements RemoteViewsService.RemoteViewsF
 
     @Override
     public void onCreate() {
-        BaseApiManager baseApiManager = new BaseApiManager();
         PreferencesHelper preferencesHelper = new PreferencesHelper(context);
+        BaseApiManager baseApiManager = new BaseApiManager(preferencesHelper);
         DatabaseHelper databaseHelper = new DatabaseHelper();
         DataManager dataManager = new DataManager(preferencesHelper, baseApiManager,
                 databaseHelper);

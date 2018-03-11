@@ -39,7 +39,6 @@ import org.mifos.mobilebanking.ui.fragments.HelpFragment;
 import org.mifos.mobilebanking.ui.fragments.HomeOldFragment;
 import org.mifos.mobilebanking.ui.fragments.NotificationFragment;
 import org.mifos.mobilebanking.ui.fragments.RecentTransactionsFragment;
-import org.mifos.mobilebanking.ui.fragments.SettingsFragment;
 import org.mifos.mobilebanking.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.mobilebanking.ui.views.UserDetailsView;
 import org.mifos.mobilebanking.utils.CircularImageView;
@@ -62,7 +61,7 @@ import butterknife.ButterKnife;
  * @since 14/07/2016
  */
 public class HomeActivity extends BaseActivity implements UserDetailsView, NavigationView.
-        OnNavigationItemSelectedListener, SettingsFragment.LanguageCallback, View.OnClickListener {
+        OnNavigationItemSelectedListener, View.OnClickListener {
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -181,7 +180,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_settings:
-                replaceFragment(SettingsFragment.newInstance(this), true, R.id.container);
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
                 break;
             case R.id.item_about_us:
                 replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
@@ -206,14 +205,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         setNavigationViewSelectedItem(R.id.item_home);
         setTitle(item.getTitle());
         return true;
-    }
-
-
-    @Override
-    public void updateNavDrawer() {
-        //update drawer
-        navigationView.getMenu().clear();
-        navigationView.inflateMenu(R.menu.menu_nav_drawer);
     }
 
     /**

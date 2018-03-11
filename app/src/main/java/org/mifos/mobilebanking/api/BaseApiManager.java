@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.api;
 
+import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.api.services.AuthenticationService;
 import org.mifos.mobilebanking.api.services.BeneficiaryService;
 import org.mifos.mobilebanking.api.services.ClientChargeService;
@@ -11,6 +12,8 @@ import org.mifos.mobilebanking.api.services.RegistrationService;
 import org.mifos.mobilebanking.api.services.SavingAccountsListService;
 import org.mifos.mobilebanking.api.services.ThirdPartyTransferService;
 
+import javax.inject.Inject;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,9 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @since 13/6/16
  */
 public class BaseApiManager {
-
-    private static BaseURL baseUrl = new BaseURL();
-    private static final String BASE_URL = baseUrl.getUrl();
 
     private static Retrofit retrofit;
     private static AuthenticationService authenticationApi;
@@ -36,9 +36,10 @@ public class BaseApiManager {
     private static RegistrationService registrationApi;
     private static NotificationService notificationApi;
 
-    public BaseApiManager() {
-        String authToken = "";
-        createService(authToken);
+    @Inject
+    public BaseApiManager(PreferencesHelper preferencesHelper) {
+        createService(preferencesHelper.getBaseUrl(), preferencesHelper.getTenant(),
+                preferencesHelper.getToken());
     }
 
     private static void init() {
@@ -58,13 +59,12 @@ public class BaseApiManager {
         return retrofit.create(clazz);
     }
 
-    public static void createService(String authToken) {
-
+    public static void createService(String endpoint, String tenant, String authToken) {
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(new BaseURL().getUrl(endpoint))
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(new SelfServiceOkHttpClient(authToken).getMifosOkHttpClient())
+                .client(new SelfServiceOkHttpClient(tenant, authToken).getMifosOkHttpClient())
                 .build();
         init();
     }
