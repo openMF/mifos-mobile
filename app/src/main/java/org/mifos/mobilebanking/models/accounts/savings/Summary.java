@@ -143,7 +143,7 @@ public class Summary implements Parcelable {
         this.accountBalance = (Double) in.readValue(Double.class.getClassLoader());
         this.totalOverdraftInterestDerived = (Double) in.readValue(Double.class.getClassLoader());
         this.interestNotPosted = (Double) in.readValue(Double.class.getClassLoader());
-        this.lastInterestCalculationDate = new ArrayList<Integer>();
+        this.lastInterestCalculationDate = new ArrayList<>();
         in.readList(this.lastInterestCalculationDate, Integer.class.getClassLoader());
     }
 

@@ -85,7 +85,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
 
         if (areFieldsValidated()) {
 
-            RadioButton radioButton = (RadioButton) rootView.findViewById(rgVerificationMode.
+            RadioButton radioButton =  rootView.findViewById(rgVerificationMode.
                     getCheckedRadioButtonId());
 
             RegisterPayload payload = new RegisterPayload();

@@ -29,15 +29,15 @@ public class Timeline implements Parcelable {
             return new Timeline[size];
         }
     };
-    private List<Integer> submittedOnDate = new ArrayList<Integer>();
+    private List<Integer> submittedOnDate = new ArrayList<>();
     private String submittedByUsername;
     private String submittedByFirstname;
     private String submittedByLastname;
-    private List<Integer> activatedOnDate = new ArrayList<Integer>();
+    private List<Integer> activatedOnDate = new ArrayList<>();
     private String activatedByUsername;
     private String activatedByFirstname;
     private String activatedByLastname;
-    private List<Integer> closedOnDate = new ArrayList<Integer>();
+    private List<Integer> closedOnDate = new ArrayList<>();
     private String closedByUsername;
     private String closedByFirstname;
     private String closedByLastname;
@@ -46,17 +46,17 @@ public class Timeline implements Parcelable {
     }
 
     protected Timeline(Parcel in) {
-        this.submittedOnDate = new ArrayList<Integer>();
+        this.submittedOnDate = new ArrayList<>();
         in.readList(this.submittedOnDate, Integer.class.getClassLoader());
         this.submittedByUsername = in.readString();
         this.submittedByFirstname = in.readString();
         this.submittedByLastname = in.readString();
-        this.activatedOnDate = new ArrayList<Integer>();
+        this.activatedOnDate = new ArrayList<>();
         in.readList(this.activatedOnDate, Integer.class.getClassLoader());
         this.activatedByUsername = in.readString();
         this.activatedByFirstname = in.readString();
         this.activatedByLastname = in.readString();
-        this.closedOnDate = new ArrayList<Integer>();
+        this.closedOnDate = new ArrayList<>();
         in.readList(this.closedOnDate, Integer.class.getClassLoader());
         this.closedByUsername = in.readString();
         this.closedByFirstname = in.readString();

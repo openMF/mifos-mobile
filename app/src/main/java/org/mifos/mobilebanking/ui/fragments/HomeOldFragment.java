@@ -132,7 +132,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_notifications);
         View count = menuItem.getActionView();
-        tvNotificationCount = (TextView) count.findViewById(R.id.tv_notification_indicator);
+        tvNotificationCount = count.findViewById(R.id.tv_notification_indicator);
         presenter.getUnreadNotificationsCount();
         count.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -248,7 +248,7 @@ public class Charge extends BaseModel implements Parcelable {
         this.clientId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.chargeId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.name = in.readString();
-        this.dueDate = new ArrayList<Integer>();
+        this.dueDate = new ArrayList<>();
         in.readList(this.dueDate, Integer.class.getClassLoader());
         this.chargeTimeType = in.readParcelable(ChargeTimeType.class.getClassLoader());
         this.chargeCalculationType = in.readParcelable(ChargeCalculationType.class.

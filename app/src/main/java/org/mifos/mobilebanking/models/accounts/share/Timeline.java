@@ -169,17 +169,17 @@ public class Timeline implements Parcelable {
     }
 
     protected Timeline(Parcel in) {
-        this.submittedOnDate = new ArrayList<Integer>();
+        this.submittedOnDate = new ArrayList<>();
         in.readList(this.submittedOnDate, Integer.class.getClassLoader());
         this.submittedByUsername = in.readString();
         this.submittedByFirstname = in.readString();
         this.submittedByLastname = in.readString();
-        this.approvedDate = new ArrayList<Integer>();
+        this.approvedDate = new ArrayList<>();
         in.readList(this.approvedDate, Integer.class.getClassLoader());
         this.approvedByUsername = in.readString();
         this.approvedByFirstname = in.readString();
         this.approvedByLastname = in.readString();
-        this.activatedDate = new ArrayList<Integer>();
+        this.activatedDate = new ArrayList<>();
         in.readList(this.activatedDate, Integer.class.getClassLoader());
         this.activatedByUsername = in.readString();
         this.activatedByFirstname = in.readString();

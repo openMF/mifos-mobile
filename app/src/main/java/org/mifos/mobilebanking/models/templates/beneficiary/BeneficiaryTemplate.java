@@ -39,7 +39,7 @@ public class BeneficiaryTemplate implements Parcelable {
     }
 
     protected BeneficiaryTemplate(Parcel in) {
-        this.accountTypeOptions = new ArrayList<AccountTypeOption>();
+        this.accountTypeOptions = new ArrayList<>();
         in.readList(this.accountTypeOptions, AccountTypeOption.class.getClassLoader());
     }
 

@@ -625,7 +625,7 @@ public class Product implements Parcelable {
         this.fundName = in.readString();
         this.includeInBorrowerCycle = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.useBorrowerCycle = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.startDate = new ArrayList<Integer>();
+        this.startDate = new ArrayList<>();
         in.readList(this.startDate, Integer.class.getClassLoader());
         this.status = in.readString();
         this.currency = in.readParcelable(Currency.class.getClassLoader());

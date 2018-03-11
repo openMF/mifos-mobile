@@ -334,7 +334,7 @@ public class SavingsWithAssociations implements Parcelable {
         this.allowOverdraft = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.enforceMinRequiredBalance = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.withHoldTax = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.lastActiveTransactionDate = new ArrayList<Integer>();
+        this.lastActiveTransactionDate = new ArrayList<>();
         in.readList(this.lastActiveTransactionDate, Integer.class.getClassLoader());
         this.isDormancyTrackingActive = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.summary = in.readParcelable(Summary.class.getClassLoader());

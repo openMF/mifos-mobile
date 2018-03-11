@@ -172,7 +172,7 @@ public class LoanOfficerOptions implements Parcelable {
         this.officeName = (String) in.readValue(String.class.getClassLoader());
         this.isLoanOfficer = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.isActive = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.joiningDate = new ArrayList<Integer>();
+        this.joiningDate = new ArrayList<>();
         in.readList(this.joiningDate, Integer.class.getClassLoader());
     }
 
