@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -148,14 +148,14 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<SavingAccount> searchInSavingsList(List<SavingAccount> accounts,
                                             final String input) {
-        return Observable.from(accounts)
-                .filter(new Function<SavingAccount, Boolean>() {
+        return Observable.fromIterable(accounts)
+                .filter(new Predicate<SavingAccount>() {
                     @Override
-                    public Boolean apply(SavingAccount savingAccount) {
+                    public boolean test(SavingAccount savingAccount) throws Exception {
                         return savingAccount.getProductName().toLowerCase().contains(input.
                                 toLowerCase());
                     }
-                }).toList().toBlocking().single();
+                    }).toList().blockingGet();
     }
 
     /**
@@ -167,14 +167,14 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<LoanAccount> searchInLoanList(List<LoanAccount> accounts,
                                                    final String input) {
-        return Observable.from(accounts)
-                .filter(new Function<LoanAccount, Boolean>() {
+        return Observable.fromIterable(accounts)
+                .filter(new Predicate<LoanAccount>() {
                     @Override
-                    public Boolean apply(LoanAccount loanAccount) {
+                    public boolean test(LoanAccount loanAccount) throws Exception {
                         return loanAccount.getProductName().toLowerCase().contains(input.
                                 toLowerCase());
                     }
-                }).toList().toBlocking().single();
+                }).toList().blockingGet();
     }
 
     /**
@@ -186,14 +186,14 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<ShareAccount> searchInSharesList(List<ShareAccount> accounts,
                                                    final String input) {
-        return Observable.from(accounts)
-                .filter(new Function<ShareAccount, Boolean>() {
+        return Observable.fromIterable(accounts)
+                .filter(new Predicate<ShareAccount>() {
                     @Override
-                    public Boolean apply(ShareAccount shareAccount) {
+                    public boolean test(ShareAccount shareAccount) throws Exception {
                         return shareAccount.getProductName().toLowerCase().contains(input.
                                 toLowerCase());
                     }
-                }).toList().toBlocking().single();
+                }).toList().blockingGet();
     }
 
     /**
@@ -203,13 +203,14 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      * {@code checkboxStatus.isChecked()} as true.
      */
     public List<CheckboxStatus> getCheckedStatus(List<CheckboxStatus> statusModelList) {
-        return Observable.from(statusModelList)
-                .filter(new Function<CheckboxStatus, Boolean>() {
+        return Observable.fromIterable(statusModelList)
+                .filter(new Predicate<CheckboxStatus>() {
+
                     @Override
-                    public Boolean apply(CheckboxStatus checkboxStatus) {
+                    public boolean test(CheckboxStatus checkboxStatus) throws Exception {
                         return checkboxStatus.isChecked();
                     }
-                }).toList().toBlocking().single();
+                }).toList().blockingGet();
     }
 
     /**
@@ -221,10 +222,10 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<SavingAccount> getFilteredSavingsAccount(List<SavingAccount> accounts,
                                                          final CheckboxStatus status) {
-        return Observable.from(accounts)
-                .filter(new Function<SavingAccount, Boolean>() {
+        return Observable.fromIterable(accounts)
+                .filter(new Predicate<SavingAccount>() {
                     @Override
-                    public Boolean apply(SavingAccount account) {
+                    public boolean test(SavingAccount account) {
                         if (status.getStatus().compareTo(context.getString(R.string.
                                         active)) == 0 && account.getStatus().getActive()) {
                             return true;
@@ -244,7 +245,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                         }
                         return false;
                     }
-                }).toList().toBlocking().single();
+                }).toList().blockingGet();
     }
 
     /**
@@ -256,10 +257,10 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<LoanAccount> getFilteredLoanAccount(List<LoanAccount> accounts,
                                                          final CheckboxStatus status) {
-        return Observable.from(accounts)
-                .filter(new Function<LoanAccount, Boolean>() {
+        return Observable.fromIterable(accounts)
+                .filter(new Predicate<LoanAccount>() {
                     @Override
-                    public Boolean apply(LoanAccount account) {
+                    public boolean test(LoanAccount account) {
                         if (status.getStatus().compareTo(context.getString(R.string.in_arrears))
                                 == 0 && account.getInArrears()) {
                             return true;
@@ -283,7 +284,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                         }
                         return false;
                     }
-                }).toList().toBlocking().single();
+                }).toList().blockingGet();
     }
 
     /**
@@ -295,10 +296,10 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      */
     public List<ShareAccount> getFilteredShareAccount(List<ShareAccount> accounts,
                                                         final CheckboxStatus status) {
-        return Observable.from(accounts)
-                .filter(new Function<ShareAccount, Boolean>() {
+        return Observable.fromIterable(accounts)
+                .filter(new Predicate<ShareAccount>() {
                     @Override
-                    public Boolean apply(ShareAccount account) {
+                    public boolean test(ShareAccount account) {
                         if (status.getStatus().compareTo(context.getString(R.string.active)) == 0 &&
                                 account.getStatus().getActive()) {
                             return true;
@@ -315,7 +316,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                         }
                         return false;
                     }
-                }).toList().toBlocking().single();
+                }).toList().blockingGet();
     }
 
 }

@@ -4,15 +4,14 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
 
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.plugins.RxJavaPlugins;
-import rx.plugins.RxJavaSchedulersHook;
-import rx.schedulers.Schedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.functions.Function;
+import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * This rule registers SchedulerHooks for RxJava and RxAndroid to ensure that subscriptions
@@ -22,49 +21,41 @@ import rx.schedulers.Schedulers;
  */
 public class RxSchedulersOverrideRule implements TestRule {
 
-    private final RxJavaSchedulersHook mRxJavaSchedulersHook = new RxJavaSchedulersHook() {
-        @Override
-        public Scheduler getIOScheduler() {
-            return Schedulers.immediate();
-        }
+    private final Scheduler SCHEDULER_INSTANCE = Schedulers.trampoline();
 
+    private Function<Scheduler, Scheduler> schedulerFunction =
+                                                        new Function<Scheduler, Scheduler>() {
         @Override
-        public Scheduler getNewThreadScheduler() {
-            return Schedulers.immediate();
+        public Scheduler apply(Scheduler scheduler) throws Exception {
+            return SCHEDULER_INSTANCE;
         }
     };
 
-    private final RxAndroidSchedulersHook mRxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
+    private Function<Callable<Scheduler>, Scheduler> schedulerFunctionLazy =
+                                                new Function<Callable<Scheduler>, Scheduler>() {
         @Override
-        public Scheduler getMainThreadScheduler() {
-            return Schedulers.immediate();
+        public Scheduler apply(Callable<Scheduler> schedulerCallable) throws Exception {
+            return SCHEDULER_INSTANCE;
         }
     };
-
-    // Hack to get around RxJavaPlugins.reset() not being public
-    // See https://github.com/ReactiveX/RxJava/issues/2297
-    // Hopefully the method will be public in new releases of RxAndroid and we can remove the hack.
-    private void callResetViaReflectionIn(RxJavaPlugins rxJavaPlugins)
-            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method method = rxJavaPlugins.getClass().getDeclaredMethod("reset");
-        method.setAccessible(true);
-        method.invoke(rxJavaPlugins);
-    }
 
     @Override
     public Statement apply(final Statement base, Description description) {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RxAndroidPlugins.getInstance().reset();
-                RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook);
-                callResetViaReflectionIn(RxJavaPlugins.getInstance());
-                RxJavaPlugins.getInstance().registerSchedulersHook(mRxJavaSchedulersHook);
+                RxAndroidPlugins.reset();
+                RxAndroidPlugins.setInitMainThreadSchedulerHandler(schedulerFunctionLazy);
+
+                RxJavaPlugins.reset();
+                RxJavaPlugins.setIoSchedulerHandler(schedulerFunction);
+                RxJavaPlugins.setNewThreadSchedulerHandler(schedulerFunction);
+                RxJavaPlugins.setComputationSchedulerHandler(schedulerFunction);
 
                 base.evaluate();
 
-                RxAndroidPlugins.getInstance().reset();
-                callResetViaReflectionIn(RxJavaPlugins.getInstance());
+                RxAndroidPlugins.reset();
+                RxJavaPlugins.reset();
             }
         };
     }

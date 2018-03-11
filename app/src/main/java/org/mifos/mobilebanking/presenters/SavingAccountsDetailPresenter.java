@@ -65,7 +65,8 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
     public void loadSavingsWithAssociations(long accountId) {
         checkViewAttached();
         getMvpView().showProgress();
-        compositeDisposables.add(dataManager.getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
+        compositeDisposables.add(dataManager.getSavingsWithAssociations(accountId,
+                                                                        Constants.TRANSACTIONS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserver<SavingsWithAssociations>() {

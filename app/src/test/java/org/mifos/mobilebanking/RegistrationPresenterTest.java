@@ -15,8 +15,8 @@ import org.mifos.mobilebanking.util.RxSchedulersOverrideRule;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
-import rx.Observable;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;

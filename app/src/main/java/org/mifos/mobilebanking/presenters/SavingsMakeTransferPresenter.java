@@ -20,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -98,7 +99,7 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
      */
     public List<String> getAccountNumbers(List<AccountOption> accountOptions) {
         final List<String> accountNumber = new ArrayList<>();
-        Observable.from(accountOptions)
+        Observable.fromIterable(accountOptions)
                 .flatMap(new Function<AccountOption, Observable<String>>() {
                     @Override
                     public Observable<String> apply(AccountOption accountOption) {
@@ -125,10 +126,10 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
      */
     public AccountOption searchAccount(List<AccountOption> accountOptions, final long accountId) {
         final AccountOption[] accountOption = {new AccountOption()};
-        Observable.from(accountOptions)
-                .filter(new Function<AccountOption, Boolean>() {
+        Observable.fromIterable(accountOptions)
+                .filter(new Predicate<AccountOption>() {
                     @Override
-                    public Boolean apply(AccountOption accountOption) {
+                    public boolean test(AccountOption accountOption) {
                         return (accountId == accountOption.getAccountId());
                     }
                 })

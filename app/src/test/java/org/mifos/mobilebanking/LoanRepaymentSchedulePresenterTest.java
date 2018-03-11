@@ -16,7 +16,8 @@ import org.mifos.mobilebanking.utils.Constants;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import rx.Observable;
+
+import io.reactivex.Observable;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
