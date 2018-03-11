@@ -169,6 +169,7 @@
     <string name="last_trans">Last Transaction Details</string>
     <string name="error_username_greater_than_six">Username should be greater than 6 alphabets</string>
     <string name="error_invalid_email">Invalid email id</string>
+    <string name="error_server_down">Server Down, Try after some time</string>
 
     <string name="fetching_client">Fetching Client</string>
 
