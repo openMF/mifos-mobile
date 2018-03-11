@@ -92,10 +92,17 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                             String errorMessage;
                             try {
                                 if (e instanceof HttpException) {
-                                    errorMessage =
-                                            ((HttpException) e).response().errorBody().string();
-                                    getMvpView().showMessage(MFErrorParser.parseError(errorMessage)
-                                            .getDeveloperMessage());
+                                    if (((HttpException) e).code() == 503) {
+                                        getMvpView().
+                                                showMessage(context.
+                                                        getString(R.string.error_server_down));
+                                    } else {
+                                        errorMessage =
+                                                ((HttpException) e).response().errorBody().string();
+                                        getMvpView()
+                                                .showMessage(MFErrorParser.parseError(errorMessage)
+                                                .getDeveloperMessage());
+                                    }
                                 }
                             } catch (Throwable throwable) {
                                 RxJavaPlugins.getErrorHandler();
