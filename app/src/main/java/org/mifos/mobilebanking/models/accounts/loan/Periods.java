@@ -512,11 +512,11 @@ public class Periods implements Parcelable {
 
     protected Periods(Parcel in) {
         this.period = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.fromDate = new ArrayList<Integer>();
+        this.fromDate = new ArrayList<>();
         in.readList(this.fromDate, Integer.class.getClassLoader());
-        this.dueDate = new ArrayList<Integer>();
+        this.dueDate = new ArrayList<>();
         in.readList(this.dueDate, Integer.class.getClassLoader());
-        this.obligationsMetOnDate = new ArrayList<Integer>();
+        this.obligationsMetOnDate = new ArrayList<>();
         in.readList(this.obligationsMetOnDate, Integer.class.getClassLoader());
         this.principalDisbursed = (Double) in.readValue(Double.class.getClassLoader());
         this.complete = (Boolean) in.readValue(Boolean.class.getClassLoader());

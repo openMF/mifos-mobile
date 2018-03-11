@@ -14,7 +14,7 @@ public class User {
     private boolean authenticated;
     private String username;
     private String base64EncodedAuthenticationKey;
-    private List<String> permissions = new ArrayList<String>();
+    private List<String> permissions = new ArrayList<>();
 
     public String getUserName() {
         return username;
