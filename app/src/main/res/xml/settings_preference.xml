@@ -9,4 +9,11 @@
         android:title="@string/language"
         android:key="@string/language_type" />
 
+    <android.support.v7.preference.ListPreference
+        android:entries="@array/theme"
+        android:entryValues="@array/theme_value"
+        android:summary="Choose themes"
+        android:defaultValue="day"
+        android:title="Themes" />
+
 </android.support.v7.preference.PreferenceScreen>
