@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -80,6 +81,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
 
     @BindView(R.id.rl_error)
     RelativeLayout rlError;
+
+    @BindView(R.id.ll_user_profile)
+    LinearLayout llUserProfile;
 
     @Inject
     UserDetailsPresenter presenter;
@@ -189,6 +193,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     public void showError(String message) {
         Toaster.show(rootView, message);
         appBarLayout.setVisibility(View.GONE);
+        llUserProfile.setVisibility(View.GONE);
         rlError.setVisibility(View.VISIBLE);
     }
 
