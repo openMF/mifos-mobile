@@ -226,7 +226,7 @@
 
     <!--Customer care details-->
     <string name="need_help">need help? Contact your support line</string>
-    <string name="help_line_number">8000000000</string>
+    <string name="help_line_number">+91-8000000000</string>
 
     <string name="transferred_successfully">Transferred Successfully</string>
 
