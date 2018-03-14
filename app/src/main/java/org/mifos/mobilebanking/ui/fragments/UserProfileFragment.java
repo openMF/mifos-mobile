@@ -56,7 +56,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     TextView tvGroups;
 
     @BindView(R.id.tv_client_type)
-    TextView tvCLientType;
+    TextView tvClientType;
 
     @BindView(R.id.tv_client_classification)
     TextView tvClientClassification;
@@ -149,7 +149,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         tvAccountNumber.setText(client.getAccountNo());
         tvActivationDate.setText(DateHelper.getDateAsString(client.getActivationDate()));
         tvOfficeName.setText(client.getOfficeName());
-        tvCLientType.setText(client.getClientType().getName());
+        tvClientType.setText(client.getClientType().getName());
         tvGroups.setText(getGroups(client.getGroups()));
         tvClientClassification.setText(client.getClientClassification().getName());
         tvPhoneNumber.setText(client.getMobileNo());
@@ -210,6 +210,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         presenter.detachView();
     }
 }

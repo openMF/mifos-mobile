@@ -182,6 +182,7 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         presenter.detachView();
     }
 }
