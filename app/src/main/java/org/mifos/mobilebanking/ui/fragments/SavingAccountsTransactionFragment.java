@@ -320,6 +320,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         savingAccountsTransactionPresenter.detachView();
     }
 }

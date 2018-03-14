@@ -305,6 +305,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         presenter.detachView();
     }
 }
