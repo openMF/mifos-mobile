@@ -50,8 +50,8 @@ android {
         }
     }
 }
-ext.abiCodes = ['arm64-v8a':'1', 'armeabi':'2', 'armeabi-v7a':'3', 'mips':'4', 'mips64':'5',
-                'x86':'6', 'x86_64':'7']
+ext.abiCodes = ['arm64-v8a': '1', 'armeabi': '2', 'armeabi-v7a': '3', 'mips': '4', 'mips64': '5',
+                'x86'      : '6', 'x86_64': '7']
 import com.android.build.OutputFile
 
 android.applicationVariants.all { variant ->
@@ -67,6 +67,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
@@ -82,7 +83,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.playServicesVersion"
 
     //Square dependencies
-    implementation ('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {
+    implementation('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {
         // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
         exclude module: 'okhttp'
     }
