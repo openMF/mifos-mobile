@@ -85,7 +85,6 @@ public class ClientChargeFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         if (getArguments() != null) {
-            setToolbarTitle(getString(R.string.charges));
             id = getArguments().getLong(Constants.CLIENT_ID);
             chargeType = (ChargeType) getArguments().getSerializable(Constants.CHARGE_TYPE);
         }
@@ -98,6 +97,7 @@ public class ClientChargeFragment extends BaseFragment implements
         ButterKnife.bind(this, rootView);
 
         clientChargePresenter.attachView(this);
+        setToolbarTitle(getString(R.string.charges));
 
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
