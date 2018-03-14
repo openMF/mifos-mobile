@@ -131,6 +131,7 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         loanAccountWithdrawPresenter.detachView();
     }
 }
