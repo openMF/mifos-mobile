@@ -383,6 +383,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         presenter.detachView();
     }
 }
