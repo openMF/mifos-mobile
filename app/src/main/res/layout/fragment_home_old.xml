@@ -48,7 +48,8 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/default_margin"
                     android:background="@android:color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
