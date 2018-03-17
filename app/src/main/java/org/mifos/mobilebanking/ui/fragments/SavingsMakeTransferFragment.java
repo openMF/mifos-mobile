@@ -25,6 +25,7 @@ import org.mifos.mobilebanking.ui.views.SavingsMakeTransferMvpView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
 
@@ -335,14 +336,18 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
-        pvOne.setCurrentCompeleted();
-        pvTwo.setCurrentActive();
+        if (!Network.isConnected(getActivity())) {
+            Toaster.show(rootView, getString(R.string.internet_not_connected), Toaster.LONG);
+        } else {
+            pvOne.setCurrentCompeleted();
+            pvTwo.setCurrentActive();
 
-        btnPayTo.setVisibility(View.GONE);
-        tvSelectPayFrom.setVisibility(View.GONE);
-        btnPayFrom.setVisibility(View.VISIBLE);
-        spPayFrom.setVisibility(View.VISIBLE);
-        spPayTo.setEnabled(false);
+            btnPayTo.setVisibility(View.GONE);
+            tvSelectPayFrom.setVisibility(View.GONE);
+            btnPayFrom.setVisibility(View.VISIBLE);
+            spPayFrom.setVisibility(View.VISIBLE);
+            spPayTo.setEnabled(false);
+        }
     }
 
     /**
