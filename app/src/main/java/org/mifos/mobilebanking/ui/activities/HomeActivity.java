@@ -85,6 +85,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private boolean isReceiverRegistered;
     boolean  doubleBackToExitPressedOnce = false;
+    private boolean isShareItemActive = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +146,10 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                     new IntentFilter(Constants.REGISTER_ON_SERVER));
             isReceiverRegistered = true;
         }
+        if (isShareItemActive) {
+            setNavigationViewSelectedItem(R.id.item_home);
+            isShareItemActive = false;
+        }
     }
 
     /**
@@ -190,6 +195,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 replaceFragment(HelpFragment.getInstance(), true, R.id.container);
                 break;
             case R.id.item_share:
+                isShareItemActive = true;
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
@@ -204,7 +210,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
         setNavigationViewSelectedItem(R.id.item_home);
-        setTitle(item.getTitle());
+        if (item.getItemId() != R.id.item_share) {
+            setTitle(item.getTitle());
+        }
         return true;
     }
 
