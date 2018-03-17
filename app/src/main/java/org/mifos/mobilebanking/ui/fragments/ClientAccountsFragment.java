@@ -369,7 +369,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             if (((AccountsFragment) getChildFragmentManager().findFragmentByTag(
                     getFragmentTag(1))).getCurrentFilterList() == null) {
                 checkBoxAdapter.setStatusList(StatusUtils.
-                        getSavingsAccountStatusList(getActivity()));
+                        getLoanAccountStatusList(getActivity()));
             } else {
                 checkBoxAdapter.setStatusList(((AccountsFragment) getChildFragmentManager()
                         .findFragmentByTag(getFragmentTag(1))).getCurrentFilterList());
@@ -380,7 +380,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             if (((AccountsFragment) getChildFragmentManager().findFragmentByTag(
                     getFragmentTag(2))).getCurrentFilterList() == null) {
                 checkBoxAdapter.setStatusList(StatusUtils.
-                        getSavingsAccountStatusList(getActivity()));
+                        getShareAccountStatusList(getActivity()));
             } else {
                 checkBoxAdapter.setStatusList(((AccountsFragment) getChildFragmentManager()
                         .findFragmentByTag(getFragmentTag(2))).getCurrentFilterList());
