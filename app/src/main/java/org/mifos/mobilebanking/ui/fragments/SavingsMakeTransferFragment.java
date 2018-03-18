@@ -174,7 +174,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @OnClick(R.id.btn_review_transfer)
     void reviewTransfer() {
 
-        if (etRemark.getText().toString().equals("")) {
+        if (etRemark.getText().toString().trim().equals("")) {
             showToaster(getString(R.string.remark_is_mandatory));
             return;
         }
