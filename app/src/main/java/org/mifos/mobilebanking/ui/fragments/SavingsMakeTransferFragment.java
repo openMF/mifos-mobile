@@ -38,6 +38,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static org.mifos.mobilebanking.ui.activities.base.BaseActivity.hideKeyboard;
+
 /**
  * Created by Rajan Maurya on 10/03/17.
  */
@@ -193,7 +195,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
         transferPayload.setTransferDescription(etRemark.getText().toString());
 
-
+        hideKeyboard(getActivity());
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
                 newInstance(transferPayload, TransferType.SELF), true, R.id.container);
     }
