@@ -106,6 +106,7 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
                         return Observable.just(accountOption.getAccountNo());
                     }
                 })
+                .distinct()
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String accountNo) throws Exception {
