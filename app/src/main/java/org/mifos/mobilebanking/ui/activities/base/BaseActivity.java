@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.ui.activities.base;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.mifos.mobilebanking.MifosSelfServiceApp;
@@ -252,4 +254,13 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
         return getSupportFragmentManager().getBackStackEntryCount();
     }
 
+
+    public static void hideKeyboard(Context context) {
+        Activity activity = (Activity) context;
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) context.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 }
