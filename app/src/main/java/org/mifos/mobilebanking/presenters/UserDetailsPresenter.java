@@ -10,11 +10,11 @@ import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.injection.ApplicationContext;
 import org.mifos.mobilebanking.models.client.Client;
+import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 import org.mifos.mobilebanking.models.notification.NotificationUserDetail;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.views.UserDetailsView;
 import org.mifos.mobilebanking.utils.ImageUtil;
-import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 
 import java.io.IOException;
 
@@ -201,7 +201,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     }
 
     private void updateRegistrationNotification(long id, NotificationRegisterPayload payload,
-                                               final String token) {
+                                                final String token) {
         checkViewAttached();
         compositeDisposables.add(dataManager.updateRegisterNotification(id, payload)
                 .observeOn(AndroidSchedulers.mainThread())
