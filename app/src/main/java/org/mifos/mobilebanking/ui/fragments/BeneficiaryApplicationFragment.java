@@ -195,10 +195,10 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         if (accountTypeId == -1) {
             Toaster.show(rootView, getString(R.string.choose_account_type));
             return;
-        } else if (tilAccountNumber.getEditText().getText().toString().equals("")) {
+        } else if (tilAccountNumber.getEditText().getText().toString().trim().equals("")) {
             tilAccountNumber.setError(getString(R.string.enter_account_number));
             return;
-        } else if (tilOfficeName.getEditText().getText().toString().equals("")) {
+        } else if (tilOfficeName.getEditText().getText().toString().trim().equals("")) {
             tilOfficeName.setError(getString(R.string.enter_office_name));
             return;
         } else if (tilTransferLimit.getEditText().getText().toString().equals("")) {
@@ -210,7 +210,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         } else if (tilTransferLimit.getEditText().getText().toString().matches("^0*")) {
             tilTransferLimit.setError(getString(R.string.amount_greater_than_zero));
             return;
-        } else if (tilBeneficiaryName.getEditText().getText().toString().equals("")) {
+        } else if (tilBeneficiaryName.getEditText().getText().toString().trim().equals("")) {
             tilBeneficiaryName.setError(getString(R.string.enter_beneficiary_name));
             return;
         }
