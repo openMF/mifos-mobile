@@ -7,6 +7,7 @@ import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.injection.ApplicationContext;
 import org.mifos.mobilebanking.models.AccountOptionAndBeneficiary;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.payload.AccountDetail;
 import org.mifos.mobilebanking.models.templates.account.AccountOption;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
@@ -119,23 +120,25 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
      * @param accountOptions {@link List} of {@link AccountOption}
      * @return Returns {@link List} containing {@code accountNumbers}
      */
-    public List<String> getAccountNumbersFromAccountOptions(List<AccountOption> accountOptions) {
-        final List<String> accountNumbers = new ArrayList<>();
+    public List<AccountDetail> getAccountNumbersFromAccountOptions(List<AccountOption>
+                                                                           accountOptions) {
+        final List<AccountDetail> accountNumber = new ArrayList<>();
         Observable.fromIterable(accountOptions)
-                .flatMap(new Function<AccountOption, Observable<String>>() {
+                .flatMap(new Function<AccountOption, Observable<AccountDetail>>() {
                     @Override
-                    public Observable<String> apply(AccountOption accountOption) {
-                        return Observable.just(accountOption.getAccountNo());
+                    public Observable<AccountDetail> apply(AccountOption accountOption) {
+                        return Observable.just(new AccountDetail(accountOption.getAccountNo(),
+                                accountOption.getAccountType().getValue()));
                     }
                 })
-                .subscribe(new Consumer<String>() {
+                .subscribe(new Consumer<AccountDetail>() {
                     @Override
-                    public void accept(String s) throws Exception {
-                        accountNumbers.add(s);
+                    public void accept(AccountDetail accountDetail) throws Exception {
+                        accountNumber.add(accountDetail);
 
                     }
                 });
-        return accountNumbers;
+        return accountNumber;
     }
 
     /**
