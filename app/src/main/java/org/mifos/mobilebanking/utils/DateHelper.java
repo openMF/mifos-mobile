@@ -6,6 +6,7 @@
 package org.mifos.mobilebanking.utils;
 
 import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,12 +27,10 @@ public class DateHelper {
 
     /**
      * the result string uses the list given in a reverse order ([x, y, z] results in "z y x")
-     *
      * @param integersOfDate [year-month-day] (ex [2016, 4, 14])
      * @return date in the format day month year (ex 14 Apr 2016)
      */
     public static String getDateAsString(List<Integer> integersOfDate) {
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(integersOfDate.get(2))
                 .append(' ')
@@ -40,7 +39,6 @@ public class DateHelper {
                 .append(integersOfDate.get(0));
 
         return stringBuilder.toString();
-
     }
 
     public static String getDateAsString(List<Integer> integersOfDate, String pattern) {
