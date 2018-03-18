@@ -88,7 +88,6 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     View rootView;
     private double totalLoanAmount, totalSavingAmount;
-    private Bitmap userProfileBitmap;
     private Client client;
     private long clientId;
     private View toolbarView;
@@ -176,7 +175,6 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         super.onSaveInstanceState(outState);
         outState.putDouble(Constants.TOTAL_LOAN, totalLoanAmount);
         outState.putDouble(Constants.TOTAL_SAVINGS, totalSavingAmount);
-        outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
         outState.putParcelable(Constants.USER_DETAILS, client);
     }
 
@@ -185,7 +183,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             showUserDetails((Client) savedInstanceState.getParcelable(Constants.USER_DETAILS));
-            showUserImage((Bitmap) savedInstanceState.getParcelable(Constants.USER_PROFILE));
+            presenter.setUserProfile(preferencesHelper.getUserProfileImage());
             showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN));
             showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS));
         }
@@ -284,10 +282,8 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 if (bitmap != null) {
 
-                    userProfileBitmap = bitmap;
                     ivUserImage.setVisibility(View.GONE);
                     ivCircularUserImage.setVisibility(View.VISIBLE);
                     ivCircularUserImage.setImageBitmap(bitmap);

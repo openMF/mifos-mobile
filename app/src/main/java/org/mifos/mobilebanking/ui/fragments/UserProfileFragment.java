@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.client.Group;
 import org.mifos.mobilebanking.presenters.UserDetailsPresenter;
@@ -88,6 +89,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Inject
     UserDetailsPresenter presenter;
 
+    @Inject
+    PreferencesHelper preferencesHelper;
+
     private View rootView;
     private Bitmap userBitmap;
     private Client client;
@@ -123,7 +127,6 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(Constants.USER_PROFILE, userBitmap);
         outState.putParcelable(Constants.USER_DETAILS, client);
     }
 
@@ -132,8 +135,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS);
-            userBitmap = savedInstanceState.getParcelable(Constants.USER_PROFILE);
-            showUserImage(userBitmap);
+            presenter.setUserProfile(preferencesHelper.getUserProfileImage());
             showUserDetails(client);
         }
     }

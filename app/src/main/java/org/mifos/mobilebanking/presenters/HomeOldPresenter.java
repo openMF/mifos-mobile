@@ -144,6 +144,8 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
      */
     public void getUserImage() {
         checkViewAttached();
+        setUserProfile(preferencesHelper.getUserProfileImage());
+
         compositeDisposable.add(dataManager.getClientImage()
                 .observeOn(Schedulers.newThread())
                 .subscribeOn(Schedulers.io())
@@ -166,19 +168,22 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
                             final String pureBase64Encoded =
                                     encodedString.substring(encodedString.indexOf(',') + 1);
-
-                            final byte[] decodedBytes =
-                                    Base64.decode(pureBase64Encoded, Base64.DEFAULT);
-
-                            Bitmap decodedBitmap = ImageUtil.getInstance().
-                                    compressImage(decodedBytes, 256, 256);
-                            getMvpView().showUserImage(decodedBitmap);
+                            preferencesHelper.setUserProfileImage(pureBase64Encoded);
+                            setUserProfile(pureBase64Encoded);
                         } catch (IOException e) {
                             Log.d("userimage", e.toString());
                         }
                     }
                 })
         );
+    }
+
+    public void setUserProfile(String image) {
+        if (image == null)
+            return;
+        final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
+        Bitmap decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes);
+        getMvpView().showUserImage(decodedBitmap);
     }
 
     public void getUnreadNotificationsCount() {
