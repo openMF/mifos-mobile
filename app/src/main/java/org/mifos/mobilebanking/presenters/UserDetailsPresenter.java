@@ -107,6 +107,8 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
      */
     public void getUserImage() {
         checkViewAttached();
+        setUserProfile(preferencesHelper.getUserProfileImage());
+
         compositeDisposables.add(dataManager.getClientImage()
                 .observeOn(Schedulers.newThread())
                 .subscribeOn(Schedulers.io())
@@ -131,20 +133,22 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
                             //the response is of the form of 'data:image/jpg;base64, .....'
                             final String pureBase64Encoded =
                                     encodedString.substring(encodedString.indexOf(',') + 1);
-
-                            final byte[] decodedBytes =
-                                    Base64.decode(pureBase64Encoded, Base64.DEFAULT);
-
-                            Bitmap decodedBitmap = ImageUtil.getInstance().
-                                    compressImage(decodedBytes);
-
-                            getMvpView().showUserImage(decodedBitmap);
+                            preferencesHelper.setUserProfileImage(pureBase64Encoded);
+                            setUserProfile(pureBase64Encoded);
                         } catch (IOException e) {
                             Log.e("userimage", e.getMessage());
                         }
                     }
                 })
         );
+    }
+
+    public void setUserProfile(String image) {
+        if (image == null)
+            return;
+        final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
+        Bitmap decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes);
+        getMvpView().showUserImage(decodedBitmap);
     }
 
     public void registerNotification(final String token) {

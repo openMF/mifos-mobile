@@ -32,6 +32,7 @@ public class PreferencesHelper {
     private static final String GCM_TOKEN = "gcm_token";
     private static final String TENANT = "preferences_base_tenant";
     private static final String BASE_URL = "preferences_base_url_key";
+    private static final String PROFILE_IMAGE = "preferences_profile_image";
 
     private SharedPreferences sharedPreferences;
 
@@ -155,6 +156,13 @@ public class PreferencesHelper {
         putString(GCM_TOKEN, token);
     }
 
+    public String getUserProfileImage() {
+        return getString(PROFILE_IMAGE, null);
+    }
+
+    public void setUserProfileImage(String image) {
+        putString(PROFILE_IMAGE, image);
+    }
 
     public String getGcmToken() {
         return getString(GCM_TOKEN, "");

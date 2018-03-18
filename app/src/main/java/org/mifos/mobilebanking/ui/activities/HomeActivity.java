@@ -110,8 +110,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             showUserImage(null);
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS);
-            userProfileBitmap = savedInstanceState.getParcelable(Constants.USER_PROFILE);
-            showUserImage(userProfileBitmap);
+            detailsPresenter.setUserProfile(preferencesHelper.getUserProfileImage());
             showUserDetails(client);
         }
 
@@ -126,7 +125,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(Constants.USER_PROFILE, userProfileBitmap);
         outState.putParcelable(Constants.USER_DETAILS, client);
     }
 
