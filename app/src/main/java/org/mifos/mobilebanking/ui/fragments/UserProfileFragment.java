@@ -142,6 +142,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
 
     /**
      * Sets client basic details which are fetched from server
+     *
      * @param client instance of {@link Client} which contains information about client
      */
     @Override
@@ -155,16 +156,26 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         tvGroups.setText(getGroups(client.getGroups()));
         tvClientClassification.setText(client.getClientClassification().getName());
         tvPhoneNumber.setText(client.getMobileNo());
-        tvDOB.setText(DateHelper.getDateAsString(client.getDobDate()));
+        if (client.getDobDate().size() != 3) {  // no data entry in database for the client
+            tvDOB.setText("No DOB found.");
+        } else {
+            tvDOB.setText(DateHelper.getDateAsString(client.getDobDate()));
+        }
         tvGender.setText(client.getGender().getName());
     }
 
     /**
      * Generate a string for groups which the client is part of.
+     *
      * @param groups {@link List} of {@link Group} which client is a part of.
      * @return Returns String of groups
      */
     private String getGroups(List<Group> groups) {
+        if (groups.size() == 0) {
+            return "No groups found."; // no groups entry in database for the client
+        }
+
+
         StringBuilder builder = new StringBuilder();
         for (Group group : groups) {
             builder.append(getString(R.string.string_and_string, group.getName(), " | "));
@@ -174,6 +185,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
 
     /**
      * Provides with client Image fetched from the server in {@code bitmap}
+     *
      * @param bitmap User Image
      */
     @Override
@@ -189,6 +201,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
