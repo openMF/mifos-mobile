@@ -5,6 +5,7 @@ import android.content.Context;
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.injection.ApplicationContext;
+import org.mifos.mobilebanking.models.payload.AccountDetail;
 import org.mifos.mobilebanking.models.templates.account.AccountOption;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
@@ -97,20 +98,20 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
      * @param accountOptions {@link List} of {@link AccountOption}
      * @return Returns {@link List} containing {@code accountNo}
      */
-    public List<String> getAccountNumbers(List<AccountOption> accountOptions) {
-        final List<String> accountNumber = new ArrayList<>();
+    public List<AccountDetail> getAccountNumbers(List<AccountOption> accountOptions) {
+        final List<AccountDetail> accountNumber = new ArrayList<>();
         Observable.fromIterable(accountOptions)
-                .flatMap(new Function<AccountOption, Observable<String>>() {
+                .flatMap(new Function<AccountOption, Observable<AccountDetail>>() {
                     @Override
-                    public Observable<String> apply(AccountOption accountOption) {
-                        return Observable.just(accountOption.getAccountNo());
+                    public Observable<AccountDetail> apply(AccountOption accountOption) {
+                        return Observable.just(new AccountDetail(accountOption.getAccountNo(),
+                                accountOption.getAccountType().getValue()));
                     }
                 })
-                .distinct()
-                .subscribe(new Consumer<String>() {
+                .subscribe(new Consumer<AccountDetail>() {
                     @Override
-                    public void accept(String accountNo) throws Exception {
-                        accountNumber.add(accountNo);
+                    public void accept(AccountDetail accountDetail) throws Exception {
+                        accountNumber.add(accountDetail);
 
                     }
                 });

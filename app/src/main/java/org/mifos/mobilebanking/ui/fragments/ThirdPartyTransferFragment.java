@@ -16,11 +16,13 @@ import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.payload.AccountDetail;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.models.templates.account.AccountOption;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.presenters.ThirdPartyTransferPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
+import org.mifos.mobilebanking.ui.adapters.AccountsSpinnerAdapter;
 import org.mifos.mobilebanking.ui.enums.TransferType;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.ThirdPartyTransferView;
@@ -98,10 +100,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     ThirdPartyTransferPresenter presenter;
 
     private List<String> listBeneficiary = new ArrayList<>();
-    private List<String> listPayFrom = new ArrayList<>();
+    private List<AccountDetail> listPayFrom = new ArrayList<>();
     private List<Beneficiary> beneficiaries;
     private ArrayAdapter<String> beneficiaryAdapter;
-    private ArrayAdapter<String> payFromAdapter;
+    private AccountsSpinnerAdapter payFromAdapter;
     private AccountOption fromAccountOption;
     private AccountOption beneficiaryAccountOption;
     private AccountOptionsTemplate accountOptionsTemplate;
@@ -158,7 +160,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @Override
     public void showUserInterface() {
-        payFromAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
+        payFromAdapter = new AccountsSpinnerAdapter(getActivity(), R.layout.account_spinner_layout,
                 listPayFrom);
         payFromAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spPayFrom.setAdapter(payFromAdapter);

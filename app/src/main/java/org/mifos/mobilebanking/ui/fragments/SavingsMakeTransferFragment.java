@@ -7,18 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.models.payload.AccountDetail;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.models.templates.account.AccountOption;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.presenters.SavingsMakeTransferPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
+import org.mifos.mobilebanking.ui.adapters.AccountsSpinnerAdapter;
 import org.mifos.mobilebanking.ui.enums.TransferType;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.SavingsMakeTransferMvpView;
@@ -96,11 +97,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     View rootView;
 
-    private List<String> listPayTo = new ArrayList<>();
-    private List<String> listPayFrom = new ArrayList<>();
+    private List<AccountDetail> listPayTo = new ArrayList<>();
+    private List<AccountDetail> listPayFrom = new ArrayList<>();
 
-    private ArrayAdapter<String> payToAdapter;
-    private ArrayAdapter<String> payFromAdapter;
+    private AccountsSpinnerAdapter payToAdapter;
+    private AccountsSpinnerAdapter payFromAdapter;
 
     private TransferPayload transferPayload;
     private String transferDate;
@@ -211,14 +212,14 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @Override
     public void showUserInterface() {
         pvOne.setCurrentActive();
-        payFromAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
+        payFromAdapter = new AccountsSpinnerAdapter(getActivity(), R.layout.account_spinner_layout,
                 listPayFrom);
         payFromAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spPayFrom.setAdapter(payFromAdapter);
         spPayFrom.setOnItemSelectedListener(this);
 
-        payToAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
-                listPayTo);
+        payToAdapter = new AccountsSpinnerAdapter(getActivity(), R.layout.account_spinner_layout,
+            listPayTo);
         payToAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spPayTo.setAdapter(payToAdapter);
         spPayTo.setOnItemSelectedListener(this);
