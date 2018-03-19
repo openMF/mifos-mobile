@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_base_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin"
@@ -25,6 +26,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_tenant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin"
