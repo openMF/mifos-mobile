@@ -42,6 +42,8 @@ public class ConfigurationDialogFragmentCompat extends PreferenceDialogFragmentC
 
         etBaseUrl.setText(preference.getBaseUrl());
         etTenant.setText(preference.getTenant());
+
+        etBaseUrl.setSelection(etBaseUrl.getText().length());
     }
 
     @Override
