@@ -211,8 +211,8 @@
     </android.support.v4.widget.NestedScrollView>
 
     <include
-        layout="@layout/layout_error"
-        android:id="@+id/rl_error"
+        layout="@layout/layout_sweet_exception_handler"
+        android:id="@+id/layout_error"
         android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>
