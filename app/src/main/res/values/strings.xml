@@ -156,6 +156,7 @@
     <string name="error_no_charge">No charges found</string>
     <string name="error_client_not_found">Client Not Found</string>
     <string name="error_fetching_client">Failed to fetch Client</string>
+    <string name="error_fetching_user_profile">Failed to fetch User Profile</string>
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>
     <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
     <string name="error_same_account_transfer">Can\'t transfer with in same account</string>

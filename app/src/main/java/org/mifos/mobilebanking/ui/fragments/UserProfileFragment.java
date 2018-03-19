@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
@@ -33,6 +32,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 /**
  * Created by dilpreet on 10/7/17.
@@ -80,8 +81,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.rl_error)
-    RelativeLayout rlError;
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @BindView(R.id.ll_user_profile)
     LinearLayout llUserProfile;
@@ -95,6 +96,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     private View rootView;
     private Bitmap userBitmap;
     private Client client;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static UserProfileFragment newInstance() {
         UserProfileFragment fragment = new UserProfileFragment();
@@ -117,6 +119,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
                 R.color.white));
         collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(getActivity(),
                 R.color.white));
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         if (savedInstanceState == null) {
             presenter.getUserDetails();
             presenter.getUserImage();
@@ -209,9 +212,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Override
     public void showError(String message) {
         Toaster.show(rootView, message);
-        appBarLayout.setVisibility(View.GONE);
-        llUserProfile.setVisibility(View.GONE);
-        rlError.setVisibility(View.VISIBLE);
+        sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.error_fetching_user_profile),
+                R.drawable.ic_assignment_turned_in_black_24dp, appBarLayout, layoutError);
     }
 
     @Override
