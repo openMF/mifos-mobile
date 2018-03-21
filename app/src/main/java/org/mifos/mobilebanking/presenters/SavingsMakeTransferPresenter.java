@@ -98,9 +98,18 @@ public class SavingsMakeTransferPresenter extends BasePresenter<SavingsMakeTrans
      * @param accountOptions {@link List} of {@link AccountOption}
      * @return Returns {@link List} containing {@code accountNo}
      */
-    public List<AccountDetail> getAccountNumbers(List<AccountOption> accountOptions) {
+    public List<AccountDetail> getAccountNumbers(List<AccountOption> accountOptions,
+                                                 final boolean isTypePayFrom) {
         final List<AccountDetail> accountNumber = new ArrayList<>();
         Observable.fromIterable(accountOptions)
+                .filter(new Predicate<AccountOption>() {
+                    @Override
+                    public boolean test(AccountOption accountOption) throws Exception {
+                        return !(accountOption.getAccountType().getCode().equals(context.
+                                getString(R.string.account_type_loan))
+                                && isTypePayFrom);
+                    }
+                })
                 .flatMap(new Function<AccountOption, Observable<AccountDetail>>() {
                     @Override
                     public Observable<AccountDetail> apply(AccountOption accountOption) {
