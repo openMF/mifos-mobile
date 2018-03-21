@@ -236,9 +236,9 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     public void showSavingsAccountTemplate(AccountOptionsTemplate accountOptionsTemplate) {
         this.accountOptionsTemplate = accountOptionsTemplate;
         listPayFrom.addAll(savingsMakeTransferPresenter.getAccountNumbers(
-                accountOptionsTemplate.getFromAccountOptions()));
+                accountOptionsTemplate.getFromAccountOptions(), true));
         listPayTo.addAll(savingsMakeTransferPresenter.getAccountNumbers(
-                accountOptionsTemplate.getToAccountOptions()));
+                accountOptionsTemplate.getToAccountOptions(), false));
         payToAdapter.notifyDataSetChanged();
         payFromAdapter.notifyDataSetChanged();
     }
