@@ -27,10 +27,12 @@ public class DateHelper {
 
     /**
      * the result string uses the list given in a reverse order ([x, y, z] results in "z y x")
+     *
      * @param integersOfDate [year-month-day] (ex [2016, 4, 14])
      * @return date in the format day month year (ex 14 Apr 2016)
      */
     public static String getDateAsString(List<Integer> integersOfDate) {
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(integersOfDate.get(2))
                 .append(' ')
@@ -49,7 +51,8 @@ public class DateHelper {
 
     /**
      * This Method converting the dd-MM-yyyy format type date string into dd MMMM yyyy
-     * @param format Final Format of date string
+     *
+     * @param format     Final Format of date string
      * @param dateString date string
      * @return dd MMMM yyyy format date string.
      */
@@ -66,7 +69,7 @@ public class DateHelper {
     }
 
     public static String getFormatConverter(String currentFormat, String requiredFormat,
-                                            String dateString) {
+            String dateString) {
         SimpleDateFormat pickerFormat = new SimpleDateFormat(currentFormat, Locale.ENGLISH);
         SimpleDateFormat finalFormat = new SimpleDateFormat(requiredFormat, Locale.ENGLISH);
         Date date = null;

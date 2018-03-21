@@ -20,7 +20,7 @@
     <string name="savings_account">Savings Account</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>
     <string name="nominal_interest_rate">Nominal Interest Rate</string>
-    <string name="account_number">Account Number </string>
+    <string name="account_number">Account Number</string>
     <string name="account_balance">Account Balance</string>
     <string name="total_deposits">Total Deposits</string>
     <string name="open_drawer">Open Drawer</string>
@@ -39,7 +39,7 @@
     <string name="working">Working</string>
     <string name="status_image">Status Image</string>
     <string name="loan_repayment_schedule">Repayment Schedule</string>
-    <string name="last_transaction">Last Transaction </string>
+    <string name="last_transaction">Last Transaction</string>
     <string name="made_on">Made on</string>
     <string name="make_transfer">Make a Transfer</string>
     <string name="select_loan_product">Select Loan Product*</string>
@@ -58,8 +58,8 @@
     <string name="withdraw_loan_reason">Reason to Withdraw Loan</string>
     <string name="loan_account_withdrawn_successfully">Loan account successfully withdrawn</string>
     <string name="submit_loan">Submit Loan</string>
-    <string name="new_loan_application">New Loan Application for </string>
-    <string name="update_loan_application">Update Loan Application for </string>
+    <string name="new_loan_application">New Loan Application for</string>
+    <string name="update_loan_application">Update Loan Application for</string>
     <string name="loan_interest_type">Interest Type</string>
     <string name="amortization">Amortization</string>
     <string name="interest_calculation_period">Interest calculation period</string>
@@ -87,8 +87,8 @@
     <string name="filter_loan">Filter Loan Accounts</string>
     <string name="filter_share">Filter Share Accounts</string>
     <string name="search">Search</string>
-    <string name="select_pay_to">Select Account to Pay To </string>
-    <string name="select_pay_from">Select Account to Pay From </string>
+    <string name="select_pay_to">Select Account to Pay To</string>
+    <string name="select_pay_from">Select Account to Pay From</string>
     <string name="enter_remarks">Enter Remarks for transfer</string>
     <string name="select_beneficiary">Select Beneficiary</string>
     <string name="continue_str">Continue</string>
@@ -117,23 +117,32 @@
     <string name="rb_email">email</string>
     <string name="verification_mode">Verification Mode</string>
 
-    <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a deposit</string>
-    <string name="account_not_active_to_perform_transfer">Account should to be Active to perform a transfer</string>
+    <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
+        deposit
+    </string>
+    <string name="account_not_active_to_perform_transfer">Account should to be Active to perform a
+        transfer
+    </string>
 
     <string name="empty_savings_accounts">There is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">There is no LoanAccount associated with you</string>
     <string name="empty_share_accounts">There is no ShareAccount associated with you</string>
     <string name="empty_transactions">There is no transactions associated with you</string>
-    <string name="empty_repayment_schedule">There is no repayment schedule associated with you</string>
+    <string name="empty_repayment_schedule">There is no repayment schedule associated with you
+    </string>
     <string name="no_more_transactions_available">No more transactions available</string>
     <string name="no_transaction">No Transaction</string>
+    <string name="no_dob_found">No DOB found.</string>
+    <string name="not_assigned_with_any_group">Not Assigned with any group</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
     <string name="error_validation_blank">%1$s cannot be blank</string>
     <string name="error_validation_minimum_chars">%1$s cannot be less than %2$d characters</string>
     <string name="error_validation_cannot_contain_spaces">%1$s cannot contain %2$s</string>
-    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s cannot begin or end with blank space</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s cannot begin or
+        end with blank space
+    </string>
     <string name="error_internal_server">Error in internal server, please try again</string>
     <string name="error_client_loading">Error loading client list</string>
     <string name="error_loan_accounts_list_loading">Error loading in loan accounts list</string>
@@ -148,7 +157,9 @@
     <string name="error_fetching_accounts">Failed to fetch Accounts</string>
     <string name="error_fetching_repayment_schedule">Failed To fetch repayment schedule</string>
     <string name="error_same_account_transfer">Can\'t transfer with in same account</string>
-    <string name="error_fetching_account_transfer_template">Error to fetching account transfer template</string>
+    <string name="error_fetching_account_transfer_template">Error to fetching account transfer
+        template
+    </string>
     <string name="error_fetching_beneficiaries">Failed to fetch Beneficiaries</string>
     <string name="error_fetching_beneficiary_template">Failed to fetch Beneficiary Template</string>
     <string name="error_fetching_template">Failed to fetch template</string>
@@ -156,7 +167,9 @@
     <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
     <string name="error_deleting_beneficiary">Failed to delete Beneficiary</string>
     <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
-    <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer template</string>
+    <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer
+        template
+    </string>
     <string name="unauthorized_client">You are not authorized</string>
     <string name="qr_code">QR Code</string>
     <string name="share_qr_code">Share QR Code</string>
@@ -168,7 +181,8 @@
     <string name="view_repayment">View Repayment Schedule</string>
     <string name="view_qr_code">View QR Code for this account</string>
     <string name="last_trans">Last Transaction Details</string>
-    <string name="error_username_greater_than_six">Username should be greater than 6 alphabets</string>
+    <string name="error_username_greater_than_six">Username should be greater than 6 alphabets
+    </string>
     <string name="error_invalid_email">Invalid email id</string>
     <string name="error_server_down">Server Down, Try after some time</string>
 
@@ -224,9 +238,12 @@
     <string name="map_marker_heading">Seattle</string>
     <string name="map_marker_desc">Home to large tech industry</string>
     <string name="loan_transaction_details">Loan Account Details</string>
-    <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully</string>
-    <string name="loan_application_updated_successfully">Loan Application Updated Successfully</string>
-    <string name="loan_application_withdrawn_successfully">Loan Application Withdrawn Successfully</string>
+    <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully
+    </string>
+    <string name="loan_application_updated_successfully">Loan Application Updated Successfully
+    </string>
+    <string name="loan_application_withdrawn_successfully">Loan Application Withdrawn Successfully
+    </string>
     <string name="none">None</string>
     <string name="all">All</string>
     <string name="four_weeks">4 Weeks</string>
@@ -268,7 +285,9 @@
     <string name="beneficiary_updated_successfully">Beneficiary updated successfully</string>
     <string name="update_beneficiary">Update Beneficiary</string>
     <string name="delete_beneficiary">Delete Beneficiary</string>
-    <string name="delete_beneficiary_confirmation">Are you sure you want to delete this Beneficiary</string>
+    <string name="delete_beneficiary_confirmation">Are you sure you want to delete this
+        Beneficiary
+    </string>
     <string name="delete">Delete</string>
     <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
     <string name="third_party_transfer">Third Party Transfer</string>
@@ -283,15 +302,19 @@
     <string name="client_classification">Client Classification</string>
     <string name="select_mode">Select Mode</string>
     <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
-        enter manually or scan account QR code</string>
+        enter manually or scan account QR code
+    </string>
     <string name="invalid_qr">You can\'t make action into your account, please scan other user
-        Savings and Loans Account QRCode</string>
+        Savings and Loans Account QRCode
+    </string>
     <string name="add">Add</string>
     <string name="scan">Scan</string>
     <string name="enter_passcode">Enter 4 digit Passcode</string>
     <string name="error_passcode">Passcode should be of 4 digit</string>
     <string name="incorrect_passcode">Incorrect Passcode</string>
-    <string name="incorrect_passcode_more_than_three">You have entered incorrect Passcode more than 3 times</string>
+    <string name="incorrect_passcode_more_than_three">You have entered incorrect Passcode more than
+        3 times
+    </string>
     <string name="skip">Skip</string>
     <string name="save">Save</string>
     <string name="passcode_setup">Setup a passcode to login</string>
@@ -303,7 +326,8 @@
     <string name="about_us_under_construction">About Us Under Construction</string>
     <string name="help_under_construction">Help Under Construction</string>
     <string name="logout">Logout</string>
-    <string name="share_msg">Download Self Service app here: https://play.google.com/store/apps/details?id=
+    <string name="share_msg">Download Self Service app here:
+        https://play.google.com/store/apps/details?id=
     </string>
     <string name="choose">Choose application</string>
     <string name="not_available">NA</string>
@@ -315,7 +339,7 @@
 
     <string name="transferred_successfully">Transferred Successfully</string>
 
-    <string name="total">Total: </string>
+    <string name="total">Total:</string>
 
     <string name="account_short">A/C</string>
     <string name="loan_product">Loan Product</string>
@@ -334,15 +358,19 @@
     <string name="dialog_action_app_settings">App Settings</string>
     <string name="dialog_message_camera_permission_denied_prompt">Without camera permission you will
         not be able to scan QR code to add beneficiary.Are you sure you want to deny this
-        permission?</string>
+        permission?
+    </string>
     <string name="dialog_message_camera_permission_never_ask_again">You have denied permission to
         use camera, without this permission you will not be able to add beneficiaries using QR Code.
-        Please enable it in settings</string>
+        Please enable it in settings
+    </string>
     <string name="dialog_message_phone_state_permission_denied_prompt">This permission is required
-        to show currency according to your country.Are you sure you want to deny it?</string>
+        to show currency according to your country.Are you sure you want to deny it?
+    </string>
     <string name="dialog_message_phone_state_permission_never_ask_again">You have denied permission
         to fetch Phone State, without this permission currency might not be shown in proper format.
-        Please enable it in settings</string>
+        Please enable it in settings
+    </string>
     <string name="msg_setting_activity_not_found">Something went wrong finding Settings activity.
         \nGo to \'Settings\' and grant permission manually.
     </string>
@@ -394,21 +422,27 @@
     </string-array>
 
     <string-array name="faq_ans">
-        <item>To apply for loan account, click on \"Apply for Loan\" given on the Home Screen.</item>
+        <item>To apply for loan account, click on \"Apply for Loan\" given on the Home Screen.
+        </item>
         <item>You can view your profile information by clicking on the User Image present on Home
-            Screen.</item>
+            Screen.
+        </item>
         <item>To view your savings account transactions, navigate to the Accounts Sections, click on
             the required savings account, click on three dots present on top right and select
-            Transactions option.</item>
+            Transactions option.
+        </item>
         <item>QrCode for any loan or savings accounts can be shared with other users which will
-            allow them to create a beneficiary.</item>
+            allow them to create a beneficiary.
+        </item>
         <item>In order to create a Beneficiary, goto Beneficiary option from Home Screen then click
             on the circular button present on bottom right, choose the option to Scan which opens
             your device camera, scan the QR Code of other person for which you want to create a
             beneficiary, after filling in the other required detail you will be able to create a
-            Beneficiary using QR Code.</item>
+            Beneficiary using QR Code.
+        </item>
         <item>To make a payment for a loan account, navigate to the Accounts Sections, choose LOAN
-            then open your required Loan Account and click on Make Payment option.</item>
+            then open your required Loan Account and click on Make Payment option.
+        </item>
 
     </string-array>
 

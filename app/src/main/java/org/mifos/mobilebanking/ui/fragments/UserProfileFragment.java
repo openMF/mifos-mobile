@@ -104,7 +104,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
@@ -157,7 +157,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         tvClientClassification.setText(client.getClientClassification().getName());
         tvPhoneNumber.setText(client.getMobileNo());
         if (client.getDobDate().size() != 3) {  // no data entry in database for the client
-            tvDOB.setText("No DOB found.");
+            tvDOB.setText(getString(R.string.no_dob_found));
         } else {
             tvDOB.setText(DateHelper.getDateAsString(client.getDobDate()));
         }
@@ -172,7 +172,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
      */
     private String getGroups(List<Group> groups) {
         if (groups.size() == 0) {
-            return "No groups found."; // no groups entry in database for the client
+            return getString(
+                    R.string.not_assigned_with_any_group); // no groups entry in database for the
+            // client
         }
 
 
