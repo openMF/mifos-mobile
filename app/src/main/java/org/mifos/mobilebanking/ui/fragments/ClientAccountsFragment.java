@@ -28,6 +28,7 @@ import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
 import org.mifos.mobilebanking.models.accounts.savings.SavingAccount;
 import org.mifos.mobilebanking.models.accounts.share.ShareAccount;
 import org.mifos.mobilebanking.presenters.AccountsPresenter;
+import org.mifos.mobilebanking.ui.activities.HomeActivity;
 import org.mifos.mobilebanking.ui.activities.LoanApplicationActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.adapters.CheckBoxAdapter;
@@ -136,6 +137,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             public void onPageScrolled(int position, float positionOffset,
                     int positionOffsetPixels) {
                 getActivity().invalidateOptionsMenu();
+                ((HomeActivity) getActivity()).hideKeyboard(getView());
                 fabCreateLoan.setVisibility(View.VISIBLE);
                 if (position == 0 && positionOffset == 0) {
                     fabCreateLoan.setVisibility(View.GONE);
