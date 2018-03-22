@@ -119,6 +119,15 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
 
+    <string name="dividend_payout">Dividend Payout</string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="interest_posting">Interest Posting</string>
+    <string name="fee_deduction">Fee Deduction</string>
+    <string name="withdrawal_transfer">Withdrawal Transfer</string>
+    <string name="rejected_transfer">Rejected Transfer</string>
+    <string name="overdraft_fee">Overdraft Fee</string>
+    <string name="savings_account_transaction">Savings Account Transaction</string>
+
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
     </string>

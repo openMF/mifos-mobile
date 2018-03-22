@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.models.CheckboxStatus;
 import org.mifos.mobilebanking.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.mobilebanking.models.accounts.savings.Transactions;
 import org.mifos.mobilebanking.presenters.SavingAccountsTransactionPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
+import org.mifos.mobilebanking.ui.adapters.CheckBoxAdapter;
 import org.mifos.mobilebanking.ui.adapters.SavingAccountsTransactionListAdapter;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.SavingAccountsTransactionView;
@@ -27,6 +33,8 @@ import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.DatePick;
 import org.mifos.mobilebanking.utils.MFDatePicker;
+import org.mifos.mobilebanking.utils.MaterialDialog;
+import org.mifos.mobilebanking.utils.StatusUtils;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import java.util.ArrayList;
@@ -73,6 +81,10 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @Inject
     SavingAccountsTransactionPresenter savingAccountsTransactionPresenter;
 
+    @Inject
+    CheckBoxAdapter checkBoxAdapter;
+
+    private RecyclerView checkBoxRecyclerView;
     private View rootView;
     private long savingsId;
     private long startDateFromPicker , endDateFromPicker;
@@ -92,6 +104,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setToolbarTitle(getString(R.string.saving_account_transactions_details));
         if (getArguments() != null) {
@@ -318,6 +331,76 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         dummyTransactionList = new ArrayList<>(transactionsList);
         savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList ,
                                                                     startDate , endDate);
+    }
+
+    /**
+     * Shows a filter dialog 
+     */
+
+    public void showFilterDialog() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        checkBoxRecyclerView = new RecyclerView(getActivity());
+        checkBoxRecyclerView.setLayoutManager(layoutManager);
+        checkBoxRecyclerView.setAdapter(checkBoxAdapter);
+        checkBoxAdapter.setStatusList(StatusUtils.getSavingsAccountTransactionList(getActivity()));
+
+        new MaterialDialog.Builder().init(getActivity())
+                .setTitle(R.string.savings_account_transaction)
+                .setMessage(R.string.select_you_want)
+                .addView(checkBoxRecyclerView)
+                .setPositiveButton(getString(R.string.filter), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        filterSavingsAccountTransactionsbyType(checkBoxAdapter.getStatusList());
+                    }
+                })
+                .setNeutralButton(getString(R.string.clear_filters),
+                        new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            transactionListAdapter
+                                    .setSavingAccountsTransactionList(transactionsList);
+                        }
+                    })
+                .setNegativeButton(R.string.cancel)
+                .createMaterialDialog()
+                .show();
+
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_savings_accounts_transactions, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    /**
+     * Will filter {@code transactionsList} according to {@code startDate} and {@code endDate}
+     * @param statusModelList Status Model List
+     */
+    public void filterSavingsAccountTransactionsbyType(List<CheckboxStatus> statusModelList) {
+        List<Transactions> filteredSavingsTransactions = new ArrayList<>();
+        for (CheckboxStatus status:savingAccountsTransactionPresenter
+                .getCheckedStatus(statusModelList)) {
+            filteredSavingsTransactions.addAll(savingAccountsTransactionPresenter
+                    .filterTranactionListbyType(transactionsList, status));
+        }
+        showFilteredList(filteredSavingsTransactions);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_filter_savings_transactions:
+                showFilterDialog();
+                break;
+        }
+        return true;
     }
 
     @Override
