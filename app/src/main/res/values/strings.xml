@@ -99,6 +99,7 @@
     <string name="savings_charges">Savings Charges</string>
     <string name="active">Active</string>
     <string name="closed">Closed</string>
+    <string name="withdrawn">Withdrawn</string>
     <string name="need_approval">Need Approval</string>
     <string name="pending">Pending</string>
     <string name="matured">Matured</string>
