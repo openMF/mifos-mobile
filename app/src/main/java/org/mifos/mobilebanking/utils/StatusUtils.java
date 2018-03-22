@@ -44,6 +44,8 @@ public class StatusUtils {
                 getColor(context, R.color.purple)));
         arrayList.add(new CheckboxStatus(context.getString(R.string.closed), ContextCompat.
                 getColor(context, R.color.black)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.withdrawn), ContextCompat.
+                getColor(context, R.color.gray_dark)));
 
         return arrayList;
     }

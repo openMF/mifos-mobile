@@ -183,6 +183,13 @@ public class Status implements Parcelable {
         return this;
     }
 
+    public boolean isLoanTypeWithdrawn() {
+
+        return !(this.active || this.closed || this.pendingApproval || this.waitingForDisbursal
+                || this.closedObligationsMet || this.closedWrittenOff || this.closedRescheduled
+                || this.overpaid);
+    }
+
     @Override
     public String toString() {
         return "Status{" +

@@ -60,6 +60,9 @@ public class Timeline implements Parcelable {
     @SerializedName("expectedMaturityDate")
     List<Integer> expectedMaturityDate;
 
+    @SerializedName("withdrawnOnDate")
+    List<Integer> withdrawnOnDate;
+
     public List<Integer> getSubmittedOnDate() {
         return submittedOnDate;
     }
@@ -180,6 +183,13 @@ public class Timeline implements Parcelable {
         this.expectedMaturityDate = expectedMaturityDate;
     }
 
+    public List<Integer> getWithdrawnOnDate() {
+        return withdrawnOnDate;
+    }
+
+    public void setWithdrawnOnDate(List<Integer> withdrawnOnDate) {
+        this.withdrawnOnDate = withdrawnOnDate;
+    }
 
     @Override
     public int describeContents() {

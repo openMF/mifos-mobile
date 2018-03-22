@@ -281,6 +281,9 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                         } else if (status.getStatus().compareTo(context.getString(R.string.
                                 closed)) == 0 && account.getStatus().getClosed()) {
                             return true;
+                        } else if (status.getStatus().compareTo(context.getString(R.string.
+                                withdrawn)) == 0 && account.getStatus().isLoanTypeWithdrawn()) {
+                            return true;
                         }
                         return false;
                     }

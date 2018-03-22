@@ -102,10 +102,17 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
                         string_and_string, context.getString(R.string.disbursement), DateHelper
                         .getDateAsString(loanAccount.getTimeline().getActualDisbursementDate())));
 
-            } else {
+            } else if (loanAccount.getStatus().getClosed()) {
+
                 setLoanAccountsGeneralDetails(holder, R.color.black, context.getString(R.string.
                         string_and_string, context.getString(R.string.closed), DateHelper
                         .getDateAsString(loanAccount.getTimeline().getClosedOnDate())));
+
+            } else {
+                setLoanAccountsGeneralDetails(holder, R.color.gray_dark, context.getString(R.string.
+                            string_and_string, context.getString(R.string.withdrawn), DateHelper
+                        .getDateAsString(loanAccount.getTimeline().getWithdrawnOnDate())));
+
             }
         }
 
