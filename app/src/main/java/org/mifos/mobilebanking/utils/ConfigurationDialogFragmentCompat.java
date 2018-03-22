@@ -14,6 +14,9 @@ import org.mifos.mobilebanking.api.BaseApiManager;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.ui.activities.LoginActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by dilpreet on 11/03/18.
  */
@@ -21,8 +24,12 @@ import org.mifos.mobilebanking.ui.activities.LoginActivity;
 public class ConfigurationDialogFragmentCompat extends PreferenceDialogFragmentCompat implements
         DialogPreference.TargetFragment {
 
-    private EditText etTenant;
-    private EditText etBaseUrl;
+    @BindView(R.id.et_tenant)
+    EditText etTenant;
+
+    @BindView(R.id.et_base_url)
+    EditText etBaseUrl;
+
     private PreferencesHelper preferencesHelper;
 
     @Override
@@ -33,12 +40,10 @@ public class ConfigurationDialogFragmentCompat extends PreferenceDialogFragmentC
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
+        ButterKnife.bind(this, view);
         preferencesHelper = new PreferencesHelper(getContext());
 
         ConfigurationPreference preference = (ConfigurationPreference) getPreference();
-
-        etBaseUrl = view.findViewById(R.id.et_base_url);
-        etTenant = view.findViewById(R.id.et_tenant);
 
         etBaseUrl.setText(preference.getBaseUrl());
         etTenant.setText(preference.getTenant());
