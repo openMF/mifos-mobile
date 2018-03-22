@@ -115,7 +115,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     private String transferDate;
     private AccountOption toAccountOption, fromAccountOption;
     private AccountOptionsTemplate accountOptionsTemplate;
-    private String transferType;
+    private String transferType, payTo, payFrom;
     private long accountId;
 
     /**
@@ -306,9 +306,11 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         switch (parent.getId()) {
             case R.id.sp_pay_to:
                 toAccountOption = accountOptionsTemplate.getToAccountOptions().get(position);
+                payTo = toAccountOption.getAccountNo();
                 break;
             case R.id.sp_pay_from:
                 fromAccountOption = accountOptionsTemplate.getFromAccountOptions().get(position);
+                payFrom = fromAccountOption.getAccountNo();
                 break;
         }
 
@@ -364,7 +366,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
-        if (spPayTo.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().toString())) {
+        if (payTo.equals(payFrom)) {
             showToaster(getString(R.string.error_same_account_transfer));
             return;
         }
