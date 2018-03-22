@@ -16,6 +16,7 @@ import org.mifos.mobilebanking.ui.views.LoginView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.MFErrorParser;
 
+import java.net.UnknownHostException;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -103,6 +104,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                                                 .showMessage(MFErrorParser.parseError(errorMessage)
                                                 .getDeveloperMessage());
                                     }
+                                }
+                                if (e instanceof UnknownHostException) {
+                                        getMvpView().showMessage(
+                                                context.getString(R.string.error_wrong_endpoint));
                                 }
                             } catch (Throwable throwable) {
                                 RxJavaPlugins.getErrorHandler();
