@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/login_padding_left">
+    android:layout_margin="@dimen/layout_padding_24dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
