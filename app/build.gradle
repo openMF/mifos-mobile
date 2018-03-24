@@ -92,8 +92,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttp3Version"
 
     //rxjava Dependencies
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
 
     //Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
@@ -108,8 +108,8 @@ dependencies {
     }
 
     //qr code
-    implementation 'com.google.zxing:core:3.2.1'
-    implementation 'me.dm7.barcodescanner:zxing:1.8.4'
+    implementation "com.google.zxing:core:$rootProject.zxingcoreVersion"
+    implementation "me.dm7.barcodescanner:zxing:$rootProject.zxingbarcodescannerVersion"
 
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
