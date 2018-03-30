@@ -1,11 +1,13 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.animation.LayoutTransition;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -80,6 +82,9 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     @BindView(R.id.swipe_home_container)
     SwipeRefreshLayout slHomeContainer;
 
+    @BindView(R.id.ll_container)
+    LinearLayout llContainer;
+
     @Inject
     HomeOldPresenter presenter;
 
@@ -114,6 +119,11 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
         slHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R
                 .color.orange_light, R.color.red_light);
         slHomeContainer.setOnRefreshListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            llContainer.getLayoutTransition()
+                    .enableTransitionType(LayoutTransition.CHANGING);
+        }
         if (savedInstanceState == null) {
             loadClientData();
         }
