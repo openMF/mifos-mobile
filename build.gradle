@@ -50,4 +50,8 @@ ext {
     runnerVersion = '0.5'
     rulesVersion = '0.5'
     espressoVersion = '2.2.2'
+    zxingcoreVersion = '3.2.1'
+    zxingbarcodescannerVersion = '1.8.4'
+    rxjavaVersion = '2.1.9'
+    rxandroidVersion = '2.0.2'
 }
