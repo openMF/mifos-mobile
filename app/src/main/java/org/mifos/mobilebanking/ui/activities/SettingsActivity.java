@@ -12,6 +12,7 @@ public class SettingsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        setToolbarTitle(getString(R.string.settings));
         showBackButton();
         replaceFragment(SettingsFragment.newInstance(), false, R.id.container);
     }

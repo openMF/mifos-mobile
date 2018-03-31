@@ -138,6 +138,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
 
     @Override
     protected void onResume() {
+        setNavigationViewSelectedItem(R.id.item_home);
         super.onResume();
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
@@ -204,7 +205,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
         setNavigationViewSelectedItem(R.id.item_home);
-        setTitle(item.getTitle());
         return true;
     }
 
