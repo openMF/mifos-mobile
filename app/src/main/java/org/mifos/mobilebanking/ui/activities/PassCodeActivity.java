@@ -105,7 +105,15 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
      */
     @OnClick(R.id.btn_skip)
     public void skip() {
-        startHomeActivity();
+        if (isPassCodeVerified) {
+            btnSkip.setText(getString(R.string.skip));
+            btnSave.setText(getString(R.string.proceed));
+            tvPasscodeIntro.setText(getString(R.string.enter_passcode));
+            strPassCodeEntered = "";
+            passCodeView.clearPasscodeField();
+            isPassCodeVerified = false;
+        } else
+            startHomeActivity();
     }
 
     /**
@@ -124,7 +132,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
                     passCodeView.clearPasscodeField();
                 }
             } else {
-                btnSkip.setVisibility(View.INVISIBLE);
+                btnSkip.setText(getString(R.string.back));
                 btnSave.setText(getString(R.string.save));
                 tvPasscodeIntro.setText(getString(R.string.reenter_passcode));
                 strPassCodeEntered = passCodeView.getPasscode();
@@ -137,6 +145,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
 
     /**
      * It is a callback for {@link PassCodeView}, provides with the passcode entered by user
+     *
      * @param passcode
      */
     @Override
@@ -180,6 +189,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
 
     /**
      * Checks for internet availability
+     *
      * @return Returns true if connected else returns false
      */
     private boolean isInternetAvailable() {
@@ -263,6 +273,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
 
     /**
      * Checks whether passcode entered is of correct length
+     *
      * @return Returns true if passcode lenght is 4 else shows message
      */
     private boolean isPassCodeLengthCorrect() {

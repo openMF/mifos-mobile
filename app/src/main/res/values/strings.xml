@@ -317,6 +317,7 @@
     </string>
     <string name="skip">Skip</string>
     <string name="save">Save</string>
+    <string name="back">Back</string>
     <string name="passcode_setup">Setup a passcode to login</string>
     <string name="reenter_passcode">Please re-enter your passcode</string>
     <string name="passcode_does_not_match">Passcode does not match.</string>
