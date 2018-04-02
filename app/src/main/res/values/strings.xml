@@ -116,6 +116,7 @@
     <string name="rb_mobile">mobile</string>
     <string name="rb_email">email</string>
     <string name="verification_mode">Verification Mode</string>
+    <string name="blank">&#160;</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
