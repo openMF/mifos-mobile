@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
 import org.mifos.mobilebanking.presenters.BeneficiaryListPresenter;
+import org.mifos.mobilebanking.ui.activities.AddBeneficiary;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.adapters.BeneficiaryListAdapter;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
@@ -125,8 +127,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         fabAddBeneficiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity) getActivity()).replaceFragment(BeneficiaryAddOptionsFragment.
-                                newInstance(), true, R.id.container);
+                startActivity(new Intent(getActivity(), AddBeneficiary.class));
             }
         });
     }
