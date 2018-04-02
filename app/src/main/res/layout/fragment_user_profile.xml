@@ -31,6 +31,7 @@
                 android:background="@drawable/scrim"/>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:title="@string/blank"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
