@@ -37,7 +37,7 @@
 
         <activity
             android:name="org.mifos.mobilebanking.ui.activities.HomeActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenLayout|screenSize"
             android:label="@string/home"/>
         <activity
             android:name="org.mifos.mobilebanking.ui.activities.SavingsAccountContainerActivity"
