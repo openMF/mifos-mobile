@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
-                    android:prompt="@string/select_pay_to"
+                    android:prompt="@string/select_pay_from"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:spinnerMode="dialog"/>
                 <android.support.v7.widget.AppCompatButton
