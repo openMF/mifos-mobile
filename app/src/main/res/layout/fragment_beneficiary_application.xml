@@ -30,8 +30,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/default_margin"
                 android:paddingTop="@dimen/default_margin"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:spinnerMode="dialog"/>
+                style="@style/Widget.AppCompat.Spinner.Underlined" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
