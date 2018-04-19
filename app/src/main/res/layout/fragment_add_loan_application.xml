@@ -60,8 +60,7 @@
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:spinnerMode="dialog"/>
+                android:layout_marginEnd="@dimen/default_padding" />
             <TextView
                 android:id="@+id/loan_purpose"
                 android:layout_width="match_parent"
@@ -84,8 +83,7 @@
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:spinnerMode="dialog"/>
+                android:layout_marginEnd="@dimen/default_padding" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
