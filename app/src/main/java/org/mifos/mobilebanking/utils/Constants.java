@@ -94,4 +94,8 @@ public class Constants {
     public static final String REGISTER_ON_SERVER = "RegisterOnServer";
 
     public static final String NOTIFY_HOME_FRAGMENT = "NotifyHomeFragment";
+
+    public static  final String OUTSTANDING_BALANCE = "outstanding_balance";
+
+    public static final String LOAN_REPAYMENT = "loan_repayment";
 }

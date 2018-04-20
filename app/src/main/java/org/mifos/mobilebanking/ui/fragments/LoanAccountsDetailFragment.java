@@ -194,7 +194,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @OnClick(R.id.btn_make_payment)
     public void onMakePaymentClicked() {
         ((BaseActivity) getActivity()).replaceFragment(SavingsMakeTransferFragment
-                .newInstance(loanId, Constants.TRANSFER_PAY_TO), true, R.id.container);
+                .newInstance(loanId, loanAccount.getSummary().getTotalOutstanding(),
+                        Constants.TRANSFER_PAY_TO), true, R.id.container);
     }
 
     /**
