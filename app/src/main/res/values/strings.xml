@@ -462,6 +462,7 @@
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
+    <string name="insufficient_funds">Unable to complete transfer due to insufficient funds</string>
     <string name="please_wait">Please Wait...</string>
     <string name="message">message</string>
     <string name="no_notification">No Notification</string>

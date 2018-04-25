@@ -76,7 +76,7 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
-                        getMvpView().showError(context.getString(R.string.transfer_error));
+                        getMvpView().showError(context.getString(R.string.insufficient_funds));
                     }
 
                     @Override
