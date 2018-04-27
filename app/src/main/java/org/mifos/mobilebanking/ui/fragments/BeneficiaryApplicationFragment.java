@@ -3,6 +3,7 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
@@ -60,6 +63,12 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @BindView(R.id.til_beneficiary_name)
     TextInputLayout tilBeneficiaryName;
 
+    @BindView(R.id.layout_error)
+    View layoutError;
+
+    @BindView(R.id.view_flipper)
+    NestedScrollView nsvBeneficiary;
+
     @Inject
     BeneficiaryApplicationPresenter presenter;
 
@@ -71,6 +80,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     private BeneficiaryTemplate beneficiaryTemplate;
     private int accountTypeId = -1;
     private View rootView;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static BeneficiaryApplicationFragment newInstance(BeneficiaryState beneficiaryState,
                                                              @Nullable Beneficiary beneficiary) {
@@ -110,6 +120,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         rootView = inflater.inflate(R.layout.fragment_beneficiary_application, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         showUserInterface();
 
         presenter.attachView(this);
@@ -171,7 +182,6 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
             tilAccountNumber.setEnabled(false);
             tilOfficeName.getEditText().setText(beneficiary.getOfficeName());
             tilOfficeName.setEnabled(false);
-
             tilBeneficiaryName.getEditText().setText(beneficiary.getName());
             tilTransferLimit.getEditText().setText(String.valueOf(beneficiary.getTransferLimit()));
         } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
@@ -222,6 +232,16 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
             submitUpdateBeneficiaryApplication();
         }
 
+    }
+
+    @OnClick(R.id.btn_try_again)
+    public void onRetry() {
+        if (Network.isConnected(getContext())) {
+            presenter.loadBeneficiaryTemplate();
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(nsvBeneficiary, layoutError);
+        } else {
+            Toaster.show(rootView, getString(R.string.internet_not_connected));
+        }
     }
 
     /**
@@ -288,8 +308,13 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      * @param msg Error message that tells the user about the problem.
      */
     @Override
-    public void showError(String msg) {
-        Toaster.show(rootView, msg);
+    public void showError(String msg ) {
+        if (!Network.isConnected(getContext())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(nsvBeneficiary, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(msg, nsvBeneficiary, layoutError);
+            Toaster.show(rootView, msg);
+        }
     }
 
     @Override
