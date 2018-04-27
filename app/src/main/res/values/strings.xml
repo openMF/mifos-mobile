@@ -95,6 +95,7 @@
     <string name="close">Close</string>
     <string name="choose_transfer_type">Choose Transfer Type</string>
     <string name="transfer_to_savings">Transfer To Savings</string>
+    <string name="transfer_from_savings">Transfer from Savings</string>
     <string name="loan_charges">Loan Charges</string>
     <string name="savings_charges">Savings Charges</string>
     <string name="active">Active</string>

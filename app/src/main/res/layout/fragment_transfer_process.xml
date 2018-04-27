@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/transfer_to_savings"
+                    android:text="@string/transfer_from_savings"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
                     android:layout_marginTop="@dimen/login_padding_left"
