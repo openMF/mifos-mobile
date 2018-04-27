@@ -94,8 +94,10 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(Constants.BENEFICIARY, new ArrayList<Parcelable>(
-                beneficiaryList));
+        if (beneficiaryList != null) {
+            outState.putParcelableArrayList(Constants.BENEFICIARY, new ArrayList<Parcelable>(
+                    beneficiaryList));
+        }
     }
 
     @Override

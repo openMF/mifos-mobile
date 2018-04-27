@@ -31,9 +31,12 @@ import org.mifos.mobilebanking.ui.views.SavingsMakeTransferMvpView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
 import org.mifos.mobilebanking.utils.Utils;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +103,9 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @BindView(R.id.ll_make_transfer)
     LinearLayout layoutMakeTransfer;
 
+    @BindView(R.id.layout_error)
+    View layoutError;
+
     @Inject
     SavingsMakeTransferPresenter savingsMakeTransferPresenter;
 
@@ -117,6 +123,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     private AccountOptionsTemplate accountOptionsTemplate;
     private String transferType, payTo, payFrom;
     private long accountId;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     /**
      * Provides an instance of {@link SavingsMakeTransferFragment}, use {@code transferType} as
@@ -154,7 +161,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         setToolbarTitle(getString(R.string.transfer));
         ButterKnife.bind(this, rootView);
         savingsMakeTransferPresenter.attachView(this);
-
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         showUserInterface();
         if (savedInstanceState == null) {
             savingsMakeTransferPresenter.loanAccountTransferTemplate();
@@ -215,6 +222,16 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    @OnClick(R.id.btn_try_again)
+    void onRetry() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError);
+            savingsMakeTransferPresenter.loanAccountTransferTemplate();
+        } else {
+            Toaster.show(rootView, getString(R.string.internet_not_connected));
+        }
+    }
+
     /**
      * Setting up basic components
      */
@@ -269,7 +286,12 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      */
     @Override
     public void showError(String message) {
-        Toaster.show(rootView, message);
+        if (!Network.isConnected(getContext())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(layoutMakeTransfer, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(message, layoutMakeTransfer, layoutError);
+            Toaster.show(rootView, message);
+        }
     }
 
     @Override
