@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
 import org.mifos.mobilebanking.models.payload.AccountDetail;
@@ -34,6 +36,7 @@ import org.mifos.mobilebanking.ui.views.ThirdPartyTransferView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
 import org.mifos.mobilebanking.utils.Utils;
@@ -97,7 +100,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     LinearLayout llReview;
 
     @BindView(R.id.tv_select_beneficary)
-    TextView tvSelectBeneficary;
+    TextView tvSelectBeneficiary;
 
     @BindView(R.id.tv_select_amount)
     TextView tvEnterAmount;
@@ -107,6 +110,9 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     @BindView(R.id.tv_add_beneficiary_msg)
     TextView tvAddBeneficiaryMsg;
+
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @Inject
     ThirdPartyTransferPresenter presenter;
@@ -121,6 +127,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     private AccountOptionsTemplate accountOptionsTemplate;
     private String transferDate;
     private View rootView;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static ThirdPartyTransferFragment newInstance() {
         ThirdPartyTransferFragment fragment = new ThirdPartyTransferFragment();
@@ -141,7 +148,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         rootView = inflater.inflate(R.layout.fragment_third_party_transfer, container, false);
         setToolbarTitle(getString(R.string.third_party_transfer));
         ButterKnife.bind(this, rootView);
-
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         showUserInterface();
 
         presenter.attachView(this);
@@ -288,7 +295,8 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         pvTwo.setCurrentActive();
 
         btnPayFrom.setVisibility(View.GONE);
-        tvSelectBeneficary.setVisibility(View.GONE);
+
+        tvSelectBeneficiary.setVisibility(View.GONE);
         if (!listBeneficiary.isEmpty()) {
             btnPayTo.setVisibility(View.VISIBLE);
             spBeneficiary.setVisibility(View.VISIBLE);
@@ -365,14 +373,29 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         ((BaseActivity) getActivity()).replaceFragment(BeneficiaryAddOptionsFragment.newInstance(),
                 true, R.id.container);
     }
-    
+
+    @OnClick(R.id.btn_try_again)
+    public void onRetry() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError);
+            presenter.loadTransferTemplate();
+        } else {
+            Toaster.show(rootView, getString(R.string.internet_not_connected));
+        }
+    }
+
     /**
      * It is called whenever any error occurs while executing a request
      * @param msg Error message that tells the user about the problem.
      */
     @Override
     public void showError(String msg) {
-        Toaster.show(rootView, msg);
+        if (!Network.isConnected(getContext())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(layoutMakeTransfer, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(msg, layoutMakeTransfer, layoutError);
+            Toaster.show(rootView, msg);
+        }
     }
 
     @Override
