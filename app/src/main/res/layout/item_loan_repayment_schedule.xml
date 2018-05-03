@@ -4,43 +4,90 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="0dp"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_marginLeft="@dimen/default_margin"
+    android:layout_marginStart="@dimen/default_margin"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="@dimen/row_padding_left">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/small_text"
-            android:textColor="@color/gray_dark"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:padding="6dp"
-            android:background="@drawable/rectangular_border"/>
-        <TextView
-            android:id="@+id/tv_loan_balance"
-            android:layout_width="0dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/date"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/medium_text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/medium_text"
-            android:textColor="@color/gray_dark"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:padding="6dp"
-            android:background="@drawable/rectangular_border"/>
-        <TextView
-            android:id="@+id/tv_loan_outstanding"
-            android:layout_width="0dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/loan_balance"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_loan_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/medium_text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/small_text"
-            android:textColor="@color/gray_dark"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:gravity="end"
-            android:padding="6dp"
-            android:background="@drawable/rectangular_border"/>
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/repayment"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_loan_outstanding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/medium_text"/>
+        </LinearLayout>
+
 </LinearLayout>
+
+</android.support.v7.widget.CardView>

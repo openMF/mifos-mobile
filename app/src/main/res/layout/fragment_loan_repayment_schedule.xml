@@ -90,46 +90,7 @@
             </TableRow>
         </TableLayout>
         </android.support.v7.widget.CardView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/date"
-                    android:textColor="@color/black"
-                    android:gravity="start"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:padding="6dp"
-                    android:background="@drawable/rectangular_border"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/loan_balance"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:padding="6dp"
-                    android:background="@drawable/rectangular_border"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/repayment"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="end"
-                    android:padding="6dp"
-                    android:background="@drawable/rectangular_border"/>
-        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_repayment_schedule"
             android:layout_width="match_parent"
@@ -138,6 +99,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginBottom="@dimen/default_margin"
+            android:scrollbars="vertical"
             />
     </LinearLayout>
 
