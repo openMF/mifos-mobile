@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
@@ -24,6 +27,7 @@ import org.mifos.mobilebanking.utils.CircularImageView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.CurrencyUtil;
 import org.mifos.mobilebanking.utils.DateHelper;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.QrCodeGenerator;
 import org.mifos.mobilebanking.utils.SymbolsUtils;
 import org.mifos.mobilebanking.utils.Toaster;
@@ -78,11 +82,8 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @BindView(R.id.ll_account)
     LinearLayout layoutAccount;
 
-    @BindView(R.id.ll_error)
+    @BindView(R.id.layout_error)
     View layoutError;
-
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
 
     @BindView(R.id.tv_minRequiredBalance)
     TextView tvMinRequiredBalanceLabel;
@@ -97,6 +98,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     private long savingsId;
     private Status status;
     private SavingsWithAssociations savingsWithAssociations;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static SavingAccountsDetailFragment newInstance(long savingsId) {
         SavingAccountsDetailFragment fragment = new SavingAccountsDetailFragment();
@@ -123,6 +125,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         setToolbarTitle(getString(R.string.saving_account_details));
         ButterKnife.bind(this, rootView);
         savingAccountsDetailPresenter.attachView(this);
+        sweetUIErrorHandler = new SweetUIErrorHandler(getContext(), rootView);
 
         if (savedInstanceState == null) {
             savingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
@@ -242,9 +245,25 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
      */
     @Override
     public void showErrorFetchingSavingAccountsDetail(String message) {
-        layoutAccount.setVisibility(View.GONE);
-        layoutError.setVisibility(View.VISIBLE);
-        tvStatus.setText(message);
+        if (!Network.isConnected(getContext())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(layoutAccount, layoutError);
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(message, layoutAccount, layoutError);
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_try_again)
+    void onRetry() {
+        if (!Network.isConnected(getContext())) {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(layoutAccount, layoutError);
+            savingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
+        }
     }
 
     /**

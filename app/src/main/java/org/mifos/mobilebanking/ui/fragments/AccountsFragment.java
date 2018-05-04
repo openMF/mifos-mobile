@@ -10,10 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.CheckboxStatus;
@@ -32,6 +31,7 @@ import org.mifos.mobilebanking.ui.views.AccountsView;
 import org.mifos.mobilebanking.utils.ComparatorBasedOnId;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DividerItemDecoration;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -60,14 +60,8 @@ public class AccountsFragment extends BaseFragment implements
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.noAccountText)
-    TextView noAccountText;
-
-    @BindView(R.id.ll_error)
-    LinearLayout ll_error;
-
-    @BindView(R.id.noAccountIcon)
-    ImageView noAccountIcon;
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @Inject
     AccountsPresenter accountsPresenter;
@@ -87,6 +81,7 @@ public class AccountsFragment extends BaseFragment implements
     private List<SavingAccount> savingAccounts;
     private List<ShareAccount> shareAccounts;
     private List<CheckboxStatus> currentFilterList;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     /**
      * Method to get the current filter list for the fragment
@@ -131,6 +126,7 @@ public class AccountsFragment extends BaseFragment implements
 
         ButterKnife.bind(this, rootView);
         accountsPresenter.attachView(this);
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -199,11 +195,16 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for reloading account of a particular {@code accountType} in case of a network error.
      */
-    @OnClick(R.id.noAccountIcon)
-    void reloadOnError() {
-        ll_error.setVisibility(View.GONE);
-        rvAccounts.setVisibility(View.VISIBLE);
-        accountsPresenter.loadAccounts(accountType);
+
+    @OnClick(R.id.btn_try_again)
+    void onRetry() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
+            accountsPresenter.loadAccounts(accountType);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -212,10 +213,16 @@ public class AccountsFragment extends BaseFragment implements
      */
     @Override
     public void onRefresh() {
-        ll_error.setVisibility(View.GONE);
-        rvAccounts.setVisibility(View.VISIBLE);
-        clearFilter();
-        accountsPresenter.loadAccounts(accountType);
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
+            clearFilter();
+            accountsPresenter.loadAccounts(accountType);
+        } else {
+            hideProgress();
+            sweetUIErrorHandler.showSweetNoInternetUI(rvAccounts, layoutError);
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -239,7 +246,7 @@ public class AccountsFragment extends BaseFragment implements
             loanAccountsListAdapter.setLoanAccountsList(loanAccounts);
             rvAccounts.setAdapter(loanAccountsListAdapter);
         } else {
-            showEmptyAccounts(getString(R.string.empty_loan_accounts));
+            showEmptyAccounts(getString(R.string.loan_account));
         }
     }
 
@@ -256,7 +263,7 @@ public class AccountsFragment extends BaseFragment implements
             savingAccountsListAdapter.setSavingAccountsList(savingAccounts);
             rvAccounts.setAdapter(savingAccountsListAdapter);
         } else {
-            showEmptyAccounts(getString(R.string.empty_savings_accounts));
+            showEmptyAccounts(getString(R.string.savings_account));
         }
     }
 
@@ -273,7 +280,7 @@ public class AccountsFragment extends BaseFragment implements
             shareAccountsListAdapter.setShareAccountsList(shareAccounts);
             rvAccounts.setAdapter(shareAccountsListAdapter);
         } else {
-            showEmptyAccounts(getString(R.string.empty_share_accounts));
+            showEmptyAccounts(getString(R.string.share_account));
         }
     }
 
@@ -283,10 +290,8 @@ public class AccountsFragment extends BaseFragment implements
      * @param emptyAccounts Text to show in {@code noAccountText}
      */
     public void showEmptyAccounts(String emptyAccounts) {
-        ll_error.setVisibility(View.VISIBLE);
-        noAccountText.setText(emptyAccounts);
-        noAccountIcon.setImageResource(R.drawable.ic_assignment_turned_in_black_24dp);
-        rvAccounts.setVisibility(View.GONE);
+        sweetUIErrorHandler.showSweetEmptyUI(emptyAccounts,
+                R.drawable.ic_supervisor_account_black_24dp, rvAccounts, layoutError);
     }
 
     /**
@@ -367,11 +372,13 @@ public class AccountsFragment extends BaseFragment implements
      */
     @Override
     public void showError(String errorMessage) {
-        ll_error.setVisibility(View.VISIBLE);
-        rvAccounts.setVisibility(View.GONE);
-        noAccountText.setText(errorMessage);
-        noAccountIcon.setImageResource(R.drawable.ic_error_black_24dp);
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+        if (!Network.isConnected(getContext())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(rvAccounts, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(errorMessage, rvAccounts, layoutError);
+            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+        }
+        hideProgress();
     }
 
     /**
@@ -390,13 +397,8 @@ public class AccountsFragment extends BaseFragment implements
         showSwipeRefreshLayout(false);
     }
 
-    public void showSwipeRefreshLayout(final boolean show) {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(show);
-            }
-        });
+    public void showSwipeRefreshLayout(boolean show) {
+        swipeRefreshLayout.setRefreshing(show);
     }
 
     @Override
