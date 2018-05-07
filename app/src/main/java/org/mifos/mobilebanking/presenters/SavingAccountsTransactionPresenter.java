@@ -86,7 +86,7 @@ public class SavingAccountsTransactionPresenter extends
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showErrorFetchingSavingAccountsDetail(
-                                context.getString(R.string.error_saving_account_details_loading));
+                                context.getString(R.string.saving_account_details));
                     }
 
                     @Override

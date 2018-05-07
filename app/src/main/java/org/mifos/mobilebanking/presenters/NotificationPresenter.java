@@ -2,6 +2,7 @@ package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
 
+import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
 import org.mifos.mobilebanking.injection.ActivityContext;
 import org.mifos.mobilebanking.models.notification.MifosNotification;
@@ -68,7 +69,9 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getMvpView().hideProgress();
+                        getMvpView().showError(context
+                                .getString(R.string.notification));
                     }
 
                     @Override

@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.notification.MifosNotification;
@@ -18,6 +20,7 @@ import org.mifos.mobilebanking.ui.adapters.NotificationAdapter;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.NotificationView;
 import org.mifos.mobilebanking.utils.DividerItemDecoration;
+import org.mifos.mobilebanking.utils.Network;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dilpreet on 13/9/17.
@@ -37,11 +41,11 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
     @BindView(R.id.rv_notifications)
     RecyclerView rvNotification;
 
-    @BindView(R.id.tv_no_notification_msg)
-    TextView tvNoNotificationMsg;
-
     @BindView(R.id.swipe_notification_container)
     SwipeRefreshLayout swipeNotificationContainer;
+
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @Inject
     NotificationPresenter presenter;
@@ -50,6 +54,7 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
     NotificationAdapter adapter;
 
     private View rootView;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
 
     public static NotificationFragment newInstance() {
@@ -72,6 +77,8 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
         rootView = inflater.inflate(R.layout.fragment_notification, container, false);
         ButterKnife.bind(this, rootView);
 
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvNotification.setLayoutManager(layoutManager);
@@ -91,18 +98,35 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
 
     @Override
     public void showNotifications(List<MifosNotification> notifications) {
-
         if (notifications.size() != 0) {
-
             adapter.setNotificationList(notifications);
         } else {
-
-            tvNoNotificationMsg.setVisibility(View.VISIBLE);
-            rvNotification.setVisibility(View.GONE);
+            sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.notification),
+                     R.drawable.ic_notifications, rvNotification, layoutError);
         }
-
     }
 
+    @Override
+    public void showError(String msg) {
+        if (!Network.isConnected(getActivity())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(rvNotification, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(msg,
+                    rvNotification, layoutError);
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_try_again)
+    public void retryClicked() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvNotification, layoutError);
+            presenter.loadNotifications();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
     public void showProgress() {
         swipeNotificationContainer.setRefreshing(true);
@@ -115,6 +139,7 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
 
     @Override
     public void onRefresh() {
+        sweetUIErrorHandler.hideSweetErrorLayoutUI(rvNotification, layoutError);
         presenter.loadNotifications();
 
     }

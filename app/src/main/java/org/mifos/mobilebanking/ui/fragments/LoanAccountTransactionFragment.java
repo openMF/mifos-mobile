@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.presenters.LoanAccountsTransactionPresenter;
@@ -23,12 +25,13 @@ import org.mifos.mobilebanking.ui.adapters.RecentTransactionListAdapter;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.LoanAccountsTransactionView;
 import org.mifos.mobilebanking.utils.Constants;
-import org.mifos.mobilebanking.utils.Toaster;
+import org.mifos.mobilebanking.utils.Network;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dilpreet on 4/3/17.
@@ -37,11 +40,8 @@ import butterknife.ButterKnife;
 public class LoanAccountTransactionFragment extends BaseFragment
         implements LoanAccountsTransactionView {
 
-    @BindView(R.id.ll_error)
+    @BindView(R.id.layout_error)
     View layoutError;
-
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
 
     @BindView(R.id.ll_loan_account_trans)
     LinearLayout llLoanAccountTrans;
@@ -61,6 +61,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
     private long loanId;
     private View rootView;
     private LoanWithAssociations loanWithAssociations;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static LoanAccountTransactionFragment newInstance(long loanId) {
         LoanAccountTransactionFragment fragment = new LoanAccountTransactionFragment();
@@ -90,6 +91,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
         ButterKnife.bind(this, rootView);
         loanAccountsTransactionPresenter.attachView(this);
 
+        sweetUIErrorHandler = new SweetUIErrorHandler(getContext(), rootView);
         showUserInterface();
         if (savedInstanceState == null) {
             loanAccountsTransactionPresenter.loadLoanAccountDetails(loanId);
@@ -143,8 +145,8 @@ public class LoanAccountTransactionFragment extends BaseFragment
      */
     @Override
     public void showEmptyTransactions(LoanWithAssociations loanWithAssociations) {
-        layoutError.setVisibility(View.VISIBLE);
-        tvStatus.setText(R.string.empty_transactions);
+        sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.transactions),
+                R.drawable.ic_compare_arrows_black_24dp, rvLoanTransactions, layoutError);
     }
 
     /**
@@ -153,9 +155,24 @@ public class LoanAccountTransactionFragment extends BaseFragment
      */
     @Override
     public void showErrorFetchingLoanAccountsDetail(String message) {
-        Toaster.show(rootView, message, Toast.LENGTH_SHORT);
-        layoutError.setVisibility(View.VISIBLE);
-        tvStatus.setText(message);
+        if (!Network.isConnected(getActivity())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(rvLoanTransactions, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(message,
+                    rvLoanTransactions, layoutError);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_try_again)
+    public void retryClicked() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvLoanTransactions, layoutError);
+            loanAccountsTransactionPresenter.loadLoanAccountDetails(loanId);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

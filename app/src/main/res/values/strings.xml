@@ -189,6 +189,7 @@
     </string>
     <string name="error_invalid_email">Invalid email id</string>
     <string name="error_server_down">Server Down, Try after some time</string>
+    <string name="client_charges">Client Charges</string>
 
     <string name="fetching_client">Fetching Client</string>
 

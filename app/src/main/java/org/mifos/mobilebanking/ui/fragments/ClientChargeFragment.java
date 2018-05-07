@@ -10,9 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.Charge;
@@ -50,14 +50,8 @@ public class ClientChargeFragment extends BaseFragment implements
     @BindView(R.id.swipe_charge_container)
     SwipeRefreshLayout swipeChargeContainer;
 
-    @BindView(R.id.ll_error)
-    RelativeLayout rlErrorLayout;
-
-    @BindView(R.id.iv_status)
-    ImageView ivError;
-
-    @BindView(R.id.tv_status)
-    TextView tvError;
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @Inject
     ClientChargePresenter clientChargePresenter;
@@ -70,6 +64,7 @@ public class ClientChargeFragment extends BaseFragment implements
     private View rootView;
     private LinearLayoutManager layoutManager;
     private List<Charge> clientChargeList = new ArrayList<>();
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static ClientChargeFragment newInstance(long clientId, ChargeType chargeType) {
         ClientChargeFragment clientChargeFragment = new ClientChargeFragment();
@@ -98,6 +93,8 @@ public class ClientChargeFragment extends BaseFragment implements
 
         clientChargePresenter.attachView(this);
         setToolbarTitle(getString(R.string.charges));
+
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
 
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -139,8 +136,9 @@ public class ClientChargeFragment extends BaseFragment implements
      * Fetches Charges for {@code id} according to {@code chargeType} provided.
      */
     private void loadCharges() {
-        rlErrorLayout.setVisibility(View.GONE);
-        swipeChargeContainer.setVisibility(View.VISIBLE);
+        if (layoutError.getVisibility() == View.VISIBLE) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvClientCharge, layoutError);
+        }
 
         if (chargeType == ChargeType.CLIENT) {
             clientChargePresenter.loadClientCharges(id);
@@ -161,11 +159,9 @@ public class ClientChargeFragment extends BaseFragment implements
     @Override
     public void showErrorFetchingClientCharges(String message) {
         if (!Network.isConnected(getActivity())) {
-            ivError.setImageResource(R.drawable.ic_error_black_24dp);
-            tvError.setText(getString(R.string.internet_not_connected));
-            swipeChargeContainer.setVisibility(View.GONE);
-            rlErrorLayout.setVisibility(View.VISIBLE);
+            sweetUIErrorHandler.showSweetNoInternetUI(rvClientCharge, layoutError);
         } else {
+            sweetUIErrorHandler.showSweetErrorUI(message, rvClientCharge, layoutError);
             Toaster.show(rootView, message);
         }
     }
@@ -173,11 +169,15 @@ public class ClientChargeFragment extends BaseFragment implements
     /**
      * Tries to fetch charges again.
      */
-    @OnClick(R.id.iv_status)
-    void onRetry() {
-        rlErrorLayout.setVisibility(View.GONE);
-        swipeChargeContainer.setVisibility(View.VISIBLE);
-        loadCharges();
+    @OnClick(R.id.btn_try_again)
+    public void retryClicked() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvClientCharge, layoutError);
+            loadCharges();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -203,9 +203,8 @@ public class ClientChargeFragment extends BaseFragment implements
             clientChargeAdapter.setClientChargeList(clientChargeList);
             rvClientCharge.setAdapter(clientChargeAdapter);
         } else {
-            rlErrorLayout.setVisibility(View.VISIBLE);
-            swipeChargeContainer.setVisibility(View.GONE);
-            tvError.setText(getString(R.string.error_no_charge));
+            sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.charges), R.drawable.ic_charges,
+                     rvClientCharge, layoutError);
         }
     }
 

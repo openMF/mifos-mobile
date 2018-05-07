@@ -322,8 +322,10 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
     <include
-        android:id="@+id/ll_error"
-        layout="@layout/layout_error"
+        layout="@layout/layout_sweet_exception_handler"
+        android:id="@+id/layout_error"
         android:visibility="gone"/>
+
 </RelativeLayout>

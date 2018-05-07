@@ -12,4 +12,6 @@ import java.util.List;
 public interface NotificationView extends MVPView {
 
     void showNotifications(List<MifosNotification> notifications);
+
+    void showError(String msg);
 }

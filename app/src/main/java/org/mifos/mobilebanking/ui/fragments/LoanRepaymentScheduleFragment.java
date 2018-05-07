@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
@@ -19,12 +21,13 @@ import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.LoanRepaymentScheduleMvpView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
-import org.mifos.mobilebanking.utils.Toaster;
+import org.mifos.mobilebanking.utils.Network;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Rajan Maurya on 03/03/17.
@@ -44,13 +47,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
     @BindView(R.id.tv_number_of_payments)
     TextView tvNumberOfPayments;
 
-    @BindView(R.id.iv_status)
-    ImageView ivStatus;
-
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
-
-    @BindView(R.id.ll_error)
+    @BindView(R.id.layout_error)
     View layoutError;
 
     @Inject
@@ -58,6 +55,8 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     @Inject
     LoanRepaymentScheduleAdapter loanRepaymentScheduleAdapter;
+
+    SweetUIErrorHandler sweetUIErrorHandler;
 
     View rootView;
     private long loanId;
@@ -88,6 +87,8 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         rootView = inflater.inflate(R.layout.fragment_loan_repayment_schedule, container, false);
         ButterKnife.bind(this, rootView);
         loanRepaymentSchedulePresenter.attachView(this);
+
+        sweetUIErrorHandler = new SweetUIErrorHandler(getContext(), rootView);
 
         showUserInterface();
         if (savedInstanceState == null) {
@@ -164,8 +165,8 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
                 getTimeline().getExpectedDisbursementDate()));
         tvNumberOfPayments.setText(String.
                 valueOf(loanWithAssociations.getNumberOfRepayments()));
-        layoutError.setVisibility(View.VISIBLE);
-        tvStatus.setText(R.string.empty_repayment_schedule);
+        sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.repayment_schedule),
+                R.drawable.ic_charges, rvRepaymentSchedule, layoutError);
     }
 
     /**
@@ -174,11 +175,25 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
      */
     @Override
     public void showError(String message) {
-        Toaster.show(rootView, message);
-        layoutError.setVisibility(View.VISIBLE);
-        tvStatus.setText(message);
+        if (!Network.isConnected(getActivity())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(rvRepaymentSchedule, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(message,
+                    rvRepaymentSchedule, layoutError);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
+    @OnClick(R.id.btn_try_again)
+    public void retryClicked() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvRepaymentSchedule, layoutError);
+            loanRepaymentSchedulePresenter.loanLoanWithAssociations(loanId);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

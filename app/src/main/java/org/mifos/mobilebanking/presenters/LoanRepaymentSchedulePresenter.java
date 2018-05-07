@@ -75,7 +75,7 @@ public class LoanRepaymentSchedulePresenter extends BasePresenter<LoanRepaymentS
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showError(context
-                                .getString(R.string.error_fetching_repayment_schedule));
+                                .getString(R.string.repayment_schedule));
                     }
 
                     @Override

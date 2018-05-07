@@ -136,7 +136,13 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
 
     @OnClick(R.id.btn_try_again)
     public void retryClicked() {
-        beneficiaryListPresenter.loadBeneficiaries();
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError);
+            beneficiaryListPresenter.loadBeneficiaries();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -146,8 +152,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     @Override
     public void onRefresh() {
         if (layoutError.getVisibility() == View.VISIBLE) {
-            layoutError.setVisibility(View.GONE);
-            rvBeneficiaries.setVisibility(View.VISIBLE);
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError);
         }
         beneficiaryListPresenter.loadBeneficiaries();
     }
