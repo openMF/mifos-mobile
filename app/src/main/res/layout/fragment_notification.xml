@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swipe_notification_container"
-    android:layout_height="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_notification_container"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_notifications"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tv_no_notification_msg"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/no_notification"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/gray_dark"
-            android:visibility="gone" />
-    </LinearLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        layout="@layout/layout_sweet_exception_handler"
+        android:id="@+id/layout_error"
+        android:visibility="gone"/>
+
+</android.support.design.widget.CoordinatorLayout>
