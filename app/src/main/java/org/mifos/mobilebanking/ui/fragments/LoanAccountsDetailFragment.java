@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
@@ -29,8 +32,8 @@ import org.mifos.mobilebanking.ui.views.LoanAccountsDetailView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.CurrencyUtil;
 import org.mifos.mobilebanking.utils.DateHelper;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.QrCodeGenerator;
-import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
@@ -69,11 +72,8 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @BindView(R.id.ll_account_detail)
     LinearLayout llAccountDetail;
 
-    @BindView(R.id.ll_error)
+    @BindView(R.id.layout_error)
     View layoutError;
-
-    @BindView(R.id.tv_status)
-    TextView tv_status;
 
     @BindView(R.id.btn_make_payment)
     Button btMakePayment;
@@ -85,6 +85,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     private LoanAccount loanAccount;
     private boolean showLoanUpdateOption = false;
     private long loanId;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
     View rootView;
 
@@ -116,6 +117,9 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
         ButterKnife.bind(this, rootView);
         loanAccountDetailsPresenter.attachView(this);
+
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
+
         if (savedInstanceState == null) {
             loanAccountDetailsPresenter.loadLoanAccountDetails(loanId);
         }
@@ -154,14 +158,12 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
                     .getActualDisbursementDate()));
             showDetails(loanAccount);
         } else if (loanAccount.getStatus().getPendingApproval()) {
-            tv_status.setText(R.string.approval_pending);
-            llAccountDetail.setVisibility(View.GONE);
-            layoutError.setVisibility(View.VISIBLE);
+            sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.approval_pending),
+                    R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError);
             showLoanUpdateOption = true;
         } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
-            tv_status.setText(R.string.waiting_for_disburse);
-            llAccountDetail.setVisibility(View.GONE);
-            layoutError.setVisibility(View.VISIBLE);
+            sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.waiting_for_disburse),
+                    R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError);
         } else {
             btMakePayment.setVisibility(View.GONE);
             tvDueDateName.setText(R.string.not_available);
@@ -244,10 +246,24 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
      */
     @Override
     public void showErrorFetchingLoanAccountsDetail(String message) {
-        llAccountDetail.setVisibility(View.GONE);
-        layoutError.setVisibility(View.VISIBLE);
-        tv_status.setText(message);
-        Toaster.show(rootView, message);
+        if (!Network.isConnected(getActivity())) {
+            sweetUIErrorHandler.showSweetNoInternetUI(llAccountDetail, layoutError);
+        } else {
+            sweetUIErrorHandler.showSweetErrorUI(message,
+                    llAccountDetail, layoutError);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_try_again)
+    public void retryClicked() {
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(llAccountDetail, layoutError);
+            loanAccountDetailsPresenter.loadLoanAccountDetails(loanId);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

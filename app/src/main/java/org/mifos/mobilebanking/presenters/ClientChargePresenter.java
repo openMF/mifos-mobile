@@ -72,7 +72,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showErrorFetchingClientCharges(
-                                context.getString(R.string.error_client_charge_loading));
+                                context.getString(R.string.client_charges));
                     }
 
                     @Override
@@ -101,7 +101,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showErrorFetchingClientCharges(
-                                context.getString(R.string.error_client_charge_loading));
+                                context.getString(R.string.client_charges));
                     }
 
                     @Override
@@ -128,7 +128,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showErrorFetchingClientCharges(
-                                context.getString(R.string.error_client_charge_loading));
+                                context.getString(R.string.client_charges));
                     }
 
                     @Override
@@ -153,7 +153,7 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().showErrorFetchingClientCharges(
-                                context.getString(R.string.error_client_charge_loading));
+                                context.getString(R.string.client_charges));
                     }
 
                     @Override

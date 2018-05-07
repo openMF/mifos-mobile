@@ -1,7 +1,6 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
     android:layout_height="match_parent">
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,8 +16,10 @@
             android:layout_weight="1"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
     <include
-    android:id="@+id/ll_error"
-    layout="@layout/layout_error"
-    android:visibility="gone"/>
-</LinearLayout>
+        layout="@layout/layout_sweet_exception_handler"
+        android:id="@+id/layout_error"
+        android:visibility="gone"/>
+
+</android.support.design.widget.CoordinatorLayout>

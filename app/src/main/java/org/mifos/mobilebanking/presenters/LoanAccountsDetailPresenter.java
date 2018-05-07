@@ -76,7 +76,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showErrorFetchingLoanAccountsDetail(
-                                context.getString(R.string.error_loan_account_details_loading));
+                                context.getString(R.string.loan_account_details));
                     }
 
                     @Override
