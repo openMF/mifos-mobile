@@ -93,7 +93,7 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
                     public void onError(Throwable e) {
                         getMvpView().hideProgress();
                         getMvpView().showErrorFetchingRecentTransactions(
-                                context.getString(R.string.error_recent_transactions_loading));
+                                context.getString(R.string.recent_transactions));
                     }
 
                     @Override
