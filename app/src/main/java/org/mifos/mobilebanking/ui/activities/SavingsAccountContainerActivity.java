@@ -13,7 +13,7 @@ import org.mifos.mobilebanking.utils.Constants;
 public class SavingsAccountContainerActivity extends BaseActivity {
 
     private long savingsId;
-    public boolean transferSuccess = false;
+    public static boolean transferSuccess = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
