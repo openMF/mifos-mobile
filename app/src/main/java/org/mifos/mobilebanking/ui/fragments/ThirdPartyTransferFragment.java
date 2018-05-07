@@ -283,6 +283,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
+        if (spBeneficiary.getAdapter().isEmpty()) {
+            showError(getString(R.string.no_beneficiary_found));
+            return;
+        }
         if (spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
                 toString())) {
             showToaster(getString(R.string.error_same_account_transfer));
@@ -335,7 +339,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     public void cancelTransfer() {
         getActivity().getSupportFragmentManager().popBackStack();
     }
-    
+
     /**
      * It is called whenever any error occurs while executing a request
      * @param msg Error message that tells the user about the problem.

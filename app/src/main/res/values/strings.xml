@@ -164,6 +164,7 @@
     </string>
     <string name="error_fetching_beneficiaries">Failed to fetch Beneficiaries</string>
     <string name="error_fetching_beneficiary_template">Failed to fetch Beneficiary Template</string>
+    <string name="no_beneficiary_found">There is no beneficiary for this account. Please create one for Third party transfers</string>
     <string name="error_fetching_template">Failed to fetch template</string>
     <string name="error_creating_beneficiary">Failed to create Beneficiary</string>
     <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
