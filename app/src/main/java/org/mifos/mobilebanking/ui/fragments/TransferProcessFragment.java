@@ -161,7 +161,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         ivSuccess.setVisibility(View.VISIBLE);
         btnClose.setVisibility(View.VISIBLE);
         llTransfer.setVisibility(View.GONE);
-        ((SavingsAccountContainerActivity) getActivity()).transferSuccess = true;
+        SavingsAccountContainerActivity.transferSuccess = true;
     }
 
     /**
