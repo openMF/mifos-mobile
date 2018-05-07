@@ -3,6 +3,7 @@ package org.mifos.mobilebanking.ui.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatButton;
@@ -58,6 +59,7 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
     private boolean isInitialScreen;
     private boolean isPassCodeVerified;
     private String strPassCodeEntered;
+    private final long TIME_DELAY = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,8 +165,17 @@ public class PassCodeActivity extends BaseActivity implements PassCodeView.PassC
                 startHomeActivity();
             } else {
                 counter++;
-                passCodeView.clearPasscodeField();
-                Toaster.show(clRootview, R.string.incorrect_passcode);
+                new CountDownTimer(TIME_DELAY, TIME_DELAY) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        passCodeView.clearPasscodeField();
+                        Toaster.show(clRootview, R.string.incorrect_passcode);
+                    }
+                }.start();
             }
         }
     }
