@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/layout_padding_24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_success"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/login_margin_top"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_success"/>
+
+            <TextView
+                android:text="@string/amount"
+                android:layout_marginTop="@dimen/row_padding_left"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/primary"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/amount"
+                tools:text="@string/amount"
+                android:gravity="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="Applying for Loan"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:layout_marginTop="@dimen/login_padding_left"
+                android:layout_width="match_parent"
+                android:textColor="@color/gray_dark"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Loan Product"
+                android:textColor="@color/primary"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:layout_marginTop="@dimen/login_padding_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_loan_product_name"
+                tools:text="@string/medium_text"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:background="@color/light_grey"/>
+
+            <TextView
+                android:text="Loan Purpose"
+                android:textColor="@color/primary"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_loan_purpose"
+                tools:text="@string/medium_text"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:background="@color/light_grey"/>
+
+            <TextView
+                android:text="Loan Amount"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:textColor="@color/primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_loan_amount"
+                tools:text="@string/medium_text"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/login_padding_left"
+                android:layout_marginStart="@dimen/login_padding_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:background="@color/light_grey"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="@dimen/row_padding_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_apply_loan"
+                    android:text="Apply"
+                    android:textColor="@color/primary"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_cancel_loan"
+                    android:text="Cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_close_loan"
+                    android:text="Close"
+                    android:visibility="gone"
+                    android:layout_margin="@dimen/row_padding_left"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.v4.widget.NestedScrollView>

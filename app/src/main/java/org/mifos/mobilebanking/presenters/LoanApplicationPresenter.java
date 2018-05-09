@@ -10,7 +10,6 @@ import org.mifos.mobilebanking.models.templates.loans.LoanTemplate;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.enums.LoanState;
 import org.mifos.mobilebanking.ui.views.LoanApplicationMvpView;
-import org.mifos.mobilebanking.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
@@ -18,7 +17,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 
 
 /**
@@ -128,13 +126,16 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
                 })
         );
     }
+/*
 
-    /**
+    */
+/**
      * Used for creating LoanAccount using the {@code loansPayload} and notifies the view after
      * successful creating of a LoanAccount. And in case of any error during creation, it
      * notifies the view.
      * @param loansPayload {@link LoansPayload} required for Loan Creation
-     */
+     *//*
+
     public void createLoansAccount(LoansPayload loansPayload) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -162,13 +163,15 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
         );
     }
 
-    /**
+    */
+/**
      * Used for updating LoanAccount using the {@code loansPayload} and specified {@code loanId} and
      * notifies the view after successful updation of a LoanAccount. And in case of any error during
      * updation, it notifies the view.
      * @param loanId Id of Loan which needs to be updated
      * @param loansPayload {@link LoansPayload} required for Loan Updation
-     */
+     *//*
+
     public void updateLoanAccount(long loanId, LoansPayload loansPayload) {
         checkViewAttached();
         getMvpView().showProgress();
@@ -195,4 +198,5 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
                 })
         );
     }
+*/
 }

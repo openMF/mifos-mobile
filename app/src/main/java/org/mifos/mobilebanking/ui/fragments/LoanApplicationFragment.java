@@ -102,7 +102,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private int purposeId;
     private String disbursementDate;
     private String submittedDate;
-    private boolean isDisbursebemntDate = false;
+    private boolean isDisbursementDate = false;
     private boolean isSubmissionDate = false;
     private boolean isLoanUpdatePurposesInitialization = true;
 
@@ -140,6 +140,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+
         if (getArguments() != null) {
             loanState = (LoanState) getArguments().getSerializable(Constants.LOAN_STATE);
 
@@ -219,16 +220,20 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             return;
         }
         if (loanState == LoanState.CREATE) {
-            submitNewLoanApplication();
+            ((BaseActivity) getActivity()).replaceFragment(LoanConfirmationFragment
+                            .newInstance(submitNewLoanApplication(), loanState, null),
+                            true, R.id.container);
         } else {
-            submitUpdateLoanApplication();
+            ((BaseActivity) getActivity()).replaceFragment(LoanConfirmationFragment
+                            .newInstance(submitUpdateLoanApplication(), loanState,
+                             loanAccountToModify), true, R.id.container);
         }
     }
 
     /**
      * Submits a New Loan Application to the server
      */
-    private void submitNewLoanApplication() {
+    private LoansPayload submitNewLoanApplication() {
         LoansPayload loansPayload = new LoansPayload();
         loansPayload.setClientId(loanTemplate.getClientId());
         loansPayload.setLoanPurposeId(purposeId);
@@ -252,13 +257,14 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 loanTemplate.getInterestCalculationPeriodType().getId());
         loansPayload.setInterestType(loanTemplate.getInterestType().getId());
 
-        loanApplicationPresenter.createLoansAccount(loansPayload);
+        //loanApplicationPresenter.createLoansAccount(loansPayload);
+        return loansPayload;
     }
 
     /**
      * Requests server to update the Loan Application with new values
      */
-    private void submitUpdateLoanApplication() {
+    private LoansPayload submitUpdateLoanApplication() {
         LoansPayload loansPayload = new LoansPayload();
         loansPayload.setPrincipal(Double.
                 parseDouble(tilPrincipalAmount.getEditText().getText().toString()));
@@ -278,7 +284,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 loanTemplate.getTransactionProcessingStrategyId());
         loansPayload.setExpectedDisbursementDate(disbursementDate);
 
-        loanApplicationPresenter.updateLoanAccount(loanAccountToModify.getId(), loansPayload);
+        //loanApplicationPresenter.updateLoanAccount(loanAccountToModify.getId(), loansPayload);
+        return loansPayload;
     }
 
     /**
@@ -323,7 +330,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      */
     @OnClick(R.id.ll_expected_disbursement_date_edit)
     public void setTvDisbursementOnDate() {
-        isDisbursebemntDate = true;
+        isDisbursementDate = true;
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }
@@ -351,10 +358,10 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             isSubmissionDate = false;
         }
 
-        if (isDisbursebemntDate) {
+        if (isDisbursementDate) {
             tvExpectedDisbursementDate.setText(date);
             disbursementDate = date;
-            isDisbursebemntDate = false;
+            isDisbursementDate = false;
         }
         setSubmissionDisburseDate();
     }
@@ -477,25 +484,24 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         }
     }
 
-    /**
+    /*
      * Shows a {@link android.support.design.widget.Snackbar} after Loan Application is created
      * successfully
-     */
     @Override
     public void showLoanAccountCreatedSuccessfully() {
         Toaster.show(rootView, R.string.loan_application_submitted_successfully);
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
-    /**
+
      * Shows a {@link android.support.design.widget.Snackbar} after Loan Application is updated
      * successfully
-     */
+     *//*
     @Override
     public void showLoanAccountUpdatedSuccessfully() {
         Toaster.show(rootView, R.string.loan_application_updated_successfully);
         getActivity().getSupportFragmentManager().popBackStack();
-    }
+    }*/
 
     /**
      * It is called whenever any error occurs while executing a request
@@ -541,8 +547,10 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 break;
 
             case R.id.sp_loan_purpose:
-                purposeId = loanTemplate.getLoanPurposeOptions().get(position).getId();
-                break;
+                if (loanTemplate.getLoanPurposeOptions().size() != 0) {
+                    purposeId = loanTemplate.getLoanPurposeOptions().get(position).getId();
+                    break;
+                }
         }
     }
 
