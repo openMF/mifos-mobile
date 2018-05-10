@@ -420,9 +420,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         tvCurrency.setText(loanAccountToModify.getCurrency().getDisplayLabel());
 
         tvSubmissionDate.setText(DateHelper.getDateAsString(loanAccountToModify.
-                getTimeline().getSubmittedOnDate(), "dd-MM-YYYY"));
+                getTimeline().getSubmittedOnDate(), "dd-MM-yyyy"));
         tvExpectedDisbursementDate.setText(DateHelper.getDateAsString(loanAccountToModify.
-                getTimeline().getExpectedDisbursementDate(), "dd-MM-YYYY"));
+                getTimeline().getExpectedDisbursementDate(), "dd-MM-yyyy"));
         setSubmissionDisburseDate();
     }
 
