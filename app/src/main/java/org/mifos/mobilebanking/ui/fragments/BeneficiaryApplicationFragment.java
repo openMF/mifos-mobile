@@ -233,7 +233,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         beneficiaryPayload.setOfficeName(tilOfficeName.getEditText().getText().toString());
         beneficiaryPayload.setAccountType(accountTypeId);
         beneficiaryPayload.setName(tilBeneficiaryName.getEditText().getText().toString());
-        beneficiaryPayload.setTransferLimit(Double.parseDouble(tilTransferLimit.getEditText().
+        beneficiaryPayload.setTransferLimit(Integer.parseInt(tilTransferLimit.getEditText().
                 getText().toString()));
         presenter.createBeneficiary(beneficiaryPayload);
     }

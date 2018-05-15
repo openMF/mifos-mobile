@@ -78,7 +78,7 @@
                     android:gravity="start"
                     android:hint="@string/transfer_limit"
                     android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:maxLength="9"
                     android:paddingBottom="16dp"/>
