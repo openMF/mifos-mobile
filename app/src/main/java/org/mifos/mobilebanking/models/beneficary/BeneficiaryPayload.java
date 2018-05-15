@@ -22,7 +22,7 @@ public class BeneficiaryPayload implements Parcelable {
     int accountType;
 
     @SerializedName("transferLimit")
-    double transferLimit;
+    int transferLimit;
 
     @SerializedName("officeName")
     String officeName;
@@ -59,11 +59,11 @@ public class BeneficiaryPayload implements Parcelable {
         this.accountType = accountType;
     }
 
-    public double getTransferLimit() {
+    public int getTransferLimit() {
         return transferLimit;
     }
 
-    public void setTransferLimit(double transferLimit) {
+    public void setTransferLimit(int transferLimit) {
         this.transferLimit = transferLimit;
     }
 
@@ -79,7 +79,7 @@ public class BeneficiaryPayload implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.accountNumber);
         dest.writeInt(this.accountType);
-        dest.writeDouble(this.transferLimit);
+        dest.writeInt(this.transferLimit);
         dest.writeString(this.officeName);
     }
 
@@ -91,7 +91,7 @@ public class BeneficiaryPayload implements Parcelable {
         this.name = in.readString();
         this.accountNumber = in.readString();
         this.accountType = in.readInt();
-        this.transferLimit = in.readDouble();
+        this.transferLimit = in.readInt();
         this.officeName = in.readString();
     }
 
