@@ -17,6 +17,10 @@ android {
         // A test runner provided by https://code.google.com/p/android-test-kit/
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
     buildTypes {
         release {
@@ -40,26 +44,6 @@ android {
     lintOptions {
         abortOnError false
         disable 'InvalidPackage'
-    }
-    splits {
-        abi {
-            enable gradle.startParameter.taskNames.contains("assembleRelease")
-            reset()
-            include 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'x86', 'x86_64'
-            universalApk false
-        }
-    }
-}
-ext.abiCodes = ['arm64-v8a':'1', 'armeabi':'2', 'armeabi-v7a':'3', 'mips':'4', 'mips64':'5',
-                'x86':'6', 'x86_64':'7']
-import com.android.build.OutputFile
-
-android.applicationVariants.all { variant ->
-    variant.outputs.each { output ->
-        def baseVersionCode = project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
-        if (baseVersionCode != null) {
-            output.versionCodeOverride = Integer.valueOf(baseVersionCode + variant.versionCode)
-        }
     }
 }
 
