@@ -106,6 +106,14 @@
                     android:text="@string/select_beneficiary"
                     android:textColor="@color/light_grey"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                <TextView
+                    android:id="@+id/tv_add_beneficiary_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@string/no_beneficiary_found_please_add"
+                    android:textColor="@color/light_grey"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
                 <Spinner
                     android:id="@+id/sp_beneficiary"
                     android:layout_width="match_parent"
@@ -124,6 +132,15 @@
                     android:visibility="gone"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/continue_str"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_add_beneficiary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/add_beneficiary" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
