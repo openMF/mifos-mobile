@@ -1,10 +1,15 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,6 +36,7 @@ import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
 import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
+import org.mifos.mobilebanking.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +121,11 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         return fragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -240,6 +251,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Override
     public void showThirdPartyTransferTemplate(AccountOptionsTemplate accountOptionsTemplate) {
         this.accountOptionsTemplate = accountOptionsTemplate;
+        listPayFrom.clear();
         listPayFrom.addAll(presenter.getAccountNumbersFromAccountOptions(accountOptionsTemplate.
                 getFromAccountOptions()));
         payFromAdapter.notifyDataSetChanged();
@@ -254,6 +266,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Override
     public void showBeneficiaryList(List<Beneficiary> beneficiaries) {
         this.beneficiaries = beneficiaries;
+        listBeneficiary.clear();
         listBeneficiary.addAll(presenter.getAccountNumbersFromBeneficiaries(beneficiaries));
         beneficiaryAdapter.notifyDataSetChanged();
     }
@@ -380,6 +393,26 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_transfer, menu);
+        Utils.setToolbarIconColor(getActivity(), menu, R.color.white);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_refresh_transfer) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            Fragment currFragment = getActivity().getSupportFragmentManager()
+                    .findFragmentById(R.id.container);
+            transaction.detach(currFragment);
+            transaction.attach(currFragment);
+            transaction.commit();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
