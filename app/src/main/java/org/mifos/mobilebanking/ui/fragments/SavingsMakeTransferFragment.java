@@ -2,8 +2,13 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,6 +33,7 @@ import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
 import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
+import org.mifos.mobilebanking.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +143,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
             accountId = getArguments().getLong(Constants.ACCOUNT_ID);
             transferType = getArguments().getString(Constants.TRANSFER_TYPE);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -237,8 +244,10 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     @Override
     public void showSavingsAccountTemplate(AccountOptionsTemplate accountOptionsTemplate) {
         this.accountOptionsTemplate = accountOptionsTemplate;
+        listPayFrom.clear();
         listPayFrom.addAll(savingsMakeTransferPresenter.getAccountNumbers(
                 accountOptionsTemplate.getFromAccountOptions(), true));
+        listPayTo.clear();
         listPayTo.addAll(savingsMakeTransferPresenter.getAccountNumbers(
                 accountOptionsTemplate.getToAccountOptions(), false));
         payToAdapter.notifyDataSetChanged();
@@ -400,6 +409,26 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         etRemark.setVisibility(View.VISIBLE);
         llReview.setVisibility(View.VISIBLE);
         etAmount.setEnabled(false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_transfer, menu);
+        Utils.setToolbarIconColor(getActivity(), menu, R.color.white);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_refresh_transfer) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            Fragment currFragment = getActivity().getSupportFragmentManager()
+                    .findFragmentById(R.id.container);
+            transaction.detach(currFragment);
+            transaction.attach(currFragment);
+            transaction.commit();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
