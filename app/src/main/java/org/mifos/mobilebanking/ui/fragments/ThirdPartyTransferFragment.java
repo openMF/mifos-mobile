@@ -84,6 +84,9 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @BindView(R.id.btn_amount)
     AppCompatButton btnAmount;
 
+    @BindView(R.id.btn_add_beneficiary)
+    AppCompatButton btnAddBeneficiary;
+
     @BindView(R.id.ll_review)
     LinearLayout llReview;
 
@@ -95,6 +98,9 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     @BindView(R.id.tv_enter_remark)
     TextView tvEnterRemark;
+
+    @BindView(R.id.tv_add_beneficiary_msg)
+    TextView tvAddBeneficiaryMsg;
 
     @Inject
     ThirdPartyTransferPresenter presenter;
@@ -270,9 +276,14 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
         btnPayFrom.setVisibility(View.GONE);
         tvSelectBeneficary.setVisibility(View.GONE);
-        btnPayTo.setVisibility(View.VISIBLE);
-        spBeneficiary.setVisibility(View.VISIBLE);
-        spPayFrom.setEnabled(false);
+        if (!listBeneficiary.isEmpty()) {
+            btnPayTo.setVisibility(View.VISIBLE);
+            spBeneficiary.setVisibility(View.VISIBLE);
+            spPayFrom.setEnabled(false);
+        } else {
+            tvAddBeneficiaryMsg.setVisibility(View.VISIBLE);
+            btnAddBeneficiary.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -334,6 +345,12 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @OnClick(R.id.btn_cancel_transfer)
     public void cancelTransfer() {
         getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @OnClick(R.id.btn_add_beneficiary)
+    public void addBeneficiary() {
+        ((BaseActivity) getActivity()).replaceFragment(BeneficiaryAddOptionsFragment.newInstance(),
+                true, R.id.container);
     }
     
     /**
