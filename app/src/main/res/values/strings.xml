@@ -172,6 +172,8 @@
     <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer
         template
     </string>
+    <string name="no_beneficiary_found_please_add">Currently, you don\'t have any Beneficiary. Please add Beneficiary</string>
+
     <string name="unauthorized_client">You are not authorized</string>
     <string name="qr_code">QR Code</string>
     <string name="share_qr_code">Share QR Code</string>
