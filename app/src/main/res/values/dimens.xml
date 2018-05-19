@@ -65,4 +65,8 @@
     <dimen name="side_bar_width">5dp</dimen>
     <dimen name="pie_chart_height">160dp</dimen>
     <dimen name="app_bar_height">225dp</dimen>
+
+    <dimen name="min_frame_size">50dp</dimen>
+    <dimen name="stroke_weight">1dp</dimen>
+    <dimen name="scv_handle_size">14dp</dimen>
 </resources>
