@@ -64,6 +64,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.playServicesVersion"
+    implementation "com.isseiaoki:simplecropview:$rootProject.cropviewVersion"
 
     //Square dependencies
     implementation ('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {

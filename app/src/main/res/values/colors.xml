@@ -13,6 +13,7 @@
     <color name="transaction_detail_table_header_bg">#8ada6134</color>
     <color name="blue">#ff003fff</color>
     <color name="red">#FF0000</color>
+    <color name="light_black">#1C1C1C</color>
 
     <color name="dashboard_gray_background">#B2C1C8</color>
 

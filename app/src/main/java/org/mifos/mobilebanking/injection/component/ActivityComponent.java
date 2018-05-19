@@ -17,6 +17,7 @@ import org.mifos.mobilebanking.ui.fragments.LoanAccountsDetailFragment;
 import org.mifos.mobilebanking.ui.activities.LoginActivity;
 import org.mifos.mobilebanking.ui.fragments.LoanApplicationFragment;
 import org.mifos.mobilebanking.ui.fragments.NotificationFragment;
+import org.mifos.mobilebanking.ui.fragments.QrCodeImportFragment;
 import org.mifos.mobilebanking.ui.fragments.RegistrationFragment;
 import org.mifos.mobilebanking.ui.fragments.RegistrationVerificationFragment;
 import org.mifos.mobilebanking.ui.fragments.SavingAccountsDetailFragment;
@@ -102,4 +103,6 @@ public interface ActivityComponent {
     void inject(HomeOldFragment homeOldFragment);
 
     void inject(NotificationFragment notificationFragment);
+
+    void inject(QrCodeImportFragment qrCodeImportFragment);
 }

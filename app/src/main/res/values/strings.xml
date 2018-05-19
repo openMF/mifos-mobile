@@ -119,6 +119,7 @@
     <string name="rb_email">email</string>
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
+    <string name="import_qr">Import QR</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
@@ -192,7 +193,9 @@
     <string name="error_invalid_email">Invalid email id</string>
     <string name="error_server_down">Server Down, Try after some time</string>
     <string name="client_charges">Client Charges</string>
-
+    <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
+    </string>
+    <string name="error_fetching_image">Error fetching image </string>
     <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
@@ -338,7 +341,8 @@
     </string>
     <string name="choose">Choose application</string>
     <string name="not_available">NA</string>
-
+    <string name="upload_qr_code">Upload QR</string>
+    <string name="select_region_qr">Select region with QR code</string>
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
     <string name="help_line_number">8000000000</string>
@@ -371,6 +375,18 @@
         use camera, without this permission you will not be able to add beneficiaries using QR Code.
         Please enable it in settings
     </string>
+    <string name="dialog_message_storage_permission_denied_prompt">Without storage permission you will
+        not be able to upload QR code to add beneficiary.Are you sure you want to deny this
+        permission?
+    </string>
+    <string name="dialog_message_read_storage_permission_never_ask_again">You have denied permission to
+        read storage, without this permission you will not be able to add beneficiaries using QR Code.
+        Please enable it in settings
+    </string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">You have denied permission to
+        write to storage, without this permission you will not be able to add beneficiaries using QR Code.
+        Please enable it in settings
+    </string>
     <string name="dialog_message_phone_state_permission_denied_prompt">This permission is required
         to show currency according to your country.Are you sure you want to deny it?
     </string>
@@ -381,6 +397,7 @@
     <string name="msg_setting_activity_not_found">Something went wrong finding Settings activity.
         \nGo to \'Settings\' and grant permission manually.
     </string>
+    <string name="permission_denied_storage">Permission denied to storage</string>
 
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>

@@ -63,7 +63,13 @@ public class Constants {
 
     public static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 2;
 
+    public static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 3;
+
+    public static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 4;
+
     public static final String PERMISSIONS_CAMERA_STATUS = "camera_status";
+
+    public static final  String PERMISSIONS_STORAGE_STATUS = "storage_status";
 
     public static final String PERMISSIONS_READ_PHONE_STATE_STATUS = "read_phone_status";
 
@@ -94,4 +100,12 @@ public class Constants {
     public static final String REGISTER_ON_SERVER = "RegisterOnServer";
 
     public static final String NOTIFY_HOME_FRAGMENT = "NotifyHomeFragment";
+
+    public static final String QR_IMAGE_URI = "qr_image_uri";
+
+    public  static  final int GALLERY_QR_PICK = 1;
+
+    public static final String FRAME_RECT = "FrameRect";
+
+    public static final String SOURCE_URI = "SourceUri";
 }

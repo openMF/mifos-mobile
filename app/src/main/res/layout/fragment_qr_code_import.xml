@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:gravity="center"
+            android:text="@string/select_region_qr"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            />
+
+    <com.isseiaoki.simplecropview.CropImageView
+        android:id="@+id/iv_crop_qr_code"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        custom:scv_background_color="@color/light_black"
+        custom:scv_overlay_color="@color/gray_dark"
+        custom:scv_frame_color="@color/blue_light"
+        custom:scv_handle_color="@color/blue_light"
+        custom:scv_guide_color="@color/blue_light"
+        custom:scv_guide_show_mode="show_always"
+        custom:scv_handle_show_mode="show_always"
+        custom:scv_handle_size="@dimen/scv_handle_size"
+        custom:scv_min_frame_size="@dimen/min_frame_size"
+        custom:scv_frame_stroke_weight="@dimen/stroke_weight"
+        custom:scv_guide_stroke_weight="@dimen/stroke_weight"
+        custom:scv_crop_enabled="true"
+        custom:scv_initial_frame_scale="1.0"
+        custom:scv_animation_enabled="true"
+        custom:scv_animation_duration="200"
+        custom:scv_handle_shadow_enabled="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/proceed"
+        android:id="@+id/btn_proceed"/>
+    </LinearLayout>
+
+</LinearLayout>
