@@ -437,7 +437,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     @OnClick(R.id.ll_surveys)
     public void surveys() {
-
+        startActivity(new Intent(getActivity(), SurveyApplicationActivity.class));
     }
 
     /**

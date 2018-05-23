@@ -94,4 +94,8 @@ public class Constants {
     public static final String REGISTER_ON_SERVER = "RegisterOnServer";
 
     public static final String NOTIFY_HOME_FRAGMENT = "NotifyHomeFragment";
+
+    public static final String SURVEY_QUESTION = "survey_question";
+
+    public static final String SURVEY_TOTAL_QUESTION = "survey_total_question";
 }

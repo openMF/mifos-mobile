@@ -118,6 +118,7 @@
     <string name="rb_email">email</string>
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
+    <string name="submit">Submit</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
@@ -333,6 +334,7 @@
     </string>
     <string name="choose">Choose application</string>
     <string name="not_available">NA</string>
+    <string name="answer_all_survey_questions">Please answer all the Questions</string>
 
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
