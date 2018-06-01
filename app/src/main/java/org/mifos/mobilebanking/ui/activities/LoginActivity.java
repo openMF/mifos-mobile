@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
-
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.presenters.LoginPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
@@ -47,7 +45,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     LinearLayout llLogin;
 
     private String userName;
-    private PasscodePreferencesHelper preferencesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +54,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         loginPresenter.attachView(this);
-        preferencesHelper = new PasscodePreferencesHelper(this);
-        if (!preferencesHelper.getPassCode().isEmpty()) {
-            startPassCodeActivity();
-        }
     }
 
     /**
