@@ -3,6 +3,7 @@ package org.mifos.mobilebanking.injection.component;
 import org.mifos.mobilebanking.injection.PerActivity;
 import org.mifos.mobilebanking.injection.module.ActivityModule;
 import org.mifos.mobilebanking.ui.activities.HomeActivity;
+import org.mifos.mobilebanking.ui.activities.SplashActivity;
 import org.mifos.mobilebanking.ui.fragments.AccountOverviewFragment;
 import org.mifos.mobilebanking.ui.fragments.BeneficiaryAddOptionsFragment;
 import org.mifos.mobilebanking.ui.activities.PassCodeActivity;
@@ -103,6 +104,9 @@ public interface ActivityComponent {
     void inject(HomeOldFragment homeOldFragment);
 
     void inject(NotificationFragment notificationFragment);
-
+    
     void inject(QrCodeImportFragment qrCodeImportFragment);
+
+    void inject(SplashActivity splashActivity);
+
 }
