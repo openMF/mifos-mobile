@@ -98,6 +98,9 @@ dependencies {
     //sweet error dependency
     implementation "com.github.therajanmaurya:Sweet-Error:$rootProject.sweeterrorVersion"
 
+    //mifos passcode
+    implementation "com.mifos.mobile:mifos-passcode:$mifosPasscodeVersion"
+
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
