@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.crashlytics.android.Crashlytics;
+import com.mifos.mobile.passcode.utils.ForegroundChecker;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -12,7 +13,6 @@ import io.fabric.sdk.android.Fabric;
 import org.mifos.mobilebanking.injection.component.ApplicationComponent;
 import org.mifos.mobilebanking.injection.component.DaggerApplicationComponent;
 import org.mifos.mobilebanking.injection.module.ApplicationModule;
-import org.mifos.mobilebanking.utils.ForegroundChecker;
 import org.mifos.mobilebanking.utils.LanguageHelper;
 
 /**
