@@ -3,18 +3,18 @@ package org.mifos.mobilebanking.ui.activities.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.mifos.mobile.passcode.BasePassCodeActivity;
 
 import org.mifos.mobilebanking.MifosSelfServiceApp;
 import org.mifos.mobilebanking.R;
@@ -23,16 +23,13 @@ import org.mifos.mobilebanking.injection.component.DaggerActivityComponent;
 import org.mifos.mobilebanking.injection.module.ActivityModule;
 import org.mifos.mobilebanking.ui.activities.PassCodeActivity;
 import org.mifos.mobilebanking.ui.views.BaseActivityCallback;
-import org.mifos.mobilebanking.utils.Constants;
-import org.mifos.mobilebanking.utils.ForegroundChecker;
 import org.mifos.mobilebanking.utils.LanguageHelper;
 
 /**
  * @author ishan
  * @since 08/07/16
  */
-public class BaseActivity extends AppCompatActivity implements BaseActivityCallback,
-        ForegroundChecker.Listener {
+public class BaseActivity extends BasePassCodeActivity implements BaseActivityCallback {
 
     protected Toolbar toolbar;
     private ActivityComponent activityComponent;
@@ -190,23 +187,8 @@ public class BaseActivity extends AppCompatActivity implements BaseActivityCallb
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        ForegroundChecker.get().addListener(this);
-        ForegroundChecker.get().onActivityResumed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        ForegroundChecker.get().onActivityPaused();
-    }
-
-    @Override
-    public void onBecameForeground() {
-        Intent intent = new Intent(this, PassCodeActivity.class);
-        intent.putExtra(Constants.INTIAL_LOGIN, false);
-        startActivity(intent);
+    public Class getPassCodeClass() {
+        return PassCodeActivity.class;
     }
 
     @Override
