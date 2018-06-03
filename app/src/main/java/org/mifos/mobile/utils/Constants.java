@@ -115,6 +115,8 @@ public class Constants {
 
     public static final String INDEX = "index";
 
+    public static final String REPORT_NAME = "reportName";
+
     public static final String DATE_PICKER_TYPE = "datePickerType";
 
     public static final String HAS_SETTINGS_CHANGED = "hasSettingsChanged";
