@@ -136,24 +136,17 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             @Override
             public void onPageScrolled(int position, float positionOffset,
                     int positionOffsetPixels) {
-                getActivity().invalidateOptionsMenu();
-                ((HomeActivity) getActivity()).hideKeyboard(getView());
-                fabCreateLoan.setVisibility(View.VISIBLE);
-                if (position == 0 && positionOffset == 0) {
-                    fabCreateLoan.setVisibility(View.GONE);
-                } else if (position < 1) {
-                    fabCreateLoan.setScaleX(positionOffset);
-                    fabCreateLoan.setScaleY(positionOffset);
-                } else if (position < 2) {
-                    fabCreateLoan.setScaleX(1 - positionOffset);
-                    fabCreateLoan.setScaleY(1 - positionOffset);
-                } else {
-                    fabCreateLoan.setVisibility(View.GONE);
-                }
             }
 
             @Override
             public void onPageSelected(int position) {
+                getActivity().invalidateOptionsMenu();
+                ((HomeActivity) getActivity()).hideKeyboard(getView());
+                if (position == 1) {
+                    fabCreateLoan.setVisibility(View.VISIBLE);
+                } else {
+                    fabCreateLoan.setVisibility(View.GONE);
+                }
             }
 
             @Override
