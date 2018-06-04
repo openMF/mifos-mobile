@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.ui.activities.base;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -29,6 +30,7 @@ import org.mifos.mobilebanking.utils.LanguageHelper;
  * @author ishan
  * @since 08/07/16
  */
+@SuppressLint("Registered")
 public class BaseActivity extends BasePassCodeActivity implements BaseActivityCallback {
 
     protected Toolbar toolbar;
