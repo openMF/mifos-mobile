@@ -29,6 +29,7 @@ import org.mifos.mobilebanking.ui.fragments.LoanRepaymentScheduleFragment;
 import org.mifos.mobilebanking.ui.fragments.RecentTransactionsFragment;
 import org.mifos.mobilebanking.ui.fragments.SavingAccountsTransactionFragment;
 import org.mifos.mobilebanking.ui.fragments.SavingsMakeTransferFragment;
+import org.mifos.mobilebanking.ui.fragments.SurveyApplicationActivity;
 import org.mifos.mobilebanking.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.mobilebanking.ui.fragments.TransferProcessFragment;
 import org.mifos.mobilebanking.ui.fragments.UserProfileFragment;
@@ -102,4 +103,6 @@ public interface ActivityComponent {
     void inject(HomeOldFragment homeOldFragment);
 
     void inject(NotificationFragment notificationFragment);
+
+    void inject(SurveyApplicationActivity surveyApplicationActivity);
 }

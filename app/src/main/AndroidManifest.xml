@@ -88,6 +88,8 @@
         <activity android:name=".ui.activities.AddBeneficiaryActivity"
                   android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name="org.mifos.mobilebanking.ui.fragments.SurveyApplicationActivity" />
+
         <receiver android:name="org.mifos.mobilebanking.ui.widgets.ChargeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
