@@ -81,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:id="@+id/iv_visibility"
-                            app:srcCompat="@drawable/ic_visibility_48px"/>
+                            app:srcCompat="@drawable/ic_visibility_24px"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
