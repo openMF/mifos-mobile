@@ -360,6 +360,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
      * Makes Overview state visible
      */
     private void showOverviewState() {
+        ivVisibility.setImageDrawable(getResources().getDrawable(R.drawable.ic_visibility_24px));
         ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray_dark));
         llAccountDetail.setVisibility(View.VISIBLE);
     }
@@ -368,6 +369,8 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
      * Hides Overview state
      */
     private void hideOverviewState() {
+        ivVisibility.setImageDrawable(getResources()
+                .getDrawable(R.drawable.ic_visibility_off_24px));
         ivVisibility.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_grey));
         llAccountDetail.setVisibility(View.GONE);
     }
