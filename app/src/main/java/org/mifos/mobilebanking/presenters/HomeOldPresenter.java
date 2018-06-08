@@ -37,7 +37,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
     private DataManager dataManager;
     private CompositeDisposable compositeDisposable;
-    @Inject
+
     PreferencesHelper preferencesHelper;
 
     /**
@@ -53,6 +53,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
     public HomeOldPresenter(DataManager dataManager, @ActivityContext Context context) {
         super(context);
         this.dataManager = dataManager;
+        preferencesHelper = dataManager.getPreferencesHelper();
         compositeDisposable = new CompositeDisposable();
     }
 

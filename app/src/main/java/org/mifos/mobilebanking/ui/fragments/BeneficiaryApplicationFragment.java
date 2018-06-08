@@ -312,7 +312,6 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         if (!Network.isConnected(getContext())) {
             sweetUIErrorHandler.showSweetNoInternetUI(nsvBeneficiary, layoutError);
         } else {
-            sweetUIErrorHandler.showSweetErrorUI(msg, nsvBeneficiary, layoutError);
             Toaster.show(rootView, msg);
         }
     }

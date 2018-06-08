@@ -66,4 +66,6 @@ public class FakeJsonName {
 
     public static final String USER_VERIFY_JSON = "userVerify.json";
 
+    public static final String NOTIFICATION_LIST = "notificationList.json";
+
 }

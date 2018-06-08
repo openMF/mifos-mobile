@@ -1,0 +1,12 @@
+[
+  {
+    "msg": "message 1",
+    "timeStamp": 23221,
+    "read": true
+  },
+  {
+    "msg": "message 2",
+    "timeStamp": 2321321,
+    "read": false
+  }
+]

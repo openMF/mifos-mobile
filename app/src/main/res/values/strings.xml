@@ -188,8 +188,6 @@
     <string name="view_repayment">View Repayment Schedule</string>
     <string name="view_qr_code">View QR Code for this account</string>
     <string name="last_trans">Last Transaction Details</string>
-    <string name="error_username_greater_than_six">Username should be greater than 6 alphabets
-    </string>
     <string name="error_invalid_email">Invalid email id</string>
     <string name="error_server_down">Server Down, Try after some time</string>
     <string name="client_charges">Client Charges</string>

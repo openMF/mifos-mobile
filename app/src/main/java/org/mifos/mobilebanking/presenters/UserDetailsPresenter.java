@@ -36,7 +36,6 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     private final DataManager dataManager;
     private CompositeDisposable compositeDisposables;
 
-    @Inject
     PreferencesHelper preferencesHelper;
 
     /**
@@ -53,6 +52,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
         super(context);
         this.dataManager = dataManager;
         compositeDisposables = new CompositeDisposable();
+        preferencesHelper = dataManager.getPreferencesHelper();
     }
 
     @Override
