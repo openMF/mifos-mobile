@@ -26,6 +26,7 @@ import org.mifos.mobile.presenters.HomeOldPresenter;
 import org.mifos.mobile.ui.activities.HomeActivity;
 import org.mifos.mobile.ui.activities.LoanApplicationActivity;
 import org.mifos.mobile.ui.activities.NotificationActivity;
+import org.mifos.mobilebanking.ui.activities.SurveyActivity;
 import org.mifos.mobile.ui.activities.UserProfileActivity;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.enums.AccountType;
@@ -440,7 +441,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     @OnClick(R.id.ll_surveys)
     public void surveys() {
-
+        startActivity(new Intent(getActivity(), SurveyActivity.class));
     }
 
     /**

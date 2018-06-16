@@ -70,6 +70,8 @@ public class FakeJsonName {
 
     public static final String GUARANTOR_LIST = "guarantorList.json";
 
+    public static final String SURVEYS = "Surveys.json";
+
     public static final String SAVINGS_ACCOUNT_TEMPLATE = "savingsAccountTemplate.json";
 
 }

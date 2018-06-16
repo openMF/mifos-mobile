@@ -107,6 +107,10 @@
         <activity android:name="org.mifos.mobile.ui.activities.AboutUsActivity"
                   android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name=".ui.activities.SurveyActivity"
+                    android:windowSoftInputMode="adjustResize"/>
+
+        <receiver android:name="org.mifos.mobilebanking.ui.widgets.ChargeAppWidget">
         <activity android:name="org.mifos.mobile.ui.activities.HelpActivity"
                   android:windowSoftInputMode="adjustResize"/>
 

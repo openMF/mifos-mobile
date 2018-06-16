@@ -215,6 +215,7 @@
         template
     </string>
     <string name="no_beneficiary_found_please_add">Currently, you don\'t have any Beneficiary. Please add Beneficiary</string>
+    <string name="error_answer_question">Please, answer this Question</string>
 
     <string name="unauthorized_client">You are not authorized</string>
     <string name="qr_code">QR Code</string>
@@ -438,6 +439,7 @@
     </string>
     <string name="permission_denied_storage">Permission denied to storage</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
+    <string name="dialog_submit_survey">Are you sure that you want to submit Survey ?</string>
 
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>

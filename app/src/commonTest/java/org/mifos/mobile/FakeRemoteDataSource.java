@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.mifos.mobile.models.Charge;
 import org.mifos.mobile.models.Page;
+import org.mifos.mobilebanking.models.survey.Survey;
 import org.mifos.mobile.models.Transaction;
 import org.mifos.mobile.models.User;
 import org.mifos.mobile.models.accounts.loan.LoanAccount;
@@ -184,6 +185,11 @@ public class FakeRemoteDataSource {
     public static List<GuarantorPayload> getGuarantorsList() {
         return mTestDataFactory.getListTypePojo(new TypeToken<List<GuarantorPayload>>() {
         }, FakeJsonName.GUARANTOR_LIST);
+    }
+
+    public static List<Survey> getSurveyQuestions() {
+        return mTestDataFactory.getListTypePojo(new TypeToken<List<Survey>>() {
+        }, FakeJsonName.SURVEYS);
     }
 
     public static SavingsAccountTemplate getSavingAccountApplicationTemplate() {

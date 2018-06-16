@@ -55,6 +55,9 @@ android {
         test {
             java.srcDir commonTestDir
         }
+        main {
+            java.srcDir commonTestDir
+        }
     }
 
     compileOptions.incremental = false
@@ -129,6 +132,9 @@ dependencies {
 
     //multidex
     implementation "androidx.multidex:multidex:$rootProject.multiDexVersion"
+
+    //android material stepper
+    implementation "com.stepstone.stepper:material-stepper:$materialStepperVersion"
 
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"

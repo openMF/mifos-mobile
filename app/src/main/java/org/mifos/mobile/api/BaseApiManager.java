@@ -11,6 +11,7 @@ import org.mifos.mobile.api.services.NotificationService;
 import org.mifos.mobile.api.services.RecentTransactionsService;
 import org.mifos.mobile.api.services.RegistrationService;
 import org.mifos.mobile.api.services.SavingAccountsListService;
+import org.mifos.mobilebanking.api.services.SurveyService;
 import org.mifos.mobile.api.services.ThirdPartyTransferService;
 import org.mifos.mobile.api.services.UserDetailsService;
 
@@ -38,6 +39,7 @@ public class BaseApiManager {
     private static RegistrationService registrationApi;
     private static NotificationService notificationApi;
     private static GuarantorService guarantorService;
+    private static SurveyService surveyService;
     private static UserDetailsService userDetailsService;
 
     @Inject
@@ -59,6 +61,7 @@ public class BaseApiManager {
         notificationApi = createApi(NotificationService.class);
         guarantorService = createApi(GuarantorService.class);
         userDetailsService = createApi(UserDetailsService.class);
+        surveyService = createApi(SurveyService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -117,6 +120,10 @@ public class BaseApiManager {
 
     public GuarantorService getGuarantorApi() {
         return guarantorService;
+    }
+
+    public static SurveyService getSurveyServiceApi() {
+        return surveyService;
     }
 
     public UserDetailsService getUserDetailsService() {

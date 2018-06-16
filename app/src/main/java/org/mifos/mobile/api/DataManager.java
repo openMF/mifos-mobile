@@ -8,6 +8,8 @@ import org.mifos.mobile.models.client.Client;
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload;
 import org.mifos.mobile.models.guarantor.GuarantorPayload;
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload;
+import org.mifos.mobilebanking.models.survey.SubmitSurveyPayload;
+import org.mifos.mobilebanking.models.survey.Survey;
 import org.mifos.mobile.models.UpdatePasswordPayload;
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload;
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload;
@@ -193,6 +195,7 @@ public class DataManager {
 
     public Observable<List<Beneficiary>> getBeneficiaryList() {
         return baseApiManager.getBeneficiaryApi().getBeneficiaryList();
+
     }
 
     public Observable<BeneficiaryTemplate> getBeneficiaryTemplate() {
@@ -332,6 +335,33 @@ public class DataManager {
                             throws Exception {
                         return Observable.just(ResponseBody.create(MediaType
                                 .parse("plain/text"), "Guarantor Deleted Successfully"));
+                    }
+                });
+    }
+
+    public Observable<List<Survey>> getSurveyQuestions() {
+        return baseApiManager.getSurveyServiceApi().getSurveyQuestions()
+                .onErrorResumeNext(
+                        new Function<Throwable, ObservableSource<?
+                                extends List<Survey>>>() {
+                            @Override
+                            public ObservableSource<? extends
+                                    List<Survey>> apply(Throwable throwable) {
+                                    return Observable.just(FakeRemoteDataSource
+                                            .getSurveyQuestions());
+                            }
+                        });
+    }
+
+    public Observable<ResponseBody> submitSurvey(SubmitSurveyPayload payload) {
+        return baseApiManager.getSurveyServiceApi().submitSurvey(clientId, payload)
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<?
+                        extends ResponseBody>>() {
+                    @Override
+                    public ObservableSource<? extends
+                            ResponseBody> apply(Throwable throwable) throws Exception {
+                        return Observable.just(ResponseBody.create(MediaType.parse("text/plain"),
+                                        "Survey successfully submitted"));
                     }
                 });
     }
