@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -23,6 +22,7 @@ import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficary.BeneficiaryDetail;
 import org.mifos.mobilebanking.models.payload.AccountDetail;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.models.templates.account.AccountOption;
@@ -30,6 +30,7 @@ import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.presenters.ThirdPartyTransferPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.adapters.AccountsSpinnerAdapter;
+import org.mifos.mobilebanking.ui.adapters.BeneficiarySpinnerAdapter;
 import org.mifos.mobilebanking.ui.enums.TransferType;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.ThirdPartyTransferView;
@@ -117,10 +118,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Inject
     ThirdPartyTransferPresenter presenter;
 
-    private List<String> listBeneficiary = new ArrayList<>();
+    private List<BeneficiaryDetail> listBeneficiary = new ArrayList<>();
     private List<AccountDetail> listPayFrom = new ArrayList<>();
     private List<Beneficiary> beneficiaries;
-    private ArrayAdapter<String> beneficiaryAdapter;
+    private BeneficiarySpinnerAdapter beneficiaryAdapter;
     private AccountsSpinnerAdapter payFromAdapter;
     private AccountOption fromAccountOption;
     private AccountOption beneficiaryAccountOption;
@@ -190,8 +191,8 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         spPayFrom.setAdapter(payFromAdapter);
         spPayFrom.setOnItemSelectedListener(this);
 
-        beneficiaryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
-                listBeneficiary);
+        beneficiaryAdapter = new BeneficiarySpinnerAdapter(getActivity(),
+                R.layout.beneficiary_spinner_layout, listBeneficiary);
         beneficiaryAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spBeneficiary.setAdapter(beneficiaryAdapter);
         spBeneficiary.setOnItemSelectedListener(this);
