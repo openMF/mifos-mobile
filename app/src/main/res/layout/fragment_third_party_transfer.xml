@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:visibility="gone"
-                    android:prompt="@string/select_pay_to"
+                    android:prompt="@string/select_beneficiary"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:spinnerMode="dialog"/>
 
