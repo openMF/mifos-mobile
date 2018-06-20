@@ -2,8 +2,11 @@ package org.mifos.mobilebanking.models.client;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+
 import org.mifos.mobilebanking.models.Timeline;
+
 import java.util.ArrayList;
 import java.util.List;
 
