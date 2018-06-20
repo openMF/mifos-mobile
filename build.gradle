@@ -11,6 +11,7 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.+'
         classpath 'com.google.gms:oss-licenses:0.9.1'
         classpath 'com.google.gms:google-services:3.1.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.50'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -44,6 +45,7 @@ ext {
     butterKnifeVersion = '8.0.1'
     dbflowVersion = '4.1.2'
     playServicesVersion = '11.6.0'
+    kotlinVersion = '1.2.50'
 
     jUnitVersion = '4.12'
     mockitoVersion = '2.6.2'
