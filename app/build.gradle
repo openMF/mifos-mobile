@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.oss.licenses.plugin'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 apply from: '../config/quality/quality.gradle'
 
@@ -21,6 +23,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -45,6 +49,10 @@ android {
         abortOnError false
         disable 'InvalidPackage'
     }
+
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -65,6 +73,9 @@ dependencies {
     implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.playServicesVersion"
     implementation "com.isseiaoki:simplecropview:$rootProject.cropviewVersion"
+
+    //kotlin dependency
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     //Square dependencies
     implementation ('com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion') {
