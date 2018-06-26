@@ -29,6 +29,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -40,6 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
 
     private Result result;
+    private CompositeDisposable compositeDisposable;
 
     /**
      * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
@@ -51,6 +53,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
     @Inject
     public QrCodeImportPresenter(@ApplicationContext Context context) {
         super(context);
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -61,6 +64,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
     @Override
     public void detachView() {
         super.detachView();
+        compositeDisposable.clear();
         context = null;
     }
 
@@ -73,7 +77,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
     public void getDecodedResult(Uri sourceUri, final CropImageView cropImageView) {
         checkViewAttached();
         getMvpView().showProgress();
-        cropImageView.crop(sourceUri)
+        compositeDisposable.add(cropImageView.crop(sourceUri)
                 .executeAsSingle()
                 .flatMap(new Function<Bitmap, SingleSource<Result>>() {
                     @Override
@@ -120,7 +124,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
                         getMvpView()
                                 .showErrorReadingQr(context.getString(R.string.error_reading_qr));
                     }
-                });
+                }));
 
     }
 
