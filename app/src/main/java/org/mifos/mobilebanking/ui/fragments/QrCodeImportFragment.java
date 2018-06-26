@@ -180,6 +180,7 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hideProgress();
         qrCodeImportPresenter.detachView();
     }
 
