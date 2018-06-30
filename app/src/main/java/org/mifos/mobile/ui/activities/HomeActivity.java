@@ -41,7 +41,7 @@ import org.mifos.mobile.utils.Constants;
 import org.mifos.mobile.utils.MaterialDialog;
 import org.mifos.mobile.utils.TextDrawable;
 import org.mifos.mobile.utils.Toaster;
-import org.mifos.mobile.utils.gcm.RegistrationIntentService;
+import org.mifos.mobile.utils.fcm.RegistrationIntentService;
 
 import javax.inject.Inject;
 
