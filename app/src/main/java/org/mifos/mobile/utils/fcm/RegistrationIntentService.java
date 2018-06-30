@@ -14,28 +14,26 @@
  * limitations under the License.
  */
 
-package org.mifos.mobile.utils.gcm;
+package org.mifos.mobile.utils.fcm;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-
-import org.mifos.mobile.R;
-import org.mifos.mobile.api.local.PreferencesHelper;
-import org.mifos.mobile.utils.Constants;
-
-import java.io.IOException;
-
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import org.mifos.mobile.utils.Constants;
 
 
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
-    private PreferencesHelper preferencesHelper;
 
     public RegistrationIntentService() {
         super(TAG);
@@ -43,17 +41,20 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        preferencesHelper = new PreferencesHelper(this);
-        try {
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
 
-            sendRegistrationToServer(token);
-        } catch (IOException e) {
-            Log.d(TAG, e.toString());
-            preferencesHelper.setSentTokenToServer(false);
-        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        sendRegistrationToServer(token);
+                    }
+                });
     }
 
     private void sendRegistrationToServer(String token) {
@@ -61,5 +62,4 @@ public class RegistrationIntentService extends IntentService {
         registrationComplete.putExtra(Constants.TOKEN, token);
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
-
 }
