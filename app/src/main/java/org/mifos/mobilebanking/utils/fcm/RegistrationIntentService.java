@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-package org.mifos.mobile.utils.gcm;
+package org.mifos.mobilebanking.utils.fcm;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
+import android.support.v4.content.LocalBroadcastManager;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-import org.mifos.mobile.R;
-import org.mifos.mobile.api.local.PreferencesHelper;
-import org.mifos.mobile.utils.Constants;
-
-import java.io.IOException;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import org.mifos.mobilebanking.utils.Constants;
 
 
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
-    private PreferencesHelper preferencesHelper;
 
     public RegistrationIntentService() {
         super(TAG);
@@ -43,17 +35,8 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        preferencesHelper = new PreferencesHelper(this);
-        try {
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-
-            sendRegistrationToServer(token);
-        } catch (IOException e) {
-            Log.d(TAG, e.toString());
-            preferencesHelper.setSentTokenToServer(false);
-        }
+        String token = FirebaseInstanceId.getInstance().getToken();
+        sendRegistrationToServer(token);
     }
 
     private void sendRegistrationToServer(String token) {

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.mifos.mobile.utils.gcm;
+package org.mifos.mobilebanking.utils.fcm;
 
 import android.content.Intent;
 
-import com.google.android.gms.iid.InstanceIDListenerService;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
-public class MifosInstanceIDListenerService extends InstanceIDListenerService {
+public class MifosInstanceIDListenerService extends FirebaseInstanceIdService {
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of

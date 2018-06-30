@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mifos.mobile.utils.gcm;
+package org.mifos.mobilebanking.utils.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,33 +22,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 
-import com.google.android.gms.gcm.GcmListenerService;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
-import org.mifos.mobile.R;
-import org.mifos.mobile.models.notification.MifosNotification;
-import org.mifos.mobile.ui.activities.HomeActivity;
-import org.mifos.mobile.utils.Constants;
+import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.models.notification.MifosNotification;
+import org.mifos.mobilebanking.ui.activities.HomeActivity;
+import org.mifos.mobilebanking.utils.Constants;
 
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import java.util.Map;
 
-public class MifosGcmListenerService extends GcmListenerService {
+public class MifosFcmListenerService extends FirebaseMessagingService {
 
-    private static final String TAG = MifosGcmListenerService.class.getSimpleName();
+    private static final String TAG = MifosFcmListenerService.class.getSimpleName();
 
-    /**
-     * Called when message is received.
-     *
-     * @param from SenderID of the sender.
-     * @param data Data bundle containing message data as key/value pairs.
-     *             For Set of keys use data.keySet().
-     */
     // [START receive_message]
     @Override
-    public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString(getString(R.string.message));
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        String from = remoteMessage.getFrom();
+        Map<String, String> data = remoteMessage.getData();
+
+        String message = data.get(getString(R.string.message));
         if (from.startsWith("/topics/")) {
             // message received from some topic.
         } else {
@@ -62,9 +59,9 @@ public class MifosGcmListenerService extends GcmListenerService {
     // [END receive_message]
 
     /**
-     * Create and show a simple notification containing the received GCM message.
+     * Create and show a simple notification containing the received FCM message.
      *
-     * @param message GCM message received.
+     * @param message FCM message received.
      */
     private void sendNotification(String message) {
         Intent intent = new Intent(this, HomeActivity.class);

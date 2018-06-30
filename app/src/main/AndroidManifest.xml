@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
@@ -148,23 +146,23 @@
 
         <service
             android:exported="false"
-            android:name="org.mifos.mobile.utils.gcm.MifosGcmListenerService">
+            android:name=".utils.fcm.MifosFcmListenerService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
             android:exported="false"
-            android:name="org.mifos.mobile.utils.gcm.MifosInstanceIDListenerService">
+            android:name="org.mifos.mobile.utils.fcm.MifosInstanceIDListenerService">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
         <service
             android:exported="false"
-            android:name="org.mifos.mobile.utils.gcm.RegistrationIntentService">
+            android:name="org.mifos.mobile.utils.fcm.RegistrationIntentService">
         </service>
 
         <activity android:name="org.mifos.mobile.ui.activities.SettingsActivity"/>
