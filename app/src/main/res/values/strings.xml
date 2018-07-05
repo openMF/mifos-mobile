@@ -121,6 +121,17 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Import QR</string>
+    <string name="product_name">Product Name</string>
+    <string name="status">Status</string>
+    <string name="total_approved_shares">Total Approved Shares</string>
+    <string name="total_pending_for_approval_shares">Total Pending For Approval Shares</string>
+    <string name="timeline">Timeline</string>
+    <string name="share_account_detail">Share Account Detail</string>
+    <string name="submission_details">Submission Details</string>
+    <string name="approval_details">Approval Details</string>
+    <string name="activation_details">Activation Details</string>
+    <string name="nil">Nil</string>
+    <string name="shares_detail">Shares Detail</string>
 
     <string name="view_guarantor">View Guarantor</string>
     <string name="add_guarantor">Add Guarantor</string>

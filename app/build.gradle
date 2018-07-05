@@ -130,6 +130,9 @@ dependencies {
     //multidex
     implementation "androidx.multidex:multidex:$rootProject.multiDexVersion"
 
+    //MPAndroid Charts
+    implementation "com.github.PhilJay:MPAndroidChart:$mpAndroidChartVersion"
+
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"

@@ -60,6 +60,7 @@ ext {
     sweeterrorVersion = '1.0.0'
     mifosPasscodeVersion = '0.3.0'
     cropviewVersion = '1.1.7'
+    mpAndroidChartVersion = 'v3.0.3'
     multiDexVersion = '2.0.1'
 
 }

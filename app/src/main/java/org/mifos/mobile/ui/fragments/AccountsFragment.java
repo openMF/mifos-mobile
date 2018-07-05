@@ -18,6 +18,7 @@ import org.mifos.mobile.models.accounts.share.ShareAccount;
 import org.mifos.mobile.presenters.AccountsPresenter;
 import org.mifos.mobile.ui.activities.LoanAccountContainerActivity;
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity;
+import org.mifos.mobilebanking.ui.activities.ShareAccountContainerActivity;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter;
@@ -432,6 +433,10 @@ public class AccountsFragment extends BaseFragment implements
                 intent.putExtra(Constants.LOAN_ID, loanAccountsListAdapter.getLoanAccountsList().
                         get(position).getId());
                 break;
+            case Constants.SHARE_ACCOUNTS:
+                intent = new Intent(getActivity(), ShareAccountContainerActivity.class);
+                intent.putExtra(Constants.SHARE_ACCOUNTS,
+                        shareAccountsListAdapter.getItem(position));
         }
         openActivity(intent);
     }
