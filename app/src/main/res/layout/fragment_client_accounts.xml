@@ -30,7 +30,6 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/margin_16dp"
         android:clickable="true"
-        android:visibility="gone"
         android:id="@+id/fab_create_loan"
         app:layout_behavior="org.mifos.mobilebanking.utils.ScrollFabBehavior"
         app:srcCompat="@drawable/ic_add_white_24dp"/>
