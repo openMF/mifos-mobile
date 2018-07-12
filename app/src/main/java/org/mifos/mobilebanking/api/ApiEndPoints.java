@@ -19,5 +19,6 @@ public class ApiEndPoints {
     public static final  String BENEFICIARIES = "beneficiaries";
     public static final String REGISTRATION = "registration";
     public static final String DEVICE = "device";
+    public static final String USER = "user";
 
 }
