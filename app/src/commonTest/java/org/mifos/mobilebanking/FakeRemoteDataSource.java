@@ -23,6 +23,7 @@ import org.mifos.mobilebanking.models.register.UserVerify;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.mobilebanking.models.templates.loans.LoanTemplate;
+import org.mifos.mobilebanking.models.templates.savings.SavingsAccountTemplate;
 
 import java.util.List;
 
@@ -183,5 +184,11 @@ public class FakeRemoteDataSource {
     public static List<GuarantorPayload> getGuarantorsList() {
         return mTestDataFactory.getListTypePojo(new TypeToken<List<GuarantorPayload>>() {
         }, FakeJsonName.GUARANTOR_LIST);
+    }
+
+    public static SavingsAccountTemplate getSavingAccountApplicationTemplate() {
+        return mTestDataFactory.getObjectTypePojo(SavingsAccountTemplate.class,
+                FakeJsonName.SAVINGS_ACCOUNT_TEMPLATE);
+
     }
 }
