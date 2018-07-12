@@ -8,6 +8,7 @@ import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.guarantor.GuarantorApplicationPayload;
 import org.mifos.mobilebanking.models.guarantor.GuarantorPayload;
 import org.mifos.mobilebanking.models.guarantor.GuarantorTemplatePayload;
+import org.mifos.mobilebanking.models.UpdatePasswordPayload;
 import org.mifos.mobilebanking.models.notification.MifosNotification;
 import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 import org.mifos.mobilebanking.models.Page;
@@ -219,6 +220,10 @@ public class DataManager {
 
     public Observable<NotificationUserDetail> getUserNotificationId(long id) {
         return baseApiManager.getNotificationApi().getUserNotificationId(id);
+    }
+
+    public Observable<ResponseBody> updateAccountPassword(UpdatePasswordPayload payload) {
+        return baseApiManager.getUserDetailsService().updateAccountPassword(payload);
     }
 
     public long getClientId() {

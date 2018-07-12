@@ -89,8 +89,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
                         getMvpView().hideProgress();
                         if (client != null) {
                             preferencesHelper.setOfficeName(client.getOfficeName());
-                            preferencesHelper.setUserName(client.getDisplayName());
-                            getMvpView().showUserDetails(preferencesHelper.getUserName());
+                            preferencesHelper.setClientName(client.getDisplayName());
+                            getMvpView().showUserDetails(preferencesHelper.getClientName());
                         } else {
                             getMvpView().showError(context
                                     .getString(R.string.error_client_not_found));

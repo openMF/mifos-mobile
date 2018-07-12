@@ -36,6 +36,7 @@ import org.mifos.mobilebanking.ui.fragments.SavingAccountsTransactionFragment;
 import org.mifos.mobilebanking.ui.fragments.SavingsMakeTransferFragment;
 import org.mifos.mobilebanking.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.mobilebanking.ui.fragments.TransferProcessFragment;
+import org.mifos.mobilebanking.ui.fragments.UpdatePasswordFragment;
 import org.mifos.mobilebanking.ui.fragments.UserProfileFragment;
 
 import dagger.Component;
@@ -117,4 +118,7 @@ public interface ActivityComponent {
     void inject(GuarantorListFragment guarantorListFragment);
 
     void inject(GuarantorDetailFragment guarantorDetailFragment);
+
+    void inject(UpdatePasswordFragment updatePasswordFragment);
+
 }

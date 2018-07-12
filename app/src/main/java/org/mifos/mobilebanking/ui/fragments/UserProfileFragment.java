@@ -1,10 +1,12 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -19,11 +21,13 @@ import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.client.Group;
 import org.mifos.mobilebanking.presenters.UserDetailsPresenter;
+import org.mifos.mobilebanking.ui.activities.EditUserDetailActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.UserDetailsView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
+import org.mifos.mobilebanking.utils.TextDrawable;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import java.util.List;
@@ -32,6 +36,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
@@ -41,9 +46,20 @@ import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 public class UserProfileFragment extends BaseFragment implements UserDetailsView {
 
-
     @BindView(R.id.iv_profile)
     ImageView ivProfile;
+
+    @BindView(R.id.iv_text_drawable)
+    ImageView ivTextDrawable;
+
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
+
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.tv_user_name)
+    TextView tvUsername;
 
     @BindView(R.id.tv_account_number)
     TextView tvAccountNumber;
@@ -72,12 +88,6 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.tv_gender)
     TextView tvGender;
 
-    @BindView(R.id.app_bar_layout)
-    AppBarLayout appBarLayout;
-
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -86,6 +96,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
 
     @BindView(R.id.ll_user_profile)
     LinearLayout llUserProfile;
+
+    @BindView(R.id.fab_edit)
+    FloatingActionButton fabEdit;
 
     @Inject
     UserDetailsPresenter presenter;
@@ -118,7 +131,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(getActivity(),
                 R.color.white));
         collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(getActivity(),
-                R.color.white));
+                                R.color.white));
+
         sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         if (savedInstanceState == null) {
             presenter.getUserDetails();
@@ -151,20 +165,35 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Override
     public void showUserDetails(Client client) {
         this.client = client;
-        collapsingToolbarLayout.setTitle(client.getDisplayName());
-        tvAccountNumber.setText(client.getAccountNo());
-        tvActivationDate.setText(DateHelper.getDateAsString(client.getActivationDate()));
-        tvOfficeName.setText(client.getOfficeName());
-        tvClientType.setText(client.getClientType().getName());
-        tvGroups.setText(getGroups(client.getGroups()));
-        tvClientClassification.setText(client.getClientClassification().getName());
-        tvPhoneNumber.setText(client.getMobileNo());
+        tvUsername.setText(nullFieldCheck(getString(R.string.username), client.getDisplayName()));
+        tvAccountNumber.setText(nullFieldCheck(getString(R.string.account_number),
+                client.getAccountNo()));
+        tvActivationDate.setText(nullFieldCheck(getString(R.string.activation_date),
+                DateHelper.getDateAsString(client.getActivationDate())));
+        tvOfficeName.setText(nullFieldCheck(getString(R.string.office_name),
+                client.getOfficeName()));
+        tvClientType.setText(nullFieldCheck(getString(R.string.client_type),
+                client.getClientType().getName()));
+        tvGroups.setText(nullFieldCheck(getString(R.string.groups),
+                getGroups(client.getGroups())));
+        tvClientClassification.setText(nullFieldCheck(getString(R.string.client_classification),
+                client.getClientClassification().getName()));
+        tvPhoneNumber.setText(nullFieldCheck(getString(R.string.phone_number),
+                client.getMobileNo()));
         if (client.getDobDate().size() != 3) {  // no data entry in database for the client
             tvDOB.setText(getString(R.string.no_dob_found));
         } else {
             tvDOB.setText(DateHelper.getDateAsString(client.getDobDate()));
         }
-        tvGender.setText(client.getGender().getName());
+        tvGender.setText(nullFieldCheck(getString(R.string.gender), client.getGender().getName()));
+    }
+
+    private String nullFieldCheck(String field, String value) {
+        if (value == null) {
+            return getString(R.string.no) + getString(R.string.blank) + field +
+                    getString(R.string.blank) + getString(R.string.found);
+        }
+        return value;
     }
 
     /**
@@ -199,9 +228,30 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
             @Override
             public void run() {
                 userBitmap = bitmap;
-                ivProfile.setImageBitmap(bitmap);
+                if (userBitmap == null) {
+                    final TextDrawable textDrawable = TextDrawable.builder()
+                            .beginConfig()
+                            .toUpperCase()
+                            .endConfig()
+                            .buildRound(preferencesHelper
+                                    .getClientName()
+                                    .substring(0, 1),
+                                    ContextCompat.getColor(getContext(), R.color.primary_dark));
+                    ivProfile.setVisibility(View.GONE);
+                    ivTextDrawable.setVisibility(View.VISIBLE);
+                    ivTextDrawable.setImageDrawable(textDrawable);
+                } else {
+                    ivTextDrawable.setVisibility(View.GONE);
+                    ivProfile.setVisibility(View.VISIBLE);
+                    ivProfile.setImageBitmap(bitmap);
+                }
             }
         });
+    }
+
+    @OnClick(R.id.btn_change_password)
+    void changePassword() {
+        startActivity(new Intent(getContext(), EditUserDetailActivity.class));
     }
 
     /**
@@ -213,7 +263,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     public void showError(String message) {
         Toaster.show(rootView, message);
         sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.error_fetching_user_profile),
-                R.drawable.ic_assignment_turned_in_black_24dp, appBarLayout, layoutError);
+                R.drawable.ic_assignment_turned_in_black_24dp, appBarLayout,
+                layoutError);
+        fabEdit.setVisibility(View.GONE);
     }
 
     @Override
