@@ -33,6 +33,7 @@ public class PreferencesHelper {
     private static final String TENANT = "preferences_base_tenant";
     private static final String BASE_URL = "preferences_base_url_key";
     private static final String PROFILE_IMAGE = "preferences_profile_image";
+    public static final String CLIENT_NAME = "client_name";
 
     private SharedPreferences sharedPreferences;
 
@@ -138,6 +139,14 @@ public class PreferencesHelper {
 
     public void setUserName(String userName) {
         putString(USER_NAME, userName);
+    }
+
+    public String getClientName() {
+        return getString(CLIENT_NAME, "");
+    }
+
+    public void setClientName(String clientName) {
+        putString(CLIENT_NAME, clientName);
     }
 
     public String getOfficeName() {

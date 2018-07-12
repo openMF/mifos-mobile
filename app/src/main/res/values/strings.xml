@@ -26,6 +26,7 @@
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
     <string name="home">Home</string>
+    <string name="large_text">Large Text</string>
     <string name="medium_text">Medium Text</string>
     <string name="small_text">Small Text</string>
     <string name="client_accounts">Client Accounts</string>
@@ -120,6 +121,7 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Import QR</string>
+
     <string name="view_guarantor">View Guarantor</string>
     <string name="add_guarantor">Add Guarantor</string>
     <string name="delete_guarantor">Delete Guarantor</string>
@@ -130,6 +132,22 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
+
+    <string name="update">Update</string>
+    <string name="edit">Edit</string>
+    <string name="passcode">Passcode</string>
+    <string name="other">Other</string>
+    <string name="gender">Gender</string>
+    <string name="no">No</string>
+    <string name="found">found</string>x
+
+    <string name="change_passcode">Change Passcode</string>
+    <string name="change_app_passcode">Change App Passcode</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_account_password">Change your Account Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="string_changed_successfully">%1$s changed successfully</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit

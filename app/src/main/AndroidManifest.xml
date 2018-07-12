@@ -96,6 +96,9 @@
                   android:windowSoftInputMode="adjustResize"
                   android:configChanges="orientation|screenSize"/>
 
+        <activity android:name=".ui.activities.EditUserDetailActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
         <receiver android:name="org.mifos.mobilebanking.ui.widgets.ChargeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

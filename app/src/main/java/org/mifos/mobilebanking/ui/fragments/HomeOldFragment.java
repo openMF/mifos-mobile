@@ -301,9 +301,9 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
                 } else {
 
                     String userName;
-                    if (!preferencesHelper.getUserName().isEmpty()) {
+                    if (!preferencesHelper.getClientName().isEmpty()) {
 
-                        userName = preferencesHelper.getUserName();
+                        userName = preferencesHelper.getClientName();
                     } else {
 
                         userName = getString(R.string.app_name);

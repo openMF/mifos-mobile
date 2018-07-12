@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment implements HomeView,
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             showUserImage((Bitmap) savedInstanceState.getParcelable(Constants.USER_PROFILE));
-            showUserDetails(preferencesHelper.getUserName());
+            showUserDetails(preferencesHelper.getClientName());
         }
     }
 
@@ -171,8 +171,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
     }
 
     private void loadClientData() {
-        if (!preferencesHelper.getUserName().isEmpty()) {
-            tvUserName.setText(getString(R.string.hello_client, preferencesHelper.getUserName()));
+        if (!preferencesHelper.getClientName().isEmpty()) {
+            tvUserName.setText(getString(R.string.hello_client, preferencesHelper.getClientName()));
             hideProgress();
         } else {
             presenter.getUserDetails();
@@ -207,8 +207,8 @@ public class HomeFragment extends BaseFragment implements HomeView,
             @Override
             public void run() {
                 String userName;
-                if (!preferencesHelper.getUserName().isEmpty()) {
-                    userName = preferencesHelper.getUserName();
+                if (!preferencesHelper.getClientName().isEmpty()) {
+                    userName = preferencesHelper.getClientName();
                 } else {
                     userName = getString(R.string.app_name);
                 }
