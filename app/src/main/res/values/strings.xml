@@ -132,6 +132,18 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
+    <string name="select_product_id">Select Product Id*</string>
+    <string name="account_id">Account Id</string>
+    <string name="new_saving_account_application">New Saving Account Application</string>
+    <string name="update_savings_account">Update Savings Account</string>
+    <string name="withdraw_savings_account">Withdraw Savings Account</string>
+    <string name="withdrawal_date">Withdrawal Date</string>
+    <string name="new_saving_account_created_successfully">New Saving Account created successfully.</string>
+    <string name="saving_account_updated_successfully">Saving Account Updated Successfully</string>
+    <string name="savings_account_withdraw_successful">Savings Account Withdraw Successful</string>
+    <string name="string_savings_account">%1$s Savings Account</string>
+    <string name="apply">Apply</string>
+    <string name="apply_savings_account">Apply Savings Account</string>
 
     <string name="update">Update</string>
     <string name="edit">Edit</string>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_update_savings_account"
+        android:title="@string/update_savings_account"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_withdraw_savings_account"
+        android:title="@string/withdraw_savings_account"
+        android:visible="false"
+        app:showAsAction="never"/>
+
+</menu>

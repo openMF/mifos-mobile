@@ -31,6 +31,7 @@ import org.mifos.mobilebanking.models.accounts.share.ShareAccount;
 import org.mifos.mobilebanking.presenters.AccountsPresenter;
 import org.mifos.mobilebanking.ui.activities.HomeActivity;
 import org.mifos.mobilebanking.ui.activities.LoanApplicationActivity;
+import org.mifos.mobilebanking.ui.activities.SavingsAccountApplicationActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.adapters.CheckBoxAdapter;
 import org.mifos.mobilebanking.ui.adapters.ViewPagerAdapter;
@@ -144,8 +145,9 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             public void onPageSelected(int position) {
                 getActivity().invalidateOptionsMenu();
                 ((HomeActivity) getActivity()).hideKeyboard(getView());
-                if (position == 1) {
-                    fabCreateLoan.show();
+
+                if (position == 0 || position == 1) {
+                    fabCreateLoan.setVisibility(View.VISIBLE);
                 } else {
                     fabCreateLoan.hide();
                 }
@@ -212,7 +214,14 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     @OnClick(R.id.fab_create_loan)
     public void createLoan() {
-        startActivity(new Intent(getActivity(), LoanApplicationActivity.class));
+        switch (viewPager.getCurrentItem()) {
+            case 0:
+                startActivity(new Intent(getActivity(), SavingsAccountApplicationActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(getActivity(), LoanApplicationActivity.class));
+                break;
+        }
     }
 
 
