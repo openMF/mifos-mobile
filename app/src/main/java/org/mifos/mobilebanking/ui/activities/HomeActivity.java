@@ -293,7 +293,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     public void showUserDetails(Client client) {
         this.client = client;
-        preferencesHelper.setUserName(client.getDisplayName());
+        preferencesHelper.setClientName(client.getDisplayName());
         tvUsername.setText(client.getDisplayName());
     }
 
@@ -319,8 +319,8 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 @Override
                 public void run() {
                     String userName;
-                    if (!preferencesHelper.getUserName().isEmpty()) {
-                        userName = preferencesHelper.getUserName();
+                    if (!preferencesHelper.getClientName().isEmpty()) {
+                        userName = preferencesHelper.getClientName();
                     } else {
                         userName = getString(R.string.app_name);
                     }

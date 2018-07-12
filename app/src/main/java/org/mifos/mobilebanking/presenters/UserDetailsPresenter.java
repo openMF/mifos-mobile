@@ -73,6 +73,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
      */
     public void getUserDetails() {
         checkViewAttached();
+        getMvpView().showProgress();
         compositeDisposables.add(dataManager.getCurrentClient()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -84,12 +85,13 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        getMvpView().showError(context.getString(R.string.error_fetching_client));
                         getMvpView().hideProgress();
+                        getMvpView().showError(context.getString(R.string.error_fetching_client));
                     }
 
                     @Override
                     public void onNext(Client client) {
+                        getMvpView().hideProgress();
                         if (client != null) {
                             getMvpView().showUserDetails(client);
                         } else {
