@@ -21,6 +21,8 @@ public class Constants {
 
     public static final String BACK_SLASH = "/";
 
+    public static final String ACCOUNTS = "accounts";
+
     public static final String SAVINGS_ACCOUNTS = "savingsAccounts";
 
     public static final String LOAN_ACCOUNTS = "loanAccounts";

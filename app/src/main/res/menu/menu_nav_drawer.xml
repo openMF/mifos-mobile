@@ -11,6 +11,12 @@
             android:title="@string/home"/>
 
         <item
+            android:id="@+id/item_dashboard"
+            android:checked="false"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/dashboard"/>
+
+        <item
             android:id="@+id/item_accounts"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="@string/accounts"/>

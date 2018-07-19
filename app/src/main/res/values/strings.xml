@@ -159,6 +159,8 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="string_changed_successfully">%1$s changed successfully</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="total_accounts">Total Accounts</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit

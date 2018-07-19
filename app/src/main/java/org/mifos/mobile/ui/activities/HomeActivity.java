@@ -166,6 +166,11 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 hideToolbarElevation();
                 replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
                 break;
+
+            case R.id.item_dashboard:
+                hideToolbarElevation();
+                replaceFragment(DashboardFragment.newInstance(), true, R.id.container);
+                break;
             case R.id.item_accounts:
                 hideToolbarElevation();
                 replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
