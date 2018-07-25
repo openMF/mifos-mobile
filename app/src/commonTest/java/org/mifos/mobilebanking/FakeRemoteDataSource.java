@@ -14,6 +14,8 @@ import org.mifos.mobilebanking.models.beneficary.BeneficiaryPayload;
 import org.mifos.mobilebanking.models.beneficary.BeneficiaryUpdatePayload;
 import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.client.ClientAccounts;
+import org.mifos.mobilebanking.models.guarantor.GuarantorPayload;
+import org.mifos.mobilebanking.models.guarantor.GuarantorTemplatePayload;
 import org.mifos.mobilebanking.models.payload.LoansPayload;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.models.register.RegisterPayload;
@@ -171,5 +173,15 @@ public class FakeRemoteDataSource {
     public static UserVerify getUserVerify() {
         return mTestDataFactory.getObjectTypePojo(UserVerify.class,
                 FakeJsonName.USER_VERIFY_JSON);
+    }
+
+    public static GuarantorTemplatePayload getGuarantorTemplatePayload() {
+        return mTestDataFactory.getObjectTypePojo(GuarantorTemplatePayload.class,
+                FakeJsonName.GUARANTOR_TEMPLATE);
+    }
+
+    public static List<GuarantorPayload> getGuarantorsList() {
+        return mTestDataFactory.getListTypePojo(new TypeToken<List<GuarantorPayload>>() {
+        }, FakeJsonName.GUARANTOR_LIST);
     }
 }
