@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_view_guarantor"
+        app:showAsAction="never"
+        android:visible="false"
+        android:title="@string/view_guarantor"/>
+    <item
         android:id="@+id/menu_update_loan"
         app:showAsAction="never"
         android:visible="false"

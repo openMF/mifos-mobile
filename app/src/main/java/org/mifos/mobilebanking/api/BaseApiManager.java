@@ -5,6 +5,7 @@ import org.mifos.mobilebanking.api.services.AuthenticationService;
 import org.mifos.mobilebanking.api.services.BeneficiaryService;
 import org.mifos.mobilebanking.api.services.ClientChargeService;
 import org.mifos.mobilebanking.api.services.ClientService;
+import org.mifos.mobilebanking.api.services.GuarantorService;
 import org.mifos.mobilebanking.api.services.LoanAccountsListService;
 import org.mifos.mobilebanking.api.services.NotificationService;
 import org.mifos.mobilebanking.api.services.RecentTransactionsService;
@@ -35,6 +36,7 @@ public class BaseApiManager {
     private static ThirdPartyTransferService thirdPartyTransferApi;
     private static RegistrationService registrationApi;
     private static NotificationService notificationApi;
+    private static GuarantorService guarantorService;
 
     @Inject
     public BaseApiManager(PreferencesHelper preferencesHelper) {
@@ -53,6 +55,7 @@ public class BaseApiManager {
         thirdPartyTransferApi = createApi(ThirdPartyTransferService.class);
         registrationApi = createApi(RegistrationService.class);
         notificationApi = createApi(NotificationService.class);
+        guarantorService = createApi(GuarantorService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -107,5 +110,9 @@ public class BaseApiManager {
 
     public NotificationService getNotificationApi() {
         return notificationApi;
+    }
+
+    public GuarantorService getGuarantorApi() {
+        return guarantorService;
     }
 }

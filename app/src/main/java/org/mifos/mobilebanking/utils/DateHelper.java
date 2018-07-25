@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,17 @@ public class DateHelper {
     public static final String LOG_TAG = DateHelper.class.getSimpleName();
 
     public static final String FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy";
+
+    public static List<Integer> getCurrentDate(String dateFormat, String separator) {
+        List<Integer> date = new ArrayList<>();
+
+        String s = new SimpleDateFormat(dateFormat, Locale.getDefault()).format(new Date());
+        for (String str : s.split(separator)) {
+            date.add(Integer.parseInt(str));
+        }
+
+        return date;
+    }
 
     /**
      * the result string uses the list given in a reverse order ([x, y, z] results in "z y x")

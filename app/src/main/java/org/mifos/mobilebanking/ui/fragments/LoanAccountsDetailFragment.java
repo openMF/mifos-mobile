@@ -290,6 +290,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         if (showLoanUpdateOption) {
             menu.findItem(R.id.menu_update_loan).setVisible(true);
             menu.findItem(R.id.menu_withdraw_loan).setVisible(true);
+            menu.findItem(R.id.menu_view_guarantor).setVisible(true);
         }
     }
 
@@ -303,6 +304,9 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         } else if (id == R.id.menu_withdraw_loan) {
             ((BaseActivity) getActivity()).replaceFragment(LoanAccountWithdrawFragment
                     .newInstance(loanAccount), true, R.id.container);
+        } else if (id == R.id.menu_view_guarantor) {
+            ((BaseActivity) getActivity()).replaceFragment(GuarantorListFragment
+                    .newInstance(loanId), true, R.id.container);
         }
         return super.onOptionsItemSelected(item);
     }

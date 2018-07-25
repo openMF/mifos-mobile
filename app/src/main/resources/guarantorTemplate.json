@@ -1,0 +1,24 @@
+{
+  "guarantorType": {
+    "id": 1,
+    "code": "guarantor.existing.customer",
+    "value": "CUSTOMER"
+  },
+  "guarantorTypeOptions": [
+    {
+      "id": 1,
+      "code": "guarantor.existing.customer",
+      "value": "CUSTOMER"
+    },
+    {
+      "id": 2,
+      "code": "guarantor.staff",
+      "value": "STAFF"
+    },
+    {
+      "id": 3,
+      "code": "guarantor.external",
+      "value": "EXTERNAL"
+    }
+  ]
+}

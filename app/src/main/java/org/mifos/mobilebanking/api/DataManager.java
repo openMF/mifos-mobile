@@ -1,9 +1,13 @@
 package org.mifos.mobilebanking.api;
 
+import org.mifos.mobilebanking.FakeRemoteDataSource;
 import org.mifos.mobilebanking.api.local.DatabaseHelper;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.models.Charge;
 import org.mifos.mobilebanking.models.client.Client;
+import org.mifos.mobilebanking.models.guarantor.GuarantorApplicationPayload;
+import org.mifos.mobilebanking.models.guarantor.GuarantorPayload;
+import org.mifos.mobilebanking.models.guarantor.GuarantorTemplatePayload;
 import org.mifos.mobilebanking.models.notification.MifosNotification;
 import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 import org.mifos.mobilebanking.models.Page;
@@ -34,6 +38,7 @@ import javax.inject.Singleton;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
+import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 
 
@@ -222,6 +227,73 @@ public class DataManager {
 
     public void setClientId(long clientId) {
         this.clientId = clientId;
+    }
+
+    public Observable<GuarantorTemplatePayload> getGuarantorTemplate(long loanId) {
+        return baseApiManager.getGuarantorApi().getGuarantorTemplate(loanId)
+                .onErrorResumeNext(new Function<Throwable,
+                        ObservableSource<? extends GuarantorTemplatePayload>>() {
+                    @Override
+                    public ObservableSource<? extends
+                            GuarantorTemplatePayload> apply(Throwable throwable) throws Exception {
+                        return Observable.just(FakeRemoteDataSource.getGuarantorTemplatePayload());
+                    }
+                });
+    }
+
+    public Observable<List<GuarantorPayload>> getGuarantorList(long loanId) {
+        return baseApiManager.getGuarantorApi().getGuarantorList(loanId)
+                .onErrorResumeNext(new Function<Throwable,
+                        ObservableSource<? extends List<GuarantorPayload>>>() {
+                    @Override
+                    public ObservableSource<?
+                            extends List<GuarantorPayload>> apply(Throwable throwable) throws
+                            Exception {
+                        return Observable.just(FakeRemoteDataSource.getGuarantorsList());
+                    }
+                });
+    }
+
+    public Observable<ResponseBody> createGuarantor(long loanId,
+                                                    GuarantorApplicationPayload payload) {
+        return baseApiManager.getGuarantorApi().createGuarantor(loanId, payload)
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<?
+                        extends ResponseBody>>() {
+                    @Override
+                    public ObservableSource<? extends ResponseBody> apply(Throwable throwable)
+                            throws Exception {
+                        ResponseBody responseBody = ResponseBody.create(MediaType
+                                .parse("text/plain"), "Guarantor Added Successfully");
+                        return Observable.just(responseBody);
+                    }
+                });
+    }
+
+    public Observable<ResponseBody> updateGuarantor(GuarantorApplicationPayload payload,
+                                                    long loanId, long guarantorId) {
+        return baseApiManager.getGuarantorApi().updateGuarantor(payload, loanId, guarantorId)
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<?
+                        extends ResponseBody>>() {
+                    @Override
+                    public ObservableSource<? extends ResponseBody> apply(Throwable throwable)
+                            throws Exception {
+                        return Observable.just(ResponseBody.create(MediaType
+                                .parse("plain/text"), "Guarantor Updated Successfully"));
+                    }
+                });
+    }
+
+    public Observable<ResponseBody> deleteGuarantor(long loanId, long guarantorId) {
+        return baseApiManager.getGuarantorApi().deleteGuarantor(loanId, guarantorId)
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<
+                        ? extends ResponseBody>>() {
+                    @Override
+                    public ObservableSource<? extends ResponseBody> apply(Throwable throwable)
+                            throws Exception {
+                        return Observable.just(ResponseBody.create(MediaType
+                                .parse("plain/text"), "Guarantor Deleted Successfully"));
+                    }
+                });
     }
 
 }

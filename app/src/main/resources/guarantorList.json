@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "loanId": 1,
+    "guarantorType": {
+      "id": 1,
+      "code": "guarantor.existing.customer",
+      "value": "CUSTOMER"
+    },
+    "firstname": "Declan",
+    "lastname": "Browne",
+    "officeName": "Head Office",
+    "joinedDate": [
+      2009,
+      1,
+      4
+    ]
+  },
+  {
+    "id": 2,
+    "loanId": 1,
+    "guarantorType": {
+      "id": 1,
+      "code": "guarantor.existing.customer",
+      "value": "CUSTOMER"
+    },
+    "firstname":"Lyndon",
+    "lastname": "Johnson",
+    "officeName": "Head Office",
+    "joinedDate": [
+      2010,
+      2,
+      1
+    ]
+  }
+]
