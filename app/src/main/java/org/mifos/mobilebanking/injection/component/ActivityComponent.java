@@ -5,11 +5,14 @@ import org.mifos.mobilebanking.injection.module.ActivityModule;
 import org.mifos.mobilebanking.ui.activities.HomeActivity;
 import org.mifos.mobilebanking.ui.activities.SplashActivity;
 import org.mifos.mobilebanking.ui.fragments.AccountOverviewFragment;
+import org.mifos.mobilebanking.ui.fragments.AddGuarantorFragment;
 import org.mifos.mobilebanking.ui.fragments.BeneficiaryAddOptionsFragment;
 import org.mifos.mobilebanking.ui.activities.PassCodeActivity;
 import org.mifos.mobilebanking.ui.fragments.BeneficiaryApplicationFragment;
 import org.mifos.mobilebanking.ui.fragments.BeneficiaryDetailFragment;
 import org.mifos.mobilebanking.ui.fragments.BeneficiaryListFragment;
+import org.mifos.mobilebanking.ui.fragments.GuarantorDetailFragment;
+import org.mifos.mobilebanking.ui.fragments.GuarantorListFragment;
 import org.mifos.mobilebanking.ui.fragments.HelpFragment;
 import org.mifos.mobilebanking.ui.fragments.HomeOldFragment;
 import org.mifos.mobilebanking.ui.fragments.LoanAccountTransactionFragment;
@@ -109,4 +112,9 @@ public interface ActivityComponent {
 
     void inject(SplashActivity splashActivity);
 
+    void inject(AddGuarantorFragment addGuarantorFragment);
+
+    void inject(GuarantorListFragment guarantorListFragment);
+
+    void inject(GuarantorDetailFragment guarantorDetailFragment);
 }

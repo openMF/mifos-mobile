@@ -108,4 +108,10 @@ public class Constants {
     public static final String FRAME_RECT = "FrameRect";
 
     public static final String SOURCE_URI = "SourceUri";
+
+    public static final String GUARANTOR_DETAILS = "guarantorDetails";
+
+    public static final String GUARANTOR_STATE = "guarantorState";
+
+    public static final String INDEX = "index";
 }

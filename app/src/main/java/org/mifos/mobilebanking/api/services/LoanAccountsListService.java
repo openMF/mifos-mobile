@@ -47,6 +47,6 @@ public interface LoanAccountsListService {
                                               @Body LoansPayload loansPayload);
 
     @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
-    Observable<ResponseBody> withdrawLoanAccount(@Path(Constants.LOAN_ID) long loanid,
+    Observable<ResponseBody> withdrawLoanAccount(@Path(Constants.LOAN_ID) long loanId,
                                                  @Body LoanWithdraw loanWithdraw);
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/light_grey" />
+
+    <TextView
+        android:id="@+id/tv_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/small_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@color/gray_light" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/light_grey" />
+
+    <TextView
+        android:id="@+id/tv_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/small_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@color/gray_light" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/office_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/light_grey" />
+
+    <TextView
+        android:id="@+id/tv_office_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/small_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@color/gray_light" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/guarantor_type"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/light_grey" />
+
+    <TextView
+        android:id="@+id/tv_guarantor_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/small_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@color/gray_light" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/joined_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/light_grey" />
+
+    <TextView
+        android:id="@+id/tv_joined_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/small_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@color/gray_light" />
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.models.accounts.loan
 
+import android.os.Parcel
 import android.os.Parcelable
 
 import com.google.gson.annotations.SerializedName
@@ -12,7 +13,6 @@ import org.mifos.mobilebanking.models.accounts.Account
  * @since 22/06/16.
  */
 
-@Parcelize
 data class LoanAccount(
         @SerializedName("loanProductId")
         var loanProductId: Long = 0,
@@ -77,4 +77,71 @@ data class LoanAccount(
         @SerializedName("timeline")
         var timeline: Timeline
 
-) : Account(), Parcelable
+) : Account(), Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readLong(),
+            parcel.readString(),
+            parcel.readLong(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readDouble(),
+            parcel.readDouble(),
+            parcel.readParcelable(Status::class.java.classLoader),
+            parcel.readParcelable(LoanType::class.java.classLoader),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readDouble(),
+            parcel.readDouble(),
+            parcel.readParcelable(Currency::class.java.classLoader),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readParcelable(Summary::class.java.classLoader),
+            parcel.readString(),
+            parcel.readParcelable(Timeline::class.java.classLoader)) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(loanProductId)
+        parcel.writeString(externalId)
+        parcel.writeLong(numberOfRepayments)
+        parcel.writeString(accountNo)
+        parcel.writeString(productName)
+        parcel.writeValue(productId)
+        parcel.writeString(loanProductName)
+        parcel.writeString(clientName)
+        parcel.writeString(loanProductDescription)
+        parcel.writeDouble(principal)
+        parcel.writeDouble(annualInterestRate)
+        parcel.writeParcelable(status, flags)
+        parcel.writeParcelable(loanType, flags)
+        parcel.writeValue(loanCycle)
+        parcel.writeDouble(loanBalance)
+        parcel.writeDouble(amountPaid)
+        parcel.writeParcelable(currency, flags)
+        parcel.writeValue(inArrears)
+        parcel.writeParcelable(summary, flags)
+        parcel.writeString(loanPurposeName)
+        parcel.writeParcelable(timeline, flags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object {
+
+        @JvmField
+        final val CREATOR: Parcelable.Creator<LoanAccount> = object : Parcelable.Creator<LoanAccount> {
+
+            override fun createFromParcel(parcel: Parcel): LoanAccount {
+                return LoanAccount(parcel)
+            }
+
+            override fun newArray(size: Int): Array<LoanAccount?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+}

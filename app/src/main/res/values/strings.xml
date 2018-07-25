@@ -120,6 +120,16 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Import QR</string>
+    <string name="view_guarantor">View Guarantor</string>
+    <string name="add_guarantor">Add Guarantor</string>
+    <string name="delete_guarantor">Delete Guarantor</string>
+    <string name="update_guarantor">Update Guarantor</string>
+    <string name="guarantor_type">Guarantor Type</string>
+    <string name="no_guarantors">No Guarantors</string>
+    <string name="tap_to_add_guarantor">Tap to Add Guarantor</string>
+    <string name="guarantor_details">Guarantor Details</string>
+    <string name="joined_date">Joined Date</string>
+    <string name="submit">Submit</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
@@ -398,6 +408,7 @@
         \nGo to \'Settings\' and grant permission manually.
     </string>
     <string name="permission_denied_storage">Permission denied to storage</string>
+    <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
 
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>
