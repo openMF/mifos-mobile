@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.presenters.LoginPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.views.LoginView;
@@ -63,6 +64,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void onLoginSuccess(String userName) {
         this.userName = userName;
+        PreferencesHelper preferencesHelper = new PreferencesHelper(this);
+        preferencesHelper.setUserName(userName);
         loginPresenter.loadClient();
     }
 

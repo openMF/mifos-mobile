@@ -205,6 +205,8 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     }
 
     private void loadClientData() {
+        tvSavingTotalAmount.setText("N/A");
+        tvLoanTotalAmount.setText("N/A");
         presenter.loadClientAccountDetails();
         presenter.getUserDetails();
         presenter.getUserImage();

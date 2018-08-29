@@ -106,6 +106,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
 
         if (savedInstanceState == null) {
             detailsPresenter.attachView(this);
+            tvUsername.setText(preferencesHelper.getUserName());
             detailsPresenter.getUserDetails();
             detailsPresenter.getUserImage();
             showUserImage(null);
