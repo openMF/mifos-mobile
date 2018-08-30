@@ -12,7 +12,7 @@
         <EditText android:id="@+id/et_account_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="phone"
             android:hint="@string/account_number" />
     </android.support.design.widget.TextInputLayout>
 
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone_number"
-            android:inputType="number"/>
+            android:inputType="phone"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

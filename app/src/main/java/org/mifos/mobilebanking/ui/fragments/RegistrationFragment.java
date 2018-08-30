@@ -2,6 +2,8 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +80,94 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
 
+        etAccountNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                digitNumberFormatWatcher(editable);
+            }
+        });
+
+        etPhoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                digitNumberFormatWatcher(editable);
+            }
+        });
+
         return rootView;
+    }
+
+    private void digitNumberFormatWatcher(Editable editable){
+        final int TOTAL_SYMBOLS = 19; // size of pattern 0000-0000-0000-0000
+        final int TOTAL_DIGITS = 16; // max numbers of digits in pattern: 0000 x 4
+        final int DIVIDER_MODULO = 5; // means divider position is every 5th symbol beginning with 1
+        final int DIVIDER_POSITION = DIVIDER_MODULO - 1; // means divider position is every 4th symbol beginning with 0
+        final char DIVIDER = ' ';
+
+        if (!isInputCorrect(editable, TOTAL_SYMBOLS, DIVIDER_MODULO, DIVIDER)) {
+            editable.replace(0, editable.length(), buildCorrectString(getDigitArray(editable, TOTAL_DIGITS), DIVIDER_POSITION, DIVIDER));
+        }
+    }
+
+    private boolean isInputCorrect(Editable s, int totalSymbols, int dividerModulo, char divider) {
+        boolean isCorrect = s.length() <= totalSymbols; // check size of entered string
+        for (int i = 0; i < s.length(); i++) { // check that every element is right
+            if (i > 0 && (i + 1) % dividerModulo == 0) {
+                isCorrect &= divider == s.charAt(i);
+            } else {
+                isCorrect &= Character.isDigit(s.charAt(i));
+            }
+        }
+        return isCorrect;
+    }
+
+    private String buildCorrectString(char[] digits, int dividerPosition, char divider) {
+        final StringBuilder formatted = new StringBuilder();
+
+        for (int i = 0; i < digits.length; i++) {
+            if (digits[i] != 0) {
+                formatted.append(digits[i]);
+                if ((i > 0) && (i < (digits.length - 1)) && (((i + 1) % dividerPosition) == 0)) {
+                    formatted.append(divider);
+                }
+            }
+        }
+
+        return formatted.toString();
+    }
+
+    private char[] getDigitArray(final Editable s, final int size) {
+        char[] digits = new char[size];
+        int index = 0;
+        for (int i = 0; i < s.length() && index < size; i++) {
+            char current = s.charAt(i);
+            if (Character.isDigit(current)) {
+                digits[index] = current;
+                index++;
+            }
+        }
+        return digits;
     }
 
     @OnClick(R.id.btn_register)
