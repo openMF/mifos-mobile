@@ -119,14 +119,14 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
     }
 
     private void digitNumberFormatWatcher(Editable e){
-        final int TOTAL_SYMBOLS = 19; // size of pattern 0000-0000-0000-0000
-        final int TOTAL_DIGITS = 16; // max numbers of digits in pattern: 0000 x 4
-        final int DIVIDER_MODULO = 5; // means divider position is every 5th symbol beginning with 1
-        final int DIVIDER_POSITION = DIVIDER_MODULO - 1; // means divider position is every 4th symbol beginning with 0
+        final int TOTAL_SYMBOLS = 19;
+        final int TOTAL_DIGITS = 16;
+        final int DIVIDER_MODULO = 5;
+        final int DIVIDER_POSITION = DIVIDER_MODULO - 1;
         final char DIVIDER = ' ';
 
         if (!isInputCorrect(e, TOTAL_SYMBOLS, DIVIDER_MODULO, DIVIDER)) {
-            e.replace(0, e.length(), buildCorrectString(getDigitArray(e, 16), 5-1, ' '));
+            e.replace(0, e.length(), buildCorrectString(getDigitArray(e, 16), 5-1, DIVIDER));
         }
     }
 
