@@ -126,7 +126,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         final char DIVIDER = ' ';
 
         if (!isInputCorrect(e, TOTAL_SYMBOLS, DIVIDER_MODULO, DIVIDER)) {
-            e.replace(0, e.length(), buildCorrectString(getDigitArray(e, 16), 5-1, DIVIDER));
+            e.replace(0, e.length(), buildCorrectString(getDigitArray(e, 16), 4, DIVIDER));
         }
     }
 
