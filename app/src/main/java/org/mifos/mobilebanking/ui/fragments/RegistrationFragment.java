@@ -118,15 +118,15 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         return rootView;
     }
 
-    private void digitNumberFormatWatcher(Editable editable){
+    private void digitNumberFormatWatcher(Editable e){
         final int TOTAL_SYMBOLS = 19; // size of pattern 0000-0000-0000-0000
         final int TOTAL_DIGITS = 16; // max numbers of digits in pattern: 0000 x 4
         final int DIVIDER_MODULO = 5; // means divider position is every 5th symbol beginning with 1
         final int DIVIDER_POSITION = DIVIDER_MODULO - 1; // means divider position is every 4th symbol beginning with 0
         final char DIVIDER = ' ';
 
-        if (!isInputCorrect(editable, TOTAL_SYMBOLS, DIVIDER_MODULO, DIVIDER)) {
-            editable.replace(0, editable.length(), buildCorrectString(getDigitArray(editable, TOTAL_DIGITS), DIVIDER_POSITION, DIVIDER));
+        if (!isInputCorrect(e, TOTAL_SYMBOLS, DIVIDER_MODULO, DIVIDER)) {
+            e.replace(0, e.length(), buildCorrectString(getDigitArray(e, 16), 5-1, ' '));
         }
     }
 
