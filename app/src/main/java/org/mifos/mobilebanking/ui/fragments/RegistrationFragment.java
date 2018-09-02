@@ -118,7 +118,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         return rootView;
     }
 
-    private void digitNumberFormatWatcher(Editable e){
+    private void digitNumberFormatWatcher(Editable e) {
         final int TOTAL_SYMBOLS = 19;
         final int TOTAL_DIGITS = 16;
         final int DIVIDER_MODULO = 5;
