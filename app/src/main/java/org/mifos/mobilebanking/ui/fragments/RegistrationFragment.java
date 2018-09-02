@@ -2,13 +2,17 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.register.RegisterPayload;
@@ -17,6 +21,7 @@ import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.RegistrationView;
 import org.mifos.mobilebanking.utils.Network;
+import org.mifos.mobilebanking.utils.PasswordStrength;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
@@ -61,6 +66,12 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
     @Inject
     RegistrationPresenter presenter;
 
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.password_strength)
+    TextView strengthView;
+
     private View rootView;
 
     public static RegistrationFragment newInstance() {
@@ -77,6 +88,30 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length()==0){
+                    progressBar.setVisibility(View.GONE);
+                    strengthView.setVisibility(View.GONE);
+                }else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    strengthView.setVisibility(View.VISIBLE);
+                    updatePasswordStrengthView(charSequence.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         return rootView;
     }
@@ -198,4 +233,31 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         super.onDestroyView();
         presenter.detachView();
     }
+
+    private void updatePasswordStrengthView(String password) {
+        if (TextView.VISIBLE != strengthView.getVisibility())
+            return;
+
+        if (password.isEmpty()) {
+            strengthView.setText("");
+            progressBar.setProgress(0);
+            return;
+        }
+
+        PasswordStrength str = PasswordStrength.calculateStrength(password);
+        strengthView.setText(str.getText(getContext()));
+        strengthView.setTextColor(str.getColor());
+
+        progressBar.getProgressDrawable().setColorFilter(str.getColor(), android.graphics.PorterDuff.Mode.SRC_IN);
+        if (str.getText(getContext()).equals("Weak")) {
+            progressBar.setProgress(25);
+        } else if (str.getText(getContext()).equals("Medium")) {
+            progressBar.setProgress(50);
+        } else if (str.getText(getContext()).equals("Strong")) {
+            progressBar.setProgress(75);
+        } else {
+            progressBar.setProgress(100);
+        }
+    }
+
 }
