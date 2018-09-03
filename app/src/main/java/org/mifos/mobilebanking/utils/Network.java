@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 /**
  * Created by rishabhkhanna on 07/03/17.
@@ -21,6 +22,30 @@ public class Network {
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();
     }
+
+    /**
+     * Check if there is any connectivity
+     *
+     * @param context
+     * @return
+     */
+
+    public static boolean isInternetOn(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        // test for connection
+        if (cm.getActiveNetworkInfo() != null
+                && cm.getActiveNetworkInfo().isAvailable()
+                && cm.getActiveNetworkInfo().isConnected()) {
+            Log.v("log", "Internet is working");
+            // txt_status.setText("Internet is working");
+            return true;
+        } else {
+            Log.v("log", "No internet access");
+            return false;
+        }
+    }
+
 
     /**
      * Check if there is any connectivity

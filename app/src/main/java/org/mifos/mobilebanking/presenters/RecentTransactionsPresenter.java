@@ -9,6 +9,7 @@ import org.mifos.mobilebanking.models.Page;
 import org.mifos.mobilebanking.models.Transaction;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
 import org.mifos.mobilebanking.ui.views.RecentTransactionsView;
+import org.mifos.mobilebanking.utils.Network;
 
 import javax.inject.Inject;
 
@@ -68,7 +69,12 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
      */
     public void loadRecentTransactions(boolean loadmore, int offset) {
         this.loadmore = loadmore;
-        loadRecentTransactions(offset, limit);
+        if (Network.isInternetOn(context)) {
+            loadRecentTransactions(offset, limit);
+        } else {
+            getMvpView().hideProgress();
+            getMvpView().showMessage("No Internet Connection");
+        }
     }
 
     /**
