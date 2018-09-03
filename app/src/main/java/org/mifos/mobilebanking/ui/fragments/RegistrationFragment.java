@@ -1,10 +1,12 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,10 +99,11 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length()==0){
+                if (charSequence.length() == 0) {
                     progressBar.setVisibility(View.GONE);
                     strengthView.setVisibility(View.GONE);
-                }else {
+                }
+                else {
                     progressBar.setVisibility(View.VISIBLE);
                     strengthView.setVisibility(View.VISIBLE);
                     updatePasswordStrengthView(charSequence.toString());
@@ -248,7 +251,8 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         strengthView.setText(str.getText(getContext()));
         strengthView.setTextColor(str.getColor());
 
-        progressBar.getProgressDrawable().setColorFilter(str.getColor(), android.graphics.PorterDuff.Mode.SRC_IN);
+        PorterDuff.Mode mode = android.graphics.PorterDuff.Mode.SRC_IN;
+        progressBar.getProgressDrawable().setColorFilter(str.getColor(), mode);
         if (str.getText(getContext()).equals("Weak")) {
             progressBar.setProgress(25);
         } else if (str.getText(getContext()).equals("Medium")) {
