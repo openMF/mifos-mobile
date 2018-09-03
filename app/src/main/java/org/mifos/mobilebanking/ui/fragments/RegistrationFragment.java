@@ -91,6 +91,9 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
 
+        progressBar.setVisibility(View.GONE);
+        strengthView.setVisibility(View.GONE);
+
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -102,8 +105,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
                 if (charSequence.length() == 0) {
                     progressBar.setVisibility(View.GONE);
                     strengthView.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     progressBar.setVisibility(View.VISIBLE);
                     strengthView.setVisibility(View.VISIBLE);
                     updatePasswordStrengthView(charSequence.toString());
