@@ -46,12 +46,13 @@ public class DateHelper {
     public static String getDateAsString(List<Integer> integersOfDate) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(integersOfDate.get(2))
-                .append(' ')
-                .append(getMonthName(integersOfDate.get(1)))
-                .append(' ')
-                .append(integersOfDate.get(0));
-
+        if (integersOfDate != null) {
+            stringBuilder.append(integersOfDate.get(2))
+                    .append(' ')
+                    .append(getMonthName(integersOfDate.get(1)))
+                    .append(' ')
+                    .append(integersOfDate.get(0));
+        }
         return stringBuilder.toString();
     }
 
