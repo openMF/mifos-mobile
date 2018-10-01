@@ -44,6 +44,7 @@ import butterknife.OnClick;
 
 public class BeneficiaryApplicationFragment extends BaseFragment implements
         BeneficiaryApplicationView, AdapterView.OnItemSelectedListener {
+    public static int cnt;
 
     @BindView(R.id.sp_account_type)
     Spinner spAccountType;
@@ -170,7 +171,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     public void showBeneficiaryTemplate(BeneficiaryTemplate beneficiaryTemplate) {
         this.beneficiaryTemplate = beneficiaryTemplate;
         for (AccountTypeOption accountTypeOption : beneficiaryTemplate.getAccountTypeOptions()) {
-            listAccountType.add(accountTypeOption.getValue());
+            if (cnt == 0) {
+                listAccountType.add(accountTypeOption.getValue());
+            }
         }
         accountTypeAdapter.notifyDataSetChanged();
 
@@ -237,6 +240,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @OnClick(R.id.btn_try_again)
     public void onRetry() {
         if (Network.isConnected(getContext())) {
+            cnt = 1;
             presenter.loadBeneficiaryTemplate();
             sweetUIErrorHandler.hideSweetErrorLayoutUI(nsvBeneficiary, layoutError);
         } else {

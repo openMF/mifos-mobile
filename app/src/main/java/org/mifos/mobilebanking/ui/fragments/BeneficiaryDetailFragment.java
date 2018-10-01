@@ -100,8 +100,8 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
         tvAccountNumber.setText(beneficiary.getAccountNumber());
         tvClientName.setText(beneficiary.getClientName());
         tvAccountType.setText(beneficiary.getAccountType().getValue());
-        tvTransferLimit.setText(CurrencyUtil.formatCurrency(getActivity(), beneficiary.
-                getTransferLimit()));
+        tvTransferLimit.setText(CurrencyUtil.formatCurrency(getActivity(),
+                beneficiary.getTransferLimit()));
         tvOfficeName.setText(beneficiary.getOfficeName());
     }
 
@@ -116,7 +116,8 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
         switch (item.getItemId()) {
             case R.id.item_update_beneficiary :
                 ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
-                        newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container);
+                        newInstance(BeneficiaryState.UPDATE, beneficiary),
+                        true, R.id.container);
                 break;
             case R.id.item_delete_beneficiary :
                 new MaterialDialog.Builder().init(getActivity())

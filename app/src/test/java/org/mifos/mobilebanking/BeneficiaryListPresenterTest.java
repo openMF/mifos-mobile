@@ -49,7 +49,7 @@ public class BeneficiaryListPresenterTest {
     public void setUp() throws Exception {
         presenter = new BeneficiaryListPresenter(dataManager, context);
         presenter.attachView(view);
-
+        
         beneficiaryList = FakeRemoteDataSource.getBeneficiaries();
     }
 

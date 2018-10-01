@@ -36,7 +36,6 @@ public class AccountsSpinnerAdapter extends ArrayAdapter<String> {
 
     public AccountsSpinnerAdapter(Context context, @LayoutRes int resource, List objects) {
         super(context, resource, 0, objects);
-
         mInflater = LayoutInflater.from(context);
         mResource = resource;
         accountDetails = objects;
