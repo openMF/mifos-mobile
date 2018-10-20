@@ -112,7 +112,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         @Override
                         public void onNext(User user) {
                             if (user != null) {
-                                final String userName = username;
+                                final String userName = preferencesHelper.getUserName();
                                 final long userID = user.getUserId();
                                 final String authToken = Constants.BASIC +
                                         user.getBase64EncodedAuthenticationKey();
