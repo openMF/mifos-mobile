@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.models
 
+import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
 
 /**
@@ -8,9 +9,9 @@ import java.util.ArrayList
  */
 
 data class User (
-
     var userId: Long = 0,
     var isAuthenticated: Boolean = false,
+    @SerializedName(value = "username")
     var userName: String? = null,
     var base64EncodedAuthenticationKey: String? = null,
     var permissions: List<String> = ArrayList()
