@@ -116,6 +116,9 @@ dependencies {
     //mifos passcode
     implementation "com.mifos.mobile:mifos-passcode:$mifosPasscodeVersion"
 
+    //multidex
+    implementation "com.android.support:multidex:$rootProject.multiDexVersion"
+
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
