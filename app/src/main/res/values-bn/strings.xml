@@ -92,7 +92,6 @@
     <string name="empty_share_accounts">Their is no ShareAccount associated with you</string>
     <string name="empty_transactions">Their is no transactions associated with you</string>
     <string name="empty_repayment_schedule">Their is no repayment schedule associated with you</string>
-    <string name="no_more_transactions_available">No more transactions available</string>
     <string name="no_transaction">No Transaction</string>
 
     <string name="error_unauthorised">Invalid Username/Password</string>

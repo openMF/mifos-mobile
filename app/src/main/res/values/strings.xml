@@ -144,7 +144,6 @@
     <string name="empty_transactions">There is no transactions associated with you</string>
     <string name="empty_repayment_schedule">There is no repayment schedule associated with you
     </string>
-    <string name="no_more_transactions_available">No more transactions available</string>
     <string name="no_transaction">No Transaction</string>
     <string name="no_dob_found">No DOB found.</string>
     <string name="not_assigned_with_any_group">Not Assigned with any group</string>

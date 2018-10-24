@@ -106,9 +106,6 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
                                     .showLoadMoreRecentTransactions(transactions.getPageItems());
                         } else if (!transactions.getPageItems().isEmpty()) {
                             getMvpView().showRecentTransactions(transactions.getPageItems());
-                        } else {
-                            getMvpView().showMessage(
-                                    context.getString(R.string.no_more_transactions_available));
                         }
                     }
                 })

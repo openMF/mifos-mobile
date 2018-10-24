@@ -108,7 +108,6 @@
     <string name="empty_share_accounts">आपके साथ कोई साझा खाता नहीं है</string>
     <string name="empty_transactions">आपके साथ कोई लेन-देन जुड़े नहीं है</string>
     <string name="empty_repayment_schedule">आपके साथ संबद्ध कोई भी पुनर्भुगतान शेड्यूल नहीं है</string>
-    <string name="no_more_transactions_available">कोई और लेनदेन उपलब्ध नहीं है</string>
     <string name="no_transaction">कोई लेनदेन नहीं</string>
     <string name="transfer_error">स्थानांतरण पूर्ण करने में असमर्थ, कृपया बाद में फिर से प्रयास करेंं</string>
 
