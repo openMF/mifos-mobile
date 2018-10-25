@@ -175,36 +175,39 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
 
     private boolean isCredentialsValid(final String username, final String password) {
-
         final Resources resources = context.getResources();
         final String correctUsername = username.replaceFirst("\\s++$", "").trim();
+        boolean fieldNotValidated = false;
+
         if (username == null || username.matches("\\s*") || username.isEmpty()) {
             getMvpView().showUsernameError(context.getString(R.string.error_validation_blank,
                     context.getString(R.string.username)));
-            return false;
+            fieldNotValidated = true;
         } else if (username.length() < 5) {
             getMvpView().showUsernameError(context.getString(R.string.error_validation_minimum_chars
                     , resources.getString(R.string.username), resources.getInteger(R.integer.
                             username_minimum_length)));
-            return false;
+            fieldNotValidated = true;
         } else if (correctUsername.contains(" ")) {
             getMvpView().showUsernameError(context.getString(
                     R.string.error_validation_cannot_contain_spaces,
                     resources.getString(R.string.username),
                     context.getString(R.string.not_contain_username)));
-            return false;
-        } else if (password == null || password.isEmpty()) {
+            fieldNotValidated = true;
+        }
+
+        if (password == null || password.isEmpty()) {
             getMvpView().showPasswordError(context.getString(R.string.error_validation_blank,
                     context.getString(R.string.password)));
-            return false;
+            fieldNotValidated = true;
         } else if (password.length() < 6) {
             getMvpView().showPasswordError(context.getString(R.string.error_validation_minimum_chars
                     , resources.getString(R.string.password), resources.getInteger(R.integer.
                             password_minimum_length)));
-            return false;
+            fieldNotValidated = true;
         }
 
-        return true;
+        return !fieldNotValidated;
     }
 
     /**
