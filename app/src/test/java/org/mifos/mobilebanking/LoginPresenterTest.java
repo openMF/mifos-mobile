@@ -72,7 +72,7 @@ public class LoginPresenterTest {
         presenter.login("selfservice", "password");
 
         verify(view).showProgress();
-        verify(view).onLoginSuccess(user.getUserName());
+        verify(view).onLoginSuccess(user.getUsername());
     }
 
     @Test
