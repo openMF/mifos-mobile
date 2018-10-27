@@ -147,9 +147,21 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
         recentTransactionsPresenter.loadRecentTransactions(false, 0);
     }
 
+    /**
+     * Shows a SnackBar message using utils.Toaster class
+     * @param message
+     */
     @Override
     public void showMessage(String message) {
         Toaster.show(rootView, message, Toaster.LONG);
+    }
+
+    /**
+     * Shows a Toast message
+     * @param message
+     */
+    public void showToastMessage(String message) {
+        ((BaseActivity) getActivity()).showToast(message);
     }
 
     /**

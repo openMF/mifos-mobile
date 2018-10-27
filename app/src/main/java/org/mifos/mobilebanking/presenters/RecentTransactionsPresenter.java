@@ -8,6 +8,7 @@ import org.mifos.mobilebanking.injection.ApplicationContext;
 import org.mifos.mobilebanking.models.Page;
 import org.mifos.mobilebanking.models.Transaction;
 import org.mifos.mobilebanking.presenters.base.BasePresenter;
+import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.views.RecentTransactionsView;
 
 import javax.inject.Inject;
@@ -106,8 +107,9 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
                                     .showLoadMoreRecentTransactions(transactions.getPageItems());
                         } else if (!transactions.getPageItems().isEmpty()) {
                             getMvpView().showRecentTransactions(transactions.getPageItems());
+
                         } else {
-                            getMvpView().showMessage(
+                            getMvpView().showToastMessage(
                                     context.getString(R.string.no_more_transactions_available));
                         }
                     }

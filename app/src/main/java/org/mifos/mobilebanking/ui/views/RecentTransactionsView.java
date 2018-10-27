@@ -42,6 +42,8 @@ public interface RecentTransactionsView extends MVPView {
 
     void showMessage(String message);
 
+    void showToastMessage(String message);
+
     /**
      * Use to indicate user that there is no transaction to show;
      */
