@@ -18,4 +18,6 @@ public interface BeneficiaryApplicationView extends MVPView {
     void showBeneficiaryUpdatedSuccessfully();
 
     void showError(String msg);
+
+    void setVisibility(int state);
 }

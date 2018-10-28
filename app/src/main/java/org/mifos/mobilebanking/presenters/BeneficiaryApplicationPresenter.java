@@ -1,6 +1,7 @@
 package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
+import android.view.View;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.DataManager;
@@ -57,6 +58,7 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
      */
     public void loadBeneficiaryTemplate() {
         checkViewAttached();
+        getMvpView().setVisibility(View.GONE);
         getMvpView().showProgress();
         compositeDisposable.add(dataManager.getBeneficiaryTemplate()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,7 +66,7 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
                 .subscribeWith(new DisposableObserver<BeneficiaryTemplate>() {
                     @Override
                     public void onComplete() {
-
+                        getMvpView().setVisibility(View.VISIBLE);
                     }
 
                     @Override
