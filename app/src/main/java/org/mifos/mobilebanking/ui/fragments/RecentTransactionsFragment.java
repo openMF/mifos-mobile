@@ -24,7 +24,6 @@ import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DividerItemDecoration;
 import org.mifos.mobilebanking.utils.EndlessRecyclerViewScrollListener;
 import org.mifos.mobilebanking.utils.Network;
-import org.mifos.mobilebanking.utils.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,9 +146,13 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
         recentTransactionsPresenter.loadRecentTransactions(false, 0);
     }
 
+    /**
+     * Shows a Toast
+     * @param message
+     */
     @Override
     public void showMessage(String message) {
-        Toaster.show(rootView, message, Toaster.LONG);
+        ((BaseActivity) getActivity()).showToast(message);
     }
 
     /**
