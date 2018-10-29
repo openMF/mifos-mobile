@@ -155,11 +155,8 @@
                         android:id="@+id/tv_submission_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@drawable/ic_edit_black_24dp"/>
                 </LinearLayout>
             </LinearLayout>
 
