@@ -38,6 +38,9 @@ public interface LoginView extends MVPView {
 
     void showPasswordError(String error);
 
+    void clearUsernameError();
+
+    void clearPasswordError();
 
     /**
      * Should be called when the client is fetched successfully from API.
