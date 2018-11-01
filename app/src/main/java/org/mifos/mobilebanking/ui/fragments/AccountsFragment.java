@@ -128,6 +128,7 @@ public class AccountsFragment extends BaseFragment implements
         accountsPresenter.attachView(this);
         sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
 
+        rvAccounts.setVisibility(View.GONE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvAccounts.setLayoutManager(layoutManager);
@@ -248,6 +249,7 @@ public class AccountsFragment extends BaseFragment implements
         } else {
             showEmptyAccounts(getString(R.string.loan_account));
         }
+        rvAccounts.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -265,6 +267,7 @@ public class AccountsFragment extends BaseFragment implements
         } else {
             showEmptyAccounts(getString(R.string.savings_account));
         }
+        rvAccounts.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -282,6 +285,7 @@ public class AccountsFragment extends BaseFragment implements
         } else {
             showEmptyAccounts(getString(R.string.share_account));
         }
+        rvAccounts.setVisibility(View.VISIBLE);
     }
 
 

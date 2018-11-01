@@ -96,6 +96,9 @@ public class ClientChargeFragment extends BaseFragment implements
 
         sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
 
+        clientChargeAdapter.setClientChargeList(clientChargeList);
+        rvClientCharge.setAdapter(clientChargeAdapter);
+
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -201,11 +204,13 @@ public class ClientChargeFragment extends BaseFragment implements
     private void inflateClientChargeList() {
         if (clientChargeList.size() > 0) {
             clientChargeAdapter.setClientChargeList(clientChargeList);
-            rvClientCharge.setAdapter(clientChargeAdapter);
+            clientChargeAdapter.notifyItemRangeInserted(1, clientChargeList.size());
+            clientChargeAdapter.notifyDataSetChanged();
         } else {
             sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.charges), R.drawable.ic_charges,
                      rvClientCharge, layoutError);
         }
+        rvClientCharge.setVisibility(View.VISIBLE);
     }
 
     @Override
