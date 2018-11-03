@@ -184,7 +184,7 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
     @Override
     public void showEmptyTransaction() {
         sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.recent_transactions),
-                R.drawable.ic_label_black_24dp, rvRecentTransactions, layoutError);
+                R.drawable.ic_label, rvRecentTransactions, layoutError);
     }
 
     /**

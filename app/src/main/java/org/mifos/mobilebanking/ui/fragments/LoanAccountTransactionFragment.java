@@ -146,7 +146,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
     @Override
     public void showEmptyTransactions(LoanWithAssociations loanWithAssociations) {
         sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.transactions),
-                R.drawable.ic_compare_arrows_black_24dp, rvLoanTransactions, layoutError);
+                R.drawable.ic_compare_arrows, rvLoanTransactions, layoutError);
     }
 
     /**

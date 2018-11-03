@@ -289,7 +289,7 @@
                             style="@style/circleLayout"
                             android:layout_height="35dp"
                             android:layout_width="35dp"
-                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
+                            app:srcCompat="@drawable/ic_compare_arrows"
                             android:contentDescription="@string/transactions"/>
 
                         <LinearLayout

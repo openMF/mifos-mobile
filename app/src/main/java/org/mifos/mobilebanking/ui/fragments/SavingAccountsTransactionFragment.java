@@ -166,7 +166,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
                     setSavingAccountsTransactionList(transactionsList);
         } else {
             sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.transactions),
-                    R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction,
+                    R.drawable.ic_compare_arrows, rvSavingAccountsTransaction,
                     layoutError);
         }
     }

@@ -228,10 +228,7 @@ public class BaseActivity extends BasePassCodeActivity implements BaseActivityCa
     public void clearFragmentBackStack() {
         FragmentManager fm = getSupportFragmentManager();
         int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-        for (int i = 0; i < backStackCount; i++) {
-            int backStackId = getSupportFragmentManager().getBackStackEntryAt(i).getId();
-            fm.popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
+        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public int stackCount() {

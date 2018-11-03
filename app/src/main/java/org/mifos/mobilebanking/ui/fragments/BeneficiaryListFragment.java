@@ -238,7 +238,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     public void showEmptyBeneficiary() {
         sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.beneficiary),
                 getString(R.string.beneficiary),
-                R.drawable.ic_beneficiaries_48px, rvBeneficiaries, layoutError);
+                R.drawable.ic_beneficiaries, rvBeneficiaries, layoutError);
         rvBeneficiaries.setVisibility(View.GONE);
     }
 

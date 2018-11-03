@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,8 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @BindView(R.id.drawer)
     DrawerLayout drawerLayout;
 
+    @BindView(R.id.container)
+    FrameLayout container;
     @Inject
     PreferencesHelper preferencesHelper;
 
@@ -154,57 +157,15 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
      */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // select which item to open
-        clearFragmentBackStack();
-        setToolbarElevation();
+        // close drawer
         menuItem = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.item_home:
-                hideToolbarElevation();
-                replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_accounts:
-                hideToolbarElevation();
-                replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
-                        true, R.id.container);
-                break;
-            case R.id.item_recent_transactions:
-                replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_charges:
-                replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
-                        R.id.container);
-                break;
-            case R.id.item_third_party_transfer:
-                replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_beneficiaries:
-                replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_settings:
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
-                break;
-            case R.id.item_about_us:
-                replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_help:
-                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
-                break;
-            case R.id.item_share:
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
-                        getString(R.string.share_msg), getApplication().getPackageName()));
-                startActivity(Intent.createChooser(i, getString(R.string.choose)));
-                break;
-            case R.id.item_logout:
-                showLogoutDialog();
-                break;
+        if (menuItem != R.id.item_settings
+                && menuItem != R.id.item_share
+                && menuItem != R.id.item_logout) {
+            container.setVisibility(View.GONE);
+            clearFragmentBackStack();
         }
-
-        // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
-        setNavigationViewSelectedItem(R.id.item_home);
         return true;
     }
 
@@ -251,6 +212,61 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+
+                setToolbarElevation();
+
+                switch (menuItem) {
+                    case R.id.item_home:
+                        hideToolbarElevation();
+                        replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
+                        break;
+                    case R.id.item_accounts:
+                        hideToolbarElevation();
+                        replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
+                                true, R.id.container);
+                        break;
+                    case R.id.item_recent_transactions:
+                        replaceFragment(RecentTransactionsFragment.newInstance(),
+                                        true,
+                                        R.id.container);
+                        break;
+                    case R.id.item_charges:
+                        replaceFragment(ClientChargeFragment.newInstance(clientId,
+                                                                        ChargeType.CLIENT),
+                                        true,
+                                        R.id.container);
+                        break;
+                    case R.id.item_third_party_transfer:
+                        replaceFragment(ThirdPartyTransferFragment.newInstance(),
+                                        true,
+                                        R.id.container);
+                        break;
+                    case R.id.item_beneficiaries:
+                        replaceFragment(BeneficiaryListFragment.newInstance(),
+                                        true,
+                                        R.id.container);
+                        break;
+                    case R.id.item_settings:
+                        startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                        break;
+                    case R.id.item_about_us:
+                        replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
+                        break;
+                    case R.id.item_help:
+                        replaceFragment(HelpFragment.getInstance(), true, R.id.container);
+                        break;
+                    case R.id.item_share:
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("text/plain");
+                        i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
+                                getString(R.string.share_msg), getApplication().getPackageName()));
+                        startActivity(Intent.createChooser(i, getString(R.string.choose)));
+                        break;
+                    case R.id.item_logout:
+                        showLogoutDialog();
+                        break;
+                }
+                container.setVisibility(View.VISIBLE);
             }
 
             @Override

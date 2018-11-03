@@ -176,7 +176,7 @@
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
+                            app:srcCompat="@drawable/ic_account_balance"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
+                            app:srcCompat="@drawable/ic_compare_arrows"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -237,7 +237,7 @@
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"/>
+                            app:srcCompat="@drawable/ic_account_balance_wallet"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -272,7 +272,7 @@
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
+                            app:srcCompat="@drawable/ic_account_balance"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -301,7 +301,7 @@
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_beneficiaries_48px"/>
+                            app:srcCompat="@drawable/ic_beneficiaries"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
