@@ -114,4 +114,6 @@ public class Constants {
     public static final String GUARANTOR_STATE = "guarantorState";
 
     public static final String INDEX = "index";
+
+    public static final String DATE_PICKER_TYPE = "datePickerType";
 }
