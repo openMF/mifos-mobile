@@ -11,7 +11,7 @@ data class User (
 
     var userId: Long = 0,
     var isAuthenticated: Boolean = false,
-    var userName: String? = null,
+    var username: String? = null,
     var base64EncodedAuthenticationKey: String? = null,
     var permissions: List<String> = ArrayList()
     )
