@@ -318,6 +318,11 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     }
 
     @Override
+    public void setVisibility(int state) {
+        llApplicationBeneficiary.setVisibility(state);
+    }
+
+    @Override
     public void showProgress() {
         showProgressBar();
     }
