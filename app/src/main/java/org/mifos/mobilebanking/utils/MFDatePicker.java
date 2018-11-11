@@ -28,7 +28,12 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     static Calendar calendar;
     private String startDateString;
     private long startDate;
-    private boolean isStartOrEnd;
+    private int datePickerType = ALL_DAYS;
+
+    /* Constants used to select which type of date picker is being called */
+    public static final int PREVIOUS_DAYS = 1; // only past days
+    public static final int FUTURE_DAYS = 2; // only future days
+    public static final int ALL_DAYS = 3;  // any day can be picked
 
 
 
@@ -51,11 +56,17 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     OnDatePickListener onDatePickListener;
 
     public MFDatePicker() {
-        isStartOrEnd = true;
+
     }
 
-    public static MFDatePicker newInsance(Fragment fragment) {
+    public static MFDatePicker newInstance(Fragment fragment, int datePickerType) {
         MFDatePicker mfDatePicker = new MFDatePicker();
+
+        Bundle args = new Bundle();
+        args.putInt(Constants.DATE_PICKER_TYPE, datePickerType);
+
+        mfDatePicker.setArguments(args);
+
         mfDatePicker.onDatePickListener = (OnDatePickListener) fragment;
         return mfDatePicker;
     }
@@ -74,11 +85,17 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
-        if (isStartOrEnd) {
-            dialog.getDatePicker().setMaxDate(new Date().getTime());
-        } else {
-            dialog.getDatePicker().setMaxDate(new Date().getTime());
-            dialog.getDatePicker().setMinDate(startDate);
+        Bundle args = getArguments();
+        this.datePickerType = args.getInt(Constants.DATE_PICKER_TYPE, this.ALL_DAYS);
+
+        switch (datePickerType) {
+            case FUTURE_DAYS:
+                dialog.getDatePicker().setMinDate(new Date().getTime());
+                break;
+
+            case PREVIOUS_DAYS:
+                dialog.getDatePicker().setMaxDate(new Date().getTime());
+                break;
         }
         return dialog;
     }
@@ -101,10 +118,6 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
 
     public interface OnDatePickListener {
         public void onDatePicked(String date);
-    }
-
-    public void isStartOrEndDate(boolean startOrEnd) {
-        isStartOrEnd = startOrEnd;
     }
 
 }

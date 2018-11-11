@@ -102,8 +102,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private int purposeId;
     private String disbursementDate;
     private String submittedDate;
-    private boolean isDisbursebemntDate = false;
-    private boolean isSubmissionDate = false;
+    private boolean isDisbursementDate = false;
     private boolean isLoanUpdatePurposesInitialization = true;
 
 
@@ -295,7 +294,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      * Initializes {@code tvSubmissionDate} with current Date
      */
     public void inflateSubmissionDate() {
-        mfDatePicker = MFDatePicker.newInsance(this);
         tvSubmissionDate.setText(MFDatePicker.getDatePickedAsString());
     }
 
@@ -303,7 +301,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      * Initializes {@code tvExpectedDisbursementDate} with current Date
      */
     public void inflateDisbursementDate() {
-        mfDatePicker = MFDatePicker.newInsance(this);
+        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS);
         tvExpectedDisbursementDate.setText(MFDatePicker.getDatePickedAsString());
     }
 
@@ -323,17 +321,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      */
     @OnClick(R.id.ll_expected_disbursement_date_edit)
     public void setTvDisbursementOnDate() {
-        isDisbursebemntDate = true;
-        mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
-                .DFRAG_DATE_PICKER);
-    }
-
-    /**
-     * Shows a {@link DialogFragment} for selecting a Date for Submission
-     */
-    @OnClick(R.id.ll_submission_date_edit)
-    public void setTvSubmittedOnDate() {
-        isSubmissionDate = true;
+        isDisbursementDate = true;
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }
@@ -345,16 +333,10 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      */
     @Override
     public void onDatePicked(String date) {
-        if (isSubmissionDate) {
-            tvSubmissionDate.setText(date);
-            submittedDate = date;
-            isSubmissionDate = false;
-        }
-
-        if (isDisbursebemntDate) {
+        if (isDisbursementDate) {
             tvExpectedDisbursementDate.setText(date);
             disbursementDate = date;
-            isDisbursebemntDate = false;
+            isDisbursementDate = false;
         }
         setSubmissionDisburseDate();
     }

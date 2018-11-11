@@ -145,7 +145,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         rvSavingAccountsTransaction.setAdapter(transactionListAdapter);
 
         radioGroup.setOnCheckedChangeListener(this);
-        mfDatePicker = MFDatePicker.newInsance(this);
+        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS);
     }
 
     /**
@@ -232,7 +232,6 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @OnClick(R.id.tv_end_date)
     public void endDatePick() {
         datePick = DatePick.END;
-        mfDatePicker.isStartOrEndDate(false);
         mfDatePicker.show(getActivity().getSupportFragmentManager(), Constants
                 .DFRAG_DATE_PICKER);
     }
@@ -337,8 +336,8 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private void filter(long startDate , long endDate) {
 
         dummyTransactionList = new ArrayList<>(transactionsList);
-        savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList ,
-                                                                    startDate , endDate);
+        savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList,
+                                                                    startDate, endDate);
     }
 
     @Override
