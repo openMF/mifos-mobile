@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
 import org.mifos.mobilebanking.presenters.BeneficiaryListPresenter;
 import org.mifos.mobilebanking.ui.activities.AddBeneficiaryActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;

@@ -17,7 +17,7 @@ import com.google.zxing.Result;
 import com.isseiaoki.simplecropview.CropImageView;
 
 import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
 import org.mifos.mobilebanking.presenters.QrCodeImportPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.enums.BeneficiaryState;
