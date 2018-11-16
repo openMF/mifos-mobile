@@ -8,7 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mifos.mobilebanking.api.DataManager;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
 import org.mifos.mobilebanking.presenters.BeneficiaryListPresenter;
 import org.mifos.mobilebanking.ui.views.BeneficiariesView;
 import org.mifos.mobilebanking.util.RxSchedulersOverrideRule;

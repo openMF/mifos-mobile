@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.models.beneficary
+package org.mifos.mobilebanking.models.beneficiary
 
 import android.os.Parcelable
 
@@ -23,7 +23,7 @@ data class BeneficiaryPayload(
         var accountType: Int = 0,
 
         @SerializedName("transferLimit")
-        var transferLimit: Int = 0,
+        var transferLimit: Float = 0f,
 
         @SerializedName("officeName")
         var officeName: String? = null
