@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.models.beneficary;
+package org.mifos.mobilebanking.models.beneficiary;
 
 /*
  * Created by saksham on 18/June/2018

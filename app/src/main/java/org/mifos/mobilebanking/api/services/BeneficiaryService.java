@@ -1,9 +1,9 @@
 package org.mifos.mobilebanking.api.services;
 
 import org.mifos.mobilebanking.api.ApiEndPoints;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
-import org.mifos.mobilebanking.models.beneficary.BeneficiaryPayload;
-import org.mifos.mobilebanking.models.beneficary.BeneficiaryUpdatePayload;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.BeneficiaryPayload;
+import org.mifos.mobilebanking.models.beneficiary.BeneficiaryUpdatePayload;
 import org.mifos.mobilebanking.models.templates.beneficiary.BeneficiaryTemplate;
 
 import java.util.List;

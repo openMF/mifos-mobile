@@ -1,6 +1,6 @@
 package org.mifos.mobilebanking.ui.views;
 
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.ui.views.base.MVPView;
 

@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.models.beneficary
+package org.mifos.mobilebanking.models.beneficiary
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,4 +10,4 @@ data class BeneficiaryUpdatePayload @JvmOverloads constructor(
 
     @SerializedName("name") var name: String? = null,
 
-    @SerializedName("transferLimit") var transferLimit: Int = 0)
+    @SerializedName("transferLimit") var transferLimit: Float = 0f)

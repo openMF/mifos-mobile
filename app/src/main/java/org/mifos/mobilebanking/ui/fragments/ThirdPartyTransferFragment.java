@@ -21,8 +21,8 @@ import android.widget.TextView;
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
-import org.mifos.mobilebanking.models.beneficary.BeneficiaryDetail;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.BeneficiaryDetail;
 import org.mifos.mobilebanking.models.payload.AccountDetail;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
 import org.mifos.mobilebanking.models.templates.account.AccountOption;

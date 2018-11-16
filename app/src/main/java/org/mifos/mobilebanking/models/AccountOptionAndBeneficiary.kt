@@ -1,6 +1,6 @@
 package org.mifos.mobilebanking.models
 
-import org.mifos.mobilebanking.models.beneficary.Beneficiary
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate
 
 /**

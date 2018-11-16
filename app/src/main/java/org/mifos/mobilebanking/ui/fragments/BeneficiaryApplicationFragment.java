@@ -15,9 +15,9 @@ import android.widget.Spinner;
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
-import org.mifos.mobilebanking.models.beneficary.BeneficiaryPayload;
-import org.mifos.mobilebanking.models.beneficary.BeneficiaryUpdatePayload;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.BeneficiaryPayload;
+import org.mifos.mobilebanking.models.beneficiary.BeneficiaryUpdatePayload;
 import org.mifos.mobilebanking.models.templates.beneficiary.AccountTypeOption;
 import org.mifos.mobilebanking.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.mobilebanking.presenters.BeneficiaryApplicationPresenter;
@@ -264,7 +264,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     private void submitUpdateBeneficiaryApplication() {
         BeneficiaryUpdatePayload payload = new BeneficiaryUpdatePayload();
         payload.setName(tilBeneficiaryName.getEditText().getText().toString());
-        payload.setTransferLimit(Integer.parseInt(tilTransferLimit.getEditText().getText().
+        payload.setTransferLimit(Float.parseFloat(tilTransferLimit.getEditText().getText().
                 toString()));
         presenter.updateBeneficiary(beneficiary.getId(), payload);
     }
