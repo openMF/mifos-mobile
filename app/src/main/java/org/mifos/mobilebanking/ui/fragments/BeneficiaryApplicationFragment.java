@@ -276,8 +276,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @Override
     public void showBeneficiaryCreatedSuccessfully() {
         Toaster.show(rootView, getString(R.string.beneficiary_created_successfully));
-        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().finish();
     }
 
     /**
