@@ -27,6 +27,7 @@ import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DividerItemDecoration;
 import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.RecyclerItemClickListener;
+import org.mifos.mobilebanking.utils.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     private View rootView;
     private List<Beneficiary> beneficiaryList;
     private SweetUIErrorHandler sweetUIErrorHandler;
-
+    private String snackbarContent = null;
     public static BeneficiaryListFragment newInstance() {
         BeneficiaryListFragment fragment = new BeneficiaryListFragment();
         return fragment;
@@ -87,7 +88,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         if (savedInstanceState == null) {
             beneficiaryListPresenter.loadBeneficiaries();
         }
-
         return rootView;
     }
 
@@ -134,6 +134,7 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
                 startActivity(new Intent(getActivity(), AddBeneficiaryActivity.class));
             }
         });
+        checkForSnackbarAndShow();
     }
 
 
@@ -240,6 +241,16 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
                 getString(R.string.beneficiary),
                 R.drawable.ic_beneficiaries_48px, rvBeneficiaries, layoutError);
         rvBeneficiaries.setVisibility(View.GONE);
+    }
+
+    public void showSnackbar(String content) {
+        snackbarContent = content;
+    }
+    public void checkForSnackbarAndShow() {
+        if (snackbarContent != null) {
+            Toaster.show(rootView, snackbarContent);
+            snackbarContent = null;
+        }
     }
 
 }

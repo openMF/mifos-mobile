@@ -3,6 +3,7 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -150,7 +151,10 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
      */
     @Override
     public void showBeneficiaryDeletedSuccessfully() {
-        Toaster.show(rootView, getString(R.string.beneficiary_deleted_successfully));
+        String className = BeneficiaryListFragment.class.getName();
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag(className);
+        BeneficiaryListFragment castedListFragment = (BeneficiaryListFragment) fragment;
+        castedListFragment.showSnackbar(getString(R.string.beneficiary_deleted_successfully));
         getActivity().getSupportFragmentManager().popBackStack();
     }
 

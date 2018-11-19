@@ -3,6 +3,7 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -286,10 +287,12 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      */
     @Override
     public void showBeneficiaryUpdatedSuccessfully() {
-        Toaster.show(rootView, getString(R.string.beneficiary_updated_successfully));
+        String className = BeneficiaryListFragment.class.getName();
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag(className);
+        BeneficiaryListFragment castedListFragment = (BeneficiaryListFragment) fragment;
+        castedListFragment.showSnackbar(getString(R.string.beneficiary_updated_successfully));
         getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager().popBackStack();
-
     }
 
 
