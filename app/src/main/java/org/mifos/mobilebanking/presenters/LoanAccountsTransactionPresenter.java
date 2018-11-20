@@ -85,7 +85,8 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
                     @Override
                     public void onNext(LoanWithAssociations loanWithAssociations) {
                         getMvpView().hideProgress();
-                        if (!loanWithAssociations.getTransactions().isEmpty()) {
+                        if (loanWithAssociations.getTransactions() != null &&
+                                !loanWithAssociations.getTransactions().isEmpty()) {
                             getMvpView().showLoanTransactions(loanWithAssociations);
                         } else {
                             getMvpView().showEmptyTransactions(loanWithAssociations);
