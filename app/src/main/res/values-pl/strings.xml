@@ -66,7 +66,7 @@
     <string name="pay_to">Wpłata do</string>
     <string name="pay_from">Wpłata od</string>
     <string name="cancel">Anuluj</string>
-    <string name="review_transfer">Przejrzyj</string>
+    <string name="review_transfer">Podgląd</string>
     <string name="transfer_to">Przelew do</string>
     <string name="transfer_from">Przelew od</string>
     <string name="making_transfer">Dokonywanie przelewu</string>
@@ -310,10 +310,10 @@
     <string name="incorrect_passcode_more_than_three">Podałeś nieprawidłowy kod dostępu więcej niż 3 razy</string>
     <string name="skip">Pomiń</string>
     <string name="save">Zapisz</string>
-    <string name="passcode_setup">Ustaw hasło, aby się zalogować</string>
-    <string name="reenter_passcode">Wprowadź ponownie hasło</string>
+    <string name="passcode_setup">Ustaw pin, aby się zalogować</string>
+    <string name="reenter_passcode">Wprowadź ponownie pin</string>
     <string name="passcode_does_not_match">Kod dostępu nie pasuje.</string>
-    <string name="forgot_passcode">Zapomniałeś hasła, loguj się ręcznie</string>
+    <string name="forgot_passcode">Zapomniałem pinu, zaloguję się za pomocą hasła</string>
     <string name="proceed">Kontynuuj</string>
     <string name="amount_greater_than_zero">Kwota powinna być większa od zera</string>
     <string name="about_us_under_construction">Zakładka O nas w budowie</string>
