@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mifos Mobile</string>
+    <string name="app_name" translatable="false">Mifos Mobile</string>
     <string name="login">Login</string>
     <string name="toast_welcome">Welcome %1$s</string>
     <string name="unable_to_connect">Not connected to internet</string>
@@ -253,9 +253,9 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="help">Help</string>
-    <string name="mifos_initiative">Mifos Initiative</string>
-    <string name="mifos_location">Mifos Initiative , Seattle , Washington 98121</string>
-    <string name="map_marker_heading">Seattle</string>
+    <string name="mifos_initiative" translatable="false">Mifos Initiative</string>
+    <string name="mifos_location" translatable="false">Mifos Initiative , Seattle , Washington 98121</string>
+    <string name="map_marker_heading" translatable="false">Seattle</string>
     <string name="map_marker_desc">Home to large tech industry</string>
     <string name="loan_transaction_details">Loan Account Details</string>
     <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully
@@ -355,8 +355,8 @@
     <string name="select_region_qr">Select region with QR code</string>
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
-    <string name="help_line_number">8000000000</string>
-    <string name="contact_email">support@mifos.org</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
 
     <string name="transferred_successfully">Transferred Successfully</string>
 
@@ -412,26 +412,26 @@
 
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>
-    <string name="double_amount">%1$.2f</string>
-    <string name="double_and_string">%1$.2f %2$s</string>
-    <string name="string_and_string">%1$s %2$s</string>
-    <string name="string_and_double">%1$s %2$.2f</string>
-    <string name="string_and_int">%1$s: %2$d</string>
+    <string name="double_amount" translatable="false">%1$.2f</string>
+    <string name="double_and_string" translatable="false">%1$.2f %2$s</string>
+    <string name="string_and_string" translatable="false">%1$s %2$s</string>
+    <string name="string_and_double" translatable="false">%1$s %2$.2f</string>
+    <string name="string_and_int" translatable="false">%1$s: %2$d</string>
     <string name="invalid_amount">Invalid Amount</string>
     <string name="exit_message">Press back again to exit</string>
 
     <string name="package_name" translatable="false">package</string>
     <string name="permission_denied_camera">Permission Denied to use Camera</string>
-    <string name="one">1</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
-    <string name="five">5</string>
-    <string name="six">6</string>
-    <string name="seven">7</string>
-    <string name="eight">8</string>
-    <string name="nine">9</string>
-    <string name="zero">0</string>
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
+    <string name="four" translatable="false">4</string>
+    <string name="five" translatable="false">5</string>
+    <string name="six" translatable="false">6</string>
+    <string name="seven" translatable="false">7</string>
+    <string name="eight" translatable="false">8</string>
+    <string name="nine" translatable="false">9</string>
+    <string name="zero" translatable="false">0</string>
 
     <string name="faq">Frequently Asked Questions</string>
     <string name="user_query">User Query</string>
@@ -494,7 +494,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="error_password_not_match">Password does not match.</string>
     <string name="app_version">Version %1$s</string>
-    <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
+    <string name="copy_right_mifos" translatable="false">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
