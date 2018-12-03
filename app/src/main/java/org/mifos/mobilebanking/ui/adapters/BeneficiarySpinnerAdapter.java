@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.beneficary.BeneficiaryDetail;
+import org.mifos.mobilebanking.models.beneficiary.BeneficiaryDetail;
 
 import java.util.List;
 
