@@ -355,8 +355,8 @@
     <string name="select_region_qr">Select region with QR code</string>
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
-    <string name="help_line_number">8000000000</string>
-    <string name="contact_email">support@mifos.org</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
 
     <string name="transferred_successfully">Transferred Successfully</string>
 
@@ -504,7 +504,7 @@
 
     <string name="pref_base_url_title">Update Endpoint</string>
     <string name="pref_base_url_desc">Click here to change your Endpoint Configurations</string>
-    <string name="pref_configuration">pref_configuration</string>
+    <string name="pref_configuration" translatable="false">pref_configuration</string>
     <string name="enter_base_url">Enter the Base URL</string>
     <string name="enter_tenant">Enter the Tenant</string>
     <string name="account_type_loan" translatable="false">accountType.loan</string>
