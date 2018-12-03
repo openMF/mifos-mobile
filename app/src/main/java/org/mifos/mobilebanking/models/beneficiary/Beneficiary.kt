@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.models.beneficary
+package org.mifos.mobilebanking.models.beneficiary
 
 import android.os.Parcelable
 

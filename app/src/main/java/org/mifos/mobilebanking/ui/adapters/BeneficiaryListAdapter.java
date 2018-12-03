@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.injection.ActivityContext;
-import org.mifos.mobilebanking.models.beneficary.Beneficiary;
+import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
 
 import java.util.ArrayList;
 import java.util.List;
