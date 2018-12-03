@@ -350,7 +350,7 @@
     <string name="dialog_message_write_storage_permission_never_ask_again">Anda telah menolak untuk menulis ke memori perangkat, tanpa izin ini Anda tidak akan dapat menambahkan ahli waris menggunakan kode QR. Aktifkan dalam pengaturan</string>
     <string name="dialog_message_phone_state_permission_denied_prompt">Izin ini diperlukan untuk menunjukkan mata uang tergantung pada negara. Anda yakin ingin mencekal fitur ini?</string>
     <string name="dialog_message_phone_state_permission_never_ask_again">Anda telah menolak izin untuk membaca status perangkat, tanpa izin ini mata uang tidak dapat ditampilkan dalam format yang benar. Aktifkan dalam pengaturan</string>
-    <string name="msg_setting_activity_not_found">Terjadi kesalahan saat mencari aktivitas di setelan. \ nBuka \ 'Pengaturan \' dan berikan izin secara manual.</string>
+    <string name="msg_setting_activity_not_found">Terjadi kesalahan saat mencari aktivitas di setelan. \nBuka \'Pengaturan \' dan berikan izin secara manual.</string>
     <string name="permission_denied_storage">Penolakan penyimpanan ditolak</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Anda yakin ingin %1$s?</string>
 
@@ -387,13 +387,12 @@
     </string-array>
 
     <string-array name="faq_ans">
-        <item>Untuk mengajukan permohonan akun kredit, klik \ "Laporkan aplikasi pinjaman \" di layar beranda.</item>
+        <item>Untuk mengajukan permohonan akun kredit, klik \"Laporkan aplikasi pinjaman \" di layar beranda.</item>
         <item>Anda dapat melihat informasi profil Anda dengan mengklik pada gambar profil di halaman aplikasi utama.</item>
         <item>Untuk melihat transaksi di rekening tabungan Anda, buka bagian Akun, klik rekening tabungan yang diperlukan, klik tiga titik yang ada di sudut kanan atas dan pilih Opsi transaksi.</item>
         <item>Kode QR untuk semua kredit atau rekening tabungan dapat dibagikan dengan pengguna lain yang akan memungkinkan mereka untuk membuat ahli waris</item>
         <item>Untuk membuat penggantinya, pergi ke ahli waris dari aplikasi halaman rumah, dan kemudian klik pada tombol di pojok kanan bawah, pilih scan, yang akan membuka perangkat kamera, memindai kode QR orang untuk siapa Anda ingin membuat ahli waris, setelah mengisi data yang dibutuhkan akan dapat membuat ahli waris menggunakan kode QR</item>
         <item>Untuk melakukan pembayaran untuk akun pinjaman, buka bagian Akun, pilih opsi PINDAH, lalu buka akun kredit target dan klik opsi Lakukan pembayaran.</item>
-
     </string-array>
 
     <string name="total_saving_balance">Total saldo tabungan</string>
@@ -407,7 +406,7 @@
     <string name="all_rights_reserved">Hak cipta dilindungi.</string>
     <string name="licenses">Perizinan</string>
     <string name="transfer_error">Tidak dapat melakukan transfer, silakan coba lagi nanti</string>
-    <string name="please_wait">Tolong tunggu...</string>
+    <string name="please_wait">Tolong tunggu…</string>
     <string name="message">Pesan</string>
     <string name="no_notification">Tanpa pemberitahuan</string>
 

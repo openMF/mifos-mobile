@@ -297,7 +297,7 @@
     <string name="client_classification">Classement client</string>
     <string name="select_mode">Choisissez le mode</string>
     <string name="add_beneficiary_option">Ajoutez des héritiers externes à votre compte. \ nEntrer manuellement ou scanner le code QR du compte</string>
-    <string name="invalid_qr">Vous ne pouvez pas effectuer d\'actions sur votre compte, scanner le code QR du compte d\'épargne ou du compte de prêt d'un autre utilisateur</string>
+    <string name="invalid_qr">Vous ne pouvez pas effectuer d\'actions sur votre compte, scanner le code QR du compte d\'épargne ou du compte de prêt d\'un autre utilisateur</string>
     <string name="add">Ajouter</string>
     <string name="scan">Balayage</string>
     <string name="enter_passcode">Entrez le code d\'accès à 4 chiffres</string>
@@ -342,10 +342,10 @@
     <string name="dialog_action_re_try">Veuillez réessayer</string>
     <string name="dialog_action_app_settings">Paramètres de l\'application</string>
     <string name="dialog_message_camera_permission_denied_prompt">Sans la permission d\'utiliser l\'appareil photo, vous ne pourrez pas scanner le code QR pour ajouter l\'héritier. Êtes-vous sûr de vouloir interdire cette fonctionnalité?</string>
-    <string name="dialog_message_camera_permission_never_ask_again">Vous avez refusé la permission d\'utiliser la caméra. Sans cette permission, vous ne pourrez pas ajouter d\'héritiers à l'aide du code QR. Activer dans les paramètres</string>
+    <string name="dialog_message_camera_permission_never_ask_again">Vous avez refusé la permission d\'utiliser la caméra. Sans cette permission, vous ne pourrez pas ajouter d\'héritiers à l\'aide du code QR. Activer dans les paramètres</string>
     <string name="dialog_message_storage_permission_denied_prompt">Sans la permission de lire de la mémoire, vous ne pourrez pas envoyer de code QR pour ajouter l\'héritier. Êtes-vous sûr de vouloir interdire cette fonctionnalité?</string>
-    <string name="dialog_message_read_storage_permission_never_ask_again">Vous avez refusé la permission de lire dans la mémoire de l\'appareil. Sans cette permission, vous ne pourrez pas ajouter d'héritiers à l'aide du code QR. Activer dans les paramètres</string>
-    <string name="dialog_message_write_storage_permission_never_ask_again">Vous avez refusé d\'écrire dans la mémoire de l\'appareil. Sans cette autorisation, vous ne pourrez pas ajouter d\'héritiers à l'aide du code QR. Activer dans les paramètres</string>
+    <string name="dialog_message_read_storage_permission_never_ask_again">Vous avez refusé la permission de lire dans la mémoire de l\'appareil. Sans cette permission, vous ne pourrez pas ajouter d\'héritiers à l\'aide du code QR. Activer dans les paramètres</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Vous avez refusé d\'écrire dans la mémoire de l\'appareil. Sans cette autorisation, vous ne pourrez pas ajouter d\'héritiers à l\'aide du code QR. Activer dans les paramètres</string>
     <string name="dialog_message_phone_state_permission_denied_prompt">Cette autorisation est nécessaire pour afficher la devise en fonction du pays. Êtes-vous sûr de vouloir interdire cette fonctionnalité?</string>
     <string name="dialog_message_phone_state_permission_never_ask_again">Vous avez refusé la permission de lire le statut du périphérique. Sans cette permission, la devise pourrait ne pas s\'afficher au format correct. Activer dans les paramètres</string>
     <string name="msg_setting_activity_not_found">Une erreur s\'est produite lors de la recherche d\'activité dans les paramètres. \ nAccédez à "Paramètres" et accordez les autorisations manuellement.</string>
@@ -357,7 +357,7 @@
     <string name="invalid_amount">Montant invalide</string>
     <string name="exit_message">Appuyez à nouveau pour quitter</string>
 
-    <string name="permission_denied_camera">Refus de l\'autorisation d\'utiliser l'appareil photo</string>
+    <string name="permission_denied_camera">Refus de l\'autorisation d\'utiliser l\'appareil photo</string>
 
     <string name="faq">Foire Aux Questions</string>
     <string name="user_query">Demande de l\'utilisateur</string>
@@ -378,25 +378,24 @@
     <string-array name="faq_qs">
         <item>Comment demander un nouveau compte de crédit?</item>
         <item>Où puis-je voir les informations sur mon profil?</item>
-        <item>Où puis-je voir les transactions de mon compte d'épargne?</item>
-        <item>Quelle est l'utilisation d'un code QR?</item>
-        <item>Comment créer un bénéficiaire à l'aide d'un code QR?</item>
+        <item>Où puis-je voir les transactions de mon compte d\'épargne?</item>
+        <item>Quelle est l\'utilisation d\'un code QR?</item>
+        <item>Comment créer un bénéficiaire à l\'aide d\'un code QR?</item>
         <item>Comment faire un paiement pour un compte de crédit?</item>
     </string-array>
 
     <string-array name="faq_ans">
-        <item>Pour demander un compte de crédit, cliquez sur \ "Signaler la demande de prêt \" sur l'écran d'accueil.</item>
-        <item>Vous pouvez afficher les informations de votre profil en cliquant sur l’image de profil sur la page principale de l’application.</item>
-        <item>Pour afficher les transactions dans votre compte d'épargne, allez à la section Comptes, cliquez sur le compte d'épargne requis, cliquez sur les trois points présents dans le coin supérieur droit et sélectionnez l'option Transaction.</item>
-        <item>Le code QR de tous les comptes de crédit ou d’épargne peut être partagé avec d’autres utilisateurs qui leur permettront de créer un héritier</item>
-        <item>Pour créer un héritier, allez à l'héritier sur la page principale de l'application, puis cliquez sur le bouton dans le coin inférieur droit, sélectionnez l'option de numérisation qui ouvrira la caméra de l'appareil, scannez le code QR de la personne pour laquelle vous souhaitez créer un héritier, après avoir rempli les données requises, créer des héritiers en utilisant le code QR</item>
-        <item>Pour effectuer un paiement pour un compte de prêt, allez à la section Comptes, sélectionnez l'option PRÊT, ouvrez le compte de crédit cible et cliquez sur l'option Effectuer un paiement.</item>
-
+        <item>Pour demander un compte de crédit, cliquez sur \"Signaler la demande de prêt \" sur l\'écran d\'accueil.</item>
+        <item>Vous pouvez afficher les informations de votre profil en cliquant sur l\’image de profil sur la page principale de l\’application.</item>
+        <item>Pour afficher les transactions dans votre compte d\'épargne, allez à la section Comptes, cliquez sur le compte d\'épargne requis, cliquez sur les trois points présents dans le coin supérieur droit et sélectionnez l\'option Transaction.</item>
+        <item>Le code QR de tous les comptes de crédit ou d\’épargne peut être partagé avec d’autres utilisateurs qui leur permettront de créer un héritier</item>
+        <item>Pour créer un héritier, allez à l\'héritier sur la page principale de l\'application, puis cliquez sur le bouton dans le coin inférieur droit, sélectionnez l\'option de numérisation qui ouvrira la caméra de l\'appareil, scannez le code QR de la personne pour laquelle vous souhaitez créer un héritier, après avoir rempli les données requises, créer des héritiers en utilisant le code QR</item>
+        <item>Pour effectuer un paiement pour un compte de prêt, allez à la section Comptes, sélectionnez l\'option PRÊT, ouvrez le compte de crédit cible et cliquez sur l\'option Effectuer un paiement.</item>
     </string-array>
 
     <string name="total_saving_balance">Le solde total de l\'épargne</string>
     <string name="total_loan_balance">Le solde total du prêt</string>
-    <string name="total_loan_savings_description">Ci-dessus le solde du compte bancaire et du compte d’épargne calculé sur la base de tous les comptes d’épargne et de prêt</string>
+    <string name="total_loan_savings_description">Ci-dessus le solde du compte bancaire et du compte d\’épargne calculé sur la base de tous les comptes d\’épargne et de prêt</string>
     <string name="cancel_transfer">Êtes-vous sûr de vouloir annuler le transfert?</string>
     <string name="yes">Si</string>
     <string name="confirm_password">Confirmer le mot de passe</string>
