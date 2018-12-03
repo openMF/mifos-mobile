@@ -158,7 +158,6 @@
     <string name="repayment_schedule">Repayment Schedule</string>
     <string name="transactions">Transactions</string>
     <string name="transfer">Transfer</string>
-    <string name="outstanding_balance_str">%1$s %2$s</string>
     <string name="approval_pending">Approval Pending</string>
     <string name="waiting_for_disburse">Waiting for Disburse</string>
     <string name="closed_because_of_obligation">Closed because of some Obligations</string>
@@ -267,7 +266,7 @@
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
-    <string name="please_wait">Please Wait...</string>
+    <string name="please_wait">Please Wait…</string>
 
 
 </resources>

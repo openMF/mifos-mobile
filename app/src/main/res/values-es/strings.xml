@@ -261,7 +261,7 @@
     <string name="loan_balance">Saldo de prestamo</string>
     <string name="repayment">Reembolso</string>
     <string name="loan_repayment">Amortización del préstamo</string>
-    <string name="quick_transfer">Transferencia rapida</string>
+    <string name="quick_transfer">Transferencia rápida</string>
     <string name="internet_not_connected">Asegúrate de tener conexión a internet</string>
     <string name="beneficiary">Heredero</string>
     <string name="manage_beneficiaries">Administrar herederos</string>
@@ -323,7 +323,6 @@
     <string name="select_region_qr">Elija región con código QR</string>
     
     <string name="need_help">Contactanos</string>
-    <string name="contact_email"></string>
     
     <string name="transferred_successfully">Transferencia exitosa</string>
 
