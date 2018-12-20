@@ -408,12 +408,12 @@
     <string name="all_rights_reserved">Wszelkie prawa zastrzeżone.</string>
     <string name="licenses">Licencje</string>
     <string name="transfer_error">Nie można wykonać przelewu, spróbuj ponownie później</string>
-    <string name="please_wait">Proszę czekać...</string>
+    <string name="please_wait">Proszę czekać…</string>
     <string name="message">wiadomość</string>
     <string name="no_notification">Brak powiadomienia</string>
 
     <string name="pref_base_url_title">Zaktualizuj Endpoint</string>
-    <string name="pref_base_url_desc">Kliknij tutaj, aby zmienić konfiguracje Endpoint'u</string>
+    <string name="pref_base_url_desc">Kliknij tutaj, aby zmienić konfiguracje Endpoint\'u</string>
     <string name="pref_configuration">pref_configuration</string>
     <string name="enter_base_url">Wprowadź podstawowy adres URL</string>
     <string name="enter_tenant">Wejdź do Lokatora</string>

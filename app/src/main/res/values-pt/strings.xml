@@ -376,12 +376,12 @@
     <string name="dialog_action_i_am_sure">Tenho a certeza</string>
     <string name="dialog_action_re_try">Tentar novamente</string>
     <string name="dialog_action_app_settings">Definições da App</string>
-    <string name="dialog_message_camera_permission_denied_prompt">Sem permissão da camera não conseguirá
+    <string name="dialog_message_camera_permission_denied_prompt">Sem permissão da câmera não conseguirá
         digitalizar o código QR para adicionar beneficiário. Tem a certeza que deseja recusar esta permissão?
     </string>
 	
     <string name="dialog_message_camera_permission_never_ask_again">Recusou a permissão para
-        usar a camera. Sem esta permissão, não conseguirá adicionar beneficiários com código QR.
+        usar a câmera. Sem esta permissão, não conseguirá adicionar beneficiários com código QR.
         Por favor, ative-a nas definições.
 	</string>
     <string name="dialog_message_storage_permission_denied_prompt">Sem permissão de armazenamento não conseguirá
@@ -420,7 +420,7 @@
     <string name="exit_message">Pressione outra vez para sair</string>
 
     <string name="package_name" translatable="false">package</string>
-    <string name="permission_denied_camera">Permissão Recusada para usar a Camera</string>
+    <string name="permission_denied_camera">Permissão Recusada para usar a Câmera</string>
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -442,8 +442,8 @@
     <string name="manage_accounts">Gerir contas</string>
     <string name="more">Mais</string>
 	<string name="settings">Definições</string>
-    <string name="language">Lingua</string>
-    <string name="choose_language">Escolha a sua lingua</string>
+    <string name="language">Língua</string>
+    <string name="choose_language">Escolha a sua língua</string>
     <string name="notification">Notificações</string>
     <string name="base_url">URL Base</string>
     <string name="tenant">Inquilino</string>
@@ -471,7 +471,7 @@
 		
         </item>
         <item>De forma a criar Beneficiário, vá à opção Beneficiário em Home, clique no botão circular presente
-			no lado inferior direito, escolha a opção de Scan que abre a sua camera,
+			no lado inferior direito, escolha a opção de Scan que abre a sua câmera,
 			digitalize o código QR de outra pessoa da qual deseja criar um beneficiário,
 			e depois de preencher os detalhes necessários conseguirá criar um beneficiário usando QR.
 			
@@ -498,7 +498,7 @@
     <string name="all_rights_reserved">Todos os direitos reservados.</string>
     <string name="licenses">Licenças</string>
     <string name="transfer_error">Impossível completar a transferência, por favor tente novamente mais tarde.</string>
-    <string name="please_wait">Por favor espere...</string>
+    <string name="please_wait">Por favor espere…</string>
     <string name="message">mensagem</string>
     <string name="no_notification">Sem notificações</string>
 
@@ -539,5 +539,5 @@
         <item>ru</item>
         <item>sw</item>
     </string-array>
-	
+
 </resources>
