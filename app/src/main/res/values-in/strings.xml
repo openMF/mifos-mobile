@@ -350,7 +350,7 @@
     <string name="dialog_message_write_storage_permission_never_ask_again">Anda telah menolak untuk menulis ke memori perangkat, tanpa izin ini Anda tidak akan dapat menambahkan ahli waris menggunakan kode QR. Aktifkan dalam pengaturan</string>
     <string name="dialog_message_phone_state_permission_denied_prompt">Izin ini diperlukan untuk menunjukkan mata uang tergantung pada negara. Anda yakin ingin mencekal fitur ini?</string>
     <string name="dialog_message_phone_state_permission_never_ask_again">Anda telah menolak izin untuk membaca status perangkat, tanpa izin ini mata uang tidak dapat ditampilkan dalam format yang benar. Aktifkan dalam pengaturan</string>
-    <string name="msg_setting_activity_not_found">Terjadi kesalahan saat mencari aktivitas di setelan. \ nBuka \ 'Pengaturan \' dan berikan izin secara manual.</string>
+    <string name="msg_setting_activity_not_found">Terjadi kesalahan saat mencari aktivitas di setelan. \nBuka \'Pengaturan \' dan berikan izin secara manual.</string>
     <string name="permission_denied_storage">Penolakan penyimpanan ditolak</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Anda yakin ingin %1$s?</string>
 
@@ -407,7 +407,7 @@
     <string name="all_rights_reserved">Hak cipta dilindungi.</string>
     <string name="licenses">Perizinan</string>
     <string name="transfer_error">Tidak dapat melakukan transfer, silakan coba lagi nanti</string>
-    <string name="please_wait">Tolong tunggu...</string>
+    <string name="please_wait">Tolong tunggu…</string>
     <string name="message">Pesan</string>
     <string name="no_notification">Tanpa pemberitahuan</string>
 
