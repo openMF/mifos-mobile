@@ -138,7 +138,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
 
     @Override
     protected void onResume() {
-        setNavigationViewSelectedItem(R.id.item_home);
         super.onResume();
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
