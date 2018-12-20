@@ -92,6 +92,12 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        beneficiaryListPresenter.loadBeneficiaries();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (beneficiaryList != null) {
