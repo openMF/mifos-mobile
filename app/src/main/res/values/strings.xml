@@ -130,6 +130,7 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
+    <string name="reason_of_withdrawal">Reason of Withdrawal</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
