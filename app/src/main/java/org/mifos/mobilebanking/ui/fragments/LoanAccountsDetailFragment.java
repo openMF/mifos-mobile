@@ -204,8 +204,6 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
                 tvNextInstallmentName.setText(R.string.not_available);
             }
         }
-        tvNextInstallmentName.setText(String.valueOf(
-                loanWithAssociations.getSummary().getTotalOutstanding()));
         tvAccountNumberName.setText(loanWithAssociations.getAccountNo());
         tvLoanTypeName.setText(loanWithAssociations.getLoanType().getValue());
         tvCurrencyName.setText(loanWithAssociations.getSummary().getCurrency().getCode());
