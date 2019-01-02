@@ -51,13 +51,10 @@ data class Summary(
         var currency: Currency? = null
 ) : Parcelable {
 
-    fun getOverdueSinceDate(): String {
-
-        return String.format(Locale.ENGLISH, "%02d/%02d/%d",
-                overdueSinceDate!![2], overdueSinceDate!![1], overdueSinceDate!![0])
-    }
-
-    fun setOverdueSinceDate(overdueSinceDate: List<Int>) {
-        this.overdueSinceDate = overdueSinceDate
+    fun getOverdueSinceDate(): List<Int>? {
+        if (overdueSinceDate==null)
+            return null
+        else
+            return overdueSinceDate
     }
 }
