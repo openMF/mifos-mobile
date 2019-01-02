@@ -171,5 +171,8 @@ data class LoanWithAssociations(
         var maximumGap: Int? = null,
 
         @SerializedName("transactions")
-        var transactions: List<Transaction> = ArrayList()
+        var transactions: List<Transaction> = ArrayList(),
+
+        @SerializedName("loanPurposeName")
+        var loanPurposeName: String? = null
 ) : Parcelable

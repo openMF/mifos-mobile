@@ -21,7 +21,8 @@ import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
-import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
+import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
+import org.mifos.mobilebanking.models.accounts.loan.Periods;
 import org.mifos.mobilebanking.presenters.LoanAccountsDetailPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.enums.AccountType;
@@ -34,6 +35,8 @@ import org.mifos.mobilebanking.utils.CurrencyUtil;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.QrCodeGenerator;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -82,7 +85,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     PreferencesHelper preferencesHelper;
 
 
-    private LoanAccount loanAccount;
+    private LoanWithAssociations loanWithAssociations;
     private boolean showLoanUpdateOption = false;
     private long loanId;
     private SweetUIErrorHandler sweetUIErrorHandler;
@@ -109,7 +112,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
 
         rootView = inflater.inflate(R.layout.fragment_loan_account_details, container, false);
@@ -130,14 +133,14 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(Constants.LOAN_ACCOUNT, loanAccount);
+        outState.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            showLoanAccountsDetail((LoanAccount) savedInstanceState.
+            showLoanAccountsDetail((LoanWithAssociations) savedInstanceState.
                     getParcelable(Constants.LOAN_ACCOUNT));
         }
     }
@@ -146,28 +149,33 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     /**
      * Shows details about loan account fetched from server is status is Active else shows and
      * error layout i.e. {@code layoutError} with a msg related to the status.
-     * @param loanAccount object containing details of each loan account,
+     *
+     * @param loanWithAssociations object containing details of each loan account,
      */
     @Override
-    public void showLoanAccountsDetail(LoanAccount loanAccount) {
+    public void showLoanAccountsDetail(LoanWithAssociations loanWithAssociations) {
         llAccountDetail.setVisibility(View.VISIBLE);
-        this.loanAccount = loanAccount;
-
-        if (loanAccount.getStatus().getActive()) {
-            tvDueDateName.setText(DateHelper.getDateAsString(loanAccount.getTimeline()
-                    .getActualDisbursementDate()));
-            showDetails(loanAccount);
-        } else if (loanAccount.getStatus().getPendingApproval()) {
+        this.loanWithAssociations = loanWithAssociations;
+        if (loanWithAssociations.getStatus().getActive()) {
+            List<Integer> overdueSinceDate =
+                    loanWithAssociations.getSummary().getOverdueSinceDate();
+            if (overdueSinceDate == null) {
+                tvDueDateName.setText(R.string.not_available);
+            } else {
+                tvDueDateName.setText(DateHelper.getDateAsString(overdueSinceDate));
+            }
+            showDetails(loanWithAssociations);
+        } else if (loanWithAssociations.getStatus().getPendingApproval()) {
             sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.approval_pending),
                     R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError);
             showLoanUpdateOption = true;
-        } else if (loanAccount.getStatus().getWaitingForDisbursal()) {
+        } else if (loanWithAssociations.getStatus().getWaitingForDisbursal()) {
             sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.waiting_for_disburse),
                     R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError);
         } else {
             btMakePayment.setVisibility(View.GONE);
             tvDueDateName.setText(R.string.not_available);
-            showDetails(loanAccount);
+            showDetails(loanWithAssociations);
         }
 
         getActivity().invalidateOptionsMenu();
@@ -175,18 +183,32 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
 
     /**
      * Sets basic information about a loan
-     * @param loanAccount object containing details of each loan account,
+     *
+     * @param loanWithAssociations object containing details of each loan account,
      */
-    public void showDetails(LoanAccount loanAccount) {
-        //TODO: Calculate nextInstallment value
+    public void showDetails(LoanWithAssociations loanWithAssociations) {
+
         tvOutstandingBalanceName.setText(getResources().getString(R.string.string_and_string,
-                loanAccount.getSummary().getCurrency().getDisplaySymbol(), CurrencyUtil.
-                formatCurrency(getActivity(), loanAccount.getSummary().getTotalOutstanding())));
+                loanWithAssociations.getSummary().getCurrency().getDisplaySymbol(), CurrencyUtil.
+                        formatCurrency(getActivity(),
+                                loanWithAssociations.getSummary().getTotalOutstanding())));
+        for (Periods thisPeriod : loanWithAssociations.getRepaymentSchedule().getPeriods()) {
+            if (thisPeriod.getDueDate().equals(loanWithAssociations.
+                    getSummary().getOverdueSinceDate())) {
+                tvNextInstallmentName.setText(getResources().getString(R.string.string_and_string,
+                        loanWithAssociations.getSummary().getCurrency().getDisplaySymbol(),
+                        CurrencyUtil.formatCurrency(getActivity(),
+                                thisPeriod.getTotalDueForPeriod())));
+                break;
+            } else if (loanWithAssociations.getSummary().getOverdueSinceDate() == null) {
+                tvNextInstallmentName.setText(R.string.not_available);
+            }
+        }
         tvNextInstallmentName.setText(String.valueOf(
-                loanAccount.getSummary().getTotalOutstanding()));
-        tvAccountNumberName.setText(loanAccount.getAccountNo());
-        tvLoanTypeName.setText(loanAccount.getLoanType().getValue());
-        tvCurrencyName.setText(loanAccount.getSummary().getCurrency().getCode());
+                loanWithAssociations.getSummary().getTotalOutstanding()));
+        tvAccountNumberName.setText(loanWithAssociations.getAccountNo());
+        tvLoanTypeName.setText(loanWithAssociations.getLoanType().getValue());
+        tvCurrencyName.setText(loanWithAssociations.getSummary().getCurrency().getCode());
     }
 
     /**
@@ -205,7 +227,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @OnClick(R.id.ll_summary)
     public void onLoanSummaryClicked() {
         ((BaseActivity) getActivity()).replaceFragment(LoanAccountSummaryFragment
-                .newInstance(loanAccount), true, R.id.container);
+                .newInstance(loanWithAssociations), true, R.id.container);
     }
 
     /**
@@ -229,19 +251,21 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @OnClick(R.id.ll_loan_charges)
     public void chargesClicked() {
         ((BaseActivity) getActivity()).replaceFragment(ClientChargeFragment
-                .newInstance(loanAccount.getId(), ChargeType.LOAN), true, R.id.container);
+                .newInstance(loanWithAssociations.getId(), ChargeType.LOAN), true, R.id.container);
     }
 
     @OnClick(R.id.ll_loan_qr_code)
     public void onQrCodeClicked() {
-        String accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanAccount.
-                getAccountNo(), preferencesHelper.getOfficeName(), AccountType.LOAN);
+        String accountDetailsInJson = QrCodeGenerator.
+                getAccountDetailsInString(loanWithAssociations.getAccountNo(),
+                        preferencesHelper.getOfficeName(), AccountType.LOAN);
         ((BaseActivity) getActivity()).replaceFragment(QrCodeDisplayFragment.
                 newInstance(accountDetailsInJson), true, R.id.container);
     }
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
@@ -299,11 +323,11 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
         int id = item.getItemId();
         if (id == R.id.menu_update_loan) {
             ((BaseActivity) getActivity()).replaceFragment(LoanApplicationFragment
-                    .newInstance(LoanState.UPDATE, loanAccount), true, R.id.container);
+                    .newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container);
             return true;
         } else if (id == R.id.menu_withdraw_loan) {
             ((BaseActivity) getActivity()).replaceFragment(LoanAccountWithdrawFragment
-                    .newInstance(loanAccount), true, R.id.container);
+                    .newInstance(loanWithAssociations), true, R.id.container);
         } else if (id == R.id.menu_view_guarantor) {
             ((BaseActivity) getActivity()).replaceFragment(GuarantorListFragment
                     .newInstance(loanId), true, R.id.container);
