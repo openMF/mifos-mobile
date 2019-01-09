@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -310,6 +311,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             search = (SearchView) menu.findItem(R.id.menu_search_share).getActionView();
         }
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        search.setMaxWidth((int) (0.75 * width));
         search.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
