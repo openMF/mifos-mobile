@@ -160,7 +160,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         this.savingsWithAssociations = savingsWithAssociations;
         transactionsList = savingsWithAssociations.getTransactions();
 
-        if (transactionsList.size() > 0) {
+        if (transactionsList != null && !transactionsList.isEmpty()) {
             transactionListAdapter.setContext(getContext());
             transactionListAdapter.
                     setSavingAccountsTransactionList(transactionsList);
