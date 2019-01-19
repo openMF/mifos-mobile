@@ -335,7 +335,9 @@ public class AccountsFragment extends BaseFragment implements
             filteredSavings.addAll(accountsPresenter.getFilteredSavingsAccount(savingAccounts,
                     status));
         }
-        savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
+        if (filteredSavings.size() != 0) {
+            savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
+        }
     }
 
     /**
@@ -349,7 +351,9 @@ public class AccountsFragment extends BaseFragment implements
             filteredSavings.addAll(accountsPresenter.getFilteredLoanAccount(loanAccounts,
                     status));
         }
-        loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
+        if (filteredSavings.size() != 0) {
+            loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
+        }
     }
 
     /**
@@ -363,7 +367,9 @@ public class AccountsFragment extends BaseFragment implements
             filteredSavings.addAll(accountsPresenter.getFilteredShareAccount(shareAccounts,
                     status));
         }
-        shareAccountsListAdapter.setShareAccountsList(filteredSavings);
+        if (filteredSavings.size() != 0) {
+            shareAccountsListAdapter.setShareAccountsList(filteredSavings);
+        }
     }
 
     /**
