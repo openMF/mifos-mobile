@@ -143,9 +143,9 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 getActivity().invalidateOptionsMenu();
                 ((HomeActivity) getActivity()).hideKeyboard(getView());
                 if (position == 1) {
-                    fabCreateLoan.setVisibility(View.VISIBLE);
+                    fabCreateLoan.show();
                 } else {
-                    fabCreateLoan.setVisibility(View.GONE);
+                    fabCreateLoan.hide();
                 }
             }
 
