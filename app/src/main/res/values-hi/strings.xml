@@ -26,7 +26,7 @@
     <string name="account_balance">खाते में शेष</string>
     <string name="total_deposits">कुल जमा</string>
     <string name="open_drawer">Open Drawer</string>
-    <string name="close_drawer">Close Drawer</string>
+    <string name="close_drawer">दराज को बंद करें</string>
     <string name="home">होम</string>
     <string name="medium_text">Medium Text</string>
     <string name="small_text">Small Text</string>
@@ -124,7 +124,7 @@
     <string name="error_saving_account_details_loading">बचत खातों की विवरण में लोड करने में त्रुटि
     </string>
 
-    <string name="qr_code">क्यूआर कोड</string>
+    <string name="qr_code">क्यू.आर कोड</string>
     <string name="error_recent_transactions_loading">हालिया लेनदेन में लोड करने में त्रुटि</string>
     <string name="error_client_charge_loading">क्लाइंट शुल्क में लोड करने में त्रुटि</string>
     <string name="error_client_not_found">ग्राहक नहीं मिला</string>
@@ -168,7 +168,7 @@
     <string name="view_repayment">पुनर्भुगतान शेड्यूल देखें</string>
     <string name="share_qr_code">क्यूआर कोड साझा करें</string>
     <string name="monitor">निगरानी करें</string>
-    <string name="view_qr_code">इस खाते के लिए क्यूआर कोड देखें</string>
+    <string name="view_qr_code">इस खाते के लिए क्यू.आर कोड देखें</string>
     <string name="last_trans">पिछले लेनदेन का विवरण</string>
     <string name="passcode_setup">लॉगिन करने के लिए एक पासकोड सेटअप करें</string>
     <string name="error_fetching_third_party_transfer_template">थर्ड पार्टी ट्रांसफर टेम्प्लेट को लाने में त्रुटि</string>
@@ -176,7 +176,7 @@
 
     <string name="fetching_client">क्लाइंट ला रहा है</string>
 
-    <string name="not_contain_username">Spaces</string>
+    <string name="not_contain_username">रिक्त स्थान</string>
     <string name="client_name">ग्राहक का नाम</string>
     <string name="account_status">खाते की स्थिति</string>
     <string name="saving_product_name">उत्पाद का नाम</string>
@@ -219,8 +219,8 @@
     <string name="amount_paid">भुगतान:</string>
     <string name="amount_waived">छूट दी गई राशि:</string>
     <string name="amount_outstanding">बकाया:</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text">उदाहरण</string>
+    <string name="add_widget">विजेट जोड़ें</string>
     <string name="help">मदद</string>
     <string name="mifos_initiative">मिफोस इनिशिएटिव</string>
     <string name="mifos_location">मिफोस इनिशिएटिव , सिएटल, वॉशिंगटन 98121</string>
@@ -349,22 +349,19 @@
     <string name="choose_language">अपनी भाषा चुनिए</string>
 
     <string name="permission_denied_camera">कैमरे का उपयोग करने के लिए अनुमति अस्वीकृत</string>
-    <string name="no_withdrawals">No withdrawals</string>
-    <string name="manage_accounts">Manage Accounts</string>
-    <string name="more">More</string>
-    <string name="total_saving_balance">Total Savings Balance</string>
-    <string name="total_loan_balance">Total Loan Balance</string>
-    <string name="total_loan_savings_description">Above Loan and Savings accout balance are
-        calculated on behalf of your all savings and loan accounts.
-    </string>
+    <string name="no_withdrawals">कोई निकासी नहीं</string>
+    <string name="manage_accounts">खातों का प्रबंध करे</string>
+    <string name="more">अधिक</string>
+    <string name="total_saving_balance">कुल बचत शेष</string>
+    <string name="total_loan_balance">कुल ऋण शेष</string>
     <string name="cancel_transfer">क्या आप वाकई हस्तांतरण रद्द करना चाहते हैं?</string>
     <string name="yes">हाँ</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="error_password_not_match">Password doesnot match.</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="error_password_not_match">पासवर्ड मैच नहीं कर रहा है</string>
     <string name="app_version">Version %1$s</string>
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
-    <string name="all_rights_reserved">All rights reserved.</string>
-    <string name="licenses">Licenses</string>
+    <string name="all_rights_reserved">सर्वाधिकार सुरक्षित</string>
+    <string name="licenses">लाइसेंस</string>
 
     <string-array name="faq_qs">
         <item>मैं नए ऋण खाते के लिए आवेदन कैसे करूं?</item>
@@ -390,6 +387,74 @@
             और भुगतान करें विकल्प पर क्लिक करें।</item>
     </string-array>
     <string name="please_wait">कृपया प्रतीक्षा करें</string>
+    <string name="in_arrears">बकाया राशि में</string>
+    <string name="search">खोज</string>
+    <string name="select_pay_to">भुगतान करने के लिए खाता चुनें</string>
+    <string name="select_pay_from">अकाउंट टू पे से सेलेक्ट करें</string>
+    <string name="close">बंद करे</string>
+    <string name="transfer_to_savings">बचत के लिए स्थानांतरण</string>
+    <string name="transfer_from_savings">बचत से स्थानांतरण</string>
+    <string name="withdrawn">वापस लिया गया</string>
+    <string name="request_id">अनुरोध आईडी</string>
+    <string name="authentication_token">प्रमाणीकरण टोकन</string>
+    <string name="verify">सत्यापित करें</string>
+    <string name="verifying">सत्यापित किया जा रहा</string>
+    <string name="sign_up">साइन उप हो रहा है</string>
+    <string name="verified">उपयोगकर्ता को सफलतापूर्वक सत्यापित किया गया है</string>
+    <string name="import_qr">ईम्पोट कू.आर.</string>
+    <string name="view_guarantor">गारंटर देखें</string>
+    <string name="add_guarantor">गारंटर जोड़ें</string>
+    <string name="delete_guarantor">गारंटर हटा दें</string>
+    <string name="update_guarantor">गारंटर अद्यतन करें</string>
+    <string name="guarantor_type">गारंटर टाइप</string>
+    <string name="no_guarantors">कोई गारंटर नहीं</string>
+    <string name="tap_to_add_guarantor">गारंटर जोड़ने के लिए टैप करें</string>
+    <string name="guarantor_details">गारंटर विवरण</string>
+    <string name="joined_date">"शामिल होने की दिनांक "</string>
+    <string name="submit">जमा करें</string>
+    <string name="account_not_active_to_perform_deposit">जमा करने के लिए खाता सक्रिय होना चाहिए</string>
+    <string name="account_not_active_to_perform_transfer">हस्तांतरण करने के लिए खाता सक्रिय होना चाहिए</string>
+    <string name="no_dob_found">कोई जन्म तारीख नहीं मिली</string>
+    <string name="not_assigned_with_any_group">किसी समूह के साथ नहीं सौंपा गया</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">% 1 $ रिक्त स्थान के साथ शुरू या समाप्त नहीं हो सकता है</string>
+    <string name="error_no_charge">कोई शुल्क नहीं मिला</string>
+    <string name="error_fetching_user_profile">उपयोगकर्ता प्रोफ़ाइल लाने में विफल</string>
+    <string name="no_beneficiary_found_please_add">वर्तमान में, आपके पास कोई लाभार्थी नहीं है,कृपया लाभार्थी जोड़ें</string>
+    <string name="unauthorized_client">आप अधिकृत नहीं  है</string>
+    <string name="choose_option">विकल्प चुनें</string>
+    <string name="error_username_greater_than_six">उपयोगकर्ता नाम 6 अक्षरों से अधिक होना चाहिए</string>
+    <string name="error_invalid_email">अमान्य ईमेल आईडी</string>
+    <string name="error_server_down">सर्वर डाउन, कुछ समय बाद प्रयास करें</string>
+    <string name="client_charges">ग्राहक शुल्क</string>
+    <string name="error_reading_qr">क्यू.आर पढ़ने में त्रुटि, सुनिश्चित करें कि आप उचित क्षेत्र का चयन करते हैं</string>
+    <string name="error_fetching_image">छवि लाने में त्रुटि</string>
+    <string name="end_date_must_be_greater">अंतिम तिथि प्रारंभ तिथि से अधिक होनी चाहिए</string>
+    <string name="reenter_passcode">कृपया अपना पासकोड पुनः प्रविष्ट करें</string>
+    <string name="passcode_does_not_match">पासकोड मेल नहीं खाता</string>
+    <string name="proceed">बढ़ना</string>
+    <string name="upload_qr_code">क्यू.आर. अपलोड करें</string>
+    <string name="not_available">उपलब्ध नहीं है</string>
+    <string name="select_region_qr">" क्यू.आर. कोड वाला क्षेत्र चुनें"</string>
+    <string name="dialog_message_storage_permission_denied_prompt">भंडारण अनुमति के बिना आप लाभार्थी को जोड़ने के लिए क्यूआर कोड अपलोड नहीं कर पाएंगे। क्या आप सुनिश्चित हैं कि आप इस अनुमति को अस्वीकार करना चाहते हैं?</string>
+    <string name="dialog_message_read_storage_permission_never_ask_again">आपने भंडारण पढ़ने की अनुमति से इनकार कर दिया है, इस अनुमति के बिना आप क्यूआर कोड का उपयोग करके लाभार्थियों को नहीं जोड़ पाएंगे। कृपया इसे सेटिंग में सक्षम करें</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">आपने भंडारण करने के लिए लिखने की अनुमति से इनकार कर दिया है, इस अनुमति के बिना आप क्यूआर कोड का उपयोग करके लाभार्थियों को नहीं जोड़ पाएंगे। कृपया इसे सेटिंग में सक्षम करें</string>
+    <string name="permission_denied_storage">"भंडारण की अनुमति से इनकार "</string>
+    <string name="dialog_are_you_sure_that_you_want_to_string">क्या आप सुनिश्चित हैं कि आप% 1 $ s करना चाहते हैं?</string>
+    <string name="double_amount">%1$.2f</string>
+    <string name="clear_filters">फिल्टर साफ करे</string>
+    <string name="notification">सूचनाएं</string>
+    <string name="base_url">आधार यू.आर.ए्ल</string>
+    <string name="tenant">किरायेदार</string>
+    <string name="message">संदेश</string>
+    <string name="no_notification">कोई अधिसूचना नहीं</string>
+    <string name="pref_base_url_title">अद्यतन समापन बिंदु</string>
+    <string name="pref_base_url_desc">अपना समापन बिंदु कॉन्फ़िगरेशन बदलने के लिए यहां क्लिक करें</string>
+    <string name="enter_base_url">आधार यू.आर.ए्ल दर्ज करें</string>
+    <string name="enter_tenant">किरायेदार दर्ज करें</string>
+    <string name="pref_configuration">वरीयता विन्यास</string>
+    <string name="contact_email">support@mifos.org</string>
+    <string name="total_loan_savings_description">लोन और बचत खाते के ऊपर की शेष राशि की गणना आपकी सभी बचत और ऋण खातों की ओर से की जाती है।</string>
+    <string name="disbursement">"संवितरण "</string>
 
 
 </resources>
