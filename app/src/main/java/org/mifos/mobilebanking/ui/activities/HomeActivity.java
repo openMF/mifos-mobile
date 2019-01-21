@@ -85,7 +85,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private boolean isReceiverRegistered;
     private int menuItem;
-    boolean  doubleBackToExitPressedOnce = false;
+    boolean doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,56 +154,61 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // select which item to open
-        clearFragmentBackStack();
-        setToolbarElevation();
-        menuItem = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.item_home:
-                hideToolbarElevation();
-                replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_accounts:
-                hideToolbarElevation();
-                replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
-                        true, R.id.container);
-                break;
-            case R.id.item_recent_transactions:
-                replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_charges:
-                replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
-                        R.id.container);
-                break;
-            case R.id.item_third_party_transfer:
-                replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_beneficiaries:
-                replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_settings:
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
-                break;
-            case R.id.item_about_us:
-                replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_help:
-                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
-                break;
-            case R.id.item_share:
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
-                        getString(R.string.share_msg), getApplication().getPackageName()));
-                startActivity(Intent.createChooser(i, getString(R.string.choose)));
-                break;
-            case R.id.item_logout:
-                showLogoutDialog();
-                break;
+        //if the selected menu item is checked it means it is the current Fragment
+        boolean isCurrentFragment = item.isChecked();
+        //Only if we have selected a menu that is not current Fragment we should take required action
+        if (!isCurrentFragment) {
+            clearFragmentBackStack();
+            setToolbarElevation();
+            menuItem = item.getItemId();
+            switch (item.getItemId()) {
+                case R.id.item_home:
+                    hideToolbarElevation();
+                    replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_accounts:
+                    hideToolbarElevation();
+                    replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
+                            true, R.id.container);
+                    break;
+                case R.id.item_recent_transactions:
+                    replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_charges:
+                    replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
+                            R.id.container);
+                    break;
+                case R.id.item_third_party_transfer:
+                    replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_beneficiaries:
+                    replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_settings:
+                    startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                    break;
+                case R.id.item_about_us:
+                    replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_help:
+                    replaceFragment(HelpFragment.getInstance(), true, R.id.container);
+                    break;
+                case R.id.item_share:
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
+                            getString(R.string.share_msg), getApplication().getPackageName()));
+                    startActivity(Intent.createChooser(i, getString(R.string.choose)));
+                    break;
+                case R.id.item_logout:
+                    showLogoutDialog();
+                    break;
+            }
         }
-
         // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
-        setNavigationViewSelectedItem(R.id.item_home);
+        if (!isCurrentFragment)
+            setNavigationViewSelectedItem(R.id.item_home);
         return true;
     }
 
@@ -431,6 +436,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // Click Header to view full profile of User
         startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
     }
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
