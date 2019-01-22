@@ -410,7 +410,8 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             title = getString(R.string.filter_share);
         }
 
-        new MaterialDialog.Builder().init(getActivity())
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder();
+        builder.init(getActivity())
                 .setTitle(title)
                 .setCancelable(false)
                 .setMessage(getString(R.string.select_you_want))
@@ -419,7 +420,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                         OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         isDialogBoxSelected = false;
                         if (account == AccountType.SAVINGS) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
@@ -485,6 +485,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                         })
                 .createMaterialDialog()
                 .show();
+        checkBoxAdapter.setDialogBuilder(builder);
     }
 
     @Override

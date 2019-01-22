@@ -19,6 +19,7 @@ public final class MaterialDialog {
     public static class Builder {
 
         private AlertDialog.Builder mMaterialDialogBuilder;
+        private AlertDialog dialog;
         private Context context;
 
         //This is the Default Builder Initialization with Material Style
@@ -170,13 +171,23 @@ public final class MaterialDialog {
 
         //This Method Show the Dialog
         public Builder show() {
-            AlertDialog dialog = mMaterialDialogBuilder.show();
+            dialog = mMaterialDialogBuilder.show();
+            dialog.getButton(dialog.BUTTON_POSITIVE).setVisibility(View.INVISIBLE);
             dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context,
                     R.color.accent));
             dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context,
                     R.color.gray_dark));
             dialog.getButton(dialog.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(context,
                     R.color.black));
+            return this;
+        }
+
+        public Builder enablePositiveButton() {
+            dialog.getButton(dialog.BUTTON_POSITIVE).setVisibility(View.VISIBLE);
+            return this;
+        }
+        public Builder disablePositiveButton() {
+            dialog.getButton(dialog.BUTTON_POSITIVE).setVisibility(View.INVISIBLE);
             return this;
         }
     }

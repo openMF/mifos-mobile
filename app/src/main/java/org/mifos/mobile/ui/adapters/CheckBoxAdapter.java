@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.mifos.mobile.R;
 import org.mifos.mobile.injection.ActivityContext;
 import org.mifos.mobile.models.CheckboxStatus;
+import org.mifos.mobile.utils.MaterialDialog;
 
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Context context;
     private List<CheckboxStatus> statusList;
+    private int checkIfShouldBEenabledVariable = 0;
+    private boolean isEnabled;
+    private MaterialDialog.Builder dialogBuilder;
 
     @Inject
     public CheckBoxAdapter(@ActivityContext Context context) {
@@ -84,14 +88,57 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ButterKnife.bind(this, itemView);
         }
 
+        @OnClick(R.id.cb_status_select)
+        public void changeValue() {
+            if (!cbStatusSelect.isChecked()) {
+                checkIfShouldBEenabledVariable--;
+            } else {
+                checkIfShouldBEenabledVariable++;
+            }
+            if (checkIfShouldBEenabledVariable > 0) {
+                isEnabled = true;
+            } else {
+                isEnabled = false;
+            }
+            toogleStatus();
+        }
         @OnClick(R.id.ll_row_checkbox)
         public void rowClicked() {
+            if (cbStatusSelect.isChecked()) {
+                checkIfShouldBEenabledVariable--;
+            } else {
+                checkIfShouldBEenabledVariable++;
+            }
+            if (checkIfShouldBEenabledVariable > 0) {
+                isEnabled = true;
+            } else {
+                isEnabled = false;
+            }
+            toogleStatus();
             cbStatusSelect.setChecked(!cbStatusSelect.isChecked());
         }
 
         @OnCheckedChanged(R.id.cb_status_select)
         public void checkChanges() {
             statusList.get(getAdapterPosition()).setChecked(cbStatusSelect.isChecked());
+        }
+    }
+
+    /**
+     This function receives a MaterialDialog Builder to change the button visibility.
+     @param dialogBuilder: Material Dialog Builder
+    */
+    public void setDialogBuilder(MaterialDialog.Builder dialogBuilder) {
+        this.dialogBuilder = dialogBuilder;
+    }
+    /**
+     This function enables or disables Positive Button.
+     */
+    void toogleStatus() {
+        if (isEnabled) {
+            dialogBuilder.enablePositiveButton();
+        } else {
+            dialogBuilder.disablePositiveButton();
         }
     }
 }
