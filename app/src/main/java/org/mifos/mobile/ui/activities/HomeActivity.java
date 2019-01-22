@@ -120,7 +120,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         }
 
     }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -137,6 +136,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     protected void onResume() {
         super.onResume();
+        if (getCheckedItem() == R.id.item_share) {
+            setNavigationViewSelectedItem(R.id.item_home);
+        }
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
                     new IntentFilter(Constants.REGISTER_ON_SERVER));
