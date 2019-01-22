@@ -58,18 +58,22 @@ public class ClientChargeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof RecyclerView.ViewHolder) {
 
             Charge charge = getItem(position);
+            String currencyRepresentation = charge.getCurrency().getDisplaySymbol();
+            if (currencyRepresentation == null) {
+                currencyRepresentation = charge.getCurrency().getCode();
+            }
             ((ViewHolder) holder).tvAmountDue.setText(context.getString(R.string.string_and_string,
-                    charge.getCurrency().getDisplaySymbol(), CurrencyUtil.formatCurrency(context,
+                    currencyRepresentation, CurrencyUtil.formatCurrency(context,
                             charge.getAmount())));
             ((ViewHolder) holder).tvAmountPaid.setText(context.getString(R.string.string_and_string,
-                    charge.getCurrency().getDisplaySymbol(), CurrencyUtil.formatCurrency(context,
+                    currencyRepresentation, CurrencyUtil.formatCurrency(context,
                             charge.getAmountPaid())));
             ((ViewHolder) holder).tvAmountWaived.setText(context.getString(R.string.
-                            string_and_string, charge.getCurrency().getDisplaySymbol(),
-                            CurrencyUtil.formatCurrency(context, charge.getAmountWaived())));
+                            string_and_string, currencyRepresentation,
+                    CurrencyUtil.formatCurrency(context, charge.getAmountWaived())));
             ((ViewHolder) holder).tvAmountOutstanding.setText(context.getString(R.string.
-                            string_and_string, charge.getCurrency().getDisplaySymbol(),
-                            CurrencyUtil.formatCurrency(context, charge.getAmountOutstanding())));
+                            string_and_string, currencyRepresentation,
+                    CurrencyUtil.formatCurrency(context, charge.getAmountOutstanding())));
             ((ViewHolder) holder).tvClientName.setText(charge.getName());
             if (charge.getDueDate().size() > 0) {
                 ((ViewHolder) holder).tvDueDate.setText(DateHelper.getDateAsString(charge.
