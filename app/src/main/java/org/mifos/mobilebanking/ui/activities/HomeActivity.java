@@ -85,7 +85,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private boolean isReceiverRegistered;
     private int menuItem;
-    boolean  doubleBackToExitPressedOnce = false;
+    boolean doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,9 +154,14 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // select which item to open
-        clearFragmentBackStack();
         setToolbarElevation();
         menuItem = item.getItemId();
+        if (menuItem != R.id.item_settings && menuItem != R.id.item_share) {
+            // If we have clicked something other than settings or share
+            // we can safely clear the back stack as a new fragment will replace
+            // the current fragment.
+            clearFragmentBackStack();
+        }
         switch (item.getItemId()) {
             case R.id.item_home:
                 hideToolbarElevation();
@@ -431,6 +436,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // Click Header to view full profile of User
         startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
     }
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
