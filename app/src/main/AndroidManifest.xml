@@ -82,9 +82,7 @@
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize"/>
-
-        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize"/>
 
@@ -92,8 +90,8 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ui.activities.AddBeneficiaryActivity"
-                  android:windowSoftInputMode="adjustResize"/>
-
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize"/>
         <receiver android:name="org.mifos.mobilebanking.ui.widgets.ChargeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
