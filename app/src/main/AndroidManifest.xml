@@ -93,7 +93,8 @@
             android:configChanges="orientation|screenSize"/>
 
         <activity android:name=".ui.activities.AddBeneficiaryActivity"
-                  android:windowSoftInputMode="adjustResize"/>
+                  android:windowSoftInputMode="adjustResize"
+                  android:configChanges="orientation|screenSize"/>
 
         <receiver android:name="org.mifos.mobilebanking.ui.widgets.ChargeAppWidget">
             <intent-filter>
