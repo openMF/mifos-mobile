@@ -73,6 +73,7 @@ public class HelpFragment extends BaseFragment implements HelpView, BottomNaviga
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
+        setToolbarTitle(getString(R.string.help));
 
         showUserInterface();
         if (savedInstanceState == null) {
