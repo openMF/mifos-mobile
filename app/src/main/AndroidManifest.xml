@@ -89,7 +89,8 @@
             android:configChanges="orientation|screenSize"/>
 
         <activity android:name="org.mifos.mobilebanking.ui.activities.NotificationActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize"/>
 
         <activity android:name=".ui.activities.AddBeneficiaryActivity"
                   android:windowSoftInputMode="adjustResize"/>
