@@ -14,7 +14,6 @@ import android.text.format.DateFormat;
 import android.widget.DatePicker;
 
 import org.mifos.mobilebanking.R;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,6 +27,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     static Calendar calendar;
     private String startDateString;
     private long startDate;
+    static Calendar selectedDate;
     private int datePickerType = ALL_DAYS;
 
     /* Constants used to select which type of date picker is being called */
@@ -40,6 +40,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     static {
 
         calendar = Calendar.getInstance();
+        selectedDate = calendar;
         dateSet = new StringBuilder()
                 .append(calendar.get(Calendar.DAY_OF_MONTH) < 10 ?
                         ("0" + calendar.get(Calendar.DAY_OF_MONTH))
@@ -78,12 +79,13 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        int year = selectedDate.get(Calendar.YEAR);
+        int month = selectedDate.get(Calendar.MONTH);
+        int day = selectedDate.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog dialog = new DatePickerDialog(getActivity(),
                 R.style.MaterialDatePickerTheme,
-                this,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
+                this, year, month, day);
 
         Bundle args = getArguments();
         this.datePickerType = args.getInt(Constants.DATE_PICKER_TYPE, this.ALL_DAYS);
@@ -106,6 +108,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         Date date = calendar.getTime();
+        selectedDate = calendar;
         onDatePickListener.onDatePicked(startDateString = DateFormat.
                 format("dd-MM-yyyy", date).toString());
         startDate = DateHelper.getDateAsLongFromString(startDateString, "dd-MM-yyyy");
