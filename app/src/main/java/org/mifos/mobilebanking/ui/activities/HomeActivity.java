@@ -192,7 +192,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             case R.id.item_share:
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
+                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.playstore_link,
                         getString(R.string.share_msg), getApplication().getPackageName()));
                 startActivity(Intent.createChooser(i, getString(R.string.choose)));
                 break;
