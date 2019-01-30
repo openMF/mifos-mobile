@@ -99,6 +99,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     private boolean isDetailVisible;
     private boolean isReceiverRegistered = false;
     private TextView tvNotificationCount;
+    private boolean isUserProfileClicked = false;
 
     public static HomeOldFragment newInstance() {
         HomeOldFragment fragment = new HomeOldFragment();
@@ -162,6 +163,7 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
     public void onResume() {
         super.onResume();
         registerReceiver();
+        isUserProfileClicked = false;
         getActivity().invalidateOptionsMenu();
     }
 
@@ -337,7 +339,10 @@ public class HomeOldFragment extends BaseFragment implements HomeOldView,
 
     @OnClick({R.id.iv_user_image, R.id.iv_circular_user_image})
     public void userImageClicked() {
-        startActivity(new Intent(getActivity(), UserProfileActivity.class));
+        if (!isUserProfileClicked) {
+            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+            isUserProfileClicked = true;
+        }
     }
 
     /**
