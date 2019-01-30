@@ -415,6 +415,7 @@
     <string name="double_amount">%1$.2f</string>
     <string name="double_and_string">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s %2$s</string>
+    <string name="playstore_link">%1$s%2$s</string>
     <string name="string_and_double">%1$s %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
     <string name="invalid_amount">Invalid Amount</string>
