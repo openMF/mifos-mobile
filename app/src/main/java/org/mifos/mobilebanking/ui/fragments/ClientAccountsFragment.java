@@ -69,6 +69,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     private RecyclerView checkBoxRecyclerView;
     private AccountType accountType;
+    private boolean isDialogBoxSelected = false;
 
     public static ClientAccountsFragment newInstance(AccountType accountType) {
         ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
@@ -346,6 +347,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
      * @param account An enum of {@link AccountType}
      */
     private void showFilterDialog(final AccountType account) {
+        if (isDialogBoxSelected) {
+            return;
+        }
+        isDialogBoxSelected = true;
         String title = "";
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -391,6 +396,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
         new MaterialDialog.Builder().init(getActivity())
                 .setTitle(title)
+                .setCancelable(false)
                 .setMessage(getString(R.string.select_you_want))
                 .addView(checkBoxRecyclerView)
                 .setPositiveButton(getString(R.string.filter), new DialogInterface.
@@ -398,6 +404,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        isDialogBoxSelected = false;
                         if (account == AccountType.SAVINGS) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
                                     getFragmentTag(0)))
@@ -430,6 +437,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        isDialogBoxSelected = false;
                         if (account == AccountType.SAVINGS) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
                                     getFragmentTag(0))).clearFilter();
@@ -452,7 +460,13 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
                     }
                 })
-                .setNegativeButton(getString(R.string.cancel))
+                .setNegativeButton(getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            isDialogBoxSelected = false;
+                        }
+                    })
                 .createMaterialDialog()
                 .show();
     }
