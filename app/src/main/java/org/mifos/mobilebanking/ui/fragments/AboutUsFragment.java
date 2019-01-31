@@ -34,6 +34,7 @@ public class AboutUsFragment extends BaseFragment {
     TextView tvCopyRight;
 
     View rootView;
+    private boolean isLicenseOpened = false;
 
     public static AboutUsFragment newInstance() {
         AboutUsFragment fragment = new AboutUsFragment();
@@ -59,6 +60,15 @@ public class AboutUsFragment extends BaseFragment {
 
     @OnClick(R.id.btn_licenses)
     void showOpenSourceLicenses() {
-        startActivity(new Intent(getActivity(), OssLicensesMenuActivity.class));
+        if (!isLicenseOpened) {
+            isLicenseOpened = true;
+            startActivity(new Intent(getActivity(), OssLicensesMenuActivity.class));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        isLicenseOpened = false;
+        super.onResume();
     }
 }
