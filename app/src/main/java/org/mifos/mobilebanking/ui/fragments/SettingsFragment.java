@@ -11,6 +11,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.utils.ConfigurationPreference;
 import org.mifos.mobilebanking.utils.ConfigurationDialogFragmentCompat;
+import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.LanguageHelper;
 
 /**
@@ -68,7 +69,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         if (preference instanceof ListPreference) {
             ListPreference listPreference = (ListPreference) preference;
             LanguageHelper.setLocale(getContext(), listPreference.getValue());
-            startActivity(new Intent(getActivity(), getActivity().getClass()));
+            Intent intent = new Intent(getActivity(), getActivity().getClass());
+            intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true);
+            startActivity(intent);
             getActivity().finish();
         }
     }
