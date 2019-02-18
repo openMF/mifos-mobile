@@ -125,7 +125,7 @@
     <string name="delete_guarantor">Delete Guarantor</string>
     <string name="update_guarantor">Update Guarantor</string>
     <string name="guarantor_type">Guarantor Type</string>
-    <string name="no_guarantors">No Guarantors</string>
+    <string name="no_guarantors">No guarantors</string>
     <string name="tap_to_add_guarantor">Tap to Add Guarantor</string>
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
@@ -205,7 +205,6 @@
     <string name="client_charges">Client Charges</string>
     <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
     </string>
-    <string name="error_fetching_image">Error fetching image </string>
     <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
@@ -321,9 +320,7 @@
     <string name="client_type">Client Type</string>
     <string name="client_classification">Client Classification</string>
     <string name="select_mode">Select Mode</string>
-    <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
-        enter manually or scan account QR code
-    </string>
+    <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account. Either enter manually or scan account QR code</string>
     <string name="invalid_qr">You can\'t make action into your account, please scan other user
         Savings and Loans Account QRCode
     </string>
@@ -404,9 +401,7 @@
         to fetch Phone State, without this permission currency might not be shown in proper format.
         Please enable it in settings
     </string>
-    <string name="msg_setting_activity_not_found">Something went wrong finding Settings activity.
-        \nGo to \'Settings\' and grant permission manually.
-    </string>
+    <string name="msg_setting_activity_not_found">Something went wrong finding Settings activity.  Go to \'Settings\' and grant permission manually.</string>
     <string name="permission_denied_storage">Permission denied to storage</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
 
@@ -544,5 +539,6 @@
         <item>ru</item>
         <item>sw</item>
     </string-array>
+    <string name="error_fetching_image">Error fetching image</string>
 
 </resources>
