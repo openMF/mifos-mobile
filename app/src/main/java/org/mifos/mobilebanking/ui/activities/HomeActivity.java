@@ -212,6 +212,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
      */
     private void showLogoutDialog() {
         new MaterialDialog.Builder().init(HomeActivity.this)
+                .setCancelable(false)
                 .setMessage(R.string.dialog_logout)
                 .setPositiveButton(getString(R.string.logout),
                         new DialogInterface.OnClickListener() {
