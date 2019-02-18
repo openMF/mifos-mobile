@@ -436,6 +436,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     public void onClick(View v) {
         // Click Header to view full profile of User
         startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     /**
