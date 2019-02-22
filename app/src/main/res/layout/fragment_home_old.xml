@@ -293,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:padding="@dimen/default_padding"
+
                         android:clickable="true"
                         android:id="@+id/ll_beneficiaries"
                         android:foreground="?selectableItemBackground"
@@ -301,12 +301,15 @@
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
+                            android:layout_marginLeft="16sp"
+                            android:layout_marginRight="16sp"
                             app:srcCompat="@drawable/ic_beneficiaries_48px"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/beneficiaries"
                             android:gravity="center"
+                            android:padding="0dp"
                             android:layout_marginTop="@dimen/divider_margin"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
                     </LinearLayout>
