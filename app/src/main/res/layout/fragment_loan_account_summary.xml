@@ -51,6 +51,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
                     android:textColor="@color/black"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     tools:text="loanAccountNumber" />
