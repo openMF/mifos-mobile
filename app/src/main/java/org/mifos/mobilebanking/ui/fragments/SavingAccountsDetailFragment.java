@@ -233,9 +233,9 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
             if (savingsWithAssociations.getTransactions() != null &&
                     !savingsWithAssociations.getTransactions().isEmpty()) {
-                tvLastTransaction.setText(getString(R.string.double_and_string,
-                        savingsWithAssociations.getTransactions().get(0).getAmount(),
-                        currencySymbol));
+                tvLastTransaction.setText(getString(R.string.string_and_double,
+                        currencySymbol,
+                        savingsWithAssociations.getTransactions().get(0).getAmount()));
                 tvMadeOnTransaction.setText(DateHelper.getDateAsString(
                         savingsWithAssociations.getLastActiveTransactionDate()));
             } else {
