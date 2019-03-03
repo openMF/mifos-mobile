@@ -209,6 +209,6 @@
     </android.support.v4.widget.NestedScrollView>
     <include
         android:visibility="gone"
-        android:id="@+id/ll_error"
-        layout="@layout/layout_error"/>
+        android:id="@+id/layout_error"
+        layout="@layout/layout_sweet_exception_handler"/>
 </RelativeLayout>

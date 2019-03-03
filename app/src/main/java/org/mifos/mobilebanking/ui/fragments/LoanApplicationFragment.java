@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
@@ -75,14 +78,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     @BindView(R.id.ll_add_loan)
     LinearLayout llAddLoan;
 
-    @BindView(R.id.ll_error)
-    RelativeLayout llError;
-
-    @BindView(R.id.tv_status)
-    TextView tvErrorStatus;
-
-    @BindView(R.id.iv_status)
-    ImageView ivReload;
+    @BindView(R.id.layout_error)
+    View layoutError;
 
     @Inject
     LoanApplicationPresenter loanApplicationPresenter;
@@ -105,6 +102,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private String submittedDate;
     private boolean isDisbursementDate = false;
     private boolean isLoanUpdatePurposesInitialization = true;
+    private SweetUIErrorHandler sweetUIErrorHandler;
 
 
     /**
@@ -159,6 +157,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
         ButterKnife.bind(this, rootView);
         loanApplicationPresenter.attachView(this);
+        sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
 
         showUserInterface();
         if (savedInstanceState == null) {
@@ -284,11 +283,15 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     /**
      * Retries to fetch {@link LoanTemplate} by calling {@code loadLoanTemplate()}
      */
-    @OnClick(R.id.iv_status)
+    @OnClick(R.id.btn_try_again)
     void onRetry() {
-        llError.setVisibility(View.GONE);
-        llAddLoan.setVisibility(View.VISIBLE);
-        loadLoanTemplate();
+        if (Network.isConnected(getContext())) {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(llAddLoan, layoutError);
+            loadLoanTemplate();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -487,11 +490,10 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     @Override
     public void showError(String message) {
         if (!Network.isConnected(getActivity())) {
-            ivReload.setImageResource(R.drawable.ic_error_black_24dp);
-            tvErrorStatus.setText(getString(R.string.internet_not_connected));
-            llAddLoan.setVisibility(View.GONE);
-            llError.setVisibility(View.VISIBLE);
+            sweetUIErrorHandler.showSweetNoInternetUI(llAddLoan, layoutError);
         } else {
+            sweetUIErrorHandler.showSweetErrorUI(message,
+                    llAddLoan, layoutError);
             Toaster.show(rootView, message);
         }
     }
