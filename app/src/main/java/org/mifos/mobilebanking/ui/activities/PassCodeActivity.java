@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mifos.mobile.passcode.MifosPassCodeActivity;
 import com.mifos.mobile.passcode.utils.EncryptionUtil;
@@ -46,6 +47,7 @@ public class PassCodeActivity extends MifosPassCodeActivity {
 
     @Override
     public void startNextActivity() {
+        Toast.makeText(this, "Logged in succesfully", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(PassCodeActivity.this, HomeActivity.class));
     }
 
