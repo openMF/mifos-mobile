@@ -152,8 +152,10 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Predicate<SavingAccount>() {
                     @Override
                     public boolean test(SavingAccount savingAccount) throws Exception {
-                        return savingAccount.getProductName().toLowerCase().contains(input.
-                                toLowerCase());
+                        return (savingAccount.getProductName().toLowerCase().contains(input.
+                                toLowerCase()) ||
+                                savingAccount.getAccountNo().toLowerCase().contains(input.
+                                        toLowerCase()));
                     }
                     }).toList().blockingGet();
     }
@@ -171,8 +173,10 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Predicate<LoanAccount>() {
                     @Override
                     public boolean test(LoanAccount loanAccount) throws Exception {
-                        return loanAccount.getProductName().toLowerCase().contains(input.
-                                toLowerCase());
+                        return (loanAccount.getProductName().toLowerCase().contains(input.
+                                toLowerCase()) ||
+                                loanAccount.getAccountNo().toLowerCase().contains(input.
+                                        toLowerCase()));
                     }
                 }).toList().blockingGet();
     }
@@ -190,8 +194,10 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
                 .filter(new Predicate<ShareAccount>() {
                     @Override
                     public boolean test(ShareAccount shareAccount) throws Exception {
-                        return shareAccount.getProductName().toLowerCase().contains(input.
-                                toLowerCase());
+                        return (shareAccount.getProductName().toLowerCase().contains(input.
+                                toLowerCase()) ||
+                                shareAccount.getAccountNo().toLowerCase().contains(input.
+                                        toLowerCase()));
                     }
                 }).toList().blockingGet();
     }
