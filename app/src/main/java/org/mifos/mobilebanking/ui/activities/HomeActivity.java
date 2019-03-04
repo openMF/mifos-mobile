@@ -187,6 +187,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 break;
             case R.id.item_settings:
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                setNavigationViewSelectedItem(R.id.item_home);
                 break;
             case R.id.item_about_us:
                 replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);

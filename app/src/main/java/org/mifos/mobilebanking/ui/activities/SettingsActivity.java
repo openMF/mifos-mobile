@@ -29,10 +29,8 @@ public class SettingsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (hasSettingsChanged) {
-            ActivityCompat.finishAffinity(this);
-            Intent i = new Intent(this, HomeActivity.class);
-            startActivity(i);
-        }
+        ActivityCompat.finishAffinity(this);
+        Intent i = new Intent(this, HomeActivity.class);
+        startActivity(i);
     }
 }
