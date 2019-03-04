@@ -52,8 +52,8 @@ public class LoanRepaymentScheduleAdapter extends
                 currency, CurrencyUtil.formatCurrency(context, period.
                         getPrincipalLoanBalanceOutstanding())));
 
-        holder.tvOutStandingBalance.setText(context.getString(R.string.double_and_string,
-                        period.getPrincipalOriginalDue(), currency));
+        holder.tvOutStandingBalance.setText(context.getString(R.string.string_and_double,
+                        currency, period.getPrincipalOriginalDue()));
 
         holder.tvDate.setText(DateHelper.getDateAsString(period.getDueDate()));
     }
