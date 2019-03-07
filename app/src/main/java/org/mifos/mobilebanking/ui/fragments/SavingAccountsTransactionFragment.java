@@ -160,7 +160,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         this.savingsWithAssociations = savingsWithAssociations;
         transactionsList = savingsWithAssociations.getTransactions();
 
-        if (transactionsList.size() > 0) {
+        if (transactionsList != null && !transactionsList.isEmpty()) {
             transactionListAdapter.setContext(getContext());
             transactionListAdapter.
                     setSavingAccountsTransactionList(transactionsList);
@@ -316,12 +316,15 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
         switch (group.getCheckedRadioButtonId()) {
             case R.id.rb_four_weeks:
+                resetFilter();
                 filter(DateHelper.subtractWeeks(4), System.currentTimeMillis());
                 break;
             case R.id.rb_three_months:
+                resetFilter();
                 filter(DateHelper.subtractMonths(3), System.currentTimeMillis());
                 break;
             case R.id.rb_six_months:
+                resetFilter();
                 filter(DateHelper.subtractMonths(6), System.currentTimeMillis());
                 break;
         }

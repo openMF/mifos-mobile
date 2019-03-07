@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -21,6 +24,7 @@ import org.mifos.mobilebanking.presenters.SavingAccountsDetailPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.enums.AccountType;
 import org.mifos.mobilebanking.ui.enums.ChargeType;
+import org.mifos.mobilebanking.ui.enums.SavingsAccountState;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.SavingAccountsDetailView;
 import org.mifos.mobilebanking.utils.CircularImageView;
@@ -99,6 +103,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     private Status status;
     private SavingsWithAssociations savingsWithAssociations;
     private SweetUIErrorHandler sweetUIErrorHandler;
+    private boolean isMenuVisible = false;
 
     public static SavingAccountsDetailFragment newInstance(long savingsId) {
         SavingAccountsDetailFragment fragment = new SavingAccountsDetailFragment();
@@ -119,7 +124,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_saving_account_details, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setToolbarTitle(getString(R.string.saving_account_details));
@@ -130,6 +135,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         if (savedInstanceState == null) {
             savingAccountsDetailPresenter.loadSavingsWithAssociations(savingsId);
         }
+        setHasOptionsMenu(true);
         return rootView;
     }
 
@@ -188,6 +194,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     /**
      * Sets Saving account basic info fetched from the server
+     *
      * @param savingsWithAssociations object containing details of a saving account
      */
     @Override
@@ -195,6 +202,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
         if (savingsWithAssociations.getStatus().getSubmittedAndPendingApproval()) {
             sweetUIErrorHandler.showSweetCustomErrorUI(getString(R.string.approval_pending),
                     R.drawable.ic_assignment_turned_in_black_24dp, layoutAccount, layoutError);
+            isMenuVisible = savingsWithAssociations.getStatus().getSubmittedAndPendingApproval();
         } else {
             layoutAccount.setVisibility(View.VISIBLE);
             String currencySymbol = savingsWithAssociations.getCurrency().getDisplaySymbol();
@@ -233,9 +241,9 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
             if (savingsWithAssociations.getTransactions() != null &&
                     !savingsWithAssociations.getTransactions().isEmpty()) {
-                tvLastTransaction.setText(getString(R.string.double_and_string,
-                        savingsWithAssociations.getTransactions().get(0).getAmount(),
-                        currencySymbol));
+                tvLastTransaction.setText(getString(R.string.string_and_double,
+                        currencySymbol,
+                        savingsWithAssociations.getTransactions().get(0).getAmount()));
                 tvMadeOnTransaction.setText(DateHelper.getDateAsString(
                         savingsWithAssociations.getLastActiveTransactionDate()));
             } else {
@@ -245,11 +253,15 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
             }
             showAccountStatus(savingsWithAssociations);
         }
+
         this.savingsWithAssociations = savingsWithAssociations;
+        getActivity().invalidateOptionsMenu();
+        showAccountStatus(savingsWithAssociations);
     }
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
@@ -278,6 +290,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
     /**
      * Sets the status of account i.e. {@code tvAccountStatus} and {@code ivCircularStatus} color
      * according to {@code savingsWithAssociations}
+     *
      * @param savingsWithAssociations object containing details of a saving account
      */
     @Override
@@ -347,4 +360,30 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
                 newInstance(accountDetailsInJson), true, R.id.container);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_savings_account_detail, menu);
+        if (isMenuVisible) {
+            menu.findItem(R.id.menu_withdraw_savings_account).setVisible(true);
+            menu.findItem(R.id.menu_update_savings_account).setVisible(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_withdraw_savings_account:
+                ((BaseActivity) getActivity()).replaceFragment(
+                        SavingsAccountWithdrawFragment.newInstance(savingsWithAssociations),
+                        true, R.id.container);
+                break;
+            case R.id.menu_update_savings_account:
+                ((BaseActivity) getActivity()).replaceFragment(SavingsAccountApplicationFragment
+                                .newInstance(SavingsAccountState.UPDATE, savingsWithAssociations),
+                        true, R.id.container);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

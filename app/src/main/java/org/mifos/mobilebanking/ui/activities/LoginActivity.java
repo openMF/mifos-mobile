@@ -111,6 +111,16 @@ public class LoginActivity extends BaseActivity implements LoginView {
         tilPassword.setError(error);
     }
 
+    @Override
+    public void clearUsernameError() {
+        tilUsername.setErrorEnabled(false);
+    }
+
+    @Override
+    public void clearPasswordError() {
+        tilPassword.setErrorEnabled(false);
+    }
+
     /**
      * Called when Login Button is clicked, used for logging in the user
      */
@@ -119,8 +129,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
         final String username = tilUsername.getEditText().getEditableText().toString();
         final String password = tilPassword.getEditText().getEditableText().toString();
-        tilUsername.setErrorEnabled(false);
-        tilPassword.setErrorEnabled(false);
 
         if (Network.isConnected(this)) {
             loginPresenter.login(username, password);

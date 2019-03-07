@@ -12,6 +12,7 @@ import org.mifos.mobilebanking.api.services.RecentTransactionsService;
 import org.mifos.mobilebanking.api.services.RegistrationService;
 import org.mifos.mobilebanking.api.services.SavingAccountsListService;
 import org.mifos.mobilebanking.api.services.ThirdPartyTransferService;
+import org.mifos.mobilebanking.api.services.UserDetailsService;
 
 import javax.inject.Inject;
 
@@ -37,6 +38,7 @@ public class BaseApiManager {
     private static RegistrationService registrationApi;
     private static NotificationService notificationApi;
     private static GuarantorService guarantorService;
+    private static UserDetailsService userDetailsService;
 
     @Inject
     public BaseApiManager(PreferencesHelper preferencesHelper) {
@@ -56,6 +58,7 @@ public class BaseApiManager {
         registrationApi = createApi(RegistrationService.class);
         notificationApi = createApi(NotificationService.class);
         guarantorService = createApi(GuarantorService.class);
+        userDetailsService = createApi(UserDetailsService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -114,5 +117,9 @@ public class BaseApiManager {
 
     public GuarantorService getGuarantorApi() {
         return guarantorService;
+    }
+
+    public UserDetailsService getUserDetailsService() {
+        return userDetailsService;
     }
 }

@@ -416,4 +416,16 @@
     <string name="pref_configuration">pref_configuration</string>
     <string name="enter_base_url">প্রাথমিক URL লিখুন</string>
     <string name="enter_tenant">ভাড়াটে যান</string>
+    <string name="error_no_charge">কোন অভিযোগ পাওয়া যায় নি</string>
+    <string name="map_marker_heading">সিয়াটেল</string>
+    <string name="one">১</string>
+    <string name="two">২</string>
+    <string name="three">৩</string>
+    <string name="four">৪</string>
+    <string name="five">৫</string>
+    <string name="six">৬</string>
+    <string name="seven">৭</string>
+    <string name="eight">৮</string>
+    <string name="nine">৯</string>
+    <string name="zero">০</string>
 </resources>

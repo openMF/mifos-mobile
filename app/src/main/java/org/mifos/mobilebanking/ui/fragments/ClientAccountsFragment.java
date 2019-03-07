@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ import org.mifos.mobilebanking.models.accounts.share.ShareAccount;
 import org.mifos.mobilebanking.presenters.AccountsPresenter;
 import org.mifos.mobilebanking.ui.activities.HomeActivity;
 import org.mifos.mobilebanking.ui.activities.LoanApplicationActivity;
+import org.mifos.mobilebanking.ui.activities.SavingsAccountApplicationActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.adapters.CheckBoxAdapter;
 import org.mifos.mobilebanking.ui.adapters.ViewPagerAdapter;
@@ -68,6 +70,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     private RecyclerView checkBoxRecyclerView;
     private AccountType accountType;
+    private boolean isDialogBoxSelected = false;
 
     public static ClientAccountsFragment newInstance(AccountType accountType) {
         ClientAccountsFragment clientAccountsFragment = new ClientAccountsFragment();
@@ -142,10 +145,11 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             public void onPageSelected(int position) {
                 getActivity().invalidateOptionsMenu();
                 ((HomeActivity) getActivity()).hideKeyboard(getView());
-                if (position == 1) {
+
+                if (position == 0 || position == 1) {
                     fabCreateLoan.setVisibility(View.VISIBLE);
                 } else {
-                    fabCreateLoan.setVisibility(View.GONE);
+                    fabCreateLoan.hide();
                 }
             }
 
@@ -210,7 +214,14 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     @OnClick(R.id.fab_create_loan)
     public void createLoan() {
-        startActivity(new Intent(getActivity(), LoanApplicationActivity.class));
+        switch (viewPager.getCurrentItem()) {
+            case 0:
+                startActivity(new Intent(getActivity(), SavingsAccountApplicationActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(getActivity(), LoanApplicationActivity.class));
+                break;
+        }
     }
 
 
@@ -310,6 +321,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
             search = (SearchView) menu.findItem(R.id.menu_search_share).getActionView();
         }
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        search.setMaxWidth((int) (0.75 * width));
         search.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -341,6 +356,10 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
      * @param account An enum of {@link AccountType}
      */
     private void showFilterDialog(final AccountType account) {
+        if (isDialogBoxSelected) {
+            return;
+        }
+        isDialogBoxSelected = true;
         String title = "";
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -386,6 +405,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
         new MaterialDialog.Builder().init(getActivity())
                 .setTitle(title)
+                .setCancelable(false)
                 .setMessage(getString(R.string.select_you_want))
                 .addView(checkBoxRecyclerView)
                 .setPositiveButton(getString(R.string.filter), new DialogInterface.
@@ -393,6 +413,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        isDialogBoxSelected = false;
                         if (account == AccountType.SAVINGS) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
                                     getFragmentTag(0)))
@@ -425,6 +446,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        isDialogBoxSelected = false;
                         if (account == AccountType.SAVINGS) {
                             ((AccountsFragment) getChildFragmentManager().findFragmentByTag(
                                     getFragmentTag(0))).clearFilter();
@@ -447,7 +469,13 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
                     }
                 })
-                .setNegativeButton(getString(R.string.cancel))
+                .setNegativeButton(getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            isDialogBoxSelected = false;
+                        }
+                    })
                 .createMaterialDialog()
                 .show();
     }

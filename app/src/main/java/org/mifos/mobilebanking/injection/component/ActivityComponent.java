@@ -33,9 +33,12 @@ import org.mifos.mobilebanking.ui.fragments.LoanAccountSummaryFragment;
 import org.mifos.mobilebanking.ui.fragments.LoanRepaymentScheduleFragment;
 import org.mifos.mobilebanking.ui.fragments.RecentTransactionsFragment;
 import org.mifos.mobilebanking.ui.fragments.SavingAccountsTransactionFragment;
+import org.mifos.mobilebanking.ui.fragments.SavingsAccountApplicationFragment;
+import org.mifos.mobilebanking.ui.fragments.SavingsAccountWithdrawFragment;
 import org.mifos.mobilebanking.ui.fragments.SavingsMakeTransferFragment;
 import org.mifos.mobilebanking.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.mobilebanking.ui.fragments.TransferProcessFragment;
+import org.mifos.mobilebanking.ui.fragments.UpdatePasswordFragment;
 import org.mifos.mobilebanking.ui.fragments.UserProfileFragment;
 
 import dagger.Component;
@@ -117,4 +120,10 @@ public interface ActivityComponent {
     void inject(GuarantorListFragment guarantorListFragment);
 
     void inject(GuarantorDetailFragment guarantorDetailFragment);
+
+    void inject(UpdatePasswordFragment updatePasswordFragment);
+
+    void inject(SavingsAccountApplicationFragment savingsAccountApplicationFragment);
+
+    void inject(SavingsAccountWithdrawFragment savingsAccountWithdrawFragment);
 }

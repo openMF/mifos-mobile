@@ -7,13 +7,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mifos.mobilebanking.api.DataManager;
-import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
+import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.presenters.LoanAccountsDetailPresenter;
 import org.mifos.mobilebanking.ui.views.LoanAccountsDetailView;
 import org.mifos.mobilebanking.util.RxSchedulersOverrideRule;
+import org.mifos.mobilebanking.utils.Constants;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
 
 import io.reactivex.Observable;
 
@@ -40,35 +40,36 @@ public class LoanAccountDetailPresenterTest {
     LoanAccountsDetailView view;
 
     private LoanAccountsDetailPresenter presenter;
-    private LoanAccount loanAccount;
+    private LoanWithAssociations loanWithAssociations;
 
     @Before
     public void setUp() throws Exception {
         presenter = new LoanAccountsDetailPresenter(dataManager, context);
         presenter.attachView(view);
 
-        loanAccount = FakeRemoteDataSource.getLoanAccount();
+        loanWithAssociations = FakeRemoteDataSource.getLoanAccountWithTransaction();
     }
 
     @Test
     public void testLoadLoanAccountDetails() throws Exception {
-        when(dataManager.getLoanAccountDetails(29)).thenReturn(Observable.just(loanAccount));
+        when(dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, 4)).
+                thenReturn(Observable.just(loanWithAssociations));
 
-        presenter.loadLoanAccountDetails(29);
+        presenter.loadLoanAccountDetails(4);
 
         verify(view).showProgress();
         verify(view).hideProgress();
-        verify(view).showLoanAccountsDetail(loanAccount);
+        verify(view).showLoanAccountsDetail(loanWithAssociations);
         verify(view, never()).showErrorFetchingLoanAccountsDetail(context.
                 getString(R.string.error_loan_account_details_loading));
     }
 
     @Test
     public void testLoadLoanAccountDetailsFails() throws Exception {
-        when(dataManager.getLoanAccountDetails(29)).thenReturn(Observable.<LoanAccount>error(new
-                RuntimeException()));
+        when(dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, 4)).
+                thenReturn(Observable.<LoanWithAssociations>error(new RuntimeException()));
 
-        presenter.loadLoanAccountDetails(29);
+        presenter.loadLoanAccountDetails(4);
 
         verify(view).showProgress();
         verify(view).hideProgress();

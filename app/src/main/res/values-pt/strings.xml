@@ -2,13 +2,13 @@
     <string name="app_name">Mifos Mobile</string>
     <string name="login">Entrar</string>
     <string name="toast_welcome">Bem-vindo %1$s</string>
-    <string name="unable_to_connect">Não há ligação à internet</string>
+    <string name="unable_to_connect">Não conectado à internet</string>
     <string name="basic">Básico</string>
     <string name="username">Nome de Utilizador</string>
-    <string name="progress_message_login">A entrar</string>
-    <string name="progress_message_loading">A carregar</string>
-    <string name="password">Palavra-passe</string>
-    <string name="email">Email</string>
+    <string name="progress_message_login">exploração madeireira em</string>
+    <string name="progress_message_loading">Carregando</string>
+    <string name="password">Senha</string>
+    <string name="email">O email</string>
     <string name="accounts">Contas</string>
     <string name="clients">Clientes</string>
     <string name="funds_transfer">Transferência de Fundos</string>
@@ -16,38 +16,37 @@
     <string name="charges">Cobranças</string>
     <string name="questionnaire">Questionário</string>
     <string name="about_us">Sobre nós</string>
-    <string name="saving_account_details">Detalhes da Conta Poupança</string>
+    <string name="saving_account_details">Detalhes da conta de poupança</string>
     <string name="savings_account">Conta Poupança</string>
-    <string name="error_loan_account_details_loading">Erro ao carregar detalhes da Conta de Empréstimo</string>
     <string name="nominal_interest_rate">Taxa de Interesse Nominal</string>
-    <string name="account_number">Conta número </string>
+    <string name="account_number">Número da conta</string>
     <string name="account_balance">Saldo da Conta</string>
-    <string name="total_deposits">Depósito Total</string>
-    <string name="open_drawer">Abrir Caixa</string>
-    <string name="close_drawer">Fechar Caixa</string>
-    <string name="home">Home</string>
+    <string name="total_deposits">Depósitos Totais</string>
+    <string name="open_drawer">Gaveta aberta</string>
+    <string name="close_drawer">Fechar gaveta</string>
+    <string name="home">Lar</string>
     <string name="medium_text">Texto médio</string>
     <string name="small_text">Texto pequeno</string>
-    <string name="client_accounts">Contas do Cliente</string>
-    <string name="splash">Splash</string>
+    <string name="client_accounts">Contas de Clientes</string>
+    <string name="splash">esguicho</string>
     <string name="savings">Poupança</string>
     <string name="loan">Empréstimo</string>
     <string name="loan_account">Conta de Empréstimos</string>
     <string name="share">Partilhar</string>
     <string name="share_account">Partilhar conta</string>
-    <string name="clients_list">Escolher um cliente</string>
+    <string name="clients_list">Escolheu um cliente</string>
     <string name="working">A trabalhar</string>
     <string name="status_image">Imagem de Status</string>
     <string name="loan_repayment_schedule">Cronograma de Reembolso</string>
     <string name="last_transaction">Última Transação </string>
     <string name="made_on">Feito em</string>
-    <string name="make_transfer">Fazer uma transferência</string>
-    <string name="select_loan_product">Selecionar produto de empréstimo*</string>
-    <string name="purpose_of_loan">Objetivo do Empréstimo*</string>
+    <string name="make_transfer">Faça uma transferência</string>
+    <string name="select_loan_product">Selecione o produto de empréstimo *</string>
+    <string name="purpose_of_loan">Finalidade do Empréstimo *</string>
     <string name="principal_amount">Quantia Principal*</string>
     <string name="amount">Quantia</string>
     <string name="remark">Observação</string>
-    <string name="expected_disbursement_date">Data de despesa esperada</string>
+    <string name="expected_disbursement_date">Data de desembolso esperada</string>
     <string name="submission_date">Data de submissão</string>
 	<string name="submitted">Submetido</string>
     <string name="disbursement">Desembolso</string>
@@ -56,23 +55,23 @@
     <string name="update_loan">Atualizar empréstimo</string>
     <string name="withdraw_loan">Levantar empréstimo</string>
     <string name="withdraw_loan_reason">Razão para levantar empréstimo</string>
-    <string name="loan_account_withdrawn_successfully">Levantamento de conta empréstimo feito com sucesso</string>
+    <string name="loan_account_withdrawn_successfully">Conta de empréstimo retirada com sucesso</string>
     <string name="submit_loan">Submeter Empréstimo</string>
-    <string name="new_loan_application">Nova solicitação de empréstimo para </string>
-    <string name="update_loan_application">Atualizar solicitação de empréstimo para </string>
-    <string name="loan_interest_type">Tipo de juro</string>
+    <string name="new_loan_application">Novo pedido de empréstimo para</string>
+    <string name="update_loan_application">Atualizar pedido de empréstimo para</string>
+    <string name="loan_interest_type">Tipo de interesse</string>
     <string name="amortization">Amortização</string>
     <string name="interest_calculation_period">Período de calculo de juro</string>
     <string name="repayment_strategy">Estratégia de Reembolso</string>
-    <string name="pay_to">Pagar a</string>
+    <string name="pay_to">Pagar para</string>
     <string name="pay_from">Pagar da</string>
     <string name="cancel">Cancelar</string>
     <string name="review_transfer">Rever</string>
     <string name="transfer_to">Transferir para</string>
     <string name="transfer_from">Transferir da</string>
-    <string name="making_transfer">A fazer transferência</string>
+    <string name="making_transfer">Fazendo Transferência</string>
     <string name="deposit">Depositar</string>
-    <string name="enter_amount">Insere quantia</string>
+    <string name="enter_amount">Digite Montante</string>
     <string name="remark_is_mandatory">Observação é obrigatória</string>
     <string name="approved">Aprovado</string>
     <string name="shares_pending">Pendente</string>
@@ -82,25 +81,25 @@
     <string name="waiting">À espera</string>
     <string name="overpaid">Excesso de pagamento</string>
     <string name="in_arrears">Em atraso</string>
-    <string name="select_you_want">Selecione tudo o que deseja</string>
+    <string name="select_you_want">Selecione tudo o que você deseja aplicar</string>
     <string name="filter_savings">Filtrar Contas Poupança</string>
     <string name="filter_loan">Filtrar Contas Empréstimo</string>
-    <string name="filter_share">Filtrar Contas de Partilha</string>
+    <string name="filter_share">Filtrar contas de compartilhamento</string>
     <string name="search">Procurar</string>
-    <string name="select_pay_to">Selecione conta a pagar</string>
-    <string name="select_pay_from">Selecione conta da qual pagar</string>
-    <string name="enter_remarks">Insira observações para a transferência</string>
+    <string name="select_pay_to">Selecione uma conta para pagar</string>
+    <string name="select_pay_from">Selecione uma conta para pagar</string>
+    <string name="enter_remarks">Insira comentários para transferência</string>
     <string name="select_beneficiary">Selecione Beneficiário</string>
     <string name="continue_str">Continuar</string>
     <string name="close">Fechar</string>
     <string name="choose_transfer_type">Escolha o tipo de transferência</string>
     <string name="transfer_to_savings">Transferir para as poupanças</string>
-    <string name="transfer_from_savings">Transferir das poupanças</string>
+    <string name="transfer_from_savings">Transferir da poupança</string>
     <string name="loan_charges">Cobranças de empréstimos</string>
     <string name="savings_charges">Cobranças de poupanças</string>
     <string name="active">Ativo</string>
     <string name="closed">Fechado</string>
-	<string name="withdrawn">Levantado</string>
+	<string name="withdrawn">Retirada</string>
     <string name="need_approval">Necessita de aprovação</string>
     <string name="pending">Pendente</string>
     <string name="matured">Amadurecido</string>
@@ -108,7 +107,7 @@
     <string name="first_name">Primeiro Nome</string>
     <string name="last_name">Último Nome</string>
     <string name="phone_number">Número de Telefone</string>
-    <string name="register">Registar</string>
+    <string name="register">Registo</string>
     <string name="request_id">ID de Pedido</string>
     <string name="authentication_token">Token de Autenticação</string>
     <string name="verify">Verificar</string>
@@ -116,7 +115,7 @@
     <string name="sign_up">A registar</string>
     <string name="verified">Utilizador foi verificado com sucesso</string>
     <string name="rb_mobile">móvel</string>
-    <string name="rb_email">email</string>
+    <string name="rb_email">o email</string>
     <string name="verification_mode">Modo de verificação</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Importar QR</string>
@@ -145,8 +144,8 @@
     <string name="empty_repayment_schedule">Não existe nenhum cronograma de reembolso associado</string>
     <string name="no_more_transactions_available">Não há mais transações disponíveis</string>
     <string name="no_transaction">Sem transações</string>
-    <string name="no_dob_found">No DOB found.</string>
-    <string name="not_assigned_with_any_group">Not Assigned with any group</string>
+    <string name="no_dob_found">Nenhum DOB encontrado.</string>
+    <string name="not_assigned_with_any_group">Não atribuído a nenhum grupo</string>
 
     <string name="error_unauthorised">Nome de utilizador / Palavra-passe inválidos</string>
     <string name="error_message_server">Erro ao carregar resposta do servidor</string>
@@ -164,10 +163,10 @@
     
 	<string name="error_recent_transactions_loading">Erro ao carregar Transações Recentes</string>
     <string name="error_client_charge_loading">Erro ao carregar cobranças de cliente</string>
-    <string name="error_no_charge">No charges found</string>
+    <string name="error_no_charge">Nenhuma cobrança encontrada</string>
 	<string name="error_client_not_found">Cliente não encontrado</string>
     <string name="error_fetching_client">Erro ao buscar cliente</string>
-    <string name="error_fetching_user_profile">Failed to fetch User Profile</string>
+    <string name="error_fetching_user_profile">Falha ao buscar o perfil do usuário</string>
 	<string name="error_fetching_accounts">Erro ao buscar contas</string>
     <string name="error_fetching_repayment_schedule">Erro ao buscar Repayment Schedule</string>
     <string name="error_same_account_transfer">Não é possível transferir dentro da mesma conta</string>
@@ -205,14 +204,14 @@
     <string name="error_reading_qr"> Erro ao ler código QR, verifique se selecionou a região correta
     </string>
     <string name="error_fetching_image">Erro ao buscar imagem </string>
-	<string name="fetching_client">Buscar Cliente</string>
+	<string name="fetching_client">Buscando Cliente</string>
 
     <string name="not_contain_username">Espaços</string>
     <string name="client_name">Nome de Cliente</string>
     <string name="account_status">Status da conta</string>
     <string name="saving_product_name">Nome do produto</string>
     <string name="total_withdrawal">Total de levantamentos</string>
-    <string name="min_required_balance">Saldo mínimo</string>
+    <string name="min_required_balance">saldo mínimo exigido</string>
     <string name="loan_product_name">Nome do produto</string>
     <string name="loan_purpose">Objetivo do empréstimo</string>
     <string name="principal">Principal</string>
@@ -237,7 +236,7 @@
     <string name="make_payment">Fazer pagamento</string>
     <string name="loan_type">Tipo de empréstimo</string>
     <string name="currency">Moeda</string>
-    <string name="repayment_schedule">Cronograma de reembolso</string>
+    <string name="repayment_schedule">Cronograma de pagamento</string>
     <string name="transactions">Transações</string>
     <string name="transfer">Transferência</string>
     <string name="approval_pending">Aprovação pendente</string>
@@ -371,19 +370,16 @@
 	<string name="dialog_logout">Tem a certeza que deseja sair?</string>
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_action_cancel">Cancelar</string>
-    <string name="dialog_action_back">Voltar</string>
+    <string name="dialog_action_back">de volta</string>
 	<string name="dialog_permission_denied">Permissão recusada</string>
     <string name="dialog_action_i_am_sure">Tenho a certeza</string>
     <string name="dialog_action_re_try">Tentar novamente</string>
     <string name="dialog_action_app_settings">Definições da App</string>
-    <string name="dialog_message_camera_permission_denied_prompt">Sem permissão da camera não conseguirá
+    <string name="dialog_message_camera_permission_denied_prompt">Sem permissão da câmera não conseguirá
         digitalizar o código QR para adicionar beneficiário. Tem a certeza que deseja recusar esta permissão?
     </string>
 	
-    <string name="dialog_message_camera_permission_never_ask_again">Recusou a permissão para
-        usar a camera. Sem esta permissão, não conseguirá adicionar beneficiários com código QR.
-        Por favor, ative-a nas definições.
-	</string>
+    <string name="dialog_message_camera_permission_never_ask_again">Você negou permissão para usar a câmera, sem essa permissão você não poderá adicionar beneficiários usando o QR Code. Por favor, habilite-o nas configurações</string>
     <string name="dialog_message_storage_permission_denied_prompt">Sem permissão de armazenamento não conseguirá
         enviar um código QR para adicionar beneficiário. Tem a certeza que quer recusar esta permissão?
     </string>
@@ -419,8 +415,7 @@
     <string name="invalid_amount">Quantia inválida</string>
     <string name="exit_message">Pressione outra vez para sair</string>
 
-    <string name="package_name" translatable="false">package</string>
-    <string name="permission_denied_camera">Permissão Recusada para usar a Camera</string>
+    <string name="permission_denied_camera">Permissão Recusada para usar a Câmera</string>
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -442,8 +437,8 @@
     <string name="manage_accounts">Gerir contas</string>
     <string name="more">Mais</string>
 	<string name="settings">Definições</string>
-    <string name="language">Lingua</string>
-    <string name="choose_language">Escolha a sua lingua</string>
+    <string name="language">Língua</string>
+    <string name="choose_language">Escolha a sua língua</string>
     <string name="notification">Notificações</string>
     <string name="base_url">URL Base</string>
     <string name="tenant">Inquilino</string>
@@ -471,7 +466,7 @@
 		
         </item>
         <item>De forma a criar Beneficiário, vá à opção Beneficiário em Home, clique no botão circular presente
-			no lado inferior direito, escolha a opção de Scan que abre a sua camera,
+			no lado inferior direito, escolha a opção de Scan que abre a sua câmera,
 			digitalize o código QR de outra pessoa da qual deseja criar um beneficiário,
 			e depois de preencher os detalhes necessários conseguirá criar um beneficiário usando QR.
 			
@@ -483,7 +478,6 @@
 
     </string-array>
 
-    <string name="language_type" translatable="false">language_type</string>
     <string name="total_saving_balance">Saldo total de poupanças</string>
     <string name="total_loan_balance">Saldo total de empréstimos</string>
     <string name="total_loan_savings_description">Os saldos das contas de poupança e empréstimo são
@@ -497,8 +491,8 @@
     <string name="copy_right_mifos">©2016-%1$s Inicitiva Mifos.</string>
     <string name="all_rights_reserved">Todos os direitos reservados.</string>
     <string name="licenses">Licenças</string>
-    <string name="transfer_error">Impossível completar a transferência, por favor tente novamente mais tarde.</string>
-    <string name="please_wait">Por favor espere...</string>
+    <string name="transfer_error">Não é possível concluir a transferência, por favor, tente novamente mais tarde</string>
+    <string name="please_wait">Por favor espere…</string>
     <string name="message">mensagem</string>
     <string name="no_notification">Sem notificações</string>
 
@@ -508,5 +502,4 @@
     <string name="enter_base_url">Insira o URl Base</string>
     <string name="enter_tenant">Insira o inquilino</string>
     <string name="account_type_loan" translatable="false">accountType.loan</string>
-	
 </resources>

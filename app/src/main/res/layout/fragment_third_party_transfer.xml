@@ -194,7 +194,7 @@
                     android:gravity="start"
                     android:visibility="gone"
                     android:hint="@string/amount"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/remark"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="text"
                     android:visibility="gone"
                     android:paddingBottom="16dp"/>

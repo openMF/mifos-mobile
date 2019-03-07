@@ -48,10 +48,13 @@ public class RecentTransactionListAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Transaction transaction = getItem(position);
-
-        holder.tvAmount.setText(context.getString(R.string.string_and_string, transaction.
-                getCurrency().getDisplaySymbol(), CurrencyUtil.formatCurrency(context,
-                transaction.getAmount())));
+        String currencyRepresentation = transaction.getCurrency().getDisplaySymbol();
+        if (currencyRepresentation == null) {
+            currencyRepresentation = transaction.getCurrency().getCode();
+        }
+        holder.tvAmount.setText(context.getString(R.string.string_and_string,
+                currencyRepresentation, CurrencyUtil.formatCurrency(context,
+                        transaction.getAmount())));
         holder.tvTypeValue.setText(Utils.formatTransactionType(transaction.getType().getValue()));
         holder.tvTransactionsDate.setText(DateHelper.getDateAsString(transaction.
                 getSubmittedOnDate()));

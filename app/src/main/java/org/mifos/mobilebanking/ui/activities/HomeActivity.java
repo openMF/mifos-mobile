@@ -85,7 +85,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private boolean isReceiverRegistered;
     private int menuItem;
-    boolean  doubleBackToExitPressedOnce = false;
+    boolean doubleBackToExitPressedOnce = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +138,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
 
     @Override
     protected void onResume() {
-        setNavigationViewSelectedItem(R.id.item_home);
         super.onResume();
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
@@ -155,9 +154,14 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // select which item to open
-        clearFragmentBackStack();
         setToolbarElevation();
         menuItem = item.getItemId();
+        if (menuItem != R.id.item_settings && menuItem != R.id.item_share) {
+            // If we have clicked something other than settings or share
+            // we can safely clear the back stack as a new fragment will replace
+            // the current fragment.
+            clearFragmentBackStack();
+        }
         switch (item.getItemId()) {
             case R.id.item_home:
                 hideToolbarElevation();
@@ -193,7 +197,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             case R.id.item_share:
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
+                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.playstore_link,
                         getString(R.string.share_msg), getApplication().getPackageName()));
                 startActivity(Intent.createChooser(i, getString(R.string.choose)));
                 break;
@@ -213,6 +217,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
      */
     private void showLogoutDialog() {
         new MaterialDialog.Builder().init(HomeActivity.this)
+                .setCancelable(false)
                 .setMessage(R.string.dialog_logout)
                 .setPositiveButton(getString(R.string.logout),
                         new DialogInterface.OnClickListener() {
@@ -288,7 +293,7 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     public void showUserDetails(Client client) {
         this.client = client;
-        preferencesHelper.setUserName(client.getDisplayName());
+        preferencesHelper.setClientName(client.getDisplayName());
         tvUsername.setText(client.getDisplayName());
     }
 
@@ -314,8 +319,8 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 @Override
                 public void run() {
                     String userName;
-                    if (!preferencesHelper.getUserName().isEmpty()) {
-                        userName = preferencesHelper.getUserName();
+                    if (!preferencesHelper.getClientName().isEmpty()) {
+                        userName = preferencesHelper.getClientName();
                     } else {
                         userName = getString(R.string.app_name);
                     }
@@ -431,7 +436,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     public void onClick(View v) {
         // Click Header to view full profile of User
         startActivity(new Intent(HomeActivity.this, UserProfileActivity.class));
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from

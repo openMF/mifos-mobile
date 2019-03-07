@@ -8,6 +8,10 @@ import org.mifos.mobilebanking.models.client.Client;
 import org.mifos.mobilebanking.models.guarantor.GuarantorApplicationPayload;
 import org.mifos.mobilebanking.models.guarantor.GuarantorPayload;
 import org.mifos.mobilebanking.models.guarantor.GuarantorTemplatePayload;
+import org.mifos.mobilebanking.models.UpdatePasswordPayload;
+import org.mifos.mobilebanking.models.accounts.savings.SavingsAccountApplicationPayload;
+import org.mifos.mobilebanking.models.accounts.savings.SavingsAccountUpdatePayload;
+import org.mifos.mobilebanking.models.accounts.savings.SavingsAccountWithdrawPayload;
 import org.mifos.mobilebanking.models.notification.MifosNotification;
 import org.mifos.mobilebanking.models.notification.NotificationRegisterPayload;
 import org.mifos.mobilebanking.models.Page;
@@ -29,6 +33,7 @@ import org.mifos.mobilebanking.models.register.UserVerify;
 import org.mifos.mobilebanking.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobilebanking.models.templates.beneficiary.BeneficiaryTemplate;
 import org.mifos.mobilebanking.models.templates.loans.LoanTemplate;
+import org.mifos.mobilebanking.models.templates.savings.SavingsAccountTemplate;
 
 import java.util.List;
 
@@ -122,6 +127,37 @@ public class DataManager {
 
     public Observable<ResponseBody> makeTransfer(TransferPayload transferPayload) {
         return baseApiManager.getSavingAccountsListApi().makeTransfer(transferPayload);
+    }
+
+    public Observable<SavingsAccountTemplate> getSavingAccountApplicationTemplate(long client) {
+        return baseApiManager.getSavingAccountsListApi()
+                .getSavingsAccountApplicationTemplate(client);
+    }
+
+    public Observable<ResponseBody> submitSavingAccountApplication(
+            SavingsAccountApplicationPayload payload) {
+        return baseApiManager.getSavingAccountsListApi().submitSavingAccountApplication(payload);
+    }
+
+    public Observable<ResponseBody> updateSavingsAccount(
+            String accountId, SavingsAccountUpdatePayload payload) {
+        return baseApiManager.getSavingAccountsListApi()
+                .updateSavingsAccountUpdate(accountId, payload);
+    }
+
+    public Observable<ResponseBody> submitWithdrawSavingsAccount(
+            String accountId, SavingsAccountWithdrawPayload payload) {
+        return baseApiManager.getSavingAccountsListApi()
+                .submitWithdrawSavingsAccount(accountId, payload)
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<?
+                        extends ResponseBody>>() {
+                    @Override
+                    public ObservableSource<? extends
+                            ResponseBody> apply(Throwable throwable) throws Exception {
+                        return Observable.just(ResponseBody.create(MediaType.parse("text/parse"),
+                                "Saving Account Withdrawn Successfully"));
+                    }
+                });
     }
 
     public Observable<LoanAccount> getLoanAccountDetails(long loanId) {
@@ -219,6 +255,10 @@ public class DataManager {
 
     public Observable<NotificationUserDetail> getUserNotificationId(long id) {
         return baseApiManager.getNotificationApi().getUserNotificationId(id);
+    }
+
+    public Observable<ResponseBody> updateAccountPassword(UpdatePasswordPayload payload) {
+        return baseApiManager.getUserDetailsService().updateAccountPassword(payload);
     }
 
     public long getClientId() {

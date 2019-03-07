@@ -9,8 +9,10 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.utils.ConfigurationPreference;
 import org.mifos.mobilebanking.utils.ConfigurationDialogFragmentCompat;
+import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.LanguageHelper;
 
 /**
@@ -68,9 +70,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         if (preference instanceof ListPreference) {
             ListPreference listPreference = (ListPreference) preference;
             LanguageHelper.setLocale(getContext(), listPreference.getValue());
-            startActivity(new Intent(getActivity(), getActivity().getClass()));
+            Intent intent = new Intent(getActivity(), getActivity().getClass());
+            intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true);
+            startActivity(intent);
             getActivity().finish();
         }
     }
 
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        switch (preference.getKey()) {
+            case Constants.PASSWORD:
+                ((BaseActivity) getActivity()).replaceFragment(UpdatePasswordFragment
+                        .newInstance(), false, R.id.container);
+                break;
+        }
+        return super.onPreferenceTreeClick(preference);
+    }
 }

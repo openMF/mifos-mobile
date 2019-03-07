@@ -103,7 +103,7 @@ dependencies {
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
-        transitive = true;
+        transitive = true
     }
 
     //qr code

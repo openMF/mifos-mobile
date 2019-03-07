@@ -26,6 +26,7 @@
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
     <string name="home">Home</string>
+    <string name="large_text">Large Text</string>
     <string name="medium_text">Medium Text</string>
     <string name="small_text">Small Text</string>
     <string name="client_accounts">Client Accounts</string>
@@ -120,6 +121,7 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Import QR</string>
+
     <string name="view_guarantor">View Guarantor</string>
     <string name="add_guarantor">Add Guarantor</string>
     <string name="delete_guarantor">Delete Guarantor</string>
@@ -130,6 +132,33 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
+    <string name="select_product_id">Select Product Id*</string>
+    <string name="account_id">Account Id</string>
+    <string name="new_saving_account_application">New Saving Account Application</string>
+    <string name="update_savings_account">Update Savings Account</string>
+    <string name="withdraw_savings_account">Withdraw Savings Account</string>
+    <string name="withdrawal_date">Withdrawal Date</string>
+    <string name="new_saving_account_created_successfully">New Saving Account created successfully.</string>
+    <string name="saving_account_updated_successfully">Saving Account Updated Successfully</string>
+    <string name="savings_account_withdraw_successful">Savings Account Withdraw Successful</string>
+    <string name="string_savings_account">%1$s Savings Account</string>
+    <string name="apply">Apply</string>
+    <string name="apply_savings_account">Apply Savings Account</string>
+    <string name="update">Update</string>
+    <string name="edit">Edit</string>
+    <string name="passcode">Passcode</string>
+    <string name="other">Other</string>
+    <string name="gender">Gender</string>
+    <string name="no">No</string>
+    <string name="found">found</string>x
+
+    <string name="change_passcode">Change Passcode</string>
+    <string name="change_app_passcode">Change App Passcode</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_account_password">Change your Account Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="string_changed_successfully">%1$s changed successfully</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
         deposit
@@ -415,6 +444,7 @@
     <string name="double_amount">%1$.2f</string>
     <string name="double_and_string">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s %2$s</string>
+    <string name="playstore_link">%1$s%2$s</string>
     <string name="string_and_double">%1$s %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
     <string name="invalid_amount">Invalid Amount</string>
@@ -508,16 +538,19 @@
     <string name="enter_base_url">Enter the Base URL</string>
     <string name="enter_tenant">Enter the Tenant</string>
     <string name="account_type_loan" translatable="false">accountType.loan</string>
+    <string name="refresh">Refresh</string>
     <string-array name="languages" translatable="false">
         <item>English</item>
         <item>हिंदी</item>
         <item>عربى</item>
+        <item>اُردُو</item>
         <item>বাঙালি</item>
         <item>Español</item>
         <item>français</item>
         <item>bahasa Indonesia</item>
         <item>ភាសាខ្មែរ</item>
         <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
         <item>မြန်မာ</item>
         <item>Polski</item>
         <item>Português</item>
@@ -529,12 +562,14 @@
         <item>en</item>
         <item>hi</item>
         <item>ar</item>
+        <item>ur</item>
         <item>bn</item>
         <item>es</item>
         <item>fr</item>
         <item>in</item>
         <item>km</item>
         <item>kn</item>
+        <item>te</item>
         <item>my</item>
         <item>pl</item>
         <item>pt</item>
