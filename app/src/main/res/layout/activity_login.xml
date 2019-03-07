@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:fitsSystemWindows="true"
@@ -33,7 +33,7 @@
                 android:src="@drawable/mifos_logo"/>
 
             <!-- Username  Label -->
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_username"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
@@ -50,10 +50,10 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password Label -->
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_password"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
@@ -70,9 +70,9 @@
                     android:drawablePadding="@dimen/layout_padding_8dp"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
@@ -81,7 +81,7 @@
                 android:text="@string/login"
                 android:textColor="@color/white"/>
 
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/btn_register"
                 android:layout_height="wrap_content"
@@ -92,5 +92,5 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

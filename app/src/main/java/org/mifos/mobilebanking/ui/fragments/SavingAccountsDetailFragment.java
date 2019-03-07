@@ -3,7 +3,7 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
@@ -166,7 +167,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     /**
      * Opens {@link SavingsMakeTransferFragment} if status is ACTIVE else shows a
-     * {@link android.support.design.widget.Snackbar} that Account should be Active
+     * {@link Snackbar} that Account should be Active
      */
     @OnClick(R.id.tv_deposit)
     void deposit() {
@@ -180,7 +181,7 @@ public class SavingAccountsDetailFragment extends BaseFragment implements Saving
 
     /**
      * Opens {@link SavingsMakeTransferFragment} if status is ACTIVE else shows a
-     * {@link android.support.design.widget.Snackbar} that Account should be Active
+     * {@link Snackbar} that Account should be Active
      */
     @OnClick(R.id.tv_make_a_transfer)
     void transfer() {

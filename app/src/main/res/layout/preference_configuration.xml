@@ -7,7 +7,7 @@
     android:padding="@dimen/layout_padding_16dp"
     android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_base_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,9 +23,9 @@
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:drawablePadding="@dimen/layout_padding_8dp"
             android:id="@+id/et_base_url"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_tenant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,5 +40,5 @@
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:drawablePadding="@dimen/layout_padding_8dp"
             android:id="@+id/et_tenant"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

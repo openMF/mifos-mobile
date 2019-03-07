@@ -1,12 +1,14 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
@@ -111,7 +113,7 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     }
 
     /**
-     * Shows an error in {@link android.support.design.widget.Snackbar} if any error occurs during
+     * Shows an error in {@link Snackbar} if any error occurs during
      * withdrawing of Loan
      *
      * @param message Error Message displayed

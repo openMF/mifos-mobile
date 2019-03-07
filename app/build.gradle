@@ -17,7 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
         // A test runner provided by https://code.google.com/p/android-test-kit/
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         ndk {
@@ -66,14 +66,14 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
 
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:preference-v7:$rootProject.supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
+    implementation "com.google.android.material:material:$rootProject.supportLibraryVersion"
+    implementation "androidx.cardview:cardview:$rootProject.supportLibraryVersion"
+    implementation "androidx.preference:preference:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
     implementation "com.google.android.gms:play-services-gcm:$rootProject.playServicesVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.supportLibraryVersion"
+    implementation "androidx.vectordrawable:vectordrawable:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.playServicesVersion"
     implementation "com.isseiaoki:simplecropview:$rootProject.cropviewVersion"
 
@@ -117,7 +117,7 @@ dependencies {
     implementation "com.mifos.mobile:mifos-passcode:$mifosPasscodeVersion"
 
     //multidex
-    implementation "com.android.support:multidex:$rootProject.multiDexVersion"
+    implementation "androidx.multidex:multidex:$rootProject.multiDexVersion"
 
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
@@ -126,16 +126,16 @@ dependencies {
     androidTestImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
-    androidTestImplementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
-    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
+    androidTestImplementation "androidx.annotation:annotation:$rootProject.supportLibraryVersion"
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
-    androidTestImplementation "com.android.support.test:rules:$rootProject.rulesVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
 }
 apply plugin: 'com.google.gms.google-services'

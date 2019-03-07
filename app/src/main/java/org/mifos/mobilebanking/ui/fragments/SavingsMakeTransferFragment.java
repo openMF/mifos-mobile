@@ -1,10 +1,10 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatButton;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,6 +37,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 import org.mifos.mobilebanking.utils.Utils;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -272,7 +273,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} with {@code message}
+     * Shows a {@link Snackbar} with {@code message}
      * @param message String to be shown
      */
     @Override

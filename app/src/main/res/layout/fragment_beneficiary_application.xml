@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +31,7 @@
                 android:paddingTop="@dimen/default_margin"
                 style="@style/Widget.AppCompat.Spinner.Underlined" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/til_account_number"
@@ -46,9 +46,9 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/til_office_name"
@@ -63,9 +63,9 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/til_transfer_limit"
@@ -81,9 +81,9 @@
                     android:maxLines="1"
                     android:maxLength="9"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/til_beneficiary_name"
@@ -98,16 +98,16 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_beneficiary_submit"
                 style="@style/Button.Base"
                 android:layout_marginTop="10dp"
                 android:text="@string/submit_beneficiary"/>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
     <include
         android:visibility="gone"
         android:id="@+id/layout_error"

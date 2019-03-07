@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_guarantors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -23,7 +23,7 @@
         android:visibility="gone"
         layout="@layout/layout_sweet_exception_handler"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_loan_guarantor"
         android:layout_margin="@dimen/default_margin"
         app:srcCompat="@drawable/ic_add_white_24dp"
@@ -31,4 +31,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

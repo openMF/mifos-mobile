@@ -1,7 +1,7 @@
 package org.mifos.mobilebanking.utils;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.CheckboxStatus;

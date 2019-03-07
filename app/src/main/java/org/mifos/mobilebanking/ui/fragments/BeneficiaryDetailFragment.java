@@ -2,7 +2,7 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
@@ -145,7 +147,7 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} on successfull deletion of a
+     * Shows a {@link Snackbar} on successfull deletion of a
      * Beneficiary and then pops current fragment
      */
     @Override

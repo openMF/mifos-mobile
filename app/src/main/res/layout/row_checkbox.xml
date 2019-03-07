@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/default_margin"
     android:paddingEnd="@dimen/default_margin"
     android:layout_height="wrap_content">
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cb_status_select"

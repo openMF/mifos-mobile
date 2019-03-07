@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -84,7 +84,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding" />
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/til_principal_amount"
@@ -103,7 +103,7 @@
                     android:layout_marginRight="@dimen/default_padding"
                     android:layout_marginEnd="@dimen/default_padding"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout style="@style/LinearLayout.Width"
@@ -195,7 +195,7 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_loan_submit"
                 style="@style/Button.Base"
                 android:layout_marginTop="10dp"
@@ -206,7 +206,7 @@
                 android:layout_marginEnd="@dimen/default_padding"/>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
     <include
         android:visibility="gone"
         android:id="@+id/ll_error"

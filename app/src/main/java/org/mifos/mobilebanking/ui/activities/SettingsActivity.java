@@ -2,7 +2,7 @@ package org.mifos.mobilebanking.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;

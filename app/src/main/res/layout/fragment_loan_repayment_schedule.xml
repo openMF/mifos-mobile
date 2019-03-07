@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible">
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -89,7 +89,7 @@
                     tools:text="@string/no_of_payments"/>
             </TableRow>
         </TableLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                     android:padding="6dp"
                     android:background="@drawable/rectangular_border"/>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_repayment_schedule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

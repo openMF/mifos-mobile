@@ -1,9 +1,11 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.NestedScrollView;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.core.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -270,7 +272,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     }
 
     /**
-     * Displays a {@link android.support.design.widget.Snackbar} on successfully creation of
+     * Displays a {@link Snackbar} on successfully creation of
      * Beneficiary and pops fragments in order to go back to {@link BeneficiaryListFragment}
      */
     @Override
@@ -280,7 +282,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     }
 
     /**
-     * Displays a {@link android.support.design.widget.Snackbar} on successfully updation of
+     * Displays a {@link Snackbar} on successfully updation of
      * Beneficiary and pops fragments in order to go back to {@link BeneficiaryListFragment}
      */
     @Override

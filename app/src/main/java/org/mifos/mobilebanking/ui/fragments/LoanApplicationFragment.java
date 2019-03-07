@@ -1,9 +1,11 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -461,7 +463,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} after Loan Application is created
+     * Shows a {@link Snackbar} after Loan Application is created
      * successfully
      */
     @Override
@@ -471,7 +473,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} after Loan Application is updated
+     * Shows a {@link Snackbar} after Loan Application is updated
      * successfully
      */
     @Override

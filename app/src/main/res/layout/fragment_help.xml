@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/margin_4dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -29,7 +29,7 @@
         android:layout_marginRight="@dimen/default_margin"
         android:id="@+id/rv_faq"/>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bnv_help"

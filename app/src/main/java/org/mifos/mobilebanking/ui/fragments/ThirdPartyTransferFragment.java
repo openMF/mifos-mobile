@@ -1,11 +1,11 @@
 package org.mifos.mobilebanking.ui.fragments;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
@@ -249,7 +250,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} with {@code message}
+     * Shows a {@link Snackbar} with {@code message}
      * @param msg String to be shown
      */
     @Override

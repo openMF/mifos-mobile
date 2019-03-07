@@ -54,7 +54,7 @@
 
 
     </TableLayout>
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="@dimen/cardview_default_elevation"
@@ -139,7 +139,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
             </TableRow>
         </TableLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

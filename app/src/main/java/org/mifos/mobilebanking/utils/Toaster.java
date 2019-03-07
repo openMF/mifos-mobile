@@ -2,7 +2,7 @@ package org.mifos.mobilebanking.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -26,8 +26,7 @@ public class Toaster {
 
         final Snackbar snackbar = Snackbar.make(view, text, duration);
         View sbView = snackbar.getView();
-        TextView textView = sbView.findViewById(android.support.design.R.id
-                .snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         textView.setTextSize(12);
         snackbar.setAction("OK", new View.OnClickListener() {
