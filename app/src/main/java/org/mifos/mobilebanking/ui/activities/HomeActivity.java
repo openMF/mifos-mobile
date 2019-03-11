@@ -25,6 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.models.client.Client;
@@ -32,11 +35,9 @@ import org.mifos.mobilebanking.presenters.UserDetailsPresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.enums.AccountType;
 import org.mifos.mobilebanking.ui.enums.ChargeType;
-import org.mifos.mobilebanking.ui.fragments.AboutUsFragment;
 import org.mifos.mobilebanking.ui.fragments.BeneficiaryListFragment;
 import org.mifos.mobilebanking.ui.fragments.ClientAccountsFragment;
 import org.mifos.mobilebanking.ui.fragments.ClientChargeFragment;
-import org.mifos.mobilebanking.ui.fragments.HelpFragment;
 import org.mifos.mobilebanking.ui.fragments.HomeOldFragment;
 import org.mifos.mobilebanking.ui.fragments.NotificationFragment;
 import org.mifos.mobilebanking.ui.fragments.RecentTransactionsFragment;
@@ -48,9 +49,6 @@ import org.mifos.mobilebanking.utils.MaterialDialog;
 import org.mifos.mobilebanking.utils.TextDrawable;
 import org.mifos.mobilebanking.utils.Toaster;
 import org.mifos.mobilebanking.utils.gcm.RegistrationIntentService;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import javax.inject.Inject;
 
@@ -156,7 +154,8 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         // select which item to open
         setToolbarElevation();
         menuItem = item.getItemId();
-        if (menuItem != R.id.item_settings && menuItem != R.id.item_share) {
+        if (menuItem != R.id.item_settings && menuItem != R.id.item_share
+                && menuItem != R.id.item_about_us && menuItem != R.id.item_help) {
             // If we have clicked something other than settings or share
             // we can safely clear the back stack as a new fragment will replace
             // the current fragment.
@@ -189,10 +188,10 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
                 break;
             case R.id.item_about_us:
-                replaceFragment(AboutUsFragment.newInstance(), true, R.id.container);
+                startActivity(new Intent(HomeActivity.this, AboutUsActivity.class));
                 break;
             case R.id.item_help:
-                replaceFragment(HelpFragment.getInstance(), true, R.id.container);
+                startActivity(new Intent(HomeActivity.this, HelpActivity.class));
                 break;
             case R.id.item_share:
                 Intent i = new Intent(Intent.ACTION_SEND);
@@ -208,7 +207,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
 
         // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
-        setNavigationViewSelectedItem(R.id.item_home);
         return true;
     }
 
@@ -419,10 +417,6 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                             setNavigationViewSelectedItem(R.id.item_third_party_transfer);
                         } else if (fragment instanceof BeneficiaryListFragment) {
                             setNavigationViewSelectedItem(R.id.item_beneficiaries);
-                        } else if (fragment instanceof HelpFragment) {
-                            setNavigationViewSelectedItem(R.id.item_help);
-                        } else if (fragment instanceof AboutUsFragment) {
-                            setNavigationViewSelectedItem(R.id.item_about_us);
                         }
                     }
                 });
