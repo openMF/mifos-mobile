@@ -39,32 +39,26 @@
 
     </group>
 
-    <group android:id="@+id/group2"
-        android:checkableBehavior="single">
+    <group android:id="@+id/group2">
 
         <item
             android:id="@+id/item_settings"
-            android:checked="false"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings"/>
         <item
             android:id="@+id/item_about_us"
-            android:checked="false"
             android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/about_us"/>
         <item
             android:id="@+id/item_help"
-            android:checked="false"
             android:icon="@drawable/ic_help_black_24dp"
             android:title="@string/help"/>
         <item
             android:id="@+id/item_share"
-            android:checked="false"
             android:icon="@drawable/ic_share_black_24dp"
             android:title="@string/share"/>
         <item
             android:id="@+id/item_logout"
-            android:checked="false"
             android:icon="@drawable/ic_logout"
             android:title="@string/logout"/>
     </group>

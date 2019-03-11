@@ -59,9 +59,11 @@ public class HelpFragment extends BaseFragment implements HelpView, BottomNaviga
     private View rootView;
     private ArrayList<FAQ> faqArrayList;
 
-    public static HelpFragment getInstance() {
-        HelpFragment helpFragment = new HelpFragment();
-        return helpFragment;
+    public static HelpFragment newInstance() {
+        HelpFragment fragment = new HelpFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
