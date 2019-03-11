@@ -16,6 +16,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 
 import org.mifos.mobilebanking.BuildConfig;
 import org.mifos.mobilebanking.R;
+import org.mifos.mobilebanking.ui.activities.PrivacyPolicyActivity;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 
 import java.util.Calendar;
@@ -57,8 +58,13 @@ public class AboutUsFragment extends BaseFragment {
         return rootView;
     }
 
-    @OnClick(R.id.btn_licenses)
+    @OnClick(R.id.tv_licenses)
     void showOpenSourceLicenses() {
         startActivity(new Intent(getActivity(), OssLicensesMenuActivity.class));
+    }
+
+    @OnClick(R.id.tv_privacy_policy)
+    void showPrivacyPolicy() {
+        startActivity(new Intent(getActivity(), PrivacyPolicyActivity.class));
     }
 }
