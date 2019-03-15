@@ -20,37 +20,37 @@ data class SavingsWithAssociations(
         var id: Long? = null,
 
         @SerializedName("accountNo")
-        var accountNo: String,
+        var accountNo: String? = null,
 
         @SerializedName("depositType")
         var depositType: DepositType? = null,
 
         @SerializedName("externalId")
-        var externalId: String,
+        var externalId: String? = null,
 
         @SerializedName("clientId")
         var clientId: Int? = null,
 
         @SerializedName("clientName")
-        var clientName: String,
+        var clientName: String? = null,
 
         @SerializedName("savingsProductId")
         var savingsProductId: Int? = null,
 
         @SerializedName("savingsProductName")
-        var savingsProductName: String,
+        var savingsProductName: String? = null,
 
         @SerializedName("fieldOfficerId")
         var fieldOfficerId: Int? = null,
 
         @SerializedName("status")
-        var status: Status,
+        var status: Status? = null,
 
         @SerializedName("timeline")
-        var timeline: TimeLine,
+        var timeline: TimeLine? = null,
 
         @SerializedName("currency")
-        var currency: Currency,
+        var currency: Currency? = null,
 
         @SerializedName("nominalAnnualInterestRate")
         internal var nominalAnnualInterestRate: Double? = null,
@@ -74,13 +74,13 @@ data class SavingsWithAssociations(
         var withHoldTax: Boolean? = null,
 
         @SerializedName("lastActiveTransactionDate")
-        var lastActiveTransactionDate: List<Int>,
+        var lastActiveTransactionDate: List<Int>? = null,
 
         @SerializedName("isDormancyTrackingActive")
         var dormancyTrackingActive: Boolean? = null,
 
         @SerializedName("summary")
-        var summary: Summary,
+        var summary: Summary? = null,
 
         @SerializedName("transactions")
         var transactions: List<Transactions> = ArrayList()
