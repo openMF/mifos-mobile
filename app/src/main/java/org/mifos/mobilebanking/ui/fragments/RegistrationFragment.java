@@ -124,10 +124,8 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.
                     username)));
             return false;
-        } else if (etUsername.getText().toString().trim().length() < 5) {
-            Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
-                    getString(R.string.username),
-                    getResources().getInteger(R.integer.username_minimum_length)));
+        } else if (etUsername.getText().toString().trim().length() < 6) {
+            Toaster.show(rootView, getString(R.string.error_username_greater_than_six));
             return false;
         } else if (etUsername.getText().toString().trim().contains(" ")) {
             Toaster.show(rootView, getString(R.string.error_validation_cannot_contain_spaces,
@@ -154,9 +152,6 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
             Toaster.show(rootView,
                     getString(R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
                     getString(R.string.password)));
-            return false;
-        } else if (etUsername.getText().toString().trim().length() < 6) {
-            Toaster.show(rootView, getString(R.string.error_username_greater_than_six));
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher( etEmail.getText().toString().trim())
                 .matches()) {
