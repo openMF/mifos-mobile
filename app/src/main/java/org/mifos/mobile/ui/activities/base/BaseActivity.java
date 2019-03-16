@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+import android.content.pm.ActivityInfo;
 
 import com.mifos.mobile.passcode.BasePassCodeActivity;
 
@@ -41,6 +42,7 @@ public class BaseActivity extends BasePassCodeActivity implements BaseActivityCa
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
