@@ -211,7 +211,6 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
         transferPayload.setTransferDescription(etRemark.getText().toString());
 
-        hideKeyboard(getActivity());
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
                 newInstance(transferPayload, TransferType.SELF), true, R.id.container);
     }
