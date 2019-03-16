@@ -181,6 +181,8 @@
     <string name="error_unauthorised">Invalid Username/Password</string>
     <string name="error_message_server">Error loading response from server</string>
     <string name="error_validation_blank">%1$s cannot be blank</string>
+    <string name="error_validation_account_number">Account number has to be of 9 digits</string>
+    <string name="error_validation_phone_number">Phone number can't have more than 15 digits.</string>
     <string name="error_validation_minimum_chars">%1$s cannot be less than %2$d characters</string>
     <string name="error_validation_cannot_contain_spaces">%1$s cannot contain %2$s</string>
     <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s cannot begin or

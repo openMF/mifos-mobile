@@ -162,6 +162,10 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
                     getString(R.string.password), getResources().
                             getInteger(R.integer.password_minimum_length)));
             return false;
+        } else if (etAccountNumber.getText().toString().trim().length() != 9) {
+            Toaster.show(rootView, getString(R.string.error_validation_account_number));
+        } else if (etPhoneNumber.getText().toString().trim().length() > 15) {
+            Toaster.show(rootView, getString(R.string.error_validation_phone_number));
         }
 
         return true;
