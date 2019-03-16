@@ -28,9 +28,11 @@ import org.mifos.mobile.presenters.UserDetailsPresenter;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.enums.AccountType;
 import org.mifos.mobile.ui.enums.ChargeType;
+import org.mifos.mobile.ui.fragments.AboutUsFragment;
 import org.mifos.mobile.ui.fragments.BeneficiaryListFragment;
 import org.mifos.mobile.ui.fragments.ClientAccountsFragment;
 import org.mifos.mobile.ui.fragments.ClientChargeFragment;
+import org.mifos.mobile.ui.fragments.HelpFragment;
 import org.mifos.mobile.ui.fragments.HomeOldFragment;
 import org.mifos.mobile.ui.fragments.NotificationFragment;
 import org.mifos.mobile.ui.fragments.RecentTransactionsFragment;
@@ -152,61 +154,67 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // select which item to open
-        setToolbarElevation();
-        menuItem = item.getItemId();
-        if (menuItem != R.id.item_settings && menuItem != R.id.item_share
-                && menuItem != R.id.item_about_us && menuItem != R.id.item_help) {
-            // If we have clicked something other than settings or share
-            // we can safely clear the back stack as a new fragment will replace
-            // the current fragment.
+
+        boolean isCurrentFragment = item.isChecked();
+        //If we have selected a menu that is not current Fragment we should take required action
+        if (!isCurrentFragment) {
             clearFragmentBackStack();
-        }
-        switch (item.getItemId()) {
-            case R.id.item_home:
-                hideToolbarElevation();
-                replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_accounts:
-                hideToolbarElevation();
-                replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
-                        true, R.id.container);
-                break;
-            case R.id.item_recent_transactions:
-                replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_charges:
-                replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
-                        R.id.container);
-                break;
-            case R.id.item_third_party_transfer:
-                replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_beneficiaries:
-                replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container);
-                break;
-            case R.id.item_settings:
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
-                break;
-            case R.id.item_about_us:
-                startActivity(new Intent(HomeActivity.this, AboutUsActivity.class));
-                break;
-            case R.id.item_help:
-                startActivity(new Intent(HomeActivity.this, HelpActivity.class));
-                break;
-            case R.id.item_share:
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.playstore_link,
-                        getString(R.string.share_msg), getApplication().getPackageName()));
-                startActivity(Intent.createChooser(i, getString(R.string.choose)));
-                break;
-            case R.id.item_logout:
-                showLogoutDialog();
-                break;
+            setToolbarElevation();
+            menuItem = item.getItemId();
+            switch (item.getItemId()) {
+                case R.id.item_home:
+                    hideToolbarElevation();
+                    replaceFragment(HomeOldFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_accounts:
+                    hideToolbarElevation();
+                    replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
+                            true, R.id.container);
+                    break;
+                case R.id.item_recent_transactions:
+                    replaceFragment(RecentTransactionsFragment.newInstance(),
+                            true, R.id.container);
+                    break;
+                case R.id.item_charges:
+                    replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT),
+                            true, R.id.container);
+                    break;
+                case R.id.item_third_party_transfer:
+                    replaceFragment(ThirdPartyTransferFragment.newInstance(),
+                            true, R.id.container);
+                    break;
+                case R.id.item_beneficiaries:
+                    replaceFragment(BeneficiaryListFragment.newInstance(),
+                            true, R.id.container);
+                    break;
+                case R.id.item_settings:
+                    startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                    break;
+                case R.id.item_about_us:
+                    replaceFragment(AboutUsFragment.newInstance(),
+                            true, R.id.container);
+                    break;
+                case R.id.item_help:
+                    replaceFragment(HelpFragment.newInstance(), true, R.id.container);
+                    break;
+                case R.id.item_share:
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_TEXT, getString(R.string.string_and_string,
+                            getString(R.string.share_msg),
+                            getApplication().getPackageName()));
+                    startActivity(Intent.createChooser(i, getString(R.string.choose)));
+                    break;
+                case R.id.item_logout:
+                    showLogoutDialog();
+                    break;
+            }
         }
 
         // close the drawer
         drawerLayout.closeDrawer(GravityCompat.START);
+        if (!isCurrentFragment)
+            setNavigationViewSelectedItem(R.id.item_home);
         return true;
     }
 
