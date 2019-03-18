@@ -1,5 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -30,6 +31,7 @@ import org.mifos.mobilebanking.ui.views.LoanApplicationMvpView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.DateHelper;
 import org.mifos.mobilebanking.utils.MFDatePicker;
+import org.mifos.mobilebanking.utils.MaterialDialog;
 import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.Toaster;
 
@@ -218,11 +220,34 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             tilPrincipalAmount.setError(getString(R.string.amount_greater_than_zero));
             return;
         }
-        if (loanState == LoanState.CREATE) {
-            submitNewLoanApplication();
-        } else {
-            submitUpdateLoanApplication();
-        }
+        confirmLoanSubmission();
+    }
+
+    private void confirmLoanSubmission() {
+        new MaterialDialog.Builder()
+                .init(getContext())
+                .setMessage(R.string.confirm_loan_submission)
+                .setPositiveButton(getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (loanState == LoanState.CREATE) {
+                                    submitNewLoanApplication();
+                                } else {
+                                    submitUpdateLoanApplication();
+                                }
+                                dialogInterface.dismiss();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                .createMaterialDialog()
+                .show();
     }
 
     /**
