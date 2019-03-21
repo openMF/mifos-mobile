@@ -97,7 +97,7 @@ dependencies {
     //Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    provided 'javax.annotation:jsr250-api:1.0'                //Required by Dagger2
+    compileOnly 'javax.annotation:jsr250-api:1.0'                //Required by Dagger2
 
     //Butter Knife
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
