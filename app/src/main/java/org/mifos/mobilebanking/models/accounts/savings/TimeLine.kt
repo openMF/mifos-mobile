@@ -1,17 +1,15 @@
 package org.mifos.mobilebanking.models.accounts.savings
 
-import android.os.Parcel
 import android.os.Parcelable
-
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Rajan Maurya on 05/03/17.
  */
 
+@Parcelize
 data class TimeLine(
         @SerializedName("submittedOnDate")
         var submittedOnDate: List<Int> = ArrayList(),
@@ -52,65 +50,4 @@ data class TimeLine(
         @SerializedName("closedOnDate")
         var closedOnDate: List<Int>
 
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            }) {
-    }
-
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeList(submittedOnDate)
-        parcel.writeString(submittedByUsername)
-        parcel.writeString(submittedByFirstname)
-        parcel.writeString(submittedByLastname)
-        parcel.writeList(approvedOnDate)
-        parcel.writeString(approvedByUsername)
-        parcel.writeString(approvedByFirstname)
-        parcel.writeString(approvedByLastname)
-        parcel.writeList(activatedOnDate)
-        parcel.writeString(activatedByUsername)
-        parcel.writeString(activatedByFirstname)
-        parcel.writeString(activatedByLastname)
-        parcel.writeList(closedOnDate)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object {
-
-        @JvmField
-        final val CREATOR: Parcelable.Creator<TimeLine> = object : Parcelable.Creator<TimeLine> {
-            override fun createFromParcel(parcel: Parcel): TimeLine {
-                return TimeLine(parcel)
-            }
-
-            override fun newArray(size: Int): Array<TimeLine?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
-
-
-}
+) : Parcelable
