@@ -23,6 +23,7 @@ import org.mifos.mobilebanking.ui.activities.SettingsActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.UpdatePasswordView;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
@@ -111,6 +112,9 @@ public class UpdatePasswordFragment extends BaseFragment implements UpdatePasswo
 
     @Override
     public void showError(String message) {
+        if (!Network.isConnected(getActivity())) {
+            message = getString(R.string.no_internet_connection);
+        }
         Toaster.show(rootView, message);
     }
 
