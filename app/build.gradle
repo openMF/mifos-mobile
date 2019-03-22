@@ -74,7 +74,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-gcm:$rootProject.playServicesVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
-    implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.playServicesVersion"
+    implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.oss_licenses"
     implementation "com.isseiaoki:simplecropview:$rootProject.cropviewVersion"
 
     //kotlin dependency
