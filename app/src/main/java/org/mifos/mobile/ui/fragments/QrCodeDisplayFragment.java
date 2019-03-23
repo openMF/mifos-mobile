@@ -78,7 +78,7 @@ public class QrCodeDisplayFragment extends BaseFragment {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(uri, "image/*");
+                intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
                 startActivity(Intent.createChooser(intent, getString(R.string.choose_option)));
                 break;
