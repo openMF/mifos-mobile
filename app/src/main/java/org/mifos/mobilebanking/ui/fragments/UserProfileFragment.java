@@ -3,18 +3,17 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
@@ -34,11 +33,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 /**
  * Created by dilpreet on 10/7/17.
@@ -131,7 +131,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(getActivity(),
                 R.color.white));
         collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(getActivity(),
-                                R.color.white));
+                R.color.white));
 
         sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         if (savedInstanceState == null) {
@@ -234,8 +234,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
                             .toUpperCase()
                             .endConfig()
                             .buildRound(preferencesHelper
-                                    .getClientName()
-                                    .substring(0, 1),
+                                            .getClientName()
+                                            .substring(0, 1),
                                     ContextCompat.getColor(getContext(), R.color.primary_dark));
                     ivProfile.setVisibility(View.GONE);
                     ivTextDrawable.setVisibility(View.VISIBLE);

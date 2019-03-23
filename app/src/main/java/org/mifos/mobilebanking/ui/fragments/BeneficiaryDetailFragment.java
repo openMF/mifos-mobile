@@ -2,7 +2,6 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
@@ -25,6 +26,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -78,7 +80,7 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_detail, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setToolbarTitle(getString(R.string.beneficiary_detail));
@@ -114,11 +116,11 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_update_beneficiary :
+            case R.id.item_update_beneficiary:
                 ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
                         newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container);
                 break;
-            case R.id.item_delete_beneficiary :
+            case R.id.item_delete_beneficiary:
                 new MaterialDialog.Builder().init(getActivity())
                         .setTitle(getString(R.string.delete_beneficiary))
                         .setMessage(getString(R.string.delete_beneficiary_confirmation))
@@ -145,7 +147,7 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} on successfull deletion of a
+     * Shows a {@link Snackbar} on successfull deletion of a
      * Beneficiary and then pops current fragment
      */
     @Override
@@ -156,6 +158,7 @@ public class BeneficiaryDetailFragment extends BaseFragment implements Beneficia
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param msg Error message that tells the user about the problem.
      */
     @Override

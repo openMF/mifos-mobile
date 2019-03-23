@@ -5,7 +5,6 @@ package org.mifos.mobilebanking.ui.fragments;
 */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +39,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -112,7 +112,7 @@ public class LoanAccountsDetailFragment extends BaseFragment implements LoanAcco
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
 
         rootView = inflater.inflate(R.layout.fragment_loan_account_details, container, false);

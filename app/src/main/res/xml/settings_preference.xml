@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/accounts">
         <Preference
             android:key="@string/password"
             android:persistent="false"
             android:summary="@string/change_account_password"
-            android:title="@string/change_password" />
+            android:title="@string/change_password"/>
 
         <Preference
             android:key="@string/passcode"
             android:persistent="false"
             android:summary="@string/change_app_passcode"
-            android:title="@string/change_passcode" />
+            android:title="@string/change_passcode"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/other">
@@ -22,11 +23,11 @@
             android:entryValues="@array/languages_value"
             android:key="@string/language_type"
             android:summary="@string/choose_language"
-            android:title="@string/language" />
+            android:title="@string/language"/>
 
         <org.mifos.mobilebanking.utils.ConfigurationPreference
             android:key="@string/pref_configuration"
             android:summary="@string/pref_base_url_desc"
-            android:title="@string/pref_base_url_title" />
+            android:title="@string/pref_base_url_title"/>
     </PreferenceCategory>
-</android.support.v7.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

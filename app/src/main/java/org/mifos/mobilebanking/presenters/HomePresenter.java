@@ -42,7 +42,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public HomePresenter(DataManager dataManager, @ApplicationContext Context context) {

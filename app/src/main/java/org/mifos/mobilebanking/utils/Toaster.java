@@ -2,12 +2,14 @@ package org.mifos.mobilebanking.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.mifos.mobilebanking.MifosSelfServiceApp;
+import org.mifos.mobilebanking.R;
 
 import java.util.ArrayList;
 
@@ -26,8 +28,7 @@ public class Toaster {
 
         final Snackbar snackbar = Snackbar.make(view, text, duration);
         View sbView = snackbar.getView();
-        TextView textView = sbView.findViewById(android.support.design.R.id
-                .snackbar_text);
+        TextView textView = sbView.findViewById(R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         textView.setTextSize(12);
         snackbar.setAction("OK", new View.OnClickListener() {
@@ -73,7 +74,7 @@ public class Toaster {
     }
 
     public static void cancelTransfer(View view, String text, String buttonText,
-                                      View.OnClickListener listener) {
+            View.OnClickListener listener) {
         final Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
         snackbar.setAction(buttonText, listener);
         snackbar.show();

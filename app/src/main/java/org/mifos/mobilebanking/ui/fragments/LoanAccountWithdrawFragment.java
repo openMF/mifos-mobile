@@ -1,12 +1,13 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
@@ -21,6 +22,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,8 +49,8 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     private LoanWithAssociations loanWithAssociations;
 
 
-    public static LoanAccountWithdrawFragment
-            newInstance(LoanWithAssociations loanWithAssociations) {
+    public static LoanAccountWithdrawFragment newInstance(
+            LoanWithAssociations loanWithAssociations) {
         LoanAccountWithdrawFragment fragment = new LoanAccountWithdrawFragment();
         Bundle args = new Bundle();
         args.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations);
@@ -68,7 +70,7 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_withdraw, container, false);
         setToolbarTitle(getString(R.string.withdraw_loan));
 
@@ -111,7 +113,7 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
     }
 
     /**
-     * Shows an error in {@link android.support.design.widget.Snackbar} if any error occurs during
+     * Shows an error in {@link Snackbar} if any error occurs during
      * withdrawing of Loan
      *
      * @param message Error Message displayed

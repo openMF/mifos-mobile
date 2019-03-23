@@ -23,8 +23,6 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -32,6 +30,9 @@ import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.notification.MifosNotification;
 import org.mifos.mobilebanking.ui.activities.HomeActivity;
 import org.mifos.mobilebanking.utils.Constants;
+
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class MifosGcmListenerService extends GcmListenerService {
 

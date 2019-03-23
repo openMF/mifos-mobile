@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:background="@color/primary"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/primary"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <androidx.core.widget.NestedScrollView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
             <LinearLayout
                 android:layout_height="match_parent"
@@ -26,8 +27,8 @@
                     android:paddingTop="@dimen/layout_padding_48dp">
 
                     <TextView
-                        android:id="@+id/tv_total_loan"
                         android:gravity="center"
+                        android:id="@+id/tv_total_loan"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:textColor="@color/white"
@@ -40,10 +41,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/layout_padding_4dp"
                         android:layout_width="match_parent"
+                        android:text="@string/total_loan_balance"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:text="@string/total_loan_balance"/>
+                        android:textStyle="bold"/>
 
                     <View
                         android:alpha="0.4"
@@ -63,8 +64,8 @@
                     android:paddingTop="@dimen/layout_padding_30dp">
 
                     <TextView
-                        android:id="@+id/tv_total_savings"
                         android:gravity="center"
+                        android:id="@+id/tv_total_savings"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:textColor="@color/white"
@@ -77,10 +78,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/layout_padding_4dp"
                         android:layout_width="match_parent"
+                        android:text="@string/total_saving_balance"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:text="@string/total_saving_balance"/>
+                        android:textStyle="bold"/>
 
                     <View
                         android:alpha="0.4"
@@ -94,19 +95,19 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/layout_padding_24dp"
                     android:layout_marginRight="@dimen/layout_padding_24dp"
                     android:layout_marginTop="@dimen/layout_padding_24dp"
+                    android:layout_width="match_parent"
+                    android:text="@string/total_loan_savings_description"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium"
-                    android:text="@string/total_loan_savings_description"/>
+                    android:textSize="@dimen/text_medium"/>
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

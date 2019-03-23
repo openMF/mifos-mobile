@@ -2,10 +2,6 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +26,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -148,7 +148,6 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
 
     /**
      * Shows a Toast
-     * @param message
      */
     @Override
     public void showMessage(String message) {
@@ -158,6 +157,7 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
     /**
      * Updates {@code recentTransactionsListAdapter} with {@code recentTransactionList} fetched from
      * server
+     *
      * @param recentTransactionList List of {@link Transaction}
      */
     @Override
@@ -168,6 +168,7 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
 
     /**
      * Appends more Transactions in {@code recentTransactionList}
+     *
      * @param transactions List of {@link Transaction}
      */
     @Override
@@ -192,6 +193,7 @@ public class RecentTransactionsFragment extends BaseFragment implements RecentTr
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override

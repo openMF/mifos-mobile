@@ -5,12 +5,12 @@ package org.mifos.mobilebanking.ui.fragments;
  */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.savings.SavingsAccountWithdrawPayload;
@@ -25,6 +25,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,7 +73,7 @@ public class SavingsAccountWithdrawFragment extends BaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_savings_account_withdraw_fragment,
                 container, false);
         ButterKnife.bind(this, rootView);

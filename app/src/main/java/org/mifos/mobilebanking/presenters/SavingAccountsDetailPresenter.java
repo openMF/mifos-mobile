@@ -35,7 +35,7 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public SavingAccountsDetailPresenter(DataManager dataManager,
@@ -60,13 +60,14 @@ public class SavingAccountsDetailPresenter extends BasePresenter<SavingAccountsD
      * Load details of a particular saving account from the server and notify the view
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
+     *
      * @param accountId Id of Savings Account
      */
     public void loadSavingsWithAssociations(long accountId) {
         checkViewAttached();
         getMvpView().showProgress();
         compositeDisposables.add(dataManager.getSavingsWithAssociations(accountId,
-                                                                        Constants.TRANSACTIONS)
+                Constants.TRANSACTIONS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserver<SavingsWithAssociations>() {

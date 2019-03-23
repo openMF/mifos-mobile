@@ -4,143 +4,154 @@
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_loan_summary"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="vertical"
         android:visibility="visible">
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+        <androidx.cardview.widget.CardView
             android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             app:cardElevation="@dimen/cardview_default_elevation"
             app:cardUseCompatPadding="true">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/login_padding_button">
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:text="@string/account_number"/>
-                <TextView
-                    android:id="@+id/tv_account_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="start"
-                    android:gravity="start"
-                    tools:text="@string/account_number"/>
-            </TableRow>
+            <TableLayout
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/login_padding_button"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:text="@string/disbursement_date"/>
-                <TextView
-                    android:id="@+id/tv_disbursement_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="start"
-                    tools:text="@string/disbursement_date"/>
-            </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:text="@string/account_number"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:gravity="start"
+                        android:id="@+id/tv_account_number"
+                        android:layout_gravity="start"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        tools:text="@string/account_number"/>
+                </TableRow>
 
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:text="@string/no_of_payments"/>
-                <TextView
-                    android:id="@+id/tv_number_of_payments"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="start"
-                    tools:text="@string/no_of_payments"/>
-            </TableRow>
-        </TableLayout>
-        </android.support.v7.widget.CardView>
+                <TableRow>
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:text="@string/disbursement_date"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:gravity="start"
+                        android:id="@+id/tv_disbursement_date"
+                        android:layout_gravity="start"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        tools:text="@string/disbursement_date"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:text="@string/no_of_payments"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:gravity="start"
+                        android:id="@+id/tv_number_of_payments"
+                        android:layout_gravity="start"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        tools:text="@string/no_of_payments"/>
+                </TableRow>
+
+            </TableLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/date"
-                    android:textColor="@color/black"
-                    android:gravity="start"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:padding="6dp"
-                    android:background="@drawable/rectangular_border"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/loan_balance"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:padding="6dp"
-                    android:background="@drawable/rectangular_border"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/repayment"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="end"
-                    android:padding="6dp"
-                    android:background="@drawable/rectangular_border"/>
-        </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_repayment_schedule"
             android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="@drawable/rectangular_border"
+                android:gravity="start"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:padding="6dp"
+                android:text="@string/date"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:background="@drawable/rectangular_border"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:padding="6dp"
+                android:text="@string/loan_balance"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:background="@drawable/rectangular_border"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:padding="6dp"
+                android:text="@string/repayment"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_repayment_schedule"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
-            />
-    </LinearLayout>
+            android:layout_width="match_parent"
+        />
 
+    </LinearLayout>
 
     <include
         layout="@layout/layout_sweet_exception_handler"

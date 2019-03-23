@@ -4,9 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +19,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -95,6 +95,7 @@ public class ShareAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.
         viewHolder.tvSharesApproved.setText(String.valueOf(shareAccount
                 .getTotalApprovedShares()));
     }
+
     @Override
     public int getItemCount() {
         return shareAccountsList.size();

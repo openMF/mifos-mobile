@@ -3,10 +3,6 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +33,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,7 +46,7 @@ import butterknife.OnClick;
  */
 
 public class SavingAccountsTransactionFragment extends BaseFragment
-        implements SavingAccountsTransactionView , RadioGroup.OnCheckedChangeListener ,
+        implements SavingAccountsTransactionView, RadioGroup.OnCheckedChangeListener,
         MFDatePicker.OnDatePickListener {
 
     @BindView(R.id.ll_account)
@@ -76,7 +76,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private SweetUIErrorHandler sweetUIErrorHandler;
     private View rootView;
     private long savingsId;
-    private long startDateFromPicker , endDateFromPicker;
+    private long startDateFromPicker, endDateFromPicker;
     private List<Transactions> transactionsList, dummyTransactionList;
     private SavingsWithAssociations savingsWithAssociations;
     private DatePick datePick;
@@ -103,7 +103,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_saving_account_transactions,
                 container, false);
 
@@ -151,11 +151,12 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     /**
      * Provides with {@code savingsWithAssociations} fetched from server which is used to update the
      * {@code transactionListAdapter}
+     *
      * @param savingsWithAssociations Contains {@link Transactions} for given Savings account.
      */
     @Override
     public void showSavingAccountsDetail(SavingsWithAssociations
-                                                     savingsWithAssociations) {
+            savingsWithAssociations) {
         layoutAccount.setVisibility(View.VISIBLE);
         this.savingsWithAssociations = savingsWithAssociations;
         transactionsList = savingsWithAssociations.getTransactions();
@@ -173,6 +174,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
@@ -197,7 +199,6 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     /**
      * Provides with a filtered list according to the constraints used in {@code filter()} function
-     * @param list
      */
     @Override
     public void showFilteredList(List<Transactions> list) {
@@ -239,6 +240,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     /**
      * A CallBack for {@link MFDatePicker} which provides us with the date selected from the
      * {@link android.app.DatePickerDialog} by {@code mfDatePicker}
+     *
      * @param date Date selected by user in {@link String}
      */
     @Override
@@ -280,6 +282,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     /**
      * Checks if {@code startDateFromPicker} is less than {@code endDateFromPicker}
+     *
      * @return Returns true if {@code startDateFromPicker} is less than {@code endDateFromPicker}
      */
     private boolean isEndDateLargeThanStartDate() {
@@ -333,14 +336,15 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
     /**
      * Will filter {@code transactionsList} according to {@code startDate} and {@code endDate}
+     *
      * @param startDate Starting date
-     * @param endDate Ending date
+     * @param endDate   Ending date
      */
-    private void filter(long startDate , long endDate) {
+    private void filter(long startDate, long endDate) {
 
         dummyTransactionList = new ArrayList<>(transactionsList);
         savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList,
-                                                                    startDate, endDate);
+                startDate, endDate);
     }
 
     @Override

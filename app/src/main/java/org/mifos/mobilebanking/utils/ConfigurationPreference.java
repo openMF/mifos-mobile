@@ -1,10 +1,11 @@
 package org.mifos.mobilebanking.utils;
 
 import android.content.Context;
-import android.support.v7.preference.DialogPreference;
 import android.util.AttributeSet;
 
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
+
+import androidx.preference.DialogPreference;
 
 /**
  * Created by dilpreet on 11/03/18.

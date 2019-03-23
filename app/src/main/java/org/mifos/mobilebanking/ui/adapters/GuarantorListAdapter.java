@@ -5,8 +5,6 @@ package org.mifos.mobilebanking.ui.adapters;
  */
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,8 @@ import org.mifos.mobilebanking.utils.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,7 +34,7 @@ public class GuarantorListAdapter extends RecyclerView.Adapter<GuarantorListAdap
     }
 
     public GuarantorListAdapter(Context context,
-                                OnClickListener listener) {
+            OnClickListener listener) {
         this.context = context;
         list = new ArrayList<>();
         this.listener = listener;

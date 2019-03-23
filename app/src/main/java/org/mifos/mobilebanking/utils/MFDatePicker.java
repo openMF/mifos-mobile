@@ -8,8 +8,6 @@ package org.mifos.mobilebanking.utils;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.widget.DatePicker;
 
@@ -17,6 +15,9 @@ import org.mifos.mobilebanking.R;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by ishankhanna on 30/06/14.
@@ -34,7 +35,6 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     public static final int PREVIOUS_DAYS = 1; // only past days
     public static final int FUTURE_DAYS = 2; // only future days
     public static final int ALL_DAYS = 3;  // any day can be picked
-
 
 
     static {

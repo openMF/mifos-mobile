@@ -36,11 +36,11 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public BeneficiaryApplicationPresenter(DataManager dataManager,
-                                           @ApplicationContext Context context) {
+            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         compositeDisposable = new CompositeDisposable();
@@ -87,6 +87,7 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
     /**
      * Used to create a Beneficiary and notifies the view after successful creation of Beneficiary.
      * And in case of any error during creation, it notifies the view.
+     *
      * @param payload {@link BeneficiaryPayload} used for creating a Beneficiary.
      */
     public void createBeneficiary(BeneficiaryPayload payload) {
@@ -120,8 +121,9 @@ public class BeneficiaryApplicationPresenter extends BasePresenter<BeneficiaryAp
      * Update a Beneficiary with provided {@code beneficiaryId} and notifies the view after
      * successful updation of Beneficiary. And in case of any error during updation, it notifies the
      * view.
+     *
      * @param beneficiaryId Id of Beneficiary which you want to update
-     * @param payload {@link BeneficiaryPayload} used for updation a Beneficiary.
+     * @param payload       {@link BeneficiaryPayload} used for updation a Beneficiary.
      */
     public void updateBeneficiary(long beneficiaryId, BeneficiaryUpdatePayload payload) {
         checkViewAttached();

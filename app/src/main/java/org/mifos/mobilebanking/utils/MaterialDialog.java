@@ -2,18 +2,19 @@ package org.mifos.mobilebanking.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import org.mifos.mobilebanking.R;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 /**
  * This Class is the Material Dialog Builder Class
  * Created by Rajan Maurya on 03/08/16.
  */
-public final class MaterialDialog  {
+public final class MaterialDialog {
 
     public static class Builder {
 
@@ -66,21 +67,21 @@ public final class MaterialDialog  {
         }
 
         //This Method Set the String Resources Text To Positive Button
-        public Builder setPositiveButton(@StringRes int  positiveText) {
+        public Builder setPositiveButton(@StringRes int positiveText) {
             mMaterialDialogBuilder.setPositiveButton(positiveText, null);
             return this;
         }
 
         //This Method set the String Text to Positive Button and set the OnClick Event to it
         public Builder setPositiveButton(String positiveText,
-                                         DialogInterface.OnClickListener listener) {
+                DialogInterface.OnClickListener listener) {
             mMaterialDialogBuilder.setPositiveButton(positiveText, listener);
             return this;
         }
 
         //This method set the String Resources text To Positive button and set the Onclick Event
         public Builder setPositiveButton(@StringRes int positiveText,
-                                         DialogInterface.OnClickListener listener) {
+                DialogInterface.OnClickListener listener) {
             mMaterialDialogBuilder.setPositiveButton(positiveText, listener);
             return this;
         }
@@ -101,14 +102,14 @@ public final class MaterialDialog  {
         //This Method set String Text to Negative Button and
         //Set the Onclick event
         public Builder setNegativeButton(String negativeText,
-                                         DialogInterface.OnClickListener listener) {
+                DialogInterface.OnClickListener listener) {
             mMaterialDialogBuilder.setNegativeButton(negativeText, listener);
             return this;
         }
 
         //This method set String Resources Text to Negative Button and set Onclick Event
         public Builder setNegativeButton(@StringRes int negativeText,
-                                         DialogInterface.OnClickListener listener) {
+                DialogInterface.OnClickListener listener) {
             mMaterialDialogBuilder.setNegativeButton(negativeText, listener);
             return this;
         }
@@ -129,14 +130,14 @@ public final class MaterialDialog  {
         //This Method set String Text to Neutral Button and
         //Set the Onclick event
         public Builder setNeutralButton(String neutralText,
-                                        DialogInterface.OnClickListener listener) {
+                DialogInterface.OnClickListener listener) {
             mMaterialDialogBuilder.setNeutralButton(neutralText, listener);
             return this;
         }
 
         //This method set String Resources Text to Neutral Button and set Onclick Event
         public Builder setNeutralButton(@StringRes int neutralText,
-                                        DialogInterface.OnClickListener listener) {
+                DialogInterface.OnClickListener listener) {
             mMaterialDialogBuilder.setNeutralButton(neutralText, listener);
             return this;
         }

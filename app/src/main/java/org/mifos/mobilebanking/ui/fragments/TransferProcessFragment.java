@@ -2,14 +2,14 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.payload.TransferPayload;
@@ -26,6 +26,8 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -96,7 +98,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_transfer_process, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         setToolbarTitle(getString(R.string.transfer));
@@ -154,7 +156,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} on succesfull transfer of money
+     * Shows a {@link Snackbar} on succesfull transfer of money
      */
     @Override
     public void showTransferredSuccessfully() {

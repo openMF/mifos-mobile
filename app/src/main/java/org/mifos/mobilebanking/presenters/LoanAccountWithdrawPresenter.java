@@ -33,7 +33,7 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public LoanAccountWithdrawPresenter(DataManager dataManager,
@@ -58,7 +58,8 @@ public class LoanAccountWithdrawPresenter extends BasePresenter<LoanAccountWithd
      * Used for withdrawing a LoanAccount using the given {@code loanId} and notifies the view after
      * successful withdrawing of a LoanAccount. And in case of any error during withdrawing, it
      * notifies the view.
-     * @param loanId Id of LoanAccount which you want to delete
+     *
+     * @param loanId       Id of LoanAccount which you want to delete
      * @param loanWithdraw {@link LoanWithdraw} for the Withdrawing LoanAccount
      */
     public void withdrawLoanAccount(long loanId, LoanWithdraw loanWithdraw) {

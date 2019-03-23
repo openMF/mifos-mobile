@@ -6,10 +6,11 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import org.mifos.mobilebanking.R;
+
+import androidx.annotation.NonNull;
 
 /**
  * Implementation of App Widget functionality.

@@ -1,7 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,7 +71,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_registration, container, false);
 
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
@@ -86,7 +86,7 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
 
         if (areFieldsValidated()) {
 
-            RadioButton radioButton =  rootView.findViewById(rgVerificationMode.
+            RadioButton radioButton = rootView.findViewById(rgVerificationMode.
                     getCheckedRadioButtonId());
 
             RegisterPayload payload = new RegisterPayload();
@@ -148,18 +148,18 @@ public class RegistrationFragment extends BaseFragment implements RegistrationVi
                     password)));
             return false;
         } else if (etPassword.getText().toString().trim().length()
-                                        < etPassword.getText().toString().length()) {
+                < etPassword.getText().toString().length()) {
             Toaster.show(rootView,
                     getString(R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
-                    getString(R.string.password)));
+                            getString(R.string.password)));
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher( etEmail.getText().toString().trim())
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString().trim())
                 .matches()) {
             Toaster.show(rootView, getString(R.string.error_invalid_email));
             return false;
         } else if (etPassword.getText().toString().trim().length() < 6) {
             Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
-                        getString(R.string.password), getResources().
+                    getString(R.string.password), getResources().
                             getInteger(R.integer.password_minimum_length)));
             return false;
         }

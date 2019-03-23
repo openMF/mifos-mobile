@@ -3,17 +3,18 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.preference.ListPreference;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
-import org.mifos.mobilebanking.utils.ConfigurationPreference;
 import org.mifos.mobilebanking.utils.ConfigurationDialogFragmentCompat;
+import org.mifos.mobilebanking.utils.ConfigurationPreference;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.LanguageHelper;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 /**
  * Created by dilpreet on 02/10/17.

@@ -3,6 +3,7 @@ package org.mifos.mobilebanking.presenters;
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
+
 import android.content.Context;
 
 import org.mifos.mobilebanking.R;
@@ -37,11 +38,11 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public LoanAccountsTransactionPresenter(DataManager dataManager,
-                                            @ApplicationContext Context context) {
+            @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         compositeDisposable = new CompositeDisposable();
@@ -62,6 +63,7 @@ public class LoanAccountsTransactionPresenter extends BasePresenter<LoanAccounts
      * Load details of a particular loan account from the server and notify the view
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
+     *
      * @param loanId Id of Loan Account
      */
     public void loadLoanAccountDetails(long loanId) {

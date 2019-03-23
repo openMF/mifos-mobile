@@ -6,7 +6,6 @@ package org.mifos.mobilebanking.ui.fragments;
 */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.CurrencyUtil;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -91,8 +91,8 @@ public class LoanAccountSummaryFragment extends BaseFragment {
 
     private View rootView;
 
-    public static LoanAccountSummaryFragment
-            newInstance(LoanWithAssociations loanWithAssociations) {
+    public static LoanAccountSummaryFragment newInstance(
+            LoanWithAssociations loanWithAssociations) {
         LoanAccountSummaryFragment loanAccountSummaryFragment =
                 new LoanAccountSummaryFragment();
         Bundle args = new Bundle();
@@ -113,7 +113,7 @@ public class LoanAccountSummaryFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_account_summary, container, false);
         setToolbarTitle(getString(R.string.loan_summary));
 
@@ -126,6 +126,7 @@ public class LoanAccountSummaryFragment extends BaseFragment {
 
     /**
      * Sets basic information about a Loan Account
+     *
      * @param loanWithAssociations object containing details of each loan account,
      */
     public void showLoanAccountsDetail(LoanWithAssociations loanWithAssociations) {
@@ -158,11 +159,12 @@ public class LoanAccountSummaryFragment extends BaseFragment {
                 loanWithAssociations.getSummary().getPenaltyChargesWaived()));
         tvFeesWaivedName.setText(getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.getSummary().getFeeChargesWaived()));;
+                loanWithAssociations.getSummary().getFeeChargesWaived()));
+        ;
         tvOutstandingBalanceName.setText(getResources().getString(R.string.string_and_string,
                 loanWithAssociations.getSummary().getCurrency().getDisplaySymbol(), CurrencyUtil.
-                formatCurrency(getActivity(),
-                        loanWithAssociations.getSummary().getTotalOutstanding())));
+                        formatCurrency(getActivity(),
+                                loanWithAssociations.getSummary().getTotalOutstanding())));
         tvLoanAccountNumber.setText(loanWithAssociations.getAccountNo());
         if (loanWithAssociations.getLoanPurposeName() != null) {
             llLoanPurpose.setVisibility(View.VISIBLE);

@@ -1,136 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_account"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <androidx.cardview.widget.CardView
             android:clickable="true"
+            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             app:cardElevation="4dp">
+
             <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_margin"
+                android:layout_width="match_parent"
                 android:orientation="vertical">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
                     <TextView
-                        android:layout_width="match_parent"
+                        android:drawableEnd="@drawable/ic_edit_wrapper"
+                        android:drawableRight="@drawable/ic_edit_wrapper"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:id="@+id/tv_start_date"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:drawableRight="@drawable/ic_edit_wrapper"
-                        android:drawableEnd="@drawable/ic_edit_wrapper"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:text="@string/start_date"
-                        android:id="@+id/tv_start_date"/>
-                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:drawableRight="@drawable/ic_edit_wrapper"
+                        android:text="@string/start_date"/>
+
+                    <TextView
                         android:drawableEnd="@drawable/ic_edit_wrapper"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:text="@string/end_date"
+                        android:drawableRight="@drawable/ic_edit_wrapper"
                         android:enabled="false"
-                        android:id="@+id/tv_end_date"/>
-                    <android.support.v7.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:id="@+id/tv_end_date"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:text="@string/end_date"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_custom_filter"
-                        android:text="@string/filter"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/divider_margin"
                         android:layout_marginStart="@dimen/divider_margin"
-                        android:textColor="@color/primary"
-                        style="@style/Widget.AppCompat.Button.Borderless"/>
+                        android:layout_width="wrap_content"
+                        android:text="@string/filter"
+                        android:textColor="@color/primary"/>
+
                 </LinearLayout>
 
                 <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
+                    android:id="@+id/rg_transaction_filter"
                     android:layout_gravity="center"
-                    android:id="@+id/rg_transaction_filter">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal">
 
                     <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/rb_four_weeks"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:text="@string/four_weeks"/>
 
                     <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/rb_three_months"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:text="@string/three_months"/>
 
                     <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/rb_six_months"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:text="@string/six_months"/>
+
                 </RadioGroup>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_all"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:text="@string/all"
                         android:textColor="@color/white"/>
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_saving_accounts_transaction"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/rv_saving_accounts_transaction"/>
+            android:layout_width="match_parent"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:text="@string/need_help"/>
 
             <TextView
-                android:id="@+id/tv_help_line_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:clickable="true"
-                android:layout_marginStart="@dimen/default_margin"
+                android:focusable="true"
+                android:id="@+id/tv_help_line_number"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_width="wrap_content"
                 android:text="@string/help_line_number"
                 android:textColor="@color/blue"/>
+
         </LinearLayout>
+
     </LinearLayout>
 
     <include

@@ -5,9 +5,6 @@ package org.mifos.mobilebanking.ui.fragments;
 */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +26,9 @@ import org.mifos.mobilebanking.utils.Network;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -129,6 +129,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
     /**
      * Fetches {@code loanWithAssociations} from server and intializes it in
      * {@code transactionsListAdapter}
+     *
      * @param loanWithAssociations object containing details about a Loan Account with Associations
      */
     @Override
@@ -141,7 +142,6 @@ public class LoanAccountTransactionFragment extends BaseFragment
 
     /**
      * Sets a {@link TextView} with a msg if Transactions list is empty
-     * @param loanWithAssociations
      */
     @Override
     public void showEmptyTransactions(LoanWithAssociations loanWithAssociations) {
@@ -151,6 +151,7 @@ public class LoanAccountTransactionFragment extends BaseFragment
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override

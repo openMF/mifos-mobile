@@ -18,7 +18,6 @@ package org.mifos.mobilebanking.utils.gcm;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -29,6 +28,8 @@ import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.utils.Constants;
 
 import java.io.IOException;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 public class RegistrationIntentService extends IntentService {

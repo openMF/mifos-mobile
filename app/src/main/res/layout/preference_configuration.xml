@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/layout_padding_16dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/layout_padding_16dp">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_base_url"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
+        android:layout_width="match_parent"
         app:hintAnimationEnabled="false">
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="@dimen/layout_padding_8dp"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
             android:hint="@string/enter_base_url"
-            android:nextFocusDown="@id/et_tenant"
-            android:drawableStart="@drawable/ic_lock_black_24dp"
-            android:drawableLeft="@drawable/ic_lock_black_24dp"
-            android:drawablePadding="@dimen/layout_padding_8dp"
-            android:id="@+id/et_base_url"/>
-    </android.support.design.widget.TextInputLayout>
+            android:id="@+id/et_base_url"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:nextFocusDown="@id/et_tenant"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_tenant"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
+        android:layout_width="match_parent"
         app:hintAnimationEnabled="false">
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enter_tenant"
-            android:drawableStart="@drawable/ic_lock_black_24dp"
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:drawablePadding="@dimen/layout_padding_8dp"
-            android:id="@+id/et_tenant"/>
-    </android.support.design.widget.TextInputLayout>
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:hint="@string/enter_tenant"
+            android:id="@+id/et_tenant"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

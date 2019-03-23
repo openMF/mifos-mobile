@@ -4,12 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
@@ -20,7 +17,8 @@ import org.mifos.mobilebanking.utils.CheckSelfPermissionAndRequest;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.Toaster;
 
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -43,7 +41,7 @@ public class BeneficiaryAddOptionsFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_add_options, container, false);
         setToolbarTitle(getString(R.string.add_beneficiary));
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
@@ -173,7 +171,7 @@ public class BeneficiaryAddOptionsFragment extends BaseFragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+            @NonNull int[] grantResults) {
         switch (requestCode) {
             case Constants.PERMISSIONS_REQUEST_CAMERA: {
 

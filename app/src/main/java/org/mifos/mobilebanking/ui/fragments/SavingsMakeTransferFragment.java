@@ -1,10 +1,8 @@
 package org.mifos.mobilebanking.ui.fragments;
 
+import static org.mifos.mobilebanking.ui.activities.base.BaseActivity.hideKeyboard;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +14,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.payload.AccountDetail;
@@ -36,18 +37,18 @@ import org.mifos.mobilebanking.utils.ProcessView;
 import org.mifos.mobilebanking.utils.Toaster;
 import org.mifos.mobilebanking.utils.Utils;
 
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static org.mifos.mobilebanking.ui.activities.base.BaseActivity.hideKeyboard;
 
 /**
  * Created by Rajan Maurya on 10/03/17.
@@ -129,9 +130,10 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      * Provides an instance of {@link SavingsMakeTransferFragment}, use {@code transferType} as
      * {@code Constants.TRANSFER_PAY_TO} when we want to deposit and
      * {@code Constants.TRANSFER_PAY_FROM} when we want to make a transfer
-     * @param accountId Saving account Id
+     *
+     * @param accountId    Saving account Id
      * @param transferType Type of transfer i.e. {@code Constants.TRANSFER_PAY_TO} or
-     * {@code Constants.TRANSFER_PAY_FROM}
+     *                     {@code Constants.TRANSFER_PAY_FROM}
      * @return Instance of {@link SavingsMakeTransferFragment}
      */
     public static SavingsMakeTransferFragment newInstance(long accountId, String transferType) {
@@ -245,7 +247,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         spPayFrom.setOnItemSelectedListener(this);
 
         payToAdapter = new AccountsSpinnerAdapter(getActivity(), R.layout.account_spinner_layout,
-            listPayTo);
+                listPayTo);
         payToAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spPayTo.setAdapter(payToAdapter);
         spPayTo.setOnItemSelectedListener(this);
@@ -256,6 +258,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     /**
      * Provides with {@code accountOptionsTemplate} fetched from server which is used to update
      * {@code listPayFrom} and {@code listPayTo}
+     *
      * @param accountOptionsTemplate Template for account transfer
      */
     @Override
@@ -272,7 +275,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} with {@code message}
+     * Shows a {@link Snackbar} with {@code message}
+     *
      * @param message String to be shown
      */
     @Override
@@ -282,6 +286,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
@@ -318,10 +323,6 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     /**
      * Callback for {@code spPayFrom} and {@code spPayTo}
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -383,7 +384,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
     /**
      * Checks validation of {@code spPayTo} {@link Spinner}.<br>
-     *  Disables {@code spPayFrom} {@link Spinner} and sets {@code pvTwo} to completed and make
+     * Disables {@code spPayFrom} {@link Spinner} and sets {@code pvTwo} to completed and make
      * {@code pvThree} active
      */
     @OnClick(R.id.btn_pay_from)

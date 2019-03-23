@@ -1,145 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/ll_account_detail"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/default_margin"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_account_detail"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/default_margin"
+              android:layout_width="match_parent"
+              android:orientation="vertical">
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginRight="@dimen/default_margin"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/table_row_padding_top"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent">
+
         <TableRow>
             <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:text="@string/beneficiary_name"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <TextView
                 android:id="@+id/tv_beneficiary_name"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="@string/beneficiary_name"
+                android:layout_width="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                tools:text="@string/beneficiary_name"/>
         </TableRow>
+
         <TableRow
             android:layout_marginTop="@dimen/default_margin">
             <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/account_number"
                 android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:text="@string/account_number"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <TextView
                 android:id="@+id/tv_account_number"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                tools:text="@string/account_number"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                tools:text="@string/account_number"/>
         </TableRow>
 
-
     </TableLayout>
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="@dimen/cardview_default_elevation"
+
+    <androidx.cardview.widget.CardView
         android:background="@color/white"
         android:clickable="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        app:cardElevation="@dimen/cardview_default_elevation"
         app:cardUseCompatPadding="true">
 
         <TableLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:padding="@dimen/table_row_padding_top"
-            android:layout_height="wrap_content">
+            android:padding="@dimen/table_row_padding_top">
+
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/client_name"
                     android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:text="@string/client_name"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <TextView
                     android:id="@+id/tv_client_name"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    tools:text="client_name"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    tools:text="client_name"/>
             </TableRow>
+
             <TableRow android:layout_marginTop="@dimen/default_margin">
                 <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:text="@string/account_type"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <TextView
                     android:id="@+id/tv_account_type"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    tools:text="account_type"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    tools:text="account_type"/>
             </TableRow>
+
             <TableRow
                 android:layout_marginTop="@dimen/default_margin">
                 <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/transfer_limit"
                     android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:text="@string/transfer_limit"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <TextView
                     android:id="@+id/tv_transfer_limit"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    tools:text="transfer_limit"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    tools:text="transfer_limit"/>
             </TableRow>
+
             <TableRow
                 android:layout_marginTop="@dimen/default_margin">
                 <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/office_name"
                     android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:text="@string/office_name"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <TextView
                     android:id="@+id/tv_office_name"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    tools:text="office_name"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/black"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    tools:text="office_name"/>
             </TableRow>
-        </TableLayout>
-    </android.support.v7.widget.CardView>
 
+        </TableLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

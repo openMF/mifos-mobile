@@ -1,9 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +22,9 @@ import org.mifos.mobilebanking.utils.Network;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -137,6 +137,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     /**
      * Fetches {@link LoanWithAssociations} for a loan with {@code loanId}
+     *
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
     @Override
@@ -156,6 +157,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     /**
      * Shows an empty layout for a loan with {@code loanId} which has no Repayment Schedule
+     *
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
     @Override
@@ -171,6 +173,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
@@ -194,6 +197,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
                     Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

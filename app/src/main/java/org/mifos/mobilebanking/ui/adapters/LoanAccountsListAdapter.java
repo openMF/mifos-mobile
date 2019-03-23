@@ -1,9 +1,6 @@
 package org.mifos.mobilebanking.ui.adapters;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +17,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -77,7 +77,7 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else if (loanAccount.getStatus().getActive()) {
 
                 setLoanAccountsGeneralDetails(holder, R.color.deposit_green, context.getString(R.
-                        string.string_and_string, context.getString(R.string.disbursement),
+                                string.string_and_string, context.getString(R.string.disbursement),
                         DateHelper.getDateAsString(loanAccount.getTimeline().
                                 getActualDisbursementDate())));
                 setLoanAccountsDetails(((ViewHolder) holder), loanAccount, R.color.deposit_green);
@@ -91,11 +91,11 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else if (loanAccount.getStatus().getPendingApproval()) {
 
                 setLoanAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(R.
-                                string.string_and_string, context.getString(R.string.
-                                submitted), DateHelper.getDateAsString(loanAccount.
-                                getTimeline().getSubmittedOnDate())));
+                        string.string_and_string, context.getString(R.string.
+                        submitted), DateHelper.getDateAsString(loanAccount.
+                        getTimeline().getSubmittedOnDate())));
 
-            }  else if (loanAccount.getStatus().getOverpaid()) {
+            } else if (loanAccount.getStatus().getOverpaid()) {
 
                 setLoanAccountsDetails(((ViewHolder) holder), loanAccount, R.color.purple);
                 setLoanAccountsGeneralDetails(holder, R.color.purple, context.getString(R.string.
@@ -110,7 +110,7 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             } else {
                 setLoanAccountsGeneralDetails(holder, R.color.gray_dark, context.getString(R.string.
-                            string_and_string, context.getString(R.string.withdrawn), DateHelper
+                        string_and_string, context.getString(R.string.withdrawn), DateHelper
                         .getDateAsString(loanAccount.getTimeline().getWithdrawnOnDate())));
 
             }
@@ -127,11 +127,12 @@ public class LoanAccountsListAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void setLoanAccountsGeneralDetails(RecyclerView.ViewHolder holder, int colorId,
-                                                 String dateStr) {
+            String dateStr) {
         ((ViewHolder) holder).ivStatusIndicator.setColorFilter(ContextCompat.
                 getColor(context, colorId));
         ((ViewHolder) holder).tvDate.setText(dateStr);
     }
+
     @Override
     public int getItemCount() {
         return loanAccountsList.size();

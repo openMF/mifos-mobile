@@ -35,7 +35,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public LoanAccountsDetailPresenter(DataManager dataManager,
@@ -60,6 +60,7 @@ public class LoanAccountsDetailPresenter extends BasePresenter<LoanAccountsDetai
      * Load details of a particular loan account from the server and notify the view
      * to display it. Notify the view, in case there is any error in fetching
      * the details from server.
+     *
      * @param loanId Id of Loan Account
      */
     public void loadLoanAccountDetails(long loanId) {

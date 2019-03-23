@@ -5,5 +5,5 @@
     <item android:id="@+id/menu_search_faq"
         app:showAsAction="always"
         android:title="@string/search"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 </menu>

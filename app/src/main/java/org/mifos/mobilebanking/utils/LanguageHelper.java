@@ -6,11 +6,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.v7.preference.PreferenceManager;
 
 import org.mifos.mobilebanking.R;
 
 import java.util.Locale;
+
+import androidx.preference.PreferenceManager;
 
 /**
  * Created by dilpreet on 02/10/17.

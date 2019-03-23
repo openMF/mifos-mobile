@@ -3,10 +3,6 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +36,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -85,6 +85,7 @@ public class AccountsFragment extends BaseFragment implements
 
     /**
      * Method to get the current filter list for the fragment
+     *
      * @return currentFilterList
      */
     public List<CheckboxStatus> getCurrentFilterList() {
@@ -93,7 +94,6 @@ public class AccountsFragment extends BaseFragment implements
 
     /**
      * Method to set current filter list value
-     * @param currentFilterList
      */
     public void setCurrentFilterList(List<CheckboxStatus> currentFilterList) {
         this.currentFilterList = currentFilterList;
@@ -236,6 +236,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Shows {@link List} of {@link LoanAccount} fetched from server using
      * {@link LoanAccountsListAdapter}
+     *
      * @param loanAccounts {@link List} of {@link LoanAccount}
      */
     @Override
@@ -253,6 +254,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Shows {@link List} of {@link SavingAccount} fetched from server using
      * {@link SavingAccountsListAdapter}
+     *
      * @param savingAccounts {@link List} of {@link SavingAccount}
      */
     @Override
@@ -270,6 +272,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Shows {@link List} of {@link ShareAccount} fetched from server using
      * {@link ShareAccountsListAdapter}
+     *
      * @param shareAccounts {@link List} of {@link ShareAccount}
      */
     @Override
@@ -287,6 +290,7 @@ public class AccountsFragment extends BaseFragment implements
 
     /**
      * Shows an error layout when this function is called.
+     *
      * @param emptyAccounts Text to show in {@code noAccountText}
      */
     public void showEmptyAccounts(String emptyAccounts) {
@@ -297,6 +301,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for searching an {@code input} String in {@code savingAccounts} and displaying it in the
      * recyclerview.
+     *
      * @param input String which is needs to be searched in list
      */
     public void searchSavingsAccount(String input) {
@@ -307,6 +312,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for searching an {@code input} String in {@code loanAccounts} and displaying it in the
      * recyclerview.
+     *
      * @param input String which is needs to be searched in list
      */
     public void searchLoanAccount(String input) {
@@ -317,6 +323,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for searching an {@code input} String in {@code savingAccounts} and displaying it in the
      * recyclerview.
+     *
      * @param input String which is needs to be searched in list
      */
     public void searchSharesAccount(String input) {
@@ -327,6 +334,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for filtering {@code savingAccounts} depending upon {@link List} of
      * {@link CheckboxStatus}
+     *
      * @param statusModelList {@link List} of {@link CheckboxStatus}
      */
     public void filterSavingsAccount(List<CheckboxStatus> statusModelList) {
@@ -341,6 +349,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for filtering {@code loanAccounts} depending upon {@link List} of
      * {@link CheckboxStatus}
+     *
      * @param statusModelList {@link List} of {@link CheckboxStatus}
      */
     public void filterLoanAccount(List<CheckboxStatus> statusModelList) {
@@ -355,6 +364,7 @@ public class AccountsFragment extends BaseFragment implements
     /**
      * Used for filtering {@code shareAccounts} depending upon {@link List} of
      * {@link CheckboxStatus}
+     *
      * @param statusModelList {@link List} of {@link CheckboxStatus}
      */
     public void filterShareAccount(List<CheckboxStatus> statusModelList) {
@@ -368,6 +378,7 @@ public class AccountsFragment extends BaseFragment implements
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param errorMessage Error message that tells the user about the problem.
      */
     @Override
@@ -436,7 +447,6 @@ public class AccountsFragment extends BaseFragment implements
      *
      * This will prevent the application from crashing if the
      * intent is null.
-     * @param intent
      */
     private void openActivity(Intent intent) {
         if (intent != null) {

@@ -9,12 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
@@ -46,6 +43,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -161,6 +162,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     /**
      * Returns tag of Fragment present at {@code position}
+     *
      * @param position position of Fragment
      * @return Tag of Fragment
      */
@@ -172,6 +174,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
      * It provides with {@code shareAccounts} fetched from server which is then passed to fragment
      * implementing {@link AccountsView} i.e. {@link AccountsFragment} which further displays them
      * in a recyclerView
+     *
      * @param shareAccounts {@link List} of {@link ShareAccount}
      */
     @Override
@@ -186,6 +189,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
      * It provides with {@code loanAccounts} fetched from server which is then passed to fragment
      * implementing {@link AccountsView} i.e. {@link AccountsFragment} which further displays them
      * in a recyclerView
+     *
      * @param loanAccounts {@link List} of {@link LoanAccount}
      */
     @Override
@@ -200,6 +204,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
      * It provides with {@code savingAccounts} fetched from server which is then passed to fragment
      * implementing {@link AccountsView} i.e. {@link AccountsFragment} which further displays them
      * in a recyclerView
+     *
      * @param savingAccounts {@link List} of {@link SavingAccount}
      */
     @Override
@@ -209,7 +214,6 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
         ((AccountsView) getChildFragmentManager().findFragmentByTag(getFragmentTag(0)))
                 .hideProgress();
     }
-
 
 
     @OnClick(R.id.fab_create_loan)
@@ -229,6 +233,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
      * It is called whenever any error occurs while executing a request which passes errorMessage to
      * fragment implementing {@link AccountsView} i.e. {@link AccountsFragment} which further
      * displays the errorMessage
+     *
      * @param errorMessage Error message that tells the user about the problem.
      */
     @Override
@@ -305,7 +310,8 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     /**
      * Initializes the search option in {@link Menu} depending upon {@code account}
-     * @param menu Interface for managing the items in a menu.
+     *
+     * @param menu    Interface for managing the items in a menu.
      * @param account An enum of {@link AccountType}
      */
     private void initSearch(Menu menu, final AccountType account) {
@@ -353,6 +359,7 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
 
     /**
      * Displays a filter dialog according to the {@code account} provided in the parameter
+     *
      * @param account An enum of {@link AccountType}
      */
     private void showFilterDialog(final AccountType account) {
@@ -471,11 +478,11 @@ public class ClientAccountsFragment extends BaseFragment implements AccountsView
                 })
                 .setNegativeButton(getString(R.string.cancel),
                         new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            isDialogBoxSelected = false;
-                        }
-                    })
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                isDialogBoxSelected = false;
+                            }
+                        })
                 .createMaterialDialog()
                 .show();
     }

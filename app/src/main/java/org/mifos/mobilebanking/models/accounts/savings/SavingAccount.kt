@@ -62,7 +62,7 @@ data class SavingAccount(
 
         @SerializedName("timeline")
         var timeLine: TimeLine? = null
-) : Account(), Parcelable {
+) : Parcelable, Account() {
     fun isRecurring(): Boolean {
         return this.depositType != null && this.depositType!!.isRecurring()
     }

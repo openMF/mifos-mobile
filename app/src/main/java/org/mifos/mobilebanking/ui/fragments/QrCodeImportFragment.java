@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ import java.io.InputStream;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -78,7 +78,7 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_qr_code_import, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
@@ -100,7 +100,8 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
     }
 
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // save data
         outState.putParcelable(Constants.FRAME_RECT, cropImageView.getActualCropRect());
@@ -120,13 +121,14 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
 
 
     @OnClick(R.id.btn_proceed)
-    public void proceed () {
+    public void proceed() {
         qrCodeImportPresenter.getDecodedResult(qrUri, cropImageView);
     }
 
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override
@@ -135,11 +137,11 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
     }
 
 
-
     /**
      * CallBack for{@link CropImageView} which retrieves data from QRCode
      * Opens {@link BeneficiaryApplicationFragment} with {@link BeneficiaryState} as
      * {@code BeneficiaryState.CREATE_QR}
+     *
      * @param result contains the results from decoded QR bitmap
      */
     @Override
@@ -150,7 +152,7 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
             Beneficiary beneficiary = gson.fromJson(result.getText(), Beneficiary.class);
             getActivity().getSupportFragmentManager().popBackStack();
             ((BaseActivity) getActivity()).replaceFragment(BeneficiaryApplicationFragment.
-                    newInstance(BeneficiaryState.CREATE_QR, beneficiary),
+                            newInstance(BeneficiaryState.CREATE_QR, beneficiary),
                     true, R.id.container);
         } catch (JsonSyntaxException e) {
             Toast.makeText(getActivity(), getString(R.string.invalid_qr),
@@ -186,6 +188,7 @@ public class QrCodeImportFragment extends BaseFragment implements QrCodeImportVi
 
     /**
      * Initializing UI
+     *
      * @param qrImageUri contains Uri of qr code image
      */
     public void setBitmapImage(Uri qrImageUri) {

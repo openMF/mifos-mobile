@@ -47,7 +47,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public HomeOldPresenter(DataManager dataManager, @ActivityContext Context context) {
@@ -179,8 +179,9 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
     }
 
     public void setUserProfile(String image) {
-        if (image == null)
+        if (image == null) {
             return;
+        }
         final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
         Bitmap decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes);
         getMvpView().showUserImage(decodedBitmap);
@@ -210,6 +211,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
     /**
      * Returns total Loan balance
+     *
      * @param loanAccountList {@link List} of {@link LoanAccount} associated with the client
      * @return Returns {@code totalAmount} which is calculated by adding all {@link LoanAccount}
      * balance.
@@ -224,6 +226,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
     /**
      * Returns total Savings balance
+     *
      * @param savingAccountList {@link List} of {@link SavingAccount} associated with the client
      * @return Returns {@code totalAmount} which is calculated by adding all {@link SavingAccount}
      * balance.

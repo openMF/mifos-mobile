@@ -1,184 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/layout_padding_24dp">
+    android:layout_margin="@dimen/layout_padding_24dp"
+    android:layout_width="match_parent">
+
     <LinearLayout
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             app:cardUseCompatPadding="true">
+
             <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
                     android:id="@+id/iv_success"
-                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_height="72dp"
                     android:layout_marginTop="@dimen/login_margin_top"
+                    android:layout_width="72dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/animated_check"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/amount"
-                    android:layout_marginTop="@dimen/row_padding_left"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/row_padding_left"
+                    android:layout_width="match_parent"
+                    android:text="@string/amount"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/amount"
+                    android:gravity="center"
                     android:id="@+id/tv_amount"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/transfer_from_savings"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    tools:text="@string/amount"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
                     android:layout_marginTop="@dimen/login_padding_left"
-                    android:textColor="@color/gray_dark"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+                    android:layout_width="match_parent"
+                    android:text="@string/transfer_from_savings"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@color/gray_dark"/>
 
                 <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
                     android:text="@string/pay_to"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/default_margin"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/medium_text"
                     android:id="@+id/tv_pay_to"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
                 <View
-                    android:layout_width="match_parent"
+                    android:background="@color/light_grey"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/default_margin"
                     android:layout_marginBottom="@dimen/divider_margin"
-                    android:background="@color/light_grey"/>
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
                 <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
                     android:text="@string/pay_from"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/medium_text"
                     android:id="@+id/tv_pay_from"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+
                 <View
-                    android:layout_width="match_parent"
+                    android:background="@color/light_grey"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/default_margin"
                     android:layout_marginBottom="@dimen/divider_margin"
-                    android:background="@color/light_grey"/>
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
+
                 <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
                     android:text="@string/date"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/medium_text"
                     android:id="@+id/tv_date"
-                    android:layout_marginTop="@dimen/divider_margin"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_marginBottom="@dimen/divider_margin"
-                    android:background="@color/light_grey"/>
-                <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/remark"
-                    android:layout_marginTop="@dimen/default_margin"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+
+                <View
+                    android:background="@color/light_grey"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
+                    android:text="@string/remark"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/primary"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/medium_text"
                     android:id="@+id/tv_remark"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/login_padding_left"
                     android:layout_marginStart="@dimen/login_padding_left"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                <View
+                    android:layout_marginTop="@dimen/divider_margin"
                     android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+
+                <View
+                    android:background="@color/light_grey"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/default_margin"
                     android:layout_marginBottom="@dimen/divider_margin"
-                    android:background="@color/light_grey"/>
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="end"
                     android:id="@+id/ll_transfer"
-                    android:layout_margin="@dimen/row_padding_left"
-                    android:orientation="horizontal">
-                    <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/btn_cancel_transfer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:text="@string/cancel"/>
-                    <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/btn_start_transfer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="@string/transfer"/>
-                </LinearLayout>
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_close"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
                     android:layout_margin="@dimen/row_padding_left"
-                    android:text="@string/close"/>
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:id="@+id/btn_cancel_transfer"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/cancel"
+                        android:textColor="@color/primary"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_start_transfer"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/transfer"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_close"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/row_padding_left"
+                    android:layout_width="wrap_content"
+                    android:text="@string/close"
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
+
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+
+</androidx.core.widget.NestedScrollView>

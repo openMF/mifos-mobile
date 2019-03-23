@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/swipe_container"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
+                android:fadeScrollbars="false"
                 android:id="@+id/rv_accounts"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
                 android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scrollbars="vertical"
-                android:fadeScrollbars="false"/>
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"/>
 
             <include
                 layout="@layout/layout_sweet_exception_handler"
                 android:id="@+id/layout_error"
                 android:visibility="gone"/>
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

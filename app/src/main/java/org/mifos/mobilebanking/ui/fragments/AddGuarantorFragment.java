@@ -5,14 +5,14 @@ package org.mifos.mobilebanking.ui.fragments;
  */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.guarantor.GuarantorApplicationPayload;
@@ -34,6 +34,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -65,7 +66,7 @@ public class AddGuarantorFragment extends BaseFragment implements AddGuarantorVi
     int index;
 
     public static AddGuarantorFragment newInstance(int index, GuarantorState guarantorState,
-                                                   GuarantorPayload payload, long loanId) {
+            GuarantorPayload payload, long loanId) {
         AddGuarantorFragment fragment = new AddGuarantorFragment();
         Bundle bundle = new Bundle();
         bundle.putLong(Constants.LOAN_ID, loanId);
@@ -91,7 +92,7 @@ public class AddGuarantorFragment extends BaseFragment implements AddGuarantorVi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_add_guarantor, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
