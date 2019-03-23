@@ -22,7 +22,7 @@ import okhttp3.Response;
 public class SelfServiceInterceptor implements Interceptor {
     public static final String HEADER_TENANT = "Fineract-Platform-TenantId";
     public static final String HEADER_AUTH = "Authorization";
-    public static final String DEFAULT_TENANT = "default";
+    public static final String DEFAULT_TENANT = "mobile";
     private String authToken;
     private String tenant;
 
