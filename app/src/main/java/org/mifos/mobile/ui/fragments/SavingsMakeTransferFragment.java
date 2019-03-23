@@ -213,7 +213,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
 
         hideKeyboard(getActivity());
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload, TransferType.SELF), true, R.id.container);
+                newInstance(transferPayload, fromAccountOption.getAccountNo(),
+                        toAccountOption.getAccountNo(), TransferType.SELF), true, R.id.container);
     }
 
     /**

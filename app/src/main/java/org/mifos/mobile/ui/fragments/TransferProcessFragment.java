@@ -68,6 +68,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     private View rootView;
     private TransferPayload payload;
     private TransferType transferType;
+    private String fromAccountNumber, toAccountNumber;
 
     /**
      * Used for TPT Transfer and own Account Transfer.<br>
@@ -77,11 +78,15 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
      * @param type    enum of {@link TransferType}
      * @return Instance of {@link TransferProcessFragment}
      */
-    public static TransferProcessFragment newInstance(TransferPayload payload, TransferType type) {
+    public static TransferProcessFragment newInstance(
+            TransferPayload payload, String fromAccountNumber,
+            String toAccountNumber, TransferType type) {
         TransferProcessFragment fragment = new TransferProcessFragment();
         Bundle args = new Bundle();
         args.putParcelable(Constants.PAYLOAD, payload);
         args.putSerializable(Constants.TRANSFER_TYPE, type);
+        args.putString(Constants.TRANSFER_TO_ACCOUNT_NUMBER, toAccountNumber);
+        args.putString(Constants.TRANSFER_FROM_ACCOUNT_NUMBER, fromAccountNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,6 +97,8 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         if (getActivity() != null) {
             payload = getArguments().getParcelable(Constants.PAYLOAD);
             transferType = (TransferType) getArguments().getSerializable(Constants.TRANSFER_TYPE);
+            toAccountNumber = getArguments().getString(Constants.TRANSFER_TO_ACCOUNT_NUMBER);
+            fromAccountNumber = getArguments().getString(Constants.TRANSFER_FROM_ACCOUNT_NUMBER);
         }
     }
 
@@ -107,8 +114,8 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         presenter.attachView(this);
 
         tvAmount.setText(CurrencyUtil.formatCurrency(getActivity(), payload.getTransferAmount()));
-        tvPayFrom.setText(String.valueOf(payload.getFromAccountId()));
-        tvPayTo.setText(String.valueOf(payload.getToAccountId()));
+        tvPayFrom.setText(fromAccountNumber);
+        tvPayTo.setText(toAccountNumber);
         tvDate.setText(payload.getTransferDate());
         tvRemark.setText(payload.getTransferDescription());
 

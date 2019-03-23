@@ -245,7 +245,9 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         transferPayload.setTransferDescription(etRemark.getText().toString());
 
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload, TransferType.TPT), true, R.id.container);
+                newInstance(transferPayload, fromAccountOption.getAccountNo(),
+                        beneficiaryAccountOption.getAccountNo(),
+                        TransferType.TPT), true, R.id.container);
 
     }
 
