@@ -41,6 +41,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
 
     private Result result;
     private CompositeDisposable compositeDisposable;
+    private boolean hasErrorOccured = false;
 
     /**
      * Initialises the LoanAccountDetailsPresenter by automatically injecting an instance of
@@ -102,6 +103,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
                             result = reader.decode(bitmap, tmpHintsMap);
                         } catch (Exception e) {
                             getMvpView().hideProgress();
+                            hasErrorOccured = true;
                             getMvpView().showErrorReadingQr(context
                                     .getString(R.string.error_reading_qr));
                         }
@@ -120,8 +122,12 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         getMvpView().hideProgress();
-                        getMvpView()
-                                .showErrorReadingQr(context.getString(R.string.error_reading_qr));
+                        if (!hasErrorOccured) {
+                            getMvpView()
+                                    .showErrorReadingQr(
+                                            context.getString(R.string.error_reading_qr));
+                        }
+                        hasErrorOccured = false;
                     }
                 }));
 
