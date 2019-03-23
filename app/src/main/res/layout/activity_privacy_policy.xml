@@ -4,23 +4,20 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  style="@style/LinearLayout.Base">
+    <LinearLayout
+        style="@style/LinearLayout.Base">
 
         <include layout="@layout/toolbar"/>
 
-        <android.support.design.widget.CoordinatorLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            tools:context=".MainActivity">
+            android:layout_width="match_parent">
 
             <WebView
                 android:id="@+id/webView"
@@ -43,10 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
-
-
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

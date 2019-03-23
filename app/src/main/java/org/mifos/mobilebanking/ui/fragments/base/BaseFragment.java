@@ -3,11 +3,12 @@ package org.mifos.mobilebanking.ui.fragments.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 import org.mifos.mobilebanking.ui.views.BaseActivityCallback;
 import org.mifos.mobilebanking.utils.LanguageHelper;
 import org.mifos.mobilebanking.utils.ProgressBarHandler;
+
+import androidx.fragment.app.Fragment;
 
 public class BaseFragment extends Fragment {
 

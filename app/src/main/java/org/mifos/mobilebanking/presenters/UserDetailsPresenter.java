@@ -46,7 +46,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public UserDetailsPresenter(@ApplicationContext Context context, DataManager dataManager) {
@@ -146,8 +146,9 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     }
 
     public void setUserProfile(String image) {
-        if (image == null)
+        if (image == null) {
             return;
+        }
         final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
         Bitmap decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes);
         getMvpView().showUserImage(decodedBitmap);
@@ -207,7 +208,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     }
 
     private void updateRegistrationNotification(long id, NotificationRegisterPayload payload,
-                                                final String token) {
+            final String token) {
         checkViewAttached();
         compositeDisposables.add(dataManager.updateRegisterNotification(id, payload)
                 .observeOn(AndroidSchedulers.mainThread())

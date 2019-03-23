@@ -30,9 +30,9 @@ public class BeneficiaryDetailPresenter extends BasePresenter<BeneficiaryDetailV
      * {@link DataManager} and {@link Context}.
      *
      * @param manager DataManager class that provides access to the data
-     *                    via the API.
-     * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                via the API.
+     * @param context Context of the view attached to the presenter. In this case
+     *                it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public BeneficiaryDetailPresenter(DataManager manager, @ApplicationContext Context context) {
@@ -51,6 +51,7 @@ public class BeneficiaryDetailPresenter extends BasePresenter<BeneficiaryDetailV
      * Used to delete a Beneficiary with given {@code beneficiaryId} and notifies the view after
      * successful deletion of a beneficiary. And in case of any error during deletion, it notifies
      * the view.
+     *
      * @param beneficiaryId Id of Beneficiary which you want to delete.
      */
     public void deleteBeneficiary(long beneficiaryId) {

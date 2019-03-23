@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
@@ -18,7 +18,7 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:background="@color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
@@ -43,19 +43,19 @@
                         android:id="@+id/tv_acc_balance"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:textStyle="bold"
                         android:textAppearance="?android:textAppearanceSmall"
-                        />
+                        android:textStyle="bold"
+                    />
 
                     <TextView
-                        android:id="@+id/account_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:id="@+id/account_status"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
                         android:lines="1"
                         android:text="@string/account_status"
                         android:textAppearance="?android:textAppearanceMedium"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"/>
 
                     <LinearLayout
                         android:gravity="start|center"
@@ -97,9 +97,6 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:textAppearanceSmall"/>
-
-
-
 
                     <TextView
                         android:ellipsize="end"
@@ -161,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:orientation="horizontal">
 
-                        <android.support.v7.widget.AppCompatButton
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/tv_deposit"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
@@ -169,7 +166,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:textColor="@android:color/white"/>
 
-                        <android.support.v7.widget.AppCompatButton
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/tv_make_a_transfer"
                             android:layout_gravity="end"
                             android:layout_height="wrap_content"
@@ -182,19 +179,19 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_4dp"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_width="match_parent"
-                android:text="@string/last_trans"
-                style="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:text="@string/last_trans"/>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:background="@color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
@@ -252,9 +249,10 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_4dp"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -262,13 +260,11 @@
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_width="match_parent"
                 android:text="@string/monitor"
-                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textAppearance="?android:textAppearanceMedium"/>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                >
+                android:layout_width="match_parent">
 
                 <LinearLayout
                     android:layout_height="wrap_content"
@@ -287,10 +283,10 @@
 
                         <ImageView
                             style="@style/circleLayout"
+                            android:contentDescription="@string/transactions"
                             android:layout_height="35dp"
                             android:layout_width="35dp"
-                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
-                            android:contentDescription="@string/transactions"/>
+                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
 
                         <LinearLayout
                             android:gravity="center"
@@ -330,10 +326,10 @@
 
                         <ImageView
                             style="@style/circleLayout"
+                            android:contentDescription="@string/charges"
                             android:layout_height="35dp"
                             android:layout_width="35dp"
-                            app:srcCompat="@drawable/ic_charges"
-                            android:contentDescription="@string/charges"/>
+                            app:srcCompat="@drawable/ic_charges"/>
 
                         <LinearLayout
                             android:gravity="center"
@@ -373,10 +369,10 @@
 
                         <ImageView
                             style="@style/circleLayout"
+                            android:contentDescription="@string/qr_code"
                             android:layout_height="35dp"
                             android:layout_width="35dp"
-                            app:srcCompat="@drawable/ic_qrcode_scan"
-                            android:contentDescription="@string/qr_code"/>
+                            app:srcCompat="@drawable/ic_qrcode_scan"/>
 
                         <LinearLayout
                             android:gravity="center"
@@ -406,7 +402,7 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_height="wrap_content"
@@ -416,9 +412,10 @@
 
                 <TextView
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_width="wrap_content"
-                    android:text="@string/need_help"
-                    android:layout_marginRight="5dp"/>
+                    android:text="@string/need_help"/>
 
                 <TextView
                     android:clickable="true"
@@ -440,4 +437,4 @@
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

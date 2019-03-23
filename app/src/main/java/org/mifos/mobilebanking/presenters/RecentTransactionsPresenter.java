@@ -36,7 +36,7 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
 
     @Inject
@@ -61,10 +61,12 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
     /**
      * Used to call function {@code loadRecentTransactions(int offset, int limit)} which is used for
      * fetching RecentTransaction from server.
+     *
      * @param loadmore Set {@code false} if calling First time and {@code true} if you need to fetch
      *                 more {@link Transaction}
-     * @param offset Set {@code 0} if calling first time or set length of {@code totalItemsCount} if
-     *               you need to fetch more {@link Transaction}
+     * @param offset   Set {@code 0} if calling first time or set length of {@code totalItemsCount}
+     *                 if
+     *                 you need to fetch more {@link Transaction}
      */
     public void loadRecentTransactions(boolean loadmore, int offset) {
         this.loadmore = loadmore;
@@ -75,8 +77,9 @@ public class RecentTransactionsPresenter extends BasePresenter<RecentTransaction
      * Used to load List of {@link Transaction} from server depending upon the {@code offset} and
      * the max {@code limit} and notifies the view to display it. And in case of any
      * error during fetching the required details it notifies the view.
+     *
      * @param offset Starting position for fetching the list of {@link Transaction}
-     * @param limit Maximum size of List of {@link Transaction} which is fetched from server
+     * @param limit  Maximum size of List of {@link Transaction} which is fetched from server
      */
     public void loadRecentTransactions(int offset, int limit) {
         checkViewAttached();

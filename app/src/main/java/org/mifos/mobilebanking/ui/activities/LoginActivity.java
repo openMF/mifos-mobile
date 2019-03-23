@@ -2,11 +2,11 @@ package org.mifos.mobilebanking.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.presenters.LoginPresenter;
@@ -18,6 +18,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.AppCompatButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,6 +59,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     /**
      * Called when Login is user has successfully logged in
+     *
      * @param userName Username of the user that successfully logged in!
      */
     @Override
@@ -93,6 +95,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param errorMessage Error message that tells the user about the problem.
      */
     @Override

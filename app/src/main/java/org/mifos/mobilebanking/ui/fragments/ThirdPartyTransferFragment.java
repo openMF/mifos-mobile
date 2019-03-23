@@ -1,11 +1,7 @@
 package org.mifos.mobilebanking.ui.fragments;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
@@ -47,6 +44,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -144,7 +145,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         rootView = inflater.inflate(R.layout.fragment_third_party_transfer, container, false);
         setToolbarTitle(getString(R.string.third_party_transfer));
@@ -249,7 +250,8 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} with {@code message}
+     * Shows a {@link Snackbar} with {@code message}
+     *
      * @param msg String to be shown
      */
     @Override
@@ -260,6 +262,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     /**
      * Provides with {@code accountOptionsTemplate} fetched from server which is used to update
      * {@code listPayFrom}
+     *
      * @param accountOptionsTemplate Template for account transfer
      */
     @Override
@@ -275,6 +278,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     /**
      * Provides with {@code beneficiaries} fetched from server which is used to update
      * {@code listBeneficiary}
+     *
      * @param beneficiaries List of {@link Beneficiary} linked with user's account
      */
     @Override
@@ -287,7 +291,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
 
     /**
-     *  Disables {@code spPayFrom} {@link Spinner} and sets {@code pvOne} to completed and make
+     * Disables {@code spPayFrom} {@link Spinner} and sets {@code pvOne} to completed and make
      * {@code pvThree} pvTwo
      */
     @OnClick(R.id.btn_pay_from)
@@ -311,7 +315,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     /**
      * Checks validation of {@code spBeneficiary} {@link Spinner}.<br>
-     *  Disables {@code spBeneficiary} {@link Spinner} and sets {@code pvTwo} to completed and make
+     * Disables {@code spBeneficiary} {@link Spinner} and sets {@code pvTwo} to completed and make
      * {@code pvThree} active
      */
     @OnClick(R.id.btn_pay_to)
@@ -387,6 +391,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param msg Error message that tells the user about the problem.
      */
     @Override
@@ -413,10 +418,6 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
     /**
      * Callback for {@code spPayFrom} and {@code spBeneficiary}
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

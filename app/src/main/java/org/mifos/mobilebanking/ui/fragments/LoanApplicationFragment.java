@@ -1,9 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
@@ -38,6 +38,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -109,6 +111,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     /**
      * Used when we want to apply for a Loan
+     *
      * @param loanState {@link LoanState} is set to {@code LoanState.CREATE}
      * @return Instance of {@link LoanApplicationFragment}
      */
@@ -122,12 +125,13 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     /**
      * Used when we want to update a Loan Application
-     * @param loanState {@link LoanState} is set to {@code LoanState.UPDATE}
+     *
+     * @param loanState            {@link LoanState} is set to {@code LoanState.UPDATE}
      * @param loanWithAssociations {@link LoanAccount} to modify
      * @return Instance of {@link LoanApplicationFragment}
      */
     public static LoanApplicationFragment newInstance(LoanState loanState,
-                                                      LoanWithAssociations loanWithAssociations) {
+            LoanWithAssociations loanWithAssociations) {
         LoanApplicationFragment fragment = new LoanApplicationFragment();
         Bundle args = new Bundle();
         args.putSerializable(Constants.LOAN_STATE, loanState);
@@ -330,6 +334,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     /**
      * A CallBack for {@link MFDatePicker} which provides us with the date selected from the
      * {@link android.app.DatePickerDialog}
+     *
      * @param date Date selected by user in {@link String}
      */
     @Override
@@ -367,6 +372,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     /**
      * Fetches the {@link LoanTemplate} from server for {@code loanState} as CREATE
+     *
      * @param loanTemplate Template for Loan Application
      */
     @Override
@@ -380,6 +386,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     /**
      * Fetches the {@link LoanTemplate} from server for {@code loanState} as UPDATE
+     *
      * @param loanTemplate Template for Loan Application
      */
     @Override
@@ -412,6 +419,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     /**
      * Fetches the {@link LoanTemplate} according to product from server for {@code loanState} as
      * CREATE
+     *
      * @param loanTemplate Template for Loan Application
      */
     @Override
@@ -434,6 +442,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     /**
      * Fetches the {@link LoanTemplate} according to product from server for {@code loanState} as
      * UPDATE
+     *
      * @param loanTemplate Template for Loan Application
      */
     @Override
@@ -461,7 +470,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} after Loan Application is created
+     * Shows a {@link Snackbar} after Loan Application is created
      * successfully
      */
     @Override
@@ -471,7 +480,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     }
 
     /**
-     * Shows a {@link android.support.design.widget.Snackbar} after Loan Application is updated
+     * Shows a {@link Snackbar} after Loan Application is updated
      * successfully
      */
     @Override
@@ -482,6 +491,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param message Error message that tells the user about the problem.
      */
     @Override

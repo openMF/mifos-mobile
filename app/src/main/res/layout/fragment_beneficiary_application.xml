@@ -1,115 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    android:background="@color/white">
-    <android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent">
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/view_flipper"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:padding="@dimen/default_padding"
         android:scrollbars="vertical">
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ll_application_beneficiary"
             style="@style/LinearLayout.Base"
+            android:id="@+id/ll_application_beneficiary"
             android:visibility="visible">
 
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:paddingTop="16dp"
                 android:text="@string/select_account_type"
                 android:textSize="16sp"/>
-            <Spinner
-                android:id="@+id/sp_account_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/default_margin"
-                android:paddingTop="@dimen/default_margin"
-                style="@style/Widget.AppCompat.Spinner.Underlined" />
 
-            <android.support.design.widget.TextInputLayout
+            <Spinner
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:id="@+id/sp_account_type"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingTop="@dimen/default_margin"/>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_account_number"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/account_number"
                     android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_office_name"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/office_name"
                     android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_transfer_limit"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/transfer_limit"
                     android:imeOptions="actionNext"
                     android:inputType="number"
-                    android:maxLines="1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:maxLength="9"
+                    android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_beneficiary_name"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:paddingTop="@dimen/default_margin">
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/beneficiary_name"
                     android:imeOptions="actionDone"
                     android:inputType="text"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:maxLines="1"
                     android:paddingBottom="16dp"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_beneficiary_submit"
+            <androidx.appcompat.widget.AppCompatButton
                 style="@style/Button.Base"
+                android:id="@+id/btn_beneficiary_submit"
                 android:layout_marginTop="10dp"
                 android:text="@string/submit_beneficiary"/>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+
+    </androidx.core.widget.NestedScrollView>
+
     <include
-        android:visibility="gone"
+        layout="@layout/layout_sweet_exception_handler"
         android:id="@+id/layout_error"
-        layout="@layout/layout_sweet_exception_handler"/>
+        android:visibility="gone"/>
+
 </RelativeLayout>

@@ -6,7 +6,6 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +31,7 @@ import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -66,7 +66,7 @@ public class GuarantorDetailFragment extends BaseFragment implements GuarantorDe
     boolean isFirstTime = true;
 
     public static GuarantorDetailFragment newInstance(int index, long loanId,
-                                                      GuarantorPayload payload) {
+            GuarantorPayload payload) {
         GuarantorDetailFragment fragment = new GuarantorDetailFragment();
         Bundle args = new Bundle();
         args.putLong(Constants.LOAN_ID, loanId);
@@ -90,7 +90,7 @@ public class GuarantorDetailFragment extends BaseFragment implements GuarantorDe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_guarantor_detail, container, false);
         setToolbarTitle(getString(R.string.guarantor_details));
         setHasOptionsMenu(true);
@@ -193,8 +193,9 @@ public class GuarantorDetailFragment extends BaseFragment implements GuarantorDe
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
-        if (!disposableUpdateGuarantor.isDisposed())
+        if (!disposableUpdateGuarantor.isDisposed()) {
             disposableUpdateGuarantor.dispose();
+        }
         hideProgressBar();
     }
 }

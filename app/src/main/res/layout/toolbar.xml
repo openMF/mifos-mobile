@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
+<androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
-    app:titleTextAppearance="@style/ToolbarTitle"
     style="@style/Toolbar.Common"
-    app:contentInsetStartWithNavigation="0dp"
+    android:id="@+id/toolbar"
     android:theme="@style/Toolbar.Common"
+    app:contentInsetStartWithNavigation="0dp"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:popupTheme="@style/AppToolbarPopup">
-</android.support.v7.widget.Toolbar>
+    app:popupTheme="@style/AppToolbarPopup"
+    app:titleTextAppearance="@style/ToolbarTitle">
+</androidx.appcompat.widget.Toolbar>

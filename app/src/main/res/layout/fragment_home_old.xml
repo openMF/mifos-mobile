@@ -1,390 +1,471 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_home_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <androidx.core.widget.NestedScrollView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ll_container"
             android:animateLayoutChanges="true"
+            android:id="@+id/ll_container"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:background="@color/primary_dark"
                 android:clickable="true"
+                android:focusable="true"
                 android:foreground="?selectableItemBackground"
                 android:layout_height="wrap_content"
-                android:background="@color/primary_dark"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
                 android:padding="@dimen/default_padding">
 
                 <ImageView
                     android:id="@+id/iv_user_image"
-                    android:layout_width="84dp"
                     android:layout_height="84dp"
-                    android:visibility="invisible"
-                    android:layout_margin="@dimen/margin_16dp" />
+                    android:layout_margin="@dimen/margin_16dp"
+                    android:layout_width="84dp"
+                    android:visibility="invisible"/>
 
                 <org.mifos.mobilebanking.utils.CircularImageView
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
                     android:id="@+id/iv_circular_user_image"
-                    tools:src="@drawable/ic_person_black_24dp"
-                    app:border_width="1dp"
-                    android:visibility="gone"
+                    android:layout_height="84dp"
                     android:layout_margin="@dimen/margin_16dp"
-                    app:border="true"/>
+                    android:layout_width="84dp"
+                    android:visibility="gone"
+                    app:border="true"
+                    app:border_width="1dp"
+                    tools:src="@drawable/ic_person_black_24dp"/>
+
                 <TextView
                     android:id="@+id/tv_user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    tools:text="@string/medium_text"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/text_headline"
-                    android:textColor="@color/white" />
+                    tools:text="@string/medium_text"/>
+
             </LinearLayout>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/default_margin"
                     android:background="@android:color/white"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_margin">
+
                     <LinearLayout
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingStart="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:paddingEnd="@dimen/default_padding"
-                        android:paddingTop="@dimen/default_margin"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
                         android:paddingBottom="@dimen/default_margin"
-                        android:orientation="horizontal">
+                        android:paddingEnd="@dimen/default_padding"
+                        android:paddingLeft="@dimen/default_padding"
+                        android:paddingRight="@dimen/default_padding"
+                        android:paddingStart="@dimen/default_padding"
+                        android:paddingTop="@dimen/default_margin">
+
                         <TextView
-                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_width="0dp"
                             android:text="@string/accounts_overview"
-                            android:textColor="@color/gray_dark"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textColor="@color/gray_dark"/>
+
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
                             android:id="@+id/iv_visibility"
-                            app:srcCompat="@drawable/ic_visibility_24px"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/default_margin"
-                        android:id="@+id/ll_account_detail"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:id="@+id/ll_total_savings"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/default_margin"
-                            android:gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="@string/amount"
-                                android:textAppearance="?android:textAppearanceMedium"
-                                android:gravity="center"
-                                android:textStyle="bold"
-                                android:textColor="@color/deposit_green"
-                                android:id="@+id/tv_saving_total_amount"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/total_saving"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                        </LinearLayout>
-                        <View
-                            android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/gray_dark"/>
+                            android:layout_width="wrap_content"
+                            app:srcCompat="@drawable/ic_visibility_24px"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_account_detail"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/default_margin">
+
                         <LinearLayout
-                            android:id="@+id/ll_total_loan"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/default_margin"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:id="@+id/ll_total_savings"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_margin">
+
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="@string/amount"
-                                android:textStyle="bold"
                                 android:gravity="center"
+                                android:id="@+id/tv_saving_total_amount"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:textColor="@color/deposit_green"
+                                android:textStyle="bold"
+                                tools:text="@string/amount"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="wrap_content"
+                                android:text="@string/total_saving"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:background="@color/gray_dark"
+                            android:layout_height="match_parent"
+                            android:layout_width="1dp"/>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:id="@+id/ll_total_loan"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_margin">
+
+                            <TextView
+                                android:gravity="center"
+                                android:id="@+id/tv_loan_total_amount"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
                                 android:textAppearance="?android:textAppearanceMedium"
                                 android:textColor="@color/red_light"
-                                android:id="@+id/tv_loan_total_amount"/>
+                                android:textStyle="bold"
+                                tools:text="@string/amount"/>
+
                             <TextView
-                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/total_loan"
                                 android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="wrap_content"
+                                android:text="@string/total_loan"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:weightSum="2">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginBottom="2dp"
-                android:weightSum="3"
-                android:layout_weight="1">
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/margin_4dp"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:layout_marginBottom="@dimen/margin_4dp"
-                    android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/default_padding"
-                        android:clickable="true"
-                        android:id="@+id/ll_accounts"
-                        android:foreground="?selectableItemBackground"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/accounts"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/divider_margin"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/margin_4dp"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:layout_marginBottom="@dimen/margin_4dp"
-                    android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/default_padding"
-                        android:id="@+id/ll_transfer"
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/transfer"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/divider_margin"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/margin_4dp"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:layout_marginRight="@dimen/margin_4dp"
-                    android:layout_marginEnd="@dimen/margin_4dp"
-                    android:layout_marginBottom="@dimen/margin_4dp"
-                    android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:id="@+id/ll_charges"
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/charges"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/divider_margin"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="3"
-                android:layout_weight="1">
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/margin_4dp"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:layout_marginBottom="@dimen/margin_4dp"
-                    android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:clickable="true"
-                        android:id="@+id/ll_apply_for_loan"
-                        android:foreground="?selectableItemBackground"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/apply_for_loan"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/divider_margin"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/margin_4dp"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:layout_marginBottom="@dimen/margin_4dp"
-                    android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:clickable="true"
-                        android:id="@+id/ll_beneficiaries"
-                        android:foreground="?selectableItemBackground"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_beneficiaries_48px"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/beneficiaries"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/divider_margin"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/margin_4dp"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:layout_marginRight="@dimen/margin_4dp"
-                    android:layout_marginEnd="@dimen/margin_4dp"
-                    android:layout_marginBottom="@dimen/margin_4dp"
-                    android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:id="@+id/ll_surveys"
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:srcCompat="@drawable/ic_surveys_48px"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/survey"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/divider_margin"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/default_padding"
-                android:paddingBottom="@dimen/default_padding"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/need_help"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/row_padding_right"
-                    android:layout_marginLeft="@dimen/row_padding_right"
-                    android:layout_marginTop="@dimen/divider_margin"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:weightSum="3">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_4dp"
+                        android:layout_marginLeft="@dimen/margin_4dp"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content">
+
+                        <LinearLayout
+                            android:background="@android:color/white"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:id="@+id/ll_accounts"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_padding">
+
+                            <ImageView
+                                android:layout_height="56dp"
+                                android:layout_width="56dp"
+                                app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
+
+                            <TextView
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="match_parent"
+                                android:text="@string/accounts"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_4dp"
+                        android:layout_marginLeft="@dimen/margin_4dp"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content">
+
+                        <LinearLayout
+                            android:background="@android:color/white"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:id="@+id/ll_transfer"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_padding">
+
+                            <ImageView
+                                android:layout_height="56dp"
+                                android:layout_width="56dp"
+                                app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
+
+                            <TextView
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="match_parent"
+                                android:text="@string/transfer"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_4dp"
+                        android:layout_marginEnd="@dimen/margin_4dp"
+                        android:layout_marginLeft="@dimen/margin_4dp"
+                        android:layout_marginRight="@dimen/margin_4dp"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content">
+
+                        <LinearLayout
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:id="@+id/ll_charges"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_padding">
+
+                            <ImageView
+                                android:layout_height="56dp"
+                                android:layout_width="56dp"
+                                app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"/>
+
+                            <TextView
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="match_parent"
+                                android:text="@string/charges"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:weightSum="3">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_4dp"
+                        android:layout_marginLeft="@dimen/margin_4dp"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content">
+
+                        <LinearLayout
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:id="@+id/ll_apply_for_loan"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_padding">
+
+                            <ImageView
+                                android:layout_height="56dp"
+                                android:layout_width="56dp"
+                                app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
+
+                            <TextView
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="match_parent"
+                                android:text="@string/apply_for_loan"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_4dp"
+                        android:layout_marginLeft="@dimen/margin_4dp"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content">
+
+                        <LinearLayout
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:id="@+id/ll_beneficiaries"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_padding">
+
+                            <ImageView
+                                android:layout_height="56dp"
+                                android:layout_width="56dp"
+                                app:srcCompat="@drawable/ic_beneficiaries_48px"/>
+
+                            <TextView
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="match_parent"
+                                android:text="@string/beneficiaries"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_4dp"
+                        android:layout_marginEnd="@dimen/margin_4dp"
+                        android:layout_marginLeft="@dimen/margin_4dp"
+                        android:layout_marginRight="@dimen/margin_4dp"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content">
+
+                        <LinearLayout
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:id="@+id/ll_surveys"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/default_padding">
+
+                            <ImageView
+                                android:layout_height="56dp"
+                                android:layout_width="56dp"
+                                app:srcCompat="@drawable/ic_surveys_48px"/>
+
+                            <TextView
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/divider_margin"
+                                android:layout_width="match_parent"
+                                android:text="@string/survey"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/row_padding_right"
+                    android:layout_marginStart="@dimen/row_padding_right"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="@string/need_help"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/row_padding_right"
                     android:layout_marginRight="@dimen/row_padding_right"
+                    android:layout_width="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:autoLink="phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/help_line_number"
-                        android:textStyle="bold"
                         android:gravity="end"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/divider_margin"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                        android:layout_width="match_parent"
+                        android:text="@string/help_line_number"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+
                     <TextView
                         android:autoLink="email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/contact_email"
                         android:gravity="end"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/divider_margin"
+                        android:layout_width="match_parent"
+                        android:text="@string/contact_email"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

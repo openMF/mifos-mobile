@@ -1,7 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.enums.BeneficiaryState;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 
+import androidx.annotation.Nullable;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
@@ -34,7 +34,7 @@ public class QrCodeReaderFragment extends BaseFragment implements ZXingScannerVi
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         mScannerView = new ZXingScannerView(getActivity());
         mScannerView.setAutoFocus(true);
         return mScannerView;
@@ -62,6 +62,7 @@ public class QrCodeReaderFragment extends BaseFragment implements ZXingScannerVi
 
     /**
      * Callback for {@link ZXingScannerView} which retrieves data from QRCode
+     *
      * @param result Contains data scanned from QRCode
      */
     @Override

@@ -43,7 +43,7 @@ public class LocationsFragment extends BaseFragment implements OnMapReadyCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_locations, container, false);
 
         ButterKnife.bind(this, rootView);
