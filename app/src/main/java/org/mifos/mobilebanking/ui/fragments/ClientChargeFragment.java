@@ -2,25 +2,21 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.Charge;
 import org.mifos.mobilebanking.presenters.ClientChargePresenter;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.adapters.ClientChargeAdapter;
-import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.enums.ChargeType;
+import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.ClientChargeView;
 import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.Network;
@@ -32,6 +28,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -152,7 +152,7 @@ public class ClientChargeFragment extends BaseFragment implements
     /**
      * It is called whenever any error occurs while executing a request. If not connected to
      * internet then it shows display a message to user to connect to internet other it just
-     * displays the {@code message} in a {@link android.support.design.widget.Snackbar}
+     * displays the {@code message} in a {@link Snackbar}
      *
      * @param message Error message that tells the user about the problem.
      */
@@ -183,6 +183,7 @@ public class ClientChargeFragment extends BaseFragment implements
     /**
      * Receives {@code clientChargeList} from server and calls {@code inflateClientChargeList()} to
      * update the {@code clientChargeAdapter} adapter.
+     *
      * @param clientChargeList {@link List} of {@link Charge}
      */
     @Override
@@ -204,7 +205,7 @@ public class ClientChargeFragment extends BaseFragment implements
             rvClientCharge.setAdapter(clientChargeAdapter);
         } else {
             sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.charges), R.drawable.ic_charges,
-                     rvClientCharge, layoutError);
+                    rvClientCharge, layoutError);
         }
     }
 

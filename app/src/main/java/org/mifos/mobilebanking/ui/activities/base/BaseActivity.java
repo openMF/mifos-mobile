@@ -5,12 +5,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -25,6 +19,13 @@ import org.mifos.mobilebanking.injection.module.ActivityModule;
 import org.mifos.mobilebanking.ui.activities.PassCodeActivity;
 import org.mifos.mobilebanking.ui.views.BaseActivityCallback;
 import org.mifos.mobilebanking.utils.LanguageHelper;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 /**
  * @author ishan

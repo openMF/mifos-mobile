@@ -5,7 +5,6 @@ package org.mifos.mobilebanking.ui.fragments;
  */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,7 +88,7 @@ public class SavingsAccountApplicationFragment extends BaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_savings_account_application, container,
                 false);
         ButterKnife.bind(this, rootView);

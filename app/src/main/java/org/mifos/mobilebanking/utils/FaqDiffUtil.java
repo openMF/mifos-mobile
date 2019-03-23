@@ -1,10 +1,10 @@
 package org.mifos.mobilebanking.utils;
 
-import android.support.v7.util.DiffUtil;
-
 import org.mifos.mobilebanking.models.FAQ;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.DiffUtil;
 
 /**
  * Created by dilpreet on 12/8/17.

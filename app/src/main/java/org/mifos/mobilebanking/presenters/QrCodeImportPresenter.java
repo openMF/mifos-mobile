@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.LuminanceSource;
@@ -48,7 +47,7 @@ public class QrCodeImportPresenter extends BasePresenter<QrCodeImportView> {
      * {@link Context}.
      *
      * @param context Context of the view attached to the presenter. In this case
-     *                it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public QrCodeImportPresenter(@ApplicationContext Context context) {

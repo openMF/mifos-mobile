@@ -46,7 +46,7 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
      * @param dataManager DataManager class that provides access to the data
      *                    via the API.
      * @param context     Context of the view attached to the presenter. In this case
-     *                    it is that of an {@link android.support.v7.app.AppCompatActivity}
+     *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
     public ThirdPartyTransferPresenter(DataManager dataManager,
@@ -80,12 +80,11 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
         compositeDisposable.add(Observable.zip(dataManager.getThirdPartyTransferTemplate(),
                 dataManager.getBeneficiaryList(),
                 new BiFunction<AccountOptionsTemplate, List<Beneficiary>,
-                                AccountOptionAndBeneficiary>()
-                {
+                        AccountOptionAndBeneficiary>() {
                     @Override
                     public AccountOptionAndBeneficiary apply(AccountOptionsTemplate
-                                                                    accountOptionsTemplate,
-                                                            List<Beneficiary> beneficiaries) {
+                            accountOptionsTemplate,
+                            List<Beneficiary> beneficiaries) {
                         return new AccountOptionAndBeneficiary(accountOptionsTemplate,
                                 beneficiaries);
                     }
@@ -118,11 +117,12 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
 
     /**
      * Retrieving {@link List} of {@code accountNumbers} from {@link List} of {@link AccountOption}
+     *
      * @param accountOptions {@link List} of {@link AccountOption}
      * @return Returns {@link List} containing {@code accountNumbers}
      */
     public List<AccountDetail> getAccountNumbersFromAccountOptions(List<AccountOption>
-                                                                           accountOptions) {
+            accountOptions) {
         final List<AccountDetail> accountNumber = new ArrayList<>();
         Observable.fromIterable(accountOptions)
                 .filter(new Predicate<AccountOption>() {
@@ -151,11 +151,12 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
 
     /**
      * Retrieving {@link List} of {@code accountNumbers} from {@link List} of {@link Beneficiary}
+     *
      * @param beneficiaries {@link List} of {@link Beneficiary}
      * @return Returns {@link List} containing {@code accountNumbers}
      */
     public List<BeneficiaryDetail> getAccountNumbersFromBeneficiaries(final List<Beneficiary>
-                                                                              beneficiaries) {
+            beneficiaries) {
         final List<BeneficiaryDetail> accountNumbers = new ArrayList<>();
         Observable.fromIterable(beneficiaries)
                 .flatMap(new Function<Beneficiary, Observable<BeneficiaryDetail>>() {
@@ -178,9 +179,10 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
     /**
      * Searches for a {@link AccountOption} with provided {@code accountNo} from {@link List} of
      * {@link AccountOption} and returns it.
+     *
      * @param accountOptions {@link List} of {@link AccountOption}
-     * @param accountNo Account Number which needs to searched in {@link List} of
-     * {@link AccountOption}
+     * @param accountNo      Account Number which needs to searched in {@link List} of
+     *                       {@link AccountOption}
      * @return Returns {@link AccountOption} which has Account Number same as the provided
      * {@code accountNo} in function parameter.
      */

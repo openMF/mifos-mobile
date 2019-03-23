@@ -1,8 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,12 +21,14 @@ import org.mifos.mobilebanking.utils.Utils;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * @author Rajan Maurya
- *         On 16/10/17.
+ * On 16/10/17.
  */
 public class AccountOverviewFragment extends BaseFragment implements AccountOverviewMvpView,
         SwipeRefreshLayout.OnRefreshListener {

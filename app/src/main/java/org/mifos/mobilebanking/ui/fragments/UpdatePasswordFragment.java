@@ -6,14 +6,14 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
@@ -23,10 +23,12 @@ import org.mifos.mobilebanking.ui.activities.SettingsActivity;
 import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
 import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
 import org.mifos.mobilebanking.ui.views.UpdatePasswordView;
+import org.mifos.mobilebanking.utils.Network;
 import org.mifos.mobilebanking.utils.Toaster;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,7 +65,7 @@ public class UpdatePasswordFragment extends BaseFragment implements UpdatePasswo
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_update_password, container, false);
         setToolbarTitle(getString(R.string.change_password));
         ButterKnife.bind(this, rootView);
@@ -111,6 +113,9 @@ public class UpdatePasswordFragment extends BaseFragment implements UpdatePasswo
 
     @Override
     public void showError(String message) {
+        if (!Network.isConnected(getActivity())) {
+            message = getString(R.string.no_internet_connection);
+        }
         Toaster.show(rootView, message);
     }
 

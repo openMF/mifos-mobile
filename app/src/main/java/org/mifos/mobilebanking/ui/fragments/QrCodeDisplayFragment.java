@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +18,7 @@ import org.mifos.mobilebanking.utils.Constants;
 import org.mifos.mobilebanking.utils.QrCodeGenerator;
 import org.mifos.mobilebanking.utils.Utils;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -55,7 +55,7 @@ public class QrCodeDisplayFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_qr_code_display, container, false);
         ButterKnife.bind(this, rootView);
 

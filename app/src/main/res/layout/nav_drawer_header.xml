@@ -6,30 +6,31 @@
     android:gravity="center_vertical|bottom"
     android:layout_height="192dp"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:orientation="vertical">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         android:id="@+id/iv_user_image"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
         android:layout_width="65dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <org.mifos.mobilebanking.utils.CircularImageView
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         android:id="@+id/iv_circular_user_image"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
         android:layout_width="65dp"
+        android:visibility="gone"
         app:border="true"
         app:border_width="1dp"
-        android:visibility="gone"
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <TextView
@@ -41,4 +42,5 @@
         android:lines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"/>
+
 </LinearLayout>

@@ -1,9 +1,6 @@
 package org.mifos.mobilebanking.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.models.beneficiary.Beneficiary;
@@ -34,6 +33,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -83,7 +84,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static BeneficiaryApplicationFragment newInstance(BeneficiaryState beneficiaryState,
-                                                             @Nullable Beneficiary beneficiary) {
+            @Nullable Beneficiary beneficiary) {
         BeneficiaryApplicationFragment fragment = new BeneficiaryApplicationFragment();
         Bundle args = new Bundle();
         args.putSerializable(Constants.BENEFICIARY_STATE, beneficiaryState);
@@ -116,7 +117,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_application, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
@@ -164,6 +165,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
      * Fetches {@link BeneficiaryTemplate} from server and further updates the UI according to
      * {@link BeneficiaryState} which is initialized in {@code newInstance()} as
      * {@code beneficiaryState}
+     *
      * @param beneficiaryTemplate {@link BeneficiaryTemplate} fetched from server
      */
     @Override
@@ -226,9 +228,9 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
         }
 
         if (beneficiaryState == BeneficiaryState.CREATE_MANUAL ||
-                beneficiaryState == BeneficiaryState.CREATE_QR ) {
+                beneficiaryState == BeneficiaryState.CREATE_QR) {
             submitNewBeneficiaryApplication();
-        } else if (beneficiaryState == BeneficiaryState.UPDATE ) {
+        } else if (beneficiaryState == BeneficiaryState.UPDATE) {
             submitUpdateBeneficiaryApplication();
         }
 
@@ -270,7 +272,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     }
 
     /**
-     * Displays a {@link android.support.design.widget.Snackbar} on successfully creation of
+     * Displays a {@link Snackbar} on successfully creation of
      * Beneficiary and pops fragments in order to go back to {@link BeneficiaryListFragment}
      */
     @Override
@@ -280,7 +282,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     }
 
     /**
-     * Displays a {@link android.support.design.widget.Snackbar} on successfully updation of
+     * Displays a {@link Snackbar} on successfully updation of
      * Beneficiary and pops fragments in order to go back to {@link BeneficiaryListFragment}
      */
     @Override
@@ -304,10 +306,11 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
 
     /**
      * It is called whenever any error occurs while executing a request
+     *
      * @param msg Error message that tells the user about the problem.
      */
     @Override
-    public void showError(String msg ) {
+    public void showError(String msg) {
         if (!Network.isConnected(getContext())) {
             sweetUIErrorHandler.showSweetNoInternetUI(nsvBeneficiary, layoutError);
         } else {

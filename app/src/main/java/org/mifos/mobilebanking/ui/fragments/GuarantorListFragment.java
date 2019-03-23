@@ -5,9 +5,6 @@ package org.mifos.mobilebanking.ui.fragments;
  */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +29,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,7 +79,7 @@ public class GuarantorListFragment extends BaseFragment implements GuarantorList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_guarantor_list, container, false);
         ButterKnife.bind(this, rootView);
         setToolbarTitle(getString(R.string.view_guarantor));
@@ -92,7 +92,7 @@ public class GuarantorListFragment extends BaseFragment implements GuarantorList
                         @Override
                         public void setOnClickListener(int position) {
                             ((BaseActivity) getActivity()).replaceFragment(GuarantorDetailFragment
-                                    .newInstance(position, loanId, list.get(position)),
+                                            .newInstance(position, loanId, list.get(position)),
                                     true, R.id.container);
                         }
                     });
@@ -181,10 +181,12 @@ public class GuarantorListFragment extends BaseFragment implements GuarantorList
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
-        if (!disposableAddGuarantor.isDisposed())
+        if (!disposableAddGuarantor.isDisposed()) {
             disposableAddGuarantor.dispose();
-        if (!disposableDeleteGuarantor.isDisposed())
+        }
+        if (!disposableDeleteGuarantor.isDisposed()) {
             disposableDeleteGuarantor.dispose();
+        }
         hideProgress();
     }
 }

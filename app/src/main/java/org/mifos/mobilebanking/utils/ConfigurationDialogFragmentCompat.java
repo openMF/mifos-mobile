@@ -2,26 +2,27 @@ package org.mifos.mobilebanking.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.preference.DialogPreference;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceDialogFragmentCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.mifos.mobilebanking.R;
 import org.mifos.mobilebanking.api.BaseApiManager;
 import org.mifos.mobilebanking.api.local.PreferencesHelper;
 import org.mifos.mobilebanking.ui.activities.LoginActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import androidx.preference.DialogPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceDialogFragmentCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by dilpreet on 11/03/18.

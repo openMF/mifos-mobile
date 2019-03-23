@@ -2,7 +2,7 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/bg_about"
     android:layout_gravity="center"
@@ -55,22 +55,22 @@
             android:id="@+id/tv_licenses"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="@color/primary"
             android:layout_marginBottom="@dimen/layout_padding_4dp"
             android:layout_marginTop="@dimen/layout_padding_48dp"
-            android:textSize="@dimen/text_medium"
-            android:text="@string/licenses"/>
+            android:layout_width="wrap_content"
+            android:text="@string/licenses"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/text_medium"/>
 
         <TextView
             android:id="@+id/tv_privacy_policy"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:text="@string/privacy_policy"
             android:textColor="@color/primary"
-            android:textSize="@dimen/text_medium"
-            android:text="@string/privacy_policy"/>
+            android:textSize="@dimen/text_medium"/>
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

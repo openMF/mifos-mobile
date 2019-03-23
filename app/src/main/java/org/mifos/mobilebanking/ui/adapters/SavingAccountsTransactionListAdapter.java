@@ -1,8 +1,6 @@
 package org.mifos.mobilebanking.ui.adapters;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -99,7 +99,7 @@ public class SavingAccountsTransactionListAdapter extends
     }
 
     private enum ColorSelect {
-        RED ,
+        RED,
         GREEN
     }
 
@@ -109,26 +109,36 @@ public class SavingAccountsTransactionListAdapter extends
     }
 
     private ColorSelect getColor(TransactionType transactionType) {
-        if (transactionType.getDeposit())
+        if (transactionType.getDeposit()) {
             return ColorSelect.GREEN;
-        if (transactionType.getDividendPayout())
+        }
+        if (transactionType.getDividendPayout()) {
             return ColorSelect.RED;
-        if (transactionType.getWithdrawal())
+        }
+        if (transactionType.getWithdrawal()) {
             return ColorSelect.RED;
-        if (transactionType.getInterestPosting())
+        }
+        if (transactionType.getInterestPosting()) {
             return ColorSelect.GREEN;
-        if (transactionType.getFeeDeduction())
+        }
+        if (transactionType.getFeeDeduction()) {
             return ColorSelect.RED;
-        if (transactionType.getInitiateTransfer())
+        }
+        if (transactionType.getInitiateTransfer()) {
             return ColorSelect.RED;
-        if (transactionType.getApproveTransfer())
+        }
+        if (transactionType.getApproveTransfer()) {
             return ColorSelect.RED;
-        if (transactionType.getWithdrawTransfer())
+        }
+        if (transactionType.getWithdrawTransfer()) {
             return ColorSelect.RED;
-        if (transactionType.getRejectTransfer())
+        }
+        if (transactionType.getRejectTransfer()) {
             return ColorSelect.GREEN;
-        if (transactionType.getOverdraftFee())
+        }
+        if (transactionType.getOverdraftFee()) {
             return ColorSelect.RED;
+        }
 
         return ColorSelect.GREEN;
     }
