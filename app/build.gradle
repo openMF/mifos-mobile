@@ -26,9 +26,20 @@ android {
 
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            storeFile file("../default_key_store.jks")
+            storePassword "mifos1234"
+            keyAlias "mifos-mobile"
+            keyPassword "mifos1234"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
