@@ -4,8 +4,8 @@ import android.os.Parcelable
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobilebanking.models.accounts.loan.LoanAccount
+
 import org.mifos.mobilebanking.models.accounts.savings.SavingAccount
 import org.mifos.mobilebanking.models.accounts.share.ShareAccount
 

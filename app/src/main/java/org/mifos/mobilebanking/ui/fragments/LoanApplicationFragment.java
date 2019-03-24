@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
 import org.mifos.mobilebanking.models.accounts.loan.LoanWithAssociations;
 import org.mifos.mobilebanking.models.payload.LoansPayload;
 import org.mifos.mobilebanking.models.templates.loans.LoanPurposeOptions;

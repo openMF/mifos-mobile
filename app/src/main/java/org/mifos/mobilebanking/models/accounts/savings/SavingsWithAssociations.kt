@@ -1,13 +1,10 @@
 package org.mifos.mobilebanking.models.accounts.savings
 
 import android.os.Parcelable
-
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobilebanking.models.client.DepositType
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author Vishwajeet
@@ -47,7 +44,7 @@ data class SavingsWithAssociations(
         var status: Status,
 
         @SerializedName("timeline")
-        var timeline: TimeLine,
+        var timeline: Timeline,
 
         @SerializedName("currency")
         var currency: Currency,

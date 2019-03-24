@@ -168,7 +168,7 @@ public class AccountsPresenter extends BasePresenter<AccountsView> {
      * provided.
      */
     public List<LoanAccount> searchInLoanList(List<LoanAccount> accounts,
-                                                   final String input) {
+                                              final String input) {
         return Observable.fromIterable(accounts)
                 .filter(new Predicate<LoanAccount>() {
                     @Override
