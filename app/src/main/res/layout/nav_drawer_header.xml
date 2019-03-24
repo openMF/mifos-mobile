@@ -20,7 +20,7 @@
         android:layout_width="65dp"
         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
-    <org.mifos.mobilebanking.utils.CircularImageView
+    <org.mifos.mobile.utils.CircularImageView
         android:background="?selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"

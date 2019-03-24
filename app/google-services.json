@@ -1,30 +1,35 @@
 {
   "project_info": {
-    "project_number": "337161660676",
-    "firebase_url": "https://self-demo.firebaseio.com",
-    "project_id": "self-demo",
-    "storage_bucket": "self-demo.appspot.com"
+    "project_number": "622027757397",
+    "firebase_url": "https://mifosmaps.firebaseio.com",
+    "project_id": "mifosmaps",
+    "storage_bucket": "mifosmaps.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:337161660676:android:f36173e948059ccb",
+        "mobilesdk_app_id": "1:622027757397:android:29f731fdcd3a65a6",
         "android_client_info": {
-          "package_name": "gcm.play.android.samples.com.gcmquickstart"
+          "package_name": "org.mifos.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "337161660676-uocdejo0hea1873ogb217npkig2vckn9.apps.googleusercontent.com",
+          "client_id": "622027757397-ju1gahmo27fjfc39v5drlnn3838rleiq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.mifos.mobile",
+            "certificate_hash": "2f8ce9c728acf6b9c50750b328742d5391c0b303"
+          }
+        },
+        {
+          "client_id": "622027757397-k76e8mb3s75ktuj5c011ng0r7mnmbgkr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDFsz8Wi2r0zFsdSwi3y3kD36gVK0GGuR8"
-        },
-        {
-          "current_key": "AIzaSyBTp5YmiUs1P1SME3gZmJ0VS9j5fNvxJAk"
+          "current_key": "AIzaSyCsoeQjAaAum-1VFKJL9vxOhGN8E9s0Plw"
         }
       ],
       "services": {
@@ -32,76 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:337161660676:android:a2809e4e9e74652e",
-        "android_client_info": {
-          "package_name": "org.mifos.selfserviceapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "337161660676-uocdejo0hea1873ogb217npkig2vckn9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDFsz8Wi2r0zFsdSwi3y3kD36gVK0GGuR8"
-        },
-        {
-          "current_key": "AIzaSyBTp5YmiUs1P1SME3gZmJ0VS9j5fNvxJAk"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:337161660676:android:e4264440ced727da",
-        "android_client_info": {
-          "package_name": "org.mifos.mobilebanking"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "337161660676-uocdejo0hea1873ogb217npkig2vckn9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDFsz8Wi2r0zFsdSwi3y3kD36gVK0GGuR8"
-        },
-        {
-          "current_key": "AIzaSyBTp5YmiUs1P1SME3gZmJ0VS9j5fNvxJAk"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622027757397-o2k3acan0jdhf7t0uddd9o4fd72bedda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

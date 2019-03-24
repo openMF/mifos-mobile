@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:orientation="vertical">
 
-                    <org.mifos.mobilebanking.utils.ProcessView
+                    <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_one"
                         android:layout_height="40dp"
                         android:layout_width="40dp"
@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:orientation="vertical">
 
-                    <org.mifos.mobilebanking.utils.ProcessView
+                    <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_two"
                         android:layout_height="40dp"
                         android:layout_width="40dp"
@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:orientation="vertical">
 
-                    <org.mifos.mobilebanking.utils.ProcessView
+                    <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_three"
                         android:layout_height="40dp"
                         android:layout_width="40dp"
@@ -226,7 +226,7 @@
             <LinearLayout
                 style="@style/LinearLayout.Width">
 
-                <org.mifos.mobilebanking.utils.ProcessView
+                <org.mifos.mobile.utils.ProcessView
                     android:id="@+id/process_four"
                     android:layout_height="40dp"
                     android:layout_width="40dp"

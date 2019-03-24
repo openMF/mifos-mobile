@@ -25,7 +25,7 @@
             android:summary="@string/choose_language"
             android:title="@string/language"/>
 
-        <org.mifos.mobilebanking.utils.ConfigurationPreference
+        <org.mifos.mobile.utils.ConfigurationPreference
             android:key="@string/pref_configuration"
             android:summary="@string/pref_base_url_desc"
             android:title="@string/pref_base_url_title"/>
