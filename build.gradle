@@ -38,12 +38,7 @@ ext {
     buildToolsVersion = '28.0.3'
 
     // App dependencies
-    appcompatVersion = '1.1.0-alpha03'
-    materialVersion = '1.1.0-alpha04'
-    cardviewVersion  = '1.0.0'
-    preferenceVersion = "1.1.0-alpha04"
-    recyclerviewVersion = '1.1.0-alpha03'
-    supportLibraryVersion = '1.0.0-beta01'
+    supportLibraryVersion = '1.0.0'
     daggerVersion = '2.5'
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.6.0'
