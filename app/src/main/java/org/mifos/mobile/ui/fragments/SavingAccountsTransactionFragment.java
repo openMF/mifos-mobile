@@ -341,7 +341,8 @@ public class SavingAccountsTransactionFragment extends BaseFragment
      * @param endDate   Ending date
      */
     private void filter(long startDate, long endDate) {
-
+        tvStartDate.setText(DateHelper.getDateAsStringFromLong(startDate));
+        tvEndDate.setText(DateHelper.getDateAsStringFromLong(endDate));
         dummyTransactionList = new ArrayList<>(transactionsList);
         savingAccountsTransactionPresenter.filterTransactionList(dummyTransactionList,
                 startDate, endDate);
