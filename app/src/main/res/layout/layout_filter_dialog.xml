@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/cb_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_period" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/rg_date_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_start_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_32dp"
+                            android:layout_marginLeft="@dimen/margin_32dp"
+                            android:layout_weight="1"
+                            android:drawableEnd="@drawable/ic_edit_wrapper"
+                            android:drawableRight="@drawable/ic_edit_wrapper"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:text="@string/start_date" />
+
+                        <TextView
+                            android:id="@+id/tv_end_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_16dp"
+                            android:layout_marginLeft="@dimen/margin_16dp"
+                            android:layout_weight="1"
+                            android:drawableEnd="@drawable/ic_edit_wrapper"
+                            android:drawableRight="@drawable/ic_edit_wrapper"
+                            android:enabled="false"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:text="@string/end_date" />
+
+                    </LinearLayout>
+
+
+                    <RadioButton
+                        android:id="@+id/rb_four_weeks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/four_weeks" />
+
+                    <RadioButton
+                        android:id="@+id/rb_three_months"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/three_months" />
+
+                    <RadioButton
+                        android:id="@+id/rb_six_months"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/six_months" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cb_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_type" />
+
+
+            <RadioGroup
+                android:id="@+id/rg_type_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deposit" />
+
+                <RadioButton
+                    android:id="@+id/rb_withdrawal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/withdrawal" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

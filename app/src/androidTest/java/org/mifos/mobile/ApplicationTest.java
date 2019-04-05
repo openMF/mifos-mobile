@@ -19,6 +19,6 @@ public class ApplicationTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-        assertEquals("org.mifos.mobilebanking", appContext.getPackageName());
+        assertEquals("org.mifos.mobile", appContext.getPackageName());
     }
 }

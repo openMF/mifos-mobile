@@ -106,20 +106,61 @@ public class SavingAccountsTransactionPresenter extends
      * @param savingAccountsTransactionList {@link List} of {@link Transactions}
      * @param startDate                     Starting date for filtering
      * @param lastDate                      Last date for filtering
+     * @param type                          Deposit/Withdrawal type for filtering
      */
     public void filterTransactionList(List<Transactions> savingAccountsTransactionList,
-            final long startDate, final long lastDate) {
-        List<Transactions> list = Observable.fromIterable(savingAccountsTransactionList)
-                .filter(new Predicate<Transactions>() {
-                    @Override
-                    public boolean test(Transactions transactions) {
-                        return startDate <= DateHelper.getDateAsLongFromList(transactions.getDate())
-                                && lastDate >= DateHelper.
-                                getDateAsLongFromList(transactions.getDate());
-                    }
-                })
-                .toList().blockingGet();
+                                      final long startDate, final long lastDate, final int type) {
+        List<Transactions> list;
 
+        if (startDate == -1 && type == -1) {
+            list = savingAccountsTransactionList;
+        } else if (startDate != -1 && type == -1) {
+            list = Observable.fromIterable(savingAccountsTransactionList)
+                    .filter(new Predicate<Transactions>() {
+                        @Override
+                        public boolean test(Transactions transactions) {
+                            return startDate <= DateHelper.
+                                    getDateAsLongFromList(transactions.getDate())
+                                    && lastDate >= DateHelper.
+                                    getDateAsLongFromList(transactions.getDate());
+                        }
+                    })
+                    .toList().blockingGet();
+        } else if (startDate == -1 && type != -1) {
+            list = Observable.fromIterable(savingAccountsTransactionList)
+                    .filter(new Predicate<Transactions>() {
+                        @Override
+                        public boolean test(Transactions transactions) {
+                            if (type == 0) {
+                                return transactions.getTransactionType().getDeposit();
+                            } else {
+                                return transactions.getTransactionType().getWithdrawal();
+                            }
+                        }
+                    })
+                    .toList().blockingGet();
+        } else {
+            list = Observable.fromIterable(savingAccountsTransactionList)
+                    .filter(new Predicate<Transactions>() {
+                        @Override
+                        public boolean test(Transactions transactions) {
+                            if (type == 0) {
+                                return startDate <= DateHelper.
+                                        getDateAsLongFromList(transactions.getDate())
+                                        && lastDate >= DateHelper.
+                                        getDateAsLongFromList(transactions.getDate())
+                                        && transactions.getTransactionType().getDeposit();
+                            } else {
+                                return startDate <= DateHelper.
+                                        getDateAsLongFromList(transactions.getDate())
+                                        && lastDate >= DateHelper.
+                                        getDateAsLongFromList(transactions.getDate())
+                                        && transactions.getTransactionType().getWithdrawal();
+                            }
+                        }
+                    })
+                    .toList().blockingGet();
+        }
         getMvpView().showFilteredList(list);
     }
 
