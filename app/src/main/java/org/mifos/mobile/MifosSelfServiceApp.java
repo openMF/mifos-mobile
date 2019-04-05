@@ -12,6 +12,8 @@ import org.mifos.mobile.injection.component.DaggerApplicationComponent;
 import org.mifos.mobile.injection.module.ApplicationModule;
 import org.mifos.mobile.utils.LanguageHelper;
 
+import java.util.Locale;
+
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
@@ -51,7 +53,7 @@ public class MifosSelfServiceApp extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LanguageHelper.onAttach(base, "en"));
+        super.attachBaseContext(LanguageHelper.onAttach(base, Locale.getDefault().getLanguage()));
     }
 
     public ApplicationComponent component() {
