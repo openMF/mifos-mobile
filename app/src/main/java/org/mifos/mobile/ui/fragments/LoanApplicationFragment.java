@@ -35,6 +35,7 @@ import org.mifos.mobile.utils.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -405,8 +406,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         tvNewLoanApplication.setText(getString(R.string.string_and_string,
                 getString(R.string.update_loan_application) + " ",
                 loanWithAssociations.getClientName()));
-        tilPrincipalAmount.getEditText().setText(String.valueOf(loanWithAssociations.
-                getPrincipal()));
+        tilPrincipalAmount.getEditText().setText(String.format(Locale.getDefault(),
+                "%.2f", loanWithAssociations.getPrincipal()));
         tvCurrency.setText(loanWithAssociations.getCurrency().getDisplayLabel());
 
         tvSubmissionDate.setText(DateHelper.getDateAsString(loanWithAssociations.
