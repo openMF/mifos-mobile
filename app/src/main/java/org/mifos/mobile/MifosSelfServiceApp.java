@@ -1,6 +1,5 @@
 package org.mifos.mobile;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
@@ -14,13 +13,15 @@ import org.mifos.mobile.injection.module.ApplicationModule;
 import org.mifos.mobile.utils.LanguageHelper;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 import io.fabric.sdk.android.Fabric;
 
 /**
  * @author ishan
  * @since 08/07/16
  */
-public class MifosSelfServiceApp extends Application {
+public class MifosSelfServiceApp extends MultiDexApplication {
 
     ApplicationComponent applicationComponent;
 
@@ -41,6 +42,7 @@ public class MifosSelfServiceApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         Fabric.with(this, new Crashlytics());
         instance = this;
         FlowManager.init(new FlowConfig.Builder(this).build());
