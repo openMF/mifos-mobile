@@ -1,6 +1,8 @@
 package org.mifos.mobile.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -89,8 +91,23 @@ public class LoginActivity extends BaseActivity implements LoginView {
      */
     @Override
     public void showPassCodeActivity() {
-        showToast(getString(R.string.toast_welcome, userName));
-        startPassCodeActivity();
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                Constants.TWO_FACTOR_AUTHENTICATION,
+                Context.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.IS_TWO_FACTOR_AUTHENTICATION, false)) {
+            showTwoFactorAuthActivity();
+        } else {
+            showToast(getString(R.string.toast_welcome, userName));
+            startPassCodeActivity();
+        }
+    }
+
+    @Override
+    public void showTwoFactorAuthActivity() {
+        Intent intent = new Intent(LoginActivity.this, TwoFactorAuthActivity.class);
+        intent.putExtra(Constants.INTIAL_LOGIN, true);
+        startActivity(intent);
+        finish();
     }
 
     /**

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -222,6 +223,13 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 preferencesHelper.clear();
+                                SharedPreferences sharedPreferences =
+                                        getSharedPreferences(Constants.TWO_FACTOR_AUTHENTICATION,
+                                                Context.MODE_PRIVATE);
+                                sharedPreferences.edit()
+                                        .putBoolean(Constants.IS_TWO_FACTOR_AUTHENTICATION,
+                                                false)
+                                        .apply();
                                 Intent i = new Intent(HomeActivity.this, LoginActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.
                                         FLAG_ACTIVITY_CLEAR_TASK);

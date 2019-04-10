@@ -69,7 +69,7 @@ public class Constants {
 
     public static final String PERMISSIONS_CAMERA_STATUS = "camera_status";
 
-    public static final  String PERMISSIONS_STORAGE_STATUS = "storage_status";
+    public static final String PERMISSIONS_STORAGE_STATUS = "storage_status";
 
     public static final String PERMISSIONS_READ_PHONE_STATE_STATUS = "read_phone_status";
 
@@ -103,7 +103,7 @@ public class Constants {
 
     public static final String QR_IMAGE_URI = "qr_image_uri";
 
-    public  static  final int GALLERY_QR_PICK = 1;
+    public static final int GALLERY_QR_PICK = 1;
 
     public static final String FRAME_RECT = "FrameRect";
 
@@ -121,5 +121,13 @@ public class Constants {
 
     public static final String PASSWORD = "Password";
 
+    public static final String TOTP = "totp";
+
     public static final String SAVINGS_ACCOUNT_STATE = "savingsaccountstate";
+
+    public static final String TWO_FACTOR_AUTHENTICATION = "two_factor_authentication";
+
+    public static final String TWO_FACTOR_AUTHENTICATION_KEY = "two_factor_authentication_key";
+
+    public static final String IS_TWO_FACTOR_AUTHENTICATION = "is_two_factor_authentication";
 }

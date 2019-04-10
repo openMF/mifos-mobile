@@ -1,8 +1,10 @@
 package org.mifos.mobile.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
@@ -10,7 +12,6 @@ import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat;
 import org.mifos.mobile.utils.ConfigurationPreference;
 import org.mifos.mobile.utils.Constants;
 import org.mifos.mobile.utils.LanguageHelper;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -84,6 +85,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             case Constants.PASSWORD:
                 ((BaseActivity) getActivity()).replaceFragment(UpdatePasswordFragment
                         .newInstance(), false, R.id.container);
+                break;
+            case Constants.TOTP:
+                SharedPreferences sharedPreferences = getActivity()
+                        .getSharedPreferences(Constants.TWO_FACTOR_AUTHENTICATION,
+                                Context.MODE_PRIVATE);
+                if (sharedPreferences.getBoolean(Constants.IS_TWO_FACTOR_AUTHENTICATION,
+                        false)) {
+                    Toast.makeText(getContext(), getString(R.string.toast_enabled),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    ((BaseActivity) getActivity()).replaceFragment(EnableTwoFactorAuthFragment
+                            .newInstance(), true, R.id.container);
+                }
                 break;
         }
         return super.onPreferenceTreeClick(preference);
