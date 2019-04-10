@@ -40,9 +40,9 @@
 
                 <EditText
                     style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:drawableLeft="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_wrapped_person_black_24dp"
                     android:drawablePadding="@dimen/layout_padding_8dp"
-                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableStart="@drawable/ic_wrapped_person_black_24dp"
                     android:hint="@string/username"
                     android:inputType="textEmailAddress"
                     android:layout_height="wrap_content"
@@ -61,9 +61,9 @@
 
                 <EditText
                     style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:drawableLeft="@drawable/ic_lock_black_24dp"
+                    android:drawableLeft="@drawable/ic_wrapped_lock_black_24dp"
                     android:drawablePadding="@dimen/layout_padding_8dp"
-                    android:drawableStart="@drawable/ic_lock_black_24dp"
+                    android:drawableStart="@drawable/ic_wrapped_lock_black_24dp"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:layout_height="wrap_content"
