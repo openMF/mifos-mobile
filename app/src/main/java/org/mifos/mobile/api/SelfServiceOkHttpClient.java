@@ -1,5 +1,7 @@
 package org.mifos.mobile.api;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -100,6 +102,8 @@ public class SelfServiceOkHttpClient {
         //Interceptor :> Full Body Logger and ApiRequest Header
         builder.addInterceptor(logger);
         builder.addInterceptor(new SelfServiceInterceptor(tenant, authToken));
+        builder.addNetworkInterceptor(new StethoInterceptor());
+
 
         return builder.build();
 

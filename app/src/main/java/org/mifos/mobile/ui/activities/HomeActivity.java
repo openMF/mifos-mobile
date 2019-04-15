@@ -17,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
 
+import org.mifos.mobile.BuildConfig;
 import org.mifos.mobile.R;
 import org.mifos.mobile.api.local.PreferencesHelper;
 import org.mifos.mobile.models.client.Client;
@@ -92,6 +94,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         ButterKnife.bind(this);
         clientId = preferencesHelper.getClientId();
 
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
         setupNavigationBar();
         setToolbarElevation();
         setToolbarTitle(getString(R.string.home));
