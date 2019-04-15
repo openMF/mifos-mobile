@@ -4,6 +4,7 @@ package org.mifos.mobile.ui.fragments;
  * Created by saksham on 13/July/2018
  */
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import org.mifos.mobile.ui.activities.SettingsActivity;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.fragments.base.BaseFragment;
 import org.mifos.mobile.ui.views.UpdatePasswordView;
+import org.mifos.mobile.utils.MaterialDialog;
 import org.mifos.mobile.utils.Network;
 import org.mifos.mobile.utils.Toaster;
 
@@ -82,7 +84,24 @@ public class UpdatePasswordFragment extends BaseFragment implements UpdatePasswo
     @OnClick(R.id.btn_update_password)
     void updatePassword() {
         if (isFieldsCompleted()) {
-            presenter.updateAccountPassword(getUpdatePasswordPayload());
+            new MaterialDialog.Builder().init(getContext())
+                    .setMessage(R.string.chg_pass_title)
+                    .setPositiveButton(getString(R.string.yes),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    presenter.updateAccountPassword(getUpdatePasswordPayload());
+                                }
+                            })
+                    .setNegativeButton(getString(R.string.cancel),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .createMaterialDialog()
+                    .show();
         }
     }
 
