@@ -33,6 +33,7 @@
 
             <TextView
                 android:id="@+id/tv_account_number"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
