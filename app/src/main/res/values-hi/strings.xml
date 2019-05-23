@@ -440,19 +440,11 @@
     <string name="dialog_message_write_storage_permission_never_ask_again">आपने भंडारण करने के लिए लिखने की अनुमति से इनकार कर दिया है, इस अनुमति के बिना आप क्यूआर कोड का उपयोग करके लाभार्थियों को नहीं जोड़ पाएंगे। कृपया इसे सेटिंग में सक्षम करें</string>
     <string name="permission_denied_storage">"भंडारण की अनुमति से इनकार "</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">क्या आप सुनिश्चित हैं कि आप% 1 $ s करना चाहते हैं?</string>
-    <string name="double_amount">%1$.2f</string>
-    <string name="clear_filters">फिल्टर साफ करे</string>
-    <string name="notification">सूचनाएं</string>
-    <string name="base_url">आधार यू.आर.ए्ल</string>
     <string name="tenant">किरायेदार</string>
     <string name="message">संदेश</string>
     <string name="no_notification">कोई अधिसूचना नहीं</string>
     <string name="pref_base_url_title">अद्यतन समापन बिंदु</string>
     <string name="pref_base_url_desc">अपना समापन बिंदु कॉन्फ़िगरेशन बदलने के लिए यहां क्लिक करें</string>
-    <string name="enter_base_url">आधार यू.आर.ए्ल दर्ज करें</string>
-    <string name="enter_tenant">किरायेदार दर्ज करें</string>
-    <string name="pref_configuration">वरीयता विन्यास</string>
-    <string name="contact_email">support@mifos.org</string>
     <string name="total_loan_savings_description">लोन और बचत खाते के ऊपर की शेष राशि की गणना आपकी सभी बचत और ऋण खातों की ओर से की जाती है।</string>
     <string name="disbursement">"संवितरण "</string>
 
