@@ -209,7 +209,6 @@
     <string name="repayment_schedule">पुनः भुगतान कार्यक्रम</string>
     <string name="transactions">लेन-देन</string>
     <string name="transfer">ट्रांसफर</string>
-    <string name="outstanding_balance_str">%1$s %2$s</string>
     <string name="approval_pending">स्वीकृति लंबित</string>
     <string name="waiting_for_disburse">व्यय की प्रतीक्षा की जा रही है</string>
     <string name="closed_because_of_obligation">कुछ दायित्वों के कारण बंद</string>

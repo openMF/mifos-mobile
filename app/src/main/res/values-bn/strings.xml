@@ -407,7 +407,7 @@
     <string name="all_rights_reserved">সমস্ত অধিকার সংরক্ষিত।</string>
     <string name="licenses">লাইসেন্সকরণ</string>
     <string name="transfer_error">একটি স্থানান্তর করতে পারবেন না, পরে আবার চেষ্টা করুন</string>
-    <string name="please_wait">অনুগ্রহ করে অপেক্ষা করুন ...</string>
+    <string name="please_wait">অনুগ্রহ করে অপেক্ষা করুন …</string>
     <string name="message">বার্তা</string>
     <string name="no_notification">কোন বিজ্ঞপ্তি নেই</string>
 
