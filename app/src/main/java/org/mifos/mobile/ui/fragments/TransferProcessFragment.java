@@ -107,8 +107,8 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         presenter.attachView(this);
 
         tvAmount.setText(CurrencyUtil.formatCurrency(getActivity(), payload.getTransferAmount()));
-        tvPayFrom.setText(String.valueOf(payload.getFromAccountId()));
-        tvPayTo.setText(String.valueOf(payload.getToAccountId()));
+        tvPayFrom.setText(String.valueOf(payload.getFromAccountNumber()));
+        tvPayTo.setText(String.valueOf(payload.getToAccountNumber()));
         tvDate.setText(payload.getTransferDate());
         tvRemark.setText(payload.getTransferDescription());
 
