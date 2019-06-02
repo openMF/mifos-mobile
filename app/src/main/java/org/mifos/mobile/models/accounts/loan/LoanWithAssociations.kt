@@ -18,22 +18,22 @@ data class LoanWithAssociations(
         var id: Int? = null,
 
         @SerializedName("accountNo")
-        var accountNo: String,
+        var accountNo: String? = null,
 
         @SerializedName("externalId")
-        var externalId: String,
+        var externalId: String? = null,
 
         @SerializedName("status")
-        var status: Status,
+        var status: Status? =null,
 
         @SerializedName("clientId")
         var clientId: Int? = null,
 
         @SerializedName("clientAccountNo")
-        var clientAccountNo: String,
+        var clientAccountNo: String? = null,
 
         @SerializedName("clientName")
-        var clientName: String,
+        var clientName: String? = null,
 
         @SerializedName("clientOfficeId")
         var clientOfficeId: Int? = null,
@@ -42,16 +42,16 @@ data class LoanWithAssociations(
         var loanProductId: Int? = null,
 
         @SerializedName("loanProductName")
-        var loanProductName: String,
+        var loanProductName: String? = null,
 
         @SerializedName("isLoanProductLinkedToFloatingRate")
         var loanProductLinkedToFloatingRate: Boolean? = null,
 
         @SerializedName("loanType")
-        var loanType: LoanType,
+        var loanType: LoanType? = null,
 
         @SerializedName("currency")
-        var currency: Currency,
+        var currency: Currency? = null,
 
         @SerializedName("principal")
         var principal: Double? = null,
@@ -66,7 +66,7 @@ data class LoanWithAssociations(
         var termFrequency: Int? = null,
 
         @SerializedName("termPeriodFrequencyType")
-        var termPeriodFrequencyType: TermPeriodFrequencyType,
+        var termPeriodFrequencyType: TermPeriodFrequencyType? = null,
 
         @SerializedName("numberOfRepayments")
         var numberOfRepayments: Int? = null,
@@ -75,25 +75,25 @@ data class LoanWithAssociations(
         var repaymentEvery: Int? = null,
 
         @SerializedName("repaymentFrequencyType")
-        var repaymentFrequencyType: RepaymentFrequencyType,
+        var repaymentFrequencyType: RepaymentFrequencyType? = null,
 
         @SerializedName("interestRatePerPeriod")
         var interestRatePerPeriod: Int? = null,
 
         @SerializedName("interestRateFrequencyType")
-        var interestRateFrequencyType: InterestRateFrequencyType,
+        var interestRateFrequencyType: InterestRateFrequencyType? = null,
 
         @SerializedName("isFloatingInterestRate")
         var floatingInterestRate: Boolean? = null,
 
         @SerializedName("amortizationType")
-        var amortizationType: AmortizationType,
+        var amortizationType: AmortizationType? = null,
 
         @SerializedName("interestType")
-        var interestType: InterestType,
+        var interestType: InterestType? = null,
 
         @SerializedName("interestCalculationPeriodType")
-        var interestCalculationPeriodType: InterestCalculationPeriodType,
+        var interestCalculationPeriodType: InterestCalculationPeriodType? = null,
 
         @SerializedName("allowPartialPeriodInterestCalcualtion")
         var allowPartialPeriodInterestCalcualtion: Boolean? = null,
@@ -102,19 +102,19 @@ data class LoanWithAssociations(
         var transactionProcessingStrategyId: Int? = null,
 
         @SerializedName("transactionProcessingStrategyName")
-        var transactionProcessingStrategyName: String,
+        var transactionProcessingStrategyName: String? = null,
 
         @SerializedName("syncDisbursementWithMeeting")
         var syncDisbursementWithMeeting: Boolean? = null,
 
         @SerializedName("timeline")
-        var timeline: Timeline,
+        var timeline: Timeline? = null,
 
         @SerializedName("summary")
-        var summary: Summary,
+        var summary: Summary? = null,
 
         @SerializedName("repaymentSchedule")
-        var repaymentSchedule: RepaymentSchedule,
+        var repaymentSchedule: RepaymentSchedule? = null,
 
         @SerializedName("feeChargesAtDisbursementCharged")
         var feeChargesAtDisbursementCharged: Double? = null,
@@ -147,16 +147,16 @@ data class LoanWithAssociations(
         var npa: Boolean? = null,
 
         @SerializedName("daysInMonthType")
-        var daysInMonthType: DaysInMonthType,
+        var daysInMonthType: DaysInMonthType? = null,
 
         @SerializedName("daysInYearType")
-        var daysInYearType: DaysInYearType,
+        var daysInYearType: DaysInYearType? = null,
 
         @SerializedName("isInterestRecalculationEnabled")
         var interestRecalculationEnabled: Boolean? = null,
 
         @SerializedName("interestRecalculationData")
-        var interestRecalculationData: InterestRecalculationData,
+        var interestRecalculationData: InterestRecalculationData? = null,
 
         @SerializedName("createStandingInstructionAtDisbursement")
         var createStandingInstructionAtDisbursement: Boolean? = null,
