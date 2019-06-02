@@ -1,7 +1,5 @@
 package org.mifos.mobile.ui.fragments;
 
-import static org.mifos.mobile.ui.activities.base.BaseActivity.hideKeyboard;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -124,6 +122,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
     private AccountOptionsTemplate accountOptionsTemplate;
     private String transferType, payTo, payFrom;
     private long accountId;
+    private double outStandingBalance;
+    private boolean isLoanRepayment;
     private SweetUIErrorHandler sweetUIErrorHandler;
 
     /**
@@ -145,12 +145,29 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         return transferFragment;
     }
 
+    public static SavingsMakeTransferFragment newInstance(long accountId, double outstandingBalance,
+                                                          String transferType) {
+        SavingsMakeTransferFragment transferFragment = new SavingsMakeTransferFragment();
+        Bundle args = new Bundle();
+        args.putLong(Constants.ACCOUNT_ID, accountId);
+        args.putString(Constants.TRANSFER_TYPE, transferType);
+        args.putDouble(Constants.OUTSTANDING_BALANCE, outstandingBalance);
+        args.putBoolean(Constants.LOAN_REPAYMENT, true);
+        transferFragment.setArguments(args);
+        return transferFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             accountId = getArguments().getLong(Constants.ACCOUNT_ID);
             transferType = getArguments().getString(Constants.TRANSFER_TYPE);
+
+            if (getArguments().getBoolean(Constants.LOAN_REPAYMENT, false)) {
+                isLoanRepayment = true;
+                outStandingBalance = getArguments().getDouble(Constants.OUTSTANDING_BALANCE);
+            }
         }
         setHasOptionsMenu(true);
     }
@@ -252,6 +269,12 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         spPayTo.setOnItemSelectedListener(this);
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
                 MFDatePicker.getDatePickedAsString());
+
+        if (isLoanRepayment) {
+            etAmount.setText(String.valueOf(outStandingBalance));
+            etAmount.setFocusable(false);
+        }
+
     }
 
     /**
