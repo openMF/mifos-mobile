@@ -542,6 +542,13 @@
     <string name="enter_tenant">Enter the Tenant</string>
     <string name="account_type_loan" translatable="false">accountType.loan</string>
     <string name="refresh">Refresh</string>
+
+    <!--Password strength strings-->
+    <string name="password_strength_weak">Weak</string>
+    <string name="password_strength_medium">Medium</string>
+    <string name="password_strength_strong">Strong</string>
+    <string name="password_strength_very_strong">Very Strong</string>
+
     <string-array name="languages" translatable="false">
         <item>English</item>
         <item>हिंदी</item>
