@@ -45,5 +45,15 @@ data class TransferPayload(
         var transferDescription: String? = null,
 
         var dateFormat : String = "dd MMMM yyyy",
-        var locale : String = "en"
+
+        var locale : String = "en",
+
+        @SerializedName("fromAccountNumber")
+        @Transient
+        var fromAccountNumber: String? = null,
+
+        @SerializedName("toAccountNumber")
+        @Transient
+        var toAccountNumber: String? = null
+
 ) : Parcelable

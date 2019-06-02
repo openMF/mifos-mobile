@@ -228,6 +228,8 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         transferPayload.setTransferDate(transferDate);
         transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
         transferPayload.setTransferDescription(etRemark.getText().toString());
+        transferPayload.setFromAccountNumber(fromAccountOption.getAccountNo());
+        transferPayload.setToAccountNumber(toAccountOption.getAccountNo());
 
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
                 newInstance(transferPayload, TransferType.SELF), true, R.id.container);
