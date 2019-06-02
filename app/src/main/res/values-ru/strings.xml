@@ -407,7 +407,7 @@
     <string name="all_rights_reserved">Все права сохранены.</string>
     <string name="licenses">Лицензирование</string>
     <string name="transfer_error">Невозможно осуществить перевод, повторите попытку позже</string>
-    <string name="please_wait">Пожалуйста, подождите ...</string>
+    <string name="please_wait">Пожалуйста, подождите …</string>
     <string name="message">Сообщение</string>
     <string name="no_notification">Нет уведомлений</string>
 
