@@ -323,7 +323,6 @@
     <string name="select_region_qr">QR কোড সঙ্গে অঞ্চল নির্বাচন করুন</string>
     
     <string name="need_help">আমাদের সাথে যোগাযোগ করুন</string>
-    <string name="help_line_number">8000000000</string>
     <string name="transferred_successfully">সফল স্থানান্তর</string>
 
     <string name="total">মোট:</string>
@@ -413,7 +412,6 @@
 
     <string name="pref_base_url_title">শেষ বিন্দু আপডেট করুন</string>
     <string name="pref_base_url_desc">Endpoint কনফিগারেশন পরিবর্তন করতে এখানে ক্লিক করুন</string>
-    <string name="pref_configuration">pref_configuration</string>
     <string name="enter_base_url">প্রাথমিক URL লিখুন</string>
     <string name="enter_tenant">ভাড়াটে যান</string>
     <string name="error_no_charge">কোন অভিযোগ পাওয়া যায় নি</string>
