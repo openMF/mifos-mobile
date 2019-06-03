@@ -323,7 +323,6 @@
     <string name="select_region_qr">Pilih wilayah dengan kode QR</string>
     
     <string name="need_help">Hubungi kami</string>
-    <string name="help_line_number">8000000000</string>
     <string name="transferred_successfully">Transfer berhasil</string>
 
     <string name="total">Total:</string>
@@ -413,7 +412,6 @@
 
     <string name="pref_base_url_title">Perbarui Endpoint</string>
     <string name="pref_base_url_desc">Klik di sini untuk mengubah konfigurasi Endpoint</string>
-    <string name="pref_configuration">Pref_configuration</string>
     <string name="enter_base_url">Masukkan URL utama</string>
     <string name="enter_tenant">Pergi ke Tenant</string>
 </resources>

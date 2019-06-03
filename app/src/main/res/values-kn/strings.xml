@@ -323,7 +323,6 @@
     <string name="select_region_qr">QR ಕೋಡ್ನೊಂದಿಗೆ ಪ್ರದೇಶವನ್ನು ಆರಿಸಿ</string>
     
     <string name="need_help">ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-    <string name="help_line_number">8000000000</string>
     <string name="transferred_successfully">ಯಶಸ್ವಿ ವರ್ಗಾವಣೆ</string>
 
     <string name="total">ಒಟ್ಟು:</string>
@@ -413,7 +412,6 @@
 
     <string name="pref_base_url_title">ಎಂಡ್ಪೋಯಿಂಟ್ ನವೀಕರಿಸಿ</string>
     <string name="pref_base_url_desc">ಎಂಡ್ಪೋಯಿಂಟ್ ಸಂರಚನೆಗಳನ್ನು ಬದಲಾಯಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ</string>
-    <string name="pref_configuration">pref_configuration</string>
     <string name="enter_base_url">ಪ್ರಾಥಮಿಕ URL ಅನ್ನು ನಮೂದಿಸಿ</string>
     <string name="enter_tenant">ಟೆನಂಟ್ಗೆ ಹೋಗಿ</string>
 </resources>
