@@ -17,22 +17,22 @@ data class Transactions(
         var id: Int? = null,
 
         @SerializedName("transactionType")
-        var transactionType: TransactionType,
+        var transactionType: TransactionType? = null,
 
         @SerializedName("accountId")
         var accountId: Int? = null,
 
         @SerializedName("accountNo")
-        var accountNo: String,
+        var accountNo: String? = null,
 
         @SerializedName("date")
         var date: List<Int> = ArrayList(),
 
         @SerializedName("currency")
-        var currency: Currency,
+        var currency: Currency? = null,
 
         @SerializedName("paymentDetailData")
-        var paymentDetailData: PaymentDetailData,
+        var paymentDetailData: PaymentDetailData? = null,
 
         @SerializedName("amount")
         var amount: Double? = null,
@@ -44,7 +44,7 @@ data class Transactions(
         var reversed: Boolean? = null,
 
         @SerializedName("submittedOnDate")
-        var submittedOnDate: List<Int>,
+        var submittedOnDate: List<Int>? = null,
 
         @SerializedName("interestedPostedAsOn")
         var interestedPostedAsOn: Boolean? = null
