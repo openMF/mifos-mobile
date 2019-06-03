@@ -323,7 +323,6 @@
     <string name="select_region_qr">ជ្រើសរើសតំបន់ដែលមានកូដ QR</string>
     
     <string name="need_help">ទាក់ទងយើង</string>
-    <string name="help_line_number">8000000000</string>
     <string name="transferred_successfully">ផ្ទេរជោគជ័យ</string>
 
     <string name="total">ចំនួនសរុប:</string>
@@ -413,7 +412,6 @@
 
     <string name="pref_base_url_title">បញ្ចប់ចំណុចបញ្ចប់</string>
     <string name="pref_base_url_desc">សូមចុចទីនេះដើម្បីប្តូរការកំណត់រចនាសម្ព័ន្ធ ចំណុចបញ្ចប់</string>
-    <string name="pref_configuration">ការកំណត់រចនាសម្ព័ន្ធដែលចូលចិត្ត</string>
     <string name="enter_base_url">បញ្ចូល URL ចម្បង</string>
     <string name="enter_tenant">ចូលទៅកាន់ភតិកៈ</string>
 </resources>
