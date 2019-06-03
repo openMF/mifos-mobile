@@ -411,7 +411,6 @@
 
     <string name="pref_base_url_title">Mettre à jour le point final</string>
     <string name="pref_base_url_desc">Cliquez ici pour modifier les configurations de point final</string>
-    <string name="pref_configuration">Pref_configuration</string>
     <string name="enter_base_url">Entrez l\'URL primaire</string>
     <string name="enter_tenant">Aller au locataire</string>
 </resources>

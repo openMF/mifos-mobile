@@ -323,7 +323,6 @@
     <string name="select_region_qr">Wybierz region z kodem QR</string>
     
     <string name="need_help">Skontaktuj się z nami</string>
-    <string name="help_line_number">8000000000</string>
     <string name="transferred_successfully">Przelew pomyślny</string>
 
     <string name="total">Całkowity:</string>
@@ -414,7 +413,6 @@
 
     <string name="pref_base_url_title">Zaktualizuj Endpoint</string>
     <string name="pref_base_url_desc">Kliknij tutaj, aby zmienić konfiguracje Endpoint\'u</string>
-    <string name="pref_configuration">pref_configuration</string>
     <string name="enter_base_url">Wprowadź podstawowy adres URL</string>
     <string name="enter_tenant">Wejdź do Lokatora</string>
 </resources>

@@ -323,7 +323,6 @@
     <string name="select_region_qr">Chagua kanda na msimbo wa QR</string>
 
     <string name="need_help">Unahitaji msaada? Wasiliana na mstari wa usaidizi wako</string>
-    <string name="help_line_number">8000000000</string>
     <string name="transferred_successfully">Uhamisho ufanisi</string>
 
     <string name="total">Jumla: </string>
@@ -413,7 +412,6 @@
 
     <string name="pref_base_url_title">Sasisha Mwisho wa Mwisho</string>
     <string name="pref_base_url_desc">Bonyeza hapa ili kubadilisha mipangilio ya Mwisho</string>
-    <string name="pref_configuration">Pref_configuration</string>
     <string name="enter_base_url">Ingiza URL ya msingi</string>
     <string name="enter_tenant">Nenda kwa Mpangaji</string>
 </resources>

@@ -413,7 +413,6 @@
 
     <string name="pref_base_url_title">Обновить конечную точку</string>
     <string name="pref_base_url_desc">Нажмите здесь, чтобы изменить конфигурации конечных точек</string>
-    <string name="pref_configuration">Pref_configuration</string>
     <string name="enter_base_url">Введите основной URL-адрес</string>
     <string name="enter_tenant">Перейти к Арендатору</string>
 </resources>
