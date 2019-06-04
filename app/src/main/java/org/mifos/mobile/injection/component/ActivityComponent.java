@@ -4,6 +4,7 @@ import org.mifos.mobile.injection.PerActivity;
 import org.mifos.mobile.injection.module.ActivityModule;
 import org.mifos.mobile.ui.activities.HomeActivity;
 import org.mifos.mobile.ui.activities.SplashActivity;
+import org.mifos.mobile.ui.activities.SurveyActivity;
 import org.mifos.mobile.ui.fragments.AccountOverviewFragment;
 import org.mifos.mobile.ui.fragments.AddGuarantorFragment;
 import org.mifos.mobile.ui.fragments.BeneficiaryAddOptionsFragment;
@@ -126,4 +127,6 @@ public interface ActivityComponent {
     void inject(SavingsAccountApplicationFragment savingsAccountApplicationFragment);
 
     void inject(SavingsAccountWithdrawFragment savingsAccountWithdrawFragment);
+
+    void inject(SurveyActivity surveyActivity);
 }

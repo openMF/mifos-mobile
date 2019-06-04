@@ -1,11 +1,11 @@
-package org.mifos.mobilebanking.api.services;
+package org.mifos.mobile.services;
 
 /*
  * Created by saksham on 17/June/2018
  */
 
-import org.mifos.mobilebanking.models.survey.SubmitSurveyPayload;
-import org.mifos.mobilebanking.models.survey.Survey;
+import org.mifos.mobile.survey.SubmitSurveyPayload;
+import org.mifos.mobile.survey.Survey;
 
 import java.util.List;
 

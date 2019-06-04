@@ -11,7 +11,7 @@ import org.mifos.mobile.api.services.NotificationService;
 import org.mifos.mobile.api.services.RecentTransactionsService;
 import org.mifos.mobile.api.services.RegistrationService;
 import org.mifos.mobile.api.services.SavingAccountsListService;
-import org.mifos.mobilebanking.api.services.SurveyService;
+import org.mifos.mobile.services.SurveyService;
 import org.mifos.mobile.api.services.ThirdPartyTransferService;
 import org.mifos.mobile.api.services.UserDetailsService;
 

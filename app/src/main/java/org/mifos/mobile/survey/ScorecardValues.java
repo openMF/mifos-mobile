@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.models.survey;
+package org.mifos.mobile.survey;
 
 /*
  * Created by saksham on 18/June/2018

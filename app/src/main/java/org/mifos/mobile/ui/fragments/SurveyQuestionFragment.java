@@ -1,12 +1,10 @@
-package org.mifos.mobilebanking.ui.fragments;
+package org.mifos.mobile.ui.fragments;
 
 /*
  * Created by saksham on 16/June/2018
  */
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +14,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.survey.QuestionDatas;
-import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
-import org.mifos.mobilebanking.ui.views.SurveyQuestionView;
-import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobile.survey.QuestionDatas;
+import org.mifos.mobile.R;
+import org.mifos.mobile.ui.fragments.base.BaseFragment;
+import org.mifos.mobile.ui.views.SurveyQuestionView;
+import org.mifos.mobile.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,8 +39,8 @@ public class SurveyQuestionFragment extends BaseFragment implements Step,
     RadioGroup rgOptions;
 
     View rootView;
-    QuestionDatas questionDatas;
-    int selectedOption = -1;
+    private QuestionDatas questionDatas;
+    private int selectedOption = -1;
 
     public static SurveyQuestionFragment newInstance(QuestionDatas question) {
         SurveyQuestionFragment fragment = new SurveyQuestionFragment();

@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.ui.activities;
+package org.mifos.mobile.ui.activities;
 
 /*
  * Created by saksham on 16/June/2018
@@ -12,18 +12,18 @@ import android.widget.Toast;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.api.DataManager;
-import org.mifos.mobilebanking.api.local.PreferencesHelper;
-import org.mifos.mobilebanking.models.survey.ScorecardValues;
-import org.mifos.mobilebanking.models.survey.SubmitSurveyPayload;
-import org.mifos.mobilebanking.models.survey.Survey;
-import org.mifos.mobilebanking.presenters.SurveyPresenter;
-import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
-import org.mifos.mobilebanking.ui.adapters.SurveyQuestionAdapter;
-import org.mifos.mobilebanking.ui.fragments.SurveyQuestionFragment;
-import org.mifos.mobilebanking.ui.views.SurveyView;
-import org.mifos.mobilebanking.utils.MaterialDialog;
+import org.mifos.mobile.R;
+import org.mifos.mobile.api.DataManager;
+import org.mifos.mobile.api.local.PreferencesHelper;
+import org.mifos.mobile.survey.ScorecardValues;
+import org.mifos.mobile.survey.SubmitSurveyPayload;
+import org.mifos.mobile.survey.Survey;
+import org.mifos.mobile.presenters.SurveyPresenter;
+import org.mifos.mobile.ui.activities.base.BaseActivity;
+import org.mifos.mobile.ui.adapters.SurveyQuestionAdapter;
+import org.mifos.mobile.ui.fragments.SurveyQuestionFragment;
+import org.mifos.mobile.ui.views.SurveyView;
+import org.mifos.mobile.utils.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,25 +1,25 @@
-package org.mifos.mobilebanking.ui.adapters;
+package org.mifos.mobile.ui.adapters;
 
 /*
  * Created by saksham on 16/June/2018
  */
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.stepstone.stepper.viewmodel.StepViewModel;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.survey.Survey;
-import org.mifos.mobilebanking.ui.fragments.SurveyQuestionFragment;
+import org.mifos.mobile.survey.Survey;
+import org.mifos.mobile.R;
+import org.mifos.mobile.ui.fragments.SurveyQuestionFragment;
 
 public class SurveyQuestionAdapter extends AbstractFragmentStepAdapter {
 
     Context context;
-    Survey surveys;
+    private Survey surveys;
 
     public SurveyQuestionAdapter(@NonNull FragmentManager fm, @NonNull Context context,
                                  Survey surveys) {

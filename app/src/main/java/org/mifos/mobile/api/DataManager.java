@@ -8,8 +8,8 @@ import org.mifos.mobile.models.client.Client;
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload;
 import org.mifos.mobile.models.guarantor.GuarantorPayload;
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload;
-import org.mifos.mobilebanking.models.survey.SubmitSurveyPayload;
-import org.mifos.mobilebanking.models.survey.Survey;
+import org.mifos.mobile.survey.SubmitSurveyPayload;
+import org.mifos.mobile.survey.Survey;
 import org.mifos.mobile.models.UpdatePasswordPayload;
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload;
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload;
@@ -195,7 +195,6 @@ public class DataManager {
 
     public Observable<List<Beneficiary>> getBeneficiaryList() {
         return baseApiManager.getBeneficiaryApi().getBeneficiaryList();
-
     }
 
     public Observable<BeneficiaryTemplate> getBeneficiaryTemplate() {

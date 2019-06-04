@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.presenters;
+package org.mifos.mobile.presenters;
 
 /*
  * Created by saksham on 17/June/2018
@@ -6,12 +6,12 @@ package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
 
-import org.mifos.mobilebanking.api.DataManager;
-import org.mifos.mobilebanking.injection.ApplicationContext;
-import org.mifos.mobilebanking.models.survey.SubmitSurveyPayload;
-import org.mifos.mobilebanking.models.survey.Survey;
-import org.mifos.mobilebanking.presenters.base.BasePresenter;
-import org.mifos.mobilebanking.ui.views.SurveyView;
+import org.mifos.mobile.api.DataManager;
+import org.mifos.mobile.injection.ApplicationContext;
+import org.mifos.mobile.survey.SubmitSurveyPayload;
+import org.mifos.mobile.survey.Survey;
+import org.mifos.mobile.presenters.base.BasePresenter;
+import org.mifos.mobile.ui.views.SurveyView;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,10 +1,10 @@
-package org.mifos.mobilebanking.ui.views;
+package org.mifos.mobile.ui.views;
 
 /*
  * Created by saksham on 16/June/2018
  */
 
-import org.mifos.mobilebanking.ui.views.base.MVPView;
+import org.mifos.mobile.ui.views.base.MVPView;
 
 public interface SurveyQuestionView extends MVPView {
 
