@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.presenters;
+package org.mifos.mobile.presenters;
 
 /*
  * Created by saksham on 16/July/2018
@@ -6,15 +6,15 @@ package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
 
-import org.mifos.mobilebanking.api.DataManager;
-import org.mifos.mobilebanking.injection.ApplicationContext;
-import org.mifos.mobilebanking.models.accounts.loan.LoanAccount;
-import org.mifos.mobilebanking.models.accounts.savings.SavingAccount;
-import org.mifos.mobilebanking.models.accounts.share.ShareAccount;
-import org.mifos.mobilebanking.models.client.ClientAccounts;
-import org.mifos.mobilebanking.presenters.base.BasePresenter;
-import org.mifos.mobilebanking.ui.views.DashboardView;
-import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobile.api.DataManager;
+import org.mifos.mobile.injection.ApplicationContext;
+import org.mifos.mobile.models.accounts.loan.LoanAccount;
+import org.mifos.mobile.models.accounts.savings.SavingAccount;
+import org.mifos.mobile.models.accounts.share.ShareAccount;
+import org.mifos.mobile.models.client.ClientAccounts;
+import org.mifos.mobile.presenters.base.BasePresenter;
+import org.mifos.mobile.ui.views.DashboardView;
+import org.mifos.mobile.utils.Constants;
 
 import java.util.HashMap;
 import java.util.List;

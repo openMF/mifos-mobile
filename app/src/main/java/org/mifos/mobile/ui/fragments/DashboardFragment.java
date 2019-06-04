@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.ui.fragments;
+package org.mifos.mobile.ui.fragments;
 
 /*
  * Created by saksham on 16/July/2018
@@ -6,12 +6,13 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -19,13 +20,13 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.client.ClientAccounts;
-import org.mifos.mobilebanking.presenters.DashboardPresenter;
-import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
-import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
-import org.mifos.mobilebanking.ui.views.DashboardView;
-import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobile.R;
+import org.mifos.mobile.models.client.ClientAccounts;
+import org.mifos.mobile.presenters.DashboardPresenter;
+import org.mifos.mobile.ui.activities.base.BaseActivity;
+import org.mifos.mobile.ui.fragments.base.BaseFragment;
+import org.mifos.mobile.ui.views.DashboardView;
+import org.mifos.mobile.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

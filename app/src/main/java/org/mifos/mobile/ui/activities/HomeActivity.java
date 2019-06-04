@@ -31,6 +31,7 @@ import org.mifos.mobile.ui.enums.ChargeType;
 import org.mifos.mobile.ui.fragments.BeneficiaryListFragment;
 import org.mifos.mobile.ui.fragments.ClientAccountsFragment;
 import org.mifos.mobile.ui.fragments.ClientChargeFragment;
+import org.mifos.mobile.ui.fragments.DashboardFragment;
 import org.mifos.mobile.ui.fragments.HomeOldFragment;
 import org.mifos.mobile.ui.fragments.NotificationFragment;
 import org.mifos.mobile.ui.fragments.RecentTransactionsFragment;
