@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mifos.mobilebanking.utils.fcm;
+package org.mifos.mobile.utils.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,16 +22,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
+
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.notification.MifosNotification;
-import org.mifos.mobilebanking.ui.activities.HomeActivity;
-import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobile.R;
+import org.mifos.mobile.models.notification.MifosNotification;
+import org.mifos.mobile.ui.activities.HomeActivity;
+import org.mifos.mobile.utils.Constants;
 
 import java.util.Map;
 

@@ -134,16 +134,6 @@
                 android:resource="@xml/fileproviderpath"/>
         </provider>
 
-        <receiver
-            android:exported="true"
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <category android:name="org.mifos.selfserviceapp"/>
-            </intent-filter>
-        </receiver>
-
         <service
             android:exported="false"
             android:name=".utils.fcm.MifosFcmListenerService">

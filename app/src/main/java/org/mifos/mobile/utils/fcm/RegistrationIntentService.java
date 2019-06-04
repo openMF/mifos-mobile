@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.mifos.mobilebanking.utils.fcm;
+package org.mifos.mobile.utils.fcm;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobile.utils.Constants;
 
 
 public class RegistrationIntentService extends IntentService {

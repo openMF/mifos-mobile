@@ -82,7 +82,7 @@ dependencies {
     implementation "androidx.cardview:cardview:$rootProject.supportLibraryVersion"
     implementation "androidx.preference:preference:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
-    implementation "com.google.firebase:firebase-messaging:$rootProject.playServicesVersion"
+    implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.supportLibraryVersion"
     implementation "androidx.vectordrawable:vectordrawable:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.oss_licenses"

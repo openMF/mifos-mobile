@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mifos.mobilebanking.utils.fcm;
+package org.mifos.mobile.utils.fcm;
 
 import android.content.Intent;
 
