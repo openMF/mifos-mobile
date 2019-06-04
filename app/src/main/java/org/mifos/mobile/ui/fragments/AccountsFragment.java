@@ -18,7 +18,7 @@ import org.mifos.mobile.models.accounts.share.ShareAccount;
 import org.mifos.mobile.presenters.AccountsPresenter;
 import org.mifos.mobile.ui.activities.LoanAccountContainerActivity;
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity;
-import org.mifos.mobilebanking.ui.activities.ShareAccountContainerActivity;
+import org.mifos.mobile.ui.activities.ShareAccountContainerActivity;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.adapters.LoanAccountsListAdapter;
 import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter;

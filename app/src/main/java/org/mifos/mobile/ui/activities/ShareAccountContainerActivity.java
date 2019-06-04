@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.ui.activities;
+package org.mifos.mobile.ui.activities;
 
 /*
  * Created by saksham on 04/July/2018
@@ -6,11 +6,11 @@ package org.mifos.mobilebanking.ui.activities;
 
 import android.os.Bundle;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.accounts.share.ShareAccount;
-import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
-import org.mifos.mobilebanking.ui.fragments.ShareAccountDetailFragment;
-import org.mifos.mobilebanking.utils.Constants;
+import org.mifos.mobile.R;
+import org.mifos.mobile.models.accounts.share.ShareAccount;
+import org.mifos.mobile.ui.activities.base.BaseActivity;
+import org.mifos.mobile.ui.fragments.ShareAccountDetailFragment;
+import org.mifos.mobile.utils.Constants;
 
 public class ShareAccountContainerActivity extends BaseActivity {
 

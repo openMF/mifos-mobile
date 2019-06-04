@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.ui.fragments;
+package org.mifos.mobile.ui.fragments;
 
 /*
  * Created by saksham on 04/July/2018
@@ -7,12 +7,13 @@ package org.mifos.mobilebanking.ui.fragments;
 import android.animation.LayoutTransition;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -21,14 +22,14 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.models.accounts.share.ShareAccount;
-import org.mifos.mobilebanking.models.accounts.share.Status;
-import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
-import org.mifos.mobilebanking.utils.CircularImageView;
-import org.mifos.mobilebanking.utils.Constants;
-import org.mifos.mobilebanking.utils.DateHelper;
-import org.mifos.mobilebanking.utils.Utils;
+import org.mifos.mobile.R;
+import org.mifos.mobile.models.accounts.share.ShareAccount;
+import org.mifos.mobile.models.accounts.share.Status;
+import org.mifos.mobile.ui.fragments.base.BaseFragment;
+import org.mifos.mobile.utils.CircularImageView;
+import org.mifos.mobile.utils.Constants;
+import org.mifos.mobile.utils.DateHelper;
+import org.mifos.mobile.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
