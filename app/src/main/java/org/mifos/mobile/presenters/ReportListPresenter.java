@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.presenters;
+package org.mifos.mobile.presenters;
 
 /*
  * Created by saksham on 01/June/2018
@@ -6,9 +6,9 @@ package org.mifos.mobilebanking.presenters;
 
 import android.content.Context;
 
-import org.mifos.mobilebanking.injection.ActivityContext;
-import org.mifos.mobilebanking.presenters.base.BasePresenter;
-import org.mifos.mobilebanking.ui.views.ReportListView;
+import org.mifos.mobile.injection.ActivityContext;
+import org.mifos.mobile.presenters.base.BasePresenter;
+import org.mifos.mobile.ui.views.ReportListView;
 
 import java.util.ArrayList;
 

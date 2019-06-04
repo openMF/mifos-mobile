@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.ui.fragments;
+package org.mifos.mobile.ui.fragments;
 
 /*
  * Created by saksham on 02/June/2018
@@ -6,8 +6,6 @@ package org.mifos.mobilebanking.ui.fragments;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,14 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.presenters.ReportViewPresenter;
-import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
-import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
-import org.mifos.mobilebanking.ui.views.ReportViewMvpView;
-import org.mifos.mobilebanking.utils.CheckSelfPermissionAndRequest;
-import org.mifos.mobilebanking.utils.Constants;
-import org.mifos.mobilebanking.utils.Toaster;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.mifos.mobile.R;
+import org.mifos.mobile.presenters.ReportViewPresenter;
+import org.mifos.mobile.ui.activities.base.BaseActivity;
+import org.mifos.mobile.ui.fragments.base.BaseFragment;
+import org.mifos.mobile.ui.views.ReportViewMvpView;
+import org.mifos.mobile.utils.CheckSelfPermissionAndRequest;
+import org.mifos.mobile.utils.Constants;
+import org.mifos.mobile.utils.Toaster;
 
 import javax.inject.Inject;
 

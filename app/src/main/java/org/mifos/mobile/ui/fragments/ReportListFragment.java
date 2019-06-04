@@ -1,23 +1,24 @@
-package org.mifos.mobilebanking.ui.fragments;
+package org.mifos.mobile.ui.fragments;
 
 /*
  * Created by saksham on 01/June/2018
  */
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.presenters.ReportListPresenter;
-import org.mifos.mobilebanking.ui.activities.base.BaseActivity;
-import org.mifos.mobilebanking.ui.adapters.ReportListAdapter;
-import org.mifos.mobilebanking.ui.fragments.base.BaseFragment;
-import org.mifos.mobilebanking.ui.views.ReportListView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.mifos.mobile.R;
+import org.mifos.mobile.presenters.ReportListPresenter;
+import org.mifos.mobile.ui.activities.base.BaseActivity;
+import org.mifos.mobile.ui.adapters.ReportListAdapter;
+import org.mifos.mobile.ui.fragments.base.BaseFragment;
+import org.mifos.mobile.ui.views.ReportListView;
 
 import java.util.ArrayList;
 

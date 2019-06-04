@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.api.services;
+package org.mifos.mobile.api.services;
 
 /*
  * Created by saksham on 02/June/2018

@@ -34,6 +34,7 @@ import org.mifos.mobile.ui.fragments.ClientChargeFragment;
 import org.mifos.mobile.ui.fragments.HomeOldFragment;
 import org.mifos.mobile.ui.fragments.NotificationFragment;
 import org.mifos.mobile.ui.fragments.RecentTransactionsFragment;
+import org.mifos.mobile.ui.fragments.ReportListFragment;
 import org.mifos.mobile.ui.fragments.ThirdPartyTransferFragment;
 import org.mifos.mobile.ui.views.UserDetailsView;
 import org.mifos.mobile.utils.CircularImageView;

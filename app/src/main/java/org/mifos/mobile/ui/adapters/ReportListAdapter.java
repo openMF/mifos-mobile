@@ -1,19 +1,20 @@
-package org.mifos.mobilebanking.ui.adapters;
+package org.mifos.mobile.ui.adapters;
 
 /*
  * Created by saksham on 01/June/2018
  */
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.injection.ActivityContext;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.mifos.mobile.R;
+import org.mifos.mobile.injection.ActivityContext;
 
 import java.util.List;
 

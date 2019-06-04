@@ -1,4 +1,4 @@
-package org.mifos.mobilebanking.presenters;
+package org.mifos.mobile.presenters;
 
 /*
  * Created by saksham on 02/June/2018
@@ -7,11 +7,11 @@ package org.mifos.mobilebanking.presenters;
 import android.content.Context;
 import android.os.Environment;
 
-import org.mifos.mobilebanking.R;
-import org.mifos.mobilebanking.api.services.ReportService;
-import org.mifos.mobilebanking.injection.ActivityContext;
-import org.mifos.mobilebanking.presenters.base.BasePresenter;
-import org.mifos.mobilebanking.ui.views.ReportViewMvpView;
+import org.mifos.mobile.R;
+import org.mifos.mobile.api.services.ReportService;
+import org.mifos.mobile.injection.ActivityContext;
+import org.mifos.mobile.presenters.base.BasePresenter;
+import org.mifos.mobile.ui.views.ReportViewMvpView;
 
 import java.io.File;
 import java.io.IOException;
