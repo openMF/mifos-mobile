@@ -5,6 +5,7 @@ import android.content.Context;
 import org.mifos.mobile.R;
 import org.mifos.mobile.api.DataManager;
 import org.mifos.mobile.injection.ApplicationContext;
+import org.mifos.mobile.models.CheckboxStatus;
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.mobile.models.accounts.savings.Transactions;
 import org.mifos.mobile.presenters.base.BasePresenter;
@@ -62,6 +63,24 @@ public class SavingAccountsTransactionPresenter extends
         super.detachView();
         compositeDisposables.clear();
     }
+
+    /**
+     * Filters {@link List} of {@link CheckboxStatus}
+     * @param statusModelList {@link List} of {@link CheckboxStatus}
+     * @return Returns {@link List} of {@link CheckboxStatus} which have
+     * {@code checkboxStatus.isChecked()} as true.
+     */
+    public List<CheckboxStatus> getCheckedStatus(List<CheckboxStatus> statusModelList) {
+        return Observable.fromIterable(statusModelList)
+                .filter(new Predicate<CheckboxStatus>() {
+
+                    @Override
+                    public boolean test(CheckboxStatus checkboxStatus) throws Exception {
+                        return checkboxStatus.isChecked();
+                    }
+                }).toList().blockingGet();
+    }
+
 
     /**
      * Load details of a particular saving account from the server and notify the view
@@ -123,5 +142,57 @@ public class SavingAccountsTransactionPresenter extends
         getMvpView().showFilteredList(list);
     }
 
+    /**
+     * Filters {@link List} of {@link Transactions} according to {@link CheckboxStatus}
+     * @param savingAccountsTransactionList {@link List} of filtered {@link Transactions}
+     * @param status Used for filtering the {@link List}
+     * @return Returns {@link List} of filtered {@link Transactions} according to the
+     * {@code status} provided.
+     */
+
+
+    public  List<Transactions> filterTranactionListbyType(
+            List<Transactions> savingAccountsTransactionList, final CheckboxStatus status) {
+
+        return Observable.fromIterable(savingAccountsTransactionList)
+                .filter(new Predicate<Transactions>() {
+                    @Override
+                    public boolean test(Transactions transactions) throws Exception {
+                        if (status.getStatus().compareTo(context.getString(R.string.deposit)) == 0
+                                && transactions.getTransactionType().getDeposit()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(
+                                context.getString(R.string.dividend_payout)) == 0 &&
+                                transactions.getTransactionType().getDividendPayout()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(
+                                context.getString(R.string.withdrawal)) == 0 &&
+                                transactions.getTransactionType().getWithdrawal()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(
+                                context.getString(R.string.interest_posting)) == 0 &&
+                                transactions.getTransactionType().getInterestPosting()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(
+                                context.getString(R.string.fee_deduction)) == 0 &&
+                                transactions.getTransactionType().getFeeDeduction()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(
+                                context.getString(R.string.withdrawal_transfer)) == 0 &&
+                                transactions.getTransactionType().getApproveTransfer()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(context.getString(
+                                R.string.rejected_transfer)) == 0 && transactions
+                                .getTransactionType().getRejectTransfer()) {
+                            return true;
+                        } else if (status.getStatus().compareTo(context.getString(
+                                R.string.overdraft_fee)) == 0 &&
+                                transactions.getTransactionType().getOverdraftFee()) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }).toList().blockingGet();
+    }
 
 }
