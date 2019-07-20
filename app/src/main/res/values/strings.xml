@@ -549,6 +549,7 @@
     <string name="password_strength_strong">Strong</string>
     <string name="password_strength_very_strong">Very Strong</string>
     <string name="loan_purpose_not_provided">Not Provided</string>
+    <string name="loan_purpose_not_provided">Not Provided</string>
 
     <string name="dividend_payout">Dividend Payout</string>
     <string name="withdrawal">Withdrawal</string>
