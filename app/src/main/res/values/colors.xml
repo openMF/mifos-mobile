@@ -58,6 +58,8 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="cell_background_color">#ffffff</color>
+    <color name="header_line_color">@color/blue_light</color>
 
     <!--Swipe Refresh Colors-->
     <array name="swipeRefreshColors">
