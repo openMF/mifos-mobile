@@ -7,10 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
+import com.evrencoskun.tableview.TableView;
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations;
+import org.mifos.mobile.models.accounts.loan.Periods;
+import org.mifos.mobile.models.accounts.loan.tableview.Cell;
+import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader;
+import org.mifos.mobile.models.accounts.loan.tableview.RowHeader;
 import org.mifos.mobile.presenters.LoanRepaymentSchedulePresenter;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.adapters.LoanRepaymentScheduleAdapter;
@@ -20,11 +27,11 @@ import org.mifos.mobile.utils.Constants;
 import org.mifos.mobile.utils.DateHelper;
 import org.mifos.mobile.utils.Network;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,8 +42,9 @@ import butterknife.OnClick;
 public class LoanRepaymentScheduleFragment extends BaseFragment implements
         LoanRepaymentScheduleMvpView {
 
-    @BindView(R.id.rv_repayment_schedule)
-    RecyclerView rvRepaymentSchedule;
+    @BindView(R.id.tv_repayment_schedule)
+    TableView tvRepaymentSchedule;
+
 
     @BindView(R.id.tv_account_number)
     TextView tvAccountNumber;
@@ -117,12 +125,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
      */
     @Override
     public void showUserInterface() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvRepaymentSchedule.setLayoutManager(layoutManager);
-        rvRepaymentSchedule.setHasFixedSize(true);
-        loanRepaymentScheduleAdapter.setContext(getActivity());
-        rvRepaymentSchedule.setAdapter(loanRepaymentScheduleAdapter);
+        tvRepaymentSchedule.setAdapter(loanRepaymentScheduleAdapter);
     }
 
     @Override
@@ -145,14 +148,31 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         this.loanWithAssociations = loanWithAssociations;
         loanRepaymentScheduleAdapter
                 .setCurrency(loanWithAssociations.getCurrency().getDisplaySymbol());
-        loanRepaymentScheduleAdapter
-                .setPeriods(loanWithAssociations.getRepaymentSchedule().getPeriods());
-
+        setTableViewList(loanWithAssociations.getRepaymentSchedule().getPeriods());
         tvAccountNumber.setText(loanWithAssociations.getAccountNo());
         tvDisbursementDate.setText(DateHelper.getDateAsString(loanWithAssociations.
                 getTimeline().getExpectedDisbursementDate()));
         tvNumberOfPayments.setText(String.
                 valueOf(loanWithAssociations.getNumberOfRepayments()));
+    }
+
+    private void setTableViewList(List<Periods> periods) {
+        List<ColumnHeader> mColumnHeaderList = new ArrayList<>();
+        List<RowHeader> mRowHeaders = new ArrayList<>();
+        List<List<Cell>> mCellList = new ArrayList<>();
+        mColumnHeaderList.add(new ColumnHeader(getString(R.string.date)));
+        mColumnHeaderList.add(new ColumnHeader(getString(R.string.loan_balance)));
+        mColumnHeaderList.add(new ColumnHeader(getString(R.string.repayment)));
+        int i = 0;
+        for (Periods period: periods) {
+            List<Cell> cells = new ArrayList<>();
+            cells.add(new Cell(period));
+            cells.add(new Cell(period));
+            cells.add(new Cell(period));
+            mCellList.add(cells);
+            mRowHeaders.add(new RowHeader(++i));
+        }
+        loanRepaymentScheduleAdapter.setAllItems(mColumnHeaderList, mRowHeaders, mCellList);
     }
 
     /**
@@ -168,7 +188,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         tvNumberOfPayments.setText(String.
                 valueOf(loanWithAssociations.getNumberOfRepayments()));
         sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.repayment_schedule),
-                R.drawable.ic_charges, rvRepaymentSchedule, layoutError);
+                R.drawable.ic_charges, tvRepaymentSchedule, layoutError);
     }
 
     /**
@@ -179,10 +199,10 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
     @Override
     public void showError(String message) {
         if (!Network.isConnected(getActivity())) {
-            sweetUIErrorHandler.showSweetNoInternetUI(rvRepaymentSchedule, layoutError);
+            sweetUIErrorHandler.showSweetNoInternetUI(tvRepaymentSchedule, layoutError);
         } else {
             sweetUIErrorHandler.showSweetErrorUI(message,
-                    rvRepaymentSchedule, layoutError);
+                    tvRepaymentSchedule, layoutError);
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         }
     }
@@ -190,7 +210,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
     @OnClick(R.id.btn_try_again)
     public void retryClicked() {
         if (Network.isConnected(getContext())) {
-            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvRepaymentSchedule, layoutError);
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(tvRepaymentSchedule, layoutError);
             loanRepaymentSchedulePresenter.loanLoanWithAssociations(loanId);
         } else {
             Toast.makeText(getContext(), getString(R.string.internet_not_connected),
