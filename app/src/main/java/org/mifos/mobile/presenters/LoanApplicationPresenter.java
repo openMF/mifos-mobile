@@ -5,12 +5,10 @@ import android.content.Context;
 import org.mifos.mobile.R;
 import org.mifos.mobile.api.DataManager;
 import org.mifos.mobile.injection.ApplicationContext;
-import org.mifos.mobile.models.payload.LoansPayload;
 import org.mifos.mobile.models.templates.loans.LoanTemplate;
 import org.mifos.mobile.presenters.base.BasePresenter;
 import org.mifos.mobile.ui.enums.LoanState;
 import org.mifos.mobile.ui.views.LoanApplicationMvpView;
-import org.mifos.mobile.utils.MFErrorParser;
 
 import javax.inject.Inject;
 
@@ -18,7 +16,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 
 
 /**
@@ -126,75 +123,6 @@ public class LoanApplicationPresenter extends BasePresenter<LoanApplicationMvpVi
                         } else {
                             getMvpView().showUpdateLoanTemplateByProduct(loanTemplate);
                         }
-                    }
-                })
-        );
-    }
-
-    /**
-     * Used for creating LoanAccount using the {@code loansPayload} and notifies the view after
-     * successful creating of a LoanAccount. And in case of any error during creation, it
-     * notifies the view.
-     *
-     * @param loansPayload {@link LoansPayload} required for Loan Creation
-     */
-    public void createLoansAccount(LoansPayload loansPayload) {
-        checkViewAttached();
-        getMvpView().showProgress();
-        compositeDisposable.add(dataManager.createLoansAccount(loansPayload)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<ResponseBody>() {
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        getMvpView().hideProgress();
-                        getMvpView().showLoanAccountCreatedSuccessfully();
-                    }
-                })
-        );
-    }
-
-    /**
-     * Used for updating LoanAccount using the {@code loansPayload} and specified {@code loanId} and
-     * notifies the view after successful updation of a LoanAccount. And in case of any error during
-     * updation, it notifies the view.
-     *
-     * @param loanId       Id of Loan which needs to be updated
-     * @param loansPayload {@link LoansPayload} required for Loan Updation
-     */
-    public void updateLoanAccount(long loanId, LoansPayload loansPayload) {
-        checkViewAttached();
-        getMvpView().showProgress();
-        compositeDisposable.add(dataManager.updateLoanAccount(loanId, loansPayload)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<ResponseBody>() {
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        getMvpView().showError(MFErrorParser.errorMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        getMvpView().hideProgress();
-                        getMvpView().showLoanAccountUpdatedSuccessfully();
                     }
                 })
         );
