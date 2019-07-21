@@ -96,60 +96,16 @@
 
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
+        <com.evrencoskun.tableview.TableView
+            android:id="@+id/tv_repayment_schedule"
             android:layout_marginTop="@dimen/default_margin"
-            android:layout_width="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:background="@drawable/rectangular_border"
-                android:gravity="start"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="6dp"
-                android:text="@string/date"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:background="@drawable/rectangular_border"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="6dp"
-                android:text="@string/loan_balance"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:background="@drawable/rectangular_border"
-                android:gravity="end"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="6dp"
-                android:text="@string/repayment"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black"/>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_repayment_schedule"
-            android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
+            app:selected_color="@color/primary"
             android:layout_width="match_parent"
-        />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

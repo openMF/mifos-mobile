@@ -70,4 +70,8 @@
     <dimen name="min_frame_size">50dp</dimen>
     <dimen name="stroke_weight">1dp</dimen>
     <dimen name="scv_handle_size">14dp</dimen>
+    <dimen name="cell_height">40dp</dimen>
+    <dimen name="row_header_width">55dp</dimen>
+    <dimen name="text_size">14sp</dimen>
+    <dimen name="table_header_line">1dp</dimen>
 </resources>
