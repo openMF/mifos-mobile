@@ -19,9 +19,5 @@ public interface LoanApplicationMvpView extends MVPView {
 
     void showUpdateLoanTemplateByProduct(LoanTemplate loanTemplate);
 
-    void showLoanAccountCreatedSuccessfully();
-
-    void showLoanAccountUpdatedSuccessfully();
-
     void showError(String message);
 }

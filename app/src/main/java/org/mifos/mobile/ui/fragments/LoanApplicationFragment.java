@@ -12,7 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.mifos.mobile.R;
@@ -39,8 +41,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -207,8 +207,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      * Calls function which applies for a new Loan Application or updates a Loan Application
      * according to {@code loanState}
      */
-    @OnClick(R.id.btn_loan_submit)
-    void onSubmitLoanApplication() {
+    @OnClick(R.id.btn_loan_review)
+    void onReviewLoanApplication() {
         if (tilPrincipalAmount.getEditText().getText().toString().equals("")) {
             tilPrincipalAmount.setError(getString(R.string.enter_amount));
             return;
@@ -224,7 +224,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             return;
         }
         if (loanState == LoanState.CREATE) {
-            submitNewLoanApplication();
+            reviewNewLoanApplication();
         } else {
             submitUpdateLoanApplication();
         }
@@ -233,9 +233,12 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     /**
      * Submits a New Loan Application to the server
      */
-    private void submitNewLoanApplication() {
+    private void reviewNewLoanApplication() {
         LoansPayload loansPayload = new LoansPayload();
         loansPayload.setClientId(loanTemplate.getClientId());
+        loansPayload.setLoanPurpose(spLoanPurpose.getSelectedItem().toString());
+        loansPayload.setProductName(spLoanProducts.getSelectedItem().toString());
+        loansPayload.setCurrency(tvCurrency.getText().toString());
         if (purposeId > 0)
             loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setProductId(productId);
@@ -258,7 +261,11 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 loanTemplate.getInterestCalculationPeriodType().getId());
         loansPayload.setInterestType(loanTemplate.getInterestType().getId());
 
-        loanApplicationPresenter.createLoansAccount(loansPayload);
+        ((BaseActivity) getActivity()).replaceFragment(ReviewLoanApplicationFragment
+                        .Companion.newInstance(loanState, loansPayload,
+                        tvNewLoanApplication.getText().toString(),
+                        tvAccountNumber.getText().toString()),
+                true, R.id.container);
     }
 
     /**
@@ -269,6 +276,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loansPayload.setPrincipal(Double.
                 parseDouble(tilPrincipalAmount.getEditText().getText().toString()));
         loansPayload.setProductId(productId);
+        loansPayload.setLoanPurpose(spLoanPurpose.getSelectedItem().toString());
+        loansPayload.setProductName(spLoanProducts.getSelectedItem().toString());
+        loansPayload.setCurrency(tvCurrency.getText().toString());
         if (purposeId > 0)
             loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
@@ -285,7 +295,13 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 loanTemplate.getTransactionProcessingStrategyId());
         loansPayload.setExpectedDisbursementDate(disbursementDate);
 
-        loanApplicationPresenter.updateLoanAccount(loanWithAssociations.getId(), loansPayload);
+        ((BaseActivity) getActivity()).replaceFragment(ReviewLoanApplicationFragment
+                        .Companion.newInstance(loanState,
+                        loansPayload,
+                        loanWithAssociations.getId(),
+                        tvNewLoanApplication.getText().toString(),
+                        tvAccountNumber.getText().toString()),
+                false, R.id.container);
     }
 
     /**
@@ -481,26 +497,6 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             tilPrincipalAmount.getEditText().setText(String.valueOf(loanTemplate.getPrincipal()));
             tvCurrency.setText(loanTemplate.getCurrency().getDisplayLabel());
         }
-    }
-
-    /**
-     * Shows a {@link Snackbar} after Loan Application is created
-     * successfully
-     */
-    @Override
-    public void showLoanAccountCreatedSuccessfully() {
-        Toaster.show(rootView, R.string.loan_application_submitted_successfully);
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
-
-    /**
-     * Shows a {@link Snackbar} after Loan Application is updated
-     * successfully
-     */
-    @Override
-    public void showLoanAccountUpdatedSuccessfully() {
-        Toaster.show(rootView, R.string.loan_application_updated_successfully);
-        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     /**

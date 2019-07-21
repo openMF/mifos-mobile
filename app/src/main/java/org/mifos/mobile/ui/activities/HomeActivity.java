@@ -28,12 +28,10 @@ import org.mifos.mobile.presenters.UserDetailsPresenter;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.ui.enums.AccountType;
 import org.mifos.mobile.ui.enums.ChargeType;
-import org.mifos.mobile.ui.enums.LoanState;
 import org.mifos.mobile.ui.fragments.BeneficiaryListFragment;
 import org.mifos.mobile.ui.fragments.ClientAccountsFragment;
 import org.mifos.mobile.ui.fragments.ClientChargeFragment;
 import org.mifos.mobile.ui.fragments.HomeOldFragment;
-import org.mifos.mobile.ui.fragments.LoanApplicationFragment;
 import org.mifos.mobile.ui.fragments.NotificationFragment;
 import org.mifos.mobile.ui.fragments.RecentTransactionsFragment;
 import org.mifos.mobile.ui.fragments.ThirdPartyTransferFragment;
@@ -97,10 +95,8 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
         setupNavigationBar();
         setToolbarElevation();
         setToolbarTitle(getString(R.string.home));
-//        replaceFragment(HomeOldFragment.newInstance(), false, R.id.container);
+        replaceFragment(HomeOldFragment.newInstance(), false, R.id.container);
 
-        replaceFragment(LoanApplicationFragment.newInstance(LoanState.CREATE), false,
-                R.id.container);
         if (getIntent() != null && getIntent().getBooleanExtra(getString(R.string.notification),
                 false)) {
             replaceFragment(NotificationFragment.newInstance(), true, R.id.container);

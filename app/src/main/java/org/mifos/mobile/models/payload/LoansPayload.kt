@@ -21,6 +21,9 @@ data class LoansPayload(
         @SerializedName("productId")
         var productId: Int? = null,
 
+        @SerializedName("productName")
+        var productName: String? = null,
+
         @SerializedName("principal")
         var principal: Double? = null,
 
@@ -69,8 +72,14 @@ data class LoansPayload(
         @SerializedName("loanPurposeId")
         var loanPurposeId: Int? = null,
 
+        @SerializedName("loanPurpose")
+        var loanPurpose: String? = null,
+
         @SerializedName("maxOutstandingLoanBalance")
         var maxOutstandingLoanBalance: Double? = null,
+
+        @SerializedName("currency")
+        var currency: String? = null,
 
         var dateFormat : String = "dd MMMM yyyy",
         var locale : String = "en"

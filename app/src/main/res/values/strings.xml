@@ -58,6 +58,7 @@
     <string name="withdraw_loan">Withdraw Loan</string>
     <string name="withdraw_loan_reason">Reason to Withdraw Loan</string>
     <string name="loan_account_withdrawn_successfully">Loan account successfully withdrawn</string>
+    <string name="review">Review</string>
     <string name="submit_loan">Submit Loan</string>
     <string name="new_loan_application">New Loan Application for</string>
     <string name="update_loan_application">Update Loan Application for</string>
@@ -549,7 +550,8 @@
     <string name="password_strength_strong">Strong</string>
     <string name="password_strength_very_strong">Very Strong</string>
     <string name="loan_purpose_not_provided">Not Provided</string>
-    <string name="loan_purpose_not_provided">Not Provided</string>
+    <string name="details">Details</string>
+    <string name="product">Product</string>
 
     <string name="dividend_payout">Dividend Payout</string>
     <string name="withdrawal">Withdrawal</string>
