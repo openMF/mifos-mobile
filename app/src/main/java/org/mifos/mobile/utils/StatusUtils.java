@@ -64,4 +64,27 @@ public class StatusUtils {
 
         return arrayList;
     }
+
+    public static List<CheckboxStatus> getSavingsAccountTransactionList(Context context) {
+        ArrayList<CheckboxStatus> arrayList = new ArrayList<>();
+        arrayList.add(new CheckboxStatus(context.getString(R.string.deposit), ContextCompat
+                .getColor(context, R.color.deposit_green)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.dividend_payout), ContextCompat
+                .getColor(context, R.color.red_light)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.withdrawal), ContextCompat
+                .getColor(context, R.color.red_light)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.interest_posting),
+                ContextCompat.getColor(context, R.color.green_light)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.fee_deduction), ContextCompat
+                .getColor(context, R.color.red_light)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.withdrawal_transfer),
+                ContextCompat.getColor(context, R.color.red_light)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.rejected_transfer),
+                ContextCompat.getColor(context, R.color.green_light)));
+        arrayList.add(new CheckboxStatus(context.getString(R.string.overdraft_fee), ContextCompat
+                .getColor(context, R.color.red_light)));
+
+        return arrayList;
+
+    }
 }
