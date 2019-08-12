@@ -73,4 +73,6 @@ public class FakeJsonName {
     public static final String SAVINGS_ACCOUNT_TEMPLATE = "savingsAccountTemplate.json";
 
     public static final String CLIENT_JSON = "client.json";
+
+    public static final String UPDATE_PASSWORD_PAYLOAD_JSON = "updatePasswordPayload.json";
 }

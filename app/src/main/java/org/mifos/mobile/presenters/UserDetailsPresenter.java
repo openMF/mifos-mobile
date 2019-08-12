@@ -35,9 +35,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
 
     private final DataManager dataManager;
     private CompositeDisposable compositeDisposables;
-
-    @Inject
-    PreferencesHelper preferencesHelper;
+    private PreferencesHelper preferencesHelper;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -49,10 +47,12 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
      *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
-    public UserDetailsPresenter(@ApplicationContext Context context, DataManager dataManager) {
+    public UserDetailsPresenter(@ApplicationContext Context context, DataManager dataManager,
+                                PreferencesHelper preferencesHelper) {
         super(context);
         this.dataManager = dataManager;
         compositeDisposables = new CompositeDisposable();
+        this.preferencesHelper = preferencesHelper;
     }
 
     @Override

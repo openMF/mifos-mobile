@@ -26,8 +26,8 @@ public class SavingsAccountWithdrawPresenter extends BasePresenter<SavingsAccoun
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    protected SavingsAccountWithdrawPresenter(DataManager dataManager,
-                                              @ApplicationContext Context context) {
+    public SavingsAccountWithdrawPresenter(DataManager dataManager,
+                                           @ApplicationContext Context context) {
         super(context);
         this.dataManager = dataManager;
         compositeDisposable = new CompositeDisposable();

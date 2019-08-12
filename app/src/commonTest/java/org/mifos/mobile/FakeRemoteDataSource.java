@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.mifos.mobile.models.Charge;
 import org.mifos.mobile.models.Page;
 import org.mifos.mobile.models.Transaction;
+import org.mifos.mobile.models.UpdatePasswordPayload;
 import org.mifos.mobile.models.User;
 import org.mifos.mobile.models.accounts.loan.LoanAccount;
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations;
@@ -195,6 +196,11 @@ public class FakeRemoteDataSource {
     public static SavingsAccountTemplate getSavingAccountApplicationTemplate() {
         return mTestDataFactory.getObjectTypePojo(SavingsAccountTemplate.class,
                 FakeJsonName.SAVINGS_ACCOUNT_TEMPLATE);
+
+    }
+    public static UpdatePasswordPayload getUpdatePasswordPayload() {
+        return mTestDataFactory.getObjectTypePojo(UpdatePasswordPayload.class,
+                FakeJsonName.UPDATE_PASSWORD_PAYLOAD_JSON);
 
     }
 }

@@ -31,8 +31,8 @@ public class UpdatePasswordPresenter extends BasePresenter<UpdatePasswordView> {
     private PreferencesHelper preferencesHelper;
 
     @Inject
-    protected UpdatePasswordPresenter(@ApplicationContext Context context, DataManager dataManager,
-                                      PreferencesHelper preferencesHelper) {
+    public UpdatePasswordPresenter(@ApplicationContext Context context, DataManager dataManager,
+                                   PreferencesHelper preferencesHelper) {
         super(context);
         compositeDisposable = new CompositeDisposable();
         this.dataManager = dataManager;
