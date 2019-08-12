@@ -27,7 +27,7 @@ public class GuarantorListPresenter extends BasePresenter<GuarantorListView> {
     CompositeDisposable compositeDisposable;
 
     @Inject
-    protected GuarantorListPresenter(@ApplicationContext Context context, DataManager dataManager) {
+    public GuarantorListPresenter(@ApplicationContext Context context, DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
         compositeDisposable = new CompositeDisposable();
