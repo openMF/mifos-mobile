@@ -41,7 +41,7 @@ public class GuarantorDetailPresenter extends BasePresenter<GuarantorDetailView>
     }
 
     @Inject
-    protected GuarantorDetailPresenter(@ApplicationContext Context context,
+    public GuarantorDetailPresenter(@ApplicationContext Context context,
                                        DataManager dataManager) {
         super(context);
         this.dataManager = dataManager;
