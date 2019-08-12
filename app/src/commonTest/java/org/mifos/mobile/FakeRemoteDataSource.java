@@ -40,6 +40,12 @@ public class FakeRemoteDataSource {
         }, FakeJsonName.CLIENT_ACCOUNTS_JSON);
     }
 
+    public static Client getCurrentClient() {
+        return mTestDataFactory.getObjectTypePojo(Client.class,
+                FakeJsonName.CLIENT_JSON);
+    }
+
+
     public static ClientAccounts getClientSavingsAccount() {
         return mTestDataFactory.getObjectTypePojo(ClientAccounts.class,
                 FakeJsonName.CLIENT_SAVINGS_ACCOUNT_JSON);
