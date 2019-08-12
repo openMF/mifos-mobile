@@ -103,7 +103,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private LoanState loanState;
     private LoanWithAssociations loanWithAssociations;
     private int productId;
-    private int purposeId;
+    private int purposeId = -1;
     private String disbursementDate;
     private String submittedDate;
     private boolean isDisbursementDate = false;
@@ -236,7 +236,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private void submitNewLoanApplication() {
         LoansPayload loansPayload = new LoansPayload();
         loansPayload.setClientId(loanTemplate.getClientId());
-        loansPayload.setLoanPurposeId(purposeId);
+        if (purposeId > 0)
+            loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setProductId(productId);
         loansPayload.setPrincipal(Double.
                 parseDouble(tilPrincipalAmount.getEditText().getText().toString()));
@@ -268,7 +269,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         loansPayload.setPrincipal(Double.
                 parseDouble(tilPrincipalAmount.getEditText().getText().toString()));
         loansPayload.setProductId(productId);
-        loansPayload.setLoanPurposeId(purposeId);
+        if (purposeId > 0)
+            loansPayload.setLoanPurposeId(purposeId);
         loansPayload.setLoanTermFrequency(loanTemplate.getTermFrequency());
         loansPayload.setLoanTermFrequencyType(loanTemplate.getInterestRateFrequencyType().getId());
         loansPayload.setNumberOfRepayments(loanTemplate.getNumberOfRepayments());
@@ -434,10 +436,16 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         tvCurrency.setText(loanTemplate.getCurrency().getDisplayLabel());
 
         listLoanPurpose.clear();
-        for (LoanPurposeOptions loanPurposeOptions : loanTemplate.getLoanPurposeOptions()) {
-            listLoanPurpose.add(loanPurposeOptions.getName());
+        listLoanPurpose.add(getActivity().getString(R.string.loan_purpose_not_provided));
+
+        if (loanTemplate.getLoanPurposeOptions() != null) {
+            for (LoanPurposeOptions loanPurposeOptions : loanTemplate.getLoanPurposeOptions()) {
+                listLoanPurpose.add(loanPurposeOptions.getName());
+            }
         }
         loanPurposeAdapter.notifyDataSetChanged();
+        spLoanPurpose.setSelection(0);
+
     }
 
     /**
@@ -450,10 +458,15 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     public void showUpdateLoanTemplateByProduct(LoanTemplate loanTemplate) {
         this.loanTemplate = loanTemplate;
         listLoanPurpose.clear();
-        for (LoanPurposeOptions loanPurposeOptions : loanTemplate.getLoanPurposeOptions()) {
-            listLoanPurpose.add(loanPurposeOptions.getName());
+        listLoanPurpose.add(getActivity().getString(R.string.loan_purpose_not_provided));
+
+        if (loanTemplate.getLoanPurposeOptions() != null) {
+            for (LoanPurposeOptions loanPurposeOptions : loanTemplate.getLoanPurposeOptions()) {
+                listLoanPurpose.add(loanPurposeOptions.getName());
+            }
         }
         loanPurposeAdapter.notifyDataSetChanged();
+        spLoanPurpose.setSelection(0);
 
         if (isLoanUpdatePurposesInitialization &&
                 loanWithAssociations.getLoanPurposeName() != null) {
@@ -535,7 +548,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
                 break;
 
             case R.id.sp_loan_purpose:
-                purposeId = loanTemplate.getLoanPurposeOptions().get(position).getId();
+                if (loanTemplate.getLoanPurposeOptions() != null) {
+                    purposeId = loanTemplate.getLoanPurposeOptions().get(position).getId();
+                }
                 break;
         }
     }
