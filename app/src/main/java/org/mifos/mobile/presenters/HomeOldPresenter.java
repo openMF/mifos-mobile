@@ -37,8 +37,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
     private DataManager dataManager;
     private CompositeDisposable compositeDisposable;
-    @Inject
-    PreferencesHelper preferencesHelper;
+    private PreferencesHelper preferencesHelper;
 
     /**
      * Initialises the LoginPresenter by automatically injecting an instance of
@@ -50,10 +49,12 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
      *                    it is that of an {@link androidx.appcompat.app.AppCompatActivity}
      */
     @Inject
-    public HomeOldPresenter(DataManager dataManager, @ActivityContext Context context) {
+    public HomeOldPresenter(DataManager dataManager, @ActivityContext Context context,
+                            PreferencesHelper preferencesHelper) {
         super(context);
         this.dataManager = dataManager;
         compositeDisposable = new CompositeDisposable();
+        this.preferencesHelper = preferencesHelper;
     }
 
     @Override
