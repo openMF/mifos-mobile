@@ -9,6 +9,7 @@ import android.widget.TextView;
 import org.mifos.mobile.R;
 import org.mifos.mobile.injection.ActivityContext;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
+import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,13 @@ public class BeneficiaryListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private List<Beneficiary> beneficiaryList;
 
+    private List<ThirdPartyBeneficiary> thirdPartyBeneficiaryList;
+
     @Inject
     public BeneficiaryListAdapter(@ActivityContext Context context) {
         this.context = context;
         beneficiaryList = new ArrayList<>();
+        thirdPartyBeneficiaryList = new ArrayList<>();
     }
 
     @Override
@@ -44,19 +48,36 @@ public class BeneficiaryListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Beneficiary beneficiary = beneficiaryList.get(position);
-        ((ViewHolder) holder).tvAccountNumber.setText(beneficiary.getAccountNumber());
-        ((ViewHolder) holder).tvName.setText(beneficiary.getName());
-        ((ViewHolder) holder).tvOfficeName.setText(beneficiary.getOfficeName());
+        if (position < beneficiaryList.size()) {
+            Beneficiary beneficiary = beneficiaryList.get(position);
+            ((ViewHolder) holder).tvAccountNumber.setText(beneficiary.getAccountNumber());
+            ((ViewHolder) holder).tvName.setText(beneficiary.getName());
+            ((ViewHolder) holder).tvOfficeName.setText(beneficiary.getOfficeName());
+        } else {
+            ThirdPartyBeneficiary thirdPartyBeneficiary = thirdPartyBeneficiaryList
+                    .get(position - beneficiaryList.size());
+            ((ViewHolder) holder).tvAccountNumber.setText(
+                    thirdPartyBeneficiary.getPartyIdInfo().getPartyIdentifier());
+            ((ViewHolder) holder).tvName.setText(thirdPartyBeneficiary.getFirstName()
+                                                     + " " + thirdPartyBeneficiary.getLastName());
+            ((ViewHolder) holder).tvOfficeName.setText(
+                    thirdPartyBeneficiary.getPartyIdInfo().getPartyIdType()
+            );
+        }
     }
 
     @Override
     public int getItemCount() {
-        return beneficiaryList.size();
+        return beneficiaryList.size() + thirdPartyBeneficiaryList.size();
     }
 
     public void setBeneficiaryList(List<Beneficiary> beneficiaryList) {
         this.beneficiaryList = beneficiaryList;
+        notifyDataSetChanged();
+    }
+
+    public void setThirdParyBeneficiaryList(List<ThirdPartyBeneficiary> thirdParyBeneficiaryList) {
+        this.thirdPartyBeneficiaryList = thirdParyBeneficiaryList;
         notifyDataSetChanged();
     }
 
