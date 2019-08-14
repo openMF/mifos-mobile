@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail;
+import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class BeneficiarySpinnerAdapter extends ArrayAdapter<String> {
     LayoutInflater layoutInflater;
     Context context;
     List<BeneficiaryDetail> list;
+    List<ThirdPartyBeneficiary> thirdPartyBeneficiaryList;
 
     public BeneficiarySpinnerAdapter(Context context, int resource, List list) {
         super(context, resource, 0, list);
@@ -67,5 +69,9 @@ public class BeneficiarySpinnerAdapter extends ArrayAdapter<String> {
     @Override
     public String getItem(int position) {
         return list.get(position).getAccountNumber();
+    }
+
+    public BeneficiaryDetail getObject(int position) {
+        return list.get(position);
     }
 }

@@ -4,6 +4,7 @@ import org.mifos.mobile.FakeRemoteDataSource;
 import org.mifos.mobile.api.local.DatabaseHelper;
 import org.mifos.mobile.api.local.PreferencesHelper;
 import org.mifos.mobile.models.Charge;
+import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.models.client.Client;
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload;
 import org.mifos.mobile.models.guarantor.GuarantorPayload;
@@ -27,6 +28,7 @@ import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload;
 import org.mifos.mobile.models.client.ClientAccounts;
 import org.mifos.mobile.models.notification.NotificationUserDetail;
 import org.mifos.mobile.models.payload.LoansPayload;
+import org.mifos.mobile.models.payload.PaymentHubTransferPayload;
 import org.mifos.mobile.models.payload.TransferPayload;
 import org.mifos.mobile.models.register.RegisterPayload;
 import org.mifos.mobile.models.register.UserVerify;
@@ -334,6 +336,14 @@ public class DataManager {
                                 .parse("plain/text"), "Guarantor Deleted Successfully"));
                     }
                 });
+    }
+
+    public Observable<List<ThirdPartyBeneficiary>> getThirdPartyBeneficiaryList() {
+        return Observable.just(FakeRemoteDataSource.getThirdPartyBeneficiaryList());
+    }
+
+    public Observable<ResponseBody> makePaymentHubTransfer(PaymentHubTransferPayload payload) {
+        return baseApiManager.getPaymentHubApi().makeTransfer(payload);
     }
 
 }
