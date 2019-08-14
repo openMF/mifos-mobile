@@ -1,0 +1,10 @@
+[
+  {
+    "firstName": "Carl",
+    "lastName": "Baker",
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "27710102999"
+    }
+  }
+]

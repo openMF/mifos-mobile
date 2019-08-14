@@ -5,6 +5,7 @@ import android.content.Context;
 import org.mifos.mobile.R;
 import org.mifos.mobile.api.DataManager;
 import org.mifos.mobile.injection.ApplicationContext;
+import org.mifos.mobile.models.payload.PaymentHubTransferPayload;
 import org.mifos.mobile.models.payload.TransferPayload;
 import org.mifos.mobile.presenters.base.BasePresenter;
 import org.mifos.mobile.ui.views.TransferProcessView;
@@ -101,6 +102,33 @@ public class TransferProcessPresenter extends BasePresenter<TransferProcessView>
         checkViewAttached();
         getMvpView().showProgress();
         compositeDisposables.add(dataManager.makeThirdPartyTransfer(transferPayload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserver<ResponseBody>() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().hideProgress();
+                        getMvpView().showError(context.getString(R.string.transfer_error));
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        getMvpView().hideProgress();
+                        getMvpView().showTransferredSuccessfully();
+                    }
+                })
+        );
+    }
+
+    public void makePaymentHubTransfer(PaymentHubTransferPayload payload) {
+        checkViewAttached();
+        getMvpView().showProgress();
+        compositeDisposables.add(dataManager.makePaymentHubTransfer(payload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserver<ResponseBody>() {

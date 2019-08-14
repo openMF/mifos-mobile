@@ -8,14 +8,19 @@ import org.mifos.mobile.api.services.ClientService;
 import org.mifos.mobile.api.services.GuarantorService;
 import org.mifos.mobile.api.services.LoanAccountsListService;
 import org.mifos.mobile.api.services.NotificationService;
+import org.mifos.mobile.api.services.PaymentHubService;
 import org.mifos.mobile.api.services.RecentTransactionsService;
 import org.mifos.mobile.api.services.RegistrationService;
 import org.mifos.mobile.api.services.SavingAccountsListService;
 import org.mifos.mobile.api.services.ThirdPartyTransferService;
 import org.mifos.mobile.api.services.UserDetailsService;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -27,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseApiManager {
 
     private static Retrofit retrofit;
+    private static Retrofit paymentHubRetrofit;
     private static AuthenticationService authenticationApi;
     private static ClientService clientsApi;
     private static SavingAccountsListService savingAccountsListApi;
@@ -39,11 +45,34 @@ public class BaseApiManager {
     private static NotificationService notificationApi;
     private static GuarantorService guarantorService;
     private static UserDetailsService userDetailsService;
+    private static PaymentHubService paymentHubService;
 
     @Inject
     public BaseApiManager(PreferencesHelper preferencesHelper) {
         createService(preferencesHelper.getBaseUrl(), preferencesHelper.getTenant(),
                 preferencesHelper.getToken());
+        createPaymentHubService("tn01");
+    }
+
+    public static void createPaymentHubService(String tenant) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .addInterceptor(new ApiInterceptor(tenant))
+                .build();
+
+        paymentHubRetrofit = new Retrofit.Builder()
+                .baseUrl(new BaseURL().getPaymentHubUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
+                .build();
+        paymentHubService = paymentHubRetrofit.create(PaymentHubService.class);
     }
 
     private static void init() {
@@ -121,5 +150,9 @@ public class BaseApiManager {
 
     public UserDetailsService getUserDetailsService() {
         return userDetailsService;
+    }
+
+    public PaymentHubService getPaymentHubApi() {
+        return paymentHubService;
     }
 }
