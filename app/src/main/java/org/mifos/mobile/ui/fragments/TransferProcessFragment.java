@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobile.R;
+import org.mifos.mobile.models.payload.PaymentHubTransferPayload;
 import org.mifos.mobile.models.payload.TransferPayload;
 import org.mifos.mobile.presenters.TransferProcessPresenter;
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity;
@@ -67,6 +68,7 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
 
     private View rootView;
     private TransferPayload payload;
+    private PaymentHubTransferPayload paymentHubTransferPayload;
     private TransferType transferType;
 
     /**
@@ -77,11 +79,13 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
      * @param type    enum of {@link TransferType}
      * @return Instance of {@link TransferProcessFragment}
      */
-    public static TransferProcessFragment newInstance(TransferPayload payload, TransferType type) {
+    public static TransferProcessFragment newInstance(TransferPayload payload, TransferType type,
+                                          PaymentHubTransferPayload paymentHubTransferPayload) {
         TransferProcessFragment fragment = new TransferProcessFragment();
         Bundle args = new Bundle();
         args.putParcelable(Constants.PAYLOAD, payload);
         args.putSerializable(Constants.TRANSFER_TYPE, type);
+        args.putParcelable(Constants.PAYMENT_HUB_PAYLOAD, paymentHubTransferPayload);
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,6 +95,8 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
             payload = getArguments().getParcelable(Constants.PAYLOAD);
+            paymentHubTransferPayload  = getArguments()
+                    .getParcelable(Constants.PAYMENT_HUB_PAYLOAD);
             transferType = (TransferType) getArguments().getSerializable(Constants.TRANSFER_TYPE);
         }
     }
@@ -128,6 +134,8 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
             presenter.makeSavingsTransfer(payload);
         } else if (transferType == TransferType.TPT) {
             presenter.makeTPTTransfer(payload);
+        } else if (transferType == TransferType.TPT_PAYMENT_HUB) {
+            presenter.makePaymentHubTransfer(paymentHubTransferPayload);
         }
     }
 

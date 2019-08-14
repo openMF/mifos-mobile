@@ -1,0 +1,10 @@
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "tenant": "tn01",
+  "fspName": "buffalo",
+  "partyIdInfo": {
+    "partyIdType": "MSISDN",
+    "partyIdentifier": "27710101999"
+  }
+}

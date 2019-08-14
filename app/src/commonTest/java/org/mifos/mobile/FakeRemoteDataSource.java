@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.mifos.mobile.models.Charge;
 import org.mifos.mobile.models.Page;
+import org.mifos.mobile.models.PaymentHubUser;
 import org.mifos.mobile.models.Transaction;
 import org.mifos.mobile.models.UpdatePasswordPayload;
 import org.mifos.mobile.models.User;
@@ -13,6 +14,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload;
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload;
+import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.models.client.Client;
 import org.mifos.mobile.models.client.ClientAccounts;
 import org.mifos.mobile.models.guarantor.GuarantorPayload;
@@ -193,6 +195,11 @@ public class FakeRemoteDataSource {
         }, FakeJsonName.GUARANTOR_LIST);
     }
 
+    public static List<ThirdPartyBeneficiary> getThirdPartyBeneficiaryList() {
+        return mTestDataFactory.getListTypePojo(new TypeToken<List<ThirdPartyBeneficiary>>() {
+        }, FakeJsonName.THIRD_PARTY_BENEFICIARY_LIST);
+    }
+
     public static SavingsAccountTemplate getSavingAccountApplicationTemplate() {
         return mTestDataFactory.getObjectTypePojo(SavingsAccountTemplate.class,
                 FakeJsonName.SAVINGS_ACCOUNT_TEMPLATE);
@@ -203,4 +210,11 @@ public class FakeRemoteDataSource {
                 FakeJsonName.UPDATE_PASSWORD_PAYLOAD_JSON);
 
     }
+
+    public static PaymentHubUser getPaymentHubUser() {
+        return mTestDataFactory.getObjectTypePojo(PaymentHubUser.class,
+                FakeJsonName.PAYMENT_HUB_USER_JSON);
+
+    }
 }
+

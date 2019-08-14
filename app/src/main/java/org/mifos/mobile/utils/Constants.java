@@ -49,6 +49,8 @@ public class Constants {
 
     public static final String BENEFICIARY = "beneficiary";
 
+    public static final String THIRD_PART_BENEFICIARY = "third_party_beneficiary";
+
     public static final String BENEFICIARY_STATE = "beneficiary_state";
 
     public static final String LOAN_STATE = "loanType";
@@ -56,6 +58,8 @@ public class Constants {
     public static final String LOAN_ACCOUNT = "loanAccount";
 
     public static final String PAYLOAD = "payload";
+
+    public static final String PAYMENT_HUB_PAYLOAD = "payment_hub_transfer_payload";
 
     public static final int REQUEST_PERMISSION_SETTING = 254;
 

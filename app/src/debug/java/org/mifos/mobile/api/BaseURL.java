@@ -11,6 +11,10 @@ public class BaseURL {
     public static final String API_PATH = "/fineract-provider/api/v1/self/";
     public static final String PROTOCOL_HTTPS = "https://";
 
+    public static final String PAYMENT_HUB_API_ENDPOINT = "buffalo.mlabs.dpc.hu";
+    public static final String PAYMENT_HUB_API_PATH = "/api/";
+
+
     private String url;
 
     public String getUrl() {
@@ -26,5 +30,9 @@ public class BaseURL {
 
     public String getUrl(String endpoint) {
         return endpoint + API_PATH;
+    }
+
+    public String getPaymentHubUrl() {
+        return PROTOCOL_HTTPS + PAYMENT_HUB_API_ENDPOINT + PAYMENT_HUB_API_PATH;
     }
 }
