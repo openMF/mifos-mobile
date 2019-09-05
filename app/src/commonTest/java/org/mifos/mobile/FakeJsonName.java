@@ -75,9 +75,4 @@ public class FakeJsonName {
     public static final String CLIENT_JSON = "client.json";
 
     public static final String UPDATE_PASSWORD_PAYLOAD_JSON = "updatePasswordPayload.json";
-
-    public static final String THIRD_PARTY_BENEFICIARY_LIST = "thirdPartyBeneficiaryList.json";
-
-    public static final String PAYMENT_HUB_USER_JSON = "paymentHubUser.json";
-
 }
