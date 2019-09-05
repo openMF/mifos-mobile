@@ -13,7 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
-import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.presenters.BeneficiaryListPresenter;
 import org.mifos.mobile.ui.activities.AddBeneficiaryActivity;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
@@ -65,7 +64,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
 
     private View rootView;
     private List<Beneficiary> beneficiaryList;
-    private List<ThirdPartyBeneficiary> thirdPartyBeneficiaryList;
     private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static BeneficiaryListFragment newInstance() {
@@ -88,7 +86,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         beneficiaryListPresenter.attachView(this);
         if (savedInstanceState == null) {
             beneficiaryListPresenter.loadBeneficiaries();
-            beneficiaryListPresenter.loadThirdPartyBeneficiaries();
         }
 
         return rootView;
@@ -98,7 +95,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
     public void onResume() {
         super.onResume();
         beneficiaryListPresenter.loadBeneficiaries();
-        beneficiaryListPresenter.loadThirdPartyBeneficiaries();
     }
 
     @Override
@@ -107,10 +103,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         if (beneficiaryList != null) {
             outState.putParcelableArrayList(Constants.BENEFICIARY, new ArrayList<Parcelable>(
                     beneficiaryList));
-        }
-        if (thirdPartyBeneficiaryList != null) {
-            outState.putParcelableArrayList(Constants.THIRD_PART_BENEFICIARY,
-                    new ArrayList<Parcelable>(thirdPartyBeneficiaryList));
         }
     }
 
@@ -121,9 +113,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
             List<Beneficiary> beneficiaries = savedInstanceState.getParcelableArrayList(Constants.
                     BENEFICIARY);
             showBeneficiaryList(beneficiaries);
-            List<ThirdPartyBeneficiary> thirdPartyBeneficiaries = savedInstanceState
-                    .getParcelableArrayList(Constants.THIRD_PART_BENEFICIARY);
-            showThirdPartyBeneficiaryList(thirdPartyBeneficiaries);
         }
     }
 
@@ -132,8 +121,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
      */
     @Override
     public void showUserInterface() {
-        thirdPartyBeneficiaryList = new ArrayList<>();
-        beneficiaryList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvBeneficiaries.setLayoutManager(layoutManager);
@@ -161,7 +148,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         if (Network.isConnected(getContext())) {
             sweetUIErrorHandler.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError);
             beneficiaryListPresenter.loadBeneficiaries();
-            beneficiaryListPresenter.loadThirdPartyBeneficiaries();
         } else {
             Toast.makeText(getContext(), getString(R.string.internet_not_connected),
                     Toast.LENGTH_SHORT).show();
@@ -178,7 +164,6 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
             sweetUIErrorHandler.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError);
         }
         beneficiaryListPresenter.loadBeneficiaries();
-        beneficiaryListPresenter.loadThirdPartyBeneficiaries();
     }
 
     /**
@@ -222,28 +207,15 @@ public class BeneficiaryListFragment extends BaseFragment implements RecyclerIte
         this.beneficiaryList = beneficiaryList;
         if (beneficiaryList.size() != 0) {
             beneficiaryListAdapter.setBeneficiaryList(beneficiaryList);
-        } else if (thirdPartyBeneficiaryList.size() == 0) {
-            showEmptyBeneficiary();
-        }
-    }
-
-    @Override
-    public void showThirdPartyBeneficiaryList(List<ThirdPartyBeneficiary>
-                                                          thirdPartyBeneficiaryList) {
-        this.thirdPartyBeneficiaryList = thirdPartyBeneficiaryList;
-        if (thirdPartyBeneficiaryList.size() != 0) {
-            beneficiaryListAdapter.setThirdParyBeneficiaryList(thirdPartyBeneficiaryList);
-        } else if (beneficiaryList.size() == 0) {
+        } else {
             showEmptyBeneficiary();
         }
     }
 
     @Override
     public void onItemClick(View childView, int position) {
-        if (position < beneficiaryList.size()) {
-            ((BaseActivity) getActivity()).replaceFragment(BeneficiaryDetailFragment
-                    .newInstance(beneficiaryList.get(position)), true, R.id.container);
-        }
+        ((BaseActivity) getActivity()).replaceFragment(BeneficiaryDetailFragment
+                .newInstance(beneficiaryList.get(position)), true, R.id.container);
     }
 
     @Override

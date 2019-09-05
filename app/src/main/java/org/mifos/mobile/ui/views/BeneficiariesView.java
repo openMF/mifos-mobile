@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.views;
 
 import org.mifos.mobile.models.beneficiary.Beneficiary;
-import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.ui.views.base.MVPView;
 
 import java.util.List;
@@ -17,6 +16,4 @@ public interface BeneficiariesView extends MVPView {
     void showError(String msg);
 
     void showBeneficiaryList(List<Beneficiary> beneficiaryList);
-
-    void showThirdPartyBeneficiaryList(List<ThirdPartyBeneficiary> thirdPartyBeneficiaryList);
 }
