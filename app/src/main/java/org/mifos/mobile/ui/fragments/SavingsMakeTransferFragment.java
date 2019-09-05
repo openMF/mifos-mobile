@@ -23,7 +23,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.models.payload.AccountDetail;
-import org.mifos.mobile.models.payload.PaymentHubTransferPayload;
 import org.mifos.mobile.models.payload.TransferPayload;
 import org.mifos.mobile.models.templates.account.AccountOption;
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate;
@@ -233,8 +232,7 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
         transferPayload.setToAccountNumber(toAccountOption.getAccountNo());
 
         ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload, TransferType.SELF, null),
-                true, R.id.container);
+                newInstance(transferPayload, TransferType.SELF), true, R.id.container);
     }
 
     /**

@@ -6,7 +6,6 @@ import org.mifos.mobile.R;
 import org.mifos.mobile.api.DataManager;
 import org.mifos.mobile.injection.ApplicationContext;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
-import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.presenters.base.BasePresenter;
 import org.mifos.mobile.ui.views.BeneficiariesView;
 
@@ -78,33 +77,6 @@ public class BeneficiaryListPresenter extends BasePresenter<BeneficiariesView> {
                     public void onNext(List<Beneficiary> beneficiaries) {
                         getMvpView().hideProgress();
                         getMvpView().showBeneficiaryList(beneficiaries);
-                    }
-                }));
-    }
-
-    public void loadThirdPartyBeneficiaries() {
-        checkViewAttached();
-        getMvpView().showProgress();
-        compositeDisposable.add(dataManager.getThirdPartyBeneficiaryList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<List<ThirdPartyBeneficiary>>() {
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        getMvpView().showError(context
-                                .getString(R.string.beneficiaries));
-                    }
-
-                    @Override
-                    public void onNext(List<ThirdPartyBeneficiary> beneficiaries) {
-                        getMvpView().hideProgress();
-                        getMvpView().showThirdPartyBeneficiaryList(beneficiaries);
                     }
                 }));
     }

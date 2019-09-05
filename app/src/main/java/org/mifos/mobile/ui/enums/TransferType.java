@@ -6,6 +6,5 @@ package org.mifos.mobile.ui.enums;
 
 public enum TransferType {
     TPT,
-    SELF,
-    TPT_PAYMENT_HUB
+    SELF
 }
