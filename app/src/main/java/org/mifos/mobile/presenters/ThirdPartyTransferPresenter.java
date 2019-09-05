@@ -8,7 +8,6 @@ import org.mifos.mobile.injection.ApplicationContext;
 import org.mifos.mobile.models.AccountOptionAndBeneficiary;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail;
-import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.models.payload.AccountDetail;
 import org.mifos.mobile.models.templates.account.AccountOption;
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate;
@@ -175,56 +174,6 @@ public class ThirdPartyTransferPresenter extends BasePresenter<ThirdPartyTransfe
                     }
                 });
         return accountNumbers;
-    }
-
-    public List<BeneficiaryDetail> getAccountNumbersFromTPBeneficiaries(
-            final List<ThirdPartyBeneficiary> beneficiaries) {
-        final List<BeneficiaryDetail> accountNumbers = new ArrayList<>();
-        Observable.fromIterable(beneficiaries)
-                .flatMap(new Function<ThirdPartyBeneficiary, Observable<BeneficiaryDetail>>() {
-                    @Override
-                    public Observable<BeneficiaryDetail> apply(ThirdPartyBeneficiary beneficiary) {
-                        return Observable.just(new BeneficiaryDetail(
-                                beneficiary.getPartyIdInfo().getPartyIdentifier(),
-                                beneficiary.getFirstName() + " "
-                                        + beneficiary.getLastName()));
-                    }
-                })
-                .subscribe(new Consumer<BeneficiaryDetail>() {
-                    @Override
-                    public void accept(BeneficiaryDetail beneficiaryDetail) throws Exception {
-                        accountNumbers.add(beneficiaryDetail);
-
-                    }
-                });
-        return accountNumbers;
-    }
-
-    public void loadThirdPartyBeneficiaries() {
-        checkViewAttached();
-        getMvpView().showProgress();
-        compositeDisposable.add(dataManager.getThirdPartyBeneficiaryList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<List<ThirdPartyBeneficiary>>() {
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        getMvpView().showError(context
-                                .getString(R.string.beneficiaries));
-                    }
-
-                    @Override
-                    public void onNext(List<ThirdPartyBeneficiary> beneficiaries) {
-                        getMvpView().hideProgress();
-                        getMvpView().showThirdPartyBeneficiaryList(beneficiaries);
-                    }
-                }));
     }
 
     /**

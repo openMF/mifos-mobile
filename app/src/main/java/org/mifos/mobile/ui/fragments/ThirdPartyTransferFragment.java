@@ -17,20 +17,11 @@ import android.widget.TextView;
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.mifos.mobile.FakeRemoteDataSource;
-import org.mifos.mobile.PartyIdInfo;
 import org.mifos.mobile.R;
-import org.mifos.mobile.api.BaseApiManager;
-import org.mifos.mobile.models.PaymentHubUser;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail;
-import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.models.payload.AccountDetail;
-import org.mifos.mobile.models.payload.PaymentHubTransferPayload;
 import org.mifos.mobile.models.payload.TransferPayload;
-import org.mifos.mobile.models.paymentHub.Amount;
-import org.mifos.mobile.models.paymentHub.PaymentHubTransactionType;
-import org.mifos.mobile.models.paymentHub.TransactingEntity;
 import org.mifos.mobile.models.templates.account.AccountOption;
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobile.presenters.ThirdPartyTransferPresenter;
@@ -129,16 +120,12 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     ThirdPartyTransferPresenter presenter;
 
     private List<BeneficiaryDetail> listBeneficiary = new ArrayList<>();
-    private List<BeneficiaryDetail> listThirdPartyBeneficiary = new ArrayList<>();
-    private List<BeneficiaryDetail> spinnerBeneficiaryList = new ArrayList<>();
     private List<AccountDetail> listPayFrom = new ArrayList<>();
     private List<Beneficiary> beneficiaries;
-    private List<ThirdPartyBeneficiary> thirdPartyBeneficiaries;
     private BeneficiarySpinnerAdapter beneficiaryAdapter;
     private AccountsSpinnerAdapter payFromAdapter;
     private AccountOption fromAccountOption;
     private AccountOption beneficiaryAccountOption;
-    private TransferType transferType;
     private AccountOptionsTemplate accountOptionsTemplate;
     private String transferDate;
     private View rootView;
@@ -169,7 +156,6 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         presenter.attachView(this);
         if (savedInstanceState == null) {
             presenter.loadTransferTemplate();
-            presenter.loadThirdPartyBeneficiaries();
         }
 
         return rootView;
@@ -181,8 +167,6 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         outState.putParcelable(Constants.TEMPLATE, accountOptionsTemplate);
         outState.putParcelableArrayList(Constants.BENEFICIARY, new ArrayList<Parcelable>(
                 beneficiaries));
-        outState.putParcelableArrayList(Constants.THIRD_PART_BENEFICIARY, new ArrayList<Parcelable>(
-                thirdPartyBeneficiaries));
     }
 
     @Override
@@ -194,9 +178,6 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             List<Beneficiary> tempBeneficiaries = savedInstanceState.getParcelableArrayList(
                     Constants.BENEFICIARY);
             showBeneficiaryList(tempBeneficiaries);
-            List<ThirdPartyBeneficiary> tempTPBeneficiary = savedInstanceState
-                    .getParcelableArrayList(Constants.THIRD_PART_BENEFICIARY);
-            showThirdPartyBeneficiaryList(tempTPBeneficiary);
         }
     }
 
@@ -212,7 +193,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         spPayFrom.setOnItemSelectedListener(this);
 
         beneficiaryAdapter = new BeneficiarySpinnerAdapter(getActivity(),
-                R.layout.beneficiary_spinner_layout, spinnerBeneficiaryList);
+                R.layout.beneficiary_spinner_layout, listBeneficiary);
         beneficiaryAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spBeneficiary.setAdapter(beneficiaryAdapter);
         spBeneficiary.setOnItemSelectedListener(this);
@@ -250,61 +231,21 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             return;
         }
 
-        if (transferDate.equals(TransferType.TPT)) {
-            TransferPayload transferPayload = new TransferPayload();
-            transferPayload.setFromAccountNumber(fromAccountOption.getAccountNo());
-            transferPayload.setToAccountNumber(beneficiaryAccountOption.getAccountNo());
-            transferPayload.setFromAccountId(fromAccountOption.getAccountId());
-            transferPayload.setFromClientId(fromAccountOption.getClientId());
-            transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
-            transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
-            transferPayload.setToOfficeId(beneficiaryAccountOption.getOfficeId());
-            transferPayload.setToAccountId(beneficiaryAccountOption.getAccountId());
-            transferPayload.setToClientId(beneficiaryAccountOption.getClientId());
-            transferPayload.setToAccountType(beneficiaryAccountOption.getAccountType().getId());
-            transferPayload.setTransferDate(transferDate);
-            transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-            transferPayload.setTransferDescription(etRemark.getText().toString());
+        TransferPayload transferPayload = new TransferPayload();
+        transferPayload.setFromAccountId(fromAccountOption.getAccountId());
+        transferPayload.setFromClientId(fromAccountOption.getClientId());
+        transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
+        transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
+        transferPayload.setToOfficeId(beneficiaryAccountOption.getOfficeId());
+        transferPayload.setToAccountId(beneficiaryAccountOption.getAccountId());
+        transferPayload.setToClientId(beneficiaryAccountOption.getClientId());
+        transferPayload.setToAccountType(beneficiaryAccountOption.getAccountType().getId());
+        transferPayload.setTransferDate(transferDate);
+        transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
+        transferPayload.setTransferDescription(etRemark.getText().toString());
 
-            ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                    newInstance(transferPayload, TransferType.TPT, null),
-                    true, R.id.container);
-
-        } else {
-            TransferPayload transferPayload = new TransferPayload();
-            transferPayload.setToAccountNumber(beneficiaryAccountOption.getAccountNo());
-
-            PaymentHubUser user = FakeRemoteDataSource.getPaymentHubUser();
-            transferPayload.setFromAccountNumber(user.getPartyIdInfo().getPartyIdentifier());
-            transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-            transferPayload.setTransferDescription(etRemark.getText().toString());
-            transferPayload.setTransferDate(transferDate);
-
-            BaseApiManager.createPaymentHubService(user.getTenant());
-            TransactingEntity payer = new TransactingEntity(user.getPartyIdInfo(),
-                    null, user.getFirstName() + " " +
-                    user.getLastName());
-            TransactingEntity payee = new TransactingEntity(
-                    new PartyIdInfo("MSISDN",
-                            beneficiaryAccountOption.getAccountNo(), null),
-                    null, beneficiaryAccountOption.getClientName());
-
-            PaymentHubTransferPayload paymentHubTransferPayload = new PaymentHubTransferPayload(
-                    null,
-                    payee,
-                    payer,
-                    "SEND",
-                    new Amount("TZS", etAmount.getText().toString()),
-                    new PaymentHubTransactionType(
-                            "TRANSFER", "PAYER", "CONSUMER"
-                    ),
-                    etRemark.getText().toString()
-            );
-            ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                            newInstance(transferPayload, TransferType.TPT_PAYMENT_HUB,
-                                    paymentHubTransferPayload),
-                    true, R.id.container);
-        }
+        ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
+                newInstance(transferPayload, TransferType.TPT), true, R.id.container);
 
     }
 
@@ -345,24 +286,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         this.beneficiaries = beneficiaries;
         listBeneficiary.clear();
         listBeneficiary.addAll(presenter.getAccountNumbersFromBeneficiaries(beneficiaries));
-        updateBeneficiaryAdapter(listBeneficiary, listThirdPartyBeneficiary);
-    }
-
-    private void updateBeneficiaryAdapter(List<BeneficiaryDetail> list1,
-                                            List<BeneficiaryDetail> list2) {
-        spinnerBeneficiaryList.clear();
-        spinnerBeneficiaryList.addAll(list1);
-        spinnerBeneficiaryList.addAll(list2);
         beneficiaryAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showThirdPartyBeneficiaryList(List<ThirdPartyBeneficiary> thirdPartyBeneficiaries) {
-        this.thirdPartyBeneficiaries = thirdPartyBeneficiaries;
-        listThirdPartyBeneficiary.clear();
-        listThirdPartyBeneficiary.addAll(
-                presenter.getAccountNumbersFromTPBeneficiaries(thirdPartyBeneficiaries));
-        updateBeneficiaryAdapter(listBeneficiary, listThirdPartyBeneficiary);
     }
 
 
@@ -378,7 +302,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
         btnPayFrom.setVisibility(View.GONE);
 
         tvSelectBeneficiary.setVisibility(View.GONE);
-        if (!spinnerBeneficiaryList.isEmpty()) {
+        if (!listBeneficiary.isEmpty()) {
             btnPayTo.setVisibility(View.VISIBLE);
             spBeneficiary.setVisibility(View.VISIBLE);
             spPayFrom.setEnabled(false);
@@ -499,18 +423,8 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.sp_beneficiary:
-                if (position < listBeneficiary.size()) {
-                    transferType = TransferType.TPT;
-                    beneficiaryAccountOption = presenter.searchAccount(accountOptionsTemplate.
-                            getFromAccountOptions(), beneficiaryAdapter.getItem(position));
-                } else {
-                    transferType =  TransferType.TPT_PAYMENT_HUB;
-                    beneficiaryAccountOption = new AccountOption();
-                    beneficiaryAccountOption.setAccountNo(beneficiaryAdapter.getObject(position)
-                            .getAccountNumber());
-                    beneficiaryAccountOption.setClientName(beneficiaryAdapter.getObject(position)
-                            .getBeneficiaryName());
-                }
+                beneficiaryAccountOption = presenter.searchAccount(accountOptionsTemplate.
+                        getFromAccountOptions(), beneficiaryAdapter.getItem(position));
                 break;
             case R.id.sp_pay_from:
                 fromAccountOption = accountOptionsTemplate.getFromAccountOptions().get(position);

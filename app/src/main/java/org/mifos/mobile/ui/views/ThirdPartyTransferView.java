@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.views;
 
 import org.mifos.mobile.models.beneficiary.Beneficiary;
-import org.mifos.mobile.models.beneficiary.ThirdPartyBeneficiary;
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate;
 import org.mifos.mobile.ui.views.base.MVPView;
 
@@ -22,6 +21,4 @@ public interface ThirdPartyTransferView extends MVPView {
     void showBeneficiaryList(List<Beneficiary> beneficiaries);
 
     void showError(String msg);
-
-    void showThirdPartyBeneficiaryList(List<ThirdPartyBeneficiary> thirdPartyBeneficiaries);
 }
