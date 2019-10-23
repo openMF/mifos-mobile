@@ -151,7 +151,9 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
         }
         final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
         Bitmap decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes);
-        getMvpView().showUserImage(decodedBitmap);
+        if (isViewAttached()) {
+            getMvpView().showUserImage(decodedBitmap);
+        }
     }
 
     public void registerNotification(final String token) {
@@ -208,7 +210,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
     }
 
     private void updateRegistrationNotification(long id, NotificationRegisterPayload payload,
-            final String token) {
+                                                final String token) {
         checkViewAttached();
         compositeDisposables.add(dataManager.updateRegisterNotification(id, payload)
                 .observeOn(AndroidSchedulers.mainThread())
