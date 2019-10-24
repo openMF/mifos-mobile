@@ -52,6 +52,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -109,6 +110,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             showUserImage(null);
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS);
+            if (!detailsPresenter.isViewAttached()) {
+                detailsPresenter.attachView(this);
+            }
             detailsPresenter.setUserProfile(preferencesHelper.getUserProfileImage());
             showUserDetails(client);
         }

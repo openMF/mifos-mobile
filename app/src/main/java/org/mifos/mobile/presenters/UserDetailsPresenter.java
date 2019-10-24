@@ -151,9 +151,7 @@ public class UserDetailsPresenter extends BasePresenter<UserDetailsView> {
         }
         final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
         Bitmap decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes);
-        if (isViewAttached()) {
-            getMvpView().showUserImage(decodedBitmap);
-        }
+        getMvpView().showUserImage(decodedBitmap);
     }
 
     public void registerNotification(final String token) {
