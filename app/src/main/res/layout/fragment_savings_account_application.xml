@@ -90,13 +90,10 @@
         android:layout_width="match_parent"
         android:spinnerMode="dropdown"/>
 
-    <Button
-        android:background="@drawable/circular_background_btn"
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/submit"/>
 
 </LinearLayout>
