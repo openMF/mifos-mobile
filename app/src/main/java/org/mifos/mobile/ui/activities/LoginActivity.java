@@ -3,6 +3,8 @@ package org.mifos.mobile.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,6 +35,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Inject
     LoginPresenter loginPresenter;
 
+    @BindView(R.id.logo)
+    ImageView logo;
+
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
 
@@ -55,6 +60,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         loginPresenter.attachView(this);
+
     }
 
     /**
@@ -65,6 +71,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void onLoginSuccess(String userName) {
         this.userName = userName;
+
         loginPresenter.loadClient();
     }
 
@@ -152,6 +159,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter.detachView();
     }
 
+
+
     /**
      * Starts {@link PassCodeActivity} with {@code Constans.INTIAL_LOGIN} as true
      */
@@ -160,5 +169,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
         intent.putExtra(Constants.INTIAL_LOGIN, true);
         startActivity(intent);
         finish();
+    }
+
+
+    public void hidekeyboard(View v){
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 }
