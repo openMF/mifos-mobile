@@ -14,79 +14,81 @@
 
         <LinearLayout
             android:id="@+id/ll_login"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="hidekeyboard"
             android:orientation="vertical"
-            android:paddingEnd="@dimen/login_padding_right"
-            android:paddingLeft="@dimen/login_padding_left"
-            android:paddingRight="@dimen/login_padding_right"
             android:paddingStart="@dimen/login_padding_left"
-            android:paddingTop="@dimen/login_padding_top">
+            android:paddingLeft="@dimen/login_padding_left"
+            android:paddingTop="@dimen/login_padding_top"
+            android:paddingEnd="@dimen/login_padding_right"
+            android:paddingRight="@dimen/login_padding_right">
 
             <ImageView
-                android:layout_gravity="center_horizontal"
-                android:layout_height="@dimen/login_height"
-                android:layout_marginBottom="@dimen/login_margin_bottom"
                 android:layout_width="wrap_content"
-                android:src="@drawable/mifos_logo"/>
+                android:layout_height="@dimen/login_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/login_margin_bottom"
+                android:onClick="hidekeyboard"
+                android:src="@drawable/mifos_logo" />
 
             <!-- Username  Label -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_username"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
-                android:layout_width="match_parent">
+                android:layout_marginBottom="@dimen/default_margin">
 
                 <EditText
                     style="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_wrapped_person_black_24dp"
                     android:drawableLeft="@drawable/ic_wrapped_person_black_24dp"
                     android:drawablePadding="@dimen/layout_padding_8dp"
-                    android:drawableStart="@drawable/ic_wrapped_person_black_24dp"
                     android:hint="@string/username"
-                    android:inputType="textEmailAddress"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password Label -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_password"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
                 app:passwordToggleEnabled="true">
 
                 <EditText
                     style="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_wrapped_lock_black_24dp"
                     android:drawableLeft="@drawable/ic_wrapped_lock_black_24dp"
                     android:drawablePadding="@dimen/layout_padding_8dp"
-                    android:drawableStart="@drawable/ic_wrapped_lock_black_24dp"
                     android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:layout_marginTop="@dimen/login_margin_top"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/login_margin_top"
+                android:layout_marginBottom="@dimen/default_margin"
                 android:text="@string/login"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/btn_register"
-                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/create_an_account"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/primary"/>
+                android:textColor="@color/primary" />
 
         </LinearLayout>
 

@@ -3,6 +3,7 @@ package org.mifos.mobile.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -160,5 +161,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
         intent.putExtra(Constants.INTIAL_LOGIN, true);
         startActivity(intent);
         finish();
+    }
+
+    public void hidekeyboard(View v){
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
     }
 }
