@@ -479,6 +479,10 @@
     <string name="notification">Notifications</string>
     <string name="base_url">Base URL</string>
     <string name="tenant">Tenant</string>
+    <string name="no_saving_account">Saving Accounts</string>
+    <string name="no_loan_account">Loan Accounts</string>
+    <string name="no_sharing_account">Sharing Accounts</string>
+
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>
