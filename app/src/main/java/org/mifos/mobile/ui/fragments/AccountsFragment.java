@@ -295,7 +295,8 @@ public class AccountsFragment extends BaseFragment implements
      */
     public void showEmptyAccounts(String emptyAccounts) {
         sweetUIErrorHandler.showSweetEmptyUI(emptyAccounts,
-                R.drawable.ic_supervisor_account_black_24dp, rvAccounts, layoutError);
+                R.drawable.ic_account_balance_wallet_black_background_24dp,
+                rvAccounts, layoutError);
     }
 
     /**
@@ -343,7 +344,11 @@ public class AccountsFragment extends BaseFragment implements
             filteredSavings.addAll(accountsPresenter.getFilteredSavingsAccount(savingAccounts,
                     status));
         }
-        savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
+        if (filteredSavings.size() == 0) {
+            showEmptyAccounts(getString(R.string.no_saving_account));
+        } else {
+            savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
+        }
     }
 
     /**
@@ -358,7 +363,11 @@ public class AccountsFragment extends BaseFragment implements
             filteredSavings.addAll(accountsPresenter.getFilteredLoanAccount(loanAccounts,
                     status));
         }
-        loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
+        if (filteredSavings.size() == 0) {
+            showEmptyAccounts(getString(R.string.no_loan_account));
+        } else {
+            loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
+        }
     }
 
     /**
@@ -373,7 +382,11 @@ public class AccountsFragment extends BaseFragment implements
             filteredSavings.addAll(accountsPresenter.getFilteredShareAccount(shareAccounts,
                     status));
         }
-        shareAccountsListAdapter.setShareAccountsList(filteredSavings);
+        if (filteredSavings.size() == 0) {
+            showEmptyAccounts(getString(R.string.no_sharing_account));
+        } else {
+            shareAccountsListAdapter.setShareAccountsList(filteredSavings);
+        }
     }
 
     /**
