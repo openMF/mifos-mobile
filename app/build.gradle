@@ -74,15 +74,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
 
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
-    implementation "com.google.android.material:material:$rootProject.supportLibraryVersion"
-    implementation "androidx.cardview:cardview:$rootProject.supportLibraryVersion"
+    implementation "com.google.android.material:material:$rootProject.designLibraryVersion"
+    implementation "androidx.cardview:cardview:$rootProject.designLibraryVersion"
     implementation "androidx.preference:preference:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
