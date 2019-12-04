@@ -27,6 +27,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     public static final String TAG = "MFDatePicker";
     static String dateSet;
     static Calendar calendar;
+    static Calendar calendarNew;
     private String startDateString;
     private long startDate;
     private int datePickerType = ALL_DAYS;
@@ -40,6 +41,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     static {
 
         calendar = Calendar.getInstance();
+        calendarNew = calendar;
         dateSet = new StringBuilder()
                 .append(calendar.get(Calendar.DAY_OF_MONTH) < 10 ?
                         ("0" + calendar.get(Calendar.DAY_OF_MONTH))
@@ -77,13 +79,14 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final Calendar cal = Calendar.getInstance();
+        int newYear = cal.get(Calendar.YEAR);
+        int newMonth = cal.get(Calendar.MONTH);
+        int newDay = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(),
-                R.style.MaterialDatePickerTheme,
-                this,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
+                R.style.MaterialDatePickerTheme ,
+                this, newYear, newMonth, newDay);
 
         Bundle args = getArguments();
         this.datePickerType = args.getInt(Constants.DATE_PICKER_TYPE, this.ALL_DAYS);
@@ -105,6 +108,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         //TODO Fix Single digit problem that fails with the locale
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
+        calendarNew = calendar; 
         Date date = calendar.getTime();
         onDatePickListener.onDatePicked(startDateString = DateFormat.
                 format("dd-MM-yyyy", date).toString());
