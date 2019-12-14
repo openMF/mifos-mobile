@@ -89,6 +89,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private MFDatePicker mfDatePicker;
     private long startDate, endDate;
     private boolean isReady;
+    private boolean dateSet = false;
     private List<CheckboxStatus> statusList;
     private boolean isCheckBoxPeriod;
     private int selectedRadioButtonId;
@@ -116,7 +117,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
-            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_saving_account_transactions,
                 container, false);
 
@@ -168,7 +169,8 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         rvSavingAccountsTransaction.setAdapter(transactionListAdapter);
 
 //        radioGroup.setOnCheckedChangeListener(this);
-        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS);
+        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS, dateSet);
+        dateSet = true;
     }
 
     /**
@@ -179,7 +181,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
      */
     @Override
     public void showSavingAccountsDetail(SavingsWithAssociations
-            savingsWithAssociations) {
+                                                 savingsWithAssociations) {
         layoutAccount.setVisibility(View.VISIBLE);
         this.savingsWithAssociations = savingsWithAssociations;
         transactionsList = savingsWithAssociations.getTransactions();
@@ -298,9 +300,9 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private void showFilterDialog() {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.layout_filter_dialog, null , false);
+        final View dialogView = inflater.inflate(R.layout.layout_filter_dialog, null, false);
 
-        final LinearLayout llcheckBoxPeriod =  dialogView.findViewById(R.id.ll_row_checkbox);
+        final LinearLayout llcheckBoxPeriod = dialogView.findViewById(R.id.ll_row_checkbox);
         final AppCompatCheckBox checkBoxPeriod = dialogView.findViewById(R.id.cb_select);
         final RadioGroup radioGroupFilter = dialogView.findViewById(R.id.rg_date_filter);
         tvStartDate = dialogView.findViewById(R.id.tv_start_date);
@@ -325,7 +327,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         llcheckBoxPeriod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    checkBoxPeriod.setChecked(!checkBoxPeriod.isChecked());
+                checkBoxPeriod.setChecked(!checkBoxPeriod.isChecked());
             }
         });
 
@@ -400,26 +402,27 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         new MaterialDialog.Builder().init(getActivity())
                 .setTitle(R.string.savings_account_transaction)
                 .addView(dialogView)
-                .setPositiveButton(getString(R.string.filter), new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (checkBoxPeriod.isChecked()) {
-                            if (!isReady) {
-                                Toaster.show(rootView, getString(R.string.select_date));
-                                return;
-                            } else if (!isEndDateLargeThanStartDate()) {
-                                Toaster.show(rootView,
-                                        getString(R.string.end_date_must_be_greater));
-                                return;
+                .setPositiveButton(getString(R.string.filter),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (checkBoxPeriod.isChecked()) {
+                                    if (!isReady) {
+                                        Toaster.show(rootView, getString(R.string.select_date));
+                                        return;
+                                    } else if (!isEndDateLargeThanStartDate()) {
+                                        Toaster.show(rootView,
+                                                getString(R.string.end_date_must_be_greater));
+                                        return;
+                                    }
+                                    filter(startDate, endDate, checkBoxAdapter.getStatusList());
+                                } else {
+                                    filter(checkBoxAdapter.getStatusList());
+                                }
+                                filterSavingsAccountTransactionsbyType(checkBoxAdapter
+                                        .getStatusList());
                             }
-                            filter(startDate, endDate, checkBoxAdapter.getStatusList());
-                        } else {
-                            filter(checkBoxAdapter.getStatusList());
-                        }
-                        filterSavingsAccountTransactionsbyType(checkBoxAdapter.getStatusList());
-                    }
-                })
+                        })
                 .setNeutralButton(getString(R.string.clear_filters),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -462,14 +465,16 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private void filter(List<CheckboxStatus> statusModelList) {
         showFilteredList(filterSavingsAccountTransactionsbyType(statusModelList));
     }
+
     /**
      * Will filter {@code transactionsList} according to {@code startDate} and {@code endDate}
+     *
      * @param statusModelList Status Model List
      */
-    private  List<Transactions> filterSavingsAccountTransactionsbyType(List<CheckboxStatus>
-                                                                               statusModelList) {
+    private List<Transactions> filterSavingsAccountTransactionsbyType(List<CheckboxStatus>
+                                                                              statusModelList) {
         List<Transactions> filteredSavingsTransactions = new ArrayList<>();
-        for (CheckboxStatus status:savingAccountsTransactionPresenter
+        for (CheckboxStatus status : savingAccountsTransactionPresenter
                 .getCheckedStatus(statusModelList)) {
             filteredSavingsTransactions.addAll(savingAccountsTransactionPresenter
                     .filterTranactionListbyType(transactionsList, status));

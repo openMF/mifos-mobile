@@ -105,6 +105,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private int productId;
     private int purposeId = -1;
     private String disbursementDate;
+    private boolean disbursementDateSet = false;
     private String submittedDate;
     private boolean isDisbursementDate = false;
     private boolean isLoanUpdatePurposesInitialization = true;
@@ -132,7 +133,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      * @return Instance of {@link LoanApplicationFragment}
      */
     public static LoanApplicationFragment newInstance(LoanState loanState,
-            LoanWithAssociations loanWithAssociations) {
+                                                      LoanWithAssociations loanWithAssociations) {
         LoanApplicationFragment fragment = new LoanApplicationFragment();
         Bundle args = new Bundle();
         args.putSerializable(Constants.LOAN_STATE, loanState);
@@ -159,7 +160,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_add_loan_application, container, false);
 
         ButterKnife.bind(this, rootView);
@@ -325,7 +326,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      * Initializes {@code tvExpectedDisbursementDate} with current Date
      */
     public void inflateDisbursementDate() {
-        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS);
+        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS,
+                disbursementDateSet);
         tvExpectedDisbursementDate.setText(MFDatePicker.getDatePickedAsString());
     }
 
@@ -361,6 +363,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
         if (isDisbursementDate) {
             tvExpectedDisbursementDate.setText(date);
             disbursementDate = date;
+            disbursementDateSet = true;
             isDisbursementDate = false;
         }
         setSubmissionDisburseDate();

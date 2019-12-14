@@ -59,7 +59,8 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
 
     }
 
-    public static MFDatePicker newInstance(Fragment fragment, int datePickerType) {
+    public static MFDatePicker newInstance(Fragment fragment, int datePickerType,
+                                           boolean disbursementDateSet) {
         MFDatePicker mfDatePicker = new MFDatePicker();
 
         Bundle args = new Bundle();
@@ -103,9 +104,9 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         //TODO Fix Single digit problem that fails with the locale
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        Date date = calendar.getTime();
+        Calendar setCalendar = calendar;
+        setCalendar.set(year, month, day);
+        Date date = setCalendar.getTime();
         onDatePickListener.onDatePicked(startDateString = DateFormat.
                 format("dd-MM-yyyy", date).toString());
         startDate = DateHelper.getDateAsLongFromString(startDateString, "dd-MM-yyyy");
