@@ -92,6 +92,7 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     private List<CheckboxStatus> statusList;
     private boolean isCheckBoxPeriod;
     private int selectedRadioButtonId;
+    public boolean active = false;
 
 
     public static SavingAccountsTransactionFragment newInstance(long savingsId) {
@@ -168,7 +169,8 @@ public class SavingAccountsTransactionFragment extends BaseFragment
         rvSavingAccountsTransaction.setAdapter(transactionListAdapter);
 
 //        radioGroup.setOnCheckedChangeListener(this);
-        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS);
+        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS, active);
+        active = true;
     }
 
     /**

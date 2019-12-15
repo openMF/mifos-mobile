@@ -26,7 +26,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
 
     public static final String TAG = "MFDatePicker";
     static String dateSet;
-    static Calendar calendar;
+    static Calendar mCalendar;
     private String startDateString;
     private long startDate;
     private int datePickerType = ALL_DAYS;
@@ -39,17 +39,17 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
 
     static {
 
-        calendar = Calendar.getInstance();
+        mCalendar = Calendar.getInstance();
         dateSet = new StringBuilder()
-                .append(calendar.get(Calendar.DAY_OF_MONTH) < 10 ?
-                        ("0" + calendar.get(Calendar.DAY_OF_MONTH))
-                        : calendar.get(Calendar.DAY_OF_MONTH))
+                .append(mCalendar.get(Calendar.DAY_OF_MONTH) < 10 ?
+                        ("0" + mCalendar.get(Calendar.DAY_OF_MONTH))
+                        : mCalendar.get(Calendar.DAY_OF_MONTH))
                 .append("-")
-                .append(calendar.get(Calendar.MONTH) + 1 < 10 ?
-                        ("0" + (calendar.get(Calendar.MONTH) + 1))
-                        : calendar.get(Calendar.MONTH) + 1)
+                .append(mCalendar.get(Calendar.MONTH) + 1 < 10 ?
+                        ("0" + (mCalendar.get(Calendar.MONTH) + 1))
+                        : mCalendar.get(Calendar.MONTH) + 1)
                 .append("-")
-                .append(calendar.get(Calendar.YEAR))
+                .append(mCalendar.get(Calendar.YEAR))
                 .toString();
     }
 
@@ -59,7 +59,7 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
 
     }
 
-    public static MFDatePicker newInstance(Fragment fragment, int datePickerType) {
+    public static MFDatePicker newInstance(Fragment fragment, int datePickerType, boolean active) {
         MFDatePicker mfDatePicker = new MFDatePicker();
 
         Bundle args = new Bundle();
@@ -68,6 +68,10 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         mfDatePicker.setArguments(args);
 
         mfDatePicker.onDatePickListener = (OnDatePickListener) fragment;
+
+        if (!active) {
+            mCalendar = Calendar.getInstance();
+        }
         return mfDatePicker;
     }
 
@@ -81,9 +85,9 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
         DatePickerDialog dialog = new DatePickerDialog(getActivity(),
                 R.style.MaterialDatePickerTheme,
                 this,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
+                mCalendar.get(Calendar.YEAR),
+                mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH));
 
         Bundle args = getArguments();
         this.datePickerType = args.getInt(Constants.DATE_PICKER_TYPE, this.ALL_DAYS);
@@ -103,13 +107,12 @@ public class MFDatePicker extends DialogFragment implements DatePickerDialog.OnD
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         //TODO Fix Single digit problem that fails with the locale
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = mCalendar;
         calendar.set(year, month, day);
         Date date = calendar.getTime();
         onDatePickListener.onDatePicked(startDateString = DateFormat.
                 format("dd-MM-yyyy", date).toString());
         startDate = DateHelper.getDateAsLongFromString(startDateString, "dd-MM-yyyy");
-
     }
 
     public void setOnDatePickListener(OnDatePickListener onDatePickListener) {

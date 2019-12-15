@@ -108,6 +108,7 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
     private String submittedDate;
     private boolean isDisbursementDate = false;
     private boolean isLoanUpdatePurposesInitialization = true;
+    public boolean active = false;
 
 
     /**
@@ -325,8 +326,9 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
      * Initializes {@code tvExpectedDisbursementDate} with current Date
      */
     public void inflateDisbursementDate() {
-        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS);
+        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS, active);
         tvExpectedDisbursementDate.setText(MFDatePicker.getDatePickedAsString());
+        active = true;
     }
 
     /**
