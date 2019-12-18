@@ -397,6 +397,12 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
+        String payToIdString = payTo.replaceFirst("^0+(?!$)", "");
+        int payToId = Integer.parseInt(payToIdString);
+        if(payToId == Math.round(accountId)) {
+            showToaster(getString(R.string.error_own_account_transfer));
+            return;
+        }
         pvOne.setCurrentCompeleted();
         pvTwo.setCurrentActive();
 
