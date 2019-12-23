@@ -354,6 +354,9 @@
     <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
         enter manually or scan account QR code
     </string>
+    <string name="income_generating_loan">Income Generating Loan</string>
+    <string name="not_applicable">Not Applicable</string>
+    <string name="dummy_principal_amount">143.00</string>
     <string name="invalid_qr">You can\'t make action into your account, please scan other user
         Savings and Loans Account QRCode
     </string>
