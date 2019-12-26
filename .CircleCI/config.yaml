@@ -1,0 +1,24 @@
+version: 1.0.0
+jobs:
+  build:
+    docker:
+      - image: circleci/android:api-27-alpha
+    steps:
+      - checkout
+      - run: echo "A first hello"
+
+      - run:
+          name: Add SDK 28
+          command: echo yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-28"
+
+      - run:
+          name: spotless check
+          command: ./gradlew spotlessCheck
+
+      - run:
+          name: Run Tests
+          command: ./gradlew build
+
+      - run:
+          name: spotless apply
+          command: ./gradlew spotlessApply
