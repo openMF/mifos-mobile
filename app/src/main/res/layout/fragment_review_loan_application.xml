@@ -5,6 +5,7 @@
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -61,7 +62,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="match_parent"
-                android:text="Income Generating Loan"
+                android:text="@string/income_generating_loan"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <TextView
@@ -82,7 +83,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="match_parent"
-                android:text="Not Applicable"
+                android:text="@string/not_applicable"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <TextView
@@ -103,7 +104,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="match_parent"
-                android:text="143.00"
+                tools:text="@string/dummy_principal_amount"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
 
