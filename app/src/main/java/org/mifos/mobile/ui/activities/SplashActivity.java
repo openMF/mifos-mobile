@@ -1,9 +1,4 @@
 package org.mifos.mobile.ui.activities;
-
-/*
- * Created by saksham on 01/June/2018
- */
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;

@@ -11,11 +11,8 @@ import android.widget.Toast;
 
 import com.mifos.mobile.passcode.BasePassCodeActivity;
 
-import org.mifos.mobile.MifosSelfServiceApp;
 import org.mifos.mobile.R;
 import org.mifos.mobile.injection.component.ActivityComponent;
-import org.mifos.mobile.injection.component.DaggerActivityComponent;
-import org.mifos.mobile.injection.module.ActivityModule;
 import org.mifos.mobile.ui.activities.PassCodeActivity;
 import org.mifos.mobile.ui.views.BaseActivityCallback;
 import org.mifos.mobile.utils.LanguageHelper;
@@ -26,6 +23,8 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+//import org.mifos.mobile.injection.component.DaggerActivityComponent;
 
 /**
  * @author ishan
@@ -73,10 +72,7 @@ public class BaseActivity extends BasePassCodeActivity implements BaseActivityCa
      */
     public ActivityComponent getActivityComponent() {
         if (activityComponent == null) {
-            activityComponent = DaggerActivityComponent.builder()
-                    .activityModule(new ActivityModule(this))
-                    .applicationComponent(MifosSelfServiceApp.get(this).component())
-                    .build();
+
         }
         return activityComponent;
     }

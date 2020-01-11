@@ -390,8 +390,10 @@
     <string name="select_region_qr">Select region with QR code</string>
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
-    <string name="help_line_number" translatable="false">8000000000</string>
-    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="help_line_number"
+        translatable="false">8000000000</string>
+    <string name="contact_email"
+        translatable="false">support@mifos.org</string>
 
     <string name="transferred_successfully">Transferred Successfully</string>
 
@@ -456,7 +458,8 @@
     <string name="invalid_amount">Invalid Amount</string>
     <string name="exit_message">Press back again to exit</string>
 
-    <string name="package_name" translatable="false">package</string>
+    <string name="package_name"
+        translatable="false">package</string>
     <string name="permission_denied_camera">Permission Denied to use Camera</string>
     <string name="one">1</string>
     <string name="two">2</string>
@@ -523,7 +526,8 @@
 
     </string-array>
 
-    <string name="language_type" translatable="false">language_type</string>
+    <string name="language_type"
+        translatable="false">language_type</string>
     <string name="total_saving_balance">Total Savings Balance</string>
     <string name="total_loan_balance">Total Loan Balance</string>
     <string name="total_loan_savings_description">Above Loan and Savings account balance are
@@ -538,8 +542,10 @@
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
-    <string name="privacy_policy_host_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="privacy_policy_host"
+        translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="privacy_policy_host_url"
+        translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
     <string name="please_wait">Please Wait...</string>
     <string name="message">message</string>
@@ -547,10 +553,12 @@
 
     <string name="pref_base_url_title">Update Endpoint</string>
     <string name="pref_base_url_desc">Click here to change your Endpoint Configurations</string>
-    <string name="pref_configuration" translatable="false">pref_configuration</string>
+    <string name="pref_configuration"
+        translatable="false">pref_configuration</string>
     <string name="enter_base_url">Enter the Base URL</string>
     <string name="enter_tenant">Enter the Tenant</string>
-    <string name="account_type_loan" translatable="false">accountType.loan</string>
+    <string name="account_type_loan"
+        translatable="false">accountType.loan</string>
     <string name="refresh">Refresh</string>
 
     <!--Password strength strings-->
@@ -573,7 +581,8 @@
     <string name="transaction_period">Transaction Period</string>
     <string name="transaction_type">Transaction Type</string>
 
-    <string-array name="languages" translatable="false">
+    <string-array name="languages"
+        translatable="false">
         <item>English</item>
         <item>हिंदी</item>
         <item>عربى</item>
@@ -592,7 +601,8 @@
         <item>Kiswahili</item>
     </string-array>
 
-    <string-array name="languages_value" translatable="false">
+    <string-array name="languages_value"
+        translatable="false">
         <item>en</item>
         <item>hi</item>
         <item>ar</item>
