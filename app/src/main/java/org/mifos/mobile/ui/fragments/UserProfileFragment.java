@@ -1,14 +1,21 @@
 package org.mifos.mobile.ui.fragments;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.appbar.AppBarLayout;
@@ -29,16 +36,23 @@ import org.mifos.mobile.utils.DateHelper;
 import org.mifos.mobile.utils.TextDrawable;
 import org.mifos.mobile.utils.Toaster;
 
+import java.io.IOException;
+import java.net.PasswordAuthentication;
+import java.net.URI;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
+import static org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission;
 
 /**
  * Created by dilpreet on 10/7/17.
@@ -110,6 +124,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     private Bitmap userBitmap;
     private Client client;
     private SweetUIErrorHandler sweetUIErrorHandler;
+    public static final int PICK_IMAGE_REQUEST=1;
+
+    private Uri imageUri;
 
     public static UserProfileFragment newInstance() {
         UserProfileFragment fragment = new UserProfileFragment();
@@ -139,7 +156,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
             presenter.getUserImage();
         }
         return rootView;
+
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

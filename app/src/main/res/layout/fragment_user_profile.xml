@@ -95,7 +95,7 @@
                     <TextView
                         android:gravity="center"
                         android:id="@+id/tv_user_name"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_width="wrap_content"
                         android:paddingTop="@dimen/layout_padding_4dp"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
