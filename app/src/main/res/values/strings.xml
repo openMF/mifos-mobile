@@ -338,6 +338,8 @@
     <string name="delete_beneficiary_confirmation">Are you sure you want to delete this
         Beneficiary
     </string>
+    <string name="login_using_password_confirmation">Are you sure you want to login using Password?
+    </string>
     <string name="delete">Delete</string>
     <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
     <string name="third_party_transfer">Third Party Transfer</string>
@@ -354,6 +356,9 @@
     <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
         enter manually or scan account QR code
     </string>
+    <string name="income_generating_loan">Income Generating Loan</string>
+    <string name="not_applicable">Not Applicable</string>
+    <string name="dummy_principal_amount">143.00</string>
     <string name="invalid_qr">You can\'t make action into your account, please scan other user
         Savings and Loans Account QRCode
     </string>
