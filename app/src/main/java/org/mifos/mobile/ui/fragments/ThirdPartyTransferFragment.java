@@ -297,7 +297,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
-        if(fromAccountOption==null){
+        if (fromAccountOption == null) {
             showToaster("Select Account to Pay From");
             return;
         }
@@ -325,11 +325,11 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
-        if(beneficiaryAccountOption==null){
+        if (beneficiaryAccountOption == null) {
             showToaster("Select Beneficiary");
             return;
         }
-        if (spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
+        if ( spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
                 toString())) {
             showToaster(getString(R.string.error_same_account_transfer));
             return;
