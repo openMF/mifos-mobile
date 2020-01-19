@@ -1,15 +1,18 @@
 package org.mifos.mobile.ui.fragments;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
+import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
 
 import org.mifos.mobile.R;
+import org.mifos.mobile.ui.activities.PassCodeActivity;
 import org.mifos.mobile.ui.activities.base.BaseActivity;
 import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat;
 import org.mifos.mobile.utils.ConfigurationPreference;
 import org.mifos.mobile.utils.Constants;
 import org.mifos.mobile.utils.LanguageHelper;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
@@ -22,6 +25,9 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener {
+
+    private PasscodePreferencesHelper passcodePreferencesHelper;
+    private static String password;
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -75,16 +81,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true);
             startActivity(intent);
             getActivity().finish();
+            password = getString(R.string.password);
         }
     }
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         switch (preference.getKey()) {
-            case Constants.PASSWORD:
+            case Constants.CHANGE_PASSWORD:
                 ((BaseActivity) getActivity()).replaceFragment(UpdatePasswordFragment
                         .newInstance(), false, R.id.container);
                 break;
+            case Constants.PASSCODE:
+                passcodePreferencesHelper = new PasscodePreferencesHelper(getActivity());
+                String currentPass = passcodePreferencesHelper.getPassCode();
+                passcodePreferencesHelper.savePassCode("");
+                Intent intent = new Intent(getActivity(), PassCodeActivity.class);
+                intent.putExtra(Constants.CURR_PASSWORD, currentPass);
+                intent.putExtra(Constants.UPDATE_PASSWORD_KEY, true);
+                startActivity(intent);
         }
         return super.onPreferenceTreeClick(preference);
     }

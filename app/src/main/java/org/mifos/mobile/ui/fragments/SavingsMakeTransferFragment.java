@@ -216,23 +216,25 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
             return;
         }
 
-        transferPayload = new TransferPayload();
-        transferPayload.setFromAccountId(fromAccountOption.getAccountId());
-        transferPayload.setFromClientId(fromAccountOption.getClientId());
-        transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
-        transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
-        transferPayload.setToOfficeId(toAccountOption.getOfficeId());
-        transferPayload.setToAccountId(toAccountOption.getAccountId());
-        transferPayload.setToClientId(toAccountOption.getClientId());
-        transferPayload.setToAccountType(toAccountOption.getAccountType().getId());
-        transferPayload.setTransferDate(transferDate);
-        transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-        transferPayload.setTransferDescription(etRemark.getText().toString());
-        transferPayload.setFromAccountNumber(fromAccountOption.getAccountNo());
-        transferPayload.setToAccountNumber(toAccountOption.getAccountNo());
+        if (fromAccountOption != null && toAccountOption != null) {
+            transferPayload = new TransferPayload();
+            transferPayload.setFromAccountId(fromAccountOption.getAccountId());
+            transferPayload.setFromClientId(fromAccountOption.getClientId());
+            transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
+            transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
+            transferPayload.setToOfficeId(toAccountOption.getOfficeId());
+            transferPayload.setToAccountId(toAccountOption.getAccountId());
+            transferPayload.setToClientId(toAccountOption.getClientId());
+            transferPayload.setToAccountType(toAccountOption.getAccountType().getId());
+            transferPayload.setTransferDate(transferDate);
+            transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
+            transferPayload.setTransferDescription(etRemark.getText().toString());
+            transferPayload.setFromAccountNumber(fromAccountOption.getAccountNo());
+            transferPayload.setToAccountNumber(toAccountOption.getAccountNo());
 
-        ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload, TransferType.SELF), true, R.id.container);
+            ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
+                    newInstance(transferPayload, TransferType.SELF), true, R.id.container);
+        }
     }
 
     /**
@@ -397,6 +399,10 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
+        if (toAccountOption == null) {
+            showToaster(getString(R.string.select_pay_to));
+            return;
+        }
         pvOne.setCurrentCompeleted();
         pvTwo.setCurrentActive();
 
@@ -414,6 +420,9 @@ public class SavingsMakeTransferFragment extends BaseFragment implements
      */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
+        if (fromAccountOption == null) {
+            showToaster(getString(R.string.select_pay_from));
+        }
         if (payTo.equals(payFrom)) {
             showToaster(getString(R.string.error_same_account_transfer));
             return;
