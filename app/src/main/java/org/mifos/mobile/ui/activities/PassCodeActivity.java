@@ -15,7 +15,11 @@ import org.mifos.mobile.utils.Constants;
 import org.mifos.mobile.utils.MaterialDialog;
 import org.mifos.mobile.utils.Toaster;
 
+import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
+
 public class PassCodeActivity extends MifosPassCodeActivity {
+    private String currPass = "";
+    private Boolean updatePassword = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,11 @@ public class PassCodeActivity extends MifosPassCodeActivity {
         if (!CheckSelfPermissionAndRequest.checkSelfPermission(this,
                 Manifest.permission.READ_PHONE_STATE)) {
             requestPermission();
+        }
+
+        if (getIntent() != null) {
+            currPass = getIntent().getStringExtra(Constants.CURR_PASSWORD);
+            updatePassword = getIntent().getBooleanExtra(Constants.UPDATE_PASSWORD_KEY, false);
         }
     }
 
@@ -78,6 +87,17 @@ public class PassCodeActivity extends MifosPassCodeActivity {
                 .createMaterialDialog()
                 .show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (updatePassword && !currPass.isEmpty()) {
+            PasscodePreferencesHelper helper = new PasscodePreferencesHelper(this);
+            helper.savePassCode(currPass);
+        }
+        finish();
+    }
+
 
     @Override
     public void showToaster(View view, int msg) {

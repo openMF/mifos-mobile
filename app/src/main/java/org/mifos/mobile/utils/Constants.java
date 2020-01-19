@@ -121,6 +121,14 @@ public class Constants {
 
     public static final String PASSWORD = "Password";
 
+    public static final String PASSCODE = "Passcode";
+
+    public static final String CHANGE_PASSWORD = "Change Password";
+
+    public static final String CURR_PASSWORD = "currentPassword";
+
+    public static final String UPDATE_PASSWORD_KEY = "updatePassword";
+
     public static final String SAVINGS_ACCOUNT_STATE = "savingsaccountstate";
 
     public static  final String OUTSTANDING_BALANCE = "outstanding_balance";

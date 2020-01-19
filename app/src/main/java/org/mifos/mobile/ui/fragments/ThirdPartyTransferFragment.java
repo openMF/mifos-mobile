@@ -1,21 +1,8 @@
 package org.mifos.mobile.ui.fragments;
 
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.models.beneficiary.Beneficiary;
@@ -38,6 +25,20 @@ import org.mifos.mobile.utils.Network;
 import org.mifos.mobile.utils.ProcessView;
 import org.mifos.mobile.utils.Toaster;
 import org.mifos.mobile.utils.Utils;
+
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +146,7 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         rootView = inflater.inflate(R.layout.fragment_third_party_transfer, container, false);
         setToolbarTitle(getString(R.string.third_party_transfer));
@@ -230,23 +231,23 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             Toaster.show(rootView, getString(R.string.error_same_account_transfer));
             return;
         }
+        if (fromAccountOption != null && beneficiaryAccountOption != null) {
+            TransferPayload transferPayload = new TransferPayload();
+            transferPayload.setFromAccountId(fromAccountOption.getAccountId());
+            transferPayload.setFromClientId(fromAccountOption.getClientId());
+            transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
+            transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
+            transferPayload.setToOfficeId(beneficiaryAccountOption.getOfficeId());
+            transferPayload.setToAccountId(beneficiaryAccountOption.getAccountId());
+            transferPayload.setToClientId(beneficiaryAccountOption.getClientId());
+            transferPayload.setToAccountType(beneficiaryAccountOption.getAccountType().getId());
+            transferPayload.setTransferDate(transferDate);
+            transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
+            transferPayload.setTransferDescription(etRemark.getText().toString());
 
-        TransferPayload transferPayload = new TransferPayload();
-        transferPayload.setFromAccountId(fromAccountOption.getAccountId());
-        transferPayload.setFromClientId(fromAccountOption.getClientId());
-        transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
-        transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
-        transferPayload.setToOfficeId(beneficiaryAccountOption.getOfficeId());
-        transferPayload.setToAccountId(beneficiaryAccountOption.getAccountId());
-        transferPayload.setToClientId(beneficiaryAccountOption.getClientId());
-        transferPayload.setToAccountType(beneficiaryAccountOption.getAccountType().getId());
-        transferPayload.setTransferDate(transferDate);
-        transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-        transferPayload.setTransferDescription(etRemark.getText().toString());
-
-        ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload, TransferType.TPT), true, R.id.container);
-
+            ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
+                    newInstance(transferPayload, TransferType.TPT), true, R.id.container);
+        }
     }
 
     /**
@@ -276,8 +277,8 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     }
 
     /**
-     * Provides with {@code beneficiaries} fetched from server which is used to update
-     * {@code listBeneficiary}
+     * Provides with {@code beneficiaries} fetched from server which is used to update {@code
+     * listBeneficiary}
      *
      * @param beneficiaries List of {@link Beneficiary} linked with user's account
      */
@@ -296,6 +297,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
+        if (fromAccountOption == null) {
+            showToaster(getString(R.string.select_pay_from));
+            return;
+        }
         pvOne.setCurrentCompeleted();
         pvTwo.setCurrentActive();
 
@@ -314,12 +319,16 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
 
 
     /**
-     * Checks validation of {@code spBeneficiary} {@link Spinner}.<br>
-     * Disables {@code spBeneficiary} {@link Spinner} and sets {@code pvTwo} to completed and make
-     * {@code pvThree} active
+     * Checks validation of {@code spBeneficiary} {@link Spinner}.<br> Disables {@code
+     * spBeneficiary} {@link Spinner} and sets {@code pvTwo} to completed and make {@code pvThree}
+     * active
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
+        if (beneficiaryAccountOption == null) {
+            showToaster(getString(R.string.select_beneficiary));
+            return;
+        }
         if (spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
                 toString())) {
             showToaster(getString(R.string.error_same_account_transfer));
@@ -336,9 +345,8 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
     }
 
     /**
-     * Checks validation of {@code etAmount} {@link EditText}.<br>
-     * Disables {@code etAmount} and sets {@code pvThree} to completed and make
-     * {@code pvFour} active
+     * Checks validation of {@code etAmount} {@link EditText}.<br> Disables {@code etAmount} and
+     * sets {@code pvThree} to completed and make {@code pvFour} active
      */
     @OnClick(R.id.btn_amount)
     public void amountSet() {

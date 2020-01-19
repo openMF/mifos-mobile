@@ -16,12 +16,18 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
+
+import org.mifos.mobile.ui.activities.PassCodeActivity;
+
 /**
  * Created by dilpreet on 02/10/17.
  */
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener {
+
+    private PasscodePreferencesHelper passcodePreferencesHelper;
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -81,10 +87,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         switch (preference.getKey()) {
-            case Constants.PASSWORD:
+            case Constants.CHANGE_PASSWORD:
                 ((BaseActivity) getActivity()).replaceFragment(UpdatePasswordFragment
                         .newInstance(), false, R.id.container);
                 break;
+            case Constants.PASSCODE:
+                passcodePreferencesHelper = new PasscodePreferencesHelper(getActivity());
+                String currentPass = passcodePreferencesHelper.getPassCode();
+                passcodePreferencesHelper.savePassCode("");
+                Intent intent = new Intent(getActivity(), PassCodeActivity.class);
+                intent.putExtra(Constants.CURR_PASSWORD, currentPass);
+                intent.putExtra(Constants.UPDATE_PASSWORD_KEY, true);
+                startActivity(intent);
         }
         return super.onPreferenceTreeClick(preference);
     }
