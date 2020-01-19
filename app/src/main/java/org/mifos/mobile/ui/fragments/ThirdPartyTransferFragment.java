@@ -14,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,10 +49,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -230,23 +231,23 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
             Toaster.show(rootView, getString(R.string.error_same_account_transfer));
             return;
         }
+        if (fromAccountOption != null && beneficiaryAccountOption != null) {
+            TransferPayload transferPayload = new TransferPayload();
+            transferPayload.setFromAccountId(fromAccountOption.getAccountId());
+            transferPayload.setFromClientId(fromAccountOption.getClientId());
+            transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
+            transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
+            transferPayload.setToOfficeId(beneficiaryAccountOption.getOfficeId());
+            transferPayload.setToAccountId(beneficiaryAccountOption.getAccountId());
+            transferPayload.setToClientId(beneficiaryAccountOption.getClientId());
+            transferPayload.setToAccountType(beneficiaryAccountOption.getAccountType().getId());
+            transferPayload.setTransferDate(transferDate);
+            transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
+            transferPayload.setTransferDescription(etRemark.getText().toString());
 
-        TransferPayload transferPayload = new TransferPayload();
-        transferPayload.setFromAccountId(fromAccountOption.getAccountId());
-        transferPayload.setFromClientId(fromAccountOption.getClientId());
-        transferPayload.setFromAccountType(fromAccountOption.getAccountType().getId());
-        transferPayload.setFromOfficeId(fromAccountOption.getOfficeId());
-        transferPayload.setToOfficeId(beneficiaryAccountOption.getOfficeId());
-        transferPayload.setToAccountId(beneficiaryAccountOption.getAccountId());
-        transferPayload.setToClientId(beneficiaryAccountOption.getClientId());
-        transferPayload.setToAccountType(beneficiaryAccountOption.getAccountType().getId());
-        transferPayload.setTransferDate(transferDate);
-        transferPayload.setTransferAmount(Double.parseDouble(etAmount.getText().toString()));
-        transferPayload.setTransferDescription(etRemark.getText().toString());
-
-        ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
-                newInstance(transferPayload, TransferType.TPT), true, R.id.container);
-
+            ((BaseActivity) getActivity()).replaceFragment(TransferProcessFragment.
+                    newInstance(transferPayload, TransferType.TPT), true, R.id.container);
+        }
     }
 
     /**
@@ -296,6 +297,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_from)
     public void payFromSelected() {
+        if(fromAccountOption==null){
+            showToaster("Select Account to Pay From");
+            return;
+        }
         pvOne.setCurrentCompeleted();
         pvTwo.setCurrentActive();
 
@@ -320,6 +325,10 @@ public class ThirdPartyTransferFragment extends BaseFragment implements ThirdPar
      */
     @OnClick(R.id.btn_pay_to)
     public void payToSelected() {
+        if(beneficiaryAccountOption==null){
+            showToaster("Select Beneficiary");
+            return;
+        }
         if (spBeneficiary.getSelectedItem().toString().equals(spPayFrom.getSelectedItem().
                 toString())) {
             showToaster(getString(R.string.error_same_account_transfer));
