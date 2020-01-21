@@ -390,7 +390,7 @@
     <string name="select_region_qr">Select region with QR code</string>
     <!--Customer care details-->
     <string name="need_help">Contact Us</string>
-    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="help_line_number" translatable="false">+18000000000</string>
     <string name="contact_email" translatable="false">support@mifos.org</string>
 
     <string name="transferred_successfully">Transferred Successfully</string>

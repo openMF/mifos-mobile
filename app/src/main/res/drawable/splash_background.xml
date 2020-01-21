@@ -4,7 +4,7 @@
     <item android:drawable="@color/white"/>
 
     <item
-        android:drawable="@drawable/imageedit_1_9869002562"
+        android:drawable="@drawable/mifos_logo"
         android:gravity="center"/>
 
 </layer-list>
