@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@android:color/white"/>
+
+    <item android:drawable="@color/white"/>
 
     <item
-        android:height="100dp"
-        android:layout_width="wrap_content"
-        >
-        <bitmap
-            android:src="@drawable/mifos_logo"
-            android:gravity="center"/>
-    </item>
+        android:drawable="@drawable/imageedit_1_9869002562"
+        android:gravity="center"/>
 
 </layer-list>
