@@ -34,7 +34,7 @@
 
         <activity
             android:name="org.mifos.mobile.ui.activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
