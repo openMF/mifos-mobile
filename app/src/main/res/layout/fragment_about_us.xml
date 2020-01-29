@@ -73,4 +73,53 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/row_padding_right"
+            android:layout_marginStart="@dimen/row_padding_right"
+            android:layout_marginTop="@dimen/divider_margin"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/need_help"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/row_padding_right"
+            android:layout_marginRight="@dimen/row_padding_right"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:autoLink="phone"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:layout_width="match_parent"
+                android:text="@string/help_line_number"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:autoLink="email"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:layout_width="match_parent"
+                android:text="@string/contact_email"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
