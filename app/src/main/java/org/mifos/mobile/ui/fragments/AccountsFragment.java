@@ -347,6 +347,7 @@ public class AccountsFragment extends BaseFragment implements
         if (filteredSavings.size() == 0) {
             showEmptyAccounts(getString(R.string.no_saving_account));
         } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
             savingAccountsListAdapter.setSavingAccountsList(filteredSavings);
         }
     }
@@ -366,6 +367,7 @@ public class AccountsFragment extends BaseFragment implements
         if (filteredSavings.size() == 0) {
             showEmptyAccounts(getString(R.string.no_loan_account));
         } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
             loanAccountsListAdapter.setLoanAccountsList(filteredSavings);
         }
     }
@@ -385,6 +387,7 @@ public class AccountsFragment extends BaseFragment implements
         if (filteredSavings.size() == 0) {
             showEmptyAccounts(getString(R.string.no_sharing_account));
         } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
             shareAccountsListAdapter.setShareAccountsList(filteredSavings);
         }
     }
