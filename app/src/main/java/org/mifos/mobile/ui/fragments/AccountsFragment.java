@@ -306,8 +306,14 @@ public class AccountsFragment extends BaseFragment implements
      * @param input String which is needs to be searched in list
      */
     public void searchSavingsAccount(String input) {
-        savingAccountsListAdapter.setSavingAccountsList(accountsPresenter.
-                searchInSavingsList(savingAccounts, input));
+        List<SavingAccount> searchResult = accountsPresenter.
+                searchInSavingsList(savingAccounts, input);
+        if (searchResult.size() == 0) {
+            showEmptyAccounts(getString(R.string.no_saving_account));
+        } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
+            savingAccountsListAdapter.setSavingAccountsList(searchResult);
+        }
     }
 
     /**
@@ -317,8 +323,14 @@ public class AccountsFragment extends BaseFragment implements
      * @param input String which is needs to be searched in list
      */
     public void searchLoanAccount(String input) {
-        loanAccountsListAdapter.setLoanAccountsList(accountsPresenter.
-                searchInLoanList(loanAccounts, input));
+        List<LoanAccount> searchResult = accountsPresenter.
+                searchInLoanList(loanAccounts, input);
+        if (searchResult.size() == 0) {
+            showEmptyAccounts(getString(R.string.no_loan_account));
+        } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
+            loanAccountsListAdapter.setLoanAccountsList(searchResult);
+        }
     }
 
     /**
@@ -328,8 +340,14 @@ public class AccountsFragment extends BaseFragment implements
      * @param input String which is needs to be searched in list
      */
     public void searchSharesAccount(String input) {
-        shareAccountsListAdapter.setShareAccountsList(accountsPresenter.
-                searchInSharesList(shareAccounts, input));
+        List<ShareAccount> searchResult = accountsPresenter.
+                searchInSharesList(shareAccounts, input);
+        if (searchResult.size() == 0) {
+            showEmptyAccounts(getString(R.string.no_sharing_account));
+        } else {
+            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
+            shareAccountsListAdapter.setShareAccountsList(searchResult);
+        }
     }
 
     /**
