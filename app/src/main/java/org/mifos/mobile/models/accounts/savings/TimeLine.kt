@@ -26,25 +26,25 @@ data class TimeLine(
         var approvedOnDate: List<Int> = ArrayList(),
 
         @SerializedName("approvedByUsername")
-        var approvedByUsername: String,
+        var approvedByUsername: String? = null,
 
         @SerializedName("approvedByFirstname")
-        var approvedByFirstname: String,
+        var approvedByFirstname: String? = null,
 
         @SerializedName("approvedByLastname")
-        var approvedByLastname: String,
+        var approvedByLastname: String? = null,
 
         @SerializedName("activatedOnDate")
         var activatedOnDate: List<Int>,
 
         @SerializedName("activatedByUsername")
-        var activatedByUsername: String,
+        var activatedByUsername: String? = null,
 
         @SerializedName("activatedByFirstname")
-        var activatedByFirstname: String,
+        var activatedByFirstname: String? = null,
 
         @SerializedName("activatedByLastname")
-        var activatedByLastname: String,
+        var activatedByLastname: String? = null,
 
         @SerializedName("closedOnDate")
         var closedOnDate: List<Int>
@@ -71,8 +71,7 @@ data class TimeLine(
             parcel.readString(),
             arrayListOf<Int>().apply {
                 parcel.readArrayList(Int::class.java.classLoader)
-            }) {
-    }
+            })
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
