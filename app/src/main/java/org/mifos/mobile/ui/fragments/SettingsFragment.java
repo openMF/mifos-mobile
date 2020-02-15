@@ -83,7 +83,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         switch (preference.getKey()) {
             case Constants.PASSWORD:
                 ((BaseActivity) getActivity()).replaceFragment(UpdatePasswordFragment
-                        .newInstance(), false, R.id.container);
+                        .newInstance(), true, R.id.container);
                 break;
         }
         return super.onPreferenceTreeClick(preference);
