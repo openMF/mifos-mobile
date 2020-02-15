@@ -466,8 +466,10 @@
                             <ImageView
                                 android:id="@+id/iv_account_status"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/default_margin"
                                 android:layout_height="@dimen/icon_small"
-                                android:layout_width="@dimen/icon_small"/>
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_marginLeft="@dimen/default_margin" />
 
                         </LinearLayout>
 
