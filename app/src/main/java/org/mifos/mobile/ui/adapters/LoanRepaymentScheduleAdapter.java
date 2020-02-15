@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
@@ -31,6 +32,7 @@ public class LoanRepaymentScheduleAdapter extends
         AbstractTableAdapter<ColumnHeader, RowHeader, Cell> {
 
     private String currency = "";
+    private double columnWidth = 0;
 
     public void setCurrency(String currency) {
         this.currency = currency;
@@ -45,6 +47,9 @@ public class LoanRepaymentScheduleAdapter extends
 
         @BindView(R.id.cell_data)
         TextView tvCell;
+
+        @BindView(R.id.cell_container)
+        LinearLayout llCellContainer;
 
         CellViewHolder(View v) {
             super(v);
@@ -84,12 +89,18 @@ public class LoanRepaymentScheduleAdapter extends
             default:
                 viewHolder.tvCell.setText("");
         }
+
+        viewHolder.llCellContainer.getLayoutParams().width = (int) columnWidth;
+        viewHolder.tvCell.requestLayout();
     }
 
     class ColumnHeaderViewHolder extends AbstractViewHolder {
 
         @BindView(R.id.column_header_textView)
         TextView tvColumnHeader;
+
+        @BindView(R.id.column_header_container)
+        LinearLayout llColumnHeaderContainer;
 
         ColumnHeaderViewHolder(View itemView) {
             super(itemView);
@@ -117,6 +128,9 @@ public class LoanRepaymentScheduleAdapter extends
         ColumnHeaderViewHolder columnHeaderViewHolder = (ColumnHeaderViewHolder) holder;
 
         columnHeaderViewHolder.tvColumnHeader.setText(String.valueOf(columnHeader.getData()));
+
+        columnHeaderViewHolder.llColumnHeaderContainer.getLayoutParams().width = (int) columnWidth;
+        columnHeaderViewHolder.tvColumnHeader.requestLayout();
     }
 
     class RowHeaderViewHolder extends AbstractViewHolder {
@@ -183,6 +197,10 @@ public class LoanRepaymentScheduleAdapter extends
         // then you should fill this method to be able create different
         // type of CellViewHolder on "onCreateCellViewHolder"
         return 0;
+    }
+
+    public void setColumnWidth(double columnWidth) {
+        this.columnWidth = columnWidth;
     }
 
 }

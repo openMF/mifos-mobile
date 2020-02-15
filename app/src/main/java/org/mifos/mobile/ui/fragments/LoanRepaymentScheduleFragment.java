@@ -1,5 +1,7 @@
 package org.mifos.mobile.ui.fragments;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ import butterknife.OnClick;
 /**
  * Created by Rajan Maurya on 03/03/17.
  */
+@SuppressWarnings("SuspiciousNameCombination")
 public class LoanRepaymentScheduleFragment extends BaseFragment implements
         LoanRepaymentScheduleMvpView {
 
@@ -91,7 +94,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_repayment_schedule, container, false);
         ButterKnife.bind(this, rootView);
         loanRepaymentSchedulePresenter.attachView(this);
@@ -125,7 +128,18 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
      */
     @Override
     public void showUserInterface() {
+        double columnWidth;
+        tvRepaymentSchedule.setHasFixedWidth(true);
+        int orientation = getActivity().getResources().getConfiguration().orientation;
+        tvRepaymentSchedule.getLayoutParams().width =
+                Resources.getSystem().getDisplayMetrics().widthPixels;
         tvRepaymentSchedule.setAdapter(loanRepaymentScheduleAdapter);
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            columnWidth = 2 * (Resources.getSystem().getDisplayMetrics().widthPixels / 7.2);
+        } else {
+            columnWidth = 2 * (Resources.getSystem().getDisplayMetrics().widthPixels / 6.6);
+        }
+        loanRepaymentScheduleAdapter.setColumnWidth(columnWidth);
     }
 
     @Override
@@ -164,7 +178,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         mColumnHeaderList.add(new ColumnHeader(getString(R.string.loan_balance)));
         mColumnHeaderList.add(new ColumnHeader(getString(R.string.repayment)));
         int i = 0;
-        for (Periods period: periods) {
+        for (Periods period : periods) {
             List<Cell> cells = new ArrayList<>();
             cells.add(new Cell(period));
             cells.add(new Cell(period));
@@ -223,5 +237,11 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         super.onDestroyView();
         hideProgressBar();
         loanRepaymentSchedulePresenter.detachView();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        showUserInterface();
     }
 }
