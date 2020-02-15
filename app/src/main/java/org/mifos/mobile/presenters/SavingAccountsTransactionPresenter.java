@@ -112,7 +112,11 @@ public class SavingAccountsTransactionPresenter extends
                     @Override
                     public void onNext(SavingsWithAssociations savingAccount) {
                         getMvpView().hideProgress();
-                        getMvpView().showSavingAccountsDetail(savingAccount);
+                        if (!savingAccount.getTransactions().isEmpty()) {
+                            getMvpView().showSavingAccountsDetail(savingAccount);
+                        } else {
+                            getMvpView().showEmptyTransactions();
+                        }
                     }
                 })
         );
@@ -138,8 +142,12 @@ public class SavingAccountsTransactionPresenter extends
                     }
                 })
                 .toList().blockingGet();
+        if (!list.isEmpty()) {
+            getMvpView().showFilteredList(list);
+        } else {
+            getMvpView().showEmptyTransactions();
+        }
 
-        getMvpView().showFilteredList(list);
     }
 
     /**

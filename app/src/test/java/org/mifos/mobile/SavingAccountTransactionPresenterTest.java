@@ -64,6 +64,7 @@ public class SavingAccountTransactionPresenterTest {
         verify(view).showSavingAccountsDetail(savingsWithAssociations);
         verify(view, never()).showErrorFetchingSavingAccountsDetail(context.getString(R.string.
                 error_saving_account_details_loading));
+        verify(view, never()).showEmptyTransactions();
     }
 
     @Test
@@ -77,6 +78,7 @@ public class SavingAccountTransactionPresenterTest {
         verify(view).hideProgress();
         verify(view).showErrorFetchingSavingAccountsDetail(context.getString(R.string.
                 error_saving_account_details_loading));
+        verify(view, never()).showEmptyTransactions();
         verify(view, never()).showSavingAccountsDetail(savingsWithAssociations);
     }
 

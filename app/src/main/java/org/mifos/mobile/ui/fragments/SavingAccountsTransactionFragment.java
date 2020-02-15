@@ -198,6 +198,15 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     }
 
     /**
+     * Shows a msg if Transactions list is empty
+     */
+    @Override
+    public void showEmptyTransactions() {
+        sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.transactions),
+                R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction, layoutError);
+    }
+
+    /**
      * It is called whenever any error occurs while executing a request
      *
      * @param message Error message that tells the user about the problem.
@@ -228,8 +237,11 @@ public class SavingAccountsTransactionFragment extends BaseFragment
     @Override
     public void showFilteredList(List<Transactions> list) {
         Toaster.show(rootView, getString(R.string.filtered));
-        transactionListAdapter.
-                setSavingAccountsTransactionList(list);
+        if (!list.isEmpty()) {
+            transactionListAdapter.setSavingAccountsTransactionList(list);
+        } else {
+            showEmptyTransactions();
+        }
     }
 
     /**
