@@ -214,7 +214,6 @@ public class AccountsFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         if (Network.isConnected(getContext())) {
-            sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
             clearFilter();
             accountsPresenter.loadAccounts(accountType);
         } else {
@@ -230,6 +229,7 @@ public class AccountsFragment extends BaseFragment implements
      * currentFilterList = null
      */
     public void clearFilter() {
+        sweetUIErrorHandler.hideSweetErrorLayoutUI(rvAccounts, layoutError);
         currentFilterList = null;
     }
 
