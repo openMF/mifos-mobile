@@ -113,7 +113,7 @@ public class LoanAccountSummaryFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_account_summary, container, false);
         setToolbarTitle(getString(R.string.loan_summary));
 
@@ -132,6 +132,9 @@ public class LoanAccountSummaryFragment extends BaseFragment {
     public void showLoanAccountsDetail(LoanWithAssociations loanWithAssociations) {
         llLoanSummary.setVisibility(View.VISIBLE);
         String currencySymbol = loanWithAssociations.getCurrency().getDisplaySymbol();
+        if (currencySymbol == null) {
+            currencySymbol = loanWithAssociations.getCurrency().getCode();
+        }
         tvLoanProductName.setText(loanWithAssociations.getLoanProductName());
         tvPrincipalName.setText(getString(R.string.string_and_double,
                 currencySymbol,
@@ -160,11 +163,9 @@ public class LoanAccountSummaryFragment extends BaseFragment {
         tvFeesWaivedName.setText(getString(R.string.string_and_double,
                 currencySymbol,
                 loanWithAssociations.getSummary().getFeeChargesWaived()));
-        ;
         tvOutstandingBalanceName.setText(getResources().getString(R.string.string_and_string,
-                loanWithAssociations.getSummary().getCurrency().getDisplaySymbol(), CurrencyUtil.
-                        formatCurrency(getActivity(),
-                                loanWithAssociations.getSummary().getTotalOutstanding())));
+                currencySymbol, CurrencyUtil.formatCurrency(getActivity(),
+                        loanWithAssociations.getSummary().getTotalOutstanding())));
         tvLoanAccountNumber.setText(loanWithAssociations.getAccountNo());
         if (loanWithAssociations.getLoanPurposeName() != null) {
             llLoanPurpose.setVisibility(View.VISIBLE);
