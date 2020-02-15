@@ -224,6 +224,8 @@ public class LoanApplicationFragment extends BaseFragment implements LoanApplica
             tilPrincipalAmount.setError(getString(R.string.amount_greater_than_zero));
             return;
         }
+
+        tilPrincipalAmount.setError(null);
         if (loanState == LoanState.CREATE) {
             reviewNewLoanApplication();
         } else {
