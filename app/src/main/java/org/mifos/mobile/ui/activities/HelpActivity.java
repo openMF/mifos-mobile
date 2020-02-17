@@ -19,5 +19,10 @@ public class HelpActivity extends BaseActivity {
         setToolbarTitle(getString(R.string.help));
         showBackButton();
         replaceFragment(HelpFragment.newInstance(), false, R.id.container);
+        public void focusGained(FocusEvent fe){
+            if(fe.getSource()== Buttontxt){
+                ButtonName.setText("");
+            }
+        }
     }
 }
