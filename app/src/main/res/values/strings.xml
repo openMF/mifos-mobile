@@ -590,6 +590,7 @@
         <item>Português</item>
         <item>русский</item>
         <item>Kiswahili</item>
+        <item>فارسی</item>
     </string-array>
 
     <string-array name="languages_value" translatable="false">
@@ -609,6 +610,7 @@
         <item>pt</item>
         <item>ru</item>
         <item>sw</item>
+        <item>fa</item>
     </string-array>
 
 </resources>
