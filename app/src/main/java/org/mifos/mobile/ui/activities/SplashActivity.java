@@ -27,7 +27,10 @@ public class SplashActivity extends BaseActivity {
             intent = new Intent(this, PassCodeActivity.class);
             intent.putExtra(Constants.INTIAL_LOGIN, true);
         } else {
-            intent = new Intent(this, LoginActivity.class);
+
+            //intent = new Intent(this, LoginActivity.class);
+            intent = new Intent(this, IntroSplashScreen.class);
+
         }
         startActivity(intent);
         finish();
