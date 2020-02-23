@@ -91,7 +91,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_loan_repayment_schedule, container, false);
         ButterKnife.bind(this, rootView);
         loanRepaymentSchedulePresenter.attachView(this);
@@ -146,8 +146,12 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
     @Override
     public void showLoanRepaymentSchedule(LoanWithAssociations loanWithAssociations) {
         this.loanWithAssociations = loanWithAssociations;
+        String currencyRepresentation = loanWithAssociations.getCurrency().getDisplaySymbol();
+        if (currencyRepresentation == null) {
+            currencyRepresentation = loanWithAssociations.getCurrency().getCode();
+        }
         loanRepaymentScheduleAdapter
-                .setCurrency(loanWithAssociations.getCurrency().getDisplaySymbol());
+                .setCurrency(currencyRepresentation);
         setTableViewList(loanWithAssociations.getRepaymentSchedule().getPeriods());
         tvAccountNumber.setText(loanWithAssociations.getAccountNo());
         tvDisbursementDate.setText(DateHelper.getDateAsString(loanWithAssociations.
@@ -164,7 +168,7 @@ public class LoanRepaymentScheduleFragment extends BaseFragment implements
         mColumnHeaderList.add(new ColumnHeader(getString(R.string.loan_balance)));
         mColumnHeaderList.add(new ColumnHeader(getString(R.string.repayment)));
         int i = 0;
-        for (Periods period: periods) {
+        for (Periods period : periods) {
             List<Cell> cells = new ArrayList<>();
             cells.add(new Cell(period));
             cells.add(new Cell(period));
