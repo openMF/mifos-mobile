@@ -73,13 +73,20 @@ public class LoanRepaymentScheduleAdapter extends
                 viewHolder.tvCell.setText(DateHelper.getDateAsString(period.getDueDate()));
                 break;
             case 1:
+                Double principal = period.getPrincipalOriginalDue();
+                if (principal == null) {
+                    principal = 0.00;
+                }
                 viewHolder.tvCell.setText(mContext.getString(R.string.string_and_double,
-                        currency, period.getPrincipalOriginalDue()));
+                        currency, principal));
                 break;
             case 2:
+                principal = period.getPrincipalLoanBalanceOutstanding();
+                if (principal == null) {
+                    principal = 0.00;
+                }
                 viewHolder.tvCell.setText(mContext.getString(R.string.string_and_string,
-                        currency, CurrencyUtil.formatCurrency(mContext, period.
-                                getPrincipalLoanBalanceOutstanding())));
+                        currency, CurrencyUtil.formatCurrency(mContext, principal)));
                 break;
             default:
                 viewHolder.tvCell.setText("");
