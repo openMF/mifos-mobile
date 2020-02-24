@@ -577,6 +577,7 @@
     <string name="description">Description</string>
     <string name="get_started">Get Started</string>
 
+
     <string-array name="languages" translatable="false">
         <item>English</item>
         <item>हिंदी</item>

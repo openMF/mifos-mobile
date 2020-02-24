@@ -61,12 +61,9 @@ public class IntroSplashScreen extends AppCompatActivity {
 //        tvSkip = findViewById(R.id.tv_skip);
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Bank account management", "With a bank account management feature, users can monitor their cards and bank accounts, " +
-                "check their balances and transaction histories, and make money transfers.", R.drawable.management));
-        mList.add(new ScreenItem("Tracking spending habits", "Users can get more control over their finances and reach their " +
-                "saving goals by using mobile budgeting apps and spending trackers.", R.drawable.track_money));
-        mList.add(new ScreenItem("Customer Support", " 24/7 customer support " +
-                "and customer can get professional consultation or advice anytime they need it.", R.drawable.customer_support));
+        mList.add(new ScreenItem("Bank account management", "With a bank account management feature, users can monitor their cards and bank accounts.", R.drawable.management));
+        mList.add(new ScreenItem("Tracking spending habits", "Users can get more control over their finances and reach their saving goals." , R.drawable.track_money));
+        mList.add(new ScreenItem("Customer Support","Customer can get professional consultation or advice anytime they need it.", R.drawable.customer_support));
 
 
         // setup viewpager
