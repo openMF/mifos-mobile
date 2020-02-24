@@ -41,6 +41,7 @@ public class IntroSplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_intro_splash_screen);
 
 
+        //If organisation want this feature to show only once to new user
 
 //        if (restorePrefData()) {
 //
@@ -61,9 +62,12 @@ public class IntroSplashScreen extends AppCompatActivity {
 //        tvSkip = findViewById(R.id.tv_skip);
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Bank account management", "With a bank account management feature, users can monitor their cards and bank account.", R.drawable.management));
-        mList.add(new ScreenItem("Tracking spending habits", "Users can get more control over their finances and reach their saving goals." , R.drawable.track_money));
-        mList.add(new ScreenItem("Customer Support","Customer can get professional consultation or advice anytime they need it.", R.drawable.customer_support));
+        mList.add(new ScreenItem("Bank account "+
+        "management",String.valueOf(R.string.management) , R.drawable.management));
+        mList.add(new ScreenItem("Tracking spending "+
+        "habits", String.valueOf(R.string.tracking) , R.drawable.track_money));
+        mList.add(new ScreenItem("Customer "+
+        "Support",String.valueOf(R.string.support), R.drawable.customer_support));
 
 
         // setup viewpager
