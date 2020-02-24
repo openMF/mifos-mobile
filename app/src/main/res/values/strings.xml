@@ -578,6 +578,11 @@
     <string name="get_started">Get Started</string>
 
 
+    //Intro Splash Item
+    <string name="management">With a bank account management feature, users can monitor their cards and bank account.</string>
+    <string name="tracking">Users can get more control over their finances and reach their saving goals.</string>
+    <string name="support">Customer can get professional consultation or advice anytime they need it.</string>
+
     <string-array name="languages" translatable="false">
         <item>English</item>
         <item>हिंदी</item>
