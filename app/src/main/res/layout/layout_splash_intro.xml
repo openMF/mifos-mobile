@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <ImageView
+        android:id="@+id/ic_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/mifos_logo" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+        android:id="@+id/intro_img"
+        android:layout_centerHorizontal="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        tools:srcCompat="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/introTitle"
+            android:layout_below="@+id/intro_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/light_black"
+            android:text="@string/title" />
+        <TextView
+            android:id="@+id/introDescription"
+            android:lineSpacingExtra="16dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/introTitle"
+            android:layout_centerHorizontal="true"
+            android:textSize="12sp"
+            android:layout_margin="20dp"
+            android:textColor="@color/light_black"
+            android:text="@string/description" />
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
