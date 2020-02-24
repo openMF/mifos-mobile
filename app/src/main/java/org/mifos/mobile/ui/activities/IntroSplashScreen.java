@@ -61,7 +61,7 @@ public class IntroSplashScreen extends AppCompatActivity {
 //        tvSkip = findViewById(R.id.tv_skip);
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Bank account management", "With a bank account management feature, users can monitor their cards and bank accounts.", R.drawable.management));
+        mList.add(new ScreenItem("Bank account management", "With a bank account management feature, users can monitor their cards and bank account.", R.drawable.management));
         mList.add(new ScreenItem("Tracking spending habits", "Users can get more control over their finances and reach their saving goals." , R.drawable.track_money));
         mList.add(new ScreenItem("Customer Support","Customer can get professional consultation or advice anytime they need it.", R.drawable.customer_support));
 
