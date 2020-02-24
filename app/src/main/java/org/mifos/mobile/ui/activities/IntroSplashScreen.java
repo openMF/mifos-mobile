@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -45,7 +43,8 @@ public class IntroSplashScreen extends AppCompatActivity {
 
 //        if (restorePrefData()) {
 //
-//            Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
+//            Intent mainActivity =
+//            new Intent(getApplicationContext(), LoginActivity.class);
 //            startActivity(mainActivity);
 //            finish();
 //        }
@@ -58,16 +57,18 @@ public class IntroSplashScreen extends AppCompatActivity {
         btnNext = findViewById(R.id.btnNext);
         btnGetStarted = findViewById(R.id.getStarted);
         tabIndicator = findViewById(R.id.tabLayout);
-//        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_animation);
+//        btnAnim =
+//        AnimationUtils.loadAnimation(getApplicationContext(),
+//        R.anim.button_animation);
 //        tvSkip = findViewById(R.id.tv_skip);
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Bank account "+
-        "management",String.valueOf(R.string.management) , R.drawable.management));
-        mList.add(new ScreenItem("Tracking spending "+
-        "habits", String.valueOf(R.string.tracking) , R.drawable.track_money));
-        mList.add(new ScreenItem("Customer "+
-        "Support",String.valueOf(R.string.support), R.drawable.customer_support));
+        mList.add(new ScreenItem("Bank Account Management",
+                String.valueOf(R.string.management), R.drawable.management));
+        mList.add(new ScreenItem("Tracking Spending Habits",
+                String.valueOf(R.string.tracking), R.drawable.track_money));
+        mList.add(new ScreenItem("Customer Support",
+                String.valueOf(R.string.support), R.drawable.customer_support));
 
 
         // setup viewpager
@@ -139,11 +140,10 @@ public class IntroSplashScreen extends AppCompatActivity {
 
                 //open main activity
 
-                Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent mainActivity =
+                        new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(mainActivity);
-                // also we need to save a boolean value to storage so next time when the user run the app
-                // we could know that he is already checked the intro screen activity
-                // i'm going to use shared preferences to that process
+
                 savePrefsData();
                 finish();
 
@@ -156,8 +156,10 @@ public class IntroSplashScreen extends AppCompatActivity {
     private boolean restorePrefData() {
 
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
-        Boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend", false);
+        SharedPreferences pref =
+                getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
+        Boolean isIntroActivityOpnendBefore =
+                pref.getBoolean("isIntroOpnend", false);
         return isIntroActivityOpnendBefore;
 
 
@@ -165,7 +167,8 @@ public class IntroSplashScreen extends AppCompatActivity {
 
     private void savePrefsData() {
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
+        SharedPreferences pref =
+                getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("isIntroOpnend", true);
         editor.commit();
