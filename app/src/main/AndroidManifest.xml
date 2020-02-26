@@ -17,8 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activities.IntroSplashScreen"></activity>
-
+        
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -108,6 +107,9 @@
         <activity
             android:name=".ui.activities.PrivacyPolicyActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity 
+            android:name=".ui.activities.IntroSplashScreen"
+            android:windowSoftInputMode="adjustResize"/>
 
         <receiver android:name=".ui.widgets.ChargeAppWidget">
             <intent-filter>
