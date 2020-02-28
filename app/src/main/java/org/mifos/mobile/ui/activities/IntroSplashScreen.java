@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -31,36 +30,12 @@ public class IntroSplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // make the activity on full screen
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_intro_splash_screen);
 
-
-        //If organisation want this feature to show only once to new user
-
-//        if (restorePrefData()) {
-//
-//            Intent mainActivity =
-//            new Intent(getApplicationContext(), LoginActivity.class);
-//            startActivity(mainActivity);
-//            finish();
-//        }
-
-        // hide the action bar
-
-        //getSupportActionBar().hide();
-
-        // ini views
         btnNext = findViewById(R.id.btnNext);
         btnGetStarted = findViewById(R.id.getStarted);
         tabIndicator = findViewById(R.id.tabLayout);
-//        btnAnim =
-//        AnimationUtils.loadAnimation(getApplicationContext(),
-//        R.anim.button_animation);
-//        tvSkip = findViewById(R.id.tv_skip);
 
         final List<ScreenItem> mList = new ArrayList<>();
         mList.add(new ScreenItem("Bank Account Management",
@@ -70,19 +45,11 @@ public class IntroSplashScreen extends AppCompatActivity {
         mList.add(new ScreenItem("Customer Support",
                 String.valueOf(R.string.support), R.drawable.customer_support));
 
-
-        // setup viewpager
         viewPager = findViewById(R.id.screenViewPager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this, mList);
         viewPager.setAdapter(introViewPagerAdapter);
-
-        // setup tablayout with viewpager
-
         tabIndicator.setupWithViewPager(viewPager);
-
-
-        // next button click Listner
-
+        
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,31 +59,22 @@ public class IntroSplashScreen extends AppCompatActivity {
 
                     position++;
                     viewPager.setCurrentItem(position);
-
-
                 }
 
-                if (position == mList.size() - 1) { // when we rech to the last screen
+                if (position == mList.size() - 1) {
 
                     loaddLastScreen();
                 }
             }
         });
 
-        // tablayout add change listener
-
-
         tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                
                 if (tab.getPosition() == mList.size() - 1) {
-
                     loaddLastScreen();
-
                 }
-
-
             }
 
             @Override
@@ -131,61 +89,22 @@ public class IntroSplashScreen extends AppCompatActivity {
         });
 
 
-        // Get Started button click listener
-
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //open main activity
-
                 Intent mainActivity =
                         new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(mainActivity);
 
-                savePrefsData();
                 finish();
-
-
             }
         });
-
     }
 
-    private boolean restorePrefData() {
-
-
-        SharedPreferences pref =
-                getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
-        Boolean isIntroActivityOpnendBefore =
-                pref.getBoolean("isIntroOpnend", false);
-        return isIntroActivityOpnendBefore;
-
-
-    }
-
-    private void savePrefsData() {
-
-        SharedPreferences pref =
-                getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("isIntroOpnend", true);
-        editor.commit();
-
-
-    }
-
-    // show the GETSTARTED Button and hide the indicator and the next button
     private void loaddLastScreen() {
-
         btnNext.setVisibility(View.GONE);
         btnGetStarted.setVisibility(View.VISIBLE);
         tabIndicator.setVisibility(View.INVISIBLE);
 
     }
 }
-
-
-
-

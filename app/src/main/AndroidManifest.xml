@@ -3,148 +3,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.mifos.mobile">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".MifosSelfServiceApp"
+        android:name="org.mifos.mobile.MifosSelfServiceApp"
         android:allowBackup="true"
         android:icon="@mipmap/mifos_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MaterialAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activities.IntroSplashScreen"></activity>
-
+        
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
+        
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
 
         <activity
             android:name=".ui.activities.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.SplashActivity"
+            android:name="org.mifos.mobile.ui.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.HomeActivity"
+            android:name="org.mifos.mobile.ui.activities.HomeActivity"
             android:configChanges="screenLayout|screenSize"
             android:label="@string/home"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.SavingsAccountContainerActivity"
+            android:name="org.mifos.mobile.ui.activities.SavingsAccountContainerActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/saving_account_details"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.PassCodeActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize" />
+            android:name="org.mifos.mobile.ui.activities.PassCodeActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.LoanAccountContainerActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:name="org.mifos.mobile.ui.activities.LoanAccountContainerActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.UserProfileActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:name="org.mifos.mobile.ui.activities.UserProfileActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.RegistrationActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:name="org.mifos.mobile.ui.activities.RegistrationActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.LoanApplicationActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:name="org.mifos.mobile.ui.activities.LoanApplicationActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.AccountOverviewActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:name="org.mifos.mobile.ui.activities.AccountOverviewActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:configChanges="orientation|screenSize"
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"            
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".ui.activities.NotificationActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ui.activities.AddBeneficiaryActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".ui.activities.AddBeneficiaryActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.activities.EditUserDetailActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.activities.SavingsAccountApplicationActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.activities.AboutUsActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.activities.HelpActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.activities.PrivacyPolicyActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
+        <activity 
+            android:name=".ui.activities.IntroSplashScreen"
+            android:windowSoftInputMode="adjustResize"/>
 
-        <receiver android:name=".ui.widgets.ChargeAppWidget">
+        <receiver android:name="org.mifos.mobile.ui.widgets.ChargeAppWidget">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/charge_app_widget_info" />
+                android:resource="@xml/charge_app_widget_info"/>
         </receiver>
 
         <service
             android:name=".ui.widgets.ChargeWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
             android:authorities="org.mifos.mobile.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            android:name="androidx.core.content.FileProvider">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileproviderpath" />
+                android:resource="@xml/fileproviderpath"/>
         </provider>
 
         <service
-            android:name=".utils.fcm.MifosFirebaseMessagingService"
-            android:exported="false">
+            android:exported="false"
+            android:name=".utils.fcm.MifosFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name=".utils.fcm.RegistrationIntentService"
-            android:exported="false" />
+            android:exported="false"
+            android:name=".utils.fcm.RegistrationIntentService"/>
 
-        <activity android:name=".ui.activities.SettingsActivity" />
+        <activity android:name=".ui.activities.SettingsActivity"/>
     </application>
 
 </manifest>
