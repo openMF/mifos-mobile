@@ -26,7 +26,6 @@
             android:layout_marginTop="20dp"
             app:civ_border_color="@color/gray_bright"
             app:civ_border_width="2dp"
-            android:src="@drawable/sharad"
             android:layout_centerHorizontal="true"
             />
         <LinearLayout
