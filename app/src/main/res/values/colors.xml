@@ -61,6 +61,12 @@
     <color name="cell_background_color">#ffffff</color>
     <color name="header_line_color">@color/blue_light</color>
 
+    <!--Chat Support Color-->
+
+    <color name="support_care">#E1EAFA</color>
+    <color name="message_sender">#F8F8F8</color>
+
+
     <!--Swipe Refresh Colors-->
     <array name="swipeRefreshColors">
         <item>@color/blue_light</item>

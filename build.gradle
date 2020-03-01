@@ -68,5 +68,7 @@ ext {
     constraintlayout = '1.1.3'
     lifecycle = '2.2.0'
     legacysupport = '1.0.0'
+    circularimage = '3.1.0'
+    chatMessage = '1.0.7'
 
 }
