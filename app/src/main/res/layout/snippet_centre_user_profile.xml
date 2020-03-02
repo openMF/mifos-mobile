@@ -385,6 +385,7 @@
             android:layout_width="wrap_content"
             android:paddingTop="@dimen/layout_padding_8dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray_dark"
             tools:text="@string/medium_text"/>
         <TextView
             android:layout_below="@+id/tv_phone_number"
@@ -397,6 +398,7 @@
             android:layout_width="wrap_content"
             android:paddingTop="@dimen/layout_padding_8dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray_dark"
             tools:text="@string/medium_text"/>
         <TextView
             android:layout_below="@+id/tv_dob"
@@ -409,6 +411,7 @@
             android:layout_width="wrap_content"
             android:paddingTop="@dimen/layout_padding_8dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray_dark"
             tools:text="@string/medium_text"/>
 
     </RelativeLayout>
