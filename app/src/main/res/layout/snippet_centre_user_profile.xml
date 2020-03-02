@@ -61,10 +61,10 @@
 
         <ImageView
             android:id="@+id/ic_username"
-            android:layout_width="32dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="5dp"
-            app:srcCompat="@drawable/username"
+            app:srcCompat="@drawable/ic_account_primary"
             android:layout_centerVertical="true"
             />
         <RelativeLayout
@@ -78,16 +78,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Username"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_user_name"
                 android:layout_below="@+id/textUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="2dp"
                 android:maxLength="25"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:hint="Username"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
@@ -105,10 +105,10 @@
 
         <ImageView
             android:id="@+id/ic_account_no"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="5dp"
-            app:srcCompat="@drawable/ic_username_grey"
+            app:srcCompat="@drawable/ic_username_primary"
             android:layout_centerVertical="true"
             />
         <RelativeLayout
@@ -122,15 +122,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Account Number"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_account_number"
                 android:layout_below="@+id/textAccountNO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:textSize="18sp"
+                android:layout_marginTop="2dp"
+                android:textSize="16sp"
                 android:hint="@string/account_number"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
@@ -148,10 +148,10 @@
 
         <ImageView
             android:id="@+id/ic_date"
-            android:layout_width="33dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="7dp"
-            app:srcCompat="@drawable/timetable"
+            app:srcCompat="@drawable/ic_date_primary"
             android:layout_centerVertical="true"
             />
         <RelativeLayout
@@ -166,16 +166,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/activation_date"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_activation_date"
                 android:layout_below="@+id/textActiDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:hint="@string/activation_date"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="2dp"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
                 />
@@ -192,8 +192,8 @@
 
         <ImageView
             android:id="@+id/ic_office"
-            android:layout_width="33dp"
-            android:layout_height="@dimen/layout_padding_30dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="5dp"
             app:srcCompat="@drawable/company"
             android:layout_centerVertical="true"
@@ -210,16 +210,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/office_name"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_office_name"
                 android:layout_below="@+id/textOffice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
-                android:textSize="18sp"
-                android:layout_marginTop="3dp"
+                android:textSize="16sp"
+                android:layout_marginTop="2dp"
                 android:hint="@string/office_name"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
@@ -236,10 +236,10 @@
 
         <ImageView
             android:id="@+id/ic_groups"
-            android:layout_width="33dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="5dp"
-            app:srcCompat="@drawable/group"
+            app:srcCompat="@drawable/ic_group_primary"
             android:layout_centerVertical="true"
             />
         <RelativeLayout
@@ -254,16 +254,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/groups"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_groups"
                 android:layout_below="@+id/textGroups"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
-                android:textSize="18sp"
-                android:layout_marginTop="3dp"
+                android:textSize="16sp"
+                android:layout_marginTop="2dp"
                 android:hint="@string/groups"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
@@ -281,10 +281,10 @@
 
         <ImageView
             android:id="@+id/ic_client"
-            android:layout_width="33dp"
-            android:layout_height="@dimen/layout_padding_30dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="5dp"
-            app:srcCompat="@drawable/client_type"
+            app:srcCompat="@drawable/client_primary"
             android:layout_centerVertical="true"
             />
         <RelativeLayout
@@ -299,16 +299,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/client_type"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_client_type"
                 android:layout_below="@+id/textClient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
-                android:textSize="18sp"
-                android:layout_marginTop="3dp"
+                android:textSize="16sp"
+                android:layout_marginTop="2dp"
                 android:hint="@string/client_type"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
@@ -325,10 +325,10 @@
 
         <ImageView
             android:id="@+id/ic_client_classify"
-            android:layout_width="33dp"
-            android:layout_height="@dimen/layout_padding_30dp"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
             android:layout_margin="5dp"
-            app:srcCompat="@drawable/client_classification"
+            app:srcCompat="@drawable/ic_client_classification"
             android:layout_centerVertical="true"
             />
         <RelativeLayout
@@ -342,16 +342,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/client_classification"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textSize="18sp"
+                android:textColor="@color/primary" />
             <TextView
                 android:id="@+id/tv_client_classification"
                 android:layout_below="@+id/textClientClassify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
-                android:layout_marginTop="3dp"
-                android:textSize="18sp"
+                android:layout_marginTop="2dp"
+                android:textSize="16sp"
                 android:hint="@string/client_classification"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_dark"
@@ -372,7 +372,7 @@
             android:layout_marginTop="@dimen/default_margin"
             android:layout_width="wrap_content"
             android:text="@string/user_details"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/primary"/>
         <TextView
             android:layout_below="@+id/textDetails"
