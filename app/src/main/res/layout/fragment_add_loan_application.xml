@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
+  -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/view_flipper"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            style="@style/LinearLayout.Base"
+            android:id="@+id/ll_add_loan"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_new_loan_application"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:text="@string/loan_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+            <TextView
+                android:id="@+id/tv_account_number"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:text="@string/account_number"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+            <TextView
+                android:id="@+id/tv_loan_products"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/select_loan_product"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/light_grey"/>
+
+            <Spinner
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:id="@+id/sp_loan_products"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="fill_parent"
+                android:paddingTop="10dp"
+                android:prompt="@string/select_loan_product"/>
+
+            <TextView
+                android:id="@+id/loan_purpose"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/purpose_of_loan"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/light_grey"/>
+
+            <Spinner
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:id="@+id/sp_loan_purpose"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="fill_parent"
+                android:paddingTop="10dp"
+                android:prompt="@string/purpose_of_loan"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_principal_amount"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent">
+
+                <EditText
+                    android:gravity="start"
+                    android:hint="@string/principal_amount"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:paddingBottom="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:paddingTop="@dimen/default_margin">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:layout_width="0dp"
+                    android:text="@string/currency"
+                    android:textColor="@color/light_grey"/>
+
+                <TextView
+                    android:gravity="end"
+                    android:id="@+id/tv_currency"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:paddingTop="@dimen/divider_margin">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_width="0dp"
+                    android:text="@string/submission_date"
+                    android:textColor="@color/light_grey"/>
+
+                <LinearLayout
+                    android:gravity="end"
+                    android:id="@+id/ll_submission_date_edit"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_weight="0.3"
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_submission_date"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/layout_padding_30dp"
+                        android:layout_marginRight="@dimen/layout_padding_30dp"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/divider_margin">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_width="0dp"
+                    android:text="@string/expected_disbursement_date"
+                    android:textColor="@color/light_grey"/>
+
+                <LinearLayout
+                    android:gravity="end"
+                    android:id="@+id/ll_expected_disbursement_date_edit"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_weight="0.3"
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_expected_disbursement_date"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                    <ImageView
+                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        app:srcCompat="@drawable/ic_edit_black_24dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/Button.Base"
+                android:id="@+id/btn_loan_review"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="10dp"
+                android:text="@string/review" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/layout_error"
+        android:id="@+id/ll_error"
+        android:visibility="gone"/>
+
+</RelativeLayout>

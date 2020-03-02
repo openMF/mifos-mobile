@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+  -->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_loan_summary"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/row_padding_left"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/table_row_padding_top"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:lines="1"
+                        android:text="@string/account_short"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                    <TextView
+                        android:id="@+id/tv_loan_account_number"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_margin"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/black"
+                        tools:text="loanAccountNumber"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:lines="1"
+                        android:text="@string/loan_product"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                    <TextView
+                        android:id="@+id/tv_loan_product_name"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_margin"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/black"
+                        tools:text="@string/loan_product"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_loan_purpose"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:lines="1"
+                        android:text="@string/loan_purpose"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                    <TextView
+                        android:id="@+id/tv_loan_purpose"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/black"
+                        tools:text="loanPurpose"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/table_row_padding_top"
+                android:layout_width="match_parent"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/row_padding_left">
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/principal"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_principal"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="@string/principal"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/interest"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_interest_charged"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="Interest"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/fees"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_fees"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="fees"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/penalties"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_penalties"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="Penalties"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/table_row_padding_top"
+                android:layout_width="match_parent"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/row_padding_left">
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/total_repayment"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_total_repayment"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="repayment"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/total_paid"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_total_paid"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="paid"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/interest_waived"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_interest_waived"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="@string/interest_waived"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/penalties_waived"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_penalties_waived"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="penalties_waived"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/fees_waived"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+                        <TextView
+                            android:id="@+id/tv_fees_waived"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="fees_waived"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/table_row_padding_top"
+                android:layout_width="match_parent"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/row_padding_left">
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/outstanding_balance"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/tv_outstanding_balance"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"
+                            tools:text="balance"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="0dp"
+                            android:lines="1"
+                            android:text="@string/account_status"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/black"/>
+
+                        <LinearLayout
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_account_status"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="@color/black"
+                                tools:text="@string/inactive_uc"/>
+
+                            <ImageView
+                                android:id="@+id/iv_account_status"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/default_margin"
+                                android:layout_height="@dimen/icon_small"
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_marginLeft="@dimen/default_margin" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/layout_error"
+            android:id="@+id/ll_error"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

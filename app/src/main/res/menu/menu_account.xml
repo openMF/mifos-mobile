@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
+  -->
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_search_saving"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item android:id="@+id/menu_search_loan"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item android:id="@+id/menu_search_share"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item
+        android:id="@+id/menu_filter_savings"
+        app:showAsAction="always"
+        android:title="@string/savings_account"
+        android:visible="false"
+        android:icon="@drawable/ic_filter_list_white_36dp"/>
+    <item
+        android:id="@+id/menu_filter_loan"
+        app:showAsAction="always"
+        android:title="@string/loan_account"
+        android:visible="false"
+        android:icon="@drawable/ic_filter_list_white_36dp"/>
+    <item
+        android:id="@+id/menu_filter_shares"
+        app:showAsAction="always"
+        android:title="@string/share_account"
+        android:visible="false"
+        android:icon="@drawable/ic_filter_list_white_36dp"/>
+
+</menu>

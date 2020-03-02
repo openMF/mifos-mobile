@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
+  -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/widget_margin"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="@color/primary"
+            android:id="@+id/widget_layout_main"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <ImageView
+                android:contentDescription="@string/charges"
+                android:id="@+id/widget_img_launcher"
+                android:layout_gravity="center_vertical"
+                android:layout_height="32dp"
+                android:layout_width="32dp"
+                app:srcCompat="@drawable/ic_attach_money_black_24dp"/>
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingEnd="@dimen/widget_header_padding"
+                android:paddingLeft="@dimen/widget_header_padding"
+                android:paddingRight="@dimen/widget_header_padding"
+                android:paddingStart="@dimen/widget_header_padding"
+                android:text="@string/charges"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_charges"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        </ListView>
+
+    </LinearLayout>
+
+</FrameLayout>

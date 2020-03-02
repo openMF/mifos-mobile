@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_status_indicator"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_width="@dimen/side_bar_width"
+        android:src="@drawable/round_corner"/>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/row_padding_left">
+
+        <TextView
+            android:ellipsize="end"
+            android:id="@+id/tv_clientSharingAccountNumber"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:lines="1"
+            android:text="@string/medium_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_shareAccountProductName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/small_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/gray_dark"/>
+
+        <LinearLayout
+            android:id="@+id/ll_account_detail"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/divider_margin"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/divider_margin"
+                android:layout_marginRight="@dimen/divider_margin"
+                android:layout_width="wrap_content"
+                android:text="@string/shares_pending"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/gray_dark"/>
+
+            <TextView
+                android:id="@+id/tv_shares_pending"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text="@string/medium_text"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/divider_margin"
+                android:layout_marginRight="@dimen/divider_margin"
+                android:layout_width="wrap_content"
+                android:text="@string/approved"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/gray_dark"/>
+
+            <TextView
+                android:id="@+id/tv_shares_approved"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/medium_text"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

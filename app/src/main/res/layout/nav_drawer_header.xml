@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="170dp"
-              android:background="@mipmap/mifos_logo"
-              android:gravity="center_vertical|bottom"
-              android:orientation="vertical"
-              android:paddingLeft="16dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary"
+    android:gravity="center_vertical|bottom"
+    android:layout_height="192dp"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/iv_user_image"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="65dp"
+        app:srcCompat="@drawable/ic_person_black_24dp"/>
+
+    <org.mifos.mobile.utils.CircularImageView
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/iv_circular_user_image"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="65dp"
+        android:visibility="gone"
+        app:border="true"
+        app:border_width="1dp"
+        app:srcCompat="@drawable/ic_person_black_24dp"/>
 
     <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="12dp"
         android:ellipsize="end"
+        android:id="@+id/tv_user_name"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
         android:lines="1"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"/>
 
 </LinearLayout>

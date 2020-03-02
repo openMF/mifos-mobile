@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_container"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/default_margin"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/tv_guarantor_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            tools:text="@string/medium_text"/>
+
+        <TextView
+            android:id="@+id/tv_joined_date"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/gray_dark"
+            tools:text="@string/small_text"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

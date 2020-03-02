@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="oval">
+
+    <solid android:color="@color/primary"/>
+
+    <size android:height="@dimen/dashboard_status_height"
+          android:width="@dimen/dashboard_status_width"/>
+
+    <!--<gradient
+        android:type="linear"
+        android:angle="360"
+        android:startColor="#b6b6b6"
+        android:endColor="#ffffff"/>-->
+
+</shape>

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_account"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <androidx.cardview.widget.CardView
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_padding">
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/acc_balance"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="match_parent"
+                        android:text="@string/account_balance"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_acc_balance"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textStyle="bold"
+                    />
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/account_status"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:lines="1"
+                        android:text="@string/account_status"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <LinearLayout
+                        android:gravity="start|center"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal">
+
+                        <org.mifos.mobile.utils.CircularImageView
+                            android:id="@+id/iv_circle_status"
+                            android:layout_gravity="start"
+                            android:layout_height="25dp"
+                            android:layout_width="25dp"
+                            android:visibility="visible"
+                        />
+
+                        <TextView
+                            android:id="@+id/tv_account_status"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:textAppearance="?android:textAppearanceSmall"
+                            android:visibility="visible"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/tv_savingAccountNumber"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:lines="1"
+                        android:text="@string/account_number"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_saving_account_number"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"/>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/tv_nominalInterestRate"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:lines="1"
+                        android:text="@string/nominal_interest_rate"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_nominal_interest_rate"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"/>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/tv_totalDeposits"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:lines="1"
+                        android:text="@string/total_deposits"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_total_deposits"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"/>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/total_withdrawals"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:lines="1"
+                        android:text="@string/total_withdrawal"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_total_withdrawals"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"/>
+
+                    <LinearLayout
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/tv_deposit"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="@string/deposit"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:textColor="@android:color/white"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/tv_make_a_transfer"
+                            android:layout_gravity="end"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="@string/make_transfer"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:textColor="@android:color/white"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_4dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/last_trans"/>
+
+            <androidx.cardview.widget.CardView
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_padding">
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/last_trans"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/last_transaction"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_last_transaction"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"/>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/made_on"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="wrap_content"
+                        android:text="@string/made_on"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_made_on"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/text_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_minRequiredBalance"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="wrap_content"
+                        android:text="@string/min_required_balance"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:id="@+id/tv_min_req_bal"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_4dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/monitor"
+                android:textAppearance="?android:textAppearanceMedium"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?selectableItemBackground"
+                        android:gravity="center"
+                        android:id="@+id/ll_savings_transactions"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:padding="@dimen/default_padding">
+
+                        <ImageView
+                            style="@style/circleLayout"
+                            android:contentDescription="@string/transactions"
+                            android:layout_height="35dp"
+                            android:layout_width="35dp"
+                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/default_margin"
+                            android:layout_marginStart="@dimen/default_margin"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="@string/transactions"
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="@string/view_transactions"
+                                android:textAppearance="?android:textAppearanceSmall"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?selectableItemBackground"
+                        android:gravity="center"
+                        android:id="@+id/ll_savings_charges"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:padding="@dimen/default_padding">
+
+                        <ImageView
+                            style="@style/circleLayout"
+                            android:contentDescription="@string/charges"
+                            android:layout_height="35dp"
+                            android:layout_width="35dp"
+                            app:srcCompat="@drawable/ic_charges"/>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/default_margin"
+                            android:layout_marginStart="@dimen/default_margin"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="@string/savings_charges"
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="@string/view_charges"
+                                android:textAppearance="?android:textAppearanceSmall"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?selectableItemBackground"
+                        android:gravity="center"
+                        android:id="@+id/ll_savings_qr_code"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:padding="@dimen/default_padding">
+
+                        <ImageView
+                            style="@style/circleLayout"
+                            android:contentDescription="@string/qr_code"
+                            android:layout_height="35dp"
+                            android:layout_width="35dp"
+                            app:srcCompat="@drawable/ic_qrcode_scan"/>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/default_margin"
+                            android:layout_marginStart="@dimen/default_margin"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="@string/qr_code"
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="@string/view_qr_code"
+                                android:textAppearance="?android:textAppearanceSmall"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="wrap_content"
+                    android:text="@string/need_help"/>
+
+                <TextView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/tv_help_line_number"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/help_line_number"
+                    android:textColor="@color/blue"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/layout_sweet_exception_handler"
+            android:id="@+id/layout_error"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

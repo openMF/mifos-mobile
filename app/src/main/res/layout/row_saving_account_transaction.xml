@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/white"
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:orientation="horizontal"
+              android:padding="@dimen/default_margin">
+
+    <View
+        android:id="@+id/v_indicator"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/account_status_width"
+        android:layout_width="@dimen/account_status_width"/>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/layout_padding_8dp"
+        android:paddingLeft="@dimen/row_padding_left"
+        android:paddingRight="@dimen/layout_padding_8dp"
+        android:paddingStart="@dimen/row_padding_left">
+
+        <TextView
+            android:id="@+id/tv_transaction_date"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/medium_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_transaction_type"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/small_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray_dark"/>
+
+        <TextView
+            android:id="@+id/tv_transaction_detail_data"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/small_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray_dark"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_weight="0.4"
+        android:layout_width="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="end"
+            android:id="@+id/tv_savingAccountAmount"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/medium_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:gravity="end"
+            android:id="@+id/tv_saving_account_running_balance"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/small_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/gray_dark"/>
+
+    </LinearLayout>
+
+</LinearLayout>

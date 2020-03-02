@@ -1,0 +1,243 @@
+{
+  "savingsAccounts": [{
+    "id": 21,
+    "accountNo": "000000021",
+    "externalId": "63723612",
+    "productId": 1,
+    "productName": "Voluntary savings",
+    "shortProductName": "VS",
+    "status": {
+      "id": 300,
+      "code": "savingsAccountStatusType.active",
+      "value": "Active",
+      "submittedAndPendingApproval": false,
+      "approved": false,
+      "rejected": false,
+      "withdrawnByApplicant": false,
+      "active": true,
+      "closed": false,
+      "prematureClosed": false,
+      "transferInProgress": false,
+      "transferOnHold": false,
+      "matured": false
+    },
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "inMultiplesOf": 0,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "accountBalance": 118393.150000,
+    "accountType": {
+      "id": 1,
+      "code": "accountType.individual",
+      "value": "Individual"
+    },
+    "timeline": {
+      "submittedOnDate": [
+        2016,
+        10,
+        3
+      ],
+      "submittedByUsername": "mifos",
+      "submittedByFirstname": "App",
+      "submittedByLastname": "Administrator",
+      "approvedOnDate": [
+        2016,
+        10,
+        3
+      ],
+      "approvedByUsername": "mifos",
+      "approvedByFirstname": "App",
+      "approvedByLastname": "Administrator",
+      "activatedOnDate": [
+        2016,
+        10,
+        3
+      ]
+    },
+    "subStatus": {
+      "id": 0,
+      "code": "SavingsAccountSubStatusEnum.none",
+      "value": "None",
+      "none": true,
+      "inactive": false,
+      "dormant": false,
+      "escheat": false
+    },
+    "lastActiveTransactionDate": [
+      2017,
+      6,
+      25
+    ],
+    "depositType": {
+      "id": 100,
+      "code": "depositAccountType.savingsDeposit",
+      "value": "Savings"
+    }
+  },
+    {
+      "id": 22,
+      "accountNo": "000000022",
+      "externalId": "8291847",
+      "productId": 1,
+      "productName": "Voluntary savings",
+      "shortProductName": "VS",
+      "status": {
+        "id": 300,
+        "code": "savingsAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "withdrawnByApplicant": false,
+        "active": true,
+        "closed": false,
+        "prematureClosed": false,
+        "transferInProgress": false,
+        "transferOnHold": false,
+        "matured": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "accountBalance": 19930.520000,
+      "accountType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedOnDate": [
+          2016,
+          10,
+          3
+        ]
+      },
+      "subStatus": {
+        "id": 0,
+        "code": "SavingsAccountSubStatusEnum.none",
+        "value": "None",
+        "none": true,
+        "inactive": false,
+        "dormant": false,
+        "escheat": false
+      },
+      "lastActiveTransactionDate": [
+        2017,
+        6,
+        25
+      ],
+      "depositType": {
+        "id": 100,
+        "code": "depositAccountType.savingsDeposit",
+        "value": "Savings"
+      }
+    },
+    {
+      "id": 23,
+      "accountNo": "000000023",
+      "externalId": "42414",
+      "productId": 1,
+      "productName": "Voluntary savings",
+      "shortProductName": "VS",
+      "status": {
+        "id": 300,
+        "code": "savingsAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "withdrawnByApplicant": false,
+        "active": true,
+        "closed": false,
+        "prematureClosed": false,
+        "transferInProgress": false,
+        "transferOnHold": false,
+        "matured": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 0,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "accountBalance": 3117780552329.610000,
+      "accountType": {
+        "id": 1,
+        "code": "accountType.individual",
+        "value": "Individual"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedOnDate": [
+          2016,
+          10,
+          3
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedOnDate": [
+          2016,
+          10,
+          3
+        ]
+      },
+      "subStatus": {
+        "id": 0,
+        "code": "SavingsAccountSubStatusEnum.none",
+        "value": "None",
+        "none": true,
+        "inactive": false,
+        "dormant": false,
+        "escheat": false
+      },
+      "lastActiveTransactionDate": [
+        2017,
+        4,
+        7
+      ],
+      "depositType": {
+        "id": 100,
+        "code": "depositAccountType.savingsDeposit",
+        "value": "Savings"
+      }
+    }
+  ]
+}

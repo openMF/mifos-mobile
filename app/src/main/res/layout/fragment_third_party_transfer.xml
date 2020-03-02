@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:background="@color/white"
+        android:id="@+id/view_flipper"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <LinearLayout
+            style="@style/LinearLayout.Base"
+            android:id="@+id/ll_make_transfer"
+            android:visibility="visible">
+
+            <LinearLayout
+                style="@style/LinearLayout.Width">
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical">
+
+                    <org.mifos.mobile.utils.ProcessView
+                        android:id="@+id/process_one"
+                        android:layout_height="40dp"
+                        android:layout_width="40dp"
+                        app:value="1"/>
+
+                    <View
+                        android:background="@color/light_grey"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
+                        android:layout_width="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/LinearLayout.Wrap"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_margin">
+
+                    <TextView
+                        android:id="@+id/tv_pay_from"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/pay_from"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                    <Spinner
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:id="@+id/sp_pay_from"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:paddingTop="10dp"
+                        android:prompt="@string/select_pay_from"
+                        android:spinnerMode="dialog"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_pay_from"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="wrap_content"
+                        android:text="@string/continue_str"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width">
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical">
+
+                    <org.mifos.mobile.utils.ProcessView
+                        android:id="@+id/process_two"
+                        android:layout_height="40dp"
+                        android:layout_width="40dp"
+                        app:value="2"/>
+
+                    <View
+                        android:background="@color/light_grey"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
+                        android:layout_width="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/LinearLayout.Wrap"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_margin">
+
+                    <TextView
+                        android:id="@+id/tv_pay_to"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/beneficiary"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_select_beneficary"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/select_beneficiary"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/light_grey"/>
+
+                    <TextView
+                        android:id="@+id/tv_add_beneficiary_msg"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/no_beneficiary_found_please_add"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/light_grey"
+                        android:visibility="gone"/>
+
+                    <Spinner
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:id="@+id/sp_beneficiary"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:paddingTop="10dp"
+                        android:prompt="@string/select_beneficiary"
+                        android:spinnerMode="dialog"
+                        android:visibility="gone"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_pay_to"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="wrap_content"
+                        android:text="@string/continue_str"
+                        android:textColor="@color/white"
+                        android:visibility="gone"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_add_beneficiary"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="wrap_content"
+                        android:text="@string/add_beneficiary"
+                        android:textColor="@color/white"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width">
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical">
+
+                    <org.mifos.mobile.utils.ProcessView
+                        android:id="@+id/process_three"
+                        android:layout_height="40dp"
+                        android:layout_width="40dp"
+                        app:value="3"/>
+
+                    <View
+                        android:background="@color/light_grey"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
+                        android:layout_width="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/LinearLayout.Wrap"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/amount"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_select_amount"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/enter_amount"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/light_grey"/>
+
+                    <EditText
+                        android:gravity="start"
+                        android:hint="@string/amount"
+                        android:id="@+id/et_amount"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:paddingBottom="16dp"
+                        android:visibility="gone"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_amount"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="wrap_content"
+                        android:text="@string/continue_str"
+                        android:textColor="@color/white"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width">
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical">
+
+                    <org.mifos.mobile.utils.ProcessView
+                        android:id="@+id/process_four"
+                        android:layout_height="40dp"
+                        android:layout_width="40dp"
+                        app:value="4"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/LinearLayout.Wrap"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/remark"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:gravity="start"
+                        android:hint="@string/remark"
+                        android:id="@+id/et_remark"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:paddingBottom="16dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/tv_enter_remark"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/enter_remarks"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/light_grey"/>
+
+                    <LinearLayout
+                        style="@style/LinearLayout.Width"
+                        android:id="@+id/ll_review"
+                        android:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_cancel_transfer"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="0.5"
+                            android:layout_width="match_parent"
+                            android:text="@string/cancel"
+                            android:textColor="@color/primary"
+                            app:backgroundTint="@color/white"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_review_transfer"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="0.5"
+                            android:layout_width="match_parent"
+                            android:text="@string/review_transfer"
+                            android:textColor="@color/white"
+                            tools:ignore="ButtonStyle"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/layout_sweet_exception_handler"
+        android:id="@+id/layout_error"
+        android:visibility="gone"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

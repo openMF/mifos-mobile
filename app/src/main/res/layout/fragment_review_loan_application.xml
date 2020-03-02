@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
+  -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/view_flipper"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            style="@style/LinearLayout.Base"
+            android:id="@+id/ll_add_loan"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_new_loan_application"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:text="@string/loan_name"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/tv_account_number"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:text="@string/account_number"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/product"
+                android:textColor="@color/black"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:id="@+id/tv_loan_product"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/income_generating_loan"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/loan_purpose"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_loan_purpose"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/not_applicable"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/principal"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_principal_amount"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_width="match_parent"
+                tools:text="@string/dummy_principal_amount"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:paddingTop="@dimen/default_margin">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:layout_width="0dp"
+                    android:text="@string/currency"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:gravity="end"
+                    android:id="@+id/tv_currency"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/divider_margin"
+                android:paddingTop="@dimen/divider_margin">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_width="0dp"
+                    android:text="@string/submission_date"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:gravity="end"
+                    android:id="@+id/tv_submission_date"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayout.Width"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/divider_margin"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/divider_margin">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_width="0dp"
+                    android:text="@string/expected_disbursement_date"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:gravity="end"
+                    android:id="@+id/tv_expected_disbursement_date"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/Button.Base"
+                android:id="@+id/btn_loan_submit"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="10dp"
+                android:text="@string/submit_loan" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/layout_error"
+        android:id="@+id/ll_error"
+        android:visibility="gone" />
+
+</RelativeLayout>

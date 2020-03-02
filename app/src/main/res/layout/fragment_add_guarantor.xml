@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/guarantor_type"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+        <Spinner
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:id="@+id/sp_guarantor_type"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_first_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <EditText
+                android:hint="@string/first_name"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_last_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <EditText
+                android:hint="@string/last_name"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_office_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <EditText
+                android:hint="@string/office_name"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:foreground="?attr/selectableItemBackground"
+            android:id="@+id/btn_submit_guarantor"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/submit"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/layout_padding_8dp">
+
+    <ImageView
+        android:id="@+id/iv_notification_icon"
+        android:layout_height="@dimen/icon_medium"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_width="@dimen/icon_medium"
+        app:srcCompat="@drawable/ic_notifications"/>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_notification_text"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAppearance="?android:textAppearanceMedium"
+            tools:text="@string/medium_text"/>
+
+        <TextView
+            android:gravity="end|right"
+            android:id="@+id/tv_notification_time"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAppearance="?android:textAppearanceSmall"
+            tools:text="@string/small_text"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/btn_dismiss_notification"
+            android:layout_gravity="right|end"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/dialog_action_ok"
+            android:textColor="@color/primary"/>
+
+    </LinearLayout>
+
+</LinearLayout>

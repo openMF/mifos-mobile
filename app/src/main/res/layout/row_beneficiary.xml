@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/default_margin"
+    android:layout_marginTop="@dimen/default_margin"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/default_padding"
+    android:paddingLeft="@dimen/row_padding_left"
+    android:paddingRight="@dimen/row_padding_right"
+    android:paddingStart="@dimen/default_padding">
+
+    <TextView
+        android:ellipsize="end"
+        android:id="@+id/tv_beneficiary_name"
+        android:layout_gravity="start"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:lines="1"
+        android:text="@string/medium_text"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:ellipsize="end"
+            android:id="@+id/tv_account_number"
+            android:layout_gravity="start"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:lines="1"
+            android:text="@string/medium_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/gray_dark"/>
+
+        <TextView
+            android:ellipsize="end"
+            android:gravity="end"
+            android:id="@+id/tv_office_name"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:lines="1"
+            android:text="@string/medium_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/gray_dark"/>
+
+    </LinearLayout>
+
+</LinearLayout>

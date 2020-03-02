@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_width="match_parent">
+
+        <EditText android:hint="@string/request_id"
+                  android:id="@+id/et_request_id"
+                  android:inputType="number"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_width="match_parent">
+
+        <EditText android:hint="@string/authentication_token"
+                  android:id="@+id/et_authentication_token"
+                  android:inputType="number"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_verify"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_margin_bottom"
+        android:layout_marginTop="@dimen/login_margin_top"
+        android:layout_width="match_parent"
+        android:text="@string/verify"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

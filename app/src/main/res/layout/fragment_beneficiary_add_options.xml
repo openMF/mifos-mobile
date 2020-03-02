@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_padding"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/select_mode"
+                android:textSize="@dimen/text_headline"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:text="@string/add_beneficiary_option"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/login_margin_top"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:id="@+id/ll_add_beneficiary_manually"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_margin">
+
+                    <ImageView
+                        android:layout_height="70dp"
+                        android:layout_width="70dp"
+                        app:srcCompat="@drawable/ic_beneficiary_add_48px"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="match_parent"
+                        android:text="@string/add"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        android:textColor="@color/gray_dark"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:id="@+id/ll_add_beneficiary_qrcode"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_margin">
+
+                    <ImageView
+                        android:layout_height="70dp"
+                        android:layout_width="70dp"
+                        app:srcCompat="@drawable/ic_qrcode_scan"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="match_parent"
+                        android:text="@string/scan"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        android:textColor="@color/gray_dark"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/login_margin_top"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:id="@+id/ll_upload_beneficiary_qrcode"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_margin">
+
+                    <ImageView
+                        android:layout_height="70dp"
+                        android:layout_width="70dp"
+                        app:srcCompat="@drawable/ic_file_upload_black_24dp"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_width="match_parent"
+                        android:text="@string/upload_qr_code"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        android:textColor="@color/gray_dark"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

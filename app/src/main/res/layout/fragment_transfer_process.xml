@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layout_padding_24dp"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_success"
+                    android:layout_gravity="center"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="@dimen/login_margin_top"
+                    android:layout_width="72dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/animated_check"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/row_padding_left"
+                    android:layout_width="match_parent"
+                    android:text="@string/amount"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tv_amount"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    tools:text="@string/amount"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/login_padding_left"
+                    android:layout_width="match_parent"
+                    android:text="@string/transfer_from_savings"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@color/gray_dark"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
+                    android:text="@string/pay_to"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary"/>
+
+                <TextView
+                    android:id="@+id/tv_pay_to"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+                <View
+                    android:background="@color/light_grey"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
+                    android:text="@string/pay_from"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary"/>
+
+                <TextView
+                    android:id="@+id/tv_pay_from"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+
+                <View
+                    android:background="@color/light_grey"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
+                    android:text="@string/date"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary"/>
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+
+                <View
+                    android:background="@color/light_grey"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"
+                    android:text="@string/remark"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary"/>
+
+                <TextView
+                    android:id="@+id/tv_remark"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_padding_left"
+                    android:layout_marginStart="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="match_parent"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    tools:text="@string/medium_text"/>
+
+                <View
+                    android:background="@color/light_grey"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_width="match_parent"/>
+
+                <LinearLayout
+                    android:gravity="end"
+                    android:id="@+id/ll_transfer"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/row_padding_left"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:id="@+id/btn_cancel_transfer"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/cancel"
+                        android:textColor="@color/primary"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_start_transfer"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/transfer"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_close"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/row_padding_left"
+                    android:layout_width="wrap_content"
+                    android:text="@string/close"
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

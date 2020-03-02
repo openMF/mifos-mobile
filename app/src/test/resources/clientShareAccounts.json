@@ -1,0 +1,111 @@
+{
+  "shareAccounts": [
+    {
+      "id": 14,
+      "accountNo": "000000014",
+      "totalApprovedShares": 10,
+      "totalPendingForApprovalShares": 0,
+      "productId": 2,
+      "productName": "SPTest",
+      "shortProductName": "SPT",
+      "status": {
+        "id": 300,
+        "code": "shareAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "active": true,
+        "closed": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          11,
+          4
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedDate": [
+          2016,
+          11,
+          4
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedDate": [
+          2016,
+          11,
+          4
+        ],
+        "activatedByUsername": "mifos",
+        "activatedByFirstname": "App",
+        "activatedByLastname": "Administrator"
+      }
+    },
+    {
+      "id": 15,
+      "accountNo": "000000015",
+      "totalApprovedShares": 10,
+      "totalPendingForApprovalShares": 0,
+      "productId": 2,
+      "productName": "SPTest",
+      "shortProductName": "SPT",
+      "status": {
+        "id": 300,
+        "code": "shareAccountStatusType.active",
+        "value": "Active",
+        "submittedAndPendingApproval": false,
+        "approved": false,
+        "rejected": false,
+        "active": true,
+        "closed": false
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "timeline": {
+        "submittedOnDate": [
+          2016,
+          11,
+          4
+        ],
+        "submittedByUsername": "mifos",
+        "submittedByFirstname": "App",
+        "submittedByLastname": "Administrator",
+        "approvedDate": [
+          2016,
+          11,
+          4
+        ],
+        "approvedByUsername": "mifos",
+        "approvedByFirstname": "App",
+        "approvedByLastname": "Administrator",
+        "activatedDate": [
+          2016,
+          11,
+          4
+        ],
+        "activatedByUsername": "mifos",
+        "activatedByFirstname": "App",
+        "activatedByLastname": "Administrator"
+      }
+    }
+]}
