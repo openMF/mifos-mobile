@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.mifos.mobile.R;
@@ -54,9 +54,6 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
 
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
-
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
 
     @BindView(R.id.tv_user_name)
     TextView tvUsername;
@@ -119,19 +116,14 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
+                             @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_new_user_profile, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
 
         ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
         ((BaseActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(getActivity(),
-                R.color.white));
-        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(getActivity(),
-                R.color.white));
 
         sweetUIErrorHandler = new SweetUIErrorHandler(getActivity(), rootView);
         if (savedInstanceState == null) {
@@ -259,6 +251,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
      *
      * @param message Error message that tells the user about the problem.
      */
+    @SuppressLint("RestrictedApi")
     @Override
     public void showError(String message) {
         Toaster.show(rootView, message);

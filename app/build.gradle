@@ -143,6 +143,11 @@ dependencies {
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
+    //circularImageView
+    implementation "de.hdodenhof:circleimageview:$rootProject.circularimage"
+    implementation "me.himanshusoni.chatmessageview:chat-message-view:$rootProject.chatMessage"
+
+
     androidTestImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
