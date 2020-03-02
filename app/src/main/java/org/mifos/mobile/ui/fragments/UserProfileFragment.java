@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.mifos.mobile.R;
@@ -251,6 +251,7 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
      *
      * @param message Error message that tells the user about the problem.
      */
+    @SuppressLint("RestrictedApi")
     @Override
     public void showError(String message) {
         Toaster.show(rootView, message);

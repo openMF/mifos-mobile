@@ -73,9 +73,12 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.legacysupport"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
+    
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
@@ -139,13 +142,18 @@ dependencies {
 
     //multidex
     implementation "androidx.multidex:multidex:$rootProject.multiDexVersion"
-    
+
     //TableView
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
 
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    //circularImageView
+    implementation "de.hdodenhof:circleimageview:$rootProject.circularimage"
+    implementation "me.himanshusoni.chatmessageview:chat-message-view:$rootProject.chatMessage"
+
 
     androidTestImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
