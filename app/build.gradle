@@ -77,6 +77,9 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
+    
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
@@ -133,7 +136,7 @@ dependencies {
 
     //multidex
     implementation "androidx.multidex:multidex:$rootProject.multiDexVersion"
-    
+
     //TableView
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
 
@@ -144,6 +147,7 @@ dependencies {
     //circleImage and v7
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatv7"
     implementation "de.hdodenhof:circleimageview:$rootProject.circleimageview"
+
 
 
     androidTestImplementation "junit:junit:$rootProject.jUnitVersion"

@@ -388,6 +388,7 @@
             tools:text="@string/medium_text"
             android:textColor="@color/gray_dark"
             />
+
         <TextView
             android:layout_below="@+id/tv_phone_number"
             android:drawableLeft="@drawable/ic_cake_wrapper"
