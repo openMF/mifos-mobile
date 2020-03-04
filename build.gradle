@@ -67,9 +67,5 @@ ext {
 
     appcompatv7 = '28.0.0'
     circleimageview = '3.1.0'
-    legacysupport = '1.0.0'
-    lifecycle = '2.1.0'
-
-
 
 }
