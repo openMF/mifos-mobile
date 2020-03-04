@@ -73,9 +73,9 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.legacy:legacy-support-v4:$rootProject.legacysupport"
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
