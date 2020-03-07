@@ -135,6 +135,8 @@ dependencies {
     
     //TableView
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.appcompatv7"
+    implementation "de.hdodenhof:circleimageview:$rootProject.circleimageview"
 
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatv7"
     implementation "de.hdodenhof:circleimageview:$rootProject.circleimageview"
