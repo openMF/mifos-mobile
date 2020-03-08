@@ -36,7 +36,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle("Settings");
+        getActivity().setTitle(getString(R.string.settings));
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
