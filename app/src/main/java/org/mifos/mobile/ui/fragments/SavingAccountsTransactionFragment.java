@@ -57,9 +57,7 @@ import butterknife.OnClick;
  */
 
 public class SavingAccountsTransactionFragment extends BaseFragment
-        implements SavingAccountsTransactionView,
-//        RadioGroup.OnCheckedChangeListener,
-        MFDatePicker.OnDatePickListener {
+        implements SavingAccountsTransactionView, MFDatePicker.OnDatePickListener {
 
     @BindView(R.id.ll_account)
     LinearLayout layoutAccount;
