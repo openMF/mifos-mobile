@@ -57,9 +57,7 @@ import butterknife.OnClick;
  */
 
 public class SavingAccountsTransactionFragment extends BaseFragment
-        implements SavingAccountsTransactionView,
-//        RadioGroup.OnCheckedChangeListener,
-        MFDatePicker.OnDatePickListener {
+        implements SavingAccountsTransactionView, MFDatePicker.OnDatePickListener {
 
     @BindView(R.id.ll_account)
     LinearLayout layoutAccount;
@@ -188,12 +186,9 @@ public class SavingAccountsTransactionFragment extends BaseFragment
 
         if (transactionsList != null && !transactionsList.isEmpty()) {
             transactionListAdapter.setContext(getContext());
-            transactionListAdapter.
-                    setSavingAccountsTransactionList(transactionsList);
+            transactionListAdapter.setSavingAccountsTransactionList(transactionsList);
         } else {
-            sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.transactions),
-                    R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction,
-                    layoutError);
+            showEmptyTransactions();
         }
     }
 
@@ -227,9 +222,18 @@ public class SavingAccountsTransactionFragment extends BaseFragment
      */
     @Override
     public void showFilteredList(List<Transactions> list) {
-        Toaster.show(rootView, getString(R.string.filtered));
-        transactionListAdapter.
-                setSavingAccountsTransactionList(list);
+        if (list.size() != 0) {
+            Toaster.show(rootView, getString(R.string.filtered));
+            transactionListAdapter.setSavingAccountsTransactionList(list);
+        } else {
+            showEmptyTransactions();
+        }
+    }
+
+    @Override
+    public void showEmptyTransactions() {
+        sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.transactions),
+                R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction, layoutError);
     }
 
     /**

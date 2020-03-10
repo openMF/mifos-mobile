@@ -18,6 +18,7 @@ import org.mifos.mobile.models.client.ClientAccounts;
 import org.mifos.mobile.models.guarantor.GuarantorPayload;
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload;
 import org.mifos.mobile.models.payload.LoansPayload;
+import org.mifos.mobile.models.payload.LoginPayload;
 import org.mifos.mobile.models.payload.TransferPayload;
 import org.mifos.mobile.models.register.RegisterPayload;
 import org.mifos.mobile.models.register.UserVerify;
@@ -161,6 +162,11 @@ public class FakeRemoteDataSource {
     public static RegisterPayload getRegisterPayload() {
         return mTestDataFactory.getObjectTypePojo(RegisterPayload.class,
                 FakeJsonName.REGISTER);
+    }
+
+    public static LoginPayload getLoginPayload() {
+        return mTestDataFactory.getObjectTypePojo(LoginPayload.class,
+                FakeJsonName.LOGIN);
     }
 
     public static Page<Charge> getCharge() {
