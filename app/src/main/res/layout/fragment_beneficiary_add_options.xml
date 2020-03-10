@@ -79,7 +79,7 @@
                     <ImageView
                         android:layout_height="70dp"
                         android:layout_width="70dp"
-                        app:srcCompat="@drawable/ic_qrcode_scan_black"/>
+                        app:srcCompat="@drawable/ic_qrcode_scan"/>
 
                     <TextView
                         android:gravity="center"
