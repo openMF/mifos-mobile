@@ -174,23 +174,19 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     }
 
 
-    public void disableErrorUserName()
-    {
-           hideErrorUserName();
+    public void disableErrorUserName() {
+        hideErrorUserName();
     }
 
-    private void hideErrorUserName()
-    {
+    private void hideErrorUserName() {
         getMvpView().showUsernameError("");
     }
 
-    public void disableErrorPassword()
-    {
-            hideErrorPassword();
+    public void disableErrorPassword() {
+        hideErrorPassword();
     }
 
-    private void hideErrorPassword()
-    {
+    private void hideErrorPassword() {
         getMvpView().showPasswordError("");
     }
 
