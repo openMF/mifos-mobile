@@ -2,7 +2,9 @@ package org.mifos.mobile.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,11 +24,13 @@ import androidx.appcompat.widget.AppCompatButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 /**
  * @author Vishwajeet
  * @since 05/06/16
  */
+
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
@@ -44,6 +48,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
+
+    @BindView(R.id.edt_email)
+    EditText edtEmail;
+
+    @BindView(R.id.edt_password)
+    EditText edtPassword;
 
     private String userName;
 
@@ -138,6 +148,20 @@ public class LoginActivity extends BaseActivity implements LoginView {
         } else {
             Toaster.show(llLogin, getString(R.string.no_internet_connection));
         }
+    }
+
+
+    @OnTouch(value = {R.id.edt_email, R.id.edt_password})
+    public boolean onTouch(View v) {
+        switch (v.getId()) {
+            case R.id.edt_email:
+                loginPresenter.disableErrorUserName();
+                break;
+            case R.id.edt_password:
+                loginPresenter.disableErrorPassword();
+                break;
+        }
+        return false;
     }
 
     @OnClick(R.id.btn_register)
