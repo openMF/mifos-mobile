@@ -174,6 +174,26 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     }
 
 
+    public void disableErrorUserName()
+    {
+           hideErrorUserName();
+    }
+
+    private void hideErrorUserName()
+    {
+        getMvpView().showUsernameError("");
+    }
+
+    public void disableErrorPassword()
+    {
+            hideErrorPassword();
+    }
+
+    private void hideErrorPassword()
+    {
+        getMvpView().showPasswordError("");
+    }
+
     private boolean isCredentialsValid(final String username, final String password) {
         boolean credentialValid = true;
         final Resources resources = context.getResources();
