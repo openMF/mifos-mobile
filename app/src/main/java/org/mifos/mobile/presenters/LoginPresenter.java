@@ -173,7 +173,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         );
     }
 
-
     public void disableErrorUserName() {
         hideErrorUserName();
     }
