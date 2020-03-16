@@ -44,6 +44,7 @@
                     android:drawablePadding="@dimen/layout_padding_8dp"
                     android:drawableStart="@drawable/ic_wrapped_person_black_24dp"
                     android:hint="@string/username"
+		    android:id="@+id/edt_email"
                     android:inputType="textEmailAddress"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
@@ -66,6 +67,7 @@
                     android:drawableStart="@drawable/ic_wrapped_lock_black_24dp"
                     android:hint="@string/password"
                     android:inputType="textPassword"
+		    android:id="@+id/edt_password"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
             </com.google.android.material.textfield.TextInputLayout>
