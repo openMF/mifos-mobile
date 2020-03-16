@@ -20,4 +20,6 @@ public interface SavingAccountsTransactionView extends MVPView {
 
     void showFilteredList(List<Transactions> list);
 
+    void showEmptyTransactions();
+
 }
