@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
+
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -33,11 +36,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 /**
  * Created by dilpreet on 16/6/17.
@@ -84,7 +86,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     private SweetUIErrorHandler sweetUIErrorHandler;
 
     public static BeneficiaryApplicationFragment newInstance(BeneficiaryState beneficiaryState,
-            @Nullable Beneficiary beneficiary) {
+                                                             @Nullable Beneficiary beneficiary) {
         BeneficiaryApplicationFragment fragment = new BeneficiaryApplicationFragment();
         Bundle args = new Bundle();
         args.putSerializable(Constants.BENEFICIARY_STATE, beneficiaryState);
@@ -117,7 +119,7 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_application, container, false);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
         ButterKnife.bind(this, rootView);
@@ -191,6 +193,28 @@ public class BeneficiaryApplicationFragment extends BaseFragment implements
             tilAccountNumber.getEditText().setText(beneficiary.getAccountNumber());
             tilOfficeName.getEditText().setText(beneficiary.getOfficeName());
         }
+    }
+
+    /**
+     * Used for removing error display on touching the field
+     */
+    @OnTouch(value = {R.id.edt_acc_number, R.id.edt_off_name, R.id.edt_trans_limit, R.id.edt_ben_name})
+    public boolean onTouch(View v) {
+        switch (v.getId()) {
+            case R.id.edt_acc_number:
+                tilAccountNumber.setError(null);
+                break;
+            case R.id.edt_off_name:
+                tilOfficeName.setError(null);
+                break;
+            case R.id.edt_trans_limit:
+                tilTransferLimit.setError(null);
+                break;
+            case R.id.edt_ben_name:
+                tilBeneficiaryName.setError(null);
+                break;
+        }
+        return false;
     }
 
     /**

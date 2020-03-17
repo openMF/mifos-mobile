@@ -41,6 +41,7 @@
                 <EditText
                     android:gravity="start"
                     android:hint="@string/account_number"
+                    android:id="@+id/edt_acc_number"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
                 <EditText
                     android:gravity="start"
                     android:hint="@string/office_name"
+                    android:id="@+id/edt_off_name"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:layout_height="wrap_content"
@@ -75,6 +77,7 @@
                 <EditText
                     android:gravity="start"
                     android:hint="@string/transfer_limit"
+                    android:id="@+id/edt_trans_limit"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:layout_height="wrap_content"
@@ -93,6 +96,7 @@
                 <EditText
                     android:gravity="start"
                     android:hint="@string/beneficiary_name"
+                    android:id="@+id/edt_ben_name"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:layout_height="wrap_content"
