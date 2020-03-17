@@ -133,43 +133,43 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public void loadClient() {
         checkViewAttached();
         compositeDisposable.add(dataManager.getClients()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<Page<Client>>() {
-                    @Override
-                    public void onComplete() {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(new DisposableObserver<Page<Client>>() {
+                            @Override
+                            public void onComplete() {
 
-                    }
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().hideProgress();
-                        if (((HttpException) e).code() == 401) {
-                            getMvpView().showMessage(context.getString(R.string.
-                                    unauthorized_client));
-                        } else {
-                            getMvpView().showMessage(context.getString(R.string.
-                                    error_fetching_client));
-                        }
-                        preferencesHelper.clear();
-                        reInitializeService();
-                    }
+                            @Override
+                            public void onError(Throwable e) {
+                                getMvpView().hideProgress();
+                                if (((HttpException) e).code() == 401) {
+                                    getMvpView().showMessage(context.getString(R.string.
+                                            unauthorized_client));
+                                } else {
+                                    getMvpView().showMessage(context.getString(R.string.
+                                            error_fetching_client));
+    ̥}
+                                preferencesHelper.clear();
+                                reInitializeService();
+                            }
 
-                    @Override
-                    public void onNext(Page<Client> clientPage) {
-                        getMvpView().hideProgress();
-                        if (clientPage.getPageItems().size() != 0) {
-                            long clientId = clientPage.getPageItems().get(0).getId();
-                            preferencesHelper.setClientId(clientId);
-                            dataManager.setClientId(clientId);
-                            reInitializeService();
-                            getMvpView().showPassCodeActivity();
-                        } else {
-                            getMvpView().showMessage(context
-                                    .getString(R.string.error_client_not_found));
-                        }
-                    }
-                })
+                            @Override
+                            public void onNext(Page<Client> clientPage) {
+                                getMvpView().hideProgress();
+                                if (clientPage.getPageItems().size() != 0) {
+                                    long clientId = clientPage.getPageItems().get(0).getId();
+                                    preferencesHelper.setClientId(clientId);
+                                    dataManager.setClientId(clientId);
+                                    reInitializeService();
+                                    getMvpView().showPassCodeActivity();
+                                } else {
+                                    getMvpView().showMessage(context
+                                            .getString(R.string.error_client_not_found));
+                                }
+                            }
+                        })
         );
     }
 
