@@ -137,11 +137,6 @@ dependencies {
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatv7"
     implementation "de.hdodenhof:circleimageview:$rootProject.circleimageview"
-
-    implementation "com.android.support:appcompat-v7:$rootProject.appcompatv7"
-    implementation "de.hdodenhof:circleimageview:$rootProject.circleimageview"
-
-
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
