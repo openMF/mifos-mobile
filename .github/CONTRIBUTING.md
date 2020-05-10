@@ -24,7 +24,7 @@ or if you have ssh set up you can use that URL instead:
 
 ## Commit Style Guide
 
- Mifos Self-Service Android application have a set of [Commit Style Guidelines](https://github.com/openMF/self-service-app/wiki/Commit-Style-Guide). we strictly following this guideline to track every change, any bug fixes, any enhancement, and any new feature addition. we are suggesting you, please follow these guidelines to help us managing every commit.
+ Mifos Self-Service Android application has a set of [Commit Style Guidelines](https://github.com/openMF/self-service-app/wiki/Commit-Style-Guide). we strictly following this guideline to track every change, any bug fixes, any enhancement, and any new feature addition. we are suggesting you, please follow these guidelines to help us manage every commit.
 
 ## Issue tracker
 
@@ -78,7 +78,7 @@ We will accept pull requests if:
 - If you would like to work on an issue, inform in the issue ticket by commenting on it.
 - Please be sure that you are able to reproduce the issue, before working on it. If not, please ask for clarification by commenting or asking the issue creator.
 
-Note: Please do not work on issues which are already being worked on by another contributor. We don't encourage creating multiple pull requests for the same issue. Also, please allow the assigned person some days to work on the issue ( The time might vary depending on the difficulty). If there is no progress after the deadline, please comment on the issue asking the contributor whether he/she is still working on it. If there is no reply, then feel free to work on the issue.
+Note: Please do not work on issues that are already being worked on by another contributor. We don't encourage creating multiple pull requests for the same issue. Also, please allow the assigned person some days to work on the issue ( The time might vary depending on the difficulty). If there is no progress after the deadline, please comment on the issue asking the contributor whether he/she is still working on it. If there is no reply, then feel free to work on the issue.
 
 
 ### Best Practices to send Pull Requests:
