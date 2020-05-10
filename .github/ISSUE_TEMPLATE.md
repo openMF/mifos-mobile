@@ -23,4 +23,4 @@ version from the manufacturer or a custom ROM?
 
 **Screenshots:**
 
-Can be created by pressing the Volume Down and Power Button at the same time on Android 4.0 and higher.
+It can be created by pressing the Volume Down and Power Button at the same time on Android 4.0 and higher.
