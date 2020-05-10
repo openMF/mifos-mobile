@@ -27,7 +27,7 @@ For pull request guidelines please click <a href="https://github.com/openMF/mifo
 We have the following branches :
 
  * **development**
-     All the contributions should be pushed to this branch. If you're making a contribution,
+     All the contributions should be pushed to this branch. If you're contributing,
      you are supposed to make a pull request to _development_.
      Please make sure it passes a build check on Travis.
 
