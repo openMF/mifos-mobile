@@ -132,7 +132,7 @@ dependencies {
 
     //multidex
     implementation "androidx.multidex:multidex:$rootProject.multiDexVersion"
-    
+
     //TableView
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
 
