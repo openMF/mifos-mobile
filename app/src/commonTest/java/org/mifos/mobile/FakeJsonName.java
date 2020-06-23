@@ -24,6 +24,8 @@ public class FakeJsonName {
 
     public static final String BENEFICIARY_UPDATE_PAYLOAD_JSON = "beneficiaryUpdatePayload.json";
 
+    public static final String LOGIN = "login.json";
+
     public static final String LOAN_ACCOUNT_JSON = "loanAccount.json";
 
     public static final String LOAN_PAYLOAD_JSON = "loanPayload.json";
