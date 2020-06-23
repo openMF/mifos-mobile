@@ -13,6 +13,7 @@ import org.mifos.mobile.api.local.PreferencesHelper;
 import org.mifos.mobile.models.Page;
 import org.mifos.mobile.models.User;
 import org.mifos.mobile.models.client.Client;
+import org.mifos.mobile.models.payload.LoginPayload;
 import org.mifos.mobile.presenters.LoginPresenter;
 import org.mifos.mobile.ui.views.LoginView;
 import org.mifos.mobile.util.RxSchedulersOverrideRule;
@@ -50,6 +51,7 @@ public class LoginPresenterTest {
     private LoginPresenter presenter;
     private User user;
     private Page<Client> clientPage, noClientPage;
+    private LoginPayload loginPayload;
 
     @Before
     public void setUp() throws Exception {
@@ -63,13 +65,15 @@ public class LoginPresenterTest {
         user = FakeRemoteDataSource.getUser();
         clientPage = FakeRemoteDataSource.getClients();
         noClientPage = FakeRemoteDataSource.getNoClients();
+
+        loginPayload = FakeRemoteDataSource.getLoginPayload();
     }
 
     @Test
     public void testLogin() throws Exception {
-        when(dataManager.login("selfservice", "password")).thenReturn(Observable.just(user));
+        when(dataManager.login(loginPayload)).thenReturn(Observable.just(user));
 
-        presenter.login("selfservice", "password");
+        presenter.login(loginPayload);
 
         verify(view).showProgress();
         verify(view).onLoginSuccess(user.getUsername());
