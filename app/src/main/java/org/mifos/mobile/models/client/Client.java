@@ -2,9 +2,9 @@ package org.mifos.mobile.models.client;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.ContactsContract;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.zxing.client.result.EmailAddressParsedResult;
 
 import org.mifos.mobile.models.Timeline;
 
@@ -81,13 +81,13 @@ public class Client implements Parcelable {
     private ClientType clientType;
 
     @SerializedName("Email")
-    private ContactsContract.CommonDataKinds.Email email;
+    private EmailAddressParsedResult email;
 
-    public ContactsContract.CommonDataKinds.Email getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setGender(ContactsContract.CommonDataKinds.Email email) {
+    public void setEmail(EmailAddressParsedResult email) {
         this.email = email;
     }
 
