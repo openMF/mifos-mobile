@@ -224,17 +224,6 @@
                             android:paddingTop="@dimen/layout_padding_8dp"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             tools:text="@string/medium_text"/>
-                        <TextView
-                            android:drawableLeft="@drawable/ic_mail_wrapper"
-                            android:drawablePadding="@dimen/layout_padding_8dp"
-                            android:drawableStart="@drawable/ic_mail_wrapper"
-                            android:gravity="center"
-                            android:id="@+id/tv_email"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:paddingTop="@dimen/layout_padding_8dp"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            tools:text="@string/medium_text"/>
 
                     </LinearLayout>
 
