@@ -2,6 +2,7 @@ package org.mifos.mobile.models.client;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -76,32 +77,18 @@ public class Client implements Parcelable {
     @SerializedName("mobileNo")
     String mobileNo;
 
-    @SerializedName("clientClassification")
-    private ClientClassification clientClassification;
-
     @SerializedName("clientType")
     private ClientType clientType;
 
-    @SerializedName("gender")
-    private Gender gender;
+    @SerializedName("Email")
+    private ContactsContract.CommonDataKinds.Email email;
 
-    @SerializedName("groups")
-    private List<Group> groups = new ArrayList<>();
-
-    public List<Group> getGroups() {
-        return groups;
+    public ContactsContract.CommonDataKinds.Email getEmail() {
+        return email;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGender(ContactsContract.CommonDataKinds.Email email) {
+        this.email = email;
     }
 
     public String getMobileNo() {
@@ -110,14 +97,6 @@ public class Client implements Parcelable {
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
-    }
-
-    public ClientClassification getClientClassification() {
-        return clientClassification;
-    }
-
-    public void setClientClassification(ClientClassification clientClassification) {
-        this.clientClassification = clientClassification;
     }
 
     public ClientType getClientType() {

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler;
 import com.google.android.material.appbar.AppBarLayout;
@@ -70,14 +71,9 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.tv_office_name)
     TextView tvOfficeName;
 
-    @BindView(R.id.tv_groups)
-    TextView tvGroups;
-
     @BindView(R.id.tv_client_type)
     TextView tvClientType;
 
-    @BindView(R.id.tv_client_classification)
-    TextView tvClientClassification;
 
     @BindView(R.id.tv_phone_number)
     TextView tvPhoneNumber;
@@ -85,8 +81,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.tv_dob)
     TextView tvDOB;
 
-    @BindView(R.id.tv_gender)
-    TextView tvGender;
+    @BindView(R.id.tv_email)
+    TextView tvEmail;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -174,10 +170,6 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
                 client.getOfficeName()));
         tvClientType.setText(nullFieldCheck(getString(R.string.client_type),
                 client.getClientType().getName()));
-        tvGroups.setText(nullFieldCheck(getString(R.string.groups),
-                getGroups(client.getGroups())));
-        tvClientClassification.setText(nullFieldCheck(getString(R.string.client_classification),
-                client.getClientClassification().getName()));
         tvPhoneNumber.setText(nullFieldCheck(getString(R.string.phone_number),
                 client.getMobileNo()));
         if (client.getDobDate().size() != 3) {  // no data entry in database for the client
@@ -185,7 +177,8 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         } else {
             tvDOB.setText(DateHelper.getDateAsString(client.getDobDate()));
         }
-        tvGender.setText(nullFieldCheck(getString(R.string.gender), client.getGender().getName()));
+        tvEmail.setText(nullFieldCheck("E-mail",
+                client.getEmail()));
     }
 
     private String nullFieldCheck(String field, String value) {
