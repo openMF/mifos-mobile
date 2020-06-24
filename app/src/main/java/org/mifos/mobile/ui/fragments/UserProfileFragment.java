@@ -82,9 +82,6 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.tv_dob)
     TextView tvDOB;
 
-    @BindView(R.id.tv_email)
-    TextView tvEmail;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -178,8 +175,6 @@ public class UserProfileFragment extends BaseFragment implements UserDetailsView
         } else {
             tvDOB.setText(DateHelper.getDateAsString(client.getDobDate()));
         }
-        tvEmail.setText(nullFieldCheck("Email",
-                client.getEmail()));
     }
 
     private String nullFieldCheck(String field, String value) {
