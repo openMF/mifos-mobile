@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.zxing.client.result.EmailAddressParsedResult;
 
 import org.mifos.mobile.models.Timeline;
 
@@ -79,17 +78,6 @@ public class Client implements Parcelable {
 
     @SerializedName("clientType")
     private ClientType clientType;
-
-    @SerializedName("Email")
-    private EmailAddressParsedResult email;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(EmailAddressParsedResult email) {
-        this.email = email;
-    }
 
     public String getMobileNo() {
         return mobileNo;
