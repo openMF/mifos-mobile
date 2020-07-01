@@ -79,7 +79,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_registration, container, false)
-        (activity as BaseActivity?)!!.activityComponent.inject(this)
+        (activity as BaseActivity?)!!.activityComponent?.inject(this)
         val rootView = this.rootView
         if (rootView != null) {
             ButterKnife.bind(this, rootView)
