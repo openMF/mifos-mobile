@@ -2,6 +2,7 @@ package org.mifos.mobile.ui.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -73,7 +74,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
-        (activity as BaseActivity).activityComponent.inject(this)
+        (activity as BaseActivity).activityComponent?.inject(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReviewLoanApplicationViewModel::class.java)
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {

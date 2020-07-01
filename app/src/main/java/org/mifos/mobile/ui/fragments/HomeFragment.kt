@@ -76,7 +76,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_home_ui, container, false)
-        (activity as HomeActivity?)!!.activityComponent.inject(this)
+        (activity as HomeActivity?)!!.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView)
         clientId = preferencesHelper!!.clientId
         setHasOptionsMenu(true)
