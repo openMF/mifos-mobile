@@ -97,9 +97,11 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
     }
 
     @Override
-    public void showNotifications(List<MifosNotification> notifications) {
+    public void showNotifications(@org.jetbrains.annotations.Nullable
+                                              List<? extends MifosNotification> notifications) {
+        assert notifications != null;
         if (notifications.size() != 0) {
-            adapter.setNotificationList(notifications);
+            adapter.setNotificationList((List<MifosNotification>) notifications);
         } else {
             sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.notification),
                     R.drawable.ic_notifications, rvNotification, layoutError);
