@@ -232,10 +232,10 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      *
      * @param client Contains details about the client
      */
-    override fun showUserDetails(client: Client) {
+    override fun showUserDetails(client: Client?) {
         this.client = client
-        preferencesHelper!!.clientName = client.displayName
-        tvUsername!!.text = client.displayName
+        preferencesHelper.clientName = client?.displayName
+        tvUsername!!.text = client?.displayName
     }
 
     /**
@@ -286,8 +286,8 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      *
      * @param message contains information about error occurred
      */
-    override fun showError(message: String) {
-        showToast(message, Toast.LENGTH_SHORT)
+    override fun showError(message: String?) {
+        showToast(message!!, Toast.LENGTH_SHORT)
     }
 
     override fun onDestroy() {
