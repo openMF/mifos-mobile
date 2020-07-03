@@ -6,6 +6,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.Nullable;
 import org.mifos.mobile.R;
 import org.mifos.mobile.api.BaseApiManager;
 import org.mifos.mobile.api.DataManager;
@@ -111,8 +112,8 @@ public class ChargeWidgetDataProvider implements RemoteViewsService.RemoteViewsF
     }
 
     @Override
-    public void showClientCharges(List<Charge> clientChargesList) {
-        charges = clientChargesList;
+    public void showClientCharges(@Nullable List<? extends Charge> clientChargesList) {
+        charges = (List<Charge>) clientChargesList;
         synchronized (object) {
             object.notify();
         }

@@ -73,8 +73,10 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     private val notifCount = 0
     private var isReceiverRegistered = false
     private var tvNotificationCount: TextView? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_home_ui, container, false)
         (activity as HomeActivity?)!!.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView)
@@ -142,7 +144,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
 
     @SuppressLint("StringFormatInvalid")
     private fun loadClientData() {
-        if (!preferencesHelper!!.clientName.isEmpty()) {
+        if (preferencesHelper!!.clientName.isNotEmpty()) {
             tvUserName!!.text = getString(R.string.hello_client, preferencesHelper!!.clientName)
             hideProgress()
         } else {
@@ -167,14 +169,13 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      *
      * @param userName of the client
      */
-    override fun showUserDetails(userName: String) {
+    override fun showUserDetails(userName: String?) {
         tvUserName!!.text = getString(R.string.hello_client, userName)
     }
 
     override fun showUserImageTextDrawable() {
         activity!!.runOnUiThread {
-            val userName: String
-            userName = if (!preferencesHelper!!.clientName.isEmpty()) {
+            val userName: String = if (preferencesHelper!!.clientName.isNotEmpty()) {
                 preferencesHelper!!.clientName
             } else {
                 getString(R.string.app_name)
@@ -196,7 +197,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      *
      * @param bitmap Client Image
      */
-    override fun showUserImage(bitmap: Bitmap) {
+    override fun showUserImage(bitmap: Bitmap?) {
         if (bitmap != null) {
             activity!!.runOnUiThread {
                 userProfileBitmap = bitmap
@@ -305,7 +306,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      *
      * @param errorMessage Error message that tells the user about the problem.
      */
-    override fun showError(errorMessage: String) {
+    override fun showError(errorMessage: String?) {
         Toaster.show(rootView, errorMessage)
     }
 
@@ -343,7 +344,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     }
 
     companion object {
-        val LOG_TAG = HomeFragment::class.java.simpleName
+        val LOG_TAG: String? = HomeFragment::class.java.simpleName
         fun newInstance(): HomeFragment {
             val fragment = HomeFragment()
             val args = Bundle()

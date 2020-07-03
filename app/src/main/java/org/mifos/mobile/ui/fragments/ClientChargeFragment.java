@@ -180,15 +180,9 @@ public class ClientChargeFragment extends BaseFragment implements
         }
     }
 
-    /**
-     * Receives {@code clientChargeList} from server and calls {@code inflateClientChargeList()} to
-     * update the {@code clientChargeAdapter} adapter.
-     *
-     * @param clientChargeList {@link List} of {@link Charge}
-     */
     @Override
-    public void showClientCharges(List<Charge> clientChargeList) {
-        this.clientChargeList = clientChargeList;
+    public void showClientCharges(@org.jetbrains.annotations.Nullable
+                                              List<? extends Charge> clientChargesList) {
         inflateClientChargeList();
         if (swipeChargeContainer.isRefreshing()) {
             swipeChargeContainer.setRefreshing(false);
