@@ -48,7 +48,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
                 .setCancelable(false)
                 .setMessage(R.string.login_using_password_confirmation)
                 .setPositiveButton(getString(R.string.logout)
-                ) { dialog, which ->
+                ) { _, _ ->
                     val i = Intent(this@PassCodeActivity,
                             LoginActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -56,7 +56,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
                     finish()
                 }
                 .setNegativeButton(getString(R.string.cancel)
-                ) { dialog, which -> dialog.dismiss() }
+                ) { dialog, _ -> dialog.dismiss() }
                 .createMaterialDialog()
                 .show()
     }
