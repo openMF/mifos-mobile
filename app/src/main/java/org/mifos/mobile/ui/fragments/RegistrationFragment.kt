@@ -82,7 +82,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         (activity as BaseActivity?)!!.activityComponent?.inject(this)
         val rootView = this.rootView
         if (rootView != null) {
-            ButterKnife.bind(this, rootView)
+            ButterKnife.bind(this, rootView!!)
         }
         presenter!!.attachView(this)
         progressBar!!.visibility = View.GONE
