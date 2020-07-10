@@ -69,10 +69,10 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     private var isReceiverRegistered = false
     var checkedItem = 0
         private set
-    var doubleBackToExitPressedOnce = false
+    private var doubleBackToExitPressedOnce = false
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityComponent.inject(this)
+        activityComponent?.inject(this)
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
         clientId = preferencesHelper.clientId
@@ -94,7 +94,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             detailsPresenter!!.setUserProfile(preferencesHelper.userProfileImage)
             showUserDetails(client!!)
         }
-        if (checkPlayServices() && !preferencesHelper!!.sentTokenToServerState()) {
+        if (checkPlayServices() && !preferencesHelper.sentTokenToServerState()) {
             // Start IntentService to register this application with GCM.
             val intent = Intent(this, RegistrationIntentService::class.java)
             startService(intent)
@@ -177,15 +177,15 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 .setCancelable(false)
                 .setMessage(R.string.dialog_logout)
                 .setPositiveButton(getString(R.string.logout)
-                ) { dialog, which ->
-                    preferencesHelper!!.clear()
+                ) { _, _ ->
+                    preferencesHelper.clear()
                     val i = Intent(this@HomeActivity, LoginActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(i)
                     finish()
                 }
                 .setNegativeButton(getString(R.string.cancel)
-                ) { dialog, which -> setNavigationViewSelectedItem(R.id.item_home) }
+                ) { _, _ -> setNavigationViewSelectedItem(R.id.item_home) }
                 .createMaterialDialog()
                 .show()
     }
@@ -253,9 +253,8 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             }
         } else {
             runOnUiThread {
-                val userName: String
-                userName = if (!preferencesHelper!!.clientName.isEmpty()) {
-                    preferencesHelper!!.clientName
+                val userName: String = if (preferencesHelper.clientName.isNotEmpty()) {
+                    preferencesHelper.clientName
                 } else {
                     getString(R.string.app_name)
                 }
