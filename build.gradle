@@ -44,7 +44,7 @@ ext {
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.6.0'
     butterKnifeVersion = '8.0.1'
-    dbflowVersion = '4.1.2'
+    dbflowVersion = '4.2.4'
     playServicesVersion = '17.0.0'
     firebaseMessagingVersion = '18.0.0'
     oss_licenses = '17.0.0'
