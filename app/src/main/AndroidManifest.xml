@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:name="org.mifos.mobile.MifosSelfServiceApp"
         android:supportsRtl="true"
-        android:theme="@style/MaterialAppTheme"
+        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
@@ -147,7 +147,9 @@
             android:name="org.mifos.mobile.utils.fcm.RegistrationIntentService">
         </service>
 
-        <activity android:name="org.mifos.mobile.ui.activities.SettingsActivity"/>
+        <activity
+            android:name="org.mifos.mobile.ui.activities.SettingsActivity">
+        </activity>
     </application>
 
 </manifest>
