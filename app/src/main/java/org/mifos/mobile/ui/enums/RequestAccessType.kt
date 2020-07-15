@@ -1,11 +1,14 @@
-package org.mifos.mobile.ui.enums;
+package org.mifos.mobile.ui.enums
 
 /**
  * Created by manishkumar on 19/05/18.
  */
+enum class RequestAccessType {
 
-public enum RequestAccessType {
     CAMERA,
+
     EXTERNAL_STORAGE_READ,
+
     EXTERNAL_STORAGE_WRITE
+
 }
