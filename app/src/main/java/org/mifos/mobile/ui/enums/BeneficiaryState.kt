@@ -1,11 +1,15 @@
-package org.mifos.mobile.ui.enums;
+package org.mifos.mobile.ui.enums
 
 /**
  * Created by dilpreet on 16/6/17.
  */
 
-public enum BeneficiaryState {
+enum class BeneficiaryState {
+
     CREATE_MANUAL,
+
     CREATE_QR,
+
     UPDATE
+
 }

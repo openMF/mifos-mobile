@@ -1,11 +1,15 @@
-package org.mifos.mobile.ui.enums;
+package org.mifos.mobile.ui.enums
 
 /**
  * Created by dilpreet on 19/7/17.
  */
 
-public enum ChargeType {
+enum class ChargeType {
+
     CLIENT,
+
     SAVINGS,
+
     LOAN
+
 }
