@@ -1,10 +1,13 @@
-package org.mifos.mobile.ui.enums;
+package org.mifos.mobile.ui.enums
 
 /*
  * Created by saksham on 25/July/2018
  */
 
-public enum GuarantorState {
+enum class GuarantorState {
+
     CREATE,
+
     UPDATE
+
 }
