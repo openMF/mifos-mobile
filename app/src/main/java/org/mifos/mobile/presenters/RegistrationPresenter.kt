@@ -30,22 +30,22 @@ class RegistrationPresenter @Inject constructor(private val dataManager: DataMan
 
     fun registerUser(registerPayload: RegisterPayload?) {
         checkViewAttached()
-        mvpView!!.showProgress()
-        compositeDisposables.add(dataManager.registerUser(registerPayload)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<ResponseBody?>() {
+        mvpView?.showProgress()
+        dataManager.registerUser(registerPayload)
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
-                        mvpView!!.hideProgress()
-                        mvpView!!.showError(MFErrorParser.errorMessage(e))
+                        mvpView?.hideProgress()
+                        mvpView?.showError(MFErrorParser.errorMessage(e))
                     }
 
                     override fun onNext(responseBody: ResponseBody) {
-                        mvpView!!.hideProgress()
-                        mvpView!!.showRegisteredSuccessfully()
+                        mvpView?.hideProgress()
+                        mvpView?.showRegisteredSuccessfully()
                     }
-                }))
+                })?.let { compositeDisposables.add(it) }
     }
 
 }

@@ -73,7 +73,7 @@ import javax.inject.Inject
         activity!!.title = getString(R.string.withdraw_savings_account)
         tvAccountNumber!!.text = savingsWithAssociations!!.accountNo
         tvClientName!!.text = savingsWithAssociations!!.clientName
-        tvWithdrawalDate!!.text = MFDatePicker.getDatePickedAsString()
+        tvWithdrawalDate!!.text = MFDatePicker.datePickedAsString
     }
 
     val isFormIncomplete: Boolean
@@ -92,7 +92,7 @@ import javax.inject.Inject
         if (!isFormIncomplete) {
             payload = SavingsAccountWithdrawPayload()
             payload!!.note = tilRemark!!.editText!!.text.toString()
-            payload!!.withdrawnOnDate = MFDatePicker.getDatePickedAsString()
+            payload!!.withdrawnOnDate = MFDatePicker.datePickedAsString
             presenter!!.submitWithdrawSavingsAccount(savingsWithAssociations!!.accountNo, payload)
         }
     }
