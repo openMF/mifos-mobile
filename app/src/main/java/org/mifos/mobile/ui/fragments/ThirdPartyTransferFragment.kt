@@ -6,10 +6,13 @@ import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.widget.AppCompatButton
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
@@ -25,6 +28,7 @@ import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.ThirdPartyTransferView
 import org.mifos.mobile.utils.*
+
 import java.util.*
 import javax.inject.Inject
 
@@ -128,17 +132,19 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         rootView = inflater.inflate(R.layout.fragment_third_party_transfer, container, false)
         setToolbarTitle(getString(R.string.third_party_transfer))
-        ButterKnife.bind(this, rootView!!)
+        if (rootView != null ) ButterKnife.bind(this, rootView!!)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         showUserInterface()
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
         if (savedInstanceState == null) {
-            presenter!!.loadTransferTemplate()
+            presenter?.loadTransferTemplate()
         }
         return rootView
     }
@@ -166,17 +172,17 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     override fun showUserInterface() {
         payFromAdapter = AccountsSpinnerAdapter(activity, R.layout.account_spinner_layout,
                 listPayFrom)
-        payFromAdapter!!.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spPayFrom!!.adapter = payFromAdapter
-        spPayFrom!!.onItemSelectedListener = this
+        payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
+        spPayFrom?.adapter = payFromAdapter
+        spPayFrom?.onItemSelectedListener = this
         beneficiaryAdapter = BeneficiarySpinnerAdapter(activity,
                 R.layout.beneficiary_spinner_layout, listBeneficiary)
-        beneficiaryAdapter!!.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spBeneficiary!!.adapter = beneficiaryAdapter
-        spBeneficiary!!.onItemSelectedListener = this
+        beneficiaryAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
+        spBeneficiary?.adapter = beneficiaryAdapter
+        spBeneficiary?.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.getDatePickedAsString())
-        pvOne!!.setCurrentActive()
+                MFDatePicker.datePickedAsString)
+        pvOne?.setCurrentActive()
     }
 
     /**
@@ -185,35 +191,35 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     @OnClick(R.id.btn_review_transfer)
     fun reviewTransfer() {
-        if (etAmount!!.text.toString() == "") {
+        if (etAmount?.text.toString() == "") {
             Toaster.show(rootView, getString(R.string.enter_amount))
             return
         }
-        if (etAmount!!.text.toString() == ".") {
+        if (etAmount?.text.toString() == ".") {
             Toaster.show(rootView, getString(R.string.invalid_amount))
             return
         }
-        if (etRemark!!.text.toString().trim { it <= ' ' } == "") {
+        if (etRemark?.text.toString().trim { it <= ' ' } == "") {
             Toaster.show(rootView, getString(R.string.remark_is_mandatory))
             return
         }
-        if (spBeneficiary!!.selectedItem.toString() == spPayFrom!!.selectedItem.toString()) {
+        if (spBeneficiary?.selectedItem.toString() == spPayFrom?.selectedItem.toString()) {
             Toaster.show(rootView, getString(R.string.error_same_account_transfer))
             return
         }
         val transferPayload = TransferPayload()
-        transferPayload.fromAccountId = fromAccountOption!!.accountId
-        transferPayload.fromClientId = fromAccountOption!!.clientId
-        transferPayload.fromAccountType = fromAccountOption!!.accountType!!.id
-        transferPayload.fromOfficeId = fromAccountOption!!.officeId
-        transferPayload.toOfficeId = beneficiaryAccountOption!!.officeId
-        transferPayload.toAccountId = beneficiaryAccountOption!!.accountId
-        transferPayload.toClientId = beneficiaryAccountOption!!.clientId
-        transferPayload.toAccountType = beneficiaryAccountOption!!.accountType!!.id
+        transferPayload.fromAccountId = fromAccountOption?.accountId
+        transferPayload.fromClientId = fromAccountOption?.clientId
+        transferPayload.fromAccountType = fromAccountOption?.accountType?.id
+        transferPayload.fromOfficeId = fromAccountOption?.officeId
+        transferPayload.toOfficeId = beneficiaryAccountOption?.officeId
+        transferPayload.toAccountId = beneficiaryAccountOption?.accountId
+        transferPayload.toClientId = beneficiaryAccountOption?.clientId
+        transferPayload.toAccountType = beneficiaryAccountOption?.accountType?.id
         transferPayload.transferDate = transferDate
-        transferPayload.transferAmount = etAmount!!.text.toString().toDouble()
-        transferPayload.transferDescription = etRemark!!.text.toString()
-        (activity as BaseActivity?)!!.replaceFragment(TransferProcessFragment.Companion.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
+        transferPayload.transferAmount = etAmount?.text.toString().toDouble()
+        transferPayload.transferDescription = etRemark?.text.toString()
+        (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.Companion.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
     }
 
     /**
@@ -234,8 +240,8 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     override fun showThirdPartyTransferTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
         listPayFrom.clear()
-        listPayFrom.addAll(presenter!!.getAccountNumbersFromAccountOptions(accountOptionsTemplate!!.fromAccountOptions))
-        payFromAdapter!!.notifyDataSetChanged()
+        presenter?.getAccountNumbersFromAccountOptions(accountOptionsTemplate?.fromAccountOptions)?.let { listPayFrom.addAll(it) }
+        payFromAdapter?.notifyDataSetChanged()
     }
 
     /**
@@ -247,8 +253,8 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     override fun showBeneficiaryList(beneficiaries: List<Beneficiary?>?) {
         this.beneficiaries = beneficiaries
         listBeneficiary.clear()
-        listBeneficiary.addAll(presenter!!.getAccountNumbersFromBeneficiaries(beneficiaries))
-        beneficiaryAdapter!!.notifyDataSetChanged()
+        presenter?.getAccountNumbersFromBeneficiaries(beneficiaries)?.let { listBeneficiary.addAll(it) }
+        beneficiaryAdapter?.notifyDataSetChanged()
     }
 
     /**
@@ -257,17 +263,17 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     @OnClick(R.id.btn_pay_from)
     fun payFromSelected() {
-        pvOne!!.setCurrentCompeleted()
-        pvTwo!!.setCurrentActive()
-        btnPayFrom!!.visibility = View.GONE
-        tvSelectBeneficiary!!.visibility = View.GONE
-        if (!listBeneficiary.isEmpty()) {
-            btnPayTo!!.visibility = View.VISIBLE
-            spBeneficiary!!.visibility = View.VISIBLE
-            spPayFrom!!.isEnabled = false
+        pvOne?.setCurrentCompeleted()
+        pvTwo?.setCurrentActive()
+        btnPayFrom?.visibility = View.GONE
+        tvSelectBeneficiary?.visibility = View.GONE
+        if (listBeneficiary.isNotEmpty()) {
+            btnPayTo?.visibility = View.VISIBLE
+            spBeneficiary?.visibility = View.VISIBLE
+            spPayFrom?.isEnabled = false
         } else {
-            tvAddBeneficiaryMsg!!.visibility = View.VISIBLE
-            btnAddBeneficiary!!.visibility = View.VISIBLE
+            tvAddBeneficiaryMsg?.visibility = View.VISIBLE
+            btnAddBeneficiary?.visibility = View.VISIBLE
         }
     }
 
@@ -278,17 +284,17 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     @OnClick(R.id.btn_pay_to)
     fun payToSelected() {
-        if (spBeneficiary!!.selectedItem.toString() == spPayFrom!!.selectedItem.toString()) {
+        if (spBeneficiary?.selectedItem.toString() == spPayFrom?.selectedItem.toString()) {
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        pvTwo!!.setCurrentCompeleted()
-        pvThree!!.setCurrentActive()
-        btnPayTo!!.visibility = View.GONE
-        tvEnterAmount!!.visibility = View.GONE
-        etAmount!!.visibility = View.VISIBLE
-        btnAmount!!.visibility = View.VISIBLE
-        spBeneficiary!!.isEnabled = false
+        pvTwo?.setCurrentCompeleted()
+        pvThree?.setCurrentActive()
+        btnPayTo?.visibility = View.GONE
+        tvEnterAmount?.visibility = View.GONE
+        etAmount?.visibility = View.VISIBLE
+        btnAmount?.visibility = View.VISIBLE
+        spBeneficiary?.isEnabled = false
     }
 
     /**
@@ -298,43 +304,43 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     @OnClick(R.id.btn_amount)
     fun amountSet() {
-        if (etAmount!!.text.toString() == "") {
+        if (etAmount?.text.toString() == "") {
             showToaster(getString(R.string.enter_amount))
             return
         }
-        if (etAmount!!.text.toString() == ".") {
+        if (etAmount?.text.toString() == ".") {
             showToaster(getString(R.string.invalid_amount))
             return
         }
-        if (etAmount!!.text.toString().toDouble() == 0.0) {
+        if (etAmount?.text.toString().toDouble() == 0.0) {
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        pvThree!!.setCurrentCompeleted()
-        pvFour!!.setCurrentActive()
-        btnAmount!!.visibility = View.GONE
-        tvEnterRemark!!.visibility = View.GONE
-        etRemark!!.visibility = View.VISIBLE
-        llReview!!.visibility = View.VISIBLE
-        etAmount!!.isEnabled = false
+        pvThree?.setCurrentCompeleted()
+        pvFour?.setCurrentActive()
+        btnAmount?.visibility = View.GONE
+        tvEnterRemark?.visibility = View.GONE
+        etRemark?.visibility = View.VISIBLE
+        llReview?.visibility = View.VISIBLE
+        etAmount?.isEnabled = false
     }
 
     @OnClick(R.id.btn_cancel_transfer)
     fun cancelTransfer() {
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     @OnClick(R.id.btn_add_beneficiary)
     fun addBeneficiary() {
-        (activity as BaseActivity?)!!.replaceFragment(BeneficiaryAddOptionsFragment.Companion.newInstance(),
+        (activity as BaseActivity?)?.replaceFragment(BeneficiaryAddOptionsFragment.Companion.newInstance(),
                 true, R.id.container)
     }
 
     @OnClick(R.id.btn_try_again)
     fun onRetry() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError)
-            presenter!!.loadTransferTemplate()
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError)
+            presenter?.loadTransferTemplate()
         } else {
             Toaster.show(rootView, getString(R.string.internet_not_connected))
         }
@@ -347,21 +353,21 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(msg, layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(msg, layoutMakeTransfer, layoutError)
             Toaster.show(rootView, msg)
         }
     }
 
     override fun showProgress() {
-        layoutMakeTransfer!!.visibility = View.GONE
+        layoutMakeTransfer?.visibility = View.GONE
         showProgressBar()
     }
 
     override fun hideProgress() {
         hideProgressBar()
-        layoutMakeTransfer!!.visibility = View.VISIBLE
+        layoutMakeTransfer?.visibility = View.VISIBLE
     }
 
     /**
@@ -369,8 +375,8 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         when (parent.id) {
-            R.id.sp_beneficiary -> beneficiaryAccountOption = presenter!!.searchAccount(accountOptionsTemplate!!.fromAccountOptions, beneficiaryAdapter!!.getItem(position))
-            R.id.sp_pay_from -> fromAccountOption = accountOptionsTemplate!!.fromAccountOptions[position]
+            R.id.sp_beneficiary -> beneficiaryAccountOption = presenter?.searchAccount(accountOptionsTemplate?.fromAccountOptions, beneficiaryAdapter?.getItem(position))
+            R.id.sp_pay_from -> fromAccountOption = accountOptionsTemplate?.fromAccountOptions?.get(position)
         }
     }
 
@@ -383,12 +389,14 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_refresh_transfer) {
-            val transaction = fragmentManager!!.beginTransaction()
-            val currFragment = activity!!.supportFragmentManager
-                    .findFragmentById(R.id.container)
-            transaction.detach(currFragment!!)
-            transaction.attach(currFragment)
-            transaction.commit()
+            val transaction = fragmentManager?.beginTransaction()
+            val currFragment = activity?.supportFragmentManager
+                    ?.findFragmentById(R.id.container)
+            if (currFragment!=null){
+                transaction?.detach(currFragment)
+                transaction?.attach(currFragment)
+            }
+            transaction?.commit()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -396,7 +404,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {

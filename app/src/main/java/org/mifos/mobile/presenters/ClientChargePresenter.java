@@ -78,9 +78,8 @@ public class ClientChargePresenter extends BasePresenter<ClientChargeView> {
                     @Override
                     public void onNext(Page<Charge> chargePage) {
                         getMvpView().hideProgress();
-                        if (chargePage != null) {
+                        if (chargePage != null)
                             getMvpView().showClientCharges(chargePage.getPageItems());
-                        }
                     }
                 })
         );

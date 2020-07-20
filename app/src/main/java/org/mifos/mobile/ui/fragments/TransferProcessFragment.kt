@@ -30,6 +30,7 @@ import javax.inject.Inject
  * Created by dilpreet on 1/7/17.
  */
 class TransferProcessFragment : BaseFragment(), TransferProcessView {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_amount)
     var tvAmount: TextView? = null
@@ -111,12 +112,12 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      * Cancels the Transfer and pops fragment
      */
     @OnClick(R.id.btn_cancel_transfer)
-    fun cancelTransfer() {
+    open fun cancelTransfer() {
         Toaster.cancelTransfer(rootView, getString(R.string.cancel_transfer),
-                getString(R.string.yes)) {
+                getString(R.string.yes), View.OnClickListener {
             activity!!.supportFragmentManager.popBackStack()
             activity!!.supportFragmentManager.popBackStack()
-        }
+        })
     }
 
     /**

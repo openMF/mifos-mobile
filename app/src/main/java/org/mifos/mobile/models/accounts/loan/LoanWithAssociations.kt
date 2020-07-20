@@ -171,7 +171,7 @@ data class LoanWithAssociations(
         var maximumGap: Int? = null,
 
         @SerializedName("transactions")
-        var transactions: List<Transaction> = ArrayList(),
+        var transactions: MutableList<Transaction?>? = ArrayList(),
 
         @SerializedName("loanPurposeName")
         var loanPurposeName: String? = null

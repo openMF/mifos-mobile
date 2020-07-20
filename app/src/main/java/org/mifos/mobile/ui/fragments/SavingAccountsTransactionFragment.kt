@@ -33,6 +33,7 @@ import javax.inject.Inject
  * Created by dilpreet on 6/3/17.
  */
 class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView, OnDatePickListener {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.ll_account)
     var layoutAccount: LinearLayout? = null
@@ -82,8 +83,10 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_saving_account_transactions,
                 container, false)
         ButterKnife.bind(this, rootView!!)
@@ -142,10 +145,10 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
         layoutAccount!!.visibility = View.VISIBLE
         this.savingsWithAssociations = savingsWithAssociations
-        transactionsList = savingsWithAssociations!!.transactions
-        if (transactionsList != null && !transactionsList!!.isEmpty()) {
-            transactionListAdapter!!.setContext(context)
-            transactionListAdapter!!.setSavingAccountsTransactionList(transactionsList)
+        transactionsList = savingsWithAssociations?.transactions
+        if (transactionsList != null && transactionsList!!.isNotEmpty()) {
+            transactionListAdapter?.setContext(context)
+            transactionListAdapter?.setSavingAccountsTransactionList(transactionsList)
         } else {
             showEmptyTransactions()
         }
@@ -179,9 +182,9 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * Provides with a filtered list according to the constraints used in `filter()` function
      */
     override fun showFilteredList(list: List<Transactions?>?) {
-        if (list!!.size != 0) {
+        if (list != null && list.isNotEmpty()) {
             Toaster.show(rootView, getString(R.string.filtered))
-            transactionListAdapter!!.setSavingAccountsTransactionList(list)
+            transactionListAdapter?.setSavingAccountsTransactionList(list)
         } else {
             showEmptyTransactions()
         }
@@ -218,7 +221,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      *
      * @param date Date selected by user in [String]
      */
-    override fun onDatePicked(date: String) {
+    override fun onDatePicked(date: String?) {
         val timeInMillis = DateHelper.getDateAsLongFromString(date, "dd-MM-yyyy")
         if (datePick == DatePick.START) {
             tvEndDate!!.isEnabled = true
@@ -341,12 +344,13 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                     }
                     filterSavingsAccountTransactionsbyType(checkBoxAdapter!!.statusList)
                 })
-                .setNeutralButton(getString(R.string.clear_filters)
-                ) { dialog, which ->
-                    transactionListAdapter!!
-                            .setSavingAccountsTransactionList(transactionsList)
-                    initializeFilterVariables()
-                }
+                .setNeutralButton(getString(R.string.clear_filters),
+                        DialogInterface.OnClickListener { _, _ ->
+                            transactionListAdapter!!
+                                    .setSavingAccountsTransactionList(transactionsList)
+                            initializeFilterVariables()
+                        }
+                )
                 .setNegativeButton(R.string.cancel)
                 .createMaterialDialog()
                 .show()

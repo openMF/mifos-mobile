@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.activities
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -47,16 +48,16 @@ class PassCodeActivity : MifosPassCodeActivity() {
         MaterialDialog.Builder().init(this@PassCodeActivity)
                 .setCancelable(false)
                 .setMessage(R.string.login_using_password_confirmation)
-                .setPositiveButton(getString(R.string.logout)
-                ) { _, _ ->
-                    val i = Intent(this@PassCodeActivity,
-                            LoginActivity::class.java)
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(i)
-                    finish()
-                }
-                .setNegativeButton(getString(R.string.cancel)
-                ) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(getString(R.string.logout),
+                        DialogInterface.OnClickListener { _, _ ->
+                            val i = Intent(this@PassCodeActivity,
+                                    LoginActivity::class.java)
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
+                            finish()
+                        })
+                .setNegativeButton(getString(R.string.cancel),
+                        DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
                 .createMaterialDialog()
                 .show()
     }

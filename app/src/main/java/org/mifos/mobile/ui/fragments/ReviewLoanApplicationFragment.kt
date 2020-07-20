@@ -2,8 +2,7 @@ package org.mifos.mobile.ui.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -108,9 +107,9 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         btn_loan_submit.setOnClickListener {
             showProgress()
             viewModel.submitLoan()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribeWith(object : DisposableObserver<ResponseBody>() {
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.io())
+                    ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
                         override fun onComplete() {
                         }
 
@@ -132,10 +131,10 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     fun showLoanAccountUpdatedSuccessfully() {
         Toaster.show(rootView, R.string.loan_application_updated_successfully)
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun showError(message: String) = if (!Network.isConnected(activity)) {
+    fun showError(message: String?) = if (!Network.isConnected(activity)) {
         iv_status.setImageResource(R.drawable.ic_error_black_24dp)
         tv_status.text = getString(R.string.internet_not_connected)
         ll_add_loan.visibility = View.GONE
@@ -156,6 +155,6 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     fun showLoanAccountCreatedSuccessfully() {
         Toaster.show(rootView, R.string.loan_application_submitted_successfully)
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 }

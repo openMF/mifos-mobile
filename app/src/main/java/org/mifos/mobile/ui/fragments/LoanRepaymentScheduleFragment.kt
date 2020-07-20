@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.evrencoskun.tableview.TableView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.Periods
@@ -26,6 +29,7 @@ import org.mifos.mobile.ui.views.LoanRepaymentScheduleMvpView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
+
 import java.util.*
 import javax.inject.Inject
 
@@ -133,9 +137,9 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     }
 
     private fun setTableViewList(periods: List<Periods>) {
-        val mColumnHeaderList: MutableList<ColumnHeader> = ArrayList()
-        val mRowHeaders: MutableList<RowHeader> = ArrayList()
-        val mCellList: MutableList<List<Cell>> = ArrayList()
+        val mColumnHeaderList: MutableList<ColumnHeader?> = ArrayList()
+        val mRowHeaders: MutableList<RowHeader?> = ArrayList()
+        val mCellList: MutableList<List<Cell?>> = ArrayList()
         mColumnHeaderList.add(ColumnHeader(getString(R.string.date)))
         mColumnHeaderList.add(ColumnHeader(getString(R.string.loan_balance)))
         mColumnHeaderList.add(ColumnHeader(getString(R.string.repayment)))

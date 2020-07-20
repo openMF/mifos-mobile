@@ -2,6 +2,7 @@ package org.mifos.mobile.utils
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -69,12 +70,14 @@ object CheckSelfPermissionAndRequest {
      */
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    fun requestPermission(activity: AppCompatActivity,
-                          permission: String,
-                          permissionRequestCode: Int,
-                          dialogMessageRetry: String?,
-                          messageNeverAskAgain: String?,
-                          permissionDeniedStatus: String?) {
+    fun requestPermission(
+            activity: AppCompatActivity,
+            permission: String,
+            permissionRequestCode: Int,
+            dialogMessageRetry: String?,
+            messageNeverAskAgain: String?,
+            permissionDeniedStatus: String?
+    ) {
         // Should we show an explanation?
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
 
@@ -84,11 +87,11 @@ object CheckSelfPermissionAndRequest {
             MaterialDialog.Builder().init(activity)
                     .setTitle(R.string.dialog_permission_denied)
                     .setMessage(dialogMessageRetry)
-                    .setPositiveButton(R.string.dialog_action_re_try
-                    ) { dialog, which ->
-                        ActivityCompat.requestPermissions(activity, arrayOf(permission),
-                                permissionRequestCode)
-                    }
+                    .setPositiveButton(R.string.dialog_action_re_try,
+                            DialogInterface.OnClickListener { _, _ ->
+                                ActivityCompat.requestPermissions(activity, arrayOf(permission),
+                                        permissionRequestCode)
+                            })
                     .setNegativeButton(R.string.dialog_action_i_am_sure)
                     .createMaterialDialog()
                     .show()
@@ -96,7 +99,7 @@ object CheckSelfPermissionAndRequest {
 
             //Requesting Permission, first time to the device.
             val preferencesHelper = PreferencesHelper(activity.applicationContext)
-            if (preferencesHelper.getBoolean(permissionDeniedStatus, true)) {
+            if (preferencesHelper.getBoolean(permissionDeniedStatus, true) == true) {
                 preferencesHelper.putBoolean(permissionDeniedStatus, false)
                 ActivityCompat.requestPermissions(activity, arrayOf(permission),
                         permissionRequestCode)
@@ -106,21 +109,21 @@ object CheckSelfPermissionAndRequest {
                 MaterialDialog.Builder().init(activity)
                         .setMessage(messageNeverAskAgain)
                         .setNegativeButton(R.string.dialog_action_cancel)
-                        .setPositiveButton(R.string.dialog_action_app_settings
-                        ) { dialog, which -> //Making the Intent to grant the permission
-                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            val uri = Uri.fromParts(activity.resources.getString(
-                                    R.string.package_name), activity.packageName, null)
-                            intent.data = uri
-                            val pm = activity.packageManager
-                            if (intent.resolveActivity(pm) != null) {
-                                activity.startActivityForResult(intent,
-                                        Constants.REQUEST_PERMISSION_SETTING)
-                            } else {
-                                Toast.makeText(activity, activity.getString(
-                                        R.string.msg_setting_activity_not_found), Toast.LENGTH_LONG).show()
-                            }
-                        }
+                        .setPositiveButton(R.string.dialog_action_app_settings,
+                                DialogInterface.OnClickListener { _, _ -> //Making the Intent to grant the permission
+                                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                    val uri = Uri.fromParts(activity.resources.getString(
+                                            R.string.package_name), activity.packageName, null)
+                                    intent.data = uri
+                                    val pm = activity.packageManager
+                                    if (intent.resolveActivity(pm) != null) {
+                                        activity.startActivityForResult(intent,
+                                                Constants.REQUEST_PERMISSION_SETTING)
+                                    } else {
+                                        Toast.makeText(activity, activity.getString(
+                                                R.string.msg_setting_activity_not_found), Toast.LENGTH_LONG).show()
+                                    }
+                                })
                         .createMaterialDialog()
                         .show()
             }

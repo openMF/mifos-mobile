@@ -30,7 +30,8 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 05/06/16
  */
-class LoginPresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) : BasePresenter<LoginView?>(context) {
+class LoginPresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) :
+        BasePresenter<LoginView?>(context) {
 
     private val preferencesHelper: PreferencesHelper = dataManager.preferencesHelper
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -96,10 +97,10 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
      */
     fun loadClient() {
         checkViewAttached()
-        compositeDisposable.add(dataManager.clients
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<Page<Client>?>() {
+        dataManager.clients
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<Page<Client?>?>() {
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView!!.hideProgress()
@@ -112,21 +113,23 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
                         reInitializeService()
                     }
 
-                    override fun onNext(clientPage: Page<Client>) {
+                    override fun onNext(clientPage: Page<Client?>) {
                         mvpView!!.hideProgress()
                         if (clientPage.pageItems.isNotEmpty()) {
-                            val clientId = clientPage.pageItems[0].id.toLong()
+                            val clientId = clientPage.pageItems[0]?.id?.toLong()
                             preferencesHelper.clientId = clientId
                             dataManager.clientId = clientId
                             reInitializeService()
-                            mvpView!!.showPassCodeActivity()
+                            mvpView?.showPassCodeActivity()
                         } else {
-                            mvpView!!.showMessage(context
+                            mvpView?.showMessage(context
                                     .getString(R.string.error_client_not_found))
                         }
                     }
-                })
-        )
+                })?.let {
+                    compositeDisposable.add(it
+                    )
+                }
     }
 
     private fun isCredentialsValid(loginPayload: LoginPayload?): Boolean {

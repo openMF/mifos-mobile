@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -67,8 +68,10 @@ import javax.inject.Inject
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_guarantor_detail, container, false)
         setToolbarTitle(getString(R.string.guarantor_details))
         setHasOptionsMenu(true)
@@ -112,12 +115,14 @@ import javax.inject.Inject
         when (itemId) {
             R.id.menu_delete_guarantor -> MaterialDialog.Builder()
                     .init(context)
-                    .setTitle(getString(R.string.delete_guarantor))
+                    .setTitle(R.string.delete_guarantor)
                     .setMessage(getString(R.string.dialog_are_you_sure_that_you_want_to_string,
                             getString(R.string.delete_guarantor)))
-                    .setPositiveButton(getString(R.string.yes)
-                    ) { dialog, which -> presenter!!.deleteGuarantor(loanId, guarantorId) }
-                    .setNegativeButton(getString(R.string.cancel))
+                    .setPositiveButton(getString(R.string.yes),
+                            DialogInterface.OnClickListener { _, _ ->
+                                presenter?.deleteGuarantor(loanId, guarantorId)
+                            })
+                    .setNegativeButton(R.string.cancel)
                     .createMaterialDialog()
                     .show()
             R.id.menu_update_guarantor -> (activity as BaseActivity?)!!.replaceFragment(AddGuarantorFragment.Companion.newInstance(index, GuarantorState.UPDATE, payload, loanId),
@@ -154,8 +159,10 @@ import javax.inject.Inject
     }
 
     companion object {
-        fun newInstance(index: Int, loanId: Long,
-                        payload: GuarantorPayload?): GuarantorDetailFragment {
+        fun newInstance(
+                index: Int, loanId: Long,
+                payload: GuarantorPayload?
+        ): GuarantorDetailFragment {
             val fragment = GuarantorDetailFragment()
             val args = Bundle()
             args.putLong(Constants.LOAN_ID, loanId)

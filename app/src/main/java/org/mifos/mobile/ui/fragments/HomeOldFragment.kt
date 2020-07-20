@@ -1,10 +1,7 @@
 package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -88,24 +85,27 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     private var totalLoanAmount = 0.0
     private var totalSavingAmount = 0.0
     private var client: Client? = null
-    private var clientId: Long = 0
+    private var clientId: Long? = 0
     private var toolbarView: View? = null
-    private var isDetailVisible = false
+    private var isDetailVisible: Boolean? = false
     private var isReceiverRegistered = false
     private var tvNotificationCount: TextView? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_home_old, container, false)
-        (activity as HomeActivity?)!!.activityComponent!!.inject(this)
+        (activity as HomeActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
-        clientId = preferencesHelper!!.clientId
-        presenter!!.attachView(this)
+        clientId = preferencesHelper?.clientId
+        presenter?.attachView(this)
         setHasOptionsMenu(true)
-        slHomeContainer!!.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
-        slHomeContainer!!.setOnRefreshListener(this)
+        slHomeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        slHomeContainer?.setOnRefreshListener(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            llContainer!!.layoutTransition
-                    .enableTransitionType(LayoutTransition.CHANGING)
+            llContainer?.layoutTransition
+                    ?.enableTransitionType(LayoutTransition.CHANGING)
         }
         if (savedInstanceState == null) {
             loadClientData()
@@ -117,7 +117,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
 
     private val notificationReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            activity!!.invalidateOptionsMenu()
+            activity?.invalidateOptionsMenu()
         }
     }
 
@@ -126,7 +126,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         val menuItem = menu.findItem(R.id.menu_notifications)
         val count = menuItem.actionView
         tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
-        presenter!!.getUnreadNotificationsCount()
+        presenter?.getUnreadNotificationsCount()
         count.setOnClickListener { startActivity(Intent(context, NotificationActivity::class.java)) }
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -134,7 +134,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     override fun onResume() {
         super.onResume()
         registerReceiver()
-        activity!!.invalidateOptionsMenu()
+        activity?.invalidateOptionsMenu()
     }
 
     override fun onPause() {
@@ -162,7 +162,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as Client)
-            presenter!!.setUserProfile(preferencesHelper!!.userProfileImage)
+            presenter?.setUserProfile(preferencesHelper?.userProfileImage)
             showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN))
             showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS))
         }
@@ -173,15 +173,15 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     }
 
     private fun loadClientData() {
-        presenter!!.loadClientAccountDetails()
-        presenter!!.getUserDetails()
-        presenter!!.getUserImage()
+        presenter?.loadClientAccountDetails()
+        presenter?.getUserDetails()
+        presenter?.getUserImage()
     }
 
     override fun showUserInterface() {
-        toolbarView = (activity as HomeActivity?)!!.toolbar!!.rootView
-        isDetailVisible = preferencesHelper!!.overviewState()
-        if (isDetailVisible) {
+        toolbarView = (activity as HomeActivity?)?.toolbar?.rootView
+        isDetailVisible = preferencesHelper?.overviewState()
+        if (isDetailVisible == true) {
             showOverviewState()
         } else {
             hideOverviewState()
@@ -194,7 +194,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      * @param accountType Enum of [AccountType]
      */
     fun openAccount(accountType: AccountType?) {
-        (activity as BaseActivity?)!!.replaceFragment(
+        (activity as BaseActivity?)?.replaceFragment(
                 ClientAccountsFragment.newInstance(accountType), true, R.id.container)
     }
 
@@ -205,7 +205,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun showLoanAccountDetails(totalLoanAmount: Double) {
         this.totalLoanAmount = totalLoanAmount
-        tvLoanTotalAmount!!.text = CurrencyUtil.formatCurrency(context, totalLoanAmount)
+        tvLoanTotalAmount?.text = CurrencyUtil.formatCurrency(context, totalLoanAmount)
     }
 
     /**
@@ -214,7 +214,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @OnClick(R.id.ll_total_loan)
     fun onClickLoan() {
         openAccount(AccountType.LOAN)
-        (activity as HomeActivity?)!!.setNavigationViewSelectedItem(R.id.item_accounts)
+        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
     }
 
     /**
@@ -224,7 +224,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun showSavingAccountDetails(totalSavingAmount: Double) {
         this.totalSavingAmount = totalSavingAmount
-        tvSavingTotalAmount!!.text = CurrencyUtil.formatCurrency(context, totalSavingAmount)
+        tvSavingTotalAmount?.text = CurrencyUtil.formatCurrency(context, totalSavingAmount)
     }
 
     /**
@@ -233,7 +233,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @OnClick(R.id.ll_total_savings)
     fun onClickSavings() {
         openAccount(AccountType.SAVINGS)
-        (activity as HomeActivity?)!!.setNavigationViewSelectedItem(R.id.item_accounts)
+        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
     }
 
     /**
@@ -243,7 +243,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun showUserDetails(client: Client?) {
         this.client = client
-        tvUserName!!.text = getString(R.string.hello_client, client!!.displayName)
+        tvUserName?.text = getString(R.string.hello_client, client?.displayName)
     }
 
     /**
@@ -252,18 +252,18 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      * @param bitmap Client Image
      */
     override fun showUserImage(bitmap: Bitmap?) {
-        activity!!.runOnUiThread {
+        activity?.runOnUiThread {
             if (bitmap != null) {
-                ivUserImage!!.visibility = View.GONE
-                ivCircularUserImage!!.visibility = View.VISIBLE
-                ivCircularUserImage!!.setImageBitmap(bitmap)
+                ivUserImage?.visibility = View.GONE
+                ivCircularUserImage?.visibility = View.VISIBLE
+                ivCircularUserImage?.setImageBitmap(bitmap)
             } else {
-                val userName: String
-                userName = if (!preferencesHelper!!.clientName.isEmpty()) {
-                    preferencesHelper!!.clientName
+                val userName: String = (if (preferencesHelper?.clientName?.isNotEmpty() == true) {
+                    preferencesHelper?.clientName
                 } else {
                     getString(R.string.app_name)
-                }
+                }) as String
+
                 val drawable = TextDrawable.builder()
                         .beginConfig()
                         .toUpperCase()
@@ -271,19 +271,19 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
                         .buildRound(userName.substring(0, 1),
                                 ContextCompat.getColor(
                                         context!!, R.color.primary))
-                ivUserImage!!.visibility = View.VISIBLE
-                ivUserImage!!.setImageDrawable(drawable)
-                ivCircularUserImage!!.visibility = View.GONE
+                ivUserImage?.visibility = View.VISIBLE
+                ivUserImage?.setImageDrawable(drawable)
+                ivCircularUserImage?.visibility = View.GONE
             }
         }
     }
 
     override fun showNotificationCount(count: Int) {
         if (count > 0) {
-            tvNotificationCount!!.visibility = View.VISIBLE
-            tvNotificationCount!!.text = count.toString()
+            tvNotificationCount?.visibility = View.VISIBLE
+            tvNotificationCount?.text = count.toString()
         } else {
-            tvNotificationCount!!.visibility = View.GONE
+            tvNotificationCount?.visibility = View.GONE
         }
     }
 
@@ -297,13 +297,13 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.iv_visibility)
     fun reverseDetailState() {
-        if (isDetailVisible) {
+        if (isDetailVisible == true) {
             isDetailVisible = false
-            preferencesHelper!!.setOverviewState(false)
+            preferencesHelper?.setOverviewState(false)
             hideOverviewState()
         } else {
             isDetailVisible = true
-            preferencesHelper!!.setOverviewState(true)
+            preferencesHelper?.setOverviewState(true)
             showOverviewState()
         }
     }
@@ -312,19 +312,19 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      * Makes Overview state visible
      */
     private fun showOverviewState() {
-        ivVisibility!!.setImageDrawable(resources.getDrawable(R.drawable.ic_visibility_24px))
-        ivVisibility!!.setColorFilter(ContextCompat.getColor(activity!!, R.color.gray_dark))
-        llAccountDetail!!.visibility = View.VISIBLE
+        ivVisibility?.setImageDrawable(resources.getDrawable(R.drawable.ic_visibility_24px))
+        ivVisibility?.setColorFilter(ContextCompat.getColor(activity?.applicationContext!!, R.color.gray_dark))
+        llAccountDetail?.visibility = View.VISIBLE
     }
 
     /**
      * Hides Overview state
      */
     private fun hideOverviewState() {
-        ivVisibility!!.setImageDrawable(resources
+        ivVisibility?.setImageDrawable(resources
                 .getDrawable(R.drawable.ic_visibility_off_24px))
-        ivVisibility!!.setColorFilter(ContextCompat.getColor(activity!!, R.color.light_grey))
-        llAccountDetail!!.visibility = View.GONE
+        ivVisibility?.setColorFilter(ContextCompat.getColor(activity?.applicationContext!!, R.color.light_grey))
+        llAccountDetail?.visibility = View.GONE
     }
 
     /**
@@ -333,7 +333,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @OnClick(R.id.ll_accounts)
     fun accountsClicked() {
         openAccount(AccountType.SAVINGS)
-        (activity as HomeActivity?)!!.setNavigationViewSelectedItem(R.id.item_accounts)
+        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
     }
 
     /**
@@ -344,16 +344,17 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         val transferTypes = arrayOf(getString(R.string.transfer), getString(R.string.third_party_transfer))
         MaterialDialog.Builder().init(activity)
                 .setTitle(R.string.choose_transfer_type)
-                .setItems(transferTypes) { dialog, which ->
-                    if (which == 0) {
-                        (activity as HomeActivity?)!!.replaceFragment(
-                                SavingsMakeTransferFragment.Companion.newInstance(1, ""), true,
-                                R.id.container)
-                    } else {
-                        (activity as HomeActivity?)!!.replaceFragment(
-                                ThirdPartyTransferFragment.Companion.newInstance(), true, R.id.container)
-                    }
-                }
+                .setItems(transferTypes,
+                        DialogInterface.OnClickListener { _, which ->
+                            if (which == 0) {
+                                (activity as HomeActivity?)?.replaceFragment(
+                                        SavingsMakeTransferFragment.newInstance(1, ""), true,
+                                        R.id.container)
+                            } else {
+                                (activity as HomeActivity?)?.replaceFragment(
+                                        ThirdPartyTransferFragment.newInstance(), true, R.id.container)
+                            }
+                        })
                 .createMaterialDialog()
                 .show()
     }
@@ -363,7 +364,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_charges)
     fun chargesClicked() {
-        (activity as HomeActivity?)!!.replaceFragment(ClientChargeFragment.Companion.newInstance(clientId,
+        (activity as HomeActivity?)?.replaceFragment(ClientChargeFragment.Companion.newInstance(clientId,
                 ChargeType.CLIENT), true, R.id.container)
     }
 
@@ -381,7 +382,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_beneficiaries)
     fun beneficiaries() {
-        (activity as HomeActivity?)!!.replaceFragment(BeneficiaryListFragment.Companion.newInstance(), true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(BeneficiaryListFragment.Companion.newInstance(), true, R.id.container)
     }
 
     @OnClick(R.id.ll_surveys)
@@ -394,7 +395,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      * @param errorMessage Error message that tells the user about the problem.
      */
     override fun showError(errorMessage: String?) {
-        val checkedItem = (activity as HomeActivity?)!!.checkedItem
+        val checkedItem = (activity as HomeActivity?)?.checkedItem
         if (checkedItem == R.id.item_about_us || checkedItem == R.id.item_help || checkedItem == R.id.item_settings) {
             return
         }
@@ -405,23 +406,23 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      * Shows [SwipeRefreshLayout]
      */
     override fun showProgress() {
-        slHomeContainer!!.isRefreshing = true
+        slHomeContainer?.isRefreshing = true
     }
 
     /**
      * Hides [SwipeRefreshLayout]
      */
     override fun hideProgress() {
-        slHomeContainer!!.isRefreshing = false
+        slHomeContainer?.isRefreshing = false
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (slHomeContainer!!.isRefreshing) {
-            slHomeContainer!!.isRefreshing = false
-            slHomeContainer!!.removeAllViews()
+        if (slHomeContainer?.isRefreshing == true) {
+            slHomeContainer?.isRefreshing = false
+            slHomeContainer?.removeAllViews()
         }
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {
