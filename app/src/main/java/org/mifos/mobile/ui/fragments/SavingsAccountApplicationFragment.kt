@@ -8,9 +8,11 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
@@ -26,12 +28,15 @@ import org.mifos.mobile.ui.views.SavingsAccountApplicationView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.MFDatePicker
+
 import java.util.*
 import javax.inject.Inject
 
 /*
 * Created by saksham on 30/June/2018
-*/   class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
+*/
+class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.sp_product_id)
     var spProductId: Spinner? = null
@@ -63,18 +68,20 @@ import javax.inject.Inject
         if (arguments != null) {
             state = arguments!!
                     .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
-            savingsWithAssociations = arguments!!.getParcelable(Constants.SAVINGS_ACCOUNTS)
+            savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_savings_account_application, container,
                 false)
         ButterKnife.bind(this, rootView!!)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
-        presenter!!.attachView(this)
-        presenter!!.loadSavingsAccountApplicationTemplate(preferencesHelper!!.clientId, state)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        presenter?.attachView(this)
+        presenter?.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
         return rootView
     }
 
@@ -84,50 +91,51 @@ import javax.inject.Inject
 
     override fun showSavingsAccountApplicationSuccessfully() {
         showMessage(getString(R.string.new_saving_account_created_successfully))
-        activity!!.finish()
+        activity?.finish()
     }
 
     override fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?) {
         showUserInterface(template)
-        activity!!.title = getString(R.string.string_savings_account,
+        activity?.title = getString(R.string.string_savings_account,
                 getString(R.string.update))
-        spProductId!!.setSelection(productIdAdapter!!.getPosition(savingsWithAssociations!!
-                .savingsProductName))
+        productIdAdapter?.getPosition(savingsWithAssociations
+                ?.savingsProductName)?.let { spProductId?.setSelection(it) }
     }
 
     override fun showSavingsAccountUpdateSuccessfully() {
         showMessage(getString(R.string.saving_account_updated_successfully))
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     fun showUserInterface(template: SavingsAccountTemplate?) {
         this.template = template
-        productOptions = template!!.productOptions
-        for ((_, name) in productOptions!!) {
-            productIdList.add(name)
-        }
-        tvClientName!!.text = template.clientName
+        productOptions = template?.productOptions
+        if (productOptions != null)
+            for ((_, name) in productOptions as ArrayList<ProductOptions>) {
+                productIdList.add(name)
+            }
+        tvClientName?.text = template?.clientName
         productIdAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item,
                 productIdList)
-        productIdAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spProductId!!.adapter = productIdAdapter
-        tvSubmissionDate!!.text = MFDatePicker.getDatePickedAsString()
+        productIdAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spProductId?.adapter = productIdAdapter
+        tvSubmissionDate?.text = MFDatePicker.datePickedAsString
     }
 
-    fun submitSavingsAccountApplication() {
+    private fun submitSavingsAccountApplication() {
         val payload = SavingsAccountApplicationPayload()
-        payload.clientId = template!!.clientId
-        payload.productId = productOptions!![spProductId!!.selectedItemPosition].id
+        payload.clientId = template?.clientId
+        payload.productId = spProductId?.selectedItemPosition?.let { productOptions?.get(it)?.id }
         payload.submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.getDatePickedAsString())
-        presenter!!.submitSavingsAccountApplication(payload)
+                MFDatePicker.datePickedAsString)
+        presenter?.submitSavingsAccountApplication(payload)
     }
 
-    fun updateSavingAccount() {
+    private fun updateSavingAccount() {
         val payload = SavingsAccountUpdatePayload()
-        payload.clientId = template!!.clientId.toLong()
-        payload.productId = productOptions!![spProductId!!.selectedItemPosition].id!!.toLong()
-        presenter!!.updateSavingsAccount(savingsWithAssociations!!.accountNo, payload)
+        payload.clientId = template?.clientId?.toLong()
+        payload.productId = spProductId?.selectedItemPosition?.let { productOptions?.get(it)?.id }?.toLong()
+        presenter?.updateSavingsAccount(savingsWithAssociations?.accountNo, payload)
     }
 
     @OnClick(R.id.btn_submit)
@@ -143,8 +151,8 @@ import javax.inject.Inject
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showMessage(message: String?) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    override fun showMessage(showMessage: String?) {
+        Toast.makeText(context, showMessage, Toast.LENGTH_SHORT).show()
     }
 
     override fun showProgress() {
@@ -158,13 +166,14 @@ import javax.inject.Inject
     override fun onDestroy() {
         super.onDestroy()
         hideProgress()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {
         @kotlin.jvm.JvmStatic
         fun newInstance(
-                state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?): SavingsAccountApplicationFragment {
+                state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
+        ): SavingsAccountApplicationFragment {
             val fragment = SavingsAccountApplicationFragment()
             val bundle = Bundle()
             bundle.putSerializable(Constants.SAVINGS_ACCOUNT_STATE, state)

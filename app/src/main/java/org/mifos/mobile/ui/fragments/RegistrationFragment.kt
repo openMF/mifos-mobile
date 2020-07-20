@@ -155,7 +155,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         }
     }
 
-    @SuppressLint("StringFormatInvalid", "StringFormatMatches")
     private fun areFieldsValidated(): Boolean {
         if (etAccountNumber!!.text.toString().trim { it <= ' ' }.isEmpty()) {
             Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.account_number)))

@@ -292,7 +292,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * Initializes `tvSubmissionDate` with current Date
      */
     private fun inflateSubmissionDate() {
-        tvSubmissionDate!!.text = MFDatePicker.getDatePickedAsString()
+        tvSubmissionDate!!.text = MFDatePicker.datePickedAsString
     }
 
     /**
@@ -300,7 +300,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     private fun inflateDisbursementDate() {
         mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS, active)
-        tvExpectedDisbursementDate!!.text = MFDatePicker.getDatePickedAsString()
+        tvExpectedDisbursementDate!!.text = MFDatePicker.datePickedAsString
         active = true
     }
 
@@ -330,7 +330,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      *
      * @param date Date selected by user in [String]
      */
-    override fun onDatePicked(date: String) {
+    override fun onDatePicked(date: String?) {
         if (isDisbursementDate) {
             tvExpectedDisbursementDate!!.text = date
             disbursementDate = date

@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -78,7 +79,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
         tvAccountNumber!!.text = beneficiary!!.accountNumber
         tvClientName!!.text = beneficiary!!.clientName
         tvAccountType!!.text = beneficiary!!.accountType!!.value
-        tvTransferLimit!!.text = CurrencyUtil.formatCurrency(activity, beneficiary!!.transferLimit!!)
+        tvTransferLimit!!.text = CurrencyUtil.formatCurrency(activity!!, beneficiary!!.transferLimit!!)
         tvOfficeName!!.text = beneficiary!!.officeName
     }
 
@@ -89,17 +90,17 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_update_beneficiary -> (activity as BaseActivity?)!!.replaceFragment(BeneficiaryApplicationFragment.Companion.newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container)
+            R.id.item_update_beneficiary -> (activity as BaseActivity?)!!.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container)
             R.id.item_delete_beneficiary -> MaterialDialog.Builder().init(activity)
                     .setTitle(getString(R.string.delete_beneficiary))
                     .setMessage(getString(R.string.delete_beneficiary_confirmation))
-                    .setPositiveButton(getString(R.string.delete)
-                    ) { dialog, which ->
-                        dialog.dismiss()
-                        presenter!!.deleteBeneficiary(beneficiary!!.id!!.toLong())
-                    }
-                    .setNegativeButton(getString(R.string.cancel)
-                    ) { dialog, which -> dialog.dismiss() }
+                    .setPositiveButton(getString(R.string.delete),
+                            DialogInterface.OnClickListener { dialog, which ->
+                                dialog.dismiss()
+                                presenter!!.deleteBeneficiary(beneficiary!!.id!!.toLong())
+                            })
+                    .setNegativeButton(getString(R.string.cancel),
+                            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
                     .createMaterialDialog()
                     .show()
         }

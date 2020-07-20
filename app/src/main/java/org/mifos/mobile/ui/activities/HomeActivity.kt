@@ -1,9 +1,6 @@
 package org.mifos.mobile.ui.activities
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -46,6 +43,7 @@ import javax.inject.Inject
  * @since 14/07/2016
  */
 class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
     @JvmField
     @BindView(R.id.navigation_view)
     var navigationView: NavigationView? = null
@@ -63,13 +61,14 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     private var tvUsername: TextView? = null
     private var ivCircularUserProfilePicture: CircularImageView? = null
     private var ivTextDrawableUserProfilePicture: ImageView? = null
-    private var clientId: Long = 0
+    private var clientId: Long? = 0
     private var userProfileBitmap: Bitmap? = null
     private var client: Client? = null
     private var isReceiverRegistered = false
     var checkedItem = 0
         private set
     private var doubleBackToExitPressedOnce = false
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityComponent?.inject(this)
@@ -91,10 +90,10 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             showUserImage(null)
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
-            detailsPresenter!!.setUserProfile(preferencesHelper.userProfileImage)
-            showUserDetails(client!!)
+            detailsPresenter?.setUserProfile(preferencesHelper.userProfileImage)
+            showUserDetails(client)
         }
-        if (checkPlayServices() && !preferencesHelper.sentTokenToServerState()) {
+        if (checkPlayServices() && preferencesHelper.sentTokenToServerState() == false) {
             // Start IntentService to register this application with GCM.
             val intent = Intent(this, RegistrationIntentService::class.java)
             startService(intent)
@@ -165,7 +164,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         }
 
         // close the drawer
-        drawerLayout!!.closeDrawer(GravityCompat.START)
+        drawerLayout?.closeDrawer(GravityCompat.START)
         return true
     }
 
@@ -176,16 +175,16 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         MaterialDialog.Builder().init(this@HomeActivity)
                 .setCancelable(false)
                 .setMessage(R.string.dialog_logout)
-                .setPositiveButton(getString(R.string.logout)
-                ) { _, _ ->
-                    preferencesHelper.clear()
-                    val i = Intent(this@HomeActivity, LoginActivity::class.java)
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(i)
-                    finish()
-                }
-                .setNegativeButton(getString(R.string.cancel)
-                ) { _, _ -> setNavigationViewSelectedItem(R.id.item_home) }
+                .setPositiveButton(getString(R.string.logout),
+                        DialogInterface.OnClickListener { _, _ ->
+                            preferencesHelper?.clear()
+                            val i = Intent(this@HomeActivity, LoginActivity::class.java)
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
+                            finish()
+                        })
+                .setNegativeButton(getString(R.string.cancel),
+                        DialogInterface.OnClickListener { _, _ -> setNavigationViewSelectedItem(R.id.item_home) })
                 .createMaterialDialog()
                 .show()
     }
@@ -195,7 +194,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * self-service application
      */
     private fun setupNavigationBar() {
-        navigationView!!.setNavigationItemSelectedListener(this)
+        navigationView?.setNavigationItemSelectedListener(this)
         val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this,
                 drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
             override fun onDrawerClosed(drawerView: View) {
@@ -207,9 +206,9 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 hideKeyboard(drawerView)
             }
         }
-        drawerLayout!!.addDrawerListener(actionBarDrawerToggle)
+        drawerLayout?.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        setupHeaderView(navigationView!!.getHeaderView(0))
+        navigationView?.getHeaderView(0)?.let { setupHeaderView(it) }
         setUpBackStackListener()
     }
 
@@ -235,7 +234,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     override fun showUserDetails(client: Client?) {
         this.client = client
         preferencesHelper.clientName = client?.displayName
-        tvUsername!!.text = client?.displayName
+        tvUsername?.text = client?.displayName
     }
 
     /**
@@ -247,27 +246,27 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         if (bitmap != null) {
             runOnUiThread {
                 userProfileBitmap = bitmap
-                ivCircularUserProfilePicture!!.setImageBitmap(bitmap)
-                ivCircularUserProfilePicture!!.visibility = View.VISIBLE
-                ivTextDrawableUserProfilePicture!!.visibility = View.GONE
+                ivCircularUserProfilePicture?.setImageBitmap(bitmap)
+                ivCircularUserProfilePicture?.visibility = View.VISIBLE
+                ivTextDrawableUserProfilePicture?.visibility = View.GONE
             }
         } else {
             runOnUiThread {
-                val userName: String = if (preferencesHelper.clientName.isNotEmpty()) {
+                val userName: String? = if (preferencesHelper.clientName?.isNotEmpty() == true) {
                     preferencesHelper.clientName
                 } else {
                     getString(R.string.app_name)
                 }
-                ivCircularUserProfilePicture!!.visibility = View.GONE
-                ivTextDrawableUserProfilePicture!!.visibility = View.VISIBLE
+                ivCircularUserProfilePicture?.visibility = View.GONE
+                ivTextDrawableUserProfilePicture?.visibility = View.VISIBLE
                 val drawable = TextDrawable.builder()
                         .beginConfig()
                         .toUpperCase()
                         .endConfig()
-                        .buildRound(userName.substring(0, 1),
+                        .buildRound(userName?.substring(0, 1),
                                 ContextCompat.getColor(
                                         this@HomeActivity, R.color.primary_dark))
-                ivTextDrawableUserProfilePicture!!.setImageDrawable(drawable)
+                ivTextDrawableUserProfilePicture?.setImageDrawable(drawable)
             }
         }
     }
@@ -291,15 +290,15 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
 
     override fun onDestroy() {
         super.onDestroy()
-        detailsPresenter!!.detachView()
+        detailsPresenter?.detachView()
     }
 
     /**
      * Handling back press
      */
     override fun onBackPressed() {
-        if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout!!.closeDrawer(GravityCompat.START)
+        if (drawerLayout?.isDrawerOpen(GravityCompat.START)!!) {
+            drawerLayout?.closeDrawer(GravityCompat.START)
             return
         }
         val fragment = supportFragmentManager.findFragmentById(R.id.container)
@@ -321,31 +320,38 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         supportFragmentManager.addOnBackStackChangedListener {
             val fragment = supportFragmentManager.findFragmentById(R.id.container)
             setToolbarElevation()
-            if (fragment is HomeOldFragment) {
-                setNavigationViewSelectedItem(R.id.item_home)
-            } else if (fragment is ClientAccountsFragment) {
-                hideToolbarElevation()
-                setNavigationViewSelectedItem(R.id.item_accounts)
-            } else if (fragment is RecentTransactionsFragment) {
-                setNavigationViewSelectedItem(R.id.item_recent_transactions)
-            } else if (fragment is ClientChargeFragment) {
-                setNavigationViewSelectedItem(R.id.item_charges)
-            } else if (fragment is ThirdPartyTransferFragment) {
-                setNavigationViewSelectedItem(R.id.item_third_party_transfer)
-            } else if (fragment is BeneficiaryListFragment) {
-                setNavigationViewSelectedItem(R.id.item_beneficiaries)
+            when (fragment) {
+                is HomeOldFragment -> {
+                    setNavigationViewSelectedItem(R.id.item_home)
+                }
+                is ClientAccountsFragment -> {
+                    hideToolbarElevation()
+                    setNavigationViewSelectedItem(R.id.item_accounts)
+                }
+                is RecentTransactionsFragment -> {
+                    setNavigationViewSelectedItem(R.id.item_recent_transactions)
+                }
+                is ClientChargeFragment -> {
+                    setNavigationViewSelectedItem(R.id.item_charges)
+                }
+                is ThirdPartyTransferFragment -> {
+                    setNavigationViewSelectedItem(R.id.item_third_party_transfer)
+                }
+                is BeneficiaryListFragment -> {
+                    setNavigationViewSelectedItem(R.id.item_beneficiaries)
+                }
             }
         }
     }
 
     fun setNavigationViewSelectedItem(id: Int) {
-        navigationView!!.setCheckedItem(id)
+        navigationView?.setCheckedItem(id)
     }
 
     override fun onClick(v: View) {
         // Click Header to view full profile of User
         startActivity(Intent(this@HomeActivity, UserProfileActivity::class.java))
-        drawerLayout!!.closeDrawer(GravityCompat.START)
+        drawerLayout?.closeDrawer(GravityCompat.START)
     }
 
     /**
