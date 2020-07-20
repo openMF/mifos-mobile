@@ -49,13 +49,13 @@ class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataMa
 
     fun getLoanState() = loanState
 
-    fun submitLoan(): Observable<ResponseBody> {
+    fun submitLoan(): Observable<ResponseBody?>? {
         loansPayload.productName = null
         loansPayload.loanPurpose = null
         loansPayload.currency = null
-        if (loanState == LoanState.CREATE)
-            return dataManager.createLoansAccount(loansPayload)
+        return if (loanState == LoanState.CREATE)
+            dataManager.createLoansAccount(loansPayload)
         else
-            return dataManager.updateLoanAccount(loanId, loansPayload)
+            dataManager.updateLoanAccount(loanId, loansPayload)
     }
 }

@@ -59,20 +59,25 @@ import javax.inject.Inject
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_guarantor_list, container, false)
-        ButterKnife.bind(this, rootView!!)
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        val rootView: View = inflater.inflate(R.layout.fragment_guarantor_list, container, false)
+        ButterKnife.bind(this, rootView)
         setToolbarTitle(getString(R.string.view_guarantor))
         (activity as BaseActivity?)!!.activityComponent!!.inject(this)
         presenter!!.attachView(this)
         if (list == null) {
-            presenter!!.getGuarantorList(loanId)
-            adapter = GuarantorListAdapter(context
-            ) { position ->
-                (activity as BaseActivity?)!!.replaceFragment(GuarantorDetailFragment.Companion.newInstance(position, loanId, list!![position]),
-                        true, R.id.container)
-            }
+            presenter?.getGuarantorList(loanId)
+            adapter = GuarantorListAdapter(context,
+                    object : GuarantorListAdapter.OnClickListener {
+                        override fun setOnClickListener(position: Int) {
+                            (activity as BaseActivity?)!!.replaceFragment(GuarantorDetailFragment
+                                    .newInstance(position, loanId, list!![position]),
+                                    true, R.id.container)
+                        }
+                    })
             setUpRxBus()
         }
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
@@ -81,8 +86,8 @@ import javax.inject.Inject
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (list != null && list!!.size == 0) {
-            sweetUIErrorHandler!!.showSweetCustomErrorUI(getString(R.string.no_guarantors),
+        if (list != null && list?.size == 0) {
+            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.no_guarantors),
                     getString(R.string.tap_to_add_guarantor),
                     R.drawable.ic_person_black_24dp, llContainer, layoutError)
         }

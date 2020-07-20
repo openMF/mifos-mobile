@@ -35,6 +35,7 @@ import javax.inject.Inject
  * Created by dilpreet on 14/6/17.
  */
 class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItemClickListener, OnRefreshListener, BeneficiariesView {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.rv_beneficiaries)
     var rvBeneficiaries: RecyclerView? = null
@@ -105,7 +106,7 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvBeneficiaries!!.layoutManager = layoutManager
         rvBeneficiaries!!.setHasFixedSize(true)
-        rvBeneficiaries!!.addItemDecoration(DividerItemDecoration(activity, layoutManager.orientation))
+        rvBeneficiaries!!.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
         rvBeneficiaries!!.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
         rvBeneficiaries!!.adapter = beneficiaryListAdapter
         swipeRefreshLayout!!.setColorSchemeColors(*activity!!
@@ -116,7 +117,7 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
 
     @OnClick(R.id.btn_try_again)
     fun retryClicked() {
-        if (Network.isConnected(context)) {
+        if (Network.isConnected((context?.applicationContext)!!)) {
             sweetUIErrorHandler!!.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
             beneficiaryListPresenter!!.loadBeneficiaries()
         } else {
@@ -155,7 +156,7 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
      * @param msg Error message that tells the user about the problem.
      */
     override fun showError(msg: String?) {
-        if (!Network.isConnected(activity)) {
+        if (!Network.isConnected((activity?.applicationContext)!!)) {
             sweetUIErrorHandler!!.showSweetNoInternetUI(rvBeneficiaries, layoutError)
         } else {
             sweetUIErrorHandler!!.showSweetErrorUI(msg,
@@ -169,18 +170,18 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
      */
     override fun showBeneficiaryList(beneficiaryList: List<Beneficiary?>?) {
         this.beneficiaryList = beneficiaryList
-        if (beneficiaryList!!.size != 0) {
+        if (beneficiaryList!!.isNotEmpty()) {
             beneficiaryListAdapter!!.setBeneficiaryList(beneficiaryList)
         } else {
             showEmptyBeneficiary()
         }
     }
 
-    override fun onItemClick(childView: View, position: Int) {
+    override fun onItemClick(childView: View?, position: Int) {
         (activity as BaseActivity?)!!.replaceFragment(BeneficiaryDetailFragment.Companion.newInstance(beneficiaryList!![position]), true, R.id.container)
     }
 
-    override fun onItemLongPress(childView: View, position: Int) {}
+    override fun onItemLongPress(childView: View?, position: Int) {}
     fun showSwipeRefreshLayout(show: Boolean) {
         swipeRefreshLayout!!.post { swipeRefreshLayout!!.isRefreshing = show }
     }
@@ -193,7 +194,7 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
     /**
      * Shows an error layout when this function is called.
      */
-    fun showEmptyBeneficiary() {
+    private fun showEmptyBeneficiary() {
         sweetUIErrorHandler!!.showSweetEmptyUI(getString(R.string.beneficiary),
                 getString(R.string.beneficiary),
                 R.drawable.ic_beneficiaries_48px, rvBeneficiaries, layoutError)

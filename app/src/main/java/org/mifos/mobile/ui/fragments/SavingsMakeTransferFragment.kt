@@ -218,7 +218,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         spPayTo!!.adapter = payToAdapter
         spPayTo!!.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.getDatePickedAsString())
+                MFDatePicker.datePickedAsString)
         if (isLoanRepayment) {
             etAmount!!.setText(outStandingBalance.toString())
             etAmount!!.isFocusable = false
