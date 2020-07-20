@@ -28,7 +28,7 @@ import javax.inject.Inject
  * Created by dilpreet on 19/6/17.
  */
 class HomePresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) : BasePresenter<HomeView?>(context) {
-    private val compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable? = CompositeDisposable()
 
     @JvmField
     @set:Inject
@@ -39,7 +39,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
 
     override fun detachView() {
         super.detachView()
-        compositeDisposable.clear()
+        compositeDisposable?.clear()
     }
 
     /**
@@ -50,29 +50,26 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
     val userDetails: Unit
         get() {
             checkViewAttached()
-            compositeDisposable.add(dataManager.currentClient
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribeWith(object : DisposableObserver<Client?>() {
+            dataManager.currentClient
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.io())
+                    ?.subscribeWith(object : DisposableObserver<Client?>() {
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {
-                            mvpView!!.showError(context.getString(R.string.error_fetching_client))
-                            mvpView!!.hideProgress()
+                            mvpView?.showError(context.getString(R.string.error_fetching_client))
+                            mvpView?.hideProgress()
                         }
 
                         override fun onNext(client: Client) {
-                            mvpView!!.hideProgress()
-                            if (client != null) {
-                                preferencesHelper!!.officeName = client.officeName
-                                preferencesHelper!!.clientName = client.displayName
-                                mvpView!!.showUserDetails(preferencesHelper!!.clientName)
-                            } else {
-                                mvpView!!.showError(context
-                                        .getString(R.string.error_client_not_found))
-                            }
+                            mvpView?.hideProgress()
+                            preferencesHelper!!.officeName = client.officeName
+                            preferencesHelper!!.clientName = client.displayName
+                            mvpView!!.showUserDetails(preferencesHelper!!.clientName)
                         }
-                    })
-            )
+                    })?.let {
+                        compositeDisposable?.add(it
+                        )
+                    }
         }
 
     /**
@@ -82,10 +79,10 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
     val userImage: Unit
         get() {
             checkViewAttached()
-            compositeDisposable.add(dataManager.clientImage
-                    .observeOn(Schedulers.newThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribeWith(object : DisposableObserver<ResponseBody?>() {
+            dataManager.clientImage
+                    ?.observeOn(Schedulers.newThread())
+                    ?.subscribeOn(Schedulers.io())
+                    ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {
                             mvpView!!.showUserImageNotFound()
@@ -96,18 +93,20 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
                                 val encodedString = response.string()
                                 val pureBase64Encoded = encodedString.substring(encodedString.indexOf(',') + 1)
                                 val decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT)
-                                val decodedBitmap = ImageUtil.getInstance().compressImage(decodedBytes, 256f, 256f)
+                                val decodedBitmap = ImageUtil.instance?.compressImage(decodedBytes, 256f, 256f)
                                 mvpView!!.showUserImage(decodedBitmap)
                             } catch (e: IOException) {
                                 Log.d("userimage", e.toString())
                             }
                         }
-                    })
-            )
+                    })?.let {
+                        compositeDisposable?.add(it
+                        )
+                    }
         }
     val unreadNotificationsCount: Unit
         get() {
-            compositeDisposable.add(dataManager.unreadNotificationsCount
+            compositeDisposable?.add(dataManager.unreadNotificationsCount
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.computation())
                     .subscribeWith(object : DisposableObserver<Int?>() {
@@ -119,16 +118,4 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
                     }))
         }
 
-    /**
-     * Initialises the LoginPresenter by automatically injecting an instance of
-     * [DataManager] and [Context].
-     *
-     * @param dataManager DataManager class that provides access to the data
-     * via the API.
-     * @param context     Context of the view attached to the presenter. In this case
-     * it is that of an [androidx.appcompat.app.AppCompatActivity]
-     */
-    init {
-        compositeDisposable = CompositeDisposable()
-    }
 }

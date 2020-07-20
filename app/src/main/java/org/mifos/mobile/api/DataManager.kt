@@ -47,144 +47,155 @@ import javax.inject.Singleton
  * @since 13/6/16.
  */
 @Singleton
-class DataManager @Inject constructor(val preferencesHelper: PreferencesHelper, private val baseApiManager: BaseApiManager,
-                                      private val databaseHelper: DatabaseHelper) {
-    var clientId: Long = preferencesHelper.clientId
+class DataManager @Inject constructor(
+        val preferencesHelper: PreferencesHelper, private val baseApiManager: BaseApiManager,
+        private val databaseHelper: DatabaseHelper
+) {
+    var clientId: Long? = preferencesHelper.clientId
     fun login(loginPayload: LoginPayload?): Observable<User?>? {
         return baseApiManager.authenticationApi?.authenticate(loginPayload)
     }
 
-    val clients: Observable<Page<Client>>
-        get() = baseApiManager.clientsApi!!.clients
-    val currentClient: Observable<Client>
-        get() = baseApiManager.clientsApi!!.getClientForId(clientId)
-    val clientImage: Observable<ResponseBody>
-        get() = baseApiManager.clientsApi!!.getClientImage(clientId)
-    val clientAccounts: Observable<ClientAccounts>
-        get() = baseApiManager.clientsApi!!.getClientAccounts(clientId)
+    val clients: Observable<Page<Client?>?>?
+        get() = baseApiManager.clientsApi?.clients
+    val currentClient: Observable<Client?>?
+        get() = baseApiManager.clientsApi?.getClientForId(clientId)
+    val clientImage: Observable<ResponseBody?>?
+        get() = baseApiManager.clientsApi?.getClientImage(clientId)
+    val clientAccounts: Observable<ClientAccounts?>?
+        get() = baseApiManager.clientsApi?.getClientAccounts(clientId)
 
-    fun getAccounts(accountType: String?): Observable<ClientAccounts> {
-        return baseApiManager.clientsApi!!.getAccounts(clientId, accountType)
+    fun getAccounts(accountType: String?): Observable<ClientAccounts?>? {
+        return baseApiManager.clientsApi?.getAccounts(clientId, accountType)
     }
 
-    fun getRecentTransactions(offset: Int, limit: Int): Observable<Page<Transaction>> {
-        return baseApiManager.recentTransactionsApi!!
-                .getRecentTransactionsList(clientId, offset, limit)
+    fun getRecentTransactions(offset: Int, limit: Int): Observable<Page<Transaction?>?>? {
+        return baseApiManager.recentTransactionsApi
+                ?.getRecentTransactionsList(clientId, offset, limit)
     }
 
-    fun getClientCharges(clientId: Long): Observable<Page<Charge>> {
-        return baseApiManager.clientChargeApi!!.getClientChargeList(clientId)
-                .concatMap { chargePage -> databaseHelper.syncCharges(chargePage) }
+    fun getClientCharges(clientId: Long): Observable<Page<Charge?>?>? {
+        return baseApiManager.clientChargeApi?.getClientChargeList(clientId)
+                ?.concatMap { chargePage -> databaseHelper.syncCharges(chargePage) }
     }
 
-    fun getLoanCharges(loanId: Long): Observable<List<Charge>> {
-        return baseApiManager.clientChargeApi!!.getLoanAccountChargeList(loanId)
+    fun getLoanCharges(loanId: Long): Observable<List<Charge?>?>? {
+        return baseApiManager.clientChargeApi?.getLoanAccountChargeList(loanId)
     }
 
-    fun getSavingsCharges(savingsId: Long): Observable<List<Charge>> {
-        return baseApiManager.clientChargeApi!!.getSavingsAccountChargeList(savingsId)
+    fun getSavingsCharges(savingsId: Long): Observable<List<Charge?>?>? {
+        return baseApiManager.clientChargeApi?.getSavingsAccountChargeList(savingsId)
     }
 
-    fun getSavingsWithAssociations(accountId: Long,
-                                   associationType: String?): Observable<SavingsWithAssociations> {
+    fun getSavingsWithAssociations(
+            accountId: Long,
+            associationType: String?
+    ): Observable<SavingsWithAssociations?>? {
         return baseApiManager
-                .savingAccountsListApi!!.getSavingsWithAssociations(accountId, associationType)
+                .savingAccountsListApi?.getSavingsWithAssociations(accountId, associationType)
     }
 
-    val accountTransferTemplate: Observable<AccountOptionsTemplate>
-        get() = baseApiManager.savingAccountsListApi!!.accountTransferTemplate
+    val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
+        get() = baseApiManager.savingAccountsListApi?.accountTransferTemplate
 
-    fun makeTransfer(transferPayload: TransferPayload?): Observable<ResponseBody> {
-        return baseApiManager.savingAccountsListApi!!.makeTransfer(transferPayload)
+    fun makeTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
+        return baseApiManager.savingAccountsListApi?.makeTransfer(transferPayload)
     }
 
-    fun getSavingAccountApplicationTemplate(client: Long): Observable<SavingsAccountTemplate> {
-        return baseApiManager.savingAccountsListApi!!
-                .getSavingsAccountApplicationTemplate(client)
+    fun getSavingAccountApplicationTemplate(client: Long?): Observable<SavingsAccountTemplate?>? {
+        return baseApiManager.savingAccountsListApi
+                ?.getSavingsAccountApplicationTemplate(client)
     }
 
     fun submitSavingAccountApplication(
-            payload: SavingsAccountApplicationPayload?): Observable<ResponseBody> {
-        return baseApiManager.savingAccountsListApi!!.submitSavingAccountApplication(payload)
+            payload: SavingsAccountApplicationPayload?
+    ): Observable<ResponseBody?>? {
+        return baseApiManager.savingAccountsListApi?.submitSavingAccountApplication(payload)
     }
 
     fun updateSavingsAccount(
-            accountId: String?, payload: SavingsAccountUpdatePayload?): Observable<ResponseBody> {
-        return baseApiManager.savingAccountsListApi!!
-                .updateSavingsAccountUpdate(accountId, payload)
+            accountId: String?, payload: SavingsAccountUpdatePayload?
+    ): Observable<ResponseBody?>? {
+        return baseApiManager.savingAccountsListApi
+                ?.updateSavingsAccountUpdate(accountId, payload)
     }
 
     fun submitWithdrawSavingsAccount(
-            accountId: String?, payload: SavingsAccountWithdrawPayload?): Observable<ResponseBody> {
-        return baseApiManager.savingAccountsListApi!!
-                .submitWithdrawSavingsAccount(accountId, payload)
-                .onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
+            accountId: String?, payload: SavingsAccountWithdrawPayload?
+    ): Observable<ResponseBody?>? {
+        return baseApiManager.savingAccountsListApi
+                ?.submitWithdrawSavingsAccount(accountId, payload)
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
                     Observable.just(ResponseBody.create(MediaType.parse("text/parse"),
                             "Saving Account Withdrawn Successfully"))
                 })
     }
 
-    fun getLoanAccountDetails(loanId: Long): Observable<LoanAccount> {
-        return baseApiManager.loanAccountsListApi!!.getLoanAccountsDetail(loanId)
+    fun getLoanAccountDetails(loanId: Long): Observable<LoanAccount?>? {
+        return baseApiManager.loanAccountsListApi?.getLoanAccountsDetail(loanId)
     }
 
-    fun getLoanWithAssociations(associationType: String?,
-                                loanId: Long): Observable<LoanWithAssociations> {
-        return baseApiManager.loanAccountsListApi!!
-                .getLoanWithAssociations(loanId, associationType)
+    fun getLoanWithAssociations(
+            associationType: String?,
+            loanId: Long
+    ): Observable<LoanWithAssociations?>? {
+        return baseApiManager.loanAccountsListApi
+                ?.getLoanWithAssociations(loanId, associationType)
     }
 
-    val loanTemplate: Observable<LoanTemplate>
-        get() = baseApiManager.loanAccountsListApi!!.getLoanTemplate(clientId)
+    val loanTemplate: Observable<LoanTemplate?>?
+        get() = baseApiManager.loanAccountsListApi?.getLoanTemplate(clientId)
 
-    fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate> {
-        return baseApiManager.loanAccountsListApi!!
-                .getLoanTemplateByProduct(clientId, productId)
+    fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate?>? {
+        return baseApiManager.loanAccountsListApi
+                ?.getLoanTemplateByProduct(clientId, productId)
     }
 
-    fun createLoansAccount(loansPayload: LoansPayload?): Observable<ResponseBody> {
-        return baseApiManager.loanAccountsListApi!!.createLoansAccount(loansPayload)
+    fun createLoansAccount(loansPayload: LoansPayload?): Observable<ResponseBody?>? {
+        return baseApiManager.loanAccountsListApi?.createLoansAccount(loansPayload)
     }
 
-    fun updateLoanAccount(loanId: Long, loansPayload: LoansPayload?): Observable<ResponseBody> {
-        return baseApiManager.loanAccountsListApi!!.updateLoanAccount(loanId, loansPayload)
+    fun updateLoanAccount(loanId: Long, loansPayload: LoansPayload?): Observable<ResponseBody?>? {
+        return baseApiManager.loanAccountsListApi?.updateLoanAccount(loanId, loansPayload)
     }
 
-    fun withdrawLoanAccount(loanId: Long, loanWithdraw: LoanWithdraw?): Observable<ResponseBody> {
-        return baseApiManager.loanAccountsListApi!!.withdrawLoanAccount(loanId, loanWithdraw)
+    fun withdrawLoanAccount(loanId: Long, loanWithdraw: LoanWithdraw?): Observable<ResponseBody?>? {
+        return baseApiManager.loanAccountsListApi?.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    val beneficiaryList: Observable<List<Beneficiary>>
-        get() = baseApiManager.beneficiaryApi!!.beneficiaryList
-    val beneficiaryTemplate: Observable<BeneficiaryTemplate>
-        get() = baseApiManager.beneficiaryApi!!.beneficiaryTemplate
+    val beneficiaryList: Observable<List<Beneficiary?>?>?
+        get() = baseApiManager.beneficiaryApi?.beneficiaryList
+    val beneficiaryTemplate: Observable<BeneficiaryTemplate?>?
+        get() = baseApiManager.beneficiaryApi?.beneficiaryTemplate
 
-    fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Observable<ResponseBody> {
-        return baseApiManager.beneficiaryApi!!.createBeneficiary(beneficiaryPayload)
+    fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Observable<ResponseBody?>? {
+        return baseApiManager.beneficiaryApi?.createBeneficiary(beneficiaryPayload)
     }
 
-    fun updateBeneficiary(beneficiaryId: Long,
-                          payload: BeneficiaryUpdatePayload?): Observable<ResponseBody> {
-        return baseApiManager.beneficiaryApi!!.updateBeneficiary(beneficiaryId, payload)
+    fun updateBeneficiary(
+            beneficiaryId: Long,
+            payload: BeneficiaryUpdatePayload?
+    ): Observable<ResponseBody>? {
+        return baseApiManager.beneficiaryApi?.updateBeneficiary(beneficiaryId, payload)
     }
 
-    fun deleteBeneficiary(beneficiaryId: Long): Observable<ResponseBody> {
-        return baseApiManager.beneficiaryApi!!.deleteBeneficiary(beneficiaryId)
+    fun deleteBeneficiary(beneficiaryId: Long): Observable<ResponseBody>? {
+        return baseApiManager.beneficiaryApi?.deleteBeneficiary(beneficiaryId)
     }
 
-    val thirdPartyTransferTemplate: Observable<AccountOptionsTemplate>
-        get() = baseApiManager.thirdPartyTransferApi!!.accountTransferTemplate
+    val thirdPartyTransferTemplate: Observable<AccountOptionsTemplate?>?
+        get() = baseApiManager.thirdPartyTransferApi?.accountTransferTemplate
 
-    fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Observable<ResponseBody> {
-        return baseApiManager.thirdPartyTransferApi!!.makeTransfer(transferPayload)
+    fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Observable<ResponseBody>? {
+        return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)
     }
 
-    fun registerUser(registerPayload: RegisterPayload?): Observable<ResponseBody> {
-        return baseApiManager.registrationApi!!.registerUser(registerPayload)
+    fun registerUser(registerPayload: RegisterPayload?): Observable<ResponseBody>? {
+        return baseApiManager.registrationApi?.registerUser(registerPayload)
     }
 
-    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody> {
-        return baseApiManager.registrationApi!!.verifyUser(userVerify)
+    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody>? {
+        return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
     val clientLocalCharges: Observable<Page<Charge>>
@@ -194,54 +205,58 @@ class DataManager @Inject constructor(val preferencesHelper: PreferencesHelper, 
     val unreadNotificationsCount: Observable<Int>
         get() = databaseHelper.unreadNotificationsCount
 
-    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody> {
-        return baseApiManager.notificationApi!!.registerNotification(payload)
+    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody>? {
+        return baseApiManager.notificationApi?.registerNotification(payload)
     }
 
-    fun updateRegisterNotification(id: Long, payload: NotificationRegisterPayload?): Observable<ResponseBody> {
-        return baseApiManager.notificationApi!!.updateRegisterNotification(id, payload)
+    fun updateRegisterNotification(id: Long, payload: NotificationRegisterPayload?): Observable<ResponseBody>? {
+        return baseApiManager.notificationApi?.updateRegisterNotification(id, payload)
     }
 
-    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail> {
-        return baseApiManager.notificationApi!!.getUserNotificationId(id)
+    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail>? {
+        return baseApiManager.notificationApi?.getUserNotificationId(id)
     }
 
-    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody> {
-        return baseApiManager.userDetailsService!!.updateAccountPassword(payload)
+    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody>? {
+        return baseApiManager.userDetailsService?.updateAccountPassword(payload)
     }
 
-    fun getGuarantorTemplate(loanId: Long): Observable<GuarantorTemplatePayload> {
-        return baseApiManager.guarantorApi!!.getGuarantorTemplate(loanId)
-                .onErrorResumeNext(Function<Throwable?, ObservableSource<out GuarantorTemplatePayload>> { Observable.just(FakeRemoteDataSource.getGuarantorTemplatePayload()) })
+    fun getGuarantorTemplate(loanId: Long?): Observable<GuarantorTemplatePayload?>? {
+        return baseApiManager.guarantorApi?.getGuarantorTemplate(loanId)
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out GuarantorTemplatePayload>> { Observable.just(FakeRemoteDataSource.getGuarantorTemplatePayload()) })
     }
 
-    fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload>> {
-        return baseApiManager.guarantorApi!!.getGuarantorList(loanId)!!
-                .onErrorResumeNext(Function<Throwable?, ObservableSource<out List<GuarantorPayload>>> { Observable.just(FakeRemoteDataSource.getGuarantorsList()) })
+    fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload?>?>? {
+        return baseApiManager.guarantorApi?.getGuarantorList(loanId)
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out List<GuarantorPayload>>> { Observable.just(FakeRemoteDataSource.getGuarantorsList()) })
     }
 
-    fun createGuarantor(loanId: Long,
-                        payload: GuarantorApplicationPayload?): Observable<ResponseBody> {
-        return baseApiManager.guarantorApi!!.createGuarantor(loanId, payload)
-                .onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
+    fun createGuarantor(
+            loanId: Long?,
+            payload: GuarantorApplicationPayload?
+    ): Observable<ResponseBody?>? {
+        return baseApiManager.guarantorApi?.createGuarantor(loanId, payload)
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
                     val responseBody = ResponseBody.create(MediaType
                             .parse("text/plain"), "Guarantor Added Successfully")
                     Observable.just(responseBody)
                 })
     }
 
-    fun updateGuarantor(payload: GuarantorApplicationPayload?,
-                        loanId: Long, guarantorId: Long): Observable<ResponseBody> {
-        return baseApiManager.guarantorApi!!.updateGuarantor(payload, loanId, guarantorId)
-                .onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
+    fun updateGuarantor(
+            payload: GuarantorApplicationPayload?,
+            loanId: Long, guarantorId: Long
+    ): Observable<ResponseBody?>? {
+        return baseApiManager.guarantorApi?.updateGuarantor(payload, loanId, guarantorId)
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
                     Observable.just(ResponseBody.create(MediaType
                             .parse("plain/text"), "Guarantor Updated Successfully"))
                 })
     }
 
-    fun deleteGuarantor(loanId: Long, guarantorId: Long): Observable<ResponseBody> {
-        return baseApiManager.guarantorApi!!.deleteGuarantor(loanId, guarantorId)
-                .onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
+    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Observable<ResponseBody?>? {
+        return baseApiManager.guarantorApi?.deleteGuarantor(loanId, guarantorId)
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {
                     Observable.just(ResponseBody.create(MediaType
                             .parse("plain/text"), "Guarantor Deleted Successfully"))
                 })

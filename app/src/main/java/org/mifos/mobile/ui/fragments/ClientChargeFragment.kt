@@ -52,7 +52,7 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
     @kotlin.jvm.JvmField
     @Inject
     var clientChargeAdapter: ClientChargeAdapter? = null
-    private var id: Long = 0
+    private var id: Long? = 0
     private var chargeType: ChargeType? = null
     private var rootView: View? = null
     private var layoutManager: LinearLayoutManager? = null
@@ -60,26 +60,28 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
-            id = arguments!!.getLong(Constants.CLIENT_ID)
-            chargeType = arguments!!.getSerializable(Constants.CHARGE_TYPE) as ChargeType
+            id = arguments?.getLong(Constants.CLIENT_ID)
+            chargeType = arguments?.getSerializable(Constants.CHARGE_TYPE) as ChargeType
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_client_charge, container, false)
         ButterKnife.bind(this, rootView!!)
-        clientChargePresenter!!.attachView(this)
+        clientChargePresenter?.attachView(this)
         setToolbarTitle(getString(R.string.charges))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         layoutManager = LinearLayoutManager(activity)
-        layoutManager!!.orientation = LinearLayoutManager.VERTICAL
-        rvClientCharge!!.layoutManager = layoutManager
-        rvClientCharge!!.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
-        swipeChargeContainer!!.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
-        swipeChargeContainer!!.setOnRefreshListener { loadCharges() }
+        layoutManager?.orientation = LinearLayoutManager.VERTICAL
+        rvClientCharge?.layoutManager = layoutManager
+        rvClientCharge?.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
+        swipeChargeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        swipeChargeContainer?.setOnRefreshListener { loadCharges() }
         if (savedInstanceState == null) {
             loadCharges()
         }
@@ -104,15 +106,13 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
      * Fetches Charges for `id` according to `chargeType` provided.
      */
     private fun loadCharges() {
-        if (layoutError!!.visibility == View.VISIBLE) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(rvClientCharge, layoutError)
+        if (layoutError?.visibility == View.VISIBLE) {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvClientCharge, layoutError)
         }
-        if (chargeType == ChargeType.CLIENT) {
-            clientChargePresenter!!.loadClientCharges(id)
-        } else if (chargeType == ChargeType.SAVINGS) {
-            clientChargePresenter!!.loadSavingsAccountCharges(id)
-        } else if (chargeType == ChargeType.LOAN) {
-            clientChargePresenter!!.loadLoanAccountCharges(id)
+        when (chargeType) {
+            ChargeType.CLIENT -> id?.let { clientChargePresenter?.loadClientCharges(it) }
+            ChargeType.SAVINGS -> id?.let { clientChargePresenter?.loadSavingsAccountCharges(it) }
+            ChargeType.LOAN -> id?.let { clientChargePresenter?.loadLoanAccountCharges(it) }
         }
     }
 
@@ -125,9 +125,9 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
      */
     override fun showErrorFetchingClientCharges(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(rvClientCharge, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(rvClientCharge, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(message, rvClientCharge, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(message, rvClientCharge, layoutError)
             Toaster.show(rootView, message)
         }
     }
@@ -138,7 +138,7 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
     @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(rvClientCharge, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvClientCharge, layoutError)
             loadCharges()
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -148,8 +148,8 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
 
     override fun showClientCharges(clientChargesList: List<Charge?>?) {
         inflateClientChargeList()
-        if (swipeChargeContainer!!.isRefreshing) {
-            swipeChargeContainer!!.isRefreshing = false
+        if (swipeChargeContainer?.isRefreshing == true) {
+            swipeChargeContainer?.isRefreshing = false
         }
     }
 
@@ -158,35 +158,36 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
      * `clientChargeList` size if greater than 0 else shows the error layout
      */
     private fun inflateClientChargeList() {
-        if (clientChargeList.size > 0) {
-            clientChargeAdapter!!.setClientChargeList(clientChargeList)
-            rvClientCharge!!.adapter = clientChargeAdapter
+        if (clientChargeList.isNotEmpty()) {
+            clientChargeAdapter?.setClientChargeList(clientChargeList)
+            rvClientCharge?.adapter = clientChargeAdapter
         } else {
-            sweetUIErrorHandler!!.showSweetEmptyUI(getString(R.string.charges), R.drawable.ic_charges,
+            sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.charges), R.drawable.ic_charges,
                     rvClientCharge, layoutError)
         }
     }
 
     override fun showProgress() {
-        swipeChargeContainer!!.isRefreshing = true
+        swipeChargeContainer?.isRefreshing = true
     }
 
     override fun hideProgress() {
-        swipeChargeContainer!!.isRefreshing = false
+        swipeChargeContainer?.isRefreshing = false
     }
 
-    override fun onItemClick(childView: View, position: Int) {}
-    override fun onItemLongPress(childView: View, position: Int) {}
+    override fun onItemClick(childView: View?, position: Int) {}
+    override fun onItemLongPress(childView: View?, position: Int) {}
     override fun onDestroyView() {
         super.onDestroyView()
-        clientChargePresenter!!.detachView()
+        clientChargePresenter?.detachView()
     }
 
     companion object {
-        fun newInstance(clientId: Long, chargeType: ChargeType?): ClientChargeFragment {
+        fun newInstance(clientId: Long?, chargeType: ChargeType?): ClientChargeFragment {
             val clientChargeFragment = ClientChargeFragment()
             val args = Bundle()
-            args.putLong(Constants.CLIENT_ID, clientId)
+            if (clientId != null)
+                args.putLong(Constants.CLIENT_ID, clientId)
             args.putSerializable(Constants.CHARGE_TYPE, chargeType)
             clientChargeFragment.arguments = args
             return clientChargeFragment
