@@ -144,8 +144,8 @@ object DateHelper {
     }
 
     @kotlin.jvm.JvmStatic
-    fun getDateAndTimeAsStringFromLong(timeInMillis: Long): String {
+    fun getDateAndTimeAsStringFromLong(timeInMillis: Long?): String {
         val sdf = SimpleDateFormat("HH:mm a dd MMM yyyy")
-        return sdf.format(Date(timeInMillis))
+        return sdf.format(timeInMillis?.let { Date(it) })
     }
 }

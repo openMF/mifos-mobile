@@ -39,11 +39,11 @@ class GuarantorListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvGuarantorName!!.text = (list?.get(position)?.firstname + " "
+        holder.tvGuarantorName?.text = (list?.get(position)?.firstname + " "
                 + list?.get(position)?.lastname)
-        holder.tvJoinedDate!!.text = getDateAsString(list?.get(position)
+        holder.tvJoinedDate?.text = getDateAsString(list?.get(position)
                 ?.joinedDate)
-        holder.cvContainer!!.setOnClickListener { listener.setOnClickListener(position) }
+        holder.cvContainer?.setOnClickListener { listener.setOnClickListener(position) }
     }
 
     override fun getItemCount(): Int {
