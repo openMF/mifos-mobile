@@ -20,7 +20,7 @@ object CurrencyUtil {
     }
 
     @kotlin.jvm.JvmStatic
-    fun formatCurrency(context: Context?, amt: Double): String {
+    fun formatCurrency(context: Context?, amt: Double?): String {
         return getDecimalFormatter(context).format(amt)
     }
 

@@ -33,8 +33,8 @@ import java.util.*
         rootView = inflater.inflate(R.layout.fragment_about_us, container, false)
         ButterKnife.bind(this, rootView!!)
         setToolbarTitle(getString(R.string.about_us))
-        tvAppVersion!!.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
-        tvCopyRight!!.text = getString(R.string.copy_right_mifos, Calendar.getInstance()[Calendar.YEAR].toString())
+        tvAppVersion?.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
+        tvCopyRight?.text = getString(R.string.copy_right_mifos, Calendar.getInstance()[Calendar.YEAR].toString())
         return rootView
     }
 

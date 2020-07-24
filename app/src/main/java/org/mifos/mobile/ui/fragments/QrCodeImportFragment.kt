@@ -9,13 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
+
 import com.isseiaoki.simplecropview.CropImageView
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.presenters.QrCodeImportPresenter
@@ -25,6 +29,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.QrCodeImportView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Toaster
+
 import java.io.FileNotFoundException
 import java.io.InputStream
 import javax.inject.Inject
@@ -33,6 +38,7 @@ import javax.inject.Inject
  * Created by manishkumar on 19/05/18.
  */
 class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
+
     private var rootView: View? = null
     private var qrUri: Uri? = null
     private var uriValue: String? = null
@@ -49,7 +55,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            uriValue = arguments!!.getString(Constants.QR_IMAGE_URI)
+            uriValue = arguments?.getString(Constants.QR_IMAGE_URI)
             qrUri = Uri.parse(uriValue)
         }
         setHasOptionsMenu(true)
@@ -58,27 +64,27 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_qr_code_import, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.import_qr))
         ButterKnife.bind(this, rootView!!)
         //load the uri
         setBitmapImage(qrUri)
-        cropImageView!!.setCompressFormat(Bitmap.CompressFormat.JPEG)
-        cropImageView!!.setOutputMaxSize(150, 150)
-        cropImageView!!.load(qrUri)
-                .initialFrameRect(mFrameRect)
-                .executeAsCompletable()
-        cropImageView!!.setCropMode(CropImageView.CropMode.FREE)
-        cropImageView!!.setInitialFrameScale(0.8f)
-        qrCodeImportPresenter!!.attachView(this)
+        cropImageView?.setCompressFormat(Bitmap.CompressFormat.JPEG)
+        cropImageView?.setOutputMaxSize(150, 150)
+        cropImageView?.load(qrUri)
+                ?.initialFrameRect(mFrameRect)
+                ?.executeAsCompletable()
+        cropImageView?.setCropMode(CropImageView.CropMode.FREE)
+        cropImageView?.setInitialFrameScale(0.8f)
+        qrCodeImportPresenter?.attachView(this)
         return rootView
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // save data
-        outState.putParcelable(Constants.FRAME_RECT, cropImageView!!.actualCropRect)
-        outState.putParcelable(Constants.SOURCE_URI, cropImageView!!.sourceUri)
+        outState.putParcelable(Constants.FRAME_RECT, cropImageView?.actualCropRect)
+        outState.putParcelable(Constants.SOURCE_URI, cropImageView?.sourceUri)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -92,7 +98,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
 
     @OnClick(R.id.btn_proceed)
     fun proceed() {
-        qrCodeImportPresenter!!.getDecodedResult(qrUri, cropImageView)
+        qrCodeImportPresenter?.getDecodedResult(qrUri, cropImageView)
     }
 
     /**
@@ -114,9 +120,9 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     override fun handleDecodedResult(result: Result?) {
         val gson = Gson()
         try {
-            val beneficiary = gson.fromJson(result!!.text, Beneficiary::class.java)
-            activity!!.supportFragmentManager.popBackStack()
-            (activity as BaseActivity?)!!.replaceFragment(BeneficiaryApplicationFragment.Companion.newInstance(BeneficiaryState.CREATE_QR, beneficiary),
+            val beneficiary = gson.fromJson(result?.text, Beneficiary::class.java)
+            activity?.supportFragmentManager?.popBackStack()
+            (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.Companion.newInstance(BeneficiaryState.CREATE_QR, beneficiary),
                     true, R.id.container)
         } catch (e: JsonSyntaxException) {
             Toast.makeText(activity, getString(R.string.invalid_qr),
@@ -141,7 +147,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        qrCodeImportPresenter!!.detachView()
+        qrCodeImportPresenter?.detachView()
     }
 
     /**
@@ -149,21 +155,21 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
      *
      * @param qrImageUri contains Uri of qr code image
      */
-    fun setBitmapImage(qrImageUri: Uri?) {
+    private fun setBitmapImage(qrImageUri: Uri?) {
         try {
-            inputStream = context!!.contentResolver.openInputStream(qrImageUri)
+            inputStream = context?.contentResolver?.openInputStream(qrImageUri)
         } catch (e: FileNotFoundException) {
             Toaster.show(rootView, getString(R.string.error_fetching_image))
         }
         val b = BitmapFactory.decodeStream(inputStream, null, null)
         try {
             if (inputStream != null) {
-                inputStream!!.close()
+                inputStream?.close()
             }
         } catch (e: Exception) {
             Toaster.show(rootView, getString(R.string.error_fetching_image))
         }
-        cropImageView!!.imageBitmap = b
+        cropImageView?.imageBitmap = b
     }
 
     companion object {

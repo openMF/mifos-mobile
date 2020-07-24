@@ -13,7 +13,7 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class GuarantorPayload(
 
-        var id: Long = 0,
+        var id: Long? = 0,
 
         var officeName: String? = null,
 

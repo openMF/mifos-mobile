@@ -5,16 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+
 import butterknife.BindView
 import butterknife.ButterKnife
+
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
+
 import java.util.*
 import javax.inject.Inject
 
@@ -53,19 +57,25 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
             holder.tvClientSavingAccountNumber?.text = savingAccount?.accountNo
             holder.tvSavingAccountProductName?.text = savingAccount?.productName
             holder.tvAccountBalance?.visibility = View.GONE
-            if (savingAccount?.status?.active!!) {
-                setSavingAccountsDetails(holder, savingAccount,
-                        R.color.deposit_green)
-                setSavingAccountsGeneralDetails(holder, R.color.deposit_green, getDateAsString(savingAccount.lastActiveTransactionDate))
-            } else if (savingAccount.status!!.approved!!) {
-                setSavingAccountsGeneralDetails(holder, R.color.light_green, context.getString(R.string.string_and_string, context.getString(R.string.approved), getDateAsString(savingAccount.timeLine!!.approvedOnDate)))
-            } else if (savingAccount.status!!.submittedAndPendingApproval!!) {
-                setSavingAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(R.string.string_and_string, context.getString(R.string.submitted), getDateAsString(savingAccount.timeLine!!.submittedOnDate)))
-            } else if (savingAccount.status!!.matured!!) {
-                setSavingAccountsDetails(holder, savingAccount, R.color.red_light)
-                setSavingAccountsGeneralDetails(holder, R.color.red_light, getDateAsString(savingAccount.lastActiveTransactionDate))
-            } else {
-                setSavingAccountsGeneralDetails(holder, R.color.black, context.getString(R.string.string_and_string, context.getString(R.string.closed), getDateAsString(savingAccount.timeLine!!.closedOnDate)))
+            when {
+                savingAccount?.status?.active == true -> {
+                    setSavingAccountsDetails(holder, savingAccount,
+                            R.color.deposit_green)
+                    setSavingAccountsGeneralDetails(holder, R.color.deposit_green, getDateAsString(savingAccount.lastActiveTransactionDate))
+                }
+                savingAccount?.status?.approved == true -> {
+                    setSavingAccountsGeneralDetails(holder, R.color.light_green, context.getString(R.string.string_and_string, context.getString(R.string.approved), getDateAsString(savingAccount.timeLine?.approvedOnDate)))
+                }
+                savingAccount?.status?.submittedAndPendingApproval == true -> {
+                    setSavingAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(R.string.string_and_string, context.getString(R.string.submitted), getDateAsString(savingAccount.timeLine?.submittedOnDate)))
+                }
+                savingAccount?.status?.matured == true -> {
+                    setSavingAccountsDetails(holder, savingAccount, R.color.red_light)
+                    setSavingAccountsGeneralDetails(holder, R.color.red_light, getDateAsString(savingAccount.lastActiveTransactionDate))
+                }
+                else -> {
+                    setSavingAccountsGeneralDetails(holder, R.color.black, context.getString(R.string.string_and_string, context.getString(R.string.closed), getDateAsString(savingAccount?.timeLine?.closedOnDate)))
+                }
             }
         }
     }
@@ -78,7 +88,7 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
         viewHolder.tvAccountBalance?.setTextColor(ContextCompat.getColor(context,
                 colorId))
         viewHolder.tvAccountBalance?.text = context.getString(R.string.string_and_string,
-                savingAccount.currency!!.displaySymbol, formatCurrency(context,
+                savingAccount.currency?.displaySymbol, formatCurrency(context,
                 savingAccount.accountBalance))
     }
 
@@ -91,8 +101,7 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
     }
 
     override fun getItemCount(): Int {
-        return if (savingAccountsList != null)
-            savingAccountsList!!.size
+        return if (savingAccountsList != null) savingAccountsList!!.size
         else 0
     }
 

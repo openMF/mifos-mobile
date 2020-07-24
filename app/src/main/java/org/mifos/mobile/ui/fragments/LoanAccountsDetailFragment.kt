@@ -77,27 +77,27 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     var preferencesHelper: PreferencesHelper? = null
     private var loanWithAssociations: LoanWithAssociations? = null
     private var showLoanUpdateOption = false
-    private var loanId: Long = 0
+    private var loanId: Long? = 0
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     var rootView: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanId = arguments!!.getLong(Constants.LOAN_ID)
+            loanId = arguments?.getLong(Constants.LOAN_ID)
         }
         setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         rootView = inflater.inflate(R.layout.fragment_loan_account_details, container, false)
         setToolbarTitle(getString(R.string.loan_account_details))
         ButterKnife.bind(this, rootView!!)
-        loanAccountDetailsPresenter!!.attachView(this)
+        loanAccountDetailsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null) {
-            loanAccountDetailsPresenter!!.loadLoanAccountDetails(loanId)
+            loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
         }
         return rootView
     }
@@ -121,29 +121,29 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      * @param loanWithAssociations object containing details of each loan account,
      */
     override fun showLoanAccountsDetail(loanWithAssociations: LoanWithAssociations?) {
-        llAccountDetail!!.visibility = View.VISIBLE
+        llAccountDetail?.visibility = View.VISIBLE
         this.loanWithAssociations = loanWithAssociations
-        if (loanWithAssociations!!.status!!.active!!) {
-            val overdueSinceDate = loanWithAssociations.summary!!.getOverdueSinceDate()
+        if (loanWithAssociations?.status?.active!!) {
+            val overdueSinceDate = loanWithAssociations.summary?.getOverdueSinceDate()
             if (overdueSinceDate == null) {
-                tvDueDateName!!.setText(R.string.not_available)
+                tvDueDateName?.setText(R.string.not_available)
             } else {
-                tvDueDateName!!.text = DateHelper.getDateAsString(overdueSinceDate)
+                tvDueDateName?.text = DateHelper.getDateAsString(overdueSinceDate)
             }
             showDetails(loanWithAssociations)
-        } else if (loanWithAssociations.status!!.pendingApproval!!) {
-            sweetUIErrorHandler!!.showSweetCustomErrorUI(getString(R.string.approval_pending),
+        } else if (loanWithAssociations.status?.pendingApproval!!) {
+            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.approval_pending),
                     R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError)
             showLoanUpdateOption = true
-        } else if (loanWithAssociations.status!!.waitingForDisbursal!!) {
-            sweetUIErrorHandler!!.showSweetCustomErrorUI(getString(R.string.waiting_for_disburse),
+        } else if (loanWithAssociations.status?.waitingForDisbursal!!) {
+            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.waiting_for_disburse),
                     R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError)
         } else {
-            btMakePayment!!.visibility = View.GONE
-            tvDueDateName!!.setText(R.string.not_available)
+            btMakePayment?.visibility = View.GONE
+            tvDueDateName?.setText(R.string.not_available)
             showDetails(loanWithAssociations)
         }
-        activity!!.invalidateOptionsMenu()
+        activity?.invalidateOptionsMenu()
     }
 
     /**
@@ -152,23 +152,23 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      * @param loanWithAssociations object containing details of each loan account,
      */
     fun showDetails(loanWithAssociations: LoanWithAssociations?) {
-        tvOutstandingBalanceName!!.text = resources.getString(R.string.string_and_string,
-                loanWithAssociations!!.summary!!.currency!!.displaySymbol, CurrencyUtil.formatCurrency(activity,
-                loanWithAssociations.summary!!.totalOutstanding))
-        for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations.repaymentSchedule!!.periods) {
-            if (dueDate == loanWithAssociations.summary!!.getOverdueSinceDate()) {
-                tvNextInstallmentName!!.text = resources.getString(R.string.string_and_string,
-                        loanWithAssociations.summary!!.currency!!.displaySymbol,
+        tvOutstandingBalanceName?.text = resources.getString(R.string.string_and_string,
+                loanWithAssociations?.summary?.currency?.displaySymbol, CurrencyUtil.formatCurrency(activity,
+                loanWithAssociations?.summary?.totalOutstanding))
+        if (loanWithAssociations?.repaymentSchedule?.periods != null) for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations?.repaymentSchedule?.periods!!) {
+            if (dueDate == loanWithAssociations.summary?.getOverdueSinceDate()) {
+                tvNextInstallmentName?.text = resources.getString(R.string.string_and_string,
+                        loanWithAssociations.summary?.currency?.displaySymbol,
                         CurrencyUtil.formatCurrency(activity,
-                                totalDueForPeriod!!))
+                                totalDueForPeriod))
                 break
-            } else if (loanWithAssociations.summary!!.getOverdueSinceDate() == null) {
-                tvNextInstallmentName!!.setText(R.string.not_available)
+            } else if (loanWithAssociations.summary?.getOverdueSinceDate() == null) {
+                tvNextInstallmentName?.setText(R.string.not_available)
             }
         }
-        tvAccountNumberName!!.text = loanWithAssociations.accountNo
-        tvLoanTypeName!!.text = loanWithAssociations.loanType!!.value
-        tvCurrencyName!!.text = loanWithAssociations.summary!!.currency!!.code
+        tvAccountNumberName?.text = loanWithAssociations?.accountNo
+        tvLoanTypeName?.text = loanWithAssociations?.loanType?.value
+        tvCurrencyName?.text = loanWithAssociations?.summary?.currency?.code
     }
 
     /**
@@ -177,7 +177,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.btn_make_payment)
     fun onMakePaymentClicked() {
-        (activity as BaseActivity?)!!.replaceFragment(SavingsMakeTransferFragment.Companion.newInstance(loanId, loanWithAssociations!!.summary!!.totalOutstanding,
+        (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.Companion.newInstance(loanId, loanWithAssociations?.summary?.totalOutstanding,
                 Constants.TRANSFER_PAY_TO), true, R.id.container)
     }
 
@@ -186,7 +186,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.ll_summary)
     fun onLoanSummaryClicked() {
-        (activity as BaseActivity?)!!.replaceFragment(LoanAccountSummaryFragment.Companion.newInstance(loanWithAssociations), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(LoanAccountSummaryFragment.Companion.newInstance(loanWithAssociations), true, R.id.container)
     }
 
     /**
@@ -194,7 +194,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.ll_repayment)
     fun onRepaymentScheduleClicked() {
-        (activity as BaseActivity?)!!.replaceFragment(LoanRepaymentScheduleFragment.Companion.newInstance(loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(LoanRepaymentScheduleFragment.Companion.newInstance(loanId), true, R.id.container)
     }
 
     /**
@@ -202,19 +202,19 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.ll_loan_transactions)
     fun onTransactionsClicked() {
-        (activity as BaseActivity?)!!.replaceFragment(LoanAccountTransactionFragment.Companion.newInstance(loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(LoanAccountTransactionFragment.Companion.newInstance(loanId), true, R.id.container)
     }
 
     @OnClick(R.id.ll_loan_charges)
     fun chargesClicked() {
-        (activity as BaseActivity?)!!.replaceFragment(ClientChargeFragment.Companion.newInstance(loanWithAssociations!!.id!!.toLong(), ChargeType.LOAN), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(ClientChargeFragment.Companion.newInstance(loanWithAssociations?.id?.toLong(), ChargeType.LOAN), true, R.id.container)
     }
 
     @OnClick(R.id.ll_loan_qr_code)
     fun onQrCodeClicked() {
-        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanWithAssociations!!.accountNo,
-                preferencesHelper!!.officeName, AccountType.LOAN)
-        (activity as BaseActivity?)!!.replaceFragment(QrCodeDisplayFragment.Companion.newInstance(accountDetailsInJson), true, R.id.container)
+        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanWithAssociations?.accountNo,
+                preferencesHelper?.officeName, AccountType.LOAN)
+        (activity as BaseActivity?)?.replaceFragment(QrCodeDisplayFragment.Companion.newInstance(accountDetailsInJson), true, R.id.container)
     }
 
     /**
@@ -224,9 +224,9 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     override fun showErrorFetchingLoanAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(llAccountDetail, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(llAccountDetail, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(message,
+            sweetUIErrorHandler?.showSweetErrorUI(message,
                     llAccountDetail, layoutError)
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
@@ -235,8 +235,8 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(llAccountDetail, layoutError)
-            loanAccountDetailsPresenter!!.loadLoanAccountDetails(loanId)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(llAccountDetail, layoutError)
+            loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
                     Toast.LENGTH_SHORT).show()
@@ -254,7 +254,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanAccountDetailsPresenter!!.detachView()
+        loanAccountDetailsPresenter?.detachView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -270,12 +270,12 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.menu_update_loan) {
-            (activity as BaseActivity?)!!.replaceFragment(LoanApplicationFragment.newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(LoanApplicationFragment.newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container)
             return true
         } else if (id == R.id.menu_withdraw_loan) {
-            (activity as BaseActivity?)!!.replaceFragment(LoanAccountWithdrawFragment.Companion.newInstance(loanWithAssociations), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(LoanAccountWithdrawFragment.Companion.newInstance(loanWithAssociations), true, R.id.container)
         } else if (id == R.id.menu_view_guarantor) {
-            (activity as BaseActivity?)!!.replaceFragment(GuarantorListFragment.Companion.newInstance(loanId), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(GuarantorListFragment.Companion.newInstance(loanId), true, R.id.container)
         }
         return super.onOptionsItemSelected(item)
     }

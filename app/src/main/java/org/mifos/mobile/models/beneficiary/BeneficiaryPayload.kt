@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class BeneficiaryPayload(
-        internal var locale : String = "en_GB",
+        internal var locale: String = "en_GB",
 
         @SerializedName("name")
         var name: String? = null,
@@ -20,10 +20,10 @@ data class BeneficiaryPayload(
         var accountNumber: String? = null,
 
         @SerializedName("accountType")
-        var accountType: Int = 0,
+        var accountType: Int? = 0,
 
         @SerializedName("transferLimit")
-        var transferLimit: Float = 0f,
+        var transferLimit: Float? = 0f,
 
         @SerializedName("officeName")
         var officeName: String? = null

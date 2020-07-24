@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.fragments
 
-import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
 import android.os.Bundle

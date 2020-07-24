@@ -14,37 +14,37 @@ data class TimeLine(
         var submittedOnDate: List<Int> = ArrayList(),
 
         @SerializedName("submittedByUsername")
-        var submittedByUsername: String,
+        var submittedByUsername: String?,
 
         @SerializedName("submittedByFirstname")
-        var submittedByFirstname: String,
+        var submittedByFirstname: String?,
 
         @SerializedName("submittedByLastname")
-        var submittedByLastname: String,
+        var submittedByLastname: String?,
 
         @SerializedName("approvedOnDate")
         var approvedOnDate: List<Int> = ArrayList(),
 
         @SerializedName("approvedByUsername")
-        var approvedByUsername: String,
+        var approvedByUsername: String?,
 
         @SerializedName("approvedByFirstname")
-        var approvedByFirstname: String,
+        var approvedByFirstname: String?,
 
         @SerializedName("approvedByLastname")
-        var approvedByLastname: String,
+        var approvedByLastname: String?,
 
         @SerializedName("activatedOnDate")
         var activatedOnDate: List<Int>,
 
         @SerializedName("activatedByUsername")
-        var activatedByUsername: String,
+        var activatedByUsername: String?,
 
         @SerializedName("activatedByFirstname")
-        var activatedByFirstname: String,
+        var activatedByFirstname: String?,
 
         @SerializedName("activatedByLastname")
-        var activatedByLastname: String,
+        var activatedByLastname: String?,
 
         @SerializedName("closedOnDate")
         var closedOnDate: List<Int>

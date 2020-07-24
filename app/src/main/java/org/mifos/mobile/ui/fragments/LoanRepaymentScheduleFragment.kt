@@ -66,26 +66,26 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     var loanRepaymentScheduleAdapter: LoanRepaymentScheduleAdapter? = null
     var sweetUIErrorHandler: SweetUIErrorHandler? = null
     var rootView: View? = null
-    private var loanId: Long = 0
+    private var loanId: Long? = 0
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.loan_repayment_schedule))
-        if (arguments != null) {
-            loanId = arguments!!.getLong(Constants.LOAN_ID)
-        }
+        if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_loan_repayment_schedule, container, false)
         ButterKnife.bind(this, rootView!!)
-        loanRepaymentSchedulePresenter!!.attachView(this)
+        loanRepaymentSchedulePresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
         showUserInterface()
         if (savedInstanceState == null) {
-            loanRepaymentSchedulePresenter!!.loanLoanWithAssociations(loanId)
+            loanRepaymentSchedulePresenter?.loanLoanWithAssociations(loanId)
         }
         return rootView
     }
@@ -106,7 +106,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      * Initializes the layout
      */
     override fun showUserInterface() {
-        tvRepaymentSchedule!!.adapter = loanRepaymentScheduleAdapter
+        tvRepaymentSchedule?.adapter = loanRepaymentScheduleAdapter
     }
 
     override fun showProgress() {
@@ -124,35 +124,32 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      */
     override fun showLoanRepaymentSchedule(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
-        var currencyRepresentation = loanWithAssociations!!.currency!!.displaySymbol
-        if (currencyRepresentation == null) {
-            currencyRepresentation = loanWithAssociations.currency!!.code
-        }
-        loanRepaymentScheduleAdapter!!
-                .setCurrency(currencyRepresentation)
-        setTableViewList(loanWithAssociations.repaymentSchedule!!.periods)
-        tvAccountNumber!!.text = loanWithAssociations.accountNo
-        tvDisbursementDate!!.text = DateHelper.getDateAsString(loanWithAssociations.timeline!!.expectedDisbursementDate)
-        tvNumberOfPayments!!.text = loanWithAssociations.numberOfRepayments.toString()
+        var currencyRepresentation = loanWithAssociations?.currency?.displaySymbol
+        loanRepaymentScheduleAdapter
+                ?.setCurrency(currencyRepresentation)
+        setTableViewList(loanWithAssociations?.repaymentSchedule?.periods)
+        tvAccountNumber?.text = loanWithAssociations?.accountNo
+        tvDisbursementDate?.text = DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
+        tvNumberOfPayments?.text = loanWithAssociations?.numberOfRepayments.toString()
     }
 
-    private fun setTableViewList(periods: List<Periods>) {
+    private fun setTableViewList(periods: List<Periods>?) {
         val mColumnHeaderList: MutableList<ColumnHeader?> = ArrayList()
         val mRowHeaders: MutableList<RowHeader?> = ArrayList()
         val mCellList: MutableList<List<Cell?>> = ArrayList()
         mColumnHeaderList.add(ColumnHeader(getString(R.string.date)))
         mColumnHeaderList.add(ColumnHeader(getString(R.string.loan_balance)))
         mColumnHeaderList.add(ColumnHeader(getString(R.string.repayment)))
-        var i = 0
-        for (period in periods) {
-            val cells: MutableList<Cell> = ArrayList()
-            cells.add(Cell(period))
-            cells.add(Cell(period))
-            cells.add(Cell(period))
-            mCellList.add(cells)
-            mRowHeaders.add(RowHeader(++i))
-        }
-        loanRepaymentScheduleAdapter!!.setAllItems(mColumnHeaderList, mRowHeaders, mCellList)
+        if (periods != null)
+            for ((i, period) in periods.withIndex()) {
+                val cells: MutableList<Cell> = ArrayList()
+                cells.add(Cell(period))
+                cells.add(Cell(period))
+                cells.add(Cell(period))
+                mCellList.add(cells)
+                mRowHeaders.add(RowHeader(i + 1))
+            }
+        loanRepaymentScheduleAdapter?.setAllItems(mColumnHeaderList, mRowHeaders, mCellList)
     }
 
     /**
@@ -161,10 +158,10 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
     override fun showEmptyRepaymentsSchedule(loanWithAssociations: LoanWithAssociations?) {
-        tvAccountNumber!!.text = loanWithAssociations!!.accountNo
-        tvDisbursementDate!!.text = DateHelper.getDateAsString(loanWithAssociations.timeline!!.expectedDisbursementDate)
-        tvNumberOfPayments!!.text = loanWithAssociations.numberOfRepayments.toString()
-        sweetUIErrorHandler!!.showSweetEmptyUI(getString(R.string.repayment_schedule),
+        tvAccountNumber?.text = loanWithAssociations?.accountNo
+        tvDisbursementDate?.text = DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
+        tvNumberOfPayments?.text = loanWithAssociations?.numberOfRepayments.toString()
+        sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.repayment_schedule),
                 R.drawable.ic_charges, tvRepaymentSchedule, layoutError)
     }
 
@@ -175,9 +172,9 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      */
     override fun showError(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(tvRepaymentSchedule, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(tvRepaymentSchedule, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(message,
+            sweetUIErrorHandler?.showSweetErrorUI(message,
                     tvRepaymentSchedule, layoutError)
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
@@ -186,8 +183,8 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(tvRepaymentSchedule, layoutError)
-            loanRepaymentSchedulePresenter!!.loanLoanWithAssociations(loanId)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(tvRepaymentSchedule, layoutError)
+            loanRepaymentSchedulePresenter?.loanLoanWithAssociations(loanId)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
                     Toast.LENGTH_SHORT).show()
@@ -197,14 +194,14 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanRepaymentSchedulePresenter!!.detachView()
+        loanRepaymentSchedulePresenter?.detachView()
     }
 
     companion object {
-        fun newInstance(loanId: Long): LoanRepaymentScheduleFragment {
+        fun newInstance(loanId: Long?): LoanRepaymentScheduleFragment {
             val loanRepaymentScheduleFragment = LoanRepaymentScheduleFragment()
             val args = Bundle()
-            args.putLong(Constants.LOAN_ID, loanId)
+            if (loanId != null) args.putLong(Constants.LOAN_ID, loanId)
             loanRepaymentScheduleFragment.arguments = args
             return loanRepaymentScheduleFragment
         }

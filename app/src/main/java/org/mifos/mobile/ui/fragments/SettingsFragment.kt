@@ -19,7 +19,7 @@ import org.mifos.mobile.utils.LanguageHelper
  * Created by dilpreet on 02/10/17.
  */
 class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings_preference)
     }
 
@@ -54,16 +54,16 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         val preference = findPreference(s)
         if (preference is ListPreference) {
             LanguageHelper.setLocale(context, preference.value)
-            val intent = Intent(activity, activity!!.javaClass)
+            val intent = Intent(activity, activity?.javaClass)
             intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
             startActivity(intent)
-            activity!!.finish()
+            activity?.finish()
         }
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            Constants.PASSWORD -> (activity as BaseActivity?)!!.replaceFragment(UpdatePasswordFragment.Companion.newInstance(), true, R.id.container)
+            Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(UpdatePasswordFragment.Companion.newInstance(), true, R.id.container)
         }
         return super.onPreferenceTreeClick(preference)
     }

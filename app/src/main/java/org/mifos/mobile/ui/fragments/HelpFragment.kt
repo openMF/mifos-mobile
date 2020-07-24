@@ -50,13 +50,13 @@ import javax.inject.Inject
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_help, container, false)
         setHasOptionsMenu(true)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
         setToolbarTitle(getString(R.string.help))
         showUserInterface()
         if (savedInstanceState == null) {
-            presenter!!.loadFaq()
+            presenter?.loadFaq()
         }
         return rootView
     }
@@ -77,15 +77,15 @@ import javax.inject.Inject
     private fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvFaq!!.layoutManager = layoutManager
-        rvFaq!!.addItemDecoration(DividerItemDecoration(activity,
+        rvFaq?.layoutManager = layoutManager
+        rvFaq?.addItemDecoration(DividerItemDecoration(activity,
                 layoutManager.orientation))
-        bnvHelp!!.setOnNavigationItemSelectedListener(this)
+        bnvHelp?.setOnNavigationItemSelectedListener(this)
     }
 
     override fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
-        faqAdapter!!.setFaqArrayList(faqArrayList)
-        rvFaq!!.adapter = faqAdapter
+        faqAdapter?.setFaqArrayList(faqArrayList)
+        rvFaq?.adapter = faqAdapter
         this.faqArrayList = faqArrayList
     }
 
@@ -100,11 +100,11 @@ import javax.inject.Inject
                 val emailIntent = Intent(Intent.ACTION_SENDTO)
                 emailIntent.data = Uri.parse("mailto:" + getString(R.string.contact_email))
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
-                if (emailIntent.resolveActivity(activity!!.packageManager) != null) {
+                if (emailIntent.resolveActivity(activity?.packageManager) != null) {
                     startActivity(emailIntent)
                 }
             }
-            R.id.menu_locations -> (activity as BaseActivity?)!!.replaceFragment(LocationsFragment.Companion.newInstance(),
+            R.id.menu_locations -> (activity as BaseActivity?)?.replaceFragment(LocationsFragment.Companion.newInstance(),
                     true, R.id.container)
         }
         return true
@@ -112,16 +112,16 @@ import javax.inject.Inject
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_help, menu)
-        val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.menu_search_faq).actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                faqAdapter!!.updateList(presenter!!.filterList(faqArrayList, newText))
+                faqAdapter?.updateList(presenter?.filterList(faqArrayList, newText))
                 return false
             }
         })

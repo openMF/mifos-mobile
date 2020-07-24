@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+
 import androidx.fragment.app.DialogFragment
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.google.android.material.textfield.TextInputLayout
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -24,6 +28,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanApplicationMvpView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.MFDatePicker.OnDatePickListener
+
 import java.util.*
 import javax.inject.Inject
 
@@ -93,8 +98,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     private var mfDatePicker: DialogFragment? = null
     private var loanState: LoanState? = null
     private var loanWithAssociations: LoanWithAssociations? = null
-    private var productId: Int = 0
-    private var purposeId: Int = -1
+    private var productId: Int? = 0
+    private var purposeId: Int? = -1
     private var disbursementDate: String? = null
     private var submittedDate: String? = null
     private var isDisbursementDate = false
@@ -108,7 +113,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * @param loanState [LoanState] is set to `LoanState.CREATE`
      * @return Instance of [LoanApplicationFragment]
      */
-    fun newInstance(loanState: LoanState): LoanApplicationFragment?{
+    fun newInstance(loanState: LoanState): LoanApplicationFragment? {
         val fragment = LoanApplicationFragment()
         val args = Bundle()
         args.putSerializable(Constants.LOAN_STATE, loanState)
@@ -137,14 +142,14 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
-            loanState = arguments!!.getSerializable(Constants.LOAN_STATE) as LoanState
+            loanState = arguments?.getSerializable(Constants.LOAN_STATE) as LoanState
             if (loanState == LoanState.CREATE) {
                 setToolbarTitle(getString(R.string.apply_for_loan))
             } else {
                 setToolbarTitle(getString(R.string.update_loan))
-                loanWithAssociations = arguments!!.getParcelable(Constants.LOAN_ACCOUNT)
+                loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
             }
         }
     }
@@ -155,7 +160,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_add_loan_application, container, false)
         ButterKnife.bind(this, rootView!!)
-        loanApplicationPresenter!!.attachView(this)
+        loanApplicationPresenter?.attachView(this)
         showUserInterface()
         if (savedInstanceState == null) {
             loadLoanTemplate()
@@ -171,7 +176,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val template: LoanTemplate = savedInstanceState.getParcelable(Constants.TEMPLATE)
+            val template: LoanTemplate? = savedInstanceState.getParcelable(Constants.TEMPLATE)
             if (loanState == LoanState.CREATE) {
                 showLoanTemplate(template)
             } else {
@@ -185,9 +190,9 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     private fun loadLoanTemplate() {
         if (loanState == LoanState.CREATE) {
-            loanApplicationPresenter!!.loadLoanApplicationTemplate(LoanState.CREATE)
+            loanApplicationPresenter?.loadLoanApplicationTemplate(LoanState.CREATE)
         } else {
-            loanApplicationPresenter!!.loadLoanApplicationTemplate(LoanState.UPDATE)
+            loanApplicationPresenter?.loadLoanApplicationTemplate(LoanState.UPDATE)
         }
     }
 
@@ -197,19 +202,19 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     @OnClick(R.id.btn_loan_review)
     fun onReviewLoanApplication() {
-        if (tilPrincipalAmount!!.editText!!.text.toString() == "") {
-            tilPrincipalAmount!!.error = getString(R.string.enter_amount)
+        if (tilPrincipalAmount?.editText?.text.toString() == "") {
+            tilPrincipalAmount?.error = getString(R.string.enter_amount)
             return
         }
-        if (tilPrincipalAmount!!.editText!!.text.toString() == ".") {
-            tilPrincipalAmount!!.error = getString(R.string.invalid_amount)
+        if (tilPrincipalAmount?.editText?.text.toString() == ".") {
+            tilPrincipalAmount?.error = getString(R.string.invalid_amount)
             return
         }
-        if (tilPrincipalAmount!!.editText!!.text.toString().matches("^0*".toRegex())) {
-            tilPrincipalAmount!!.error = getString(R.string.amount_greater_than_zero)
+        if (tilPrincipalAmount?.editText?.text.toString().matches("^0*".toRegex())) {
+            tilPrincipalAmount?.error = getString(R.string.amount_greater_than_zero)
             return
         }
-        tilPrincipalAmount!!.error = null
+        tilPrincipalAmount?.error = null
         if (loanState == LoanState.CREATE) {
             reviewNewLoanApplication()
         } else {
@@ -222,29 +227,29 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     private fun reviewNewLoanApplication() {
         val loansPayload = LoansPayload()
-        loansPayload.clientId = loanTemplate!!.clientId
-        loansPayload.loanPurpose = spLoanPurpose!!.selectedItem.toString()
-        loansPayload.productName = spLoanProducts!!.selectedItem.toString()
-        loansPayload.currency = tvCurrency!!.text.toString()
-        if (purposeId > 0) loansPayload.loanPurposeId = purposeId
+        loansPayload.clientId = loanTemplate?.clientId
+        loansPayload.loanPurpose = spLoanPurpose?.selectedItem.toString()
+        loansPayload.productName = spLoanProducts?.selectedItem.toString()
+        loansPayload.currency = tvCurrency?.text.toString()
+        if (purposeId != null && purposeId!! > 0) loansPayload.loanPurposeId = purposeId
         loansPayload.productId = productId
-        loansPayload.principal = tilPrincipalAmount!!.editText!!.text.toString().toDouble()
-        loansPayload.loanTermFrequency = loanTemplate!!.termFrequency
-        loansPayload.loanTermFrequencyType = loanTemplate!!.interestRateFrequencyType.id
+        loansPayload.principal = tilPrincipalAmount?.editText?.text.toString().toDouble()
+        loansPayload.loanTermFrequency = loanTemplate?.termFrequency
+        loansPayload.loanTermFrequencyType = loanTemplate?.interestRateFrequencyType?.id
         loansPayload.loanType = "individual"
-        loansPayload.numberOfRepayments = loanTemplate!!.numberOfRepayments
-        loansPayload.repaymentEvery = loanTemplate!!.repaymentEvery
-        loansPayload.repaymentFrequencyType = loanTemplate!!.interestRateFrequencyType.id
-        loansPayload.interestRatePerPeriod = loanTemplate!!.interestRatePerPeriod
+        loansPayload.numberOfRepayments = loanTemplate?.numberOfRepayments
+        loansPayload.repaymentEvery = loanTemplate?.repaymentEvery
+        loansPayload.repaymentFrequencyType = loanTemplate?.interestRateFrequencyType?.id
+        loansPayload.interestRatePerPeriod = loanTemplate?.interestRatePerPeriod
         loansPayload.expectedDisbursementDate = disbursementDate
         loansPayload.submittedOnDate = submittedDate
-        loansPayload.transactionProcessingStrategyId = loanTemplate!!.transactionProcessingStrategyId
-        loansPayload.amortizationType = loanTemplate!!.amortizationType.id
-        loansPayload.interestCalculationPeriodType = loanTemplate!!.interestCalculationPeriodType.id
-        loansPayload.interestType = loanTemplate!!.interestType.id
-        (activity as BaseActivity?)!!.replaceFragment(newInstance(loanState!!, loansPayload,
-                tvNewLoanApplication!!.text.toString(),
-                tvAccountNumber!!.text.toString()),
+        loansPayload.transactionProcessingStrategyId = loanTemplate?.transactionProcessingStrategyId
+        loansPayload.amortizationType = loanTemplate?.amortizationType?.id
+        loansPayload.interestCalculationPeriodType = loanTemplate?.interestCalculationPeriodType?.id
+        loansPayload.interestType = loanTemplate?.interestType?.id
+        (activity as BaseActivity?)?.replaceFragment(newInstance(loanState!!, loansPayload,
+                tvNewLoanApplication?.text.toString(),
+                tvAccountNumber?.text.toString()),
                 true, R.id.container)
     }
 
@@ -253,28 +258,28 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     private fun submitUpdateLoanApplication() {
         val loansPayload = LoansPayload()
-        loansPayload.principal = tilPrincipalAmount!!.editText!!.text.toString().toDouble()
+        loansPayload.principal = tilPrincipalAmount?.editText?.text.toString().toDouble()
         loansPayload.productId = productId
-        loansPayload.loanPurpose = spLoanPurpose!!.selectedItem.toString()
-        loansPayload.productName = spLoanProducts!!.selectedItem.toString()
-        loansPayload.currency = tvCurrency!!.text.toString()
-        if (purposeId > 0) loansPayload.loanPurposeId = purposeId
-        loansPayload.loanTermFrequency = loanTemplate!!.termFrequency
-        loansPayload.loanTermFrequencyType = loanTemplate!!.interestRateFrequencyType.id
-        loansPayload.numberOfRepayments = loanTemplate!!.numberOfRepayments
-        loansPayload.repaymentEvery = loanTemplate!!.repaymentEvery
-        loansPayload.repaymentFrequencyType = loanTemplate!!.interestRateFrequencyType.id
-        loansPayload.interestRatePerPeriod = loanTemplate!!.interestRatePerPeriod
-        loansPayload.interestType = loanTemplate!!.interestType.id
-        loansPayload.interestCalculationPeriodType = loanTemplate!!.interestCalculationPeriodType.id
-        loansPayload.amortizationType = loanTemplate!!.amortizationType.id
-        loansPayload.transactionProcessingStrategyId = loanTemplate!!.transactionProcessingStrategyId
+        loansPayload.loanPurpose = spLoanPurpose?.selectedItem.toString()
+        loansPayload.productName = spLoanProducts?.selectedItem.toString()
+        loansPayload.currency = tvCurrency?.text.toString()
+        if (purposeId != null && purposeId!! > 0) loansPayload.loanPurposeId = purposeId
+        loansPayload.loanTermFrequency = loanTemplate?.termFrequency
+        loansPayload.loanTermFrequencyType = loanTemplate?.interestRateFrequencyType?.id
+        loansPayload.numberOfRepayments = loanTemplate?.numberOfRepayments
+        loansPayload.repaymentEvery = loanTemplate?.repaymentEvery
+        loansPayload.repaymentFrequencyType = loanTemplate?.interestRateFrequencyType?.id
+        loansPayload.interestRatePerPeriod = loanTemplate?.interestRatePerPeriod
+        loansPayload.interestType = loanTemplate?.interestType?.id
+        loansPayload.interestCalculationPeriodType = loanTemplate?.interestCalculationPeriodType?.id
+        loansPayload.amortizationType = loanTemplate?.amortizationType?.id
+        loansPayload.transactionProcessingStrategyId = loanTemplate?.transactionProcessingStrategyId
         loansPayload.expectedDisbursementDate = disbursementDate
-        (activity as BaseActivity?)!!.replaceFragment(newInstance(loanState!!,
+        (activity as BaseActivity?)?.replaceFragment(newInstance(loanState,
                 loansPayload,
-                loanWithAssociations!!.id!!.toLong(),
-                tvNewLoanApplication!!.text.toString(),
-                tvAccountNumber!!.text.toString()),
+                loanWithAssociations?.id?.toLong(),
+                tvNewLoanApplication?.text.toString(),
+                tvAccountNumber?.text.toString()),
                 false, R.id.container)
     }
 
@@ -283,8 +288,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     @OnClick(R.id.iv_status)
     fun onRetry() {
-        llError!!.visibility = View.GONE
-        llAddLoan!!.visibility = View.VISIBLE
+        llError?.visibility = View.GONE
+        llAddLoan?.visibility = View.VISIBLE
         loadLoanTemplate()
     }
 
@@ -292,7 +297,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * Initializes `tvSubmissionDate` with current Date
      */
     private fun inflateSubmissionDate() {
-        tvSubmissionDate!!.text = MFDatePicker.datePickedAsString
+        tvSubmissionDate?.text = MFDatePicker.datePickedAsString
     }
 
     /**
@@ -300,7 +305,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     private fun inflateDisbursementDate() {
         mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.FUTURE_DAYS, active)
-        tvExpectedDisbursementDate!!.text = MFDatePicker.datePickedAsString
+        tvExpectedDisbursementDate?.text = MFDatePicker.datePickedAsString
         active = true
     }
 
@@ -308,8 +313,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * Sets `submittedDate` and `disbursementDate` in a specific format
      */
     fun setSubmissionDisburseDate() {
-        disbursementDate = tvExpectedDisbursementDate!!.text.toString()
-        submittedDate = tvSubmissionDate!!.text.toString()
+        disbursementDate = tvExpectedDisbursementDate?.text.toString()
+        submittedDate = tvSubmissionDate?.text.toString()
         submittedDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, submittedDate)
         disbursementDate = DateHelper.getSpecificFormat(
                 DateHelper.FORMAT_dd_MMMM_yyyy, disbursementDate)
@@ -321,7 +326,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     @OnClick(R.id.ll_expected_disbursement_date_edit)
     fun setTvDisbursementOnDate() {
         isDisbursementDate = true
-        mfDatePicker!!.show(activity!!.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        mfDatePicker?.show(activity?.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
     }
 
     /**
@@ -332,7 +337,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun onDatePicked(date: String?) {
         if (isDisbursementDate) {
-            tvExpectedDisbursementDate!!.text = date
+            tvExpectedDisbursementDate?.text = date
             disbursementDate = date
             isDisbursementDate = false
         }
@@ -343,16 +348,16 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * Initializes the layout
      */
     override fun showUserInterface() {
-        loanProductAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item,
+        loanProductAdapter = ArrayAdapter(activity?.applicationContext, android.R.layout.simple_spinner_item,
                 listLoanProducts)
-        loanProductAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spLoanProducts!!.adapter = loanProductAdapter
-        spLoanProducts!!.onItemSelectedListener = this
-        loanPurposeAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item,
+        loanProductAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spLoanProducts?.adapter = loanProductAdapter
+        spLoanProducts?.onItemSelectedListener = this
+        loanPurposeAdapter = ArrayAdapter(activity?.applicationContext, android.R.layout.simple_spinner_item,
                 listLoanPurpose)
-        loanPurposeAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spLoanPurpose!!.adapter = loanPurposeAdapter
-        spLoanPurpose!!.onItemSelectedListener = this
+        loanPurposeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spLoanPurpose?.adapter = loanPurposeAdapter
+        spLoanPurpose?.onItemSelectedListener = this
         inflateSubmissionDate()
         inflateDisbursementDate()
         setSubmissionDisburseDate()
@@ -365,10 +370,11 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun showLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        for ((_, name) in loanTemplate!!.productOptions) {
-            listLoanProducts.add(name)
-        }
-        loanProductAdapter!!.notifyDataSetChanged()
+        if (loanTemplate?.productOptions != null)
+            for ((_, name) in loanTemplate.productOptions) {
+                listLoanProducts.add(name)
+            }
+        loanProductAdapter?.notifyDataSetChanged()
     }
 
     /**
@@ -378,22 +384,23 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        for ((_, name) in loanTemplate!!.productOptions) {
-            listLoanProducts.add(name)
-        }
-        loanProductAdapter!!.notifyDataSetChanged()
-        spLoanProducts!!.setSelection(loanProductAdapter!!
-                .getPosition(loanWithAssociations!!.loanProductName))
-        tvAccountNumber!!.text = getString(R.string.string_and_string,
-                getString(R.string.account_number) + " ", loanWithAssociations!!.accountNo)
-        tvNewLoanApplication!!.text = getString(R.string.string_and_string,
+        if (loanTemplate?.productOptions != null)
+            for ((_, name) in loanTemplate.productOptions) {
+                listLoanProducts.add(name)
+            }
+        loanProductAdapter?.notifyDataSetChanged()
+        spLoanProducts?.setSelection(loanProductAdapter!!
+                .getPosition(loanWithAssociations?.loanProductName))
+        tvAccountNumber?.text = getString(R.string.string_and_string,
+                getString(R.string.account_number) + " ", loanWithAssociations?.accountNo)
+        tvNewLoanApplication?.text = getString(R.string.string_and_string,
                 getString(R.string.update_loan_application) + " ",
-                loanWithAssociations!!.clientName)
-        tilPrincipalAmount!!.editText!!.setText(String.format(Locale.getDefault(),
-                "%.2f", loanWithAssociations!!.principal))
-        tvCurrency!!.text = loanWithAssociations!!.currency!!.displayLabel
-        tvSubmissionDate!!.text = DateHelper.getDateAsString(loanWithAssociations!!.timeline!!.submittedOnDate, "dd-MM-yyyy")
-        tvExpectedDisbursementDate!!.text = DateHelper.getDateAsString(loanWithAssociations!!.timeline!!.expectedDisbursementDate, "dd-MM-yyyy")
+                loanWithAssociations?.clientName)
+        tilPrincipalAmount?.editText?.setText(String.format(Locale.getDefault(),
+                "%.2f", loanWithAssociations?.principal))
+        tvCurrency?.text = loanWithAssociations?.currency?.displayLabel
+        tvSubmissionDate?.text = DateHelper.getDateAsString(loanWithAssociations?.timeline?.submittedOnDate, "dd-MM-yyyy")
+        tvExpectedDisbursementDate?.text = DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate, "dd-MM-yyyy")
         setSubmissionDisburseDate()
     }
 
@@ -405,21 +412,20 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        tvAccountNumber!!.text = getString(R.string.string_and_string,
-                getString(R.string.account_number) + " ", loanTemplate!!.clientAccountNo)
-        tvNewLoanApplication!!.text = getString(R.string.string_and_string,
-                getString(R.string.new_loan_application) + " ", loanTemplate.clientName)
-        tilPrincipalAmount!!.editText!!.setText(loanTemplate.principal.toString())
-        tvCurrency!!.text = loanTemplate.currency.displayLabel
+        tvAccountNumber?.text = getString(R.string.string_and_string,
+                getString(R.string.account_number) + " ", loanTemplate?.clientAccountNo)
+        tvNewLoanApplication?.text = getString(R.string.string_and_string,
+                getString(R.string.new_loan_application) + " ", loanTemplate?.clientName)
+        tilPrincipalAmount?.editText?.setText(loanTemplate?.principal.toString())
+        tvCurrency?.text = loanTemplate?.currency?.displayLabel
         listLoanPurpose.clear()
-        listLoanPurpose.add(activity!!.getString(R.string.loan_purpose_not_provided))
-        if (loanTemplate.loanPurposeOptions != null) {
+        listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
+        if (loanTemplate?.loanPurposeOptions != null)
             for (loanPurposeOptions in loanTemplate.loanPurposeOptions) {
                 listLoanPurpose.add(loanPurposeOptions.name)
             }
-        }
-        loanPurposeAdapter!!.notifyDataSetChanged()
-        spLoanPurpose!!.setSelection(0)
+        loanPurposeAdapter?.notifyDataSetChanged()
+        spLoanPurpose?.setSelection(0)
     }
 
     /**
@@ -431,24 +437,25 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     override fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         listLoanPurpose.clear()
-        listLoanPurpose.add(activity!!.getString(R.string.loan_purpose_not_provided))
-        for (loanPurposeOptions in loanTemplate!!.loanPurposeOptions) {
-            listLoanPurpose.add(loanPurposeOptions.name)
-        }
-        loanPurposeAdapter!!.notifyDataSetChanged()
-        spLoanPurpose!!.setSelection(0)
+        listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
+        if (loanTemplate?.loanPurposeOptions != null)
+            for (loanPurposeOptions in loanTemplate.loanPurposeOptions) {
+                listLoanPurpose.add(loanPurposeOptions.name)
+            }
+        loanPurposeAdapter?.notifyDataSetChanged()
+        spLoanPurpose?.setSelection(0)
         if (isLoanUpdatePurposesInitialization &&
-                loanWithAssociations!!.loanPurposeName != null) {
-            spLoanPurpose!!.setSelection(loanPurposeAdapter!!
-                    .getPosition(loanWithAssociations!!.loanPurposeName))
+                loanWithAssociations?.loanPurposeName != null) {
+            spLoanPurpose?.setSelection(loanPurposeAdapter!!
+                    .getPosition(loanWithAssociations?.loanPurposeName))
             isLoanUpdatePurposesInitialization = false
         } else {
-            tvAccountNumber!!.text = getString(R.string.string_and_string,
-                    getString(R.string.account_number) + " ", loanTemplate.clientAccountNo)
-            tvNewLoanApplication!!.text = getString(R.string.string_and_string,
-                    getString(R.string.new_loan_application) + " ", loanTemplate.clientName)
-            tilPrincipalAmount!!.editText!!.setText(loanTemplate.principal.toString())
-            tvCurrency!!.text = loanTemplate.currency.displayLabel
+            tvAccountNumber?.text = getString(R.string.string_and_string,
+                    getString(R.string.account_number) + " ", loanTemplate?.clientAccountNo)
+            tvNewLoanApplication?.text = getString(R.string.string_and_string,
+                    getString(R.string.new_loan_application) + " ", loanTemplate?.clientName)
+            tilPrincipalAmount?.editText?.setText(loanTemplate?.principal.toString())
+            tvCurrency?.text = loanTemplate?.currency?.displayLabel
         }
     }
 
@@ -459,38 +466,38 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun showError(message: String?) {
         if (!Network.isConnected(activity)) {
-            ivReload!!.setImageResource(R.drawable.ic_error_black_24dp)
-            tvErrorStatus!!.text = getString(R.string.internet_not_connected)
-            llAddLoan!!.visibility = View.GONE
-            llError!!.visibility = View.VISIBLE
+            ivReload?.setImageResource(R.drawable.ic_error_black_24dp)
+            tvErrorStatus?.text = getString(R.string.internet_not_connected)
+            llAddLoan?.visibility = View.GONE
+            llError?.visibility = View.VISIBLE
         } else {
             Toaster.show(rootView, message)
         }
     }
 
     override fun showProgress() {
-        llAddLoan!!.visibility = View.GONE
+        llAddLoan?.visibility = View.GONE
         showProgressBar()
     }
 
     override fun hideProgress() {
-        llAddLoan!!.visibility = View.VISIBLE
+        llAddLoan?.visibility = View.VISIBLE
         hideProgressBar()
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         when (parent.id) {
             R.id.sp_loan_products -> {
-                productId = loanTemplate!!.productOptions[position].id!!
+                productId = loanTemplate?.productOptions?.get(position)?.id
                 if (loanState == LoanState.CREATE) {
-                    loanApplicationPresenter!!.loadLoanApplicationTemplateByProduct(productId,
+                    loanApplicationPresenter?.loadLoanApplicationTemplateByProduct(productId,
                             LoanState.CREATE)
                 } else {
-                    loanApplicationPresenter!!.loadLoanApplicationTemplateByProduct(productId,
+                    loanApplicationPresenter?.loadLoanApplicationTemplateByProduct(productId,
                             LoanState.UPDATE)
                 }
             }
-            R.id.sp_loan_purpose -> purposeId = loanTemplate!!.loanPurposeOptions[position].id!!
+            R.id.sp_loan_purpose -> purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
         }
     }
 
@@ -498,7 +505,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanApplicationPresenter!!.detachView()
+        loanApplicationPresenter?.detachView()
     }
 
     companion object {

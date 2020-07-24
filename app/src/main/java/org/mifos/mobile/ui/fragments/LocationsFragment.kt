@@ -28,14 +28,14 @@ class LocationsFragment : BaseFragment(), OnMapReadyCallback {
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_locations, container, false)
         ButterKnife.bind(this, rootView!!)
-        mapView!!.onCreate(savedInstanceState)
-        mapView!!.onResume()
+        mapView?.onCreate(savedInstanceState)
+        mapView?.onResume()
         try {
-            MapsInitializer.initialize(activity!!.applicationContext)
+            MapsInitializer.initialize(activity?.applicationContext)
         } catch (e: Exception) {
             Log.d(LocationsFragment::class.java.simpleName, e.toString())
         }
-        mapView!!.getMapAsync(this)
+        mapView?.getMapAsync(this)
         return rootView
     }
 

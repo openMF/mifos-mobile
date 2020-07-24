@@ -54,48 +54,66 @@ class LoanAccountsListAdapter @Inject constructor(@param:ActivityContext private
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ViewHolder) {
             val loanAccount = getItem(position)
-            holder.tvClientLoanAccountNumber!!.text = loanAccount?.accountNo
-            holder.tvLoanAccountProductName!!.text = loanAccount?.productName
-            holder.tvAccountBalance!!.visibility = View.GONE
-            if (loanAccount?.status!!.active!! && loanAccount.inArrears!!) {
-                setLoanAccountsGeneralDetails(holder, R.color.red, context.getString(R.string.string_and_string, context.getString(R.string.disbursement), getDateAsString(loanAccount.timeline.actualDisbursementDate)))
+            holder.tvClientLoanAccountNumber?.text = loanAccount?.accountNo
+            holder.tvLoanAccountProductName?.text = loanAccount?.productName
+            holder.tvAccountBalance?.visibility = View.GONE
+            if (loanAccount?.status?.active == true && loanAccount.inArrears == true) {
+                setLoanAccountsGeneralDetails(holder, R.color.red, context.getString(
+                        R.string.string_and_string, context.getString(R.string.disbursement),
+                        getDateAsString(loanAccount.timeline?.actualDisbursementDate)
+                ))
                 setLoanAccountsDetails(holder, loanAccount, R.color.red)
-            } else if (loanAccount.status!!.active!!) {
-                setLoanAccountsGeneralDetails(holder, R.color.deposit_green, context.getString(R.string.string_and_string, context.getString(R.string.disbursement),
-                        getDateAsString(loanAccount.timeline.actualDisbursementDate)))
+            } else if (loanAccount?.status?.active == true) {
+                setLoanAccountsGeneralDetails(holder, R.color.deposit_green, context.getString(
+                        R.string.string_and_string, context.getString(R.string.disbursement),
+                        getDateAsString(loanAccount.timeline?.actualDisbursementDate)
+                ))
                 setLoanAccountsDetails(holder, loanAccount, R.color.deposit_green)
-            } else if (loanAccount.status!!.waitingForDisbursal!!) {
-                setLoanAccountsGeneralDetails(holder, R.color.blue, context.getString(R.string.string_and_string, context.getString(R.string.approved), getDateAsString(loanAccount.timeline.approvedOnDate)))
-            } else if (loanAccount.status!!.pendingApproval!!) {
-                setLoanAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(R.string.string_and_string, context.getString(R.string.submitted), getDateAsString(loanAccount.timeline.submittedOnDate)))
-            } else if (loanAccount.status!!.overpaid!!) {
+            } else if (loanAccount?.status?.waitingForDisbursal == true) {
+                setLoanAccountsGeneralDetails(holder, R.color.blue, context.getString(
+                        R.string.string_and_string, context.getString(R.string.approved),
+                        getDateAsString(loanAccount.timeline?.approvedOnDate)
+                ))
+            } else if (loanAccount?.status?.pendingApproval == true) {
+                setLoanAccountsGeneralDetails(holder, R.color.light_yellow, context.getString(
+                        R.string.string_and_string, context.getString(R.string.submitted),
+                        getDateAsString(loanAccount.timeline?.submittedOnDate)
+                ))
+            } else if (loanAccount?.status?.overpaid == true) {
                 setLoanAccountsDetails(holder, loanAccount, R.color.purple)
-                setLoanAccountsGeneralDetails(holder, R.color.purple, context.getString(R.string.string_and_string, context.getString(R.string.disbursement), getDateAsString(loanAccount.timeline.actualDisbursementDate)))
-            } else if (loanAccount.status!!.closed!!) {
-                setLoanAccountsGeneralDetails(holder, R.color.black, context.getString(R.string.string_and_string, context.getString(R.string.closed), getDateAsString(loanAccount.timeline.closedOnDate)))
+                setLoanAccountsGeneralDetails(holder, R.color.purple, context.getString(
+                        R.string.string_and_string, context.getString(R.string.disbursement),
+                        getDateAsString(loanAccount.timeline?.actualDisbursementDate)
+                ))
+            } else if (loanAccount?.status?.closed == true) {
+                setLoanAccountsGeneralDetails(holder, R.color.black, context.getString(
+                        R.string.string_and_string, context.getString(R.string.closed),
+                        getDateAsString(loanAccount.timeline?.closedOnDate)
+                ))
             } else {
-                setLoanAccountsGeneralDetails(holder, R.color.gray_dark, context.getString(R.string.string_and_string, context.getString(R.string.withdrawn), getDateAsString(loanAccount.timeline.withdrawnOnDate)))
+                setLoanAccountsGeneralDetails(holder, R.color.gray_dark, context.getString(R.string.string_and_string, context.getString(R.string.withdrawn), getDateAsString(loanAccount?.timeline?.withdrawnOnDate)))
             }
         }
     }
 
     private fun setLoanAccountsDetails(viewHolder: ViewHolder, loanAccount: LoanAccount, color: Int) {
         val amountBalance: Double = if (loanAccount.loanBalance != 0.0) loanAccount.loanBalance else 0.0
-        viewHolder.tvAccountBalance!!.visibility = View.VISIBLE
-        viewHolder.tvAccountBalance!!.text = formatCurrency(context, amountBalance)
-        viewHolder.tvAccountBalance!!.setTextColor(ContextCompat.getColor(context, color))
+        viewHolder.tvAccountBalance?.visibility = View.VISIBLE
+        viewHolder.tvAccountBalance?.text = formatCurrency(context, amountBalance)
+        viewHolder.tvAccountBalance?.setTextColor(ContextCompat.getColor(context, color))
     }
 
     private fun setLoanAccountsGeneralDetails(
             holder: RecyclerView.ViewHolder, colorId: Int,
             dateStr: String
     ) {
-        (holder as ViewHolder).ivStatusIndicator!!.setColorFilter(ContextCompat.getColor(context, colorId))
-        holder.tvDate!!.text = dateStr
+        (holder as ViewHolder).ivStatusIndicator?.setColorFilter(ContextCompat.getColor(context, colorId))
+        holder.tvDate?.text = dateStr
     }
 
     override fun getItemCount(): Int {
-        return loanAccountsList!!.size
+        return if (loanAccountsList != null) loanAccountsList!!.size
+        else 0
     }
 
     class ViewHolder(v: View?) : RecyclerView.ViewHolder(v!!) {

@@ -59,7 +59,7 @@ data class LoanAccount(
         var amountPaid: Double = 0.toDouble(),
 
         @SerializedName("currency")
-        var currency: Currency,
+        var currency: Currency?,
 
         @SerializedName("inArrears")
         var inArrears: Boolean? = null,
@@ -71,7 +71,7 @@ data class LoanAccount(
         var loanPurposeName: String? = null,
 
         @SerializedName("timeline")
-        var timeline: Timeline
+        var timeline: Timeline?
 
 ) : Account(), Parcelable {
     constructor(parcel: Parcel) : this(

@@ -29,6 +29,7 @@ class RecentTransactionListAdapter @Inject constructor(@ActivityContext context:
 
     private var transactions: MutableList<Transaction?>
     private val context: Context
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_recent_transaction, parent, false)

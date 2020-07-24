@@ -7,13 +7,17 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
 import android.widget.*
+
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
@@ -26,6 +30,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingAccountsTransactionView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.MFDatePicker.OnDatePickListener
+
 import java.util.*
 import javax.inject.Inject
 
@@ -76,10 +81,10 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) {
-            savingsId = arguments!!.getLong(Constants.SAVINGS_ID)
+            savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
         }
     }
 
@@ -90,11 +95,11 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         rootView = inflater.inflate(R.layout.fragment_saving_account_transactions,
                 container, false)
         ButterKnife.bind(this, rootView!!)
-        savingAccountsTransactionPresenter!!.attachView(this)
+        savingAccountsTransactionPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
         showUserInterface()
         if (savedInstanceState == null) {
-            savingAccountsTransactionPresenter!!.loadSavingsWithAssociations(savingsId)
+            savingAccountsTransactionPresenter?.loadSavingsWithAssociations(savingsId)
         }
         initializeFilterVariables()
         return rootView
@@ -127,9 +132,9 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvSavingAccountsTransaction!!.setHasFixedSize(true)
-        rvSavingAccountsTransaction!!.layoutManager = layoutManager
-        rvSavingAccountsTransaction!!.adapter = transactionListAdapter
+        rvSavingAccountsTransaction?.setHasFixedSize(true)
+        rvSavingAccountsTransaction?.layoutManager = layoutManager
+        rvSavingAccountsTransaction?.adapter = transactionListAdapter
 
 //        radioGroup.setOnCheckedChangeListener(this);
         mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS, active)
@@ -143,10 +148,10 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * @param savingsWithAssociations Contains [Transactions] for given Savings account.
      */
     override fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
-        layoutAccount!!.visibility = View.VISIBLE
+        layoutAccount?.visibility = View.VISIBLE
         this.savingsWithAssociations = savingsWithAssociations
         transactionsList = savingsWithAssociations?.transactions
-        if (transactionsList != null && transactionsList!!.isNotEmpty()) {
+        if (transactionsList != null && transactionsList?.isNotEmpty() == true) {
             transactionListAdapter?.setContext(context)
             transactionListAdapter?.setSavingAccountsTransactionList(transactionsList)
         } else {
@@ -161,17 +166,17 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      */
     override fun showErrorFetchingSavingAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(rvSavingAccountsTransaction, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(rvSavingAccountsTransaction, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(message, rvSavingAccountsTransaction, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(message, rvSavingAccountsTransaction, layoutError)
         }
     }
 
     @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(rvSavingAccountsTransaction, layoutError)
-            savingAccountsTransactionPresenter!!.loadSavingsWithAssociations(savingsId)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvSavingAccountsTransaction, layoutError)
+            savingAccountsTransactionPresenter?.loadSavingsWithAssociations(savingsId)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
                     Toast.LENGTH_SHORT).show()
@@ -191,7 +196,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     }
 
     override fun showEmptyTransactions() {
-        sweetUIErrorHandler!!.showSweetEmptyUI(getString(R.string.transactions),
+        sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.transactions),
                 R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction, layoutError)
     }
 
@@ -207,12 +212,12 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
 
     private fun startDatePick() {
         datePick = DatePick.START
-        mfDatePicker!!.show(activity!!.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        mfDatePicker?.show(activity?.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
     }
 
     private fun endDatePick() {
         datePick = DatePick.END
-        mfDatePicker!!.show(activity!!.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        mfDatePicker?.show(activity?.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
     }
 
     /**
@@ -224,12 +229,12 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onDatePicked(date: String?) {
         val timeInMillis = DateHelper.getDateAsLongFromString(date, "dd-MM-yyyy")
         if (datePick == DatePick.START) {
-            tvEndDate!!.isEnabled = true
-            tvStartDate!!.text = DateHelper.getDateAsStringFromLong(timeInMillis)
+            tvEndDate?.isEnabled = true
+            tvStartDate?.text = DateHelper.getDateAsStringFromLong(timeInMillis)
             startDate = timeInMillis
         } else {
             endDate = timeInMillis
-            tvEndDate!!.text = DateHelper.getDateAsStringFromLong(timeInMillis)
+            tvEndDate?.text = DateHelper.getDateAsStringFromLong(timeInMillis)
             isReady = true
         }
     }
@@ -254,25 +259,25 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * Shows a filter dialog
      */
     private fun showFilterDialog() {
-        val inflater = activity!!.layoutInflater
-        val dialogView = inflater.inflate(R.layout.layout_filter_dialog, null, false)
-        val llcheckBoxPeriod = dialogView.findViewById<LinearLayout>(R.id.ll_row_checkbox)
-        val checkBoxPeriod: AppCompatCheckBox = dialogView.findViewById(R.id.cb_select)
-        val radioGroupFilter = dialogView.findViewById<RadioGroup>(R.id.rg_date_filter)
-        tvStartDate = dialogView.findViewById(R.id.tv_start_date)
-        tvEndDate = dialogView.findViewById(R.id.tv_end_date)
-        tvStartDate!!.isEnabled = false
-        tvEndDate!!.isEnabled = false
+        val inflater = activity?.layoutInflater
+        val dialogView = inflater?.inflate(R.layout.layout_filter_dialog, null, false)
+        val llcheckBoxPeriod = dialogView?.findViewById<LinearLayout>(R.id.ll_row_checkbox)
+        val checkBoxPeriod: AppCompatCheckBox? = dialogView?.findViewById(R.id.cb_select)
+        val radioGroupFilter = dialogView?.findViewById<RadioGroup>(R.id.rg_date_filter)
+        tvStartDate = dialogView?.findViewById(R.id.tv_start_date)
+        tvEndDate = dialogView?.findViewById(R.id.tv_end_date)
+        tvStartDate?.isEnabled = false
+        tvEndDate?.isEnabled = false
 
         //setup listeners
-        tvStartDate!!.setOnClickListener { startDatePick() }
-        tvEndDate!!.setOnClickListener { endDatePick() }
-        llcheckBoxPeriod.setOnClickListener { checkBoxPeriod.isChecked = !checkBoxPeriod.isChecked }
-        checkBoxPeriod.setOnCheckedChangeListener { _, isChecked ->
+        tvStartDate?.setOnClickListener { startDatePick() }
+        tvEndDate?.setOnClickListener { endDatePick() }
+        llcheckBoxPeriod?.setOnClickListener { checkBoxPeriod?.isChecked = (checkBoxPeriod?.isChecked != true) }
+        checkBoxPeriod?.setOnCheckedChangeListener { _, isChecked ->
             isCheckBoxPeriod = isChecked
             if (!isChecked) {
                 isReady = false
-                radioGroupFilter.clearCheck()
+                radioGroupFilter?.clearCheck()
                 selectedRadioButtonId = -1
             } else {
                 if (selectedRadioButtonId == -1) {
@@ -281,55 +286,55 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                 }
             }
         }
-        radioGroupFilter.setOnCheckedChangeListener { radioGroup, i ->
+        radioGroupFilter?.setOnCheckedChangeListener { radioGroup, i ->
             isCheckBoxPeriod = true
             selectedRadioButtonId = radioGroup.checkedRadioButtonId
             when (radioGroup.checkedRadioButtonId) {
                 R.id.rb_four_weeks -> {
-                    tvStartDate!!.isEnabled = false
-                    tvEndDate!!.isEnabled = false
+                    tvStartDate?.isEnabled = false
+                    tvEndDate?.isEnabled = false
                     startDate = DateHelper.subtractWeeks(4)
                     endDate = System.currentTimeMillis()
                     isReady = true
                 }
                 R.id.rb_three_months -> {
-                    tvStartDate!!.isEnabled = false
-                    tvEndDate!!.isEnabled = false
+                    tvStartDate?.isEnabled = false
+                    tvEndDate?.isEnabled = false
                     startDate = DateHelper.subtractMonths(3)
                     endDate = System.currentTimeMillis()
                     isReady = true
                 }
                 R.id.rb_six_months -> {
-                    tvStartDate!!.isEnabled = false
-                    tvEndDate!!.isEnabled = false
+                    tvStartDate?.isEnabled = false
+                    tvEndDate?.isEnabled = false
                     startDate = DateHelper.subtractMonths(6)
                     endDate = System.currentTimeMillis()
                     isReady = true
                 }
                 R.id.rb_date -> {
-                    tvStartDate!!.isEnabled = true
-                    tvEndDate!!.isEnabled = false
+                    tvStartDate?.isEnabled = true
+                    tvEndDate?.isEnabled = false
                 }
             }
         }
 
         //restore prev state
-        checkBoxPeriod.isChecked = isCheckBoxPeriod
+        checkBoxPeriod?.isChecked = isCheckBoxPeriod
         if (selectedRadioButtonId != -1) {
-            val btn = dialogView.findViewById<RadioButton>(selectedRadioButtonId)
-            btn.isChecked = true
+            val btn = dialogView?.findViewById<RadioButton>(selectedRadioButtonId)
+            btn?.isChecked = true
         }
-        val checkBoxRecyclerView: RecyclerView = dialogView.findViewById(R.id.recycler_view)
+        val checkBoxRecyclerView: RecyclerView? = dialogView?.findViewById(R.id.recycler_view)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        checkBoxRecyclerView.layoutManager = layoutManager
-        checkBoxRecyclerView.adapter = checkBoxAdapter
-        checkBoxAdapter!!.statusList = statusList
+        checkBoxRecyclerView?.layoutManager = layoutManager
+        checkBoxRecyclerView?.adapter = checkBoxAdapter
+        checkBoxAdapter?.statusList = statusList
         MaterialDialog.Builder().init(activity)
                 .setTitle(R.string.savings_account_transaction)
                 .addView(dialogView)
                 .setPositiveButton(getString(R.string.filter), DialogInterface.OnClickListener { dialog, which ->
-                    if (checkBoxPeriod.isChecked) {
+                    if (checkBoxPeriod?.isChecked == true) {
                         if (!isReady) {
                             Toaster.show(rootView, getString(R.string.select_date))
                             return@OnClickListener
@@ -338,11 +343,11 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                                     getString(R.string.end_date_must_be_greater))
                             return@OnClickListener
                         }
-                        filter(startDate, endDate, checkBoxAdapter!!.statusList)
+                        filter(startDate, endDate, checkBoxAdapter?.statusList)
                     } else {
-                        filter(checkBoxAdapter!!.statusList)
+                        filter(checkBoxAdapter?.statusList)
                     }
-                    filterSavingsAccountTransactionsbyType(checkBoxAdapter!!.statusList)
+                    filterSavingsAccountTransactionsbyType(checkBoxAdapter?.statusList)
                 })
                 .setNeutralButton(getString(R.string.clear_filters),
                         DialogInterface.OnClickListener { _, _ ->
@@ -367,9 +372,9 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * @param startDate Starting date
      * @param endDate   Ending date
      */
-    private fun filter(startDate: Long, endDate: Long, statusModelList: List<CheckboxStatus>) {
+    private fun filter(startDate: Long, endDate: Long, statusModelList: List<CheckboxStatus?>?) {
         val dummyTransactionList = filterSavingsAccountTransactionsbyType(statusModelList)
-        savingAccountsTransactionPresenter!!.filterTransactionList(dummyTransactionList,
+        savingAccountsTransactionPresenter?.filterTransactionList(dummyTransactionList,
                 startDate, endDate)
     }
 
@@ -378,7 +383,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      *
      * @param statusModelList Status Model List
      */
-    private fun filter(statusModelList: List<CheckboxStatus>) {
+    private fun filter(statusModelList: List<CheckboxStatus?>?) {
         showFilteredList(filterSavingsAccountTransactionsbyType(statusModelList))
     }
 
@@ -386,13 +391,14 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * Will filter `transactionsList` according to `startDate` and `endDate`
      * @param statusModelList Status Model List
      */
-    private fun filterSavingsAccountTransactionsbyType(statusModelList: List<CheckboxStatus>): List<Transactions?> {
+    private fun filterSavingsAccountTransactionsbyType(statusModelList: List<CheckboxStatus?>?): List<Transactions?> {
         val filteredSavingsTransactions: MutableList<Transactions?> = ArrayList()
-        for (status in savingAccountsTransactionPresenter!!
-                .getCheckedStatus(statusModelList)) {
-            filteredSavingsTransactions.addAll(savingAccountsTransactionPresenter!!
-                    .filterTranactionListbyType(transactionsList, status))
-        }
+        if (savingAccountsTransactionPresenter != null)
+            for (status in savingAccountsTransactionPresenter!!
+                    .getCheckedStatus(statusModelList)) {
+                filteredSavingsTransactions.addAll(savingAccountsTransactionPresenter!!
+                        .filterTranactionListbyType(transactionsList, status))
+            }
         return filteredSavingsTransactions
     }
 
@@ -406,14 +412,14 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        savingAccountsTransactionPresenter!!.detachView()
+        savingAccountsTransactionPresenter?.detachView()
     }
 
     companion object {
-        fun newInstance(savingsId: Long): SavingAccountsTransactionFragment {
+        fun newInstance(savingsId: Long?): SavingAccountsTransactionFragment {
             val fragment = SavingAccountsTransactionFragment()
             val args = Bundle()
-            args.putLong(Constants.SAVINGS_ID, savingsId)
+            if (savingsId != null) args.putLong(Constants.SAVINGS_ID, savingsId)
             fragment.arguments = args
             return fragment
         }

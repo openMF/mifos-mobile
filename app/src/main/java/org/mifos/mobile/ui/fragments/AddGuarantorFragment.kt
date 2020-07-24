@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.google.android.material.textfield.TextInputLayout
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
@@ -25,12 +28,15 @@ import org.mifos.mobile.utils.RxBus.publish
 import org.mifos.mobile.utils.RxEvent.AddGuarantorEvent
 import org.mifos.mobile.utils.RxEvent.UpdateGuarantorEvent
 import org.mifos.mobile.utils.Toaster
+
 import java.util.*
 import javax.inject.Inject
 
 /*
 * Created by saksham on 23/July/2018
-*/   class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
+*/
+class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.sp_guarantor_type)
     var spGuarantorType: Spinner? = null
@@ -53,28 +59,30 @@ import javax.inject.Inject
     var guarantorTypeAdapter: ArrayAdapter<String?>? = null
     var template: GuarantorTemplatePayload? = null
     var payload: GuarantorPayload? = null
-    var guarantorState: GuarantorState? = null
-    var guarantorApplicationPayload: GuarantorApplicationPayload? = null
+    private var guarantorState: GuarantorState? = null
+    private var guarantorApplicationPayload: GuarantorApplicationPayload? = null
     var rootView: View? = null
-    var loanId: Long = 0
-    var index = 0
+    var loanId: Long? = 0
+    var index: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanId = arguments!!.getLong(Constants.LOAN_ID)
+            loanId = arguments?.getLong(Constants.LOAN_ID)
             guarantorState = arguments!!
                     .getSerializable(Constants.GUARANTOR_STATE) as GuarantorState
-            payload = arguments!!.getParcelable(Constants.PAYLOAD)
-            index = arguments!!.getInt(Constants.INDEX)
+            payload = arguments?.getParcelable(Constants.PAYLOAD)
+            index = arguments?.getInt(Constants.INDEX)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_add_guarantor, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))
         } else if (guarantorState == GuarantorState.UPDATE) {
@@ -85,49 +93,49 @@ import javax.inject.Inject
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter!!.getGuarantorTemplate(guarantorState, loanId)
+        presenter?.getGuarantorTemplate(guarantorState, loanId)
     }
 
     @OnClick(R.id.btn_submit_guarantor)
     fun onSubmit() {
-        tilFirstName!!.isErrorEnabled = false
-        tilLastName!!.isErrorEnabled = false
-        tilOfficeName!!.isErrorEnabled = false
+        tilFirstName?.isErrorEnabled = false
+        tilLastName?.isErrorEnabled = false
+        tilOfficeName?.isErrorEnabled = false
         if (isFieldsCompleted) {
             guarantorApplicationPayload = generatePayload()
             if (guarantorState == GuarantorState.CREATE) {
-                presenter!!.createGuarantor(loanId, guarantorApplicationPayload)
+                presenter?.createGuarantor(loanId, guarantorApplicationPayload)
             } else if (guarantorState == GuarantorState.UPDATE) {
-                presenter!!.updateGuarantor(guarantorApplicationPayload, loanId, payload!!.id)
+                presenter?.updateGuarantor(guarantorApplicationPayload, loanId, payload?.id)
             }
         }
     }
 
     private fun generatePayload(): GuarantorApplicationPayload {
         return GuarantorApplicationPayload(
-                template!!.guarantorTypeOptions!!
-                        .get(getGuarantorTypeIndex(spGuarantorType!!.selectedItem.toString())),
-                tilFirstName!!.editText!!.text.toString().trim { it <= ' ' },
-                tilLastName!!.editText!!.text.toString().trim { it <= ' ' },
-                tilOfficeName!!.editText!!.text.toString().trim { it <= ' ' }
+                template?.guarantorTypeOptions
+                        ?.get(getGuarantorTypeIndex(spGuarantorType?.selectedItem.toString())),
+                tilFirstName?.editText?.text.toString().trim { it <= ' ' },
+                tilLastName?.editText?.text.toString().trim { it <= ' ' },
+                tilOfficeName?.editText?.text.toString().trim { it <= ' ' }
         )
     }
 
     private val isFieldsCompleted: Boolean
-        private get() {
+        get() {
             var rv = true
-            if (tilFirstName!!.editText!!.text.toString().trim { it <= ' ' }.length == 0) {
-                tilFirstName!!.error = getString(R.string.error_validation_blank,
+            if (tilFirstName?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+                tilFirstName?.error = getString(R.string.error_validation_blank,
                         getString(R.string.first_name))
                 rv = false
             }
-            if (tilLastName!!.editText!!.text.toString().trim { it <= ' ' }.length == 0) {
-                tilLastName!!.error = getString(R.string.error_validation_blank,
+            if (tilLastName?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+                tilLastName?.error = getString(R.string.error_validation_blank,
                         getString(R.string.last_name))
                 rv = false
             }
-            if (tilOfficeName!!.editText!!.text.toString().trim { it <= ' ' }.length == 0) {
-                tilOfficeName!!.error = getString(R.string.error_validation_blank,
+            if (tilOfficeName?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+                tilOfficeName?.error = getString(R.string.error_validation_blank,
                         getString(R.string.office_name))
                 rv = false
             }
@@ -136,7 +144,7 @@ import javax.inject.Inject
 
     private fun getGuarantorTypeIndex(optionSelected: String): Int {
         var rv = 0
-        for (option in template!!.guarantorTypeOptions!!) {
+        for (option in template?.guarantorTypeOptions!!) {
             if (option.value == optionSelected) {
                 return rv
             }
@@ -155,7 +163,7 @@ import javax.inject.Inject
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter!!.detachView()
+        presenter?.detachView()
         hideProgressBar()
     }
 
@@ -167,17 +175,17 @@ import javax.inject.Inject
     override fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
-        tilFirstName!!.editText!!.setText(payload!!.firstname)
-        tilLastName!!.editText!!.setText(payload!!.lastname)
-        tilOfficeName!!.editText!!.setText(payload!!.officeName)
-        spGuarantorType!!.setSelection(findPreviouslySelectedGuarantorType(payload!!.guarantorType
+        tilFirstName?.editText?.setText(payload?.firstname)
+        tilLastName?.editText?.setText(payload?.lastname)
+        tilOfficeName?.editText?.setText(payload?.officeName)
+        spGuarantorType?.setSelection(findPreviouslySelectedGuarantorType(payload?.guarantorType
                 ?.value))
     }
 
     private fun findPreviouslySelectedGuarantorType(value: String?): Int {
         var rv = 0
         var counter = 0
-        for (option in template!!.guarantorTypeOptions!!) {
+        for (option in template?.guarantorTypeOptions!!) {
             if (option.value == value) {
                 rv = counter
             }
@@ -188,24 +196,24 @@ import javax.inject.Inject
 
     private fun setUpSpinner() {
         val options: MutableList<String?> = ArrayList()
-        for (option in template!!.guarantorTypeOptions!!) {
+        for (option in template?.guarantorTypeOptions!!) {
             options.add(option.value)
         }
         guarantorTypeAdapter = ArrayAdapter(context,
                 android.R.layout.simple_spinner_dropdown_item, options)
-        spGuarantorType!!.adapter = guarantorTypeAdapter
+        spGuarantorType?.adapter = guarantorTypeAdapter
     }
 
     override fun updatedSuccessfully(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        publish(UpdateGuarantorEvent(guarantorApplicationPayload!!, index))
-        activity!!.supportFragmentManager.popBackStack()
+        publish(UpdateGuarantorEvent(guarantorApplicationPayload, index))
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     override fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        publish(AddGuarantorEvent(payload!!, index))
-        activity!!.supportFragmentManager.popBackStack()
+        publish(AddGuarantorEvent(payload, index))
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     override fun showError(message: String?) {
@@ -213,14 +221,16 @@ import javax.inject.Inject
     }
 
     companion object {
-        fun newInstance(index: Int, guarantorState: GuarantorState?,
-                        payload: GuarantorPayload?, loanId: Long): AddGuarantorFragment {
+        fun newInstance(
+                index: Int?, guarantorState: GuarantorState?,
+                payload: GuarantorPayload?, loanId: Long?
+        ): AddGuarantorFragment {
             val fragment = AddGuarantorFragment()
             val bundle = Bundle()
-            bundle.putLong(Constants.LOAN_ID, loanId)
+            if (loanId != null) bundle.putLong(Constants.LOAN_ID, loanId)
             bundle.putSerializable(Constants.GUARANTOR_STATE, guarantorState)
+            if (index != null) bundle.putInt(Constants.INDEX, index)
             bundle.putParcelable(Constants.PAYLOAD, payload)
-            bundle.putInt(Constants.INDEX, index)
             fragment.arguments = bundle
             return fragment
         }

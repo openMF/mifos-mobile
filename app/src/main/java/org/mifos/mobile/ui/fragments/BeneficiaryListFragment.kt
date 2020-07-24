@@ -65,21 +65,21 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_list, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
         setToolbarTitle(getString(R.string.beneficiaries))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         showUserInterface()
-        beneficiaryListPresenter!!.attachView(this)
+        beneficiaryListPresenter?.attachView(this)
         if (savedInstanceState == null) {
-            beneficiaryListPresenter!!.loadBeneficiaries()
+            beneficiaryListPresenter?.loadBeneficiaries()
         }
         return rootView
     }
 
     override fun onResume() {
         super.onResume()
-        beneficiaryListPresenter!!.loadBeneficiaries()
+        beneficiaryListPresenter?.loadBeneficiaries()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -104,22 +104,22 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
     override fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvBeneficiaries!!.layoutManager = layoutManager
-        rvBeneficiaries!!.setHasFixedSize(true)
-        rvBeneficiaries!!.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
-        rvBeneficiaries!!.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
-        rvBeneficiaries!!.adapter = beneficiaryListAdapter
-        swipeRefreshLayout!!.setColorSchemeColors(*activity!!
+        rvBeneficiaries?.layoutManager = layoutManager
+        rvBeneficiaries?.setHasFixedSize(true)
+        rvBeneficiaries?.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
+        rvBeneficiaries?.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
+        rvBeneficiaries?.adapter = beneficiaryListAdapter
+        swipeRefreshLayout?.setColorSchemeColors(*activity!!
                 .resources.getIntArray(R.array.swipeRefreshColors))
-        swipeRefreshLayout!!.setOnRefreshListener(this)
-        fabAddBeneficiary!!.setOnClickListener { startActivity(Intent(activity, AddBeneficiaryActivity::class.java)) }
+        swipeRefreshLayout?.setOnRefreshListener(this)
+        fabAddBeneficiary?.setOnClickListener { startActivity(Intent(activity, AddBeneficiaryActivity::class.java)) }
     }
 
     @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected((context?.applicationContext)!!)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
-            beneficiaryListPresenter!!.loadBeneficiaries()
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
+            beneficiaryListPresenter?.loadBeneficiaries()
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
                     Toast.LENGTH_SHORT).show()
@@ -130,10 +130,10 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
      * Refreshes `beneficiaryList` by calling `loadBeneficiaries()`
      */
     override fun onRefresh() {
-        if (layoutError!!.visibility == View.VISIBLE) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
+        if (layoutError?.visibility == View.VISIBLE) {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
         }
-        beneficiaryListPresenter!!.loadBeneficiaries()
+        beneficiaryListPresenter?.loadBeneficiaries()
     }
 
     /**
@@ -157,9 +157,9 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected((activity?.applicationContext)!!)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(rvBeneficiaries, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(rvBeneficiaries, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(msg,
+            sweetUIErrorHandler?.showSweetErrorUI(msg,
                     rvBeneficiaries, layoutError)
             Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
         }
@@ -170,35 +170,35 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
      */
     override fun showBeneficiaryList(beneficiaryList: List<Beneficiary?>?) {
         this.beneficiaryList = beneficiaryList
-        if (beneficiaryList!!.isNotEmpty()) {
-            beneficiaryListAdapter!!.setBeneficiaryList(beneficiaryList)
+        if (beneficiaryList?.isNotEmpty() == true) {
+            beneficiaryListAdapter?.setBeneficiaryList(beneficiaryList)
         } else {
             showEmptyBeneficiary()
         }
     }
 
     override fun onItemClick(childView: View?, position: Int) {
-        (activity as BaseActivity?)!!.replaceFragment(BeneficiaryDetailFragment.Companion.newInstance(beneficiaryList!![position]), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(BeneficiaryDetailFragment.Companion.newInstance(beneficiaryList!![position]), true, R.id.container)
     }
 
     override fun onItemLongPress(childView: View?, position: Int) {}
-    fun showSwipeRefreshLayout(show: Boolean) {
-        swipeRefreshLayout!!.post { swipeRefreshLayout!!.isRefreshing = show }
+    private fun showSwipeRefreshLayout(show: Boolean?) {
+        swipeRefreshLayout?.post { swipeRefreshLayout?.isRefreshing = (show == true) }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        beneficiaryListPresenter!!.detachView()
+        beneficiaryListPresenter?.detachView()
     }
 
     /**
      * Shows an error layout when this function is called.
      */
     private fun showEmptyBeneficiary() {
-        sweetUIErrorHandler!!.showSweetEmptyUI(getString(R.string.beneficiary),
+        sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.beneficiary),
                 getString(R.string.beneficiary),
                 R.drawable.ic_beneficiaries_48px, rvBeneficiaries, layoutError)
-        rvBeneficiaries!!.visibility = View.GONE
+        rvBeneficiaries?.visibility = View.GONE
     }
 
     companion object {

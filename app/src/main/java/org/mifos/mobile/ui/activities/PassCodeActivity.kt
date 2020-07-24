@@ -57,7 +57,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
                             finish()
                         })
                 .setNegativeButton(getString(R.string.cancel),
-                        DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+                        DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                 .createMaterialDialog()
                 .show()
     }

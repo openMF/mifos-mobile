@@ -1,7 +1,9 @@
 package org.mifos.mobile.api.services
 
 import io.reactivex.Observable
+
 import okhttp3.ResponseBody
+
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
@@ -10,6 +12,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+
 import retrofit2.http.*
 
 /**
@@ -19,7 +22,7 @@ import retrofit2.http.*
 interface SavingAccountsListService {
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
     fun getSavingsWithAssociations(
-            @Path("accountId") accountId: Long,
+            @Path("accountId") accountId: Long?,
             @Query("associations") associationType: String?
     ): Observable<SavingsWithAssociations?>?
 

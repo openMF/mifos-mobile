@@ -14,12 +14,12 @@ object RxBus {
     private val publisher = PublishSubject.create<Any>()
 
     @JvmStatic
-    fun publish(event: Any) {
-        publisher.onNext(event)
+    fun publish(event: Any?) {
+        if (event != null) publisher.onNext(event)
     }
 
     @JvmStatic
-    fun<T> listen(eventType: Class<T>): Observable<T> {
+    fun <T> listen(eventType: Class<T>): Observable<T> {
         return publisher.ofType(eventType)
     }
 

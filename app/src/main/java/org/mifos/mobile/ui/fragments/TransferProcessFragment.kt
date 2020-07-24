@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+
 import androidx.appcompat.widget.AppCompatButton
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.presenters.TransferProcessPresenter
@@ -24,6 +27,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
+
 import javax.inject.Inject
 
 /**
@@ -72,23 +76,23 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (activity != null) {
-            payload = arguments!!.getParcelable(Constants.PAYLOAD)
-            transferType = arguments!!.getSerializable(Constants.TRANSFER_TYPE) as TransferType
+            payload = arguments?.getParcelable(Constants.PAYLOAD)
+            transferType = arguments?.getSerializable(Constants.TRANSFER_TYPE) as TransferType
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_transfer_process, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
         ButterKnife.bind(this, rootView!!)
-        presenter!!.attachView(this)
-        tvAmount!!.text = CurrencyUtil.formatCurrency(activity, payload!!.transferAmount!!)
-        tvPayFrom!!.text = payload!!.fromAccountNumber.toString()
-        tvPayTo!!.text = payload!!.toAccountNumber.toString()
-        tvDate!!.text = payload!!.transferDate
-        tvRemark!!.text = payload!!.transferDescription
+        presenter?.attachView(this)
+        tvAmount?.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)
+        tvPayFrom?.text = payload?.fromAccountNumber.toString()
+        tvPayTo?.text = payload?.toAccountNumber.toString()
+        tvDate?.text = payload?.transferDate
+        tvRemark?.text = payload?.transferDescription
         return rootView
     }
 
@@ -102,9 +106,9 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
             return
         }
         if (transferType == TransferType.SELF) {
-            presenter!!.makeSavingsTransfer(payload)
+            presenter?.makeSavingsTransfer(payload)
         } else if (transferType == TransferType.TPT) {
-            presenter!!.makeTPTTransfer(payload)
+            presenter?.makeTPTTransfer(payload)
         }
     }
 
@@ -115,8 +119,8 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     open fun cancelTransfer() {
         Toaster.cancelTransfer(rootView, getString(R.string.cancel_transfer),
                 getString(R.string.yes), View.OnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
-            activity!!.supportFragmentManager.popBackStack()
+            activity?.supportFragmentManager?.popBackStack()
+            activity?.supportFragmentManager?.popBackStack()
         })
     }
 
@@ -125,8 +129,8 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      */
     @OnClick(R.id.btn_close)
     fun closeClicked() {
-        activity!!.supportFragmentManager.popBackStack()
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     /**
@@ -134,10 +138,10 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      */
     override fun showTransferredSuccessfully() {
         Toaster.show(rootView, getString(R.string.transferred_successfully))
-        ivSuccess!!.visibility = View.VISIBLE
-        (ivSuccess!!.drawable as Animatable).start()
-        btnClose!!.visibility = View.VISIBLE
-        llTransfer!!.visibility = View.GONE
+        ivSuccess?.visibility = View.VISIBLE
+        (ivSuccess?.drawable as Animatable).start()
+        btnClose?.visibility = View.VISIBLE
+        llTransfer?.visibility = View.GONE
         SavingsAccountContainerActivity.transferSuccess = true
     }
 
@@ -160,7 +164,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {

@@ -49,27 +49,27 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_account_overview, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
-        accountOverviewPresenter!!.attachView(this)
+        accountOverviewPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts_overview))
-        swipeRefreshLayout!!.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
-        swipeRefreshLayout!!.setOnRefreshListener(this)
+        swipeRefreshLayout?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        swipeRefreshLayout?.setOnRefreshListener(this)
         if (savedInstanceState == null) {
-            accountOverviewPresenter!!.loadClientAccountDetails()
+            accountOverviewPresenter?.loadClientAccountDetails()
         }
         return rootView
     }
 
     override fun onRefresh() {
-        accountOverviewPresenter!!.loadClientAccountDetails()
+        accountOverviewPresenter?.loadClientAccountDetails()
     }
 
     override fun showTotalLoanSavings(totalLoan: Double, totalSavings: Double) {
         totalLoanBalance = totalLoan
         totalSavingsBalance = totalSavings
-        tvTotalLoan!!.text = CurrencyUtil.formatCurrency(context!!, totalLoan)
-        tvTotalSavings!!.text = CurrencyUtil.formatCurrency(context!!, totalSavings)
+        tvTotalLoan?.text = CurrencyUtil.formatCurrency(context!!, totalLoan)
+        tvTotalSavings?.text = CurrencyUtil.formatCurrency(context!!, totalSavings)
     }
 
     override fun showError(message: String?) {
@@ -77,11 +77,11 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     }
 
     override fun showProgress() {
-        swipeRefreshLayout!!.isRefreshing = true
+        swipeRefreshLayout?.isRefreshing = true
     }
 
     override fun hideProgress() {
-        swipeRefreshLayout!!.isRefreshing = false
+        swipeRefreshLayout?.isRefreshing = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -93,7 +93,7 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.menu_refresh_account_overview) {
-            accountOverviewPresenter!!.loadClientAccountDetails()
+            accountOverviewPresenter?.loadClientAccountDetails()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -116,7 +116,7 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
 
     override fun onDestroyView() {
         super.onDestroyView()
-        accountOverviewPresenter!!.detachView()
+        accountOverviewPresenter?.detachView()
     }
 
     companion object {

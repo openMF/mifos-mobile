@@ -5,11 +5,15 @@ import android.os.Parcelable
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+
 import androidx.appcompat.widget.AppCompatButton
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.payload.TransferPayload
@@ -22,6 +26,7 @@ import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsMakeTransferMvpView
 import org.mifos.mobile.utils.*
+
 import java.util.*
 import javax.inject.Inject
 
@@ -29,6 +34,7 @@ import javax.inject.Inject
  * Created by Rajan Maurya on 10/03/17.
  */
 class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, OnItemSelectedListener {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.sp_pay_to)
     var spPayTo: Spinner? = null
@@ -113,34 +119,36 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     private var transferType: String? = null
     private var payTo: String? = null
     private var payFrom: String? = null
-    private var accountId: Long = 0
-    private var outStandingBalance = 0.0
+    private var accountId: Long? = 0
+    private var outStandingBalance: Double? = 0.0
     private var isLoanRepayment = false
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            accountId = arguments!!.getLong(Constants.ACCOUNT_ID)
-            transferType = arguments!!.getString(Constants.TRANSFER_TYPE)
-            if (arguments!!.getBoolean(Constants.LOAN_REPAYMENT, false)) {
+            accountId = arguments?.getLong(Constants.ACCOUNT_ID)
+            transferType = arguments?.getString(Constants.TRANSFER_TYPE)
+            if (arguments?.getBoolean(Constants.LOAN_REPAYMENT, false) == true) {
                 isLoanRepayment = true
-                outStandingBalance = arguments!!.getDouble(Constants.OUTSTANDING_BALANCE)
+                outStandingBalance = arguments?.getDouble(Constants.OUTSTANDING_BALANCE)
             }
         }
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_savings_make_transfer, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
         ButterKnife.bind(this, rootView!!)
-        savingsMakeTransferPresenter!!.attachView(this)
+        savingsMakeTransferPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         showUserInterface()
         if (savedInstanceState == null) {
-            savingsMakeTransferPresenter!!.loanAccountTransferTemplate()
+            savingsMakeTransferPresenter?.loanAccountTransferTemplate()
         }
         return rootView
     }
@@ -163,25 +171,25 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     @OnClick(R.id.btn_review_transfer)
     fun reviewTransfer() {
-        if (etRemark!!.text.toString().trim { it <= ' ' } == "") {
+        if (etRemark?.text.toString().trim { it <= ' ' } == "") {
             showToaster(getString(R.string.remark_is_mandatory))
             return
         }
         transferPayload = TransferPayload()
-        transferPayload!!.fromAccountId = fromAccountOption!!.accountId
-        transferPayload!!.fromClientId = fromAccountOption!!.clientId
-        transferPayload!!.fromAccountType = fromAccountOption!!.accountType!!.id
-        transferPayload!!.fromOfficeId = fromAccountOption!!.officeId
-        transferPayload!!.toOfficeId = toAccountOption!!.officeId
-        transferPayload!!.toAccountId = toAccountOption!!.accountId
-        transferPayload!!.toClientId = toAccountOption!!.clientId
-        transferPayload!!.toAccountType = toAccountOption!!.accountType!!.id
-        transferPayload!!.transferDate = transferDate
-        transferPayload!!.transferAmount = etAmount!!.text.toString().toDouble()
-        transferPayload!!.transferDescription = etRemark!!.text.toString()
-        transferPayload!!.fromAccountNumber = fromAccountOption!!.accountNo
-        transferPayload!!.toAccountNumber = toAccountOption!!.accountNo
-        (activity as BaseActivity?)!!.replaceFragment(TransferProcessFragment.Companion.newInstance(transferPayload, TransferType.SELF), true, R.id.container)
+        transferPayload?.fromAccountId = fromAccountOption?.accountId
+        transferPayload?.fromClientId = fromAccountOption?.clientId
+        transferPayload?.fromAccountType = fromAccountOption?.accountType?.id
+        transferPayload?.fromOfficeId = fromAccountOption?.officeId
+        transferPayload?.toOfficeId = toAccountOption?.officeId
+        transferPayload?.toAccountId = toAccountOption?.accountId
+        transferPayload?.toClientId = toAccountOption?.clientId
+        transferPayload?.toAccountType = toAccountOption?.accountType?.id
+        transferPayload?.transferDate = transferDate
+        transferPayload?.transferAmount = etAmount?.text.toString().toDouble()
+        transferPayload?.transferDescription = etRemark?.text.toString()
+        transferPayload?.fromAccountNumber = fromAccountOption?.accountNo
+        transferPayload?.toAccountNumber = toAccountOption?.accountNo
+        (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.Companion.newInstance(transferPayload, TransferType.SELF), true, R.id.container)
     }
 
     /**
@@ -189,14 +197,14 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     @OnClick(R.id.btn_cancel_transfer)
     fun cancelTransfer() {
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     @OnClick(R.id.btn_try_again)
     fun onRetry() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler!!.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError)
-            savingsMakeTransferPresenter!!.loanAccountTransferTemplate()
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError)
+            savingsMakeTransferPresenter?.loanAccountTransferTemplate()
         } else {
             Toaster.show(rootView, getString(R.string.internet_not_connected))
         }
@@ -206,22 +214,26 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      * Setting up basic components
      */
     override fun showUserInterface() {
-        pvOne!!.setCurrentActive()
-        payFromAdapter = AccountsSpinnerAdapter(activity, R.layout.account_spinner_layout,
-                listPayFrom)
-        payFromAdapter!!.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spPayFrom!!.adapter = payFromAdapter
-        spPayFrom!!.onItemSelectedListener = this
-        payToAdapter = AccountsSpinnerAdapter(activity, R.layout.account_spinner_layout,
-                listPayTo)
-        payToAdapter!!.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spPayTo!!.adapter = payToAdapter
-        spPayTo!!.onItemSelectedListener = this
+        pvOne?.setCurrentActive()
+        payFromAdapter = activity?.applicationContext?.let {
+            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
+                    listPayFrom)
+        }
+        payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
+        spPayFrom?.adapter = payFromAdapter
+        spPayFrom?.onItemSelectedListener = this
+        payToAdapter = activity?.applicationContext?.let {
+            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
+                    listPayTo)
+        }
+        payToAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
+        spPayTo?.adapter = payToAdapter
+        spPayTo?.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
                 MFDatePicker.datePickedAsString)
         if (isLoanRepayment) {
-            etAmount!!.setText(outStandingBalance.toString())
-            etAmount!!.isFocusable = false
+            etAmount?.setText(outStandingBalance.toString())
+            etAmount?.isFocusable = false
         }
     }
 
@@ -234,13 +246,13 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     override fun showSavingsAccountTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
         listPayFrom.clear()
-        listPayFrom.addAll(savingsMakeTransferPresenter!!.getAccountNumbers(
-                accountOptionsTemplate!!.fromAccountOptions, true))
+        savingsMakeTransferPresenter?.getAccountNumbers(
+                accountOptionsTemplate?.fromAccountOptions, true)?.let { listPayFrom.addAll(it) }
         listPayTo.clear()
-        listPayTo.addAll(savingsMakeTransferPresenter!!.getAccountNumbers(
-                accountOptionsTemplate.toAccountOptions, false))
-        payToAdapter!!.notifyDataSetChanged()
-        payFromAdapter!!.notifyDataSetChanged()
+        savingsMakeTransferPresenter?.getAccountNumbers(
+                accountOptionsTemplate?.toAccountOptions, false)?.let { listPayTo.addAll(it) }
+        payToAdapter?.notifyDataSetChanged()
+        payFromAdapter?.notifyDataSetChanged()
     }
 
     /**
@@ -259,9 +271,9 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     override fun showError(message: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler!!.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
         } else {
-            sweetUIErrorHandler!!.showSweetErrorUI(message, layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(message, layoutMakeTransfer, layoutError)
             Toaster.show(rootView, message)
         }
     }
@@ -275,12 +287,12 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     }
 
     override fun showProgress() {
-        layoutMakeTransfer!!.visibility = View.GONE
+        layoutMakeTransfer?.visibility = View.GONE
         showProgressBar()
     }
 
     override fun hideProgress() {
-        layoutMakeTransfer!!.visibility = View.VISIBLE
+        layoutMakeTransfer?.visibility = View.VISIBLE
         hideProgressBar()
     }
 
@@ -290,34 +302,34 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         when (parent.id) {
             R.id.sp_pay_to -> {
-                toAccountOption = accountOptionsTemplate!!.toAccountOptions[position]
-                payTo = toAccountOption!!.accountNo
+                toAccountOption = accountOptionsTemplate?.toAccountOptions?.get(position)
+                payTo = toAccountOption?.accountNo
             }
             R.id.sp_pay_from -> {
-                fromAccountOption = accountOptionsTemplate!!.fromAccountOptions[position]
-                payFrom = fromAccountOption!!.accountNo
+                fromAccountOption = accountOptionsTemplate?.fromAccountOptions?.get(position)
+                payFrom = fromAccountOption?.accountNo
             }
         }
         when (transferType) {
             Constants.TRANSFER_PAY_TO -> {
                 setToolbarTitle(getString(R.string.deposit))
-                toAccountOption = savingsMakeTransferPresenter!!
-                        .searchAccount(accountOptionsTemplate!!.toAccountOptions, accountId)
-                spPayTo!!.setSelection(accountOptionsTemplate!!.toAccountOptions
-                        .indexOf(toAccountOption!!))
-                spPayTo!!.isEnabled = false
-                pvOne!!.setCurrentCompeleted()
+                toAccountOption = savingsMakeTransferPresenter
+                        ?.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
+                spPayTo?.setSelection(accountOptionsTemplate?.toAccountOptions
+                        ?.indexOf(toAccountOption)!!)
+                spPayTo?.isEnabled = false
+                pvOne?.setCurrentCompeleted()
             }
             Constants.TRANSFER_PAY_FROM -> {
                 setToolbarTitle(getString(R.string.transfer))
-                fromAccountOption = savingsMakeTransferPresenter!!
-                        .searchAccount(accountOptionsTemplate!!.fromAccountOptions, accountId)
-                spPayFrom!!.setSelection(accountOptionsTemplate!!.fromAccountOptions
-                        .indexOf(fromAccountOption!!))
-                spPayFrom!!.isEnabled = false
-                spPayFrom!!.visibility = View.VISIBLE
-                tvSelectPayFrom!!.visibility = View.GONE
-                pvTwo!!.setCurrentCompeleted()
+                fromAccountOption = savingsMakeTransferPresenter
+                        ?.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
+                spPayFrom?.setSelection(accountOptionsTemplate?.fromAccountOptions
+                        ?.indexOf(fromAccountOption)!!)
+                spPayFrom?.isEnabled = false
+                spPayFrom?.visibility = View.VISIBLE
+                tvSelectPayFrom?.visibility = View.GONE
+                pvTwo?.setCurrentCompeleted()
             }
         }
     }
@@ -330,13 +342,13 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     @OnClick(R.id.btn_pay_to)
     fun payToSelected() {
-        pvOne!!.setCurrentCompeleted()
-        pvTwo!!.setCurrentActive()
-        btnPayTo!!.visibility = View.GONE
-        tvSelectPayFrom!!.visibility = View.GONE
-        btnPayFrom!!.visibility = View.VISIBLE
-        spPayFrom!!.visibility = View.VISIBLE
-        spPayTo!!.isEnabled = false
+        pvOne?.setCurrentCompeleted()
+        pvTwo?.setCurrentActive()
+        btnPayTo?.visibility = View.GONE
+        tvSelectPayFrom?.visibility = View.GONE
+        btnPayFrom?.visibility = View.VISIBLE
+        spPayFrom?.visibility = View.VISIBLE
+        spPayTo?.isEnabled = false
     }
 
     /**
@@ -350,13 +362,13 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        pvTwo!!.setCurrentCompeleted()
-        pvThree!!.setCurrentActive()
-        btnPayFrom!!.visibility = View.GONE
-        tvEnterAmount!!.visibility = View.GONE
-        etAmount!!.visibility = View.VISIBLE
-        btnAmount!!.visibility = View.VISIBLE
-        spPayFrom!!.isEnabled = false
+        pvTwo?.setCurrentCompeleted()
+        pvThree?.setCurrentActive()
+        btnPayFrom?.visibility = View.GONE
+        tvEnterAmount?.visibility = View.GONE
+        etAmount?.visibility = View.VISIBLE
+        btnAmount?.visibility = View.VISIBLE
+        spPayFrom?.isEnabled = false
     }
 
     /**
@@ -366,25 +378,25 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     @OnClick(R.id.btn_amount)
     fun amountSet() {
-        if (etAmount!!.text.toString() == "") {
+        if (etAmount?.text.toString() == "") {
             showToaster(getString(R.string.enter_amount))
             return
         }
-        if (etAmount!!.text.toString() == ".") {
+        if (etAmount?.text.toString() == ".") {
             showToaster(getString(R.string.invalid_amount))
             return
         }
-        if (etAmount!!.text.toString().toDouble() == 0.0) {
+        if (etAmount?.text.toString().toDouble() == 0.0) {
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        pvThree!!.setCurrentCompeleted()
-        pvFour!!.setCurrentActive()
-        btnAmount!!.visibility = View.GONE
-        tvEnterRemark!!.visibility = View.GONE
-        etRemark!!.visibility = View.VISIBLE
-        llReview!!.visibility = View.VISIBLE
-        etAmount!!.isEnabled = false
+        pvThree?.setCurrentCompeleted()
+        pvFour?.setCurrentActive()
+        btnAmount?.visibility = View.GONE
+        tvEnterRemark?.visibility = View.GONE
+        etRemark?.visibility = View.VISIBLE
+        llReview?.visibility = View.VISIBLE
+        etAmount?.isEnabled = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -395,12 +407,14 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_refresh_transfer) {
-            val transaction = fragmentManager!!.beginTransaction()
-            val currFragment = activity!!.supportFragmentManager
-                    .findFragmentById(R.id.container)
-            transaction.detach(currFragment!!)
-            transaction.attach(currFragment)
-            transaction.commit()
+            val transaction = fragmentManager?.beginTransaction()
+            val currFragment = activity?.supportFragmentManager
+                    ?.findFragmentById(R.id.container)
+            if (currFragment != null) {
+                transaction?.detach(currFragment)
+                transaction?.attach(currFragment)
+            }
+            transaction?.commit()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -409,7 +423,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         super.onDestroyView()
         hideProgress()
         hideMifosProgressDialog()
-        savingsMakeTransferPresenter!!.detachView()
+        savingsMakeTransferPresenter?.detachView()
     }
 
     companion object {
@@ -423,22 +437,24 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
          * `Constants.TRANSFER_PAY_FROM`
          * @return Instance of [SavingsMakeTransferFragment]
          */
-        fun newInstance(accountId: Long, transferType: String?): SavingsMakeTransferFragment {
+        fun newInstance(accountId: Long?, transferType: String?): SavingsMakeTransferFragment {
             val transferFragment = SavingsMakeTransferFragment()
             val args = Bundle()
-            args.putLong(Constants.ACCOUNT_ID, accountId)
+            if (accountId != null) args.putLong(Constants.ACCOUNT_ID, accountId)
             args.putString(Constants.TRANSFER_TYPE, transferType)
             transferFragment.arguments = args
             return transferFragment
         }
 
-        fun newInstance(accountId: Long, outstandingBalance: Double,
-                        transferType: String?): SavingsMakeTransferFragment {
+        fun newInstance(
+                accountId: Long?, outstandingBalance: Double?,
+                transferType: String?
+        ): SavingsMakeTransferFragment {
             val transferFragment = SavingsMakeTransferFragment()
             val args = Bundle()
-            args.putLong(Constants.ACCOUNT_ID, accountId)
+            if (accountId != null) args.putLong(Constants.ACCOUNT_ID, accountId)
             args.putString(Constants.TRANSFER_TYPE, transferType)
-            args.putDouble(Constants.OUTSTANDING_BALANCE, outstandingBalance)
+            if (outstandingBalance != null) args.putDouble(Constants.OUTSTANDING_BALANCE, outstandingBalance)
             args.putBoolean(Constants.LOAN_REPAYMENT, true)
             transferFragment.arguments = args
             return transferFragment

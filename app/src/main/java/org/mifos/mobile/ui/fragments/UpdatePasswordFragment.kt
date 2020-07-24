@@ -51,32 +51,34 @@ import javax.inject.Inject
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_update_password, container, false)
         setToolbarTitle(getString(R.string.change_password))
         ButterKnife.bind(this, rootView!!)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
-        presenter!!.attachView(this)
-        tilNewPassword!!.editText!!.addTextChangedListener(this)
-        tilConfirmNewPassword!!.editText!!.addTextChangedListener(this)
-        tilNewPassword!!.editText!!.onFocusChangeListener = this
-        tilConfirmNewPassword!!.editText!!.onFocusChangeListener = this
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        presenter?.attachView(this)
+        tilNewPassword?.editText?.addTextChangedListener(this)
+        tilConfirmNewPassword?.editText?.addTextChangedListener(this)
+        tilNewPassword?.editText?.onFocusChangeListener = this
+        tilConfirmNewPassword?.editText?.onFocusChangeListener = this
         return rootView
     }
 
     @OnClick(R.id.btn_update_password)
     fun updatePassword() {
         if (isFieldsCompleted) {
-            presenter!!.updateAccountPassword(updatePasswordPayload)
+            presenter?.updateAccountPassword(updatePasswordPayload)
         }
     }
 
     private val isFieldsCompleted: Boolean
         private get() {
             var rv = true
-            val newPassword = tilNewPassword!!.editText!!.text.toString().trim { it <= ' ' }
-            val repeatPassword = tilConfirmNewPassword!!.editText!!.text.toString().trim { it <= ' ' }
+            val newPassword = tilNewPassword?.editText?.text.toString().trim { it <= ' ' }
+            val repeatPassword = tilConfirmNewPassword?.editText?.text.toString().trim { it <= ' ' }
             if (!checkNewPasswordFieldsComplete()) {
                 rv = false
             }
@@ -89,12 +91,12 @@ import javax.inject.Inject
             }
             return rv
         }
-    private val updatePasswordPayload: UpdatePasswordPayload
-        private get() {
+    private val updatePasswordPayload: UpdatePasswordPayload?
+        get() {
             payload = UpdatePasswordPayload()
-            payload!!.password = tilNewPassword!!.editText!!.text.toString().trim { it <= ' ' }
-            payload!!.repeatPassword = tilConfirmNewPassword!!.editText!!.text.toString().trim { it <= ' ' }
-            return payload!!
+            payload?.password = tilNewPassword?.editText?.text.toString().trim { it <= ' ' }
+            payload?.repeatPassword = tilConfirmNewPassword?.editText?.text.toString().trim { it <= ' ' }
+            return payload
         }
 
     override fun showError(message: String?) {
@@ -121,15 +123,15 @@ import javax.inject.Inject
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        if (tilNewPassword!!.editText!!.hasFocus() && isFocusLostNewPassword) {
+        if (tilNewPassword?.editText?.hasFocus() == true && isFocusLostNewPassword) {
             checkNewPasswordFieldsComplete()
         }
-        if (tilConfirmNewPassword!!.editText!!.hasFocus() && isFocusLostConfirmPassword) {
+        if (tilConfirmNewPassword?.editText?.hasFocus() == true && isFocusLostConfirmPassword) {
             checkConfirmPasswordFieldsComplete()
         }
     }
@@ -147,38 +149,38 @@ import javax.inject.Inject
     }
 
     private fun checkNewPasswordFieldsComplete(): Boolean {
-        val newPassword = tilNewPassword!!.editText!!.text.toString()
+        val newPassword = tilNewPassword?.editText?.text.toString()
         isFocusLostNewPassword = true
         if (newPassword.isEmpty()) {
-            tilNewPassword!!.error = getString(R.string.error_validation_blank,
+            tilNewPassword?.error = getString(R.string.error_validation_blank,
                     getString(R.string.new_password))
             return false
         }
         if (newPassword.length < 6) {
-            tilNewPassword!!.error = getString(R.string.error_validation_minimum_chars,
+            tilNewPassword?.error = getString(R.string.error_validation_minimum_chars,
                     getString(R.string.new_password),
                     resources.getInteger(R.integer.password_minimum_length))
             return false
         }
-        tilNewPassword!!.isErrorEnabled = false
+        tilNewPassword?.isErrorEnabled = false
         return true
     }
 
     private fun checkConfirmPasswordFieldsComplete(): Boolean {
-        val confirmPassword = tilConfirmNewPassword!!.editText!!.text.toString()
+        val confirmPassword = tilConfirmNewPassword?.editText?.text.toString()
         isFocusLostConfirmPassword = true
         if (confirmPassword.isEmpty()) {
-            tilConfirmNewPassword!!.error = getString(R.string.error_validation_blank,
+            tilConfirmNewPassword?.error = getString(R.string.error_validation_blank,
                     getString(R.string.confirm_password))
             return false
         }
         if (confirmPassword.length < 6) {
-            tilConfirmNewPassword!!.error = getString(R.string.error_validation_minimum_chars,
+            tilConfirmNewPassword?.error = getString(R.string.error_validation_minimum_chars,
                     getString(R.string.confirm_password),
                     resources.getInteger(R.integer.password_minimum_length))
             return false
         }
-        tilConfirmNewPassword!!.isErrorEnabled = false
+        tilConfirmNewPassword?.isErrorEnabled = false
         return true
     }
 
