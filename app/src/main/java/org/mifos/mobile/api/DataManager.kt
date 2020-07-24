@@ -88,7 +88,7 @@ class DataManager @Inject constructor(
     }
 
     fun getSavingsWithAssociations(
-            accountId: Long,
+            accountId: Long?,
             associationType: String?
     ): Observable<SavingsWithAssociations?>? {
         return baseApiManager
@@ -137,7 +137,7 @@ class DataManager @Inject constructor(
 
     fun getLoanWithAssociations(
             associationType: String?,
-            loanId: Long
+            loanId: Long?
     ): Observable<LoanWithAssociations?>? {
         return baseApiManager.loanAccountsListApi
                 ?.getLoanWithAssociations(loanId, associationType)
@@ -159,7 +159,7 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi?.updateLoanAccount(loanId, loansPayload)
     }
 
-    fun withdrawLoanAccount(loanId: Long, loanWithdraw: LoanWithdraw?): Observable<ResponseBody?>? {
+    fun withdrawLoanAccount(loanId: Long?, loanWithdraw: LoanWithdraw?): Observable<ResponseBody?>? {
         return baseApiManager.loanAccountsListApi?.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
@@ -173,13 +173,13 @@ class DataManager @Inject constructor(
     }
 
     fun updateBeneficiary(
-            beneficiaryId: Long,
+            beneficiaryId: Long?,
             payload: BeneficiaryUpdatePayload?
-    ): Observable<ResponseBody>? {
+    ): Observable<ResponseBody?>? {
         return baseApiManager.beneficiaryApi?.updateBeneficiary(beneficiaryId, payload)
     }
 
-    fun deleteBeneficiary(beneficiaryId: Long): Observable<ResponseBody>? {
+    fun deleteBeneficiary(beneficiaryId: Long?): Observable<ResponseBody?>? {
         return baseApiManager.beneficiaryApi?.deleteBeneficiary(beneficiaryId)
     }
 
@@ -245,7 +245,7 @@ class DataManager @Inject constructor(
 
     fun updateGuarantor(
             payload: GuarantorApplicationPayload?,
-            loanId: Long, guarantorId: Long
+            loanId: Long?, guarantorId: Long?
     ): Observable<ResponseBody?>? {
         return baseApiManager.guarantorApi?.updateGuarantor(payload, loanId, guarantorId)
                 ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out ResponseBody>> {

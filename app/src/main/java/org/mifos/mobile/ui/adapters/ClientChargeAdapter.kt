@@ -47,31 +47,29 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
     // Binds the values for each of the stored variables to the view
     // Also changes the color of the circle depending on whether the charge is active or not
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is RecyclerView.ViewHolder) {
-            val charge = getItem(position)
-            var currencyRepresentation = charge.currency.displaySymbol
-            if (currencyRepresentation == null) {
-                currencyRepresentation = charge.currency.code
-            }
-            (holder as ViewHolder).tvAmountDue!!.text = context.getString(R.string.string_and_string,
-                    currencyRepresentation, formatCurrency(context,
-                    charge.amount))
-            holder.tvAmountPaid!!.text = context.getString(R.string.string_and_string,
-                    currencyRepresentation, formatCurrency(context,
-                    charge.amountPaid))
-            holder.tvAmountWaived!!.text = context.getString(R.string.string_and_string, currencyRepresentation,
-                    formatCurrency(context, charge.amountWaived))
-            holder.tvAmountOutstanding!!.text = context.getString(R.string.string_and_string, currencyRepresentation,
-                    formatCurrency(context, charge.amountOutstanding))
-            holder.tvClientName!!.text = charge.name
-            if (charge.dueDate.size > 0) {
-                holder.tvDueDate!!.text = getDateAsString(charge.dueDate)
-            }
-            if (charge.isIsPaid || charge.isIsWaived || charge.paid || charge.waived) {
-                holder.circle_status!!.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
-            } else {
-                holder.circle_status!!.setBackgroundColor(ContextCompat.getColor(context, R.color.deposit_green))
-            }
+        val charge = getItem(position)
+        var currencyRepresentation = charge.currency.displaySymbol
+        if (currencyRepresentation == null) {
+            currencyRepresentation = charge.currency.code
+        }
+        (holder as ViewHolder).tvAmountDue?.text = context.getString(R.string.string_and_string,
+                currencyRepresentation, formatCurrency(context,
+                charge.amount))
+        holder.tvAmountPaid?.text = context.getString(R.string.string_and_string,
+                currencyRepresentation, formatCurrency(context,
+                charge.amountPaid))
+        holder.tvAmountWaived?.text = context.getString(R.string.string_and_string, currencyRepresentation,
+                formatCurrency(context, charge.amountWaived))
+        holder.tvAmountOutstanding?.text = context.getString(R.string.string_and_string, currencyRepresentation,
+                formatCurrency(context, charge.amountOutstanding))
+        holder.tvClientName?.text = charge.name
+        if (charge.dueDate.size > 0) {
+            holder.tvDueDate?.text = getDateAsString(charge.dueDate)
+        }
+        if (charge.isIsPaid || charge.isIsWaived || charge.paid || charge.waived) {
+            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
+        } else {
+            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.deposit_green))
         }
     }
 

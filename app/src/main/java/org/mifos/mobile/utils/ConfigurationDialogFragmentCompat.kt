@@ -77,10 +77,10 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
 
     val isFieldEmpty: Boolean
         get() {
-            if (etBaseUrl!!.text.toString().trim { it <= ' ' }.length == 0) {
+            if (etBaseUrl!!.text.toString().trim { it <= ' ' }.isEmpty()) {
                 return true
             }
-            return if (etTenant!!.text.toString().trim { it <= ' ' }.length == 0) {
+            return if (etTenant!!.text.toString().trim { it <= ' ' }.isEmpty()) {
                 true
             } else false
         }
@@ -94,13 +94,13 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        if (s.toString().length == 0) {
-            if (etBaseUrl!!.text.toString().length == 0) {
+        if (s.toString().isEmpty()) {
+            if (etBaseUrl!!.text.toString().isEmpty()) {
                 tilBaseUrl!!.isErrorEnabled = true
                 tilBaseUrl!!.error = getString(R.string.error_validation_blank,
                         getString(R.string.base_url))
             }
-            if (etTenant!!.text.toString().length == 0) {
+            if (etTenant!!.text.toString().isEmpty()) {
                 tilTenant!!.isErrorEnabled = true
                 tilTenant!!.error = getString(R.string.error_validation_blank,
                         getString(R.string.tenant))

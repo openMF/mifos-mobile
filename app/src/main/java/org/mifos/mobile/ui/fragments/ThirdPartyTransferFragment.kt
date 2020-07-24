@@ -170,13 +170,17 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      * Setting up basic components
      */
     override fun showUserInterface() {
-        payFromAdapter = AccountsSpinnerAdapter(activity, R.layout.account_spinner_layout,
-                listPayFrom)
+        payFromAdapter = activity?.applicationContext?.let {
+            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
+                    listPayFrom)
+        }
         payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
         spPayFrom?.adapter = payFromAdapter
         spPayFrom?.onItemSelectedListener = this
-        beneficiaryAdapter = BeneficiarySpinnerAdapter(activity,
-                R.layout.beneficiary_spinner_layout, listBeneficiary)
+        beneficiaryAdapter = activity?.applicationContext?.let {
+            BeneficiarySpinnerAdapter(it,
+                    R.layout.beneficiary_spinner_layout, listBeneficiary)
+        }
         beneficiaryAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
         spBeneficiary?.adapter = beneficiaryAdapter
         spBeneficiary?.onItemSelectedListener = this

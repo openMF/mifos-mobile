@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import com.google.android.material.textfield.TextInputLayout
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
@@ -19,11 +22,13 @@ import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.MFDatePicker
 import org.mifos.mobile.utils.Toaster
+
 import javax.inject.Inject
 
 /*
 * Created by saksham on 02/July/2018
-*/   class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawView {
+*/
+class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawView {
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_client_name)
     var tvClientName: TextView? = null
@@ -49,7 +54,7 @@ import javax.inject.Inject
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            savingsWithAssociations = arguments!!.getParcelable(Constants.SAVINGS_ACCOUNTS)
+            savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
         }
     }
 
@@ -58,8 +63,8 @@ import javax.inject.Inject
         rootView = inflater.inflate(R.layout.fragment_savings_account_withdraw_fragment,
                 container, false)
         ButterKnife.bind(this, rootView!!)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
-        presenter!!.attachView(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        presenter?.attachView(this)
         showUserInterface()
         return rootView
     }
@@ -70,36 +75,36 @@ import javax.inject.Inject
     }
 
     override fun showUserInterface() {
-        activity!!.title = getString(R.string.withdraw_savings_account)
-        tvAccountNumber!!.text = savingsWithAssociations!!.accountNo
-        tvClientName!!.text = savingsWithAssociations!!.clientName
-        tvWithdrawalDate!!.text = MFDatePicker.datePickedAsString
+        activity?.title = getString(R.string.withdraw_savings_account)
+        tvAccountNumber?.text = savingsWithAssociations?.accountNo
+        tvClientName?.text = savingsWithAssociations?.clientName
+        tvWithdrawalDate?.text = MFDatePicker.datePickedAsString
     }
 
-    val isFormIncomplete: Boolean
+    private val isFormIncomplete: Boolean?
         get() {
             var rv = false
-            if (tilRemark!!.editText!!.text.toString().trim { it <= ' ' }.length == 0) {
+            if (tilRemark?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
                 rv = true
-                tilRemark!!.error = getString(R.string.error_validation_blank,
+                tilRemark?.error = getString(R.string.error_validation_blank,
                         getString(R.string.remark))
             }
             return rv
         }
 
     override fun submitWithdrawSavingsAccount() {
-        tilRemark!!.isErrorEnabled = false
-        if (!isFormIncomplete) {
+        tilRemark?.isErrorEnabled = false
+        if (isFormIncomplete == false) {
             payload = SavingsAccountWithdrawPayload()
-            payload!!.note = tilRemark!!.editText!!.text.toString()
-            payload!!.withdrawnOnDate = MFDatePicker.datePickedAsString
-            presenter!!.submitWithdrawSavingsAccount(savingsWithAssociations!!.accountNo, payload)
+            payload?.note = tilRemark?.editText?.text.toString()
+            payload?.withdrawnOnDate = MFDatePicker.datePickedAsString
+            presenter?.submitWithdrawSavingsAccount(savingsWithAssociations?.accountNo, payload)
         }
     }
 
     override fun showSavingsAccountWithdrawSuccessfully() {
         showMessage(getString(R.string.savings_account_withdraw_successful))
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     override fun showMessage(message: String?) {
@@ -120,7 +125,7 @@ import javax.inject.Inject
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {
