@@ -23,7 +23,8 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 6/3/17.
  */
-class SavingAccountsTransactionListAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SavingAccountsTransactionListAdapter @Inject constructor() :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var savingAccountsTransactionList: List<Transactions?>?
     private var context: Context? = null

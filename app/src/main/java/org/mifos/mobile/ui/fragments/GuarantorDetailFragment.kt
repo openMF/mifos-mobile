@@ -52,19 +52,19 @@ import javax.inject.Inject
     @Inject
     var presenter: GuarantorDetailPresenter? = null
     var rootView: View? = null
-    var loanId: Long = 0
-    var guarantorId: Long = 0
-    var index = 0
+    var loanId: Long? = 0
+    private var guarantorId: Long? = 0
+    var index: Int? = 0
     var payload: GuarantorPayload? = null
     var disposableUpdateGuarantor: Disposable? = null
     var isFirstTime = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanId = arguments!!.getLong(Constants.LOAN_ID)
-            payload = arguments!!.getParcelable(Constants.GUARANTOR_DETAILS)
-            index = arguments!!.getInt(Constants.INDEX)
-            guarantorId = payload!!.id
+            loanId = arguments?.getLong(Constants.LOAN_ID)
+            payload = arguments?.getParcelable(Constants.GUARANTOR_DETAILS)
+            index = arguments?.getInt(Constants.INDEX)
+            guarantorId = payload?.id
         }
     }
 
@@ -76,32 +76,32 @@ import javax.inject.Inject
         setToolbarTitle(getString(R.string.guarantor_details))
         setHasOptionsMenu(true)
         ButterKnife.bind(this, rootView!!)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (isFirstTime) {
             isFirstTime = false
             setUpRxBus()
         }
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
         return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tvFirstName!!.text = payload!!.firstname
-        tvLastName!!.text = payload!!.lastname
-        tvGuarantorType!!.text = payload!!.guarantorType!!.value
-        tvJoinedDate!!.text = DateHelper.getDateAsString(payload!!.joinedDate)
-        tvOfficeName!!.text = payload!!.officeName
+        tvFirstName?.text = payload?.firstname
+        tvLastName?.text = payload?.lastname
+        tvGuarantorType?.text = payload?.guarantorType?.value
+        tvJoinedDate?.text = DateHelper.getDateAsString(payload?.joinedDate)
+        tvOfficeName?.text = payload?.officeName
     }
 
     private fun setUpRxBus() {
         disposableUpdateGuarantor = listen(UpdateGuarantorEvent::class.java)
                 .subscribe { (payload1) ->
-                    payload!!.firstname = payload1.firstName
-                    payload!!.lastname = payload1.lastName
-                    payload!!.guarantorType = payload1
-                            .guarantorType
-                    payload!!.officeName = payload1.officeName
+                    payload?.firstname = payload1?.firstName
+                    payload?.lastname = payload1?.lastName
+                    payload?.guarantorType = payload1
+                            ?.guarantorType
+                    payload?.officeName = payload1?.officeName
                 }
     }
 
@@ -111,8 +111,7 @@ import javax.inject.Inject
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        when (itemId) {
+        when (item.itemId) {
             R.id.menu_delete_guarantor -> MaterialDialog.Builder()
                     .init(context)
                     .setTitle(R.string.delete_guarantor)
@@ -125,14 +124,14 @@ import javax.inject.Inject
                     .setNegativeButton(R.string.cancel)
                     .createMaterialDialog()
                     .show()
-            R.id.menu_update_guarantor -> (activity as BaseActivity?)!!.replaceFragment(AddGuarantorFragment.Companion.newInstance(index, GuarantorState.UPDATE, payload, loanId),
+            R.id.menu_update_guarantor -> (activity as BaseActivity?)?.replaceFragment(AddGuarantorFragment.Companion.newInstance(index, GuarantorState.UPDATE, payload, loanId),
                     true, R.id.container)
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun guarantorDeletedSuccessfully(message: String?) {
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
         publish(DeleteGuarantorEvent(index))
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
@@ -151,9 +150,9 @@ import javax.inject.Inject
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter!!.detachView()
-        if (!disposableUpdateGuarantor!!.isDisposed) {
-            disposableUpdateGuarantor!!.dispose()
+        presenter?.detachView()
+        if (disposableUpdateGuarantor?.isDisposed == false) {
+            disposableUpdateGuarantor?.dispose()
         }
         hideProgressBar()
     }

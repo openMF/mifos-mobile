@@ -327,8 +327,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
     fun filterSavingsAccount(statusModelList: List<CheckboxStatus?>?) {
         val filteredSavings: MutableList<SavingAccount?>? = ArrayList()
         if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
-            for (status in accountsPresenter!!.getCheckedStatus(statusModelList)!!) {
-                accountsPresenter!!.getFilteredSavingsAccount(savingAccounts,
+            for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
+                accountsPresenter?.getFilteredSavingsAccount(savingAccounts,
                         status)?.let { filteredSavings?.addAll(it) }
             }
         }
@@ -349,8 +349,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
         val filteredSavings: MutableList<LoanAccount?>? = ArrayList()
         when {
             accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null -> {
-                for (status in accountsPresenter!!.getCheckedStatus(statusModelList)!!) {
-                    accountsPresenter!!.getFilteredLoanAccount(loanAccounts,
+                for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
+                    accountsPresenter?.getFilteredLoanAccount(loanAccounts,
                             status)?.let { filteredSavings?.addAll(it) }
                 }
             }

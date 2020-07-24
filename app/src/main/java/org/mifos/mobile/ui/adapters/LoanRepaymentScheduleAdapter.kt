@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+
 import butterknife.BindView
 import butterknife.ButterKnife
+
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder
+
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.models.accounts.loan.Periods
@@ -17,14 +20,17 @@ import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader
 import org.mifos.mobile.models.accounts.loan.tableview.RowHeader
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
+
 import javax.inject.Inject
 
 /**
  * Created by Rajan Maurya on 04/03/17.
  */
-class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationContext context: Context?) : AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>(context) {
-    private var currency = ""
-    fun setCurrency(currency: String) {
+class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationContext context: Context?) :
+        AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>(context) {
+
+    private var currency: String? = ""
+    fun setCurrency(currency: String?) {
         this.currency = currency
     }
 
@@ -56,13 +62,13 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
         var principal: Double?
 
         when (columnPosition) {
-            0 -> viewHolder.tvCell!!.text = getDateAsString(period.dueDate)
+            0 -> viewHolder.tvCell?.text = getDateAsString(period.dueDate)
             1 -> {
                 principal = period.principalOriginalDue
                 if (principal == null) {
                     principal = 0.00
                 }
-                viewHolder.tvCell!!.text = mContext.getString(R.string.string_and_double,
+                viewHolder.tvCell?.text = mContext.getString(R.string.string_and_double,
                         currency, principal)
             }
             2 -> {
@@ -70,10 +76,10 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
                 if (principal == null) {
                     principal = 0.00
                 }
-                viewHolder.tvCell!!.text = mContext.getString(R.string.string_and_string,
+                viewHolder.tvCell?.text = mContext.getString(R.string.string_and_string,
                         currency, formatCurrency(mContext, principal))
             }
-            else -> viewHolder.tvCell!!.text = ""
+            else -> viewHolder.tvCell?.text = ""
         }
     }
 
@@ -104,7 +110,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
 
         // Get the holder to update cell item text
         val columnHeaderViewHolder = holder as ColumnHeaderViewHolder
-        columnHeaderViewHolder.tvColumnHeader!!.text = data.toString()
+        columnHeaderViewHolder.tvColumnHeader?.text = data.toString()
     }
 
     internal inner class RowHeaderViewHolder(itemView: View?) : AbstractViewHolder(itemView) {
@@ -132,7 +138,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
 
         // Get the holder to update row header item text
         val rowHeaderViewHolder = holder as RowHeaderViewHolder
-        rowHeaderViewHolder.tvRowHeader!!.text = data.toString()
+        rowHeaderViewHolder.tvRowHeader?.text = data.toString()
     }
 
     override fun onCreateCornerView(): View {

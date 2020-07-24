@@ -25,7 +25,7 @@ class QrCodeDisplayFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            json = arguments!!.getString(Constants.QR_DATA)
+            json = arguments?.getString(Constants.QR_DATA)
         }
         setHasOptionsMenu(true)
     }
@@ -34,7 +34,7 @@ class QrCodeDisplayFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_qr_code_display, container, false)
         ButterKnife.bind(this, rootView!!)
-        ivQrCode!!.setImageBitmap(QrCodeGenerator.encodeAsBitmap(json))
+        ivQrCode?.setImageBitmap(QrCodeGenerator.encodeAsBitmap(json))
         return rootView
     }
 
@@ -46,7 +46,7 @@ class QrCodeDisplayFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_qr_code_share -> {
-                val bitmapDrawable = ivQrCode!!.drawable as BitmapDrawable
+                val bitmapDrawable = ivQrCode?.drawable as BitmapDrawable
                 val uri = Utils.getImageUri(activity, bitmapDrawable.bitmap)
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND

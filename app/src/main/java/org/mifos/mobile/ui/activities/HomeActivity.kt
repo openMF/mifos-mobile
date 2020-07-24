@@ -177,7 +177,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 .setMessage(R.string.dialog_logout)
                 .setPositiveButton(getString(R.string.logout),
                         DialogInterface.OnClickListener { _, _ ->
-                            preferencesHelper?.clear()
+                            preferencesHelper.clear()
                             val i = Intent(this@HomeActivity, LoginActivity::class.java)
                             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(i)

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
@@ -19,12 +21,14 @@ import org.mifos.mobile.ui.views.LoanAccountWithdrawView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Toaster
+
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 7/6/17.
  */
 class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_client_name)
     var tvClientName: TextView? = null
@@ -44,19 +48,21 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
-            loanWithAssociations = arguments!!.getParcelable(Constants.LOAN_ACCOUNT)
+            loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_loan_withdraw, container, false)
         setToolbarTitle(getString(R.string.withdraw_loan))
         ButterKnife.bind(this, rootView!!)
         showUserInterface()
-        loanAccountWithdrawPresenter!!.attachView(this)
+        loanAccountWithdrawPresenter?.attachView(this)
         return rootView
     }
 
@@ -64,8 +70,8 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
      * Sets Basic Information about that Loan Application
      */
     private fun showUserInterface() {
-        tvClientName!!.text = loanWithAssociations!!.clientName
-        tvAccountNumber!!.text = loanWithAssociations!!.accountNo
+        tvClientName?.text = loanWithAssociations?.clientName
+        tvAccountNumber?.text = loanWithAssociations?.accountNo
     }
 
     /**
@@ -74,10 +80,10 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     @OnClick(R.id.btn_withdraw_loan)
     fun onLoanWithdraw() {
         val loanWithdraw = LoanWithdraw()
-        loanWithdraw.note = etWithdrawReason!!.text.toString()
+        loanWithdraw.note = etWithdrawReason?.text.toString()
         loanWithdraw.withdrawnOnDate = DateHelper
                 .getDateAsStringFromLong(System.currentTimeMillis())
-        loanAccountWithdrawPresenter!!.withdrawLoanAccount(loanWithAssociations!!.id!!.toLong(),
+        loanAccountWithdrawPresenter?.withdrawLoanAccount(loanWithAssociations?.id?.toLong(),
                 loanWithdraw)
     }
 
@@ -86,7 +92,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
      */
     override fun showLoanAccountWithdrawSuccess() {
         Toaster.show(rootView, R.string.loan_application_withdrawn_successfully)
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     /**
@@ -110,12 +116,13 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        loanAccountWithdrawPresenter!!.detachView()
+        loanAccountWithdrawPresenter?.detachView()
     }
 
     companion object {
         fun newInstance(
-                loanWithAssociations: LoanWithAssociations?): LoanAccountWithdrawFragment {
+                loanWithAssociations: LoanWithAssociations?
+        ): LoanAccountWithdrawFragment {
             val fragment = LoanAccountWithdrawFragment()
             val args = Bundle()
             args.putParcelable(Constants.LOAN_ACCOUNT, loanWithAssociations)
