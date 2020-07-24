@@ -55,7 +55,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            beneficiary = arguments!!.getParcelable(Constants.BENEFICIARY)
+            beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
         }
         setHasOptionsMenu(true)
     }
@@ -63,10 +63,10 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_detail, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiary_detail))
         ButterKnife.bind(this, rootView!!)
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
         showUserInterface()
         return rootView
     }
@@ -75,12 +75,12 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
      * Used for setting up of User Interface
      */
     override fun showUserInterface() {
-        tvName!!.text = beneficiary!!.name
-        tvAccountNumber!!.text = beneficiary!!.accountNumber
-        tvClientName!!.text = beneficiary!!.clientName
-        tvAccountType!!.text = beneficiary!!.accountType!!.value
-        tvTransferLimit!!.text = CurrencyUtil.formatCurrency(activity!!, beneficiary!!.transferLimit!!)
-        tvOfficeName!!.text = beneficiary!!.officeName
+        tvName?.text = beneficiary?.name
+        tvAccountNumber?.text = beneficiary?.accountNumber
+        tvClientName?.text = beneficiary?.clientName
+        tvAccountType?.text = beneficiary?.accountType?.value
+        tvTransferLimit?.text = CurrencyUtil.formatCurrency(activity!!, beneficiary?.transferLimit!!)
+        tvOfficeName?.text = beneficiary?.officeName
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -90,14 +90,14 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_update_beneficiary -> (activity as BaseActivity?)!!.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container)
+            R.id.item_update_beneficiary -> (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container)
             R.id.item_delete_beneficiary -> MaterialDialog.Builder().init(activity)
                     .setTitle(getString(R.string.delete_beneficiary))
                     .setMessage(getString(R.string.delete_beneficiary_confirmation))
                     .setPositiveButton(getString(R.string.delete),
                             DialogInterface.OnClickListener { dialog, which ->
                                 dialog.dismiss()
-                                presenter!!.deleteBeneficiary(beneficiary!!.id!!.toLong())
+                                presenter?.deleteBeneficiary(beneficiary?.id?.toLong())
                             })
                     .setNegativeButton(getString(R.string.cancel),
                             DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
@@ -113,7 +113,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
      */
     override fun showBeneficiaryDeletedSuccessfully() {
         Toaster.show(rootView, getString(R.string.beneficiary_deleted_successfully))
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     /**
@@ -142,7 +142,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {

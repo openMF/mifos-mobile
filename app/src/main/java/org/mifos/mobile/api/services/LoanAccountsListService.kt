@@ -21,7 +21,7 @@ interface LoanAccountsListService {
 
     @GET(ApiEndPoints.LOANS + "/{loanId}")
     fun getLoanWithAssociations(
-            @Path("loanId") loanId: Long,
+            @Path("loanId") loanId: Long?,
             @Query("associations") associationType: String?
     ): Observable<LoanWithAssociations?>?
 
@@ -45,7 +45,7 @@ interface LoanAccountsListService {
 
     @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
     fun withdrawLoanAccount(
-            @Path(Constants.LOAN_ID) loanId: Long,
+            @Path(Constants.LOAN_ID) loanId: Long?,
             @Body loanWithdraw: LoanWithdraw?
     ): Observable<ResponseBody?>?
 }

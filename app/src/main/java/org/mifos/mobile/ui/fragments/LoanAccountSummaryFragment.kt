@@ -102,9 +102,9 @@ class LoanAccountSummaryFragment : BaseFragment() {
     private var rootView: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
-            loanWithAssociations = arguments!!.getParcelable(Constants.LOAN_ACCOUNT)
+            loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
         }
     }
 
@@ -123,54 +123,54 @@ class LoanAccountSummaryFragment : BaseFragment() {
      * @param loanWithAssociations object containing details of each loan account,
      */
     fun showLoanAccountsDetail(loanWithAssociations: LoanWithAssociations?) {
-        llLoanSummary!!.visibility = View.VISIBLE
-        var currencySymbol = loanWithAssociations!!.currency!!.displaySymbol
+        llLoanSummary?.visibility = View.VISIBLE
+        var currencySymbol = loanWithAssociations?.currency?.displaySymbol
         if (currencySymbol == null) {
-            currencySymbol = loanWithAssociations.currency!!.code
+            currencySymbol = loanWithAssociations?.currency?.code
         }
-        tvLoanProductName!!.text = loanWithAssociations.loanProductName
-        tvPrincipalName!!.text = getString(R.string.string_and_double,
+        tvLoanProductName?.text = loanWithAssociations?.loanProductName
+        tvPrincipalName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.principal)
-        tvInterestChargedName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.principal)
+        tvInterestChargedName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.interestCharged)
-        tvFeesName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.interestCharged)
+        tvFeesName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.feeChargesCharged)
-        tvPenaltiesName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.feeChargesCharged)
+        tvPenaltiesName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.penaltyChargesCharged)
-        tvTotalRepaymentName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.penaltyChargesCharged)
+        tvTotalRepaymentName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.totalExpectedRepayment)
-        tvTotalPaidName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.totalExpectedRepayment)
+        tvTotalPaidName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.totalRepayment)
-        tvInterestWaivedName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.totalRepayment)
+        tvInterestWaivedName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.interestWaived)
-        tvPenaltiesWaivedName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.interestWaived)
+        tvPenaltiesWaivedName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.penaltyChargesWaived)
-        tvFeesWaivedName!!.text = getString(R.string.string_and_double,
+                loanWithAssociations?.summary?.penaltyChargesWaived)
+        tvFeesWaivedName?.text = getString(R.string.string_and_double,
                 currencySymbol,
-                loanWithAssociations.summary!!.feeChargesWaived)
-        tvOutstandingBalanceName!!.text = resources.getString(R.string.string_and_string,
+                loanWithAssociations?.summary?.feeChargesWaived)
+        tvOutstandingBalanceName?.text = resources.getString(R.string.string_and_string,
                 currencySymbol, CurrencyUtil.formatCurrency(activity,
-                loanWithAssociations.summary!!.totalOutstanding))
-        tvLoanAccountNumber!!.text = loanWithAssociations.accountNo
-        if (loanWithAssociations.loanPurposeName != null) {
-            llLoanPurpose!!.visibility = View.VISIBLE
-            tvLoanPurpose!!.text = loanWithAssociations.loanPurposeName
+                loanWithAssociations?.summary?.totalOutstanding))
+        tvLoanAccountNumber?.text = loanWithAssociations?.accountNo
+        if (loanWithAssociations?.loanPurposeName != null) {
+            llLoanPurpose?.visibility = View.VISIBLE
+            tvLoanPurpose?.text = loanWithAssociations.loanPurposeName
         }
-        if (loanWithAssociations.status!!.active!!) {
-            tvAccountStatus!!.setText(R.string.active_uc)
-            ivAccountStatus!!.setImageResource(R.drawable.ic_check_circle_green_24px
+        if (loanWithAssociations?.status?.active == true) {
+            tvAccountStatus?.setText(R.string.active_uc)
+            ivAccountStatus?.setImageResource(R.drawable.ic_check_circle_green_24px
             )
         } else {
-            tvAccountStatus!!.setText(R.string.inactive_uc)
-            ivAccountStatus!!.setImageResource(R.drawable.ic_report_problem_red_24px)
+            tvAccountStatus?.setText(R.string.inactive_uc)
+            ivAccountStatus?.setImageResource(R.drawable.ic_report_problem_red_24px)
         }
     }
 

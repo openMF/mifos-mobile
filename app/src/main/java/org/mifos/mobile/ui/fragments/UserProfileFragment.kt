@@ -120,22 +120,24 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     private var userBitmap: Bitmap? = null
     private var client: Client? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_user_profile, container, false)
-        (activity as BaseActivity?)!!.activityComponent!!.inject(this)
+        (activity as BaseActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
-        presenter!!.attachView(this)
-        (activity as BaseActivity?)!!.setSupportActionBar(toolbar)
-        (activity as BaseActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        collapsingToolbarLayout!!.setCollapsedTitleTextColor(ContextCompat.getColor(activity!!,
+        presenter?.attachView(this)
+        (activity as BaseActivity?)?.setSupportActionBar(toolbar)
+        (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        collapsingToolbarLayout?.setCollapsedTitleTextColor(ContextCompat.getColor(activity!!,
                 R.color.white))
-        collapsingToolbarLayout!!.setExpandedTitleColor(ContextCompat.getColor(activity!!,
+        collapsingToolbarLayout?.setExpandedTitleColor(ContextCompat.getColor(activity!!,
                 R.color.white))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null) {
-            presenter!!.getUserDetails()
-            presenter!!.getUserImage()
+            presenter?.getUserDetails()
+            presenter?.getUserImage()
         }
         return rootView
     }
@@ -149,7 +151,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
-            presenter!!.setUserProfile(preferencesHelper!!.userProfileImage)
+            presenter?.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }
     }
@@ -161,27 +163,27 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      */
     override fun showUserDetails(client: Client?) {
         this.client = client
-        tvUsername!!.text = nullFieldCheck(getString(R.string.username), client!!.displayName)
-        tvAccountNumber!!.text = nullFieldCheck(getString(R.string.account_number),
-                client.accountNo)
-        tvActivationDate!!.text = nullFieldCheck(getString(R.string.activation_date),
-                DateHelper.getDateAsString(client.activationDate))
-        tvOfficeName!!.text = nullFieldCheck(getString(R.string.office_name),
-                client.officeName)
-        tvClientType!!.text = nullFieldCheck(getString(R.string.client_type),
-                client.clientType.name)
-        tvGroups!!.text = nullFieldCheck(getString(R.string.groups),
-                getGroups(client.groups))
-        tvClientClassification!!.text = nullFieldCheck(getString(R.string.client_classification),
-                client.clientClassification.name)
-        tvPhoneNumber!!.text = nullFieldCheck(getString(R.string.phone_number),
-                client.mobileNo)
-        if (client.dobDate.size != 3) {  // no data entry in database for the client
-            tvDOB!!.text = getString(R.string.no_dob_found)
+        tvUsername?.text = nullFieldCheck(getString(R.string.username), client?.displayName)
+        tvAccountNumber?.text = nullFieldCheck(getString(R.string.account_number),
+                client?.accountNo)
+        tvActivationDate?.text = nullFieldCheck(getString(R.string.activation_date),
+                DateHelper.getDateAsString(client?.activationDate))
+        tvOfficeName?.text = nullFieldCheck(getString(R.string.office_name),
+                client?.officeName)
+        tvClientType?.text = nullFieldCheck(getString(R.string.client_type),
+                client?.clientType?.name)
+        tvGroups?.text = nullFieldCheck(getString(R.string.groups),
+                getGroups(client?.groups))
+        tvClientClassification?.text = nullFieldCheck(getString(R.string.client_classification),
+                client?.clientClassification?.name)
+        tvPhoneNumber?.text = nullFieldCheck(getString(R.string.phone_number),
+                client?.mobileNo)
+        if (client?.dobDate?.size != 3) {  // no data entry in database for the client
+            tvDOB?.text = getString(R.string.no_dob_found)
         } else {
-            tvDOB!!.text = DateHelper.getDateAsString(client.dobDate)
+            tvDOB?.text = DateHelper.getDateAsString(client.dobDate)
         }
-        tvGender!!.text = nullFieldCheck(getString(R.string.gender), client.gender.name)
+        tvGender?.text = nullFieldCheck(getString(R.string.gender), client?.gender?.name)
     }
 
     private fun nullFieldCheck(field: String, value: String?): String {
@@ -196,16 +198,17 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      * @param groups [List] of [Group] which client is a part of.
      * @return Returns String of groups
      */
-    private fun getGroups(groups: List<Group>): String {
-        if (groups.size == 0) {
+    private fun getGroups(groups: List<Group>?): String {
+        if (groups?.isEmpty() == true) {
             return getString(
                     R.string.not_assigned_with_any_group) // no groups entry in database for the
             // client
         }
         val builder = StringBuilder()
-        for ((_, _, name) in groups) {
-            builder.append(getString(R.string.string_and_string, name, " | "))
-        }
+        if (groups != null)
+            for ((_, _, name) in groups) {
+                builder.append(getString(R.string.string_and_string, name, " | "))
+            }
         return builder.toString().substring(0, builder.toString().length - 2)
     }
 
@@ -215,7 +218,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      * @param bitmap User Image
      */
     override fun showUserImage(bitmap: Bitmap?) {
-        activity!!.runOnUiThread {
+        activity?.runOnUiThread {
             userBitmap = bitmap
             if (userBitmap == null) {
                 val textDrawable = TextDrawable.builder()
@@ -226,13 +229,13 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                                 ?.clientName
                                 ?.substring(0, 1),
                                 ContextCompat.getColor(context!!, R.color.primary_dark))
-                ivProfile!!.visibility = View.GONE
-                ivTextDrawable!!.visibility = View.VISIBLE
-                ivTextDrawable!!.setImageDrawable(textDrawable)
+                ivProfile?.visibility = View.GONE
+                ivTextDrawable?.visibility = View.VISIBLE
+                ivTextDrawable?.setImageDrawable(textDrawable)
             } else {
-                ivTextDrawable!!.visibility = View.GONE
-                ivProfile!!.visibility = View.VISIBLE
-                ivProfile!!.setImageBitmap(bitmap)
+                ivTextDrawable?.visibility = View.GONE
+                ivProfile?.visibility = View.VISIBLE
+                ivProfile?.setImageBitmap(bitmap)
             }
         }
     }
@@ -249,10 +252,10 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      */
     override fun showError(message: String?) {
         Toaster.show(rootView, message)
-        sweetUIErrorHandler!!.showSweetCustomErrorUI(getString(R.string.error_fetching_user_profile),
+        sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.error_fetching_user_profile),
                 R.drawable.ic_assignment_turned_in_black_24dp, appBarLayout,
                 layoutError)
-        fabEdit!!.visibility = View.GONE
+        fabEdit?.visibility = View.GONE
     }
 
     override fun showProgress() {
@@ -266,7 +269,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        presenter!!.detachView()
+        presenter?.detachView()
     }
 
     companion object {

@@ -1,18 +1,16 @@
 package org.mifos.mobile.ui.fragments
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_review_loan_application.*
 import kotlinx.android.synthetic.main.layout_error.*
 import okhttp3.ResponseBody
-
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -47,12 +45,12 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             return fragment
         }
 
-        fun newInstance(loanState: LoanState, loansPayload: LoansPayload, loanId: Long, loanName: String, accountNo: String)
+        fun newInstance(loanState: LoanState?, loansPayload: LoansPayload?, loanId: Long?, loanName: String?, accountNo: String?)
                 : ReviewLoanApplicationFragment {
             val fragment = ReviewLoanApplicationFragment()
             val args = Bundle().apply {
                 putSerializable(LOAN_STATE, loanState)
-                putLong(LOAN_ID, loanId)
+                if (loanId != null) putLong(LOAN_ID, loanId)
                 putParcelable(LOANS_PAYLOAD, loansPayload)
                 putString(LOAN_NAME, loanName)
                 putString(ACCOUNT_NO, accountNo)
