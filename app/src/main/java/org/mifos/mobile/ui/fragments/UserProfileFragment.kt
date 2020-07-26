@@ -136,8 +136,8 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                 R.color.white))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null) {
-            presenter?.getUserDetails()
-            presenter?.getUserImage()
+            presenter?.userDetails
+            presenter?.userImage
         }
         return rootView
     }

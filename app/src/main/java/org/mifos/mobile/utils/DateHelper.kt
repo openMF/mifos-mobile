@@ -90,7 +90,7 @@ object DateHelper {
      * @param month an integer from 1 to 12
      * @return string representation of the month like Jan or Feb..etc
      */
-    fun getMonthName(month: Int): String {
+    private fun getMonthName(month: Int): String? {
         var monthName = ""
         when (month) {
             1 -> monthName = "Jan"
@@ -109,7 +109,7 @@ object DateHelper {
         return monthName
     }
 
-    fun getDateAsLongFromString(dateStr: String?, pattern: String?): Long {
+    fun getDateAsLongFromString(dateStr: String?, pattern: String?): Long? {
         val sdf = SimpleDateFormat(pattern)
         var date: Date? = null
         try {
@@ -117,11 +117,11 @@ object DateHelper {
         } catch (e: ParseException) {
             Log.d("TAG", e.message)
         }
-        return date!!.time
+        return date?.time
     }
 
     @kotlin.jvm.JvmStatic
-    fun getDateAsLongFromList(integersOfDate: List<Int>?): Long {
+    fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
         val dateStr = getDateAsString(integersOfDate)
         return getDateAsLongFromString(dateStr, "dd MMM yyyy")
     }
@@ -138,9 +138,9 @@ object DateHelper {
         return calendar.timeInMillis
     }
 
-    fun getDateAsStringFromLong(timeInMillis: Long): String {
+    fun getDateAsStringFromLong(timeInMillis: Long?): String {
         val sdf = SimpleDateFormat("dd MMM yyyy")
-        return sdf.format(Date(timeInMillis))
+        return sdf.format(timeInMillis?.let { Date(it) })
     }
 
     @kotlin.jvm.JvmStatic

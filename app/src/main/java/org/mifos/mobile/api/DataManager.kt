@@ -186,26 +186,26 @@ class DataManager @Inject constructor(
     val thirdPartyTransferTemplate: Observable<AccountOptionsTemplate?>?
         get() = baseApiManager.thirdPartyTransferApi?.accountTransferTemplate
 
-    fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Observable<ResponseBody>? {
+    fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
         return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)
     }
 
-    fun registerUser(registerPayload: RegisterPayload?): Observable<ResponseBody>? {
+    fun registerUser(registerPayload: RegisterPayload?): Observable<ResponseBody?>? {
         return baseApiManager.registrationApi?.registerUser(registerPayload)
     }
 
-    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody>? {
+    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody?>? {
         return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
-    val clientLocalCharges: Observable<Page<Charge>>
+    val clientLocalCharges: Observable<Page<Charge?>?>
         get() = databaseHelper.clientCharges
-    val notifications: Observable<List<MifosNotification>>
+    val notifications: Observable<List<MifosNotification?>>
         get() = databaseHelper.notifications
     val unreadNotificationsCount: Observable<Int>
         get() = databaseHelper.unreadNotificationsCount
 
-    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody>? {
+    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody?>? {
         return baseApiManager.notificationApi?.registerNotification(payload)
     }
 
@@ -217,7 +217,7 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi?.getUserNotificationId(id)
     }
 
-    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody>? {
+    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody?>? {
         return baseApiManager.userDetailsService?.updateAccountPassword(payload)
     }
 

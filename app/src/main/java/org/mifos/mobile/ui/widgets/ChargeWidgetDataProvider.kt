@@ -22,7 +22,8 @@ import java.util.concurrent.locks.ReentrantLock
  * ChargeWidgetDataProvider acts as the adapter for the collection view widget,
  * providing RemoteViews to the widget in the getViewAt method.
  */
-class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Context?) : RemoteViewsFactory,
+class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Context) :
+        RemoteViewsFactory,
         ClientChargeView {
 
     private var chargePresenter: ClientChargePresenter? = null
@@ -37,12 +38,12 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
         val dataManager = DataManager(preferencesHelper, baseApiManager,
                 databaseHelper)
         chargePresenter = ClientChargePresenter(dataManager, context)
-        chargePresenter!!.attachView(this)
+        chargePresenter?.attachView(this)
     }
 
     override fun onDataSetChanged() {
         //TODO Make ClientId Dynamic
-        chargePresenter!!.loadClientLocalCharges()
+        chargePresenter?.loadClientLocalCharges()
         synchronized(`object`) {
             try {
                 // Calling wait() will block this thread until another thread
@@ -55,13 +56,14 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     }
 
     override fun getCount(): Int {
-        return charges!!.size
+        return if (charges != null) charges!!.size
+        else 0
     }
 
     override fun getViewAt(position: Int): RemoteViews {
         val charge = charges?.get(position)
         val itemId = R.layout.item_widget_client_charge
-        val view = RemoteViews(context?.packageName, itemId)
+        val view = RemoteViews(context.packageName, itemId)
         view.setTextViewText(R.id.tv_charge_name, charge?.name)
         view.setTextViewText(R.id.tv_charge_amount, charge?.amount.toString())
         view.setImageViewResource(R.id.circle_status, R.drawable.ic_attach_money_black_24dp)
@@ -85,7 +87,7 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     }
 
     override fun showErrorFetchingClientCharges(message: String?) {
-        Toast.makeText(context, context?.getString(R.string.error_client_charge_loading),
+        Toast.makeText(context, context.getString(R.string.error_client_charge_loading),
                 Toast.LENGTH_SHORT).show()
     }
 
@@ -101,7 +103,7 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     override fun hideProgress() {}
 
     override fun onDestroy() {
-        chargePresenter!!.detachView()
+        chargePresenter?.detachView()
     }
 
     companion object {

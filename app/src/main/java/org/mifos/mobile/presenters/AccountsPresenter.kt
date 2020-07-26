@@ -27,7 +27,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
-class AccountsPresenter @Inject constructor(@ApplicationContext context: Context?, private val dataManager: DataManager) :
+class AccountsPresenter @Inject constructor(@ApplicationContext context: Context, private val dataManager: DataManager) :
         BasePresenter<AccountsView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -55,7 +55,7 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(context.getString(R.string.error_fetching_accounts))
+                        mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
                     }
 
                     override fun onNext(clientAccounts: ClientAccounts) {
@@ -86,7 +86,7 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(context.getString(R.string.error_fetching_accounts))
+                        mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
                     }
 
                     override fun onNext(clientAccounts: ClientAccounts) {
@@ -182,15 +182,15 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
     ): Collection<SavingAccount?>? {
         return Observable.fromIterable(accounts)
                 .filter(Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1) ->
-                    if (status?.status?.compareTo(context.getString(R.string.active)) == 0 && status1?.active == true) {
+                    if (context?.getString(R.string.active)?.let { status?.status?.compareTo(it) } == 0 && status1?.active == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.approved)) == 0 && status1?.approved == true) {
+                    } else if (context?.getString(R.string.approved)?.let { status?.status?.compareTo(it) } == 0 && status1?.approved == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.approval_pending)) == 0 && status1?.submittedAndPendingApproval == true) {
+                    } else if (context?.getString(R.string.approval_pending)?.let { status?.status?.compareTo(it) } == 0 && status1?.submittedAndPendingApproval == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.matured)) == 0 && status1?.matured == true) {
+                    } else if (context?.getString(R.string.matured)?.let { status?.status?.compareTo(it) } == 0 && status1?.matured == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.closed)) == 0 && status1?.closed == true) {
+                    } else if (context?.getString(R.string.closed)?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true) {
                         return@Predicate true
                     }
                     false
@@ -210,20 +210,20 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
     ): Collection<LoanAccount?>? {
         return Observable.fromIterable(accounts)
                 .filter(Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1, _, _, _, _, _, inArrears) ->
-                    if (status?.status?.compareTo(context.getString(R.string.in_arrears))
-                            == 0 && inArrears == true ) {
+                    if (context?.getString(R.string.in_arrears)?.let { status?.status?.compareTo(it) }
+                            == 0 && inArrears == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.active)) == 0 && status1?.active == true ) {
+                    } else if (context?.getString(R.string.active)?.let { status?.status?.compareTo(it) } == 0 && status1?.active == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.waiting_for_disburse)) == 0 && status1?.waitingForDisbursal == true ) {
+                    } else if (context?.getString(R.string.waiting_for_disburse)?.let { status?.status?.compareTo(it) } == 0 && status1?.waitingForDisbursal == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.approval_pending)) == 0 && status1?.pendingApproval == true ) {
+                    } else if (context?.getString(R.string.approval_pending)?.let { status?.status?.compareTo(it) } == 0 && status1?.pendingApproval == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.overpaid)) == 0 && status1?.overpaid == true ) {
+                    } else if (context?.getString(R.string.overpaid)?.let { status?.status?.compareTo(it) } == 0 && status1?.overpaid == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.closed)) == 0 && status1?.closed == true ) {
+                    } else if (context?.getString(R.string.closed)?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.withdrawn)) == 0 && status1?.isLoanTypeWithdrawn() == true) {
+                    } else if (context?.getString(R.string.withdrawn)?.let { status?.status?.compareTo(it) } == 0 && status1?.isLoanTypeWithdrawn() == true) {
                         return@Predicate true
                     }
                     false
@@ -243,14 +243,14 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
     ): Collection<ShareAccount?>? {
         return Observable.fromIterable(accounts)
                 .filter(Predicate { (_, _, _, _, _, _, status1) ->
-                    if (status?.status?.compareTo(context.getString(R.string.active)) == 0 &&
-                            status1?.active == true ) {
+                    if (context?.getString(R.string.active)?.let { status?.status?.compareTo(it) } == 0 &&
+                            status1?.active == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.approved)) == 0 && status1?.approved == true ) {
+                    } else if (context?.getString(R.string.approved)?.let { status?.status?.compareTo(it) } == 0 && status1?.approved == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.approval_pending)) == 0 && status1?.submittedAndPendingApproval == true ) {
+                    } else if (context?.getString(R.string.approval_pending)?.let { status?.status?.compareTo(it) } == 0 && status1?.submittedAndPendingApproval == true) {
                         return@Predicate true
-                    } else if (status?.status?.compareTo(context.getString(R.string.closed)) == 0 && status1?.closed == true ) {
+                    } else if (context?.getString(R.string.closed)?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true) {
                         return@Predicate true
                     }
                     false

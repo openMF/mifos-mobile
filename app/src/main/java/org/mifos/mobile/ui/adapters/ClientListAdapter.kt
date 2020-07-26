@@ -31,12 +31,10 @@ class ClientListAdapter(context: Context, private var listItems: List<Client>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is RecyclerView.ViewHolder) {
-            val client = getItem(position)
-            (holder as ViewHolder).tv_clientName?.text = client.firstname + " " + client
-                    .lastname
-            holder.tv_clientAccountNumber?.text = client.accountNo
-        }
+        val client = getItem(position)
+        (holder as ViewHolder).tv_clientName?.text = client.firstname + " " + client
+                .lastname
+        holder.tv_clientAccountNumber?.text = client.accountNo
     }
 
     override fun getItemId(i: Int): Long {
