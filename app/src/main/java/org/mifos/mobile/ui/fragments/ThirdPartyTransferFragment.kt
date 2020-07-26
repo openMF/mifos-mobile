@@ -267,7 +267,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     @OnClick(R.id.btn_pay_from)
     fun payFromSelected() {
-        pvOne?.setCurrentCompeleted()
+        pvOne?.setCurrentCompleted()
         pvTwo?.setCurrentActive()
         btnPayFrom?.visibility = View.GONE
         tvSelectBeneficiary?.visibility = View.GONE
@@ -292,7 +292,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        pvTwo?.setCurrentCompeleted()
+        pvTwo?.setCurrentCompleted()
         pvThree?.setCurrentActive()
         btnPayTo?.visibility = View.GONE
         tvEnterAmount?.visibility = View.GONE
@@ -320,7 +320,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        pvThree?.setCurrentCompeleted()
+        pvThree?.setCurrentCompleted()
         pvFour?.setCurrentActive()
         btnAmount?.visibility = View.GONE
         tvEnterRemark?.visibility = View.GONE

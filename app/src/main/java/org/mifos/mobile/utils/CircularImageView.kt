@@ -28,7 +28,7 @@ class CircularImageView @JvmOverloads constructor(context: Context, attrs: Attri
 
     fun addShadow() {
         setLayerType(View.LAYER_TYPE_SOFTWARE, paintBorder)
-        paintBorder!!.setShadowLayer(4.0f, 0.0f, 2.0f, Color.BLACK)
+        paintBorder?.setShadowLayer(4.0f, 0.0f, 2.0f, Color.BLACK)
     }
 
     public override fun onDraw(canvas: Canvas) {

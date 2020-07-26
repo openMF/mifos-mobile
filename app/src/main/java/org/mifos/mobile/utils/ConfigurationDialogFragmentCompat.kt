@@ -51,23 +51,23 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
         val preference = preference as ConfigurationPreference
         etBaseUrl?.setText(preference.baseUrl)
         etTenant?.setText(preference.tenant)
-        etBaseUrl!!.setSelection(etBaseUrl!!.text.length)
-        etTenant!!.addTextChangedListener(this)
-        etBaseUrl!!.addTextChangedListener(this)
+        etBaseUrl?.text?.length?.let { etBaseUrl?.setSelection(it) }
+        etTenant?.addTextChangedListener(this)
+        etBaseUrl?.addTextChangedListener(this)
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
         if (positiveResult && !isFieldEmpty && isUrlValid) {
             val preference = preference as ConfigurationPreference
-            preference.updateConfigurations(etBaseUrl!!.text.toString(), etTenant!!.text.toString())
-            preferencesHelper!!.clear()
-            val baseUrl = preferencesHelper!!.baseUrl
-            val tenant = preferencesHelper!!.tenant
+            preference.updateConfigurations(etBaseUrl?.text.toString(), etTenant?.text.toString())
+            preferencesHelper?.clear()
+            val baseUrl = preferencesHelper?.baseUrl
+            val tenant = preferencesHelper?.tenant
             createService(baseUrl, tenant, "")
             val loginIntent = Intent(activity, LoginActivity::class.java)
             loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(loginIntent)
-            activity!!.finish()
+            activity?.finish()
         }
     }
 
@@ -77,16 +77,16 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
 
     val isFieldEmpty: Boolean
         get() {
-            if (etBaseUrl!!.text.toString().trim { it <= ' ' }.isEmpty()) {
+            if (etBaseUrl?.text.toString().trim { it <= ' ' }.isEmpty()) {
                 return true
             }
-            return if (etTenant!!.text.toString().trim { it <= ' ' }.isEmpty()) {
+            return if (etTenant?.text.toString().trim { it <= ' ' }.isEmpty()) {
                 true
             } else false
         }
     val isUrlValid: Boolean
         get() = try {
-            URL(etBaseUrl!!.text.toString())
+            URL(etBaseUrl?.text.toString())
             true
         } catch (e: MalformedURLException) {
             false
@@ -95,22 +95,22 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         if (s.toString().isEmpty()) {
-            if (etBaseUrl!!.text.toString().isEmpty()) {
-                tilBaseUrl!!.isErrorEnabled = true
-                tilBaseUrl!!.error = getString(R.string.error_validation_blank,
+            if (etBaseUrl?.text.toString().isEmpty()) {
+                tilBaseUrl?.isErrorEnabled = true
+                tilBaseUrl?.error = getString(R.string.error_validation_blank,
                         getString(R.string.base_url))
             }
-            if (etTenant!!.text.toString().isEmpty()) {
-                tilTenant!!.isErrorEnabled = true
-                tilTenant!!.error = getString(R.string.error_validation_blank,
+            if (etTenant?.text.toString().isEmpty()) {
+                tilTenant?.isErrorEnabled = true
+                tilTenant?.error = getString(R.string.error_validation_blank,
                         getString(R.string.tenant))
             }
         } else {
-            if (etBaseUrl!!.text.toString().length != 0) {
-                tilBaseUrl!!.isErrorEnabled = false
+            if (etBaseUrl?.text.toString().length != 0) {
+                tilBaseUrl?.isErrorEnabled = false
             }
-            if (etTenant!!.text.toString().length != 0) {
-                tilTenant!!.isErrorEnabled = false
+            if (etTenant?.text.toString().length != 0) {
+                tilTenant?.isErrorEnabled = false
             }
         }
     }

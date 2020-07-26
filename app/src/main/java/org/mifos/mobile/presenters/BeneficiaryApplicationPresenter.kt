@@ -53,7 +53,7 @@ class BeneficiaryApplicationPresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showError(context
-                                .getString(R.string.error_fetching_beneficiary_template))
+                                ?.getString(R.string.error_fetching_beneficiary_template))
                     }
 
                     override fun onNext(beneficiaryTemplate: BeneficiaryTemplate) {
@@ -80,7 +80,7 @@ class BeneficiaryApplicationPresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showError(context
-                                .getString(R.string.error_creating_beneficiary))
+                                ?.getString(R.string.error_creating_beneficiary))
                     }
 
                     override fun onNext(responseBody: ResponseBody) {
@@ -109,7 +109,7 @@ class BeneficiaryApplicationPresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showError(context
-                                .getString(R.string.error_updating_beneficiary))
+                                ?.getString(R.string.error_updating_beneficiary))
                     }
 
                     override fun onNext(responseBody: ResponseBody) {

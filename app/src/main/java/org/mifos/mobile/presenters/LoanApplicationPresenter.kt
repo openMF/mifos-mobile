@@ -50,7 +50,7 @@ class LoanApplicationPresenter @Inject constructor(private val dataManager: Data
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(context.getString(R.string.error_fetching_template))
+                        mvpView?.showError(context?.getString(R.string.error_fetching_template))
                     }
 
                     override fun onNext(loanTemplate: LoanTemplate) {
@@ -85,7 +85,7 @@ class LoanApplicationPresenter @Inject constructor(private val dataManager: Data
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(context.getString(R.string.error_fetching_template))
+                        mvpView?.showError(context?.getString(R.string.error_fetching_template))
                     }
 
                     override fun onNext(loanTemplate: LoanTemplate) {

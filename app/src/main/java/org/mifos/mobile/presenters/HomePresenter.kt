@@ -56,15 +56,15 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
                     ?.subscribeWith(object : DisposableObserver<Client?>() {
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {
-                            mvpView?.showError(context.getString(R.string.error_fetching_client))
+                            mvpView?.showError(context?.getString(R.string.error_fetching_client))
                             mvpView?.hideProgress()
                         }
 
                         override fun onNext(client: Client) {
                             mvpView?.hideProgress()
-                            preferencesHelper!!.officeName = client.officeName
-                            preferencesHelper!!.clientName = client.displayName
-                            mvpView!!.showUserDetails(preferencesHelper!!.clientName)
+                            preferencesHelper?.officeName = client.officeName
+                            preferencesHelper?.clientName = client.displayName
+                            mvpView?.showUserDetails(preferencesHelper?.clientName)
                         }
                     })?.let {
                         compositeDisposable?.add(it
@@ -85,7 +85,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
                     ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {
-                            mvpView!!.showUserImageNotFound()
+                            mvpView?.showUserImageNotFound()
                         }
 
                         override fun onNext(response: ResponseBody) {
@@ -94,7 +94,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
                                 val pureBase64Encoded = encodedString.substring(encodedString.indexOf(',') + 1)
                                 val decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT)
                                 val decodedBitmap = ImageUtil.instance?.compressImage(decodedBytes, 256f, 256f)
-                                mvpView!!.showUserImage(decodedBitmap)
+                                mvpView?.showUserImage(decodedBitmap)
                             } catch (e: IOException) {
                                 Log.d("userimage", e.toString())
                             }
@@ -113,7 +113,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {}
                         override fun onNext(integer: Int) {
-                            mvpView!!.showNotificationCount(integer)
+                            mvpView?.showNotificationCount(integer)
                         }
                     }))
         }
