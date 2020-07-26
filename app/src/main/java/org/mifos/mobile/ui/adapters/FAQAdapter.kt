@@ -7,22 +7,27 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.utils.FaqDiffUtil
+
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 12/8/17.
  */
-class FAQAdapter @Inject constructor(@ActivityContext context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FAQAdapter @Inject constructor(@ActivityContext context: Context) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var faqArrayList: ArrayList<FAQ?>?
     private var alreadySelectedPosition = 0
@@ -32,7 +37,7 @@ class FAQAdapter @Inject constructor(@ActivityContext context: Context) : Recycl
         alreadySelectedPosition = -1
     }
 
-    fun updateList(faqArrayList: ArrayList<FAQ?>?) {
+    fun updateList(faqArrayList: java.util.ArrayList<FAQ?>?) {
         val diffResult = DiffUtil.calculateDiff(FaqDiffUtil(this.faqArrayList,
                 faqArrayList))
         diffResult.dispatchUpdatesTo(this)

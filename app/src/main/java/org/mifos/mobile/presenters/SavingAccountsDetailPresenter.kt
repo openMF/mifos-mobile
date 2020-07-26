@@ -55,7 +55,7 @@ class SavingAccountsDetailPresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showErrorFetchingSavingAccountsDetail(
-                                context.getString(R.string.error_saving_account_details_loading))
+                                context?.getString(R.string.error_saving_account_details_loading))
                     }
 
                     override fun onNext(savingAccount: SavingsWithAssociations) {
