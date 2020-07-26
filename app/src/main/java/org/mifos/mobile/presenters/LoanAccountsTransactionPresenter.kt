@@ -55,7 +55,7 @@ class LoanAccountsTransactionPresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showErrorFetchingLoanAccountsDetail(
-                                context.getString(R.string.loan_transaction_details))
+                                context?.getString(R.string.loan_transaction_details))
                     }
 
                     override fun onNext(loanWithAssociations: LoanWithAssociations) {

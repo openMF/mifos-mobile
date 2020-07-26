@@ -85,8 +85,8 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         }
         if (savedInstanceState == null) {
             detailsPresenter?.attachView(this)
-            detailsPresenter?.getUserDetails()
-            detailsPresenter?.getUserImage()
+            detailsPresenter?.userDetails
+            detailsPresenter?.userImage
             showUserImage(null)
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS)

@@ -55,7 +55,7 @@ class LoanAccountWithdrawPresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showLoanAccountWithdrawError(
-                                context.getString(R.string.error_loan_account_withdraw))
+                                context?.getString(R.string.error_loan_account_withdraw))
                     }
 
                     override fun onNext(responseBody: ResponseBody) {

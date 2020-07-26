@@ -71,7 +71,6 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
     @kotlin.jvm.JvmField
     @Inject
     var shareAccountsListAdapter: ShareAccountsListAdapter? = null
-    var rootView: View? = null
     private var accountType: String? = null
     private var loanAccounts: List<LoanAccount?>? = null
     private var savingAccounts: List<SavingAccount?>? = null
@@ -110,8 +109,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_accounts, container, false)
-        ButterKnife.bind(this, rootView!!)
+        val rootView = inflater.inflate(R.layout.fragment_accounts, container, false)
+        ButterKnife.bind(this, rootView)
         accountsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
@@ -174,7 +173,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
      */
     @OnClick(R.id.btn_try_again)
     fun onRetry() {
-        if (Network.isConnected(context!!)) {
+        if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvAccounts, layoutError)
             accountsPresenter?.loadAccounts(accountType)
         } else {
@@ -188,7 +187,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
      * a particular `accountType`
      */
     override fun onRefresh() {
-        if (Network.isConnected(context!!)) {
+        if (Network.isConnected(context)) {
             clearFilter()
             accountsPresenter?.loadAccounts(accountType)
         } else {

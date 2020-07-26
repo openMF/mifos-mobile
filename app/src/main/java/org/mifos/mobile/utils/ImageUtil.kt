@@ -72,13 +72,14 @@ class ImageUtil {
         val middleY = actualHeight / 2.0f
         val scaleMatrix = Matrix()
         scaleMatrix.setScale(ratioX, ratioY, middleX, middleY)
-        val canvas = Canvas(scaledBitmap)
-        canvas.matrix = scaleMatrix
-        canvas.drawBitmap(bmp, middleX - bmp.width / 2, middleY - bmp.height / 2,
+        val canvas: Canvas? = Canvas(scaledBitmap)
+        canvas?.matrix = scaleMatrix
+        canvas?.drawBitmap(bmp, middleX - bmp.width / 2, middleY - bmp.height / 2,
                 Paint(Paint.FILTER_BITMAP_FLAG))
-        scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
-                scaledBitmap!!.width, scaledBitmap.height, null,
-                true)
+        if (scaledBitmap != null)
+            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                    scaledBitmap.width, scaledBitmap.height, null,
+                    true)
         return scaledBitmap
     }
 

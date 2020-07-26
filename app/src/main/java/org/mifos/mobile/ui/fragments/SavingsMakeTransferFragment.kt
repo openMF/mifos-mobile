@@ -318,7 +318,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
                 spPayTo?.setSelection(accountOptionsTemplate?.toAccountOptions
                         ?.indexOf(toAccountOption)!!)
                 spPayTo?.isEnabled = false
-                pvOne?.setCurrentCompeleted()
+                pvOne?.setCurrentCompleted()
             }
             Constants.TRANSFER_PAY_FROM -> {
                 setToolbarTitle(getString(R.string.transfer))
@@ -329,7 +329,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
                 spPayFrom?.isEnabled = false
                 spPayFrom?.visibility = View.VISIBLE
                 tvSelectPayFrom?.visibility = View.GONE
-                pvTwo?.setCurrentCompeleted()
+                pvTwo?.setCurrentCompleted()
             }
         }
     }
@@ -342,7 +342,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     @OnClick(R.id.btn_pay_to)
     fun payToSelected() {
-        pvOne?.setCurrentCompeleted()
+        pvOne?.setCurrentCompleted()
         pvTwo?.setCurrentActive()
         btnPayTo?.visibility = View.GONE
         tvSelectPayFrom?.visibility = View.GONE
@@ -362,7 +362,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        pvTwo?.setCurrentCompeleted()
+        pvTwo?.setCurrentCompleted()
         pvThree?.setCurrentActive()
         btnPayFrom?.visibility = View.GONE
         tvEnterAmount?.visibility = View.GONE
@@ -390,7 +390,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        pvThree?.setCurrentCompeleted()
+        pvThree?.setCurrentCompleted()
         pvFour?.setCurrentActive()
         btnAmount?.visibility = View.GONE
         tvEnterRemark?.visibility = View.GONE

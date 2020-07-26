@@ -22,25 +22,24 @@ class ProcessView : View {
         valueStr = typedArray.getString(R.styleable.ProcessView_value)
         typedArray.recycle()
         textPaint = Paint()
-        textPaint!!.color = getColorCompat(android.R.color.white)
-        textPaint!!.isAntiAlias = true
-        textPaint!!.style = Paint.Style.FILL
-        textPaint!!.strokeWidth = 1f
-        textPaint!!.textSize = 40f
+        textPaint?.color = getColorCompat(android.R.color.white)
+        textPaint?.isAntiAlias = true
+        textPaint?.style = Paint.Style.FILL
+        textPaint?.strokeWidth = 1f
+        textPaint?.textSize = 40f
         backgroundPaint = Paint()
-        backgroundPaint!!.color = getColorCompat(R.color.gray_dark)
-        backgroundPaint!!.isAntiAlias = true
-        backgroundPaint!!.style = Paint.Style.FILL
+        backgroundPaint?.color = getColorCompat(R.color.gray_dark)
+        backgroundPaint?.isAntiAlias = true
+        backgroundPaint?.style = Paint.Style.FILL
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val xPos = canvas.width / 2 - (textPaint!!.measureText(valueStr.toString()) / 2).toInt()
-        val yPos = (canvas.height / 2 - (textPaint!!.descent() +
-                textPaint!!.ascent()) / 2).toInt()
+        val xPos = canvas.width / 2 - (textPaint?.measureText(valueStr.toString())?.div(2))?.toInt()!!
+        val yPos = (canvas.height / 2 - ((textPaint?.descent()?.plus(textPaint?.ascent()!!))?.div(2))!!).toInt()
         val usableWidth = width - (paddingLeft + paddingRight)
         val usableHeight = height - (paddingTop + paddingBottom)
-        val radius = Math.min(usableWidth, usableHeight) / 2
+        val radius = usableWidth.coerceAtMost(usableHeight) / 2
         val cx = paddingLeft + usableWidth / 2
         val cy = paddingTop + usableHeight / 2
         canvas.drawCircle(cx.toFloat(), cy.toFloat(), radius.toFloat(), backgroundPaint)
@@ -48,12 +47,12 @@ class ProcessView : View {
     }
 
     fun setCurrentActive() {
-        backgroundPaint!!.color = getColorCompat(R.color.primary)
+        backgroundPaint?.color = getColorCompat(R.color.primary)
         invalidate()
     }
 
-    fun setCurrentCompeleted() {
-        backgroundPaint!!.color = getColorCompat(R.color.primary)
+    fun setCurrentCompleted() {
+        backgroundPaint?.color = getColorCompat(R.color.primary)
         valueStr = "\u2713"
         invalidate()
     }

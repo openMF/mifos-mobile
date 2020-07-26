@@ -24,7 +24,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 23/July/2018
 */
-class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Context?, var dataManager: DataManager) :
+class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Context, var dataManager: DataManager) :
         BasePresenter<AddGuarantorView?>(context) {
 
     var compositeDisposable: CompositeDisposable = CompositeDisposable()

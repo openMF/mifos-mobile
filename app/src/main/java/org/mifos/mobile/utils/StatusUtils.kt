@@ -16,9 +16,9 @@ object StatusUtils {
     fun getSavingsAccountStatusList(context: Context?): List<CheckboxStatus> {
         val arrayList = ArrayList<CheckboxStatus>()
         arrayList.add(CheckboxStatus(context?.getString(R.string.active), ContextCompat.getColor(context!!, R.color.deposit_green)))
-        arrayList.add(CheckboxStatus(context?.getString(R.string.approved), ContextCompat.getColor(context!!, R.color.light_green)))
-        arrayList.add(CheckboxStatus(context?.getString(R.string.approval_pending), ContextCompat
-                .getColor(context!!, R.color.light_yellow)))
+        arrayList.add(CheckboxStatus(context.getString(R.string.approved), ContextCompat.getColor(context, R.color.light_green)))
+        arrayList.add(CheckboxStatus(context.getString(R.string.approval_pending), ContextCompat
+                .getColor(context, R.color.light_yellow)))
         arrayList.add(CheckboxStatus(context.getString(R.string.matured), ContextCompat.getColor(context, R.color.red_light)))
         arrayList.add(CheckboxStatus(context.getString(R.string.closed), ContextCompat.getColor(context, R.color.black)))
         return arrayList

@@ -20,8 +20,8 @@ import java.util.*
  */
 class MFDatePicker : DialogFragment(), OnDateSetListener {
     private var startDateString: String? = null
-    private var startDate: Long = 0
-    private var datePickerType = ALL_DAYS
+    private var startDate: Long? = 0
+    private var datePickerType: Int? = ALL_DAYS
 
     companion object {
         const val TAG = "MFDatePicker"
@@ -47,25 +47,31 @@ class MFDatePicker : DialogFragment(), OnDateSetListener {
         init {
             mCalendar = Calendar.getInstance()
             datePickedAsString = StringBuilder()
-                    .append(if (mCalendar?.get(Calendar.DAY_OF_MONTH)!! < 10) "0" + mCalendar?.get(Calendar.DAY_OF_MONTH) else mCalendar?.get(Calendar.DAY_OF_MONTH))
+                    .append(if (mCalendar?.get(Calendar.DAY_OF_MONTH) != null &&
+                            (mCalendar?.get(Calendar.DAY_OF_MONTH)!! < 10)) "0" +
+                            mCalendar?.get(Calendar.DAY_OF_MONTH)
+                    else mCalendar?.get(Calendar.DAY_OF_MONTH))
                     .append("-")
-                    .append(if (mCalendar?.get(Calendar.MONTH)!! + 1 < 10) "0" + (mCalendar?.get(Calendar.MONTH)!! + 1) else mCalendar?.get(Calendar.MONTH)!! + 1)
+                    .append(if (mCalendar?.get(Calendar.MONTH) != null &&
+                            (mCalendar?.get(Calendar.MONTH)!! + 1 < 10)) "0" +
+                            (mCalendar?.get(Calendar.MONTH)!! + 1)
+                    else mCalendar?.get(Calendar.MONTH)?.plus(1))
                     .append("-")
-                    .append(mCalendar?.get(Calendar.YEAR)!!)
+                    .append(mCalendar?.get(Calendar.YEAR))
                     .toString()
         }
     }
 
     private var onDatePickListener: OnDatePickListener? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = DatePickerDialog(activity,
+        val dialog = DatePickerDialog(this.requireContext(),
                 R.style.MaterialDatePickerTheme,
                 this,
-                mCalendar!![Calendar.YEAR],
-                mCalendar!![Calendar.MONTH],
-                mCalendar!![Calendar.DAY_OF_MONTH])
+                mCalendar?.get(Calendar.YEAR)!!,
+                mCalendar?.get(Calendar.MONTH)!!,
+                mCalendar?.get(Calendar.DAY_OF_MONTH)!!)
         val args = arguments
-        datePickerType = args!!.getInt(Constants.DATE_PICKER_TYPE, ALL_DAYS)
+        datePickerType = args?.getInt(Constants.DATE_PICKER_TYPE, ALL_DAYS)
         when (datePickerType) {
             FUTURE_DAYS -> dialog.datePicker.minDate = Date().time
             PREVIOUS_DAYS -> dialog.datePicker.maxDate = Date().time
@@ -78,7 +84,7 @@ class MFDatePicker : DialogFragment(), OnDateSetListener {
         val calendar = mCalendar
         calendar!![year, month] = day
         val date = calendar.time
-        onDatePickListener!!.onDatePicked(DateFormat.format("dd-MM-yyyy", date).toString().also { startDateString = it })
+        onDatePickListener?.onDatePicked(DateFormat.format("dd-MM-yyyy", date).toString().also { startDateString = it })
         startDate = DateHelper.getDateAsLongFromString(startDateString, "dd-MM-yyyy")
     }
 

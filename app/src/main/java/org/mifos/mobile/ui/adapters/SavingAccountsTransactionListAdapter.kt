@@ -33,7 +33,7 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
     }
 
     fun getItem(position: Int?): Transactions? {
-        return savingAccountsTransactionList?.get(position!!)
+        return position?.let { savingAccountsTransactionList?.get(it) }
     }
 
     fun setSavingAccountsTransactionList(savingAccountsTransactionList: List<Transactions?>?) {
@@ -51,23 +51,21 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val (_, transactionType, _, _, date, currency, paymentDetailData, amount, runningBalance) = getItem(position)!!
-        (holder as ViewHolder).tvSavingAccountAmount!!.text = context!!.getString(R.string.string_and_string, currency!!.displaySymbol, formatCurrency(context, amount!!))
-        holder.tvSavingAccountRunningBalance!!.text = context!!.getString(R.string.string_and_string, currency.displaySymbol, formatCurrency(context, runningBalance!!))
-        holder.tvTransactionType!!.text = transactionType!!.value
+        (holder as ViewHolder).tvSavingAccountAmount?.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, amount!!))
+        holder.tvSavingAccountRunningBalance?.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, runningBalance!!))
+        holder.tvTransactionType?.text = transactionType?.value
         if (paymentDetailData != null) {
-            holder.tvTransactionDetailData!!.visibility = View.VISIBLE
-            holder.tvTransactionDetailData!!.text = paymentDetailData.paymentType.name
+            holder.tvTransactionDetailData?.visibility = View.VISIBLE
+            holder.tvTransactionDetailData?.text = paymentDetailData.paymentType.name
         }
-        holder.tvTransactionDate!!.text = getDateAsString(date)
+        holder.tvTransactionDate?.text = getDateAsString(date)
         val color = getColor(transactionType)
         if (color == ColorSelect.RED) {
-            holder.vIndicator!!.rotation = 180f
-            holder.vIndicator!!.setBackgroundDrawable(
-                    ContextCompat.getDrawable(context!!, R.drawable.triangular_red_view))
+            holder.vIndicator?.rotation = 180f
+            holder.vIndicator?.background = ContextCompat.getDrawable(context!!, R.drawable.triangular_red_view)
         } else {
-            holder.vIndicator!!.rotation = 0f
-            holder.vIndicator!!.setBackgroundDrawable(
-                    ContextCompat.getDrawable(context!!, R.drawable.triangular_green_view))
+            holder.vIndicator?.rotation = 0f
+            holder.vIndicator?.background = ContextCompat.getDrawable(context!!, R.drawable.triangular_green_view)
         }
     }
 
@@ -76,38 +74,39 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
     }
 
     override fun getItemCount(): Int {
-        return savingAccountsTransactionList!!.size
+        return if (savingAccountsTransactionList != null) savingAccountsTransactionList!!.size
+        else 0
     }
 
     private fun getColor(transactionType: TransactionType?): ColorSelect {
-        if (transactionType!!.deposit!!) {
+        if (transactionType?.deposit == true) {
             return ColorSelect.GREEN
         }
-        if (transactionType.dividendPayout!!) {
+        if (transactionType?.dividendPayout == true) {
             return ColorSelect.RED
         }
-        if (transactionType.withdrawal!!) {
+        if (transactionType?.withdrawal == true) {
             return ColorSelect.RED
         }
-        if (transactionType.interestPosting!!) {
+        if (transactionType?.interestPosting == true) {
             return ColorSelect.GREEN
         }
-        if (transactionType.feeDeduction!!) {
+        if (transactionType?.feeDeduction == true) {
             return ColorSelect.RED
         }
-        if (transactionType.initiateTransfer!!) {
+        if (transactionType?.initiateTransfer == true) {
             return ColorSelect.RED
         }
-        if (transactionType.approveTransfer!!) {
+        if (transactionType?.approveTransfer == true) {
             return ColorSelect.RED
         }
-        if (transactionType.withdrawTransfer!!) {
+        if (transactionType?.withdrawTransfer == true) {
             return ColorSelect.RED
         }
-        if (transactionType.rejectTransfer!!) {
+        if (transactionType?.rejectTransfer == true) {
             return ColorSelect.GREEN
         }
-        return if (transactionType.overdraftFee!!) {
+        return if (transactionType?.overdraftFee == true) {
             ColorSelect.RED
         } else ColorSelect.GREEN
     }

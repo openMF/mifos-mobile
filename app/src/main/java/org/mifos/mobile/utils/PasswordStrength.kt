@@ -2,17 +2,18 @@ package org.mifos.mobile.utils
 
 import android.content.Context
 import android.graphics.Color
+
 import org.mifos.mobile.R
 
-enum class PasswordStrength(var resId: Int, var color: Int) {
+enum class PasswordStrength(private var resId: Int, var color: Int) {
 
     WEAK(R.string.password_strength_weak, Color.RED),
     MEDIUM(R.string.password_strength_medium, Color.argb(255, 220, 185, 0)),
     STRONG(R.string.password_strength_strong, Color.GREEN),
     VERY_STRONG(R.string.password_strength_very_strong, Color.BLUE);
 
-    fun getText(ctx: Context?): CharSequence {
-        return ctx!!.getText(resId)
+    fun getText(ctx: Context?): CharSequence? {
+        return ctx?.getText(resId)
     }
 
     companion object {

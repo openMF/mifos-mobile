@@ -6,7 +6,7 @@ import org.mifos.mobile.models.FAQ
 /**
  * Created by dilpreet on 12/8/17.
  */
-class FaqDiffUtil(private val oldFaq: ArrayList<FAQ?>??, private val newFaq: ArrayList<FAQ?>?) : DiffUtil.Callback() {
+class FaqDiffUtil(private val oldFaq: ArrayList<FAQ?>?, private val newFaq: ArrayList<FAQ?>?) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return if (oldFaq?.size != null) oldFaq.size
         else 0

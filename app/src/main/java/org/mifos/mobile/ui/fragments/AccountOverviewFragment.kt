@@ -3,10 +3,13 @@ package org.mifos.mobile.ui.fragments
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+
 import butterknife.BindView
 import butterknife.ButterKnife
+
 import org.mifos.mobile.R
 import org.mifos.mobile.presenters.AccountOverviewPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -16,6 +19,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
+
 import javax.inject.Inject
 
 /**
@@ -65,9 +69,9 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
         accountOverviewPresenter?.loadClientAccountDetails()
     }
 
-    override fun showTotalLoanSavings(totalLoan: Double, totalSavings: Double) {
-        totalLoanBalance = totalLoan
-        totalSavingsBalance = totalSavings
+    override fun showTotalLoanSavings(totalLoan: Double?, totalSavings: Double?) {
+        totalLoanBalance = totalLoan!!
+        totalSavingsBalance = totalSavings!!
         tvTotalLoan?.text = CurrencyUtil.formatCurrency(context!!, totalLoan)
         tvTotalSavings?.text = CurrencyUtil.formatCurrency(context!!, totalSavings)
     }

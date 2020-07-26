@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
@@ -29,7 +30,7 @@ class DividerItemDecoration(context: Context?, orientation: Int) : ItemDecoratio
         }
     }
 
-    private fun drawVertical(c: Canvas?, parent: RecyclerView) {
+    private fun drawVertical(c: Canvas, parent: RecyclerView) {
         val left = parent.paddingLeft
         val right = parent.width - parent.paddingRight
         val childCount = parent.childCount
@@ -38,13 +39,13 @@ class DividerItemDecoration(context: Context?, orientation: Int) : ItemDecoratio
             val params = child
                     .layoutParams as RecyclerView.LayoutParams
             val top = child.bottom + params.bottomMargin
-            val bottom = top + mDivider!!.intrinsicHeight
+            val bottom = top + if (mDivider != null) mDivider!!.intrinsicHeight else 0
             mDivider?.setBounds(left, top, right, bottom)
             mDivider?.draw(c)
         }
     }
 
-    private fun drawHorizontal(c: Canvas?, parent: RecyclerView) {
+    private fun drawHorizontal(c: Canvas, parent: RecyclerView) {
         val top = parent.paddingTop
         val bottom = parent.height - parent.paddingBottom
         val childCount = parent.childCount
@@ -53,7 +54,7 @@ class DividerItemDecoration(context: Context?, orientation: Int) : ItemDecoratio
             val params = child
                     .layoutParams as RecyclerView.LayoutParams
             val left = child.right + params.rightMargin
-            val right = left + mDivider!!.intrinsicHeight
+            val right = left + if (mDivider != null) mDivider!!.intrinsicHeight else 0
             mDivider?.setBounds(left, top, right, bottom)
             mDivider?.draw(c)
         }
@@ -64,9 +65,9 @@ class DividerItemDecoration(context: Context?, orientation: Int) : ItemDecoratio
             state: RecyclerView.State
     ) {
         if (mOrientation == VERTICAL_LIST) {
-            outRect[0, 0, 0] = mDivider!!.intrinsicHeight
+            outRect[0, 0, 0] = if (mDivider != null) mDivider!!.intrinsicHeight else 0
         } else {
-            outRect[0, 0, mDivider!!.intrinsicWidth] = 0
+            outRect[0, 0, if (mDivider != null) mDivider!!.intrinsicWidth else 0] = 0
         }
     }
 

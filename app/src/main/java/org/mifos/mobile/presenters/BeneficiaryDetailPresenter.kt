@@ -46,7 +46,7 @@ class BeneficiaryDetailPresenter @Inject constructor(private val manager: DataMa
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(context.getString(R.string.error_deleting_beneficiary))
+                        mvpView?.showError(context?.getString(R.string.error_deleting_beneficiary))
                     }
 
                     override fun onNext(responseBody: ResponseBody) {

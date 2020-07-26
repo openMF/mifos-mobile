@@ -1,11 +1,13 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
+
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.injection.ApplicationContext
@@ -14,6 +16,7 @@ import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.SavingsMakeTransferMvpView
+
 import java.util.*
 import javax.inject.Inject
 
@@ -48,7 +51,7 @@ class SavingsMakeTransferPresenter @Inject constructor(
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(context.getString(
+                        mvpView?.showError(context?.getString(
                                 R.string.error_fetching_account_transfer_template))
                     }
 
@@ -74,7 +77,7 @@ class SavingsMakeTransferPresenter @Inject constructor(
     ): List<AccountDetail> {
         val accountNumber: MutableList<AccountDetail> = ArrayList()
         Observable.fromIterable(accountOptions)
-                .filter { (_, _, accountType) -> !(accountType?.code == context.getString(R.string.account_type_loan) && isTypePayFrom) }
+                .filter { (_, _, accountType) -> !(accountType?.code == context?.getString(R.string.account_type_loan) && isTypePayFrom) }
                 .flatMap { (_, accountNo, accountType) ->
                     Observable.just(AccountDetail(accountNo!!,
                             accountType?.value!!))

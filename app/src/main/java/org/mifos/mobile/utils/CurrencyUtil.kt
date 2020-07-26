@@ -2,6 +2,7 @@ package org.mifos.mobile.utils
 
 import android.content.Context
 import android.telephony.TelephonyManager
+
 import java.text.DecimalFormat
 import java.util.*
 
@@ -29,7 +30,7 @@ object CurrencyUtil {
         val locale: Locale?
         val tm = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         locale = try {
-            Locale("en", tm.networkCountryIso.toUpperCase())
+            Locale("en", tm.networkCountryIso.toUpperCase(Locale.ROOT))
         } catch (e: Exception) {
             defaultLocale
         }

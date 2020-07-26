@@ -22,7 +22,7 @@ import javax.inject.Inject
 * Created by saksham on 25/July/2018
 */
 class GuarantorDetailPresenter @Inject constructor(
-        @ApplicationContext context: Context?,
+        @ApplicationContext context: Context,
         var dataManager: DataManager
 ) : BasePresenter<GuarantorDetailView?>(context) {
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -36,23 +36,23 @@ class GuarantorDetailPresenter @Inject constructor(
     }
 
     fun deleteGuarantor(loanId: Long?, guarantorId: Long?) {
-        mvpView!!.showProgress()
+        mvpView?.showProgress()
         dataManager.deleteGuarantor(loanId, guarantorId)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                     override fun onNext(responseBody: ResponseBody) {
-                        mvpView!!.hideProgress()
+                        mvpView?.hideProgress()
                         try {
-                            mvpView!!.guarantorDeletedSuccessfully(responseBody.string())
+                            mvpView?.guarantorDeletedSuccessfully(responseBody.string())
                         } catch (e: IOException) {
                             Log.d(TAG, e.message)
                         }
                     }
 
                     override fun onError(e: Throwable) {
-                        mvpView!!.hideProgress()
-                        mvpView!!.showError(e.message)
+                        mvpView?.hideProgress()
+                        mvpView?.showError(e.message)
                     }
 
                     override fun onComplete() {}

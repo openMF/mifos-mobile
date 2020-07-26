@@ -1,6 +1,7 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
+
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
@@ -51,7 +52,7 @@ class LoanRepaymentSchedulePresenter @Inject constructor(
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
                         mvpView?.showError(context
-                                .getString(R.string.repayment_schedule))
+                                ?.getString(R.string.repayment_schedule))
                     }
 
                     override fun onNext(loanWithAssociations: LoanWithAssociations) {
