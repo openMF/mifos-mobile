@@ -5,8 +5,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
+
 import org.mifos.mobile.R
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.Constants
