@@ -33,12 +33,12 @@ class RegistrationIntentService : IntentService(TAG) {
                     }
 
                     // Get new Instance ID token
-                    val token = task.result!!.token
+                    val token = task.result?.token
                     sendRegistrationToServer(token)
                 })
     }
 
-    private fun sendRegistrationToServer(token: String) {
+    private fun sendRegistrationToServer(token: String?) {
         val registrationComplete = Intent(Constants.REGISTER_ON_SERVER)
         registrationComplete.putExtra(Constants.TOKEN, token)
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete)

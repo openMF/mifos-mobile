@@ -36,7 +36,7 @@ class MifosFirebaseMessagingService : FirebaseMessagingService() {
         val from = remoteMessage.from
         val data = remoteMessage.data
         val message = data[getString(R.string.message)]
-        if (from!!.startsWith("/topics/")) {
+        if ((from?.startsWith("/topics/") == true)) {
             // message received from some topic.
         } else {
             // normal downstream message.
