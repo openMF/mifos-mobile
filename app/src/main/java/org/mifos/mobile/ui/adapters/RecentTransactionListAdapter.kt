@@ -42,11 +42,11 @@ class RecentTransactionListAdapter @Inject constructor(@ActivityContext context:
         if (currencyRepresentation == null) {
             currencyRepresentation = currency.code
         }
-        holder.tvAmount!!.text = context.getString(R.string.string_and_string,
+        holder.tvAmount?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,
                 amount!!))
-        holder.tvTypeValue!!.text = formatTransactionType(type.value)
-        holder.tvTransactionsDate!!.text = getDateAsString(submittedOnDate)
+        holder.tvTypeValue?.text = formatTransactionType(type.value)
+        holder.tvTransactionsDate?.text = getDateAsString(submittedOnDate)
     }
 
     fun setTransactions(transactions: MutableList<Transaction?>?) {
