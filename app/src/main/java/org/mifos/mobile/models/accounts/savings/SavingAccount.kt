@@ -64,6 +64,6 @@ data class SavingAccount(
         var timeLine: TimeLine? = null
 ) : Parcelable, Account() {
     fun isRecurring(): Boolean {
-        return this.depositType != null && this.depositType!!.isRecurring()
+        return this.depositType != null && (this.depositType?.isRecurring() == true)
     }
 }

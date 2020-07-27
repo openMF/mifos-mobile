@@ -1,13 +1,10 @@
 package org.mifos.mobile.models.accounts.savings
 
 import android.os.Parcelable
-
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobile.models.client.DepositType
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author Vishwajeet
@@ -87,8 +84,8 @@ data class SavingsWithAssociations(
 
 ) : Parcelable {
 
-    fun isRecurring() : Boolean {
-        return this.depositType != null && this.depositType!!.isRecurring()
+    fun isRecurring(): Boolean {
+        return this.depositType != null && (this.depositType?.isRecurring() == true)
     }
 
     fun setNominalAnnualInterestRate(nominalAnnualInterestRate: Double?) {

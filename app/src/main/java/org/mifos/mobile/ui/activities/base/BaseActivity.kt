@@ -84,8 +84,8 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
      */
     protected fun showBackButton() {
         if (supportActionBar != null) {
-            supportActionBar!!.setHomeButtonEnabled(true)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setHomeButtonEnabled(true)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }
 
@@ -135,18 +135,18 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
     override fun showProgressDialog(message: String?) {
         if (progress == null) {
             progress = ProgressDialog(this, ProgressDialog.STYLE_SPINNER)
-            progress!!.setCancelable(false)
+            progress?.setCancelable(false)
         }
-        progress!!.setMessage(message)
-        progress!!.show()
+        progress?.setMessage(message)
+        progress?.show()
     }
 
     /**
      * Hides the progress dialog if it is currently being shown
      */
     override fun hideProgressDialog() {
-        if (progress != null && progress!!.isShowing) {
-            progress!!.dismiss()
+        if (progress != null && (progress?.isShowing == true)) {
+            progress?.dismiss()
             progress = null
         }
     }
@@ -155,7 +155,7 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
      * Used for setting title of Toolbar
      * @param title String you want to display as title
      */
-    fun setActionBarTitle(title: String?) {
+    private fun setActionBarTitle(title: String?) {
         if (supportActionBar != null && getTitle() != null) {
             setTitle(title)
         }
