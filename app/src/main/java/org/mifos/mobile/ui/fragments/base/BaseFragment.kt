@@ -23,14 +23,14 @@ open class BaseFragment : Fragment() {
      * @param message Message you want to display
      */
     protected fun showMifosProgressDialog(message: String?) {
-        if (callback != null) callback!!.showProgressDialog(message)
+        if (callback != null) callback?.showProgressDialog(message)
     }
 
     /**
      * Used for hiding the progressbar.
      */
     protected fun hideMifosProgressDialog() {
-        if (callback != null) callback!!.hideProgressDialog()
+        if (callback != null) callback?.hideProgressDialog()
     }
 
     /**
@@ -38,21 +38,21 @@ open class BaseFragment : Fragment() {
      * @param title String you want to display as title
      */
     protected fun setToolbarTitle(title: String?) {
-        callback!!.setToolbarTitle(title)
+        callback?.setToolbarTitle(title)
     }
 
     /**
      * Displays [ProgressBarHandler]
      */
     protected fun showProgressBar() {
-        progressBarHandler!!.show()
+        progressBarHandler?.show()
     }
 
     /**
      * Hides [ProgressBarHandler]
      */
     protected fun hideProgressBar() {
-        progressBarHandler!!.hide()
+        progressBarHandler?.hide()
     }
 
     override fun onAttach(context: Context) {

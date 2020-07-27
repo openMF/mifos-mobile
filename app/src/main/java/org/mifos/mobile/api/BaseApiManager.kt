@@ -67,8 +67,8 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
             userDetailsService = createApi(UserDetailsService::class.java)
         }
 
-        private fun <T> createApi(clazz: Class<T>): T {
-            return retrofit!!.create(clazz)
+        private fun <T> createApi(clazz: Class<T>): T? {
+            return retrofit?.create(clazz)
         }
 
         @JvmStatic
