@@ -30,6 +30,7 @@ import javax.inject.Inject
  * @since 05/06/16
  */
 class LoginActivity : BaseActivity(), LoginView {
+
     @JvmField
     @Inject
     var loginPresenter: LoginPresenter? = null
