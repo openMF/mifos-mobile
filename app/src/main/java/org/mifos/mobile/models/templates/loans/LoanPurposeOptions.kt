@@ -11,16 +11,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoanPurposeOptions(
-        @SerializedName("id")
+
         var id: Int? = null,
 
-        @SerializedName("name")
         var name: String,
 
-        @SerializedName("position")
         var position: Int? = null,
 
-        @SerializedName("description")
         var description: String,
 
         @SerializedName("isActive")

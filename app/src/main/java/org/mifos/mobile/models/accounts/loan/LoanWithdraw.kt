@@ -1,8 +1,6 @@
 package org.mifos.mobile.models.accounts.loan
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,10 +9,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoanWithdraw(
-        @SerializedName("withdrawnOnDate")
         var withdrawnOnDate: String? = null,
 
-        @SerializedName("note")
         var note: String? = null,
 
         internal var dateFormat : String = "dd MMMM yyyy",

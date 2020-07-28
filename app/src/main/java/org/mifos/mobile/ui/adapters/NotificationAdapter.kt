@@ -44,7 +44,7 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
         val notification = notificationList?.get(position)
         (holder as ViewHolder).tvNotificationText?.text = notification?.msg
         holder.tvNotificationTime?.text = getDateAndTimeAsStringFromLong(notification?.timeStamp)
-        if (notification?.isRead == true) {
+        if (notification?.isRead() == true) {
             holder.ivNotificationIcon?.setColorFilter(ContextCompat.getColor(context, R.color.gray_dark))
             holder.btnDismissNotification?.visibility = View.GONE
         } else {
@@ -77,7 +77,7 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
 
         @OnClick(R.id.btn_dismiss_notification)
         fun dismissNotification() {
-            notificationList?.get(adapterPosition)?.isRead = true
+            notificationList?.get(adapterPosition)?.setRead(true)
             notificationList?.get(adapterPosition)?.save()
             notifyItemChanged(adapterPosition)
         }

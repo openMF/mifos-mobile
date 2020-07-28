@@ -1,6 +1,6 @@
 package org.mifos.mobile.models
 
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author Rajan Maurya

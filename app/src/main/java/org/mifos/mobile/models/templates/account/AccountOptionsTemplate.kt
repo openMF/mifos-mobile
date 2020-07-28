@@ -1,10 +1,7 @@
 package org.mifos.mobile.models.templates.account
 
 import android.os.Parcelable
-
 import kotlinx.android.parcel.Parcelize
-
-import kotlin.collections.ArrayList
 
 /**
  * Created by Rajan Maurya on 10/03/17.

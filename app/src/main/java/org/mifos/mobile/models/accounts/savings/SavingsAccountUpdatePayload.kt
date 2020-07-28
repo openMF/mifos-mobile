@@ -5,16 +5,13 @@ package org.mifos.mobile.models.accounts.savings
  */
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SavingsAccountUpdatePayload(
 
-        @SerializedName("clientId")
         var clientId: Long? = 0,
 
-        @SerializedName("productId")
         var productId: Long? = 0
 
 ) : Parcelable

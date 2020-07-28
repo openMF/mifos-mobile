@@ -1,21 +1,14 @@
 package org.mifos.mobile.models.client
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobile.api.ApiEndPoints
 
 @Parcelize
 data class DepositType(
-        @SerializedName("id")
         var id: Int? = null,
-
-        @SerializedName("code")
         var code: String,
 
-        @SerializedName("value")
         var value: String
 ) : Parcelable {
 

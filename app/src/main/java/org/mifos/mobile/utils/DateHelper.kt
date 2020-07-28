@@ -35,7 +35,7 @@ object DateHelper {
      * @param integersOfDate [year-month-day] (ex [2016, 4, 14])
      * @return date in the format day month year (ex 14 Apr 2016)
      */
-    fun getDateAsString(integersOfDate: List<Int>?): String {
+    fun getDateAsString(integersOfDate: List<Int?>?): String {
         val stringBuilder = StringBuilder()
         if (integersOfDate != null) {
             stringBuilder.append(integersOfDate[2])
@@ -90,7 +90,7 @@ object DateHelper {
      * @param month an integer from 1 to 12
      * @return string representation of the month like Jan or Feb..etc
      */
-    private fun getMonthName(month: Int): String? {
+    private fun getMonthName(month: Int?): String? {
         var monthName = ""
         when (month) {
             1 -> monthName = "Jan"
