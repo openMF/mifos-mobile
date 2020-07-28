@@ -11,25 +11,19 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoanOfficerOptions(
-        @SerializedName("id")
+
         var id: Int? = null,
 
-        @SerializedName("firstname")
         var firstname: String,
 
-        @SerializedName("lastname")
         var lastname: String,
 
-        @SerializedName("displayName")
         var displayName: String,
 
-        @SerializedName("mobileNo")
         var mobileNo: String,
 
-        @SerializedName("officeId")
         var officeId: Int? = null,
 
-        @SerializedName("officeName")
         var officeName: String,
 
         @SerializedName("isLoanOfficer")
@@ -38,7 +32,6 @@ data class LoanOfficerOptions(
         @SerializedName("isActive")
         var active: Boolean? = null,
 
-        @SerializedName("joiningDate")
         var joiningDate: List<Int>
 
 ) : Parcelable

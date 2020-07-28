@@ -69,7 +69,7 @@ class MifosFirebaseMessagingService : FirebaseMessagingService() {
         val notification = MifosNotification()
         notification.msg = message
         notification.timeStamp = System.currentTimeMillis()
-        notification.isRead = false
+        notification.setRead(false)
         notification.save()
         notificationManager.notify(0, notificationBuilder.build())
     }
