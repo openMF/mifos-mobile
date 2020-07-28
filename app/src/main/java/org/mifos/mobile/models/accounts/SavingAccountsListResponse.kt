@@ -1,8 +1,7 @@
 package org.mifos.mobile.models.accounts
 
 import org.mifos.mobile.models.accounts.savings.SavingAccount
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author Vishwajeet

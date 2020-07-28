@@ -1,22 +1,17 @@
 package org.mifos.mobile.models.client
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.accounts.share.ShareAccount
-
-import java.util.ArrayList
+import java.util.*
 
 @Parcelize
 data class ClientAccounts(
         var loanAccounts: List<LoanAccount> = ArrayList(),
         var savingsAccounts: List<SavingAccount>? = ArrayList(),
 
-        @SerializedName("shareAccounts")
         var shareAccounts: List<ShareAccount> = ArrayList()
 
 ) : Parcelable {

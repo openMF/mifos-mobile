@@ -2,7 +2,6 @@ package org.mifos.mobile.models.accounts.savings
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import java.util.*
 
 /**
@@ -10,43 +9,30 @@ import java.util.*
  */
 
 data class TimeLine(
-        @SerializedName("submittedOnDate")
         var submittedOnDate: List<Int> = ArrayList(),
 
-        @SerializedName("submittedByUsername")
         var submittedByUsername: String?,
 
-        @SerializedName("submittedByFirstname")
         var submittedByFirstname: String?,
 
-        @SerializedName("submittedByLastname")
         var submittedByLastname: String?,
 
-        @SerializedName("approvedOnDate")
         var approvedOnDate: List<Int> = ArrayList(),
 
-        @SerializedName("approvedByUsername")
         var approvedByUsername: String?,
 
-        @SerializedName("approvedByFirstname")
         var approvedByFirstname: String?,
 
-        @SerializedName("approvedByLastname")
         var approvedByLastname: String?,
 
-        @SerializedName("activatedOnDate")
         var activatedOnDate: List<Int>,
 
-        @SerializedName("activatedByUsername")
         var activatedByUsername: String?,
 
-        @SerializedName("activatedByFirstname")
         var activatedByFirstname: String?,
 
-        @SerializedName("activatedByLastname")
         var activatedByLastname: String?,
 
-        @SerializedName("closedOnDate")
         var closedOnDate: List<Int>
 
 ) : Parcelable {

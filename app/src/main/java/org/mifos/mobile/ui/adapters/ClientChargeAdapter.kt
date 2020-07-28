@@ -48,9 +48,9 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
     // Also changes the color of the circle depending on whether the charge is active or not
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val charge = getItem(position)
-        var currencyRepresentation = charge.currency.displaySymbol
+        var currencyRepresentation = charge.currency?.displaySymbol
         if (currencyRepresentation == null) {
-            currencyRepresentation = charge.currency.code
+            currencyRepresentation = charge.currency?.code
         }
         (holder as ViewHolder).tvAmountDue?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,
@@ -63,10 +63,10 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
         holder.tvAmountOutstanding?.text = context.getString(R.string.string_and_string, currencyRepresentation,
                 formatCurrency(context, charge.amountOutstanding))
         holder.tvClientName?.text = charge.name
-        if (charge.dueDate.size > 0) {
+        if (charge.dueDate.isNotEmpty()) {
             holder.tvDueDate?.text = getDateAsString(charge.dueDate)
         }
-        if (charge.isIsPaid || charge.isIsWaived || charge.paid || charge.waived) {
+        if (charge.isIsPaid == true || charge.isIsWaived == true || charge.paid || charge.waived == true) {
             holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
         } else {
             holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.deposit_green))

@@ -2,7 +2,6 @@ package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
 
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -12,28 +11,20 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AllowAttributeOverrides(
 
-        @SerializedName("amortizationType")
         var amortizationType: Boolean? = null,
 
-        @SerializedName("interestType")
         var interestType: Boolean? = null,
 
-        @SerializedName("transactionProcessingStrategyId")
         var transactionProcessingStrategyId: Boolean? = null,
 
-        @SerializedName("interestCalculationPeriodType")
         var interestCalculationPeriodType: Boolean? = null,
 
-        @SerializedName("inArrearsTolerance")
         var inArrearsTolerance: Boolean? = null,
 
-        @SerializedName("repaymentEvery")
         var repaymentEvery: Boolean? = null,
 
-        @SerializedName("graceOnPrincipalAndInterestPayment")
         var graceOnPrincipalAndInterestPayment: Boolean? = null,
 
-        @SerializedName("graceOnArrearsAgeing")
         var graceOnArrearsAgeing: Boolean? = null
 
 ) : Parcelable
