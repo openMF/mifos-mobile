@@ -3,8 +3,7 @@ package org.mifos.mobile.models.mifoserror
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-
-import java.util.ArrayList
+import java.util.*
 
 @Parcelize
 data class MifosError(
