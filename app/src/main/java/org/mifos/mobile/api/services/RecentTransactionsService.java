@@ -5,7 +5,9 @@ import org.mifos.mobile.models.Page;
 import org.mifos.mobile.models.Transaction;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -19,4 +21,14 @@ public interface RecentTransactionsService {
             @Path("clientId") long clientId,
             @Query("offset") int offset,
             @Query("limit") int limit);
+
+    @POST(ApiEndPoints.TRANSFER)
+    Observable<TransactionInfo> makeTransaction(@Body Transaction transaction);
+
+    @GET(ApiEndPoints.TRANSFER + "/{transactionId}")
+    Observable<TransactionResponse> fetchTransactionInfo(
+            @Path("transactionId") String transactionId);
+
+    @POST(ApiEndPoints.TRANSACTION_REQUEST)
+    Observable<TransactionInfo> requestTransaction(@Body Transaction transactionRequest);
 }

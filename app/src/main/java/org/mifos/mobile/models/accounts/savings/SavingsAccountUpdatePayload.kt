@@ -15,6 +15,8 @@ data class SavingsAccountUpdatePayload(
         var clientId: Long = 0,
 
         @SerializedName("productId")
-        var productId: Long = 0
+        var productId: Long = 0,
+
+        val externalId: String
 
 ) : Parcelable

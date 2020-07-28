@@ -19,4 +19,12 @@ public abstract class Account {
     public void setId(long id) {
         this.id = id;
     }
+    private String externalId;
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
 }

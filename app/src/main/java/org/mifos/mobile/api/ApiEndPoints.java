@@ -20,5 +20,6 @@ public class ApiEndPoints {
     public static final String REGISTRATION = "registration";
     public static final String DEVICE = "device";
     public static final String USER = "user";
-
+    public static final String INTEROPERATION = "interoperation";
+    public static final String ACCOUNTS = "accounts";
 }

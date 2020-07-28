@@ -42,6 +42,9 @@ data class SavingAccount(
         @SerializedName("clientName")
         var clientName: String? = null,
 
+        @SerializedName("externalId")
+        var externalId: String? = null,
+
         @SerializedName("savingsProductId")
         var savingsProductId: String? = null,
 

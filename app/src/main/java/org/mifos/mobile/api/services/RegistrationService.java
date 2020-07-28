@@ -20,4 +20,7 @@ public interface RegistrationService {
 
     @POST(ApiEndPoints.REGISTRATION + "/user")
     Observable<ResponseBody> verifyUser(@Body UserVerify userVerify);
+
+    @POST(ApiEndPoints.PARTY_REGISTRATION)
+    Observable<ResponseBody> registerSecondaryIdentifier(@Body RegistrationEntity registrationEntity);
 }
