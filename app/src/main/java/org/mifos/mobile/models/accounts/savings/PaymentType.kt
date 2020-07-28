@@ -1,8 +1,6 @@
 package org.mifos.mobile.models.accounts.savings
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,9 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PaymentType(
-        @SerializedName("id")
         var id: Int? = null,
 
-        @SerializedName("name")
         var name: String
 ) : Parcelable
