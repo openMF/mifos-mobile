@@ -17,11 +17,13 @@ import java.util.*
 class Charge : BaseModel, Parcelable {
     @PrimaryKey
     var id: Int? = null
+
     var clientId: Int? = null
     var chargeId: Int? = null
 
     @Column
     var name: String? = null
+
     var dueDate: List<Int?> = ArrayList()
     var chargeTimeType: ChargeTimeType? = null
     var chargeCalculationType: ChargeCalculationType? = null
@@ -41,14 +43,17 @@ class Charge : BaseModel, Parcelable {
 
     @Column
     var amountOutstanding = 0.0
-    var isPenalty = false
+
+    var penalty = false
 
     @Column
-    var isIsActive: Boolean? = false
-    var isIsPaid: Boolean? = false
-    var isIsWaived: Boolean? = false
+    var isActive = false
+
+    var isPaid: Boolean? = false
+    var isWaived: Boolean? = false
+
     var paid = false
-    var waived: Boolean? = false
+    var waived = false
 
     override fun describeContents(): Int {
         return 0
@@ -68,10 +73,10 @@ class Charge : BaseModel, Parcelable {
         dest.writeValue(amountWaived)
         dest.writeValue(amountWrittenOff)
         dest.writeValue(amountOutstanding)
-        dest.writeValue(isPenalty)
-        dest.writeValue(isIsActive)
-        dest.writeValue(isIsPaid)
-        dest.writeValue(isIsWaived)
+        dest.writeValue(penalty)
+        dest.writeValue(isActive)
+        dest.writeValue(isPaid)
+        dest.writeValue(isWaived)
         dest.writeValue(paid)
         dest.writeValue(waived)
     }
@@ -92,10 +97,10 @@ class Charge : BaseModel, Parcelable {
         amountWaived = `in`.readValue(Double::class.java.classLoader) as Double
         amountWrittenOff = `in`.readValue(Double::class.java.classLoader) as Double
         amountOutstanding = `in`.readValue(Double::class.java.classLoader) as Double
-        isPenalty = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        isIsActive = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        isIsPaid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        isIsWaived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        penalty = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isActive = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isPaid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isWaived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
         paid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
         waived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
     }
