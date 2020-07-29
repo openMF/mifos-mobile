@@ -116,7 +116,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     @kotlin.jvm.JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    private var rootView: View? = null
+    private lateinit var rootView: View
     private var userBitmap: Bitmap? = null
     private var client: Client? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
@@ -126,7 +126,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_user_profile, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
+        ButterKnife.bind(this, rootView)
         presenter?.attachView(this)
         (activity as BaseActivity?)?.setSupportActionBar(toolbar)
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -225,9 +225,12 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                         .beginConfig()
                         .toUpperCase()
                         .endConfig()
-                        .buildRound(preferencesHelper
-                                ?.clientName
-                                ?.substring(0, 1),
+                        .buildRound(
+                                (if (preferencesHelper?.clientName.isNullOrEmpty()) preferencesHelper
+                                        ?.userName
+                                else preferencesHelper
+                                        ?.clientName)
+                                        ?.substring(0, 1),
                                 ContextCompat.getColor(context!!, R.color.primary_dark))
                 ivProfile?.visibility = View.GONE
                 ivTextDrawable?.visibility = View.VISIBLE
