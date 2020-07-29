@@ -28,11 +28,14 @@ import org.mifos.mobile.utils.Toaster
 import java.util.*
 import javax.inject.Inject
 
+
 /**
  * @author Vishwajeet
  * @since 17/8/16.
  */
-class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
+class ClientChargeFragment :
+        BaseFragment(), RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
+
     @kotlin.jvm.JvmField
     @BindView(R.id.rv_client_charge)
     var rvClientCharge: RecyclerView? = null
@@ -56,7 +59,7 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
     private var chargeType: ChargeType? = null
     private var rootView: View? = null
     private var layoutManager: LinearLayoutManager? = null
-    private val clientChargeList: List<Charge> = ArrayList()
+    private var clientChargeList: List<Charge?>? = ArrayList()
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,10 +149,11 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
         }
     }
 
-    override fun showClientCharges(clientChargesList: List<Charge?>?) {
+    override fun showClientCharges(clientChargeList: List<Charge?>?) {
+        this.clientChargeList = clientChargeList
         inflateClientChargeList()
-        if (swipeChargeContainer?.isRefreshing == true) {
-            swipeChargeContainer?.isRefreshing = false
+        if (swipeChargeContainer!!.isRefreshing) {
+            swipeChargeContainer!!.isRefreshing = false
         }
     }
 
@@ -158,7 +162,7 @@ class ClientChargeFragment : BaseFragment(), RecyclerItemClickListener.OnItemCli
      * `clientChargeList` size if greater than 0 else shows the error layout
      */
     private fun inflateClientChargeList() {
-        if (clientChargeList.isNotEmpty()) {
+        if (clientChargeList?.isNotEmpty() == true) {
             clientChargeAdapter?.setClientChargeList(clientChargeList)
             rvClientCharge?.adapter = clientChargeAdapter
         } else {

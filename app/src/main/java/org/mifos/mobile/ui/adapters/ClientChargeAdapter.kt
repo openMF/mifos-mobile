@@ -27,13 +27,13 @@ import javax.inject.Inject
 class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var clientChargeList: List<Charge> = ArrayList()
-    fun setClientChargeList(clientChargeList: List<Charge>) {
+    private var clientChargeList: List<Charge?>? = ArrayList()
+    fun setClientChargeList(clientChargeList: List<Charge?>?) {
         this.clientChargeList = clientChargeList
     }
 
-    fun getItem(position: Int): Charge {
-        return clientChargeList[position]
+    fun getItem(position: Int): Charge? {
+        return clientChargeList?.get(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,25 +48,25 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
     // Also changes the color of the circle depending on whether the charge is active or not
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val charge = getItem(position)
-        var currencyRepresentation = charge.currency?.displaySymbol
+        var currencyRepresentation = charge?.currency?.displaySymbol
         if (currencyRepresentation == null) {
-            currencyRepresentation = charge.currency?.code
+            currencyRepresentation = charge?.currency?.code
         }
         (holder as ViewHolder).tvAmountDue?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,
-                charge.amount))
+                charge?.amount))
         holder.tvAmountPaid?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,
-                charge.amountPaid))
+                charge?.amountPaid))
         holder.tvAmountWaived?.text = context.getString(R.string.string_and_string, currencyRepresentation,
-                formatCurrency(context, charge.amountWaived))
+                formatCurrency(context, charge?.amountWaived))
         holder.tvAmountOutstanding?.text = context.getString(R.string.string_and_string, currencyRepresentation,
-                formatCurrency(context, charge.amountOutstanding))
-        holder.tvClientName?.text = charge.name
-        if (charge.dueDate.isNotEmpty()) {
-            holder.tvDueDate?.text = getDateAsString(charge.dueDate)
+                formatCurrency(context, charge?.amountOutstanding))
+        holder.tvClientName?.text = charge?.name
+        if (charge?.dueDate?.isNotEmpty() == true) {
+            holder.tvDueDate?.text = getDateAsString(charge?.dueDate)
         }
-        if (charge.isIsPaid == true || charge.isIsWaived == true || charge.paid || charge.waived == true) {
+        if (charge?.isPaid == true || charge?.isWaived == true || charge?.paid == true || charge?.waived == true) {
             holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
         } else {
             holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.deposit_green))
@@ -74,7 +74,8 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
     }
 
     override fun getItemCount(): Int {
-        return clientChargeList.size
+        return if (clientChargeList != null) clientChargeList!!.size
+        else 0
     }
 
     class ViewHolder(v: View?) : RecyclerView.ViewHolder(v!!) {
