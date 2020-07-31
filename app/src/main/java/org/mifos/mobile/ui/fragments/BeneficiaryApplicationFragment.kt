@@ -264,7 +264,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         accountTypeId = beneficiaryTemplate?.accountTypeOptions?.get(position)?.id
     }
 
