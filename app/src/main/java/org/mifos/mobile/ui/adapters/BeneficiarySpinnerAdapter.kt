@@ -17,7 +17,7 @@ import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 * Created by saksham on 18/June/2018
 */
 class BeneficiarySpinnerAdapter(context: Context, private var resource: Int, var list: MutableList<BeneficiaryDetail?>) :
-        ArrayAdapter<String?>(context, resource, 0) {
+        ArrayAdapter<String?>(context, resource, 0, list as List<String?>) {
 
     @JvmField
     @BindView(R.id.tv_account_number)
