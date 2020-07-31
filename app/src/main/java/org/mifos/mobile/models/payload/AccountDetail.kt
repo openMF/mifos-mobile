@@ -5,5 +5,6 @@ package org.mifos.mobile.models.payload
  */
 
 data class AccountDetail(
-        var accountNumber: String,
-        var accountType: String)
+        var accountNumber: String?,
+        var accountType: String?
+)

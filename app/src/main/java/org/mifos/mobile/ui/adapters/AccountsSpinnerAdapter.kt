@@ -19,7 +19,7 @@ import org.mifos.mobile.models.payload.AccountDetail
  * Created by dilpreet on 19/03/18.
  */
 class AccountsSpinnerAdapter(context: Context, @LayoutRes resource: Int, objects: MutableList<AccountDetail?>) :
-        ArrayAdapter<String?>(context, resource, 0) {
+        ArrayAdapter<String?>(context, resource, 0, objects as List<String?>) {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val accountDetails: MutableList<AccountDetail?> = objects

@@ -485,8 +485,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
         hideProgressBar()
     }
 
-    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        when (parent.id) {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (parent?.id) {
             R.id.sp_loan_products -> {
                 productId = loanTemplate?.productOptions?.get(position)?.id
                 if (loanState == LoanState.CREATE) {
