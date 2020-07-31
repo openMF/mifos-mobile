@@ -299,8 +299,8 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     /**
      * Callback for `spPayFrom` and `spPayTo`
      */
-    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        when (parent.id) {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (parent?.id) {
             R.id.sp_pay_to -> {
                 toAccountOption = accountOptionsTemplate?.toAccountOptions?.get(position)
                 payTo = toAccountOption?.accountNo
@@ -405,8 +405,8 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         Utils.setToolbarIconColor(activity, menu, R.color.white)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_refresh_transfer) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.menu_refresh_transfer) {
             val transaction = fragmentManager?.beginTransaction()
             val currFragment = activity?.supportFragmentManager
                     ?.findFragmentById(R.id.container)
