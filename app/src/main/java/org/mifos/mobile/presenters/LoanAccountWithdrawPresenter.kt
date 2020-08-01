@@ -22,7 +22,7 @@ import javax.inject.Inject
  * Created by dilpreet on 7/6/17.
  */
 class LoanAccountWithdrawPresenter @Inject constructor(
-        private val dataManager: DataManager,
+        private val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<LoanAccountWithdrawView?>(context) {
 
@@ -47,7 +47,7 @@ class LoanAccountWithdrawPresenter @Inject constructor(
     fun withdrawLoanAccount(loanId: Long?, loanWithdraw: LoanWithdraw?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.withdrawLoanAccount(loanId, loanWithdraw)
+        dataManager?.withdrawLoanAccount(loanId, loanWithdraw)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

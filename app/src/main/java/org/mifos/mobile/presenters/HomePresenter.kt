@@ -27,7 +27,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 19/6/17.
  */
-class HomePresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) : BasePresenter<HomeView?>(context) {
+class HomePresenter @Inject constructor(private val dataManager: DataManager?, @ApplicationContext context: Context?) : BasePresenter<HomeView?>(context) {
     private val compositeDisposable: CompositeDisposable? = CompositeDisposable()
 
     @JvmField
@@ -50,7 +50,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
     val userDetails: Unit
         get() {
             checkViewAttached()
-            dataManager.currentClient
+            dataManager?.currentClient
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribeOn(Schedulers.io())
                     ?.subscribeWith(object : DisposableObserver<Client?>() {
@@ -79,7 +79,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
     val userImage: Unit
         get() {
             checkViewAttached()
-            dataManager.clientImage
+            dataManager?.clientImage
                     ?.observeOn(Schedulers.newThread())
                     ?.subscribeOn(Schedulers.io())
                     ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -106,16 +106,16 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager, @A
         }
     val unreadNotificationsCount: Unit
         get() {
-            compositeDisposable?.add(dataManager.unreadNotificationsCount
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.computation())
-                    .subscribeWith(object : DisposableObserver<Int?>() {
+            dataManager?.unreadNotificationsCount
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.computation())
+                    ?.subscribeWith(object : DisposableObserver<Int?>() {
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {}
                         override fun onNext(integer: Int) {
                             mvpView?.showNotificationCount(integer)
                         }
-                    }))
+                    })?.let { compositeDisposable?.add(it) }
         }
 
 }

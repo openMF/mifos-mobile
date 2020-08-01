@@ -19,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 14/9/17.
  */
-class NotificationPresenter @Inject constructor(private val manager: DataManager, @ActivityContext context: Context) :
+class NotificationPresenter @Inject constructor(private val manager: DataManager?, @ActivityContext context: Context?) :
         BasePresenter<NotificationView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -35,10 +35,10 @@ class NotificationPresenter @Inject constructor(private val manager: DataManager
     fun loadNotifications() {
         checkViewAttached()
         mvpView?.showProgress()
-        compositeDisposable.add(manager.notifications
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<List<MifosNotification?>?>() {
+        manager?.notifications
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<List<MifosNotification?>?>() {
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
@@ -50,7 +50,7 @@ class NotificationPresenter @Inject constructor(private val manager: DataManager
                         mvpView?.hideProgress()
                         mvpView?.showNotifications(notificationModels)
                     }
-                }))
+                })?.let { compositeDisposable.add(it) }
     }
 
 }

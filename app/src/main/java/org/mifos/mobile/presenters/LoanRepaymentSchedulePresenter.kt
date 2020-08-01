@@ -22,7 +22,7 @@ import javax.inject.Inject
  */
 class LoanRepaymentSchedulePresenter @Inject constructor(
         @ApplicationContext context: Context?,
-        private val dataManager: DataManager
+        private val dataManager: DataManager?
 ) : BasePresenter<LoanRepaymentScheduleMvpView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun attachView(mvpView: LoanRepaymentScheduleMvpView?) {
@@ -43,7 +43,7 @@ class LoanRepaymentSchedulePresenter @Inject constructor(
     fun loanLoanWithAssociations(loanId: Long?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE,
+        dataManager?.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE,
                 loanId)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
