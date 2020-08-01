@@ -53,7 +53,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     var drawerLayout: DrawerLayout? = null
 
     @set:Inject
-    lateinit var preferencesHelper: PreferencesHelper
+    var preferencesHelper: PreferencesHelper? = null
 
     @JvmField
     @set:Inject
@@ -74,7 +74,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         activityComponent?.inject(this)
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
-        clientId = preferencesHelper.clientId
+        clientId = preferencesHelper?.clientId
         setupNavigationBar()
         setToolbarElevation()
         setToolbarTitle(getString(R.string.home))
@@ -90,10 +90,10 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             showUserImage(null)
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
-            detailsPresenter?.setUserProfile(preferencesHelper.userProfileImage)
+            detailsPresenter?.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }
-        if (checkPlayServices() && preferencesHelper.sentTokenToServerState() == false) {
+        if (checkPlayServices() && preferencesHelper?.sentTokenToServerState() == false) {
             // Start IntentService to register this application with GCM.
             val intent = Intent(this, RegistrationIntentService::class.java)
             startService(intent)
@@ -177,7 +177,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 .setMessage(R.string.dialog_logout)
                 .setPositiveButton(getString(R.string.logout),
                         DialogInterface.OnClickListener { _, _ ->
-                            preferencesHelper.clear()
+                            preferencesHelper?.clear()
                             val i = Intent(this@HomeActivity, LoginActivity::class.java)
                             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(i)
@@ -233,7 +233,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      */
     override fun showUserDetails(client: Client?) {
         this.client = client
-        preferencesHelper.clientName = client?.displayName
+        preferencesHelper?.clientName = client?.displayName
         tvUsername?.text = client?.displayName
     }
 
@@ -252,8 +252,8 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             }
         } else {
             runOnUiThread {
-                val userName: String? = if (preferencesHelper.clientName?.isNotEmpty() == true) {
-                    preferencesHelper.clientName
+                val userName: String? = if (preferencesHelper?.clientName?.isNotEmpty() == true) {
+                    preferencesHelper?.clientName
                 } else {
                     getString(R.string.app_name)
                 }

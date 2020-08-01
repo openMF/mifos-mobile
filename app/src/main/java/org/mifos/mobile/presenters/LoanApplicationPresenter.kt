@@ -20,7 +20,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 06/03/17.
  */
-class LoanApplicationPresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) :
+class LoanApplicationPresenter @Inject constructor(private val dataManager: DataManager?, @ApplicationContext context: Context?) :
         BasePresenter<LoanApplicationMvpView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -43,7 +43,7 @@ class LoanApplicationPresenter @Inject constructor(private val dataManager: Data
     fun loadLoanApplicationTemplate(loanState: LoanState) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.loanTemplate
+        dataManager?.loanTemplate
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<LoanTemplate?>() {
@@ -78,7 +78,7 @@ class LoanApplicationPresenter @Inject constructor(private val dataManager: Data
     fun loadLoanApplicationTemplateByProduct(productId: Int?, loanState: LoanState?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getLoanTemplateByProduct(productId)
+        dataManager?.getLoanTemplateByProduct(productId)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<LoanTemplate?>() {

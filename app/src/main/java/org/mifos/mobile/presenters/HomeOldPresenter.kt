@@ -31,8 +31,8 @@ import javax.inject.Inject
  * Created by dilpreet on 19/6/17.
  */
 class HomeOldPresenter @Inject constructor(
-        private val dataManager: DataManager, @ActivityContext context: Context,
-        private val preferencesHelper: PreferencesHelper
+        private val dataManager: DataManager?, @ActivityContext context: Context?,
+        private val preferencesHelper: PreferencesHelper?
 ) : BasePresenter<HomeOldView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -53,7 +53,7 @@ class HomeOldPresenter @Inject constructor(
     fun loadClientAccountDetails() {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.clientAccounts
+        dataManager?.clientAccounts
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
@@ -84,7 +84,7 @@ class HomeOldPresenter @Inject constructor(
     val userDetails: Unit
         get() {
             checkViewAttached()
-            dataManager.currentClient
+            dataManager?.currentClient
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribeOn(Schedulers.io())
                     ?.subscribeWith(object : DisposableObserver<Client?>() {
@@ -95,7 +95,7 @@ class HomeOldPresenter @Inject constructor(
                         }
 
                         override fun onNext(client: Client) {
-                            preferencesHelper.officeName = client.officeName
+                            preferencesHelper?.officeName = client.officeName
                             mvpView?.showUserDetails(client)
                         }
                     })?.let {
@@ -111,8 +111,8 @@ class HomeOldPresenter @Inject constructor(
     val userImage: Unit
         get() {
             checkViewAttached()
-            setUserProfile(preferencesHelper.userProfileImage)
-            dataManager.clientImage
+            setUserProfile(preferencesHelper?.userProfileImage)
+            dataManager?.clientImage
                     ?.observeOn(Schedulers.newThread())
                     ?.subscribeOn(Schedulers.io())
                     ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -125,7 +125,7 @@ class HomeOldPresenter @Inject constructor(
                             try {
                                 val encodedString = response.string()
                                 val pureBase64Encoded = encodedString.substring(encodedString.indexOf(',') + 1)
-                                preferencesHelper.userProfileImage = pureBase64Encoded
+                                preferencesHelper?.userProfileImage = pureBase64Encoded
                                 setUserProfile(pureBase64Encoded)
                             } catch (e: IOException) {
                                 Log.d("userimage", e.toString())
@@ -148,10 +148,10 @@ class HomeOldPresenter @Inject constructor(
 
     val unreadNotificationsCount: Unit
         get() {
-            compositeDisposable.add(dataManager.unreadNotificationsCount
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.computation())
-                    .subscribeWith(object : DisposableObserver<Int?>() {
+            dataManager?.unreadNotificationsCount
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.computation())
+                    ?.subscribeWith(object : DisposableObserver<Int?>() {
                         override fun onComplete() {}
                         override fun onError(e: Throwable) {
                             mvpView?.showNotificationCount(0)
@@ -160,7 +160,7 @@ class HomeOldPresenter @Inject constructor(
                         override fun onNext(integer: Int) {
                             mvpView?.showNotificationCount(integer)
                         }
-                    }))
+                    })?.let { compositeDisposable.add(it) }
         }
 
     /**

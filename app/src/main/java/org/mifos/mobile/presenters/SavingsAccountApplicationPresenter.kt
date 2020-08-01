@@ -24,7 +24,7 @@ import javax.inject.Inject
 * Created by saksham on 30/June/2018
 */
 class SavingsAccountApplicationPresenter @Inject constructor(
-        private val dataManager: DataManager,
+        private val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<SavingsAccountApplicationView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -43,7 +43,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
     ) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getSavingAccountApplicationTemplate(clientId)
+        dataManager?.getSavingAccountApplicationTemplate(clientId)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<SavingsAccountTemplate?>() {
@@ -68,7 +68,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
     fun submitSavingsAccountApplication(payload: SavingsAccountApplicationPayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.submitSavingAccountApplication(payload)
+        dataManager?.submitSavingAccountApplication(payload)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -90,7 +90,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
     fun updateSavingsAccount(accountId: String?, payload: SavingsAccountUpdatePayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.updateSavingsAccount(accountId, payload)
+        dataManager?.updateSavingsAccount(accountId, payload)
                 ?.subscribeOn(Schedulers.newThread())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

@@ -22,8 +22,8 @@ import javax.inject.Inject
  * @since 10/08/16
  */
 class RecentTransactionsPresenter @Inject constructor(
-        private val dataManager: DataManager,
-        @ApplicationContext context: Context
+        private val dataManager: DataManager?,
+        @ApplicationContext context: Context?
 ) : BasePresenter<RecentTransactionsView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
@@ -64,7 +64,7 @@ class RecentTransactionsPresenter @Inject constructor(
     private fun loadRecentTransactions(offset: Int, limit: Int) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getRecentTransactions(offset, limit)
+        dataManager?.getRecentTransactions(offset, limit)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<Page<Transaction?>?>() {

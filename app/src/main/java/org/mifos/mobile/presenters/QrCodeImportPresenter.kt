@@ -24,7 +24,7 @@ import javax.inject.Inject
 /**
  * Created by manishkumar on 19/05/18.
  */
-class QrCodeImportPresenter @Inject constructor(@ApplicationContext context: Context) :
+class QrCodeImportPresenter @Inject constructor(@ApplicationContext context: Context?) :
         BasePresenter<QrCodeImportView?>(context) {
 
     private var result: Result? = null
