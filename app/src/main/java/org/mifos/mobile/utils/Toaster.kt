@@ -13,14 +13,11 @@ import java.util.*
 
 object Toaster {
 
-    const val INDEFINITE = Snackbar.LENGTH_INDEFINITE
-    const val LONG = Snackbar.LENGTH_LONG
-    const val SHORT = Snackbar.LENGTH_SHORT
     private val snackbarsQueue = ArrayList<Snackbar>()
 
     @JvmOverloads
     fun show(view: View?, text: String?, duration: Int = Snackbar.LENGTH_LONG) {
-        val imm = MifosSelfServiceApp.getContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = MifosSelfServiceApp.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         val snackbar = Snackbar.make(view!!, text!!, duration)
         val sbView = snackbar.view
@@ -50,7 +47,7 @@ object Toaster {
     }
 
     fun show(view: View, res: Int, duration: Int) {
-        show(view, MifosSelfServiceApp.getContext().resources.getString(res), duration)
+        show(view, MifosSelfServiceApp.context?.resources?.getString(res), duration)
     }
 
     fun cancelTransfer(
@@ -64,6 +61,6 @@ object Toaster {
 
 
     fun show(view: View?, res: Int) {
-        show(view, MifosSelfServiceApp.getContext().resources.getString(res))
+        show(view, MifosSelfServiceApp.context?.resources?.getString(res))
     }
 }
