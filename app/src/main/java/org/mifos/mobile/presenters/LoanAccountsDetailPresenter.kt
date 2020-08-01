@@ -22,7 +22,7 @@ import javax.inject.Inject
  * @since 19/08/16
  */
 class LoanAccountsDetailPresenter @Inject constructor(
-        private val dataManager: DataManager,
+        private val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<LoanAccountsDetailView?>(context) {
 
@@ -46,7 +46,7 @@ class LoanAccountsDetailPresenter @Inject constructor(
     fun loadLoanAccountDetails(loanId: Long?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE,
+        dataManager?.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE,
                 loanId)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())

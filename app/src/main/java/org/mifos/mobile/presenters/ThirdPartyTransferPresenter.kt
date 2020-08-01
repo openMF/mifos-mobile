@@ -28,8 +28,8 @@ import javax.inject.Inject
  * Created by dilpreet on 21/6/17.
  */
 class ThirdPartyTransferPresenter @Inject constructor(
-        private val dataManager: DataManager,
-        @ApplicationContext context: Context
+        private val dataManager: DataManager?,
+        @ApplicationContext context: Context?
 ) : BasePresenter<ThirdPartyTransferView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun attachView(mvpView: ThirdPartyTransferView?) {
@@ -49,8 +49,8 @@ class ThirdPartyTransferPresenter @Inject constructor(
     fun loadTransferTemplate() {
         checkViewAttached()
         mvpView?.showProgress()
-        compositeDisposable.add(Observable.zip(dataManager.thirdPartyTransferTemplate,
-                dataManager.beneficiaryList,
+        compositeDisposable.add(Observable.zip(dataManager?.thirdPartyTransferTemplate,
+                dataManager?.beneficiaryList,
                 BiFunction<AccountOptionsTemplate?, List<Beneficiary?>?, AccountOptionAndBeneficiary> { accountOptionsTemplate, beneficiaries ->
                     AccountOptionAndBeneficiary(accountOptionsTemplate,
                             beneficiaries)

@@ -25,8 +25,8 @@ import javax.inject.Inject
 * Created by saksham on 13/July/2018
 */
 class UpdatePasswordPresenter @Inject constructor(
-        @ApplicationContext context: Context, private val dataManager: DataManager,
-        private val preferencesHelper: PreferencesHelper
+        @ApplicationContext context: Context?, private val dataManager: DataManager?,
+        private val preferencesHelper: PreferencesHelper?
 ) : BasePresenter<UpdatePasswordView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -43,7 +43,7 @@ class UpdatePasswordPresenter @Inject constructor(
     fun updateAccountPassword(payload: UpdatePasswordPayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.updateAccountPassword(payload)
+        dataManager?.updateAccountPassword(payload)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -63,11 +63,11 @@ class UpdatePasswordPresenter @Inject constructor(
     }
 
     fun updateAuthenticationToken(password: String?) {
-        val authenticationToken = Credentials.basic(preferencesHelper.userName, password)
-        preferencesHelper.saveToken(authenticationToken)
-        createService(preferencesHelper.baseUrl,
-                preferencesHelper.tenant,
-                preferencesHelper.token)
+        val authenticationToken = Credentials.basic(preferencesHelper?.userName, password)
+        preferencesHelper?.saveToken(authenticationToken)
+        createService(preferencesHelper?.baseUrl,
+                preferencesHelper?.tenant,
+                preferencesHelper?.token)
     }
 
 }

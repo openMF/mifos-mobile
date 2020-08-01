@@ -25,7 +25,7 @@ import javax.inject.Inject
  * Created by dilpreet on 16/6/17.
  */
 class BeneficiaryApplicationPresenter @Inject constructor(
-        private val dataManager: DataManager,
+        private val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<BeneficiaryApplicationView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -42,7 +42,7 @@ class BeneficiaryApplicationPresenter @Inject constructor(
         checkViewAttached()
         mvpView?.setVisibility(View.GONE)
         mvpView?.showProgress()
-        dataManager.beneficiaryTemplate
+        dataManager?.beneficiaryTemplate
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<BeneficiaryTemplate?>() {
@@ -72,7 +72,7 @@ class BeneficiaryApplicationPresenter @Inject constructor(
     fun createBeneficiary(payload: BeneficiaryPayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.createBeneficiary(payload)
+        dataManager?.createBeneficiary(payload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -101,7 +101,7 @@ class BeneficiaryApplicationPresenter @Inject constructor(
     fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.updateBeneficiary(beneficiaryId, payload)
+        dataManager?.updateBeneficiary(beneficiaryId, payload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

@@ -24,7 +24,7 @@ import javax.inject.Inject
  * Created by dilpreet on 4/3/17.
  */
 class LoanAccountsTransactionPresenter @Inject constructor(
-        private val dataManager: DataManager,
+        private val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<LoanAccountsTransactionView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -47,7 +47,7 @@ class LoanAccountsTransactionPresenter @Inject constructor(
     fun loadLoanAccountDetails(loanId: Long?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getLoanWithAssociations(Constants.TRANSACTIONS, loanId)
+        dataManager?.getLoanWithAssociations(Constants.TRANSACTIONS, loanId)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<LoanWithAssociations?>() {

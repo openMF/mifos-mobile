@@ -30,10 +30,10 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 05/06/16
  */
-class LoginPresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) :
+class LoginPresenter @Inject constructor(private val dataManager: DataManager?, @ApplicationContext context: Context?) :
         BasePresenter<LoginView?>(context) {
 
-    private val preferencesHelper: PreferencesHelper = dataManager.preferencesHelper
+    private val preferencesHelper: PreferencesHelper? = dataManager?.preferencesHelper
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun attachView(mvpView: LoginView?) {
         super.attachView(mvpView)
@@ -55,7 +55,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
         checkViewAttached()
         if (isCredentialsValid(loginPayload)) {
             mvpView?.showProgress()
-            compositeDisposable.add(dataManager.login(loginPayload)
+            compositeDisposable.add(dataManager?.login(loginPayload)
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribeOn(Schedulers.io())!!
                     .subscribeWith(object : DisposableObserver<User?>() {
@@ -97,7 +97,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
      */
     fun loadClient() {
         checkViewAttached()
-        dataManager.clients
+        dataManager?.clients
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<Page<Client?>?>() {
@@ -109,7 +109,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
                         } else {
                             mvpView?.showMessage(context?.getString(R.string.error_fetching_client))
                         }
-                        preferencesHelper.clear()
+                        preferencesHelper?.clear()
                         reInitializeService()
                     }
 
@@ -117,7 +117,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
                         mvpView?.hideProgress()
                         if (clientPage.pageItems.isNotEmpty()) {
                             val clientId = clientPage.pageItems[0]?.id?.toLong()
-                            preferencesHelper.clientId = clientId
+                            preferencesHelper?.clientId = clientId
                             dataManager.clientId = clientId
                             reInitializeService()
                             mvpView?.showPassCodeActivity()
@@ -145,7 +145,9 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
                 credentialValid = false
             }
             username.length < 5 -> {
-                mvpView?.showUsernameError(context?.getString(R.string.error_validation_minimum_chars, resources?.getString(R.string.username), resources?.getInteger(R.integer.username_minimum_length)))
+                mvpView?.showUsernameError(context?.getString(R.string.error_validation_minimum_chars,
+                        resources?.getString(R.string.username),
+                        resources?.getInteger(R.integer.username_minimum_length)))
                 credentialValid = false
             }
             correctUsername.contains(" ") -> {
@@ -187,15 +189,15 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager, @
      * @param authToken - The authentication token to be saved.
      */
     private fun saveAuthenticationTokenForSession(userName: String?, userID: Long, authToken: String) {
-        preferencesHelper.userName = userName
-        preferencesHelper.userId = userID
-        preferencesHelper.saveToken(authToken)
+        preferencesHelper?.userName = userName
+        preferencesHelper?.userId = userID
+        preferencesHelper?.saveToken(authToken)
         reInitializeService()
     }
 
     private fun reInitializeService() {
-        BaseApiManager.createService(preferencesHelper.baseUrl, preferencesHelper.tenant,
-                preferencesHelper.token)
+        BaseApiManager.createService(preferencesHelper?.baseUrl, preferencesHelper?.tenant,
+                preferencesHelper?.token)
     }
 
 }

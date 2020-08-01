@@ -14,7 +14,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 12/8/17.
  */
-class HelpPresenter @Inject constructor(@ApplicationContext context: Context) :
+class HelpPresenter @Inject constructor(@ApplicationContext context: Context?) :
         BasePresenter<HelpView?>(context) {
 
     override fun attachView(mvpView: HelpView?) {

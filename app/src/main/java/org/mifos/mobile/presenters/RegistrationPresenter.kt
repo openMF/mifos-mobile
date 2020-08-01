@@ -21,7 +21,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 31/7/17.
  */
-class RegistrationPresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context?) : BasePresenter<RegistrationView?>(context) {
+class RegistrationPresenter @Inject constructor(private val dataManager: DataManager?, @ApplicationContext context: Context?) : BasePresenter<RegistrationView?>(context) {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
     fun attachView(mvpView: RegistrationView) {
         super.attachView(mvpView)
@@ -35,7 +35,7 @@ class RegistrationPresenter @Inject constructor(private val dataManager: DataMan
     fun registerUser(registerPayload: RegisterPayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.registerUser(registerPayload)
+        dataManager?.registerUser(registerPayload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

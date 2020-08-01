@@ -22,7 +22,7 @@ import javax.inject.Inject
  * @since 18/8/16.
  */
 class SavingAccountsDetailPresenter @Inject constructor(
-        private val dataManager: DataManager,
+        private val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<SavingAccountsDetailView?>(context) {
 
@@ -46,7 +46,7 @@ class SavingAccountsDetailPresenter @Inject constructor(
     fun loadSavingsWithAssociations(accountId: Long?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getSavingsWithAssociations(accountId,
+        dataManager?.getSavingsWithAssociations(accountId,
                 Constants.TRANSACTIONS)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())

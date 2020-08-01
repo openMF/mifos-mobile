@@ -23,8 +23,8 @@ import javax.inject.Inject
  * On 16/10/17.
  */
 class AccountOverviewPresenter @Inject constructor(
-        @ApplicationContext context: Context,
-        private val dataManager: DataManager
+        @ApplicationContext context: Context?,
+        private val dataManager: DataManager?
 ) : BasePresenter<AccountOverviewMvpView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun attachView(mvpView: AccountOverviewMvpView?) {
@@ -44,7 +44,7 @@ class AccountOverviewPresenter @Inject constructor(
     fun loadClientAccountDetails() {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.clientAccounts
+        dataManager?.clientAccounts
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {

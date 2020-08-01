@@ -22,8 +22,8 @@ import javax.inject.Inject
  * Created by dilpreet on 31/7/17.
  */
 class RegistrationVerificationPresenter @Inject constructor(
-        private val dataManager: DataManager,
-        @ApplicationContext context: Context
+        private val dataManager: DataManager?,
+        @ApplicationContext context: Context?
 ) : BasePresenter<RegistrationVerificationView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
@@ -39,7 +39,7 @@ class RegistrationVerificationPresenter @Inject constructor(
     fun verifyUser(userVerify: UserVerify?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.verifyUser(userVerify)
+        dataManager?.verifyUser(userVerify)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

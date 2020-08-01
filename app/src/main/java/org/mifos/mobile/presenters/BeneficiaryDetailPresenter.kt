@@ -20,7 +20,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 16/6/17.
  */
-class BeneficiaryDetailPresenter @Inject constructor(private val manager: DataManager, @ApplicationContext context: Context?) :
+class BeneficiaryDetailPresenter @Inject constructor(private val manager: DataManager?, @ApplicationContext context: Context?) :
         BasePresenter<BeneficiaryDetailView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -39,7 +39,7 @@ class BeneficiaryDetailPresenter @Inject constructor(private val manager: DataMa
     fun deleteBeneficiary(beneficiaryId: Long?) {
         checkViewAttached()
         mvpView?.showProgress()
-        manager.deleteBeneficiary(beneficiaryId)
+        manager?.deleteBeneficiary(beneficiaryId)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

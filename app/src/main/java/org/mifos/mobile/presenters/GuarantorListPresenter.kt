@@ -18,7 +18,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 24/July/2018
 */
-class GuarantorListPresenter @Inject constructor(@ApplicationContext context: Context, var dataManager: DataManager) :
+class GuarantorListPresenter @Inject constructor(@ApplicationContext context: Context?, var dataManager: DataManager?) :
         BasePresenter<GuarantorListView?>(context) {
 
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -33,7 +33,7 @@ class GuarantorListPresenter @Inject constructor(@ApplicationContext context: Co
 
     fun getGuarantorList(loanId: Long) {
         mvpView?.showProgress()
-        dataManager.getGuarantorList(loanId)
+        dataManager?.getGuarantorList(loanId)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<List<GuarantorPayload?>?>() {

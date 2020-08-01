@@ -21,8 +21,8 @@ import javax.inject.Inject
 * Created by saksham on 02/July/2018
 */
 class SavingsAccountWithdrawPresenter @Inject constructor(
-        private val dataManager: DataManager,
-        @ApplicationContext context: Context
+        private val dataManager: DataManager?,
+        @ApplicationContext context: Context?
 ) : BasePresenter<SavingsAccountWithdrawView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -41,7 +41,7 @@ class SavingsAccountWithdrawPresenter @Inject constructor(
     ) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.submitWithdrawSavingsAccount(accountId, payload)
+        dataManager?.submitWithdrawSavingsAccount(accountId, payload)
                 ?.subscribeOn(Schedulers.newThread())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
