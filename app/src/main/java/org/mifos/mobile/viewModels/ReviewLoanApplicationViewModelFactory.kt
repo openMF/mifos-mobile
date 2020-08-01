@@ -7,7 +7,7 @@ import org.mifos.mobile.injection.PerActivity
 import javax.inject.Inject
 
 @PerActivity
-class ReviewLoanApplicationViewModelFactory @Inject constructor(private val dataManager: DataManager)
+class ReviewLoanApplicationViewModelFactory @Inject constructor(private val dataManager: DataManager?)
     : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

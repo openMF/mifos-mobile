@@ -24,7 +24,7 @@ import javax.inject.Inject
  * Created by Rajan Maurya on 10/03/17.
  */
 class SavingsMakeTransferPresenter @Inject constructor(
-        val dataManager: DataManager,
+        val dataManager: DataManager?,
         @ApplicationContext context: Context?
 ) : BasePresenter<SavingsMakeTransferMvpView?>(context) {
     private var compositeDisposables: CompositeDisposable = CompositeDisposable()
@@ -44,7 +44,7 @@ class SavingsMakeTransferPresenter @Inject constructor(
     fun loanAccountTransferTemplate() {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.accountTransferTemplate
+        dataManager?.accountTransferTemplate
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<AccountOptionsTemplate?>() {

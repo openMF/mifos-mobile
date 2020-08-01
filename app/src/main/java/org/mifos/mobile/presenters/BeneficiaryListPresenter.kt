@@ -19,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 14/6/17.
  */
-class BeneficiaryListPresenter @Inject constructor(private val dataManager: DataManager, @ApplicationContext context: Context) : BasePresenter<BeneficiariesView?>(context) {
+class BeneficiaryListPresenter @Inject constructor(private val dataManager: DataManager?, @ApplicationContext context: Context?) : BasePresenter<BeneficiariesView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun detachView() {
         super.detachView()
@@ -34,7 +34,7 @@ class BeneficiaryListPresenter @Inject constructor(private val dataManager: Data
     fun loadBeneficiaries() {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.beneficiaryList
+        dataManager?.beneficiaryList
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<List<Beneficiary?>?>() {

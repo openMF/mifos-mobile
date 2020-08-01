@@ -33,8 +33,8 @@ import javax.inject.Inject
  * Created by naman on 07/04/17.
  */
 class UserDetailsPresenter @Inject constructor(
-        @ApplicationContext context: Context, private val dataManager: DataManager,
-        private val preferencesHelper: PreferencesHelper
+        @ApplicationContext context: Context?, private val dataManager: DataManager?,
+        private val preferencesHelper: PreferencesHelper?
 ) : BasePresenter<UserDetailsView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
@@ -56,7 +56,7 @@ class UserDetailsPresenter @Inject constructor(
         get() {
             checkViewAttached()
             mvpView?.showProgress()
-            dataManager.currentClient
+            dataManager?.currentClient
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribeOn(Schedulers.io())
                     ?.subscribeWith(object : DisposableObserver<Client?>() {
@@ -83,8 +83,8 @@ class UserDetailsPresenter @Inject constructor(
     val userImage: Unit
         get() {
             checkViewAttached()
-            setUserProfile(preferencesHelper.userProfileImage)
-            dataManager.clientImage
+            setUserProfile(preferencesHelper?.userProfileImage)
+            dataManager?.clientImage
                     ?.observeOn(Schedulers.newThread())
                     ?.subscribeOn(Schedulers.io())
                     ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -100,7 +100,7 @@ class UserDetailsPresenter @Inject constructor(
                                 //removing 'data:image/jpg;base64' from the response
                                 //the response is of the form of 'data:image/jpg;base64, .....'
                                 val pureBase64Encoded = encodedString.substring(encodedString.indexOf(',') + 1)
-                                preferencesHelper.userProfileImage = pureBase64Encoded
+                                preferencesHelper?.userProfileImage = pureBase64Encoded
                                 setUserProfile(pureBase64Encoded)
                             } catch (e: IOException) {
                                 Log.e("userimage", e.message)
@@ -123,8 +123,8 @@ class UserDetailsPresenter @Inject constructor(
 
     fun registerNotification(token: String) {
         checkViewAttached()
-        val payload = NotificationRegisterPayload(preferencesHelper.clientId!!, token)
-        dataManager.registerNotification(payload)
+        val payload = NotificationRegisterPayload(preferencesHelper?.clientId!!, token)
+        dataManager?.registerNotification(payload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -145,7 +145,7 @@ class UserDetailsPresenter @Inject constructor(
 
     private fun getUserNotificationId(payload: NotificationRegisterPayload, token: String) {
         checkViewAttached()
-        dataManager.getUserNotificationId(preferencesHelper.clientId!!)
+        dataManager?.getUserNotificationId(preferencesHelper?.clientId!!)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<NotificationUserDetail?>() {
@@ -165,7 +165,7 @@ class UserDetailsPresenter @Inject constructor(
             token: String
     ) {
         checkViewAttached()
-        dataManager.updateRegisterNotification(id, payload)
+        dataManager?.updateRegisterNotification(id, payload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -175,8 +175,8 @@ class UserDetailsPresenter @Inject constructor(
                     }
 
                     override fun onNext(responseBody: ResponseBody) {
-                        preferencesHelper.setSentTokenToServer(true)
-                        preferencesHelper.saveGcmToken(token)
+                        preferencesHelper?.setSentTokenToServer(true)
+                        preferencesHelper?.saveGcmToken(token)
                     }
                 })?.let { compositeDisposables.add(it) }
     }
