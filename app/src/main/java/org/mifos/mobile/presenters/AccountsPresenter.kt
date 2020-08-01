@@ -27,7 +27,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
-class AccountsPresenter @Inject constructor(@ApplicationContext context: Context, private val dataManager: DataManager) :
+class AccountsPresenter @Inject constructor(@ApplicationContext context: Context?, private val dataManager: DataManager?) :
         BasePresenter<AccountsView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -48,7 +48,7 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
     fun loadClientAccounts() {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.clientAccounts
+        dataManager?.clientAccounts
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
@@ -79,7 +79,7 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
     fun loadAccounts(accountType: String?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.getAccounts(accountType)
+        dataManager?.getAccounts(accountType)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {

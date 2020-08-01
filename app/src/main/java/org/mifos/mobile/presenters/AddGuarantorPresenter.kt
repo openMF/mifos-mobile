@@ -24,7 +24,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 23/July/2018
 */
-class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Context, var dataManager: DataManager) :
+class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Context?, var dataManager: DataManager?) :
         BasePresenter<AddGuarantorView?>(context) {
 
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -39,7 +39,7 @@ class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Contex
 
     fun getGuarantorTemplate(state: GuarantorState?, loanId: Long?) {
         mvpView?.showProgress()
-        dataManager.getGuarantorTemplate(loanId)
+        dataManager?.getGuarantorTemplate(loanId)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<GuarantorTemplatePayload?>() {
@@ -62,7 +62,7 @@ class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Contex
 
     fun createGuarantor(loanId: Long?, payload: GuarantorApplicationPayload?) {
         mvpView?.showProgress()
-        dataManager.createGuarantor(loanId, payload)
+        dataManager?.createGuarantor(loanId, payload)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -88,7 +88,7 @@ class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Contex
             guarantorId: Long?
     ) {
         mvpView?.showProgress()
-        dataManager.updateGuarantor(payload, loanId, guarantorId)
+        dataManager?.updateGuarantor(payload, loanId, guarantorId)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

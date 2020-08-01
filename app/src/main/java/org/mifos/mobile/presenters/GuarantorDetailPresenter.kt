@@ -22,8 +22,8 @@ import javax.inject.Inject
 * Created by saksham on 25/July/2018
 */
 class GuarantorDetailPresenter @Inject constructor(
-        @ApplicationContext context: Context,
-        var dataManager: DataManager
+        @ApplicationContext context: Context?,
+        var dataManager: DataManager?
 ) : BasePresenter<GuarantorDetailView?>(context) {
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun attachView(mvpView: GuarantorDetailView?) {
@@ -37,7 +37,7 @@ class GuarantorDetailPresenter @Inject constructor(
 
     fun deleteGuarantor(loanId: Long?, guarantorId: Long?) {
         mvpView?.showProgress()
-        dataManager.deleteGuarantor(loanId, guarantorId)
+        dataManager?.deleteGuarantor(loanId, guarantorId)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

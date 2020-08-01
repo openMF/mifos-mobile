@@ -23,8 +23,8 @@ import javax.inject.Inject
  * Created by dilpreet on 1/7/17.
  */
 class TransferProcessPresenter @Inject constructor(
-        val dataManager: DataManager,
-        @ApplicationContext context: Context
+        val dataManager: DataManager?,
+        @ApplicationContext context: Context?
 ) : BasePresenter<TransferProcessView?>(context) {
 
     var compositeDisposables: CompositeDisposable = CompositeDisposable()
@@ -47,7 +47,7 @@ class TransferProcessPresenter @Inject constructor(
     fun makeSavingsTransfer(transferPayload: TransferPayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.makeTransfer(transferPayload)
+        dataManager?.makeTransfer(transferPayload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
@@ -77,7 +77,7 @@ class TransferProcessPresenter @Inject constructor(
     fun makeTPTTransfer(transferPayload: TransferPayload?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager.makeThirdPartyTransfer(transferPayload)
+        dataManager?.makeThirdPartyTransfer(transferPayload)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {

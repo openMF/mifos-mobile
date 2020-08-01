@@ -1,9 +1,9 @@
-package org.mifos.mobile.injection;
+package org.mifos.mobile.injection
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
 
-import javax.inject.Scope;
+import javax.inject.Scope
 
 /**
  * A scoping annotation to permit objects whose lifetime should
@@ -15,5 +15,4 @@ import javax.inject.Scope;
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PerActivity {
-}
+annotation class PerActivity
