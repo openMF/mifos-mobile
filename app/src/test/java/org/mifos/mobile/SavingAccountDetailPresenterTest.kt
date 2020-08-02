@@ -44,7 +44,7 @@ class SavingAccountDetailPresenterTest {
     fun setUp() {
         presenter = SavingAccountsDetailPresenter(dataManager!!, context)
         presenter?.attachView(view)
-        savingsWithAssociations = FakeRemoteDataSource.getSavingsWithAssociations()
+        savingsWithAssociations = FakeRemoteDataSource.savingsWithAssociations
     }
 
     @Test

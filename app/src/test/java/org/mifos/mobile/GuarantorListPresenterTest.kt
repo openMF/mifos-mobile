@@ -44,7 +44,7 @@ class GuarantorListPresenterTest {
     fun setUp() {
         presenter = GuarantorListPresenter(context!!, dataManager!!)
         presenter?.attachView(view)
-        guarantorPayloadList = FakeRemoteDataSource.getGuarantorsList()
+        guarantorPayloadList = FakeRemoteDataSource.guarantorsList
     }
 
     @After
