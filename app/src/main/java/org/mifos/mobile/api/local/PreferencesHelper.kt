@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.text.TextUtils
+
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.SelfServiceInterceptor
 import org.mifos.mobile.injection.ApplicationContext
+
 import javax.inject.Inject
 import javax.inject.Singleton
 

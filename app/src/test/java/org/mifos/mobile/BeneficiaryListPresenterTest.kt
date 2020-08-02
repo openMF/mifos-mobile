@@ -44,7 +44,7 @@ class BeneficiaryListPresenterTest {
     fun setUp() {
         presenter = BeneficiaryListPresenter(dataManager!!, context!!)
         presenter?.attachView(view)
-        beneficiaryList = FakeRemoteDataSource.getBeneficiaries()
+        beneficiaryList = FakeRemoteDataSource.beneficiaries
     }
 
     @After

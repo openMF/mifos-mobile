@@ -54,7 +54,7 @@ class NotificationPresenterTest {
     @Test
     fun testLoadNotifications() {
         val list: List<MifosNotification?> = ArrayList()
-        Mockito.`when`<Observable<List<MifosNotification?>>>(dataManager?.notifications)
+        Mockito.`when`<Observable<List<MifosNotification?>?>?>(dataManager?.notifications)
                 .thenReturn(Observable.just(list))
         presenter?.loadNotifications()
         Mockito.verify(view)?.showProgress()

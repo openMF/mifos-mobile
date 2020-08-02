@@ -50,7 +50,7 @@ class RegistrationPresenterTest {
     fun setUp() {
         presenter = RegistrationPresenter(dataManager!!, context)
         presenter?.attachView(view!!)
-        registerPayload = FakeRemoteDataSource.getRegisterPayload()
+        registerPayload = FakeRemoteDataSource.registerPayload
     }
 
     @After
