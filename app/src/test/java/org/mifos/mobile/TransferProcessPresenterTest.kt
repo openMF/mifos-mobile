@@ -49,7 +49,7 @@ class TransferProcessPresenterTest {
     fun setUp() {
         presenter = TransferProcessPresenter(dataManager!!, context!!)
         presenter?.attachView(view)
-        transferPayload = FakeRemoteDataSource.getTransferPayload()
+        transferPayload = FakeRemoteDataSource.transferPayload
     }
 
     @After

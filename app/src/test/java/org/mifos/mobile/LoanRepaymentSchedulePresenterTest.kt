@@ -47,8 +47,8 @@ class LoanRepaymentSchedulePresenterTest {
     fun setUp() {
         presenter = LoanRepaymentSchedulePresenter(context, dataManager!!)
         presenter?.attachView(view)
-        loanWithRepaymentSchedule = FakeRemoteDataSource.getLoanAccountRepaymentSchedule()
-        loanWithEmptyRepaymentSchedule = FakeRemoteDataSource.getLoanAccountEmptyRepaymentSchedule()
+        loanWithRepaymentSchedule = FakeRemoteDataSource.loanAccountRepaymentSchedule
+        loanWithEmptyRepaymentSchedule = FakeRemoteDataSource.loanAccountEmptyRepaymentSchedule
     }
 
     @After

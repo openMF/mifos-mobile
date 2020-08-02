@@ -45,7 +45,7 @@ class LoanAccountDetailPresenterTest {
     fun setUp() {
         presenter = LoanAccountsDetailPresenter(dataManager!!, context)
         presenter?.attachView(view)
-        loanWithAssociations = FakeRemoteDataSource.getLoanAccountWithTransaction()
+        loanWithAssociations = FakeRemoteDataSource.loanAccountWithTransaction
     }
 
     @Test

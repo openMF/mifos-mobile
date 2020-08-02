@@ -44,7 +44,7 @@ class AccountOverviewPresenterTest {
     fun setUp() {
         presenter = AccountOverviewPresenter(context!!, dataManager!!)
         presenter?.attachView(mvpView)
-        accounts = FakeRemoteDataSource.getClientAccounts()
+        accounts = FakeRemoteDataSource.clientAccounts
     }
 
     @After

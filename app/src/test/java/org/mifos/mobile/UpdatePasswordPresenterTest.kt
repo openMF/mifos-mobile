@@ -55,7 +55,7 @@ class UpdatePasswordPresenterTest {
         Mockito.`when`(preferencesHelper?.baseUrl)
                 .thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT)
         presenter = UpdatePasswordPresenter(context!!, dataManager!!, preferencesHelper!!)
-        passwordPayload = FakeRemoteDataSource.getUpdatePasswordPayload()
+        passwordPayload = FakeRemoteDataSource.updatePasswordPayload
         presenter?.attachView(view)
     }
 

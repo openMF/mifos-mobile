@@ -46,8 +46,8 @@ class ThirdPartyTransferPresenterTest {
     fun setUp() {
         presenter = ThirdPartyTransferPresenter(dataManager!!, context!!)
         presenter?.attachView(view)
-        accountOptionsTemplate = FakeRemoteDataSource.getAccountOptionsTemplate()
-        beneficiaryList = FakeRemoteDataSource.getBeneficiaries()
+        accountOptionsTemplate = FakeRemoteDataSource.accountOptionsTemplate
+        beneficiaryList = FakeRemoteDataSource.beneficiaries
     }
 
     @After

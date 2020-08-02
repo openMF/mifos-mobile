@@ -47,7 +47,7 @@ class RecentTransactionsPresenterTest {
     fun setUp() {
         presenter = RecentTransactionsPresenter(dataManager!!, context!!)
         presenter?.attachView(view)
-        recentTransaction = FakeRemoteDataSource.getTransactions()
+        recentTransaction = FakeRemoteDataSource.transactions
     }
 
     @After

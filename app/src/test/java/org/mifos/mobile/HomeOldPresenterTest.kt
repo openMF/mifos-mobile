@@ -50,8 +50,8 @@ class HomeOldPresenterTest {
     fun setUp() {
         presenter = HomeOldPresenter(dataManager!!, context!!, preferencesHelper!!)
         presenter?.attachView(view)
-        clientAccounts = FakeRemoteDataSource.getClientAccounts()
-        client = FakeRemoteDataSource.getCurrentClient()
+        clientAccounts = FakeRemoteDataSource.clientAccounts
+        client = FakeRemoteDataSource.currentClient
     }
 
     @After

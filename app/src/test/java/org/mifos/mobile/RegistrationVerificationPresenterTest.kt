@@ -50,7 +50,7 @@ class RegistrationVerificationPresenterTest {
     fun setUp() {
         presenter = RegistrationVerificationPresenter(dataManager!!, context!!)
         presenter?.attachView(view)
-        userVerify = FakeRemoteDataSource.getUserVerify()
+        userVerify = FakeRemoteDataSource.userVerify
     }
 
     @After

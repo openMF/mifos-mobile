@@ -50,7 +50,7 @@ class BeneficiaryApplicationPresenterTest {
     fun setUp() {
         presenter = BeneficiaryApplicationPresenter(dataManager!!, context)
         presenter?.attachView(view)
-        beneficiaryTemplate = FakeRemoteDataSource.getBeneficiaryTemplate()
+        beneficiaryTemplate = FakeRemoteDataSource.beneficiaryTemplate
         payload = FakeRemoteDataSource.beneficiaryPayload()
         updatePayload = FakeRemoteDataSource.beneficiaryUpdatePayload()
     }

@@ -52,7 +52,7 @@ class UserDetailsPresenterTest {
     @Throws(Exception::class)
     fun setUp() {
         presenter = UserDetailsPresenter(context!!, dataManager!!, preferencesHelper!!)
-        client = FakeRemoteDataSource.getCurrentClient()
+        client = FakeRemoteDataSource.currentClient
         presenter?.attachView(view)
     }
 

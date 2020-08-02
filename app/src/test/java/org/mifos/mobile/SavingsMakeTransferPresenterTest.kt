@@ -44,7 +44,7 @@ class SavingsMakeTransferPresenterTest {
     fun setUp() {
         presenter = SavingsMakeTransferPresenter(dataManager!!, context)
         presenter?.attachView(view)
-        accountOptionsTemplate = FakeRemoteDataSource.getAccountOptionsTemplate()
+        accountOptionsTemplate = FakeRemoteDataSource.accountOptionsTemplate
     }
 
     @After
