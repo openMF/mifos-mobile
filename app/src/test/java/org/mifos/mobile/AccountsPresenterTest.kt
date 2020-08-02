@@ -48,10 +48,10 @@ class AccountsPresenterTest {
     fun setUp() {
         presenter = AccountsPresenter(context!!, dataManager!!)
         presenter?.attachView(accountsView)
-        accounts = FakeRemoteDataSource.getClientAccounts()
-        savingsAccount = FakeRemoteDataSource.getClientSavingsAccount()
-        loanAccounts = FakeRemoteDataSource.getClientLoanAccount()
-        shareAccounts = FakeRemoteDataSource.getClientShareAccount()
+        accounts = FakeRemoteDataSource.clientAccounts
+        savingsAccount = FakeRemoteDataSource.clientSavingsAccount
+        loanAccounts = FakeRemoteDataSource.clientLoanAccount
+        shareAccounts = FakeRemoteDataSource.clientShareAccount
     }
 
     @After

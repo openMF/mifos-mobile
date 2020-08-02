@@ -48,9 +48,9 @@ class ClientChargePresenterTest {
     fun setUp() {
         presenter = ClientChargePresenter(dataManager, context)
         presenter?.attachView(view)
-        charge = FakeRemoteDataSource.getCharge()
-        savingsCharge = FakeRemoteDataSource.getSavingsCharge()
-        loanCharge = FakeRemoteDataSource.getLoanCharge()
+        charge = FakeRemoteDataSource.charge
+        savingsCharge = FakeRemoteDataSource.savingsCharge
+        loanCharge = FakeRemoteDataSource.loanCharge
     }
 
     @After
