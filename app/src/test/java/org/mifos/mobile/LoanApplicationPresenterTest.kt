@@ -53,9 +53,9 @@ class LoanApplicationPresenterTest {
     fun setUp() {
         presenter = LoanApplicationPresenter(dataManager!!, context)
         presenter?.attachView(view)
-        loanTemplate = FakeRemoteDataSource.getLoanTemplate()
-        loanTemplateWithProduct = FakeRemoteDataSource.getLoanTemplateByTemplate()
-        loansPayload = FakeRemoteDataSource.getLoansPayload()
+        loanTemplate = FakeRemoteDataSource.loanTemplate
+        loanTemplateWithProduct = FakeRemoteDataSource.loanTemplateByTemplate
+        loansPayload = FakeRemoteDataSource.loansPayload
     }
 
     @After

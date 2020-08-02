@@ -56,12 +56,12 @@ class LoginPresenterTest {
     fun setUp() {
         Mockito.`when`(mockHelper?.baseUrl).thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT)
         Mockito.`when`(dataManager?.preferencesHelper).thenReturn(mockHelper)
-        presenter = LoginPresenter(dataManager!!, context)
+        presenter = LoginPresenter(dataManager, context)
         presenter?.attachView(view)
-        user = FakeRemoteDataSource.getUser()
-        clientPage = FakeRemoteDataSource.getClients()
-        noClientPage = FakeRemoteDataSource.getNoClients()
-        loginPayload = FakeRemoteDataSource.getLoginPayload()
+        user = FakeRemoteDataSource.user
+        clientPage = FakeRemoteDataSource.clients
+        noClientPage = FakeRemoteDataSource.noClients
+        loginPayload = FakeRemoteDataSource.loginPayload
     }
 
     @Test

@@ -198,9 +198,9 @@ class DataManager @Inject constructor(
         return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
-    val clientLocalCharges: Observable<Page<Charge?>?>
+    val clientLocalCharges: Observable<Page<Charge?>?>?
         get() = databaseHelper.clientCharges
-    val notifications: Observable<List<MifosNotification?>>
+    val notifications: Observable<List<MifosNotification?>?>?
         get() = databaseHelper.notifications
     val unreadNotificationsCount: Observable<Int>
         get() = databaseHelper.unreadNotificationsCount
@@ -209,11 +209,11 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi?.registerNotification(payload)
     }
 
-    fun updateRegisterNotification(id: Long, payload: NotificationRegisterPayload?): Observable<ResponseBody>? {
+    fun updateRegisterNotification(id: Long, payload: NotificationRegisterPayload?): Observable<ResponseBody?>? {
         return baseApiManager.notificationApi?.updateRegisterNotification(id, payload)
     }
 
-    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail>? {
+    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail?>? {
         return baseApiManager.notificationApi?.getUserNotificationId(id)
     }
 
@@ -223,12 +223,12 @@ class DataManager @Inject constructor(
 
     fun getGuarantorTemplate(loanId: Long?): Observable<GuarantorTemplatePayload?>? {
         return baseApiManager.guarantorApi?.getGuarantorTemplate(loanId)
-                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out GuarantorTemplatePayload>> { Observable.just(FakeRemoteDataSource.getGuarantorTemplatePayload()) })
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out GuarantorTemplatePayload>> { Observable.just(FakeRemoteDataSource.guarantorTemplatePayload) })
     }
 
     fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload?>?>? {
         return baseApiManager.guarantorApi?.getGuarantorList(loanId)
-                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out List<GuarantorPayload>>> { Observable.just(FakeRemoteDataSource.getGuarantorsList()) })
+                ?.onErrorResumeNext(Function<Throwable?, ObservableSource<out List<GuarantorPayload>>> { Observable.just(FakeRemoteDataSource.guarantorsList) })
     }
 
     fun createGuarantor(
