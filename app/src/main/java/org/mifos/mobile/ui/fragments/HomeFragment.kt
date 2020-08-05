@@ -56,10 +56,12 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     @BindView(R.id.swipe_home_container)
     var slHomeContainer: SwipeRefreshLayout? = null
 
-    @set:Inject
+    @JvmField
+    @Inject
     var presenter: HomePresenter? = null
 
-    @set:Inject
+    @JvmField
+    @Inject
     var preferencesHelper: PreferencesHelper? = null
 
     lateinit var rootView: View
