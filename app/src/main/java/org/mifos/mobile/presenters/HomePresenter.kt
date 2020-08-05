@@ -31,7 +31,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager?, @
     private val compositeDisposable: CompositeDisposable? = CompositeDisposable()
 
     @JvmField
-    @set:Inject
+    @Inject
     var preferencesHelper: PreferencesHelper? = null
     override fun attachView(mvpView: HomeView?) {
         super.attachView(mvpView)
