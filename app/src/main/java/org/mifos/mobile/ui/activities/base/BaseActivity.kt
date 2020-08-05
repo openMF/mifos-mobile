@@ -117,7 +117,7 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
      * @param message   Message that the toast must show.
      * @param toastType Duration for which the toast must be visible.
      */
-    fun showToast(message: String, toastType: Int) {
+    fun showToast(message: String?, toastType: Int) {
         Toast.makeText(this@BaseActivity, message, toastType).show()
     }
 
