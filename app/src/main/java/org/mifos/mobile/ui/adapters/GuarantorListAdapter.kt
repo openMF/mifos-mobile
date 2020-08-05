@@ -47,7 +47,8 @@ class GuarantorListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list?.size!!
+        return if (list?.size != null) list?.size!!
+        else 0
     }
 
     fun setGuarantorList(payload: MutableList<GuarantorPayload?>?) {

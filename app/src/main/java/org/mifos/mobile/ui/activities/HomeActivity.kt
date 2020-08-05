@@ -36,6 +36,7 @@ import org.mifos.mobile.ui.fragments.*
 import org.mifos.mobile.ui.views.UserDetailsView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
+
 import javax.inject.Inject
 
 /**
@@ -43,7 +44,6 @@ import javax.inject.Inject
  * @since 14/07/2016
  */
 class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
     @JvmField
     @BindView(R.id.navigation_view)
     var navigationView: NavigationView? = null
@@ -52,11 +52,12 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     @BindView(R.id.drawer)
     var drawerLayout: DrawerLayout? = null
 
-    @set:Inject
+    @JvmField
+    @Inject
     var preferencesHelper: PreferencesHelper? = null
 
     @JvmField
-    @set:Inject
+    @Inject
     var detailsPresenter: UserDetailsPresenter? = null
     private var tvUsername: TextView? = null
     private var ivCircularUserProfilePicture: CircularImageView? = null
@@ -67,8 +68,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     private var isReceiverRegistered = false
     var checkedItem = 0
         private set
-    private var doubleBackToExitPressedOnce = false
-
+    var doubleBackToExitPressedOnce = false
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityComponent?.inject(this)
@@ -252,7 +252,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             }
         } else {
             runOnUiThread {
-                val userName: String? = if (preferencesHelper?.clientName?.isNotEmpty() == true) {
+                val userName: String? = if (preferencesHelper?.clientName?.isEmpty() == false) {
                     preferencesHelper?.clientName
                 } else {
                     getString(R.string.app_name)
@@ -285,7 +285,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * @param message contains information about error occurred
      */
     override fun showError(message: String?) {
-        showToast(message!!, Toast.LENGTH_SHORT)
+        showToast(message, Toast.LENGTH_SHORT)
     }
 
     override fun onDestroy() {
@@ -297,7 +297,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * Handling back press
      */
     override fun onBackPressed() {
-        if (drawerLayout?.isDrawerOpen(GravityCompat.START)!!) {
+        if (drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
             drawerLayout?.closeDrawer(GravityCompat.START)
             return
         }
