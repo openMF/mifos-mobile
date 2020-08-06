@@ -86,7 +86,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         val rootView = this.rootView
         if (rootView != null) {
-            ButterKnife.bind(this, rootView!!)
+            ButterKnife.bind(this, rootView)
         }
         presenter?.attachView(this)
         progressBar?.visibility = View.GONE
@@ -174,7 +174,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
                     getString(R.string.username), getString(R.string.not_contain_username)))
             return false
         } else if (etFirstName?.text?.isEmpty() == true) {
-            Toaster?.show(rootView, getString(R.string.error_validation_blank, getString(R.string.first_name)))
+            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.first_name)))
             return false
         } else if (etLastName?.text.toString().trim { it <= ' ' }.isEmpty()) {
             Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.last_name)))

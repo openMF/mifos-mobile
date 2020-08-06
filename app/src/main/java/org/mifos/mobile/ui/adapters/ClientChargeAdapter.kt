@@ -64,7 +64,7 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
                 formatCurrency(context, charge?.amountOutstanding))
         holder.tvClientName?.text = charge?.name
         if (charge?.dueDate?.isNotEmpty() == true) {
-            holder.tvDueDate?.text = getDateAsString(charge?.dueDate)
+            holder.tvDueDate?.text = getDateAsString(charge.dueDate)
         }
         if (charge?.isPaid == true || charge?.isWaived == true || charge?.paid == true || charge?.waived == true) {
             holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
