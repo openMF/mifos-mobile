@@ -116,7 +116,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      * Cancels the Transfer and pops fragment
      */
     @OnClick(R.id.btn_cancel_transfer)
-    open fun cancelTransfer() {
+    fun cancelTransfer() {
         Toaster.cancelTransfer(rootView, getString(R.string.cancel_transfer),
                 getString(R.string.yes), View.OnClickListener {
             activity?.supportFragmentManager?.popBackStack()

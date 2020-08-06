@@ -14,17 +14,17 @@ data class LoanOfficerOptions(
 
         var id: Int? = null,
 
-        var firstname: String,
+        var firstname: String? = null,
 
-        var lastname: String,
+        var lastname: String? = null,
 
-        var displayName: String,
+        var displayName: String? = null,
 
-        var mobileNo: String,
+        var mobileNo: String? = null,
 
         var officeId: Int? = null,
 
-        var officeName: String,
+        var officeName: String? = null,
 
         @SerializedName("isLoanOfficer")
         var loanOfficer: Boolean? = null,
@@ -32,6 +32,6 @@ data class LoanOfficerOptions(
         @SerializedName("isActive")
         var active: Boolean? = null,
 
-        var joiningDate: List<Int>
+        var joiningDate: List<Int>? = null
 
 ) : Parcelable

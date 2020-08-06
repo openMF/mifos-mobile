@@ -40,7 +40,7 @@ import javax.inject.Inject
 class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
 
     private var rootView: View? = null
-    private var qrUri: Uri? = null
+    private lateinit var qrUri: Uri
     private var uriValue: String? = null
     private var mFrameRect: RectF? = null
     private var inputStream: InputStream? = null
@@ -155,7 +155,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
      *
      * @param qrImageUri contains Uri of qr code image
      */
-    private fun setBitmapImage(qrImageUri: Uri?) {
+    private fun setBitmapImage(qrImageUri: Uri) {
         try {
             inputStream = context?.contentResolver?.openInputStream(qrImageUri)
         } catch (e: FileNotFoundException) {

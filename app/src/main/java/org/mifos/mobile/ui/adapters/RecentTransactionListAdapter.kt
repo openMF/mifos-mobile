@@ -38,9 +38,9 @@ class RecentTransactionListAdapter @Inject constructor(@ActivityContext context:
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val (_, _, _, type, _, currency, amount, submittedOnDate) = getItem(position)
-        var currencyRepresentation = currency.displaySymbol
+        var currencyRepresentation = currency?.displaySymbol
         if (currencyRepresentation == null) {
-            currencyRepresentation = currency.code
+            currencyRepresentation = currency?.code
         }
         holder.tvAmount?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,

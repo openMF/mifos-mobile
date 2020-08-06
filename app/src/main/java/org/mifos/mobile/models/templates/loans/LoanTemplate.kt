@@ -15,24 +15,24 @@ data class LoanTemplate(
 
         var clientId: Int? = null,
 
-        var clientAccountNo: String,
+        var clientAccountNo: String? = null,
 
-        var clientName: String,
+        var clientName: String? = null,
 
         var clientOfficeId: Int? = null,
 
         var loanProductId: Int? = null,
 
-        var loanProductName: String,
+        var loanProductName: String? = null,
 
         @SerializedName("isLoanProductLinkedToFloatingRate")
         var loanProductLinkedToFloatingRate: Boolean? = null,
 
         var fundId: Int? = null,
 
-        var fundName: String,
+        var fundName: String? = null,
 
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var principal: Double? = null,
 
@@ -42,28 +42,28 @@ data class LoanTemplate(
 
         var termFrequency: Int? = null,
 
-        var termPeriodFrequencyType: TermPeriodFrequencyType,
+        var termPeriodFrequencyType: TermPeriodFrequencyType? = null,
 
         var numberOfRepayments: Int? = null,
 
         var repaymentEvery: Int? = null,
 
-        var repaymentFrequencyType: RepaymentFrequencyType,
+        var repaymentFrequencyType: RepaymentFrequencyType? = null,
 
         var interestRatePerPeriod: Double? = null,
 
-        var interestRateFrequencyType: InterestRateFrequencyType,
+        var interestRateFrequencyType: InterestRateFrequencyType? = null,
 
         var annualInterestRate: Double? = null,
 
         @SerializedName("isFloatingInterestRate")
         var floatingInterestRate: Boolean? = null,
 
-        var amortizationType: AmortizationType,
+        var amortizationType: AmortizationType? = null,
 
-        var interestType: InterestType,
+        var interestType: InterestType? = null,
 
-        var interestCalculationPeriodType: InterestCalculationPeriodType,
+        var interestCalculationPeriodType: InterestCalculationPeriodType? = null,
 
         var allowPartialPeriodInterestCalcualtion: Boolean? = null,
 
@@ -71,7 +71,7 @@ data class LoanTemplate(
 
         var graceOnArrearsAgeing: Int? = null,
 
-        var timeline: Timeline,
+        var timeline: Timeline? = null,
 
         var productOptions: List<ProductOptions> = ArrayList(),
 
@@ -109,11 +109,11 @@ data class LoanTemplate(
 
         var canDisburse: Boolean? = null,
 
-        var product: Product,
+        var product: Product? = null,
 
-        var daysInMonthType: DaysInMonthType,
+        var daysInMonthType: DaysInMonthType? = null,
 
-        var daysInYearType: DaysInYearType,
+        var daysInYearType: DaysInYearType? = null,
 
         @SerializedName("isInterestRecalculationEnabled")
         var interestRecalculationEnabled: Boolean? = null,
