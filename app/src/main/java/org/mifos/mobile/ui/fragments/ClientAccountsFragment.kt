@@ -275,9 +275,9 @@ import javax.inject.Inject
         val displayMetrics = DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         val width = displayMetrics.widthPixels
-        search?.maxWidth = (0.75 * width).toInt()
-        search?.setSearchableInfo(manager.getSearchableInfo(activity?.componentName))
-        search?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        search.maxWidth = (0.75 * width).toInt()
+        search.setSearchableInfo(manager.getSearchableInfo(activity?.componentName))
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }

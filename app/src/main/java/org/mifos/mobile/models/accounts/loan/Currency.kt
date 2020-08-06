@@ -9,18 +9,17 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Currency(
-        var code: String,
+        var code: String? = null,
 
-        var name: String,
+        var name: String? = null,
 
         var decimalPlaces: Double? = null,
 
         var inMultiplesOf: Double? = null,
 
-        var displaySymbol: String,
+        var displaySymbol: String? = null,
 
-        var nameCode: String,
+        var nameCode: String? = null,
 
-        var displayLabel: String
-
+        var displayLabel: String? = null
 ) : Parcelable
