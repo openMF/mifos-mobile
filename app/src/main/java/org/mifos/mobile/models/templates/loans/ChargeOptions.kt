@@ -14,24 +14,24 @@ data class ChargeOptions(
 
         var id: Int? = null,
 
-        var name: String,
+        var name: String? = null,
 
         var active: Boolean? = null,
 
         var penalty: Boolean? = null,
 
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var amount: Double? = null,
 
-        var chargeTimeType: ChargeTimeType,
+        var chargeTimeType: ChargeTimeType? = null,
 
-        var chargeAppliesTo: ChargeAppliesTo,
+        var chargeAppliesTo: ChargeAppliesTo? = null,
 
-        var chargeCalculationType: ChargeCalculationType,
+        var chargeCalculationType: ChargeCalculationType? = null,
 
-        var chargePaymentMode: ChargePaymentMode,
+        var chargePaymentMode: ChargePaymentMode? = null,
 
-        var taxGroup: TaxGroup
+        var taxGroup: TaxGroup? = null
 
 ) : Parcelable

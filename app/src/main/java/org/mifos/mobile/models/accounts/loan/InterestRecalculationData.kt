@@ -17,17 +17,17 @@ data class InterestRecalculationData(
 
         var loanId: Int? = null,
 
-        var interestRecalculationCompoundingType: InterestRecalculationCompoundingType,
+        var interestRecalculationCompoundingType: InterestRecalculationCompoundingType? = null,
 
-        var rescheduleStrategyType: RescheduleStrategyType,
+        var rescheduleStrategyType: RescheduleStrategyType? = null,
 
         var calendarData: CalendarData,
 
-        var recalculationRestFrequencyType: RecalculationRestFrequencyType,
+        var recalculationRestFrequencyType: RecalculationRestFrequencyType? = null,
 
         var recalculationRestFrequencyInterval: Double? = null,
 
-        var recalculationCompoundingFrequencyType: RecalculationCompoundingFrequencyType,
+        var recalculationCompoundingFrequencyType: RecalculationCompoundingFrequencyType? = null,
 
         @SerializedName("isCompoundingToBePostedAsTransaction")
         var compoundingToBePostedAsTransaction: Boolean? = null,

@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 data class TransactionProcessingStrategyOptions(
         var id: Int? = null,
 
-        var code: String,
+        var code: String? = null,
 
-        var name: String
+        var name: String? = null
 ) : Parcelable

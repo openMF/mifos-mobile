@@ -60,8 +60,8 @@ class PrivacyPolicyActivity : BaseActivity() {
 
     internal inner class MyWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            if (Uri.parse(url).host
-                            .endsWith(getString(R.string.privacy_policy_host))) {
+            if (Uri.parse(url)?.host
+                            ?.endsWith(getString(R.string.privacy_policy_host)) == true) {
                 return false
             }
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))

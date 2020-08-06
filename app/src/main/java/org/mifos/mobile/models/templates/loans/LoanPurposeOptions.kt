@@ -14,11 +14,11 @@ data class LoanPurposeOptions(
 
         var id: Int? = null,
 
-        var name: String,
+        var name: String? = null,
 
         var position: Int? = null,
 
-        var description: String,
+        var description: String? = null,
 
         @SerializedName("isActive")
         var active: Boolean? = null

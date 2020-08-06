@@ -12,5 +12,5 @@ data class FundOptions(
 
         var id: Int? = null,
 
-        var name: String
+        var name: String? = null
 ) : Parcelable

@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Summary(
 
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var totalDeposits: Double? = null,
 

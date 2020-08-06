@@ -62,15 +62,13 @@ class CircularImageView @JvmOverloads constructor(context: Context, attrs: Attri
         var result = 0
         val specMode = MeasureSpec.getMode(measureSpec)
         val specSize = MeasureSpec.getSize(measureSpec)
-        result = if (specMode == MeasureSpec.EXACTLY) {
-            // The parent has determined an exact size for the child.
-            specSize
-        } else if (specMode == MeasureSpec.AT_MOST) {
-            // The child can be as large as it wants up to the specified size.
-            specSize
-        } else {
-            // The parent has not imposed any constraint on the child.
-            canvasSize
+        result = when (specMode) {
+            MeasureSpec.EXACTLY ->
+                specSize // The parent has determined an exact size for the child.
+            MeasureSpec.AT_MOST ->
+                specSize // The child can be as large as it wants up to the specified size.
+            else ->
+                canvasSize // The parent has not imposed any constraint on the child.
         }
         return result
     }
@@ -79,20 +77,18 @@ class CircularImageView @JvmOverloads constructor(context: Context, attrs: Attri
         var result = 0
         val specMode = MeasureSpec.getMode(measureSpecHeight)
         val specSize = MeasureSpec.getSize(measureSpecHeight)
-        result = if (specMode == MeasureSpec.EXACTLY) {
-            // We were told how big to be
-            specSize
-        } else if (specMode == MeasureSpec.AT_MOST) {
-            // The child can be as large as it wants up to the specified size.
-            specSize
-        } else {
-            // Measure the text (beware: ascent is a negative number)
-            canvasSize
+        result = when (specMode) {
+            MeasureSpec.EXACTLY ->
+                specSize // We were told how big to be
+            MeasureSpec.AT_MOST ->
+                specSize // The child can be as large as it wants up to the specified size.
+            else ->
+                canvasSize // Measure the text (beware: ascent is a negative number)
         }
         return result + 2
     }
 
-    fun drawableToBitmap(drawable: Drawable?): Bitmap? {
+    private fun drawableToBitmap(drawable: Drawable?): Bitmap? {
         if (drawable == null) {
             return null
         } else if (drawable is BitmapDrawable) {

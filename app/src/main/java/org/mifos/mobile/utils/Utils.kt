@@ -16,6 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.DateFormatSymbols
+import java.util.*
 
 /**
  * Created by michaelsosnick on 12/12/16.
@@ -68,9 +69,9 @@ object Utils {
     }
 
     @kotlin.jvm.JvmStatic
-    fun formatTransactionType(type: String): String {
+    fun formatTransactionType(type: String?): String? {
         val builder = StringBuilder()
-        for (str in type.toLowerCase().split("_".toRegex()).toTypedArray()) {
+        for (str in type?.toLowerCase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
             builder.append(str[0].toString().toUpperCase() + str.substring(1,
                     str.length) + " ")
         }

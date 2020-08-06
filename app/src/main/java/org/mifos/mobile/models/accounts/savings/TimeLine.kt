@@ -25,7 +25,7 @@ data class TimeLine(
 
         var approvedByLastname: String?,
 
-        var activatedOnDate: List<Int>,
+        var activatedOnDate: List<Int>? = null,
 
         var activatedByUsername: String?,
 

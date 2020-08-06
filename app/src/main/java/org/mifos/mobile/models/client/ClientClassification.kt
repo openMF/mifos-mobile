@@ -6,7 +6,7 @@ package org.mifos.mobile.models.client
 
 data class ClientClassification(
         var id: Int,
-        var name: String,
+        var name: String? = null,
         var active: Boolean,
         var mandatory: Boolean
 )

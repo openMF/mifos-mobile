@@ -348,12 +348,12 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * Initializes the layout
      */
     override fun showUserInterface() {
-        loanProductAdapter = ArrayAdapter(activity?.applicationContext, android.R.layout.simple_spinner_item,
+        loanProductAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item,
                 listLoanProducts)
         loanProductAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spLoanProducts?.adapter = loanProductAdapter
         spLoanProducts?.onItemSelectedListener = this
-        loanPurposeAdapter = ArrayAdapter(activity?.applicationContext, android.R.layout.simple_spinner_item,
+        loanPurposeAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item,
                 listLoanPurpose)
         loanPurposeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spLoanPurpose?.adapter = loanPurposeAdapter

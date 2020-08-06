@@ -10,7 +10,7 @@ import java.util.*
 
 @Parcelize
 data class RepaymentSchedule(
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var loanTermInDays: Int? = null,
 

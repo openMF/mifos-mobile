@@ -18,7 +18,7 @@ data class CalendarData(
 
         var entityType: EntityType,
 
-        var title: String,
+        var title: String? = null,
 
         var startDate: List<Int> = ArrayList(),
 
@@ -30,7 +30,7 @@ data class CalendarData(
 
         var repeating: Boolean? = null,
 
-        var recurrence: String,
+        var recurrence: String? = null,
 
         var frequency: Frequency,
 
@@ -42,7 +42,7 @@ data class CalendarData(
 
         var secondReminder: Int? = null,
 
-        var humanReadable: String,
+        var humanReadable: String? = null,
 
         var createdDate: List<Int> = ArrayList(),
 
@@ -50,10 +50,9 @@ data class CalendarData(
 
         var createdByUserId: Int? = null,
 
-        var createdByUsername: String,
+        var createdByUsername: String? = null,
 
         var lastUpdatedByUserId: Int? = null,
 
-        var lastUpdatedByUsername: String
-
+        var lastUpdatedByUsername: String? = null
 ) : Parcelable

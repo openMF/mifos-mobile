@@ -12,11 +12,11 @@ data class LoanCollateralOptions(
 
         var id: Int? = null,
 
-        var name: String,
+        var name: String? = null,
 
         var position: Int? = null,
 
-        var description: String,
+        var description: String? = null,
 
         var active: Boolean? = null
 ) : Parcelable

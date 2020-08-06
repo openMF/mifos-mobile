@@ -13,13 +13,13 @@ data class PaymentDetailData(
 
         var paymentType: PaymentType,
 
-        var accountNumber: String,
+        var accountNumber: String? = null,
 
-        var checkNumber: String,
+        var checkNumber: String? = null,
 
-        var routingCode: String,
+        var routingCode: String? = null,
 
-        var receiptNumber: String,
+        var receiptNumber: String? = null,
 
-        var bankNumber: String
+        var bankNumber: String? = null
 ) : Parcelable

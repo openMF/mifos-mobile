@@ -155,7 +155,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         tvOutstandingBalanceName?.text = resources.getString(R.string.string_and_string,
                 loanWithAssociations?.summary?.currency?.displaySymbol, CurrencyUtil.formatCurrency(activity,
                 loanWithAssociations?.summary?.totalOutstanding))
-        if (loanWithAssociations?.repaymentSchedule?.periods != null) for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations?.repaymentSchedule?.periods!!) {
+        if (loanWithAssociations?.repaymentSchedule?.periods != null) for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations.repaymentSchedule?.periods!!) {
             if (dueDate == loanWithAssociations.summary?.getOverdueSinceDate()) {
                 tvNextInstallmentName?.text = resources.getString(R.string.string_and_string,
                         loanWithAssociations.summary?.currency?.displaySymbol,

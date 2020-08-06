@@ -6,6 +6,6 @@ package org.mifos.mobile.models.client
 
 data class Group(
         var id: Int,
-        var accountNo: String,
-        var name: String
+        var accountNo: String? = null,
+        var name: String? = null
 )

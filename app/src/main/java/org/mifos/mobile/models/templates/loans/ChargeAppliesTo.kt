@@ -12,7 +12,7 @@ data class ChargeAppliesTo(
 
         var id: Int? = null,
 
-        var code: String,
+        var code: String? = null,
 
-        var value: String
+        var value: String? = null
 ) : Parcelable

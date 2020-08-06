@@ -95,12 +95,12 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
                     .setTitle(getString(R.string.delete_beneficiary))
                     .setMessage(getString(R.string.delete_beneficiary_confirmation))
                     .setPositiveButton(getString(R.string.delete),
-                            DialogInterface.OnClickListener { dialog, which ->
+                            DialogInterface.OnClickListener { dialog, _ ->
                                 dialog.dismiss()
                                 presenter?.deleteBeneficiary(beneficiary?.id?.toLong())
                             })
                     .setNegativeButton(getString(R.string.cancel),
-                            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+                            DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                     .createMaterialDialog()
                     .show()
         }

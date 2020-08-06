@@ -14,23 +14,23 @@ data class Product(
 
         var id: Int? = null,
 
-        var name: String,
+        var name: String? = null,
 
-        var shortName: String,
+        var shortName: String? = null,
 
         var fundId: Int? = null,
 
-        var fundName: String,
+        var fundName: String? = null,
 
         var includeInBorrowerCycle: Boolean? = null,
 
         var useBorrowerCycle: Boolean? = null,
 
-        var startDate: List<Int>,
+        var startDate: List<Int>? = null,
 
-        var status: String,
+        var status: String? = null,
 
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var principal: Double? = null,
 
@@ -46,7 +46,7 @@ data class Product(
 
         var repaymentEvery: Int? = null,
 
-        var repaymentFrequencyType: RepaymentFrequencyType,
+        var repaymentFrequencyType: RepaymentFrequencyType? = null,
 
         var interestRatePerPeriod: Double? = null,
 
@@ -54,7 +54,7 @@ data class Product(
 
         var maxInterestRatePerPeriod: Double? = null,
 
-        var interestRateFrequencyType: InterestRateFrequencyType,
+        var interestRateFrequencyType: InterestRateFrequencyType? = null,
 
         var annualInterestRate: Double? = null,
 
@@ -74,30 +74,30 @@ data class Product(
 
         var interestType: InterestType,
 
-        var interestCalculationPeriodType: InterestCalculationPeriodType,
+        var interestCalculationPeriodType: InterestCalculationPeriodType? = null,
 
         var allowPartialPeriodInterestCalcualtion: Boolean? = null,
 
         var transactionProcessingStrategyId: Int? = null,
 
-        var transactionProcessingStrategyName: String,
+        var transactionProcessingStrategyName: String? = null,
 
         var graceOnArrearsAgeing: Int? = null,
 
         var overdueDaysForNPA: Int? = null,
 
-        var daysInMonthType: DaysInMonthType,
+        var daysInMonthType: DaysInMonthType? = null,
 
         var daysInYearType: DaysInYearType,
 
         @SerializedName("isInterestRecalculationEnabled")
         var interestRecalculationEnabled: Boolean? = null,
 
-        var interestRecalculationData: InterestRecalculationData,
+        var interestRecalculationData: InterestRecalculationData? = null,
 
         var canDefineInstallmentAmount: Boolean? = null,
 
-        var accountingRule: AccountingRule,
+        var accountingRule: AccountingRule? = null,
 
         var multiDisburseLoan: Boolean? = null,
 
@@ -109,6 +109,6 @@ data class Product(
 
         var accountMovesOutOfNPAOnlyOnArrearsCompletion: Boolean? = null,
 
-        var allowAttributeOverrides: AllowAttributeOverrides
+        var allowAttributeOverrides: AllowAttributeOverrides? = null
 
 ) : Parcelable

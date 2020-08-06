@@ -1,6 +1,7 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
+
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,7 +12,7 @@ data class AccountingRule(
 
         var id: Int? = null,
 
-        var code: String,
+        var code: String? = null,
 
-        var value: String
+        var value: String? = null
 ) : Parcelable

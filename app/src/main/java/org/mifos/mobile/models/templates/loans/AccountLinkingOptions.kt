@@ -10,13 +10,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AccountLinkingOptions(
 
-        var accountNo: String,
+        var accountNo: String? = null,
 
         var clientId: Int? = null,
 
-        var clientName: String,
+        var clientName: String? = null,
 
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var fieldOfficerId: Int? = null,
 
@@ -24,6 +24,5 @@ data class AccountLinkingOptions(
 
         var productId: Int? = null,
 
-        var productName: String
-
+        var productName: String? = null
 ) : Parcelable

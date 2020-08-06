@@ -1,8 +1,5 @@
 package org.mifos.mobile.injection
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-
 import javax.inject.Qualifier
 
 /**
@@ -10,5 +7,5 @@ import javax.inject.Qualifier
  * @since 08/07/16
  */
 @Qualifier
-@Retention(RetentionPolicy.RUNTIME)
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class ApplicationContext
