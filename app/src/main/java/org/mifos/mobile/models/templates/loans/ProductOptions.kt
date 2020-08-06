@@ -14,7 +14,7 @@ data class ProductOptions(
 
         var id: Int? = null,
 
-        var name: String,
+        var name: String? = null,
 
         var includeInBorrowerCycle: Boolean? = null,
 

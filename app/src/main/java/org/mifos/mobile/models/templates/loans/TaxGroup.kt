@@ -11,5 +11,5 @@ import kotlinx.android.parcel.Parcelize
 data class TaxGroup(
         var id: Int? = null,
 
-        var name: String
+        var name: String? = null
 ) : Parcelable

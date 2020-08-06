@@ -18,13 +18,13 @@ data class Transaction(
 
         var officeId: Long? = null,
 
-        var officeName: String,
+        var officeName: String? = null,
 
         var type: Type,
 
         var date: List<Int> = ArrayList(),
 
-        var currency: Currency,
+        var currency: Currency? = null,
 
         var amount: Double? = null,
 

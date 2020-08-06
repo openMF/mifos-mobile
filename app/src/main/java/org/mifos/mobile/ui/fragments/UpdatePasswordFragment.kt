@@ -75,7 +75,7 @@ import javax.inject.Inject
     }
 
     private val isFieldsCompleted: Boolean
-        private get() {
+        get() {
             var rv = true
             val newPassword = tilNewPassword?.editText?.text.toString().trim { it <= ' ' }
             val repeatPassword = tilConfirmNewPassword?.editText?.text.toString().trim { it <= ' ' }

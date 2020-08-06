@@ -9,7 +9,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Timeline(
-        var submittedOnDate: List<Int>,
+        var submittedOnDate: List<Int>? = null,
 
         var submittedByUsername: String?,
 
@@ -17,7 +17,7 @@ data class Timeline(
 
         var submittedByLastname: String?,
 
-        var approvedOnDate: List<Int>,
+        var approvedOnDate: List<Int>? = null,
 
         var approvedByUsername: String?,
 
@@ -25,9 +25,9 @@ data class Timeline(
 
         var approvedByLastname: String?,
 
-        var expectedDisbursementDate: List<Int>,
+        var expectedDisbursementDate: List<Int>? = null,
 
-        var actualDisbursementDate: List<Int>,
+        var actualDisbursementDate: List<Int>? = null,
 
         var disbursedByUsername: String?,
 
@@ -35,9 +35,9 @@ data class Timeline(
 
         var disbursedByLastname: String?,
 
-        var closedOnDate: List<Int>,
+        var closedOnDate: List<Int>? = null,
 
-        var expectedMaturityDate: List<Int>,
+        var expectedMaturityDate: List<Int>? = null,
 
         var withdrawnOnDate: List<Int>
 
