@@ -96,7 +96,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     }
 
     /**
-     * Shows an error in [Snackbar] if any error occurs during
+     * Shows an error in {@link Snackbar} if any error occurs during
      * withdrawing of Loan
      *
      * @param message Error Message displayed

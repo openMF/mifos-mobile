@@ -31,10 +31,6 @@ class QrCodeImportPresenter @Inject constructor(@ApplicationContext context: Con
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private var hasErrorOccured = false
 
-    override fun attachView(mvpView: QrCodeImportView?) {
-        super.attachView(mvpView)
-    }
-
     override fun detachView() {
         super.detachView()
         compositeDisposable.clear()

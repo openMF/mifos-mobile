@@ -72,8 +72,7 @@ data class Timeline(
             },
             arrayListOf<Int>().apply {
                 parcel.readArrayList(Int::class.java.classLoader)
-            }) {
-    }
+            })
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeList(submittedOnDate)
@@ -101,7 +100,7 @@ data class Timeline(
     companion object {
 
         @JvmField
-        final var CREATOR: Parcelable.Creator<Timeline> = object : Parcelable.Creator<Timeline> {
+        var CREATOR: Parcelable.Creator<Timeline> = object : Parcelable.Creator<Timeline> {
             override fun createFromParcel(parcel: Parcel): Timeline {
                 return Timeline(parcel)
             }

@@ -54,13 +54,5 @@ class ChargeAppWidget : AppWidgetProvider() {
             views.setRemoteAdapter(R.id.lv_charges, Intent(context, ChargeWidgetService::class.java))
         }
 
-        /**
-         * Sets the remote adapter used to fill in the list items
-         *
-         * @param views RemoteViews to set the RemoteAdapter
-         */
-        private fun setRemoteAdapterV11(context: Context, views: RemoteViews) {
-            views.setRemoteAdapter(0, R.id.lv_charges, Intent(context, ChargeWidgetService::class.java))
-        }
     }
 }

@@ -47,9 +47,6 @@ import javax.inject.Inject
     private var payload: UpdatePasswordPayload? = null
     private var isFocusLostNewPassword = false
     private var isFocusLostConfirmPassword = false
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

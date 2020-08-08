@@ -146,7 +146,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
 
     /**
      * Opens [SavingsMakeTransferFragment] if status is ACTIVE else shows a
-     * [Snackbar] that Account should be Active
+     * {@link Snackbar} that Account should be Active
      */
     @OnClick(R.id.tv_deposit)
     fun deposit() {
@@ -159,7 +159,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
 
     /**
      * Opens [SavingsMakeTransferFragment] if status is ACTIVE else shows a
-     * [Snackbar] that Account should be Active
+     * {@link Snackbar} that Account should be Active
      */
     @OnClick(R.id.tv_make_a_transfer)
     fun transfer() {

@@ -122,7 +122,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         try {
             val beneficiary = gson.fromJson(result?.text, Beneficiary::class.java)
             activity?.supportFragmentManager?.popBackStack()
-            (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.Companion.newInstance(BeneficiaryState.CREATE_QR, beneficiary),
+            (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.CREATE_QR, beneficiary),
                     true, R.id.container)
         } catch (e: JsonSyntaxException) {
             Toast.makeText(activity, getString(R.string.invalid_qr),

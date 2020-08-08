@@ -27,9 +27,6 @@ class RegistrationVerificationPresenter @Inject constructor(
 ) : BasePresenter<RegistrationVerificationView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: RegistrationVerificationView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

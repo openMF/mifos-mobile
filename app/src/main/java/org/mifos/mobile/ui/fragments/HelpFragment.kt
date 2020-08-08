@@ -104,7 +104,7 @@ import javax.inject.Inject
                     startActivity(emailIntent)
                 }
             }
-            R.id.menu_locations -> (activity as BaseActivity?)?.replaceFragment(LocationsFragment.Companion.newInstance(),
+            R.id.menu_locations -> (activity as BaseActivity?)?.replaceFragment(LocationsFragment.newInstance(),
                     true, R.id.container)
         }
         return true

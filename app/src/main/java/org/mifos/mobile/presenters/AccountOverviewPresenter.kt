@@ -27,9 +27,6 @@ class AccountOverviewPresenter @Inject constructor(
         private val dataManager: DataManager?
 ) : BasePresenter<AccountOverviewMvpView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: AccountOverviewMvpView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

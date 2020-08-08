@@ -28,9 +28,6 @@ class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Contex
         BasePresenter<AddGuarantorView?>(context) {
 
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: AddGuarantorView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

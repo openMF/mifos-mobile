@@ -35,9 +35,6 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager?, 
 
     private val preferencesHelper: PreferencesHelper? = dataManager?.preferencesHelper
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: LoginView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

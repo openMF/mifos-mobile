@@ -43,7 +43,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
      */
     @OnClick(R.id.ll_add_beneficiary_manually)
     fun addManually() {
-        (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.Companion.newInstance(BeneficiaryState.CREATE_MANUAL, null), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.CREATE_MANUAL, null), true, R.id.container)
     }
 
     /**
@@ -54,7 +54,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
     fun addUsingQrCode() {
         if (checkSelfPermission(activity,
                         Manifest.permission.CAMERA)) {
-            (activity as BaseActivity?)?.replaceFragment(QrCodeReaderFragment.Companion.newInstance(), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(QrCodeReaderFragment.newInstance(), true, R.id.container)
         } else {
             requestPermission(RequestAccessType.CAMERA)
         }
@@ -84,7 +84,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Constants.GALLERY_QR_PICK && data != null) {
             activity?.supportFragmentManager?.popBackStack()
-            (activity as BaseActivity?)?.replaceFragment(QrCodeImportFragment.Companion.newInstance(data.data), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(QrCodeImportFragment.newInstance(data.data), true, R.id.container)
         }
     }
 
@@ -144,7 +144,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
             Constants.PERMISSIONS_REQUEST_CAMERA -> {
                 if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    (activity as BaseActivity?)?.replaceFragment(QrCodeReaderFragment.Companion.newInstance(), true, R.id.container)
+                    (activity as BaseActivity?)?.replaceFragment(QrCodeReaderFragment.newInstance(), true, R.id.container)
                 } else {
                     Toaster.show(rootView, resources
                             .getString(R.string.permission_denied_camera))

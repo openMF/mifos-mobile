@@ -63,7 +63,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(UpdatePasswordFragment.Companion.newInstance(), true, R.id.container)
+            Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(UpdatePasswordFragment.newInstance(), true, R.id.container)
         }
         return super.onPreferenceTreeClick(preference)
     }

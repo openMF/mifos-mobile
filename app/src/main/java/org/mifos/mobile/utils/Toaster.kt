@@ -26,9 +26,6 @@ object Toaster {
         textView.textSize = 12f
         snackbar.setAction("OK") { }
         snackbar.addCallback(object : Snackbar.Callback() {
-            override fun onShown(sb: Snackbar) {
-                super.onShown(sb)
-            }
 
             override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
                 super.onDismissed(transientBottomBar, event)

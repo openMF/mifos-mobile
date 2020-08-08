@@ -24,9 +24,6 @@ class LoanApplicationPresenter @Inject constructor(private val dataManager: Data
         BasePresenter<LoanApplicationMvpView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: LoanApplicationMvpView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

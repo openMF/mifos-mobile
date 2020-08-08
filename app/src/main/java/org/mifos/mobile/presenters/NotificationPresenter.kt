@@ -23,9 +23,6 @@ class NotificationPresenter @Inject constructor(private val manager: DataManager
         BasePresenter<NotificationView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: NotificationView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

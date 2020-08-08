@@ -189,7 +189,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         transferPayload?.transferDescription = etRemark?.text.toString()
         transferPayload?.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload?.toAccountNumber = toAccountOption?.accountNo
-        (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.Companion.newInstance(transferPayload, TransferType.SELF), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.newInstance(transferPayload, TransferType.SELF), true, R.id.container)
     }
 
     /**
@@ -256,7 +256,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     }
 
     /**
-     * Shows a [Snackbar] with `message`
+     * Shows a {@link Snackbar} with `message`
      *
      * @param message String to be shown
      */

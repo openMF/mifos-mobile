@@ -13,7 +13,7 @@ import android.widget.RelativeLayout
 /**
  * @author Rajan Maurya
  */
-class ProgressBarHandler(private val mContext: Context) {
+class ProgressBarHandler(mContext: Context) {
     private val mProgressBar: ProgressBar
     fun show() {
         mProgressBar.visibility = View.VISIBLE

@@ -246,7 +246,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     }
 
     /**
-     * Displays a [Snackbar] on successfully creation of
+     * Displays a {@link Snackbar} on successfully creation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
     override fun showBeneficiaryCreatedSuccessfully() {
@@ -255,7 +255,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     }
 
     /**
-     * Displays a [Snackbar] on successfully updation of
+     * Displays a {@link Snackbar} on successfully updation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
     override fun showBeneficiaryUpdatedSuccessfully() {

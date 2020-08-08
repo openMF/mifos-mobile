@@ -197,9 +197,6 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         navigationView?.setNavigationItemSelectedListener(this)
         val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this,
                 drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-            }
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)

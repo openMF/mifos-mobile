@@ -73,8 +73,7 @@ data class LoanAccount(
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readParcelable(Summary::class.java.classLoader),
             parcel.readString(),
-            parcel.readParcelable(Timeline::class.java.classLoader)) {
-    }
+            parcel.readParcelable(Timeline::class.java.classLoader))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(loanProductId)
@@ -107,7 +106,7 @@ data class LoanAccount(
     companion object {
 
         @JvmField
-        final val CREATOR: Parcelable.Creator<LoanAccount> = object : Parcelable.Creator<LoanAccount> {
+        val CREATOR: Parcelable.Creator<LoanAccount> = object : Parcelable.Creator<LoanAccount> {
 
             override fun createFromParcel(parcel: Parcel): LoanAccount {
                 return LoanAccount(parcel)

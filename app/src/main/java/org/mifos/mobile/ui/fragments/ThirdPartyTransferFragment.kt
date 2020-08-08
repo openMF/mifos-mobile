@@ -223,11 +223,11 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         transferPayload.transferDate = transferDate
         transferPayload.transferAmount = etAmount?.text.toString().toDouble()
         transferPayload.transferDescription = etRemark?.text.toString()
-        (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.Companion.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
     }
 
     /**
-     * Shows a [Snackbar] with `message`
+     * Shows a {@link Snackbar} with `message`
      *
      * @param msg String to be shown
      */
@@ -336,7 +336,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
 
     @OnClick(R.id.btn_add_beneficiary)
     fun addBeneficiary() {
-        (activity as BaseActivity?)?.replaceFragment(BeneficiaryAddOptionsFragment.Companion.newInstance(),
+        (activity as BaseActivity?)?.replaceFragment(BeneficiaryAddOptionsFragment.newInstance(),
                 true, R.id.container)
     }
 

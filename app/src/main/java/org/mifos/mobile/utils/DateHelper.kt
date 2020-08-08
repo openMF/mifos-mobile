@@ -18,7 +18,7 @@ import java.util.*
  */
 object DateHelper {
 
-    val LOG_TAG = DateHelper::class.java.simpleName
+    val LOG_TAG: String? = DateHelper::class.java.simpleName
     const val FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy"
     fun getCurrentDate(dateFormat: String?, separator: String): List<Int> {
         val date: MutableList<Int> = ArrayList()

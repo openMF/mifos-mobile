@@ -122,7 +122,7 @@ class ClientChargeFragment :
     /**
      * It is called whenever any error occurs while executing a request. If not connected to
      * internet then it shows display a message to user to connect to internet other it just
-     * displays the `message` in a [Snackbar]
+     * displays the `message` in a {@link Snackbar}
      *
      * @param message Error message that tells the user about the problem.
      */

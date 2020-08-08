@@ -108,7 +108,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
     }
 
     /**
-     * Shows a [Snackbar] on successfull deletion of a
+     * Shows a {@link Snackbar} on successfull deletion of a
      * Beneficiary and then pops current fragment
      */
     override fun showBeneficiaryDeletedSuccessfully() {

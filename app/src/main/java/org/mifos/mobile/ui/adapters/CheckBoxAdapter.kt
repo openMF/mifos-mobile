@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.adapters
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
@@ -13,14 +12,13 @@ import butterknife.ButterKnife
 import butterknife.OnCheckedChanged
 import butterknife.OnClick
 import org.mifos.mobile.R
-import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.CheckboxStatus
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 3/7/17.
  */
-class CheckBoxAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
+class CheckBoxAdapter @Inject constructor() :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var statusList: List<CheckboxStatus?>? = null

@@ -28,9 +28,6 @@ class SavingsAccountApplicationPresenter @Inject constructor(
         @ApplicationContext context: Context?
 ) : BasePresenter<SavingsAccountApplicationView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: SavingsAccountApplicationView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

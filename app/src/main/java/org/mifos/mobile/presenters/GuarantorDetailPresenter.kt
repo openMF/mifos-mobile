@@ -26,9 +26,6 @@ class GuarantorDetailPresenter @Inject constructor(
         var dataManager: DataManager?
 ) : BasePresenter<GuarantorDetailView?>(context) {
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: GuarantorDetailView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

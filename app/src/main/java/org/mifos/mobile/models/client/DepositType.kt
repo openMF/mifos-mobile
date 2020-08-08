@@ -34,7 +34,7 @@ data class DepositType(
         companion object {
 
             fun fromId(id: Int): ServerTypes {
-                for (type in ServerTypes.values()) {
+                for (type in values()) {
                     if (type.id == id) {
                         return type
                     }

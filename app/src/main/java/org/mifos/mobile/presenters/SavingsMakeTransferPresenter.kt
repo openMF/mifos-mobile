@@ -28,9 +28,6 @@ class SavingsMakeTransferPresenter @Inject constructor(
         @ApplicationContext context: Context?
 ) : BasePresenter<SavingsMakeTransferMvpView?>(context) {
     private var compositeDisposables: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: SavingsMakeTransferMvpView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

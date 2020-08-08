@@ -6,27 +6,27 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import org.mifos.mobile.R
 
-class CircularImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ImageView(context, attrs) {
+class CircularImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : AppCompatImageView(context, attrs) {
     private var borderWidth = 0
     private var canvasSize = 0
     private var image: Bitmap? = null
-    private val paint: Paint
+    private val paint: Paint = Paint()
     private val paintBorder: Paint?
-    fun setBorderWidth(borderWidth: Int) {
+    private fun setBorderWidth(borderWidth: Int) {
         this.borderWidth = borderWidth
         requestLayout()
         this.invalidate()
     }
 
-    fun setBorderColor(borderColor: Int) {
+    private fun setBorderColor(borderColor: Int) {
         if (paintBorder != null) paintBorder.color = borderColor
         this.invalidate()
     }
 
-    fun addShadow() {
+    private fun addShadow() {
         setLayerType(View.LAYER_TYPE_SOFTWARE, paintBorder)
         paintBorder?.setShadowLayer(4.0f, 0.0f, 2.0f, Color.BLACK)
     }
@@ -107,10 +107,9 @@ class CircularImageView @JvmOverloads constructor(context: Context, attrs: Attri
     init {
 
         // init paint
-        paint = Paint()
         paint.isAntiAlias = true
         paintBorder = Paint()
-        paintBorder.setAntiAlias(true)
+        paintBorder.isAntiAlias = true
 
         // load the styled attributes and set their properties
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.CircularImageView)
