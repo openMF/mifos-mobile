@@ -72,7 +72,7 @@ object Utils {
     fun formatTransactionType(type: String?): String? {
         val builder = StringBuilder()
         for (str in type?.toLowerCase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
-            builder.append(str[0].toString().toUpperCase() + str.substring(1,
+            builder.append(str[0].toString().toUpperCase(Locale.ROOT) + str.substring(1,
                     str.length) + " ")
         }
         return builder.toString()

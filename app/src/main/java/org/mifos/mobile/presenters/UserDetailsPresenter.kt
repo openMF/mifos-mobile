@@ -38,9 +38,6 @@ class UserDetailsPresenter @Inject constructor(
 ) : BasePresenter<UserDetailsView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: UserDetailsView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

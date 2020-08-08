@@ -371,7 +371,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
     fun filterShareAccount(statusModelList: List<CheckboxStatus?>?) {
         val filteredSavings: MutableList<ShareAccount?>? = ArrayList()
         when {
-            accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null-> {
+            accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null -> {
                 for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
                     accountsPresenter?.getFilteredShareAccount(shareAccounts,
                             status)?.let { filteredSavings?.addAll(it) }
@@ -455,7 +455,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
     }
 
     companion object {
-        val LOG_TAG = AccountsFragment::class.java.simpleName
+        val LOG_TAG: String? = AccountsFragment::class.java.simpleName
         fun newInstance(accountType: String?): AccountsFragment {
             val fragment = AccountsFragment()
             val args = Bundle()

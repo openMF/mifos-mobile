@@ -22,9 +22,6 @@ class GuarantorListPresenter @Inject constructor(@ApplicationContext context: Co
         BasePresenter<GuarantorListView?>(context) {
 
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: GuarantorListView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

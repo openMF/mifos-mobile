@@ -25,9 +25,6 @@ class ClientChargePresenter @Inject constructor(private val dataManager: DataMan
         BasePresenter<ClientChargeView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: ClientChargeView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

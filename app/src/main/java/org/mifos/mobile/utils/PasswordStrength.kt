@@ -31,17 +31,16 @@ enum class PasswordStrength(private var resId: Int, var color: Int) {
             var sawDigit = false
             var sawSpecial = false
             for (element in password) {
-                val c = element
-                if (!sawSpecial && !Character.isLetterOrDigit(c)) {
+                if (!sawSpecial && !Character.isLetterOrDigit(element)) {
                     currentScore += 1
                     sawSpecial = true
                 } else {
-                    if (!sawDigit && Character.isDigit(c)) {
+                    if (!sawDigit && Character.isDigit(element)) {
                         currentScore += 1
                         sawDigit = true
                     } else {
                         if (!sawUpper || !sawLower) {
-                            if (Character.isUpperCase(c)) {
+                            if (Character.isUpperCase(element)) {
                                 sawUpper = true
                             } else {
                                 sawLower = true

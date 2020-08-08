@@ -36,9 +36,6 @@ class HomeOldPresenter @Inject constructor(
 ) : BasePresenter<HomeOldView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: HomeOldView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

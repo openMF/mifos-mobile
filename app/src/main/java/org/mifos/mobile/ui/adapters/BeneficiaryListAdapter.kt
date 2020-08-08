@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import org.mifos.mobile.R
-import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 15/6/17.
  */
-class BeneficiaryListAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
+class BeneficiaryListAdapter @Inject constructor() :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var beneficiaryList: List<Beneficiary?>? = ArrayList()

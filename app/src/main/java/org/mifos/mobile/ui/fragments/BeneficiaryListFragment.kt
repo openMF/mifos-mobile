@@ -178,7 +178,7 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
     }
 
     override fun onItemClick(childView: View?, position: Int) {
-        (activity as BaseActivity?)?.replaceFragment(BeneficiaryDetailFragment.Companion.newInstance(beneficiaryList!![position]), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(BeneficiaryDetailFragment.newInstance(beneficiaryList!![position]), true, R.id.container)
     }
 
     override fun onItemLongPress(childView: View?, position: Int) {}

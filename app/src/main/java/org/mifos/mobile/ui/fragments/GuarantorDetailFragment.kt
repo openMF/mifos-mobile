@@ -124,7 +124,7 @@ import javax.inject.Inject
                     .setNegativeButton(R.string.cancel)
                     .createMaterialDialog()
                     .show()
-            R.id.menu_update_guarantor -> (activity as BaseActivity?)?.replaceFragment(AddGuarantorFragment.Companion.newInstance(index, GuarantorState.UPDATE, payload, loanId),
+            R.id.menu_update_guarantor -> (activity as BaseActivity?)?.replaceFragment(AddGuarantorFragment.newInstance(index, GuarantorState.UPDATE, payload, loanId),
                     true, R.id.container)
         }
         return super.onOptionsItemSelected(item)

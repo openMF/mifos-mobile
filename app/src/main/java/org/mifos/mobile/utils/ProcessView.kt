@@ -16,7 +16,7 @@ class ProcessView : View {
     private var textPaint: Paint? = null
     private var backgroundPaint: Paint? = null
 
-    constructor(context: Context?) : super(context, null) {}
+    constructor(context: Context?) : super(context, null)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProcessView)
         valueStr = typedArray.getString(R.styleable.ProcessView_value)

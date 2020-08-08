@@ -17,14 +17,6 @@ import javax.inject.Inject
 class HelpPresenter @Inject constructor(@ApplicationContext context: Context?) :
         BasePresenter<HelpView?>(context) {
 
-    override fun attachView(mvpView: HelpView?) {
-        super.attachView(mvpView)
-    }
-
-    override fun detachView() {
-        super.detachView()
-    }
-
     fun loadFaq() {
         val qs = context?.resources?.getStringArray(R.array.faq_qs)
         val ans = context?.resources?.getStringArray(R.array.faq_ans)
