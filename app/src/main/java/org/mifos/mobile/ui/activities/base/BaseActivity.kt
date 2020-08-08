@@ -4,16 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
-import android.os.Bundle
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-
 import com.mifos.mobile.passcode.BasePassCodeActivity
 import org.mifos.mobile.MifosSelfServiceApp
 import org.mifos.mobile.R
@@ -73,10 +70,6 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
      */
     fun setToolbarElevation() {
         ViewCompat.setElevation(toolbar!!, 8f)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     /**
@@ -159,10 +152,6 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
         if (supportActionBar != null && getTitle() != null) {
             setTitle(title)
         }
-    }
-
-    protected fun setActionBarTitle(title: Int) {
-        setActionBarTitle(resources.getString(title))
     }
 
     /**

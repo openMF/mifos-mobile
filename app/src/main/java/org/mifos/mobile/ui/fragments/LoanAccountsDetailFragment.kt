@@ -177,7 +177,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.btn_make_payment)
     fun onMakePaymentClicked() {
-        (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.Companion.newInstance(loanId, loanWithAssociations?.summary?.totalOutstanding,
+        (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.newInstance(loanId, loanWithAssociations?.summary?.totalOutstanding,
                 Constants.TRANSFER_PAY_TO), true, R.id.container)
     }
 
@@ -186,7 +186,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.ll_summary)
     fun onLoanSummaryClicked() {
-        (activity as BaseActivity?)?.replaceFragment(LoanAccountSummaryFragment.Companion.newInstance(loanWithAssociations), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(LoanAccountSummaryFragment.newInstance(loanWithAssociations), true, R.id.container)
     }
 
     /**
@@ -194,7 +194,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.ll_repayment)
     fun onRepaymentScheduleClicked() {
-        (activity as BaseActivity?)?.replaceFragment(LoanRepaymentScheduleFragment.Companion.newInstance(loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(LoanRepaymentScheduleFragment.newInstance(loanId), true, R.id.container)
     }
 
     /**
@@ -202,19 +202,19 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     @OnClick(R.id.ll_loan_transactions)
     fun onTransactionsClicked() {
-        (activity as BaseActivity?)?.replaceFragment(LoanAccountTransactionFragment.Companion.newInstance(loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(LoanAccountTransactionFragment.newInstance(loanId), true, R.id.container)
     }
 
     @OnClick(R.id.ll_loan_charges)
     fun chargesClicked() {
-        (activity as BaseActivity?)?.replaceFragment(ClientChargeFragment.Companion.newInstance(loanWithAssociations?.id?.toLong(), ChargeType.LOAN), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(ClientChargeFragment.newInstance(loanWithAssociations?.id?.toLong(), ChargeType.LOAN), true, R.id.container)
     }
 
     @OnClick(R.id.ll_loan_qr_code)
     fun onQrCodeClicked() {
         val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanWithAssociations?.accountNo,
                 preferencesHelper?.officeName, AccountType.LOAN)
-        (activity as BaseActivity?)?.replaceFragment(QrCodeDisplayFragment.Companion.newInstance(accountDetailsInJson), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(QrCodeDisplayFragment.newInstance(accountDetailsInJson), true, R.id.container)
     }
 
     /**
@@ -273,9 +273,9 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
             (activity as BaseActivity?)?.replaceFragment(LoanApplicationFragment.newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container)
             return true
         } else if (id == R.id.menu_withdraw_loan) {
-            (activity as BaseActivity?)?.replaceFragment(LoanAccountWithdrawFragment.Companion.newInstance(loanWithAssociations), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(LoanAccountWithdrawFragment.newInstance(loanWithAssociations), true, R.id.container)
         } else if (id == R.id.menu_view_guarantor) {
-            (activity as BaseActivity?)?.replaceFragment(GuarantorListFragment.Companion.newInstance(loanId), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(GuarantorListFragment.newInstance(loanId), true, R.id.container)
         }
         return super.onOptionsItemSelected(item)
     }

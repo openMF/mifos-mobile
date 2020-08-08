@@ -134,7 +134,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     }
 
     /**
-     * Shows a [Snackbar] on succesfull transfer of money
+     * Shows a {@link Snackbar} on succesfull transfer of money
      */
     override fun showTransferredSuccessfully() {
         Toaster.show(rootView, getString(R.string.transferred_successfully))
