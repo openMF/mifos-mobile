@@ -29,9 +29,6 @@ class RecentTransactionsPresenter @Inject constructor(
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
     private val limit = 50
     private var loadmore = false
-    override fun attachView(mvpView: RecentTransactionsView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

@@ -31,10 +31,6 @@ class UpdatePasswordPresenter @Inject constructor(
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    override fun attachView(mvpView: UpdatePasswordView?) {
-        super.attachView(mvpView)
-    }
-
     override fun detachView() {
         super.detachView()
         compositeDisposable.clear()

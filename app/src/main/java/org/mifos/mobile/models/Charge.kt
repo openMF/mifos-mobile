@@ -2,11 +2,14 @@ package org.mifos.mobile.models
 
 import android.os.Parcel
 import android.os.Parcelable
+
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.structure.BaseModel
+
 import org.mifos.mobile.api.local.SelfServiceDatabase
+
 import java.util.*
 
 /**
@@ -15,18 +18,19 @@ import java.util.*
  */
 @Table(database = SelfServiceDatabase::class)
 class Charge : BaseModel, Parcelable {
+    @JvmField
     @PrimaryKey
     var id: Int? = null
 
     var clientId: Int? = null
-    var chargeId: Int? = null
+    private var chargeId: Int? = null
 
     @Column
     var name: String? = null
 
     var dueDate: List<Int?> = ArrayList()
-    var chargeTimeType: ChargeTimeType? = null
-    var chargeCalculationType: ChargeCalculationType? = null
+    private var chargeTimeType: ChargeTimeType? = null
+    private var chargeCalculationType: ChargeCalculationType? = null
     var currency: Currency? = null
 
     @Column
@@ -81,7 +85,7 @@ class Charge : BaseModel, Parcelable {
         dest.writeValue(waived)
     }
 
-    constructor() {}
+    constructor()
     private constructor(`in`: Parcel) {
         id = `in`.readValue(Int::class.java.classLoader) as Int
         clientId = `in`.readValue(Int::class.java.classLoader) as Int

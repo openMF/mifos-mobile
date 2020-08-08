@@ -27,9 +27,6 @@ class LoanAccountWithdrawPresenter @Inject constructor(
 ) : BasePresenter<LoanAccountWithdrawView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: LoanAccountWithdrawView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

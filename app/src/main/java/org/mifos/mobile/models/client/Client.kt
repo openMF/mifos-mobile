@@ -92,7 +92,7 @@ class Client : Parcelable {
         dest.writeString(staffName)
     }
 
-    constructor() {}
+    constructor()
     protected constructor(`in`: Parcel) {
         id = `in`.readInt()
         accountNo = `in`.readString()

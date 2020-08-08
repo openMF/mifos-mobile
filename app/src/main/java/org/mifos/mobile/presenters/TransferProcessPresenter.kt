@@ -28,9 +28,6 @@ class TransferProcessPresenter @Inject constructor(
 ) : BasePresenter<TransferProcessView?>(context) {
 
     var compositeDisposables: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: TransferProcessView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()
