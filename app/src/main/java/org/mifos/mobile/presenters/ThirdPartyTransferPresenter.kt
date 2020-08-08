@@ -32,9 +32,6 @@ class ThirdPartyTransferPresenter @Inject constructor(
         @ApplicationContext context: Context?
 ) : BasePresenter<ThirdPartyTransferView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: ThirdPartyTransferView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

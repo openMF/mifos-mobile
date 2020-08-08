@@ -33,9 +33,6 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager?, @
     @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    override fun attachView(mvpView: HomeView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

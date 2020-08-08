@@ -32,9 +32,6 @@ class SavingAccountsTransactionPresenter @Inject constructor(
 ) : BasePresenter<SavingAccountsTransactionView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
-    override fun attachView(mvpView: SavingAccountsTransactionView?) {
-        super.attachView(mvpView)
-    }
 
     override fun detachView() {
         super.detachView()

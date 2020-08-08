@@ -80,9 +80,7 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
             if (etBaseUrl?.text.toString().trim { it <= ' ' }.isEmpty()) {
                 return true
             }
-            return if (etTenant?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                true
-            } else false
+            return etTenant?.text.toString().trim { it <= ' ' }.isEmpty()
         }
     val isUrlValid: Boolean
         get() = try {

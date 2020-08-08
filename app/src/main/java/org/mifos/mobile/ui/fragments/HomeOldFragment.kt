@@ -11,13 +11,16 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -29,10 +32,10 @@ import org.mifos.mobile.ui.activities.UserProfileActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.fragments.HomeFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
+
 import javax.inject.Inject
 
 /**
@@ -365,7 +368,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_charges)
     fun chargesClicked() {
-        (activity as HomeActivity?)?.replaceFragment(ClientChargeFragment.Companion.newInstance(clientId,
+        (activity as HomeActivity?)?.replaceFragment(ClientChargeFragment.newInstance(clientId,
                 ChargeType.CLIENT), true, R.id.container)
     }
 
@@ -383,7 +386,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_beneficiaries)
     fun beneficiaries() {
-        (activity as HomeActivity?)?.replaceFragment(BeneficiaryListFragment.Companion.newInstance(), true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container)
     }
 
     @OnClick(R.id.ll_surveys)
@@ -427,7 +430,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     }
 
     companion object {
-        val LOG_TAG = HomeFragment::class.java.simpleName
+        val LOG_TAG: String? = HomeFragment::class.java.simpleName
         fun newInstance(): HomeOldFragment {
             return HomeOldFragment()
         }
