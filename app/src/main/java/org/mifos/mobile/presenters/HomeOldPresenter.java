@@ -181,6 +181,7 @@ public class HomeOldPresenter extends BasePresenter<HomeOldView> {
 
     public void setUserProfile(String image) {
         if (image == null) {
+            getMvpView().showUserImage(null);
             return;
         }
         final byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
