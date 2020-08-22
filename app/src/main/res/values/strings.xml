@@ -412,6 +412,11 @@
     <string name="dialog_action_i_am_sure">I\'M Sure</string>
     <string name="dialog_action_re_try">Retry</string>
     <string name="dialog_action_app_settings">App Settings</string>
+    <string name="rate_the_app">RATE THE APP</string>
+    <string name="remind_me_later">REMIND ME LATER</string>
+    <string name="rate_it_now">RATE IT NOW</string>
+    <string name="never">NEVER</string>
+    <string name="rate_message">If you like using this app please take a moment to rate it. Thanks for your support!</string>
     <string name="dialog_message_camera_permission_denied_prompt">Without camera permission you will
         not be able to scan QR code to add beneficiary.Are you sure you want to deny this
         permission?

@@ -103,7 +103,7 @@ public class Constants {
 
     public static final String QR_IMAGE_URI = "qr_image_uri";
 
-    public  static  final int GALLERY_QR_PICK = 1;
+    public static final int GALLERY_QR_PICK = 1;
 
     public static final String FRAME_RECT = "FrameRect";
 
@@ -123,7 +123,25 @@ public class Constants {
 
     public static final String SAVINGS_ACCOUNT_STATE = "savingsaccountstate";
 
-    public static  final String OUTSTANDING_BALANCE = "outstanding_balance";
+    public static final String OUTSTANDING_BALANCE = "outstanding_balance";
 
     public static final String LOAN_REPAYMENT = "loan_repayment";
+
+    public static final int DAYS_UNTIL_PROMPT = 3;
+
+    public static final int REMIND_LAUNCHES_UNTIL_PROMPT = 5;
+
+    public static final int REMIND_DAYS_UNTIL_PROMPT = 5;
+
+    public static final String DONT_SHOW_AGAIN = "dontShowAgain";
+
+    public static final int LAUNCHES_UNTIL_PROMPT = 7;
+
+    public static final String LAUNCH_COUNT = "launchCount";
+
+    public static final String DATE_FIRST_LAUNCH = "dateFirstLaunch";
+
+    public static final String REMIND_COUNT = "remindCount";
+
+    public static final String VERSION_CODE = "versionCode";
 }

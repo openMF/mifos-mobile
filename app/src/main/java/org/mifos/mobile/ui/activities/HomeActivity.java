@@ -39,6 +39,7 @@ import org.mifos.mobile.ui.views.UserDetailsView;
 import org.mifos.mobile.utils.CircularImageView;
 import org.mifos.mobile.utils.Constants;
 import org.mifos.mobile.utils.MaterialDialog;
+import org.mifos.mobile.utils.RateApp;
 import org.mifos.mobile.utils.TextDrawable;
 import org.mifos.mobile.utils.Toaster;
 import org.mifos.mobile.utils.fcm.RegistrationIntentService;
@@ -73,6 +74,9 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
 
     @Inject
     UserDetailsPresenter detailsPresenter;
+
+    @Inject
+    RateApp appRater;
 
     private TextView tvUsername;
     private CircularImageView ivCircularUserProfilePicture;
@@ -118,6 +122,8 @@ public class HomeActivity extends BaseActivity implements UserDetailsView, Navig
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+
+        appRater.appLaunched(this);
 
     }
 
