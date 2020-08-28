@@ -15,10 +15,15 @@ public class ApiEndPoints {
     public static final String LOAN_ACCOUNTS = "loanAccounts";
     public static final String RECURRING_ACCOUNTS = "recurringdepositaccounts";
     public static final String LOANS = "loans";
-    public static final  String ACCOUNT_TRANSFER = "accounttransfers";
-    public static final  String BENEFICIARIES = "beneficiaries";
+    public static final String ACCOUNT_TRANSFER = "accounttransfers";
+    public static final String BENEFICIARIES = "beneficiaries";
     public static final String REGISTRATION = "registration";
     public static final String DEVICE = "device";
     public static final String USER = "user";
+    public static final String INTEROPERATION = "interoperation";
+    public static final String ACCOUNTS = "accounts";
+    public static final String TRANSFER = "transfer";
+    public static final String PARTY_REGISTRATION = "partyRegisteration";
+    public static final String TRANSACTION_REQUEST = "transactionRequest";
 
 }

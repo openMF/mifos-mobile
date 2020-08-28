@@ -60,6 +60,8 @@ public interface ActivityComponent {
 
     void inject(HomeFragment homeFragment);
 
+    void inject(TransactionActivity transactionActivity);
+
     void inject(ClientAccountsFragment clientAccountsFragment);
 
     void inject(RecentTransactionsFragment recentTransactionsFragment);

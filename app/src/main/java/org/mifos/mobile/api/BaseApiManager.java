@@ -5,6 +5,7 @@ import org.mifos.mobile.api.services.AuthenticationService;
 import org.mifos.mobile.api.services.BeneficiaryService;
 import org.mifos.mobile.api.services.ClientChargeService;
 import org.mifos.mobile.api.services.ClientService;
+import org.mifos.mobile.api.services.FineractPaymentHubService;
 import org.mifos.mobile.api.services.GuarantorService;
 import org.mifos.mobile.api.services.LoanAccountsListService;
 import org.mifos.mobile.api.services.NotificationService;
@@ -12,6 +13,7 @@ import org.mifos.mobile.api.services.RecentTransactionsService;
 import org.mifos.mobile.api.services.RegistrationService;
 import org.mifos.mobile.api.services.SavingAccountsListService;
 import org.mifos.mobile.api.services.ThirdPartyTransferService;
+import org.mifos.mobile.api.services.TransactionsService;
 import org.mifos.mobile.api.services.UserDetailsService;
 
 import javax.inject.Inject;
@@ -39,7 +41,8 @@ public class BaseApiManager {
     private static NotificationService notificationApi;
     private static GuarantorService guarantorService;
     private static UserDetailsService userDetailsService;
-
+    private static FineractPaymentHubService fineractPaymentHubService;
+    private static TransactionsService transactionsService;
     @Inject
     public BaseApiManager(PreferencesHelper preferencesHelper) {
         createService(preferencesHelper.getBaseUrl(), preferencesHelper.getTenant(),
@@ -59,6 +62,8 @@ public class BaseApiManager {
         notificationApi = createApi(NotificationService.class);
         guarantorService = createApi(GuarantorService.class);
         userDetailsService = createApi(UserDetailsService.class);
+        fineractPaymentHubService = createApi(FineractPaymentHubService.class);
+        transactionsService = createApi(TransactionsService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -122,4 +127,8 @@ public class BaseApiManager {
     public UserDetailsService getUserDetailsService() {
         return userDetailsService;
     }
+
+    public FineractPaymentHubService getFineractPaymentHubApi() {return getFineractPaymentHubApi; }
+
+    public TransactionsService getTransactionsApi() {return getTransactionsApi; }
 }
