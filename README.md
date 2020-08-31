@@ -26,6 +26,9 @@ For pull request guidelines please click <a href="https://github.com/openMF/mifo
 
 We have the following branches :
 
+ * **gsoc#2020**
+	 The app is currently being converted to Kotlin for enabling multiplatform development in the future. Kotlin version of the app is currently pushed in this branch. Any further development shall be pushed to this branch until the conversion is reviewed and merged into development branch.
+	  
  * **development**
      All the contributions should be pushed to this branch. If you're making a contribution,
      you are supposed to make a pull request to _development_.
