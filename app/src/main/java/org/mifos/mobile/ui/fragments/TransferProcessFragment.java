@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.mifos.mobile.passcode.TransferVerificationActivity;
 
 import org.mifos.mobile.R;
 import org.mifos.mobile.models.payload.TransferPayload;
@@ -124,11 +126,8 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
             Toaster.show(rootView, getString(R.string.internet_not_connected));
             return;
         }
-        if (transferType == TransferType.SELF) {
-            presenter.makeSavingsTransfer(payload);
-        } else if (transferType == TransferType.TPT) {
-            presenter.makeTPTTransfer(payload);
-        }
+        Intent i = new Intent(getActivity(), TransferVerificationActivity.class);
+        startActivityForResult(i, Constants.VERIFICATION_REQUEST);
     }
 
     /**
@@ -192,5 +191,18 @@ public class TransferProcessFragment extends BaseFragment implements TransferPro
     public void onDestroyView() {
         super.onDestroyView();
         presenter.detachView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.VERIFICATION_REQUEST &&
+                resultCode == getActivity().RESULT_OK) {
+            if (transferType == TransferType.SELF) {
+                presenter.makeSavingsTransfer(payload);
+            } else if (transferType == TransferType.TPT) {
+                presenter.makeTPTTransfer(payload);
+            }
+        }
     }
 }

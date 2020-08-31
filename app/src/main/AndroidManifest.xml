@@ -146,8 +146,8 @@
             android:exported="false"
             android:name="org.mifos.mobile.utils.fcm.RegistrationIntentService">
         </service>
-
         <activity android:name="org.mifos.mobile.ui.activities.SettingsActivity"/>
+        <activity android:name="com.mifos.mobile.passcode.TransferVerificationActivity"/>
     </application>
 
 </manifest>

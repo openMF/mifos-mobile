@@ -572,6 +572,9 @@
     <string name="savings_account_transaction">Savings Account Transaction</string>
     <string name="transaction_period">Transaction Period</string>
     <string name="transaction_type">Transaction Type</string>
+    <string name="transfer_verify_passcode">Enter your passcode</string>
+    <string name="cancel_transaction">Cancel</string>
+    <string name="transfer_type">TransferType</string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>
