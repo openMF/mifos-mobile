@@ -1,8 +1,6 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,24 +9,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Currency(
-        @SerializedName("code")
-        var code: String,
 
-        @SerializedName("name")
-        var name: String,
+        var code: String? = null,
 
-        @SerializedName("decimalPlaces")
+        var name: String? = null,
+
         var decimalPlaces: Double? = null,
 
-        @SerializedName("inMultiplesOf")
         var inMultiplesOf: Int? = null,
 
-        @SerializedName("displaySymbol")
-        var displaySymbol: String,
+        var displaySymbol: String? = null,
 
-        @SerializedName("nameCode")
-        var nameCode: String,
+        var nameCode: String? = null,
 
-        @SerializedName("displayLabel")
-        var displayLabel: String
+        var displayLabel: String? = null
 ) : Parcelable

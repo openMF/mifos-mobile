@@ -8,9 +8,9 @@ import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 
 class RxEvent {
 
-    data class AddGuarantorEvent(var payload: GuarantorApplicationPayload, var index: Int)
+    data class AddGuarantorEvent(var payload: GuarantorApplicationPayload?, var index: Int?)
 
-    data class DeleteGuarantorEvent(var index: Int)
+    data class DeleteGuarantorEvent(var index: Int?)
 
-    data class UpdateGuarantorEvent(var payload: GuarantorApplicationPayload, var index: Int)
+    data class UpdateGuarantorEvent(var payload: GuarantorApplicationPayload?, var index: Int?)
 }

@@ -1,8 +1,6 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,6 +9,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Timeline(
-        @SerializedName("expectedDisbursementDate")
         var expectedDisbursementDate: List<Int>
 ) : Parcelable

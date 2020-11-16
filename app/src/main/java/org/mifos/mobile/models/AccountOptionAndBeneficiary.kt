@@ -9,4 +9,5 @@ import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 
 data class AccountOptionAndBeneficiary(
         val accountOptionsTemplate: AccountOptionsTemplate,
-        val beneficiaryList: List<Beneficiary>)
+        val beneficiaryList: List<Beneficiary?>
+)

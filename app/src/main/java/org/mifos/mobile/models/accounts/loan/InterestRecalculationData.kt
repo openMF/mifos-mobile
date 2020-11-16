@@ -13,34 +13,25 @@ import org.mifos.mobile.models.accounts.loan.calendardata.CalendarData
 
 @Parcelize
 data class InterestRecalculationData(
-        @SerializedName("id")
         var id: Int? = null,
 
-        @SerializedName("loanId")
         var loanId: Int? = null,
 
-        @SerializedName("interestRecalculationCompoundingType")
-        var interestRecalculationCompoundingType: InterestRecalculationCompoundingType,
+        var interestRecalculationCompoundingType: InterestRecalculationCompoundingType? = null,
 
-        @SerializedName("rescheduleStrategyType")
-        var rescheduleStrategyType: RescheduleStrategyType,
+        var rescheduleStrategyType: RescheduleStrategyType? = null,
 
-        @SerializedName("calendarData")
         var calendarData: CalendarData,
 
-        @SerializedName("recalculationRestFrequencyType")
-        var recalculationRestFrequencyType: RecalculationRestFrequencyType,
+        var recalculationRestFrequencyType: RecalculationRestFrequencyType? = null,
 
-        @SerializedName("recalculationRestFrequencyInterval")
         var recalculationRestFrequencyInterval: Double? = null,
 
-        @SerializedName("recalculationCompoundingFrequencyType")
-        var recalculationCompoundingFrequencyType: RecalculationCompoundingFrequencyType,
+        var recalculationCompoundingFrequencyType: RecalculationCompoundingFrequencyType? = null,
 
         @SerializedName("isCompoundingToBePostedAsTransaction")
         var compoundingToBePostedAsTransaction: Boolean? = null,
 
-        @SerializedName("allowCompoundingOnEod")
         var allowCompoundingOnEod: Boolean? = null
 
 ) : Parcelable

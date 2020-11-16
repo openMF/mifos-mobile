@@ -10,7 +10,7 @@ data class ChargeOptions(
         var name: String? = null,
         var active: Boolean? = null,
         var penalty: Boolean? = null,
-        var currency: Currency,
+        var currency: Currency? = null,
         var amount: Float = 0.toFloat(),
         var chargeTimeType: ChargeTimeType,
         var chargeAppliesTo: ChargeAppliesTo,

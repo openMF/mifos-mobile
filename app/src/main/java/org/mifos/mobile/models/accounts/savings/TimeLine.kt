@@ -2,7 +2,6 @@ package org.mifos.mobile.models.accounts.savings
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import java.util.*
 
 /**
@@ -10,43 +9,30 @@ import java.util.*
  */
 
 data class TimeLine(
-        @SerializedName("submittedOnDate")
         var submittedOnDate: List<Int> = ArrayList(),
 
-        @SerializedName("submittedByUsername")
-        var submittedByUsername: String,
+        var submittedByUsername: String?,
 
-        @SerializedName("submittedByFirstname")
-        var submittedByFirstname: String,
+        var submittedByFirstname: String?,
 
-        @SerializedName("submittedByLastname")
-        var submittedByLastname: String,
+        var submittedByLastname: String?,
 
-        @SerializedName("approvedOnDate")
         var approvedOnDate: List<Int> = ArrayList(),
 
-        @SerializedName("approvedByUsername")
-        var approvedByUsername: String,
+        var approvedByUsername: String?,
 
-        @SerializedName("approvedByFirstname")
-        var approvedByFirstname: String,
+        var approvedByFirstname: String?,
 
-        @SerializedName("approvedByLastname")
-        var approvedByLastname: String,
+        var approvedByLastname: String?,
 
-        @SerializedName("activatedOnDate")
-        var activatedOnDate: List<Int>,
+        var activatedOnDate: List<Int>? = null,
 
-        @SerializedName("activatedByUsername")
-        var activatedByUsername: String,
+        var activatedByUsername: String?,
 
-        @SerializedName("activatedByFirstname")
-        var activatedByFirstname: String,
+        var activatedByFirstname: String?,
 
-        @SerializedName("activatedByLastname")
-        var activatedByLastname: String,
+        var activatedByLastname: String?,
 
-        @SerializedName("closedOnDate")
         var closedOnDate: List<Int>
 
 ) : Parcelable {
@@ -71,8 +57,7 @@ data class TimeLine(
             parcel.readString(),
             arrayListOf<Int>().apply {
                 parcel.readArrayList(Int::class.java.classLoader)
-            }) {
-    }
+            })
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -98,7 +83,7 @@ data class TimeLine(
     companion object {
 
         @JvmField
-        final val CREATOR: Parcelable.Creator<TimeLine> = object : Parcelable.Creator<TimeLine> {
+        val CREATOR: Parcelable.Creator<TimeLine> = object : Parcelable.Creator<TimeLine> {
             override fun createFromParcel(parcel: Parcel): TimeLine {
                 return TimeLine(parcel)
             }

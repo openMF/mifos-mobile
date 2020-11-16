@@ -1,8 +1,6 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,12 +9,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TermFrequencyTypeOptions(
-        @SerializedName("id")
         var id: Int? = null,
 
-        @SerializedName("code")
-        var code: String,
+        var code: String? = null,
 
-        @SerializedName("value")
-        var value: String
+        var value: String? = null
 ) : Parcelable
