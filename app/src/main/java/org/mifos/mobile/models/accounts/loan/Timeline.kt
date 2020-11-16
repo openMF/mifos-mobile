@@ -7,55 +7,38 @@ package org.mifos.mobile.models.accounts.loan
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 
 data class Timeline(
-        @SerializedName("submittedOnDate")
-        var submittedOnDate: List<Int>,
+        var submittedOnDate: List<Int>? = null,
 
-        @SerializedName("submittedByUsername")
-        var submittedByUsername: String,
+        var submittedByUsername: String?,
 
-        @SerializedName("submittedByFirstname")
-        var submittedByFirstname: String,
+        var submittedByFirstname: String?,
 
-        @SerializedName("submittedByLastname")
-        var submittedByLastname: String,
+        var submittedByLastname: String?,
 
-        @SerializedName("approvedOnDate")
-        var approvedOnDate: List<Int>,
+        var approvedOnDate: List<Int>? = null,
 
-        @SerializedName("approvedByUsername")
-        var approvedByUsername: String,
+        var approvedByUsername: String?,
 
-        @SerializedName("approvedByFirstname")
-        var approvedByFirstname: String,
+        var approvedByFirstname: String?,
 
-        @SerializedName("approvedByLastname")
-        var approvedByLastname: String,
+        var approvedByLastname: String?,
 
-        @SerializedName("expectedDisbursementDate")
-        var expectedDisbursementDate: List<Int>,
+        var expectedDisbursementDate: List<Int>? = null,
 
-        @SerializedName("actualDisbursementDate")
-        var actualDisbursementDate: List<Int>,
+        var actualDisbursementDate: List<Int>? = null,
 
-        @SerializedName("disbursedByUsername")
-        var disbursedByUsername: String,
+        var disbursedByUsername: String?,
 
-        @SerializedName("disbursedByFirstname")
-        var disbursedByFirstname: String,
+        var disbursedByFirstname: String?,
 
-        @SerializedName("disbursedByLastname")
-        var disbursedByLastname: String,
+        var disbursedByLastname: String?,
 
-        @SerializedName("closedOnDate")
-        var closedOnDate: List<Int>,
+        var closedOnDate: List<Int>? = null,
 
-        @SerializedName("expectedMaturityDate")
-        var expectedMaturityDate: List<Int>,
+        var expectedMaturityDate: List<Int>? = null,
 
-        @SerializedName("withdrawnOnDate")
         var withdrawnOnDate: List<Int>
 
 ) : Parcelable {
@@ -89,8 +72,7 @@ data class Timeline(
             },
             arrayListOf<Int>().apply {
                 parcel.readArrayList(Int::class.java.classLoader)
-            }) {
-    }
+            })
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeList(submittedOnDate)
@@ -118,7 +100,7 @@ data class Timeline(
     companion object {
 
         @JvmField
-        final var CREATOR: Parcelable.Creator<Timeline> = object : Parcelable.Creator<Timeline> {
+        var CREATOR: Parcelable.Creator<Timeline> = object : Parcelable.Creator<Timeline> {
             override fun createFromParcel(parcel: Parcel): Timeline {
                 return Timeline(parcel)
             }

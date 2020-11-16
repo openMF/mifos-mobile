@@ -1,14 +1,10 @@
 package org.mifos.mobile.models
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobile.models.client.Currency
 import org.mifos.mobile.models.client.Type
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author Vishwajeet
@@ -17,31 +13,23 @@ import java.util.ArrayList
 
 @Parcelize
 data class Transaction(
-        @SerializedName("id")
+
         var id: Long? = null,
 
-        @SerializedName("officeId")
         var officeId: Long? = null,
 
-        @SerializedName("officeName")
-        var officeName: String,
+        var officeName: String? = null,
 
-        @SerializedName("type")
         var type: Type,
 
-        @SerializedName("date")
         var date: List<Int> = ArrayList(),
 
-        @SerializedName("currency")
-        var currency: Currency,
+        var currency: Currency? = null,
 
-        @SerializedName("amount")
         var amount: Double? = null,
 
-        @SerializedName("submittedOnDate")
         var submittedOnDate: List<Int> = ArrayList(),
 
-        @SerializedName("reversed")
         var reversed: Boolean? = null
 
 ) : Parcelable

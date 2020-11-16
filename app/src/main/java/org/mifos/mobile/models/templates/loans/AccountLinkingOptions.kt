@@ -1,8 +1,6 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,28 +9,20 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AccountLinkingOptions(
-        @SerializedName("accountNo")
-        var accountNo: String,
 
-        @SerializedName("clientId")
+        var accountNo: String? = null,
+
         var clientId: Int? = null,
 
-        @SerializedName("clientName")
-        var clientName: String,
+        var clientName: String? = null,
 
-        @SerializedName("currency")
-        var currency: Currency,
+        var currency: Currency? = null,
 
-        @SerializedName("fieldOfficerId")
         var fieldOfficerId: Int? = null,
 
-        @SerializedName("id")
         var id: Int? = null,
 
-        @SerializedName("productId")
         var productId: Int? = null,
 
-        @SerializedName("productName")
-        var productName: String
-
+        var productName: String? = null
 ) : Parcelable

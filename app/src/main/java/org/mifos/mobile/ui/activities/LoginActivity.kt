@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -31,6 +30,7 @@ import javax.inject.Inject
  * @since 05/06/16
  */
 class LoginActivity : BaseActivity(), LoginView {
+
     @JvmField
     @Inject
     var loginPresenter: LoginPresenter? = null
@@ -54,10 +54,10 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityComponent.inject(this)
+        activityComponent?.inject(this)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
-        loginPresenter!!.attachView(this)
+        loginPresenter?.attachView(this)
     }
 
     /**
@@ -65,9 +65,9 @@ class LoginActivity : BaseActivity(), LoginView {
      *
      * @param userName Username of the user that successfully logged in!
      */
-    override fun onLoginSuccess(userName: String) {
+    override fun onLoginSuccess(userName: String?) {
         this.userName = userName
-        loginPresenter!!.loadClient()
+        loginPresenter?.loadClient()
     }
 
     /**
@@ -87,7 +87,6 @@ class LoginActivity : BaseActivity(), LoginView {
     /**
      * Starts [PassCodeActivity]
      */
-    @SuppressLint("StringFormatInvalid")
     override fun showPassCodeActivity() {
         showToast(getString(R.string.toast_welcome, userName))
         startPassCodeActivity()
@@ -98,25 +97,25 @@ class LoginActivity : BaseActivity(), LoginView {
      *
      * @param errorMessage Error message that tells the user about the problem.
      */
-    override fun showMessage(errorMessage: String) {
-        showToast(errorMessage, Toast.LENGTH_LONG)
-        llLogin!!.visibility = View.VISIBLE
+    override fun showMessage(errorMessage: String?) {
+        showToast(errorMessage!!, Toast.LENGTH_LONG)
+        llLogin?.visibility = View.VISIBLE
     }
 
-    override fun showUsernameError(error: String) {
-        tilUsername!!.error = error
+    override fun showUsernameError(error: String?) {
+        tilUsername?.error = error
     }
 
-    override fun showPasswordError(error: String) {
-        tilPassword!!.error = error
+    override fun showPasswordError(error: String?) {
+        tilPassword?.error = error
     }
 
     override fun clearUsernameError() {
-        tilUsername!!.isErrorEnabled = false
+        tilUsername?.isErrorEnabled = false
     }
 
     override fun clearPasswordError() {
-        tilPassword!!.isErrorEnabled = false
+        tilPassword?.isErrorEnabled = false
     }
 
     /**
@@ -125,13 +124,13 @@ class LoginActivity : BaseActivity(), LoginView {
 
     @OnClick(R.id.btn_login)
     fun onLoginClicked() {
-        val username = tilUsername!!.editText!!.editableText.toString()
-        val password = tilPassword!!.editText!!.editableText.toString()
+        val username = tilUsername?.editText?.editableText.toString()
+        val password = tilPassword?.editText?.editableText.toString()
         if (Network.isConnected(this)) {
             val payload = LoginPayload()
             payload.username = username
             payload.password = password
-            loginPresenter!!.login(payload)
+            loginPresenter?.login(payload)
         } else {
             Toaster.show(llLogin, getString(R.string.no_internet_connection))
         }
@@ -144,7 +143,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onDestroy() {
         super.onDestroy()
-        loginPresenter!!.detachView()
+        loginPresenter?.detachView()
     }
 
     /**

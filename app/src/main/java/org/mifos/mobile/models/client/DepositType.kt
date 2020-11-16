@@ -1,22 +1,15 @@
 package org.mifos.mobile.models.client
 
 import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 import org.mifos.mobile.api.ApiEndPoints
 
 @Parcelize
 data class DepositType(
-        @SerializedName("id")
         var id: Int? = null,
+        var code: String? = null,
 
-        @SerializedName("code")
-        var code: String,
-
-        @SerializedName("value")
-        var value: String
+        var value: String? = null
 ) : Parcelable {
 
     fun isRecurring(): Boolean {
@@ -32,7 +25,7 @@ data class DepositType(
     }
 
 
-    enum class ServerTypes constructor(val id: Int?, val code: String, val endpoint: String) {
+    enum class ServerTypes constructor(val id: Int?, val code: String? = null, val endpoint: String) {
         SAVINGS(100, "depositAccountType.savingsDeposit", ApiEndPoints.SAVINGS_ACCOUNTS),
         FIXED(200, "depositAccountType.fixedDeposit", ApiEndPoints.SAVINGS_ACCOUNTS),
         RECURRING(300, "depositAccountType.recurringDeposit", ApiEndPoints.RECURRING_ACCOUNTS);
@@ -41,7 +34,7 @@ data class DepositType(
         companion object {
 
             fun fromId(id: Int): ServerTypes {
-                for (type in ServerTypes.values()) {
+                for (type in values()) {
                     if (type.id == id) {
                         return type
                     }
