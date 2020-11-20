@@ -71,3 +71,6 @@ View the [wiki](https://github.com/openMF/self-service-app/wiki) to see pages th
 
 See the [requirements](https://github.com/openMF/self-service-app/wiki/Design-&-Requirements) for an initial design mockup and documentation on the Fineract API.
 
+## Note
+
+The UI design is currently being revamped. New design can be found [here](https://docs.google.com/presentation/d/1yFR19vGlKW-amxzGms8TgPzd1jWkrALPFcaC85EyYpw/edit#slide=id.g6c6ccd991d_0_42)
