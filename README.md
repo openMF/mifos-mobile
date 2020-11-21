@@ -2,7 +2,7 @@
 
 # Mifos-Mobile Android Application for MifosX
 
-An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold. Data visible to customers will be a sub-set of what staff can see. This is a native Android Application written in Java with POJO classes in Kotlin.
+An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold. Data visible to customers will be a sub-set of what staff can see. This is a native Android Application written in Kotlin.
 
 ### Status
 
@@ -26,9 +26,6 @@ For pull request guidelines please click <a href="https://github.com/openMF/mifo
 
 We have the following branches :
 
- * **gsoc#2020**
-	 The app is currently being converted to Kotlin for enabling multiplatform development in the future. Kotlin version of the app is currently pushed in this branch. Any further development shall be pushed to this branch until the conversion is reviewed and merged into development branch.
-	  
  * **development**
      All the contributions should be pushed to this branch. If you're making a contribution,
      you are supposed to make a pull request to _development_.
