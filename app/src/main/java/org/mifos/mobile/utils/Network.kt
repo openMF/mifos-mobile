@@ -15,9 +15,13 @@ object Network {
      * @param context
      * @return
      */
-    private fun getNetworkInfo(context: Context): NetworkInfo {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo
+    private fun getNetworkInfo(context: Context): NetworkInfo? {
+        val cm: ConnectivityManager?
+        cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (cm.activeNetworkInfo !=null){
+            return cm.activeNetworkInfo
+        }
+        return null
     }
 
     /**
@@ -29,7 +33,10 @@ object Network {
     @kotlin.jvm.JvmStatic
     fun isConnected(context: Context?): Boolean {
         val info = getNetworkInfo(context!!)
-        return info.isConnected
+        if (info != null) {
+            return info.isConnected
+        }
+        return false
     }
 
     /**
@@ -41,7 +48,10 @@ object Network {
      */
     fun isConnectedWifi(context: Context): Boolean {
         val info = getNetworkInfo(context)
-        return info.isConnected && info.type == ConnectivityManager.TYPE_WIFI
+        if (info != null) {
+            return info.isConnected && info.type == ConnectivityManager.TYPE_WIFI
+        }
+        return false
     }
 
     /**
@@ -53,7 +63,10 @@ object Network {
      */
     fun isConnectedMobile(context: Context): Boolean {
         val info = getNetworkInfo(context)
-        return info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
+        if (info != null) {
+            return info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
+        }
+        return false
     }
 
     /**
@@ -64,7 +77,10 @@ object Network {
      */
     fun isConnectedFast(context: Context): Boolean {
         val info = getNetworkInfo(context)
-        return info.isConnected && isConnectionFast(info.type, info.subtype)
+        if (info != null) {
+            return info.isConnected && isConnectionFast(info.type, info.subtype)
+        }
+        return false
     }
 
     /**
