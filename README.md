@@ -6,9 +6,9 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 
 ### Status
 
-[![Join the chat at https://gitter.im/openMF/self-service-app](https://badges.gitter.im/openMF/self-service-app.svg)](https://gitter.im/openMF/self-service-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/openMF/mifos-mobile.svg?branch=development)](https://travis-ci.org/openMF/mifos-mobile)
-
+| Master | Development | Chat |
+|------------|-----------------|-----------------|
+| ![Mifos-Mobile CI[Master/Dev]](https://github.com/openMF/mifos-mobile/workflows/Mifos-Mobile%20CI%5BMaster/Dev%5D/badge.svg?branch=master) | ![Mifos-Mobile CI[Master/Dev]](https://github.com/openMF/mifos-mobile/workflows/Mifos-Mobile%20CI%5BMaster/Dev%5D/badge.svg?branch=development) |[![Join the chat at https://gitter.im/openMF/self-service-app](https://badges.gitter.im/openMF/self-service-app.svg)](https://gitter.im/openMF/self-service-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)|
 
 ## Screenshots
 
@@ -29,7 +29,7 @@ We have the following branches :
  * **development**
      All the contributions should be pushed to this branch. If you're making a contribution,
      you are supposed to make a pull request to _development_.
-     Please make sure it passes a build check on Travis.
+     Please make sure it passes a build check on Github Workflows CI.
 
      It is advisable to clone only the development branch using the following command:
 
@@ -41,6 +41,12 @@ We have the following branches :
 
  * **master**
    The master branch contains all the stable and bug-free working code. The development branch once complete will be merged with this branch.
+
+To get the latest apk of master/development branch from Github Artifacts, follow these steps:
+1. Go to to the [Actions](https://github.com/openMF/mifos-mobile/actions) tab of this repository.
+2. Select the latest workflow for master/development branch.
+3. Click on hyperlink 'mifos-mobile' in Artifacts section.
+4. Extract the downloaded file and get the apk.
 
 ## Development Setup
 
