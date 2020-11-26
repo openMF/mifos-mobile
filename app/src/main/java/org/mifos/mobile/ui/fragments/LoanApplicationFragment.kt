@@ -1,6 +1,9 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -370,11 +373,12 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun showLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        if (loanTemplate?.productOptions != null)
+        if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
                 listLoanProducts.add(name)
             }
-        loanProductAdapter?.notifyDataSetChanged()
+            loanProductAdapter?.notifyDataSetChanged()
+        }
     }
 
     /**
@@ -384,10 +388,11 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      */
     override fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        if (loanTemplate?.productOptions != null)
+        if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
                 listLoanProducts.add(name)
             }
+        }
         loanProductAdapter?.notifyDataSetChanged()
         spLoanProducts?.setSelection(loanProductAdapter!!
                 .getPosition(loanWithAssociations?.loanProductName))
@@ -420,10 +425,11 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
         tvCurrency?.text = loanTemplate?.currency?.displayLabel
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
-        if (loanTemplate?.loanPurposeOptions != null)
+        if (loanTemplate?.loanPurposeOptions != null) {
             for (loanPurposeOptions in loanTemplate.loanPurposeOptions) {
                 listLoanPurpose.add(loanPurposeOptions.name)
             }
+        }
         loanPurposeAdapter?.notifyDataSetChanged()
         spLoanPurpose?.setSelection(0)
     }
@@ -438,10 +444,11 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
         this.loanTemplate = loanTemplate
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
-        if (loanTemplate?.loanPurposeOptions != null)
+        if (loanTemplate?.loanPurposeOptions != null) {
             for (loanPurposeOptions in loanTemplate.loanPurposeOptions) {
                 listLoanPurpose.add(loanPurposeOptions.name)
             }
+        }
         loanPurposeAdapter?.notifyDataSetChanged()
         spLoanPurpose?.setSelection(0)
         if (isLoanUpdatePurposesInitialization &&
@@ -497,11 +504,27 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
                             LoanState.UPDATE)
                 }
             }
-            R.id.sp_loan_purpose -> purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
+            R.id.sp_loan_purpose ->
+            {
+                if(loanTemplate?.loanPurposeOptions?.size==0){
+                    loanApplicationPresenter?.loadLoanApplicationTemplateByProduct(productId,
+                            LoanState.UPDATE)
+                    val handler = Handler()
+                    val runnable = Runnable {
+                        purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
+                        spLoanPurpose?.setSelection(position)
+                    }
+                    handler.postDelayed(runnable,1500)
+                }else {
+                    purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
+                    spLoanPurpose?.setSelection(position)
+                }
+            }
         }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
