@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -498,21 +497,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
                             LoanState.UPDATE)
                 }
             }
-            R.id.sp_loan_purpose -> {
-                if(loanTemplate?.loanPurposeOptions?.size==0){
-                    loanApplicationPresenter?.loadLoanApplicationTemplateByProduct(productId,
-                            LoanState.UPDATE)
-                    val handler = Handler()
-                    val runnable = Runnable {
-                        purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
-                        spLoanPurpose?.setSelection(position)
-                    }
-                    handler.postDelayed(runnable,1500)
-                }else {
-                    purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
-                    spLoanPurpose?.setSelection(position)
-                }
-            }
+            R.id.sp_loan_purpose -> purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
         }
     }
 
