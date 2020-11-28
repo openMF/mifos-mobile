@@ -10,6 +10,7 @@ apply from: '../config/quality/quality.gradle'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    ndkVersion rootProject.ext.ndkVersion
 
     defaultConfig {
         applicationId "org.mifos.mobile"
