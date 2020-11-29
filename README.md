@@ -8,7 +8,7 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 
 | Master | Development | Chat |
 |------------|-----------------|-----------------|
-| ![Mifos-Mobile CI[Master/Dev]](https://github.com/openMF/mifos-mobile/workflows/Mifos-Mobile%20CI%5BMaster/Dev%5D/badge.svg?branch=master) | ![Mifos-Mobile CI[Master/Dev]](https://github.com/openMF/mifos-mobile/workflows/Mifos-Mobile%20CI%5BMaster/Dev%5D/badge.svg?branch=development) |[![Join the chat at https://gitter.im/openMF/self-service-app](https://badges.gitter.im/openMF/self-service-app.svg)](https://gitter.im/openMF/self-service-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)|
+| ![Mifos-Mobile CI[Master]](https://github.com/openMF/mifos-mobile/workflows/Workflow%20for%20master/development%20branches/badge.svg?branch=master) | ![Mifos-Mobile CI[Development]](https://github.com/openMF/mifos-mobile/workflows/Workflow%20for%20master/development%20branches/badge.svg?branch=development) |[![Join the chat at https://gitter.im/openMF/self-service-app](https://badges.gitter.im/openMF/self-service-app.svg)](https://gitter.im/openMF/self-service-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)|
 
 ## Screenshots
 
@@ -41,6 +41,8 @@ We have the following branches :
 
  * **master**
    The master branch contains all the stable and bug-free working code. The development branch once complete will be merged with this branch.
+
+### Instruction to get the latest APK
 
 To get the latest apk of master/development branch from Github Artifacts, follow these steps:
 1. Go to to the [Actions](https://github.com/openMF/mifos-mobile/actions) tab of this repository.
