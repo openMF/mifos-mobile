@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.oss.licenses.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -117,9 +117,9 @@ dependencies {
     //Butter Knife
     implementation "com.jakewharton:butterknife:$butterKnifeVersion"
     kapt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
-        transitive = true
-    }
+
+    // Firebase Crashlytics dependency
+    implementation "com.google.firebase:firebase-crashlytics:$firebaseCrashlyticsVersion"
 
     //Annotation library
     implementation "androidx.annotation:annotation:$rootProject.annotationLibraryVersion"
