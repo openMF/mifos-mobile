@@ -6,7 +6,7 @@
 
 <resources>
 
-    <style name="Button" parent="AppTheme.Button" />
+    <style name="Button" parent="Material.Button" />
 
     <style name="Button.Base">
         <item name="android:textSize">17sp</item>>

@@ -5,13 +5,13 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MaterialAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MaterialAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorButtonNormal">@color/primary</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="buttonStyle">@style/AppTheme.Button</item>
+        <item name="buttonStyle">@style/Material.Button</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="alertDialogTheme">@style/MaterialAlertDialogStyle</item>
     </style>
@@ -22,7 +22,7 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+    <style name="Material.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
@@ -62,9 +62,20 @@
         <item name="colorAccent">@color/accent</item>
     </style>
     
-    <!--Theme for Spash-->
+    <!--Theme for Splash-->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <!--Redesign Login Screen-->
+    <style name="TextInputLayout.StrokeWhite" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeWidth">@dimen/layout_padding_2dp</item>
+    </style>
+
+    <style name="LoginTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/login_bg</item>
+    </style>
+
+    <dimen name="layout_padding_2dp">2dp</dimen>
 </resources>
