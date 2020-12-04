@@ -57,7 +57,7 @@ ext {
     rulesVersion = '1.1.0-alpha4'
     espressoVersion = '3.1.0-alpha4'
     zxingcoreVersion = '3.2.1'
-    zxingbarcodescannerVersion = '1.8.4'
+    zxingbarcodescannerVersion = '1.9.13'
     rxjavaVersion = '2.1.9'
     rxandroidVersion = '2.0.2'
     sweeterrorVersion = '1.0.0'
