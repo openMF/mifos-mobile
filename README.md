@@ -76,6 +76,10 @@ View the [wiki](https://github.com/openMF/self-service-app/wiki) to see pages th
 
 See the [requirements](https://github.com/openMF/self-service-app/wiki/Design-&-Requirements) for an initial design mockup and documentation on the Fineract API.
 
+## PaymentHub Usecases
+
+For Payment Hub usecases, check this [documentation](https://mifos.gitbook.io/docs/payment-hub-ee/overview/payment-hub-apis). Mifos Mobile utilises medium connector of Payment Hub.
+
 ## Note
 
 The UI design is currently being revamped. New design can be found [here](https://docs.google.com/presentation/d/1yFR19vGlKW-amxzGms8TgPzd1jWkrALPFcaC85EyYpw/edit#slide=id.g6c6ccd991d_0_42)
