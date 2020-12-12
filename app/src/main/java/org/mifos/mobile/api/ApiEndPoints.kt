@@ -17,4 +17,11 @@ object ApiEndPoints {
     const val REGISTRATION = "registration"
     const val DEVICE = "device"
     const val USER = "user"
+
+    // For Payment-Hub related calls
+    const val INTEROPERATION = "interoperation"
+    const val ACCOUNTS = "accounts"
+    const val TRANSFER = "transfer"
+    const val PARTY_REGISTRATION = "partyRegistration"
+    const val TRANSACTION_REQUEST = "transactionRequest"
 }

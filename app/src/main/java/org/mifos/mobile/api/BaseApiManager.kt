@@ -54,6 +54,9 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
         private var notificationApi: NotificationService? = null
         private var userDetailsService: UserDetailsService? = null
         private var guarantorApi: GuarantorService? = null
+        private var fineractPaymentHubApi: FineractPaymentHubService? = null
+        private var transactionsApi: TransactionsService? = null
+
         private fun init() {
             authenticationApi = createApi(AuthenticationService::class.java)
             clientsApi = createApi(ClientService::class.java)
@@ -67,6 +70,8 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
             notificationApi = createApi(NotificationService::class.java)
             guarantorApi = createApi(GuarantorService::class.java)
             userDetailsService = createApi(UserDetailsService::class.java)
+            fineractPaymentHubApi = createApi(FineractPaymentHubService::class.java)
+            transactionsApi = createApi(TransactionsService::class.java)
         }
 
         private fun <T> createApi(clazz: Class<T>): T? {
@@ -88,5 +93,14 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
     init {
         createService(preferencesHelper.baseUrl, preferencesHelper.tenant,
                 preferencesHelper.token)
+    }
+
+
+    fun getFineractPaymentHubApi(): FineractPaymentHubService? {
+        return fineractPaymentHubApi
+    }
+
+    fun getTransactionsApi(): TransactionsService? {
+        return transactionsApi
     }
 }
