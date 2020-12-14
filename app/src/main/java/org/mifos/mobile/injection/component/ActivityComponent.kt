@@ -9,6 +9,7 @@ import org.mifos.mobile.ui.activities.LoginActivity
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.SplashActivity
 import org.mifos.mobile.ui.fragments.*
+import org.mifos.mobile.ui.transaction.TransactionActivity
 
 /**
  * @author ishan
@@ -56,4 +57,5 @@ interface ActivityComponent {
     fun inject(savingsAccountApplicationFragment: SavingsAccountApplicationFragment?)
     fun inject(savingsAccountWithdrawFragment: SavingsAccountWithdrawFragment?)
     fun inject(reviewLoanApplicationFragment: ReviewLoanApplicationFragment?)
+    fun inject(transactionActivity: TransactionActivity?)
 }

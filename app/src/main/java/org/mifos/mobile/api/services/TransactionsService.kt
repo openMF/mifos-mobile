@@ -14,7 +14,7 @@ interface TransactionsService {
     @POST(ApiEndPoints.TRANSFER)
     fun makeTransaction(@Body transaction: Transaction?): Observable<TransactionInfo>
 
-    @GET(ApiEndPoints.TRANSFER.toString() + "/{transactionId}")
+    @GET(ApiEndPoints.TRANSFER + "/{transactionId}")
     fun fetchTransactionInfo(
             @Path("transactionId") transactionId: String?): Observable<TransactionResponse>
 

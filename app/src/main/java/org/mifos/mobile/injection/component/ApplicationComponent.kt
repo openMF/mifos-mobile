@@ -9,6 +9,7 @@ import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.data.DataManagerTransaction
 import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.injection.module.ApplicationModule
 
@@ -28,4 +29,5 @@ interface ApplicationComponent {
     fun prefManager(): PreferencesHelper?
     fun baseApiManager(): BaseApiManager?
     fun databaseHelper(): DatabaseHelper?
+    fun dataManagerTransaction(): DataManagerTransaction?
 }

@@ -33,6 +33,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
+import org.mifos.mobile.ui.transaction.TransactionActivity
 import org.mifos.mobile.ui.views.UserDetailsView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
@@ -148,7 +149,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             R.id.item_recent_transactions -> replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container)
             R.id.item_charges -> replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
                     R.id.container)
-            R.id.item_third_party_transfer -> replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container)
+            R.id.item_third_party_transfer -> startActivity(Intent(this@HomeActivity, TransactionActivity::class.java))
             R.id.item_beneficiaries -> replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container)
             R.id.item_settings -> startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
             R.id.item_about_us -> startActivity(Intent(this@HomeActivity, AboutUsActivity::class.java))

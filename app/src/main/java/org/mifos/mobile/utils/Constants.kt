@@ -66,4 +66,6 @@ object Constants {
     const val OUTSTANDING_BALANCE = "outstanding_balance"
     const val LOAN_REPAYMENT = "loan_repayment"
     const val TENANT_ID = "tn05"
+    const val ERROR_FETCHING_ACCOUNTS = "errorFetchingAccounts"
+    const val TEST_PAYER = "76894434000"
 }

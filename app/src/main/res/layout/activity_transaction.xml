@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/til_msisdn"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layout_padding_24dp"
+            android:layout_width="match_parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:hint="@string/msisdn"
+                android:id="@+id/et_msisdntext"
+                android:inputType="number"
+                android:layout_height="50dp"
+                android:layout_width="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/til_amount"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layout_padding_24dp"
+            android:layout_width="match_parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:hint="@string/amount"
+                android:id="@+id/et_amounttext"
+                android:inputType="number"
+                android:layout_height="50dp"
+                android:layout_width="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_send"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Send Money"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>

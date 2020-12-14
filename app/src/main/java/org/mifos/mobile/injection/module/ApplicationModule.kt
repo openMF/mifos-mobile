@@ -8,6 +8,7 @@ import dagger.Provides
 
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.data.PaymentHubApiManager
 import org.mifos.mobile.injection.ApplicationContext
 
 import javax.inject.Singleton
@@ -39,5 +40,11 @@ class ApplicationModule(private val application: Application) {
     @Singleton
     fun provideBaseApiManager(preferencesHelper: PreferencesHelper?): BaseApiManager {
         return BaseApiManager(preferencesHelper!!)
+    }
+
+    @Provides
+    @Singleton
+    internal fun providePaymentHubApiManager(): PaymentHubApiManager {
+        return PaymentHubApiManager(application)
     }
 }

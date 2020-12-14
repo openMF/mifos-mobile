@@ -11,6 +11,9 @@ class BaseURL {
     val defaultBaseUrl: String
         get() = PROTOCOL_HTTPS + API_ENDPOINT
 
+    val paymentUrl: String
+        get() = PROTOCOL_HTTP + PAYMENTAPI_ENDPOINT + PAYMENT_API_PATH
+
     fun getUrl(endpoint: String): String {
         return endpoint + API_PATH
     }
@@ -18,6 +21,9 @@ class BaseURL {
     companion object {
         const val API_ENDPOINT = "mobile.mifos.io"
         const val API_PATH = "/fineract-provider/api/v1/self/"
+        const val PAYMENT_API_PATH = "/channel/"
+        const val PAYMENTAPI_ENDPOINT = "med-connector-channel.mifos.io"
+        const val PROTOCOL_HTTP = "http://"
         const val PROTOCOL_HTTPS = "https://"
     }
 }

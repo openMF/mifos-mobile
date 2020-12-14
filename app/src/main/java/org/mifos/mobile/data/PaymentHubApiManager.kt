@@ -18,8 +18,6 @@ class PaymentHubApiManager constructor(context: Context) {
     private lateinit var partyRegistrationApi: PartyRegistrationService
     private lateinit var retrofit: Retrofit
 
-    val paymentUrl: String = "https://med-connector-channel.mifos.io/channel/"
-
     init {
         createService(context)
     }
@@ -46,7 +44,7 @@ class PaymentHubApiManager constructor(context: Context) {
                 .addInterceptor(ApiInterceptor(Constants.TENANT_ID))
                 .build()
         retrofit = Retrofit.Builder()
-                .baseUrl(paymentUrl)
+                .baseUrl(BaseURL().paymentUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
