@@ -74,4 +74,18 @@
     <dimen name="row_header_width">55dp</dimen>
     <dimen name="text_size">14sp</dimen>
     <dimen name="table_header_line">1dp</dimen>
+    <dimen name="layout_padding_20dp">20dp</dimen>
+    <dimen name="layout_width_25dp">25dp</dimen>
+    <dimen name="layout_height_25dp">25dp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="layout_padding_10dp">10dp</dimen>
+    <dimen name="text_size_60sp">60sp</dimen>
+    <dimen name="layout_padding_50dp">50dp</dimen>
+    <dimen name="layout_corner_radius_50dp">50dp</dimen>
+    <dimen name="text_size_25sp">25sp</dimen>
+    <dimen name="layout_padding_0dp">0dp</dimen>
+    <dimen name="layout_padding_negative_50dp">-50dp</dimen>
+    <dimen name="layout_padding_75dp">75dp</dimen>
+    <dimen name="layout_corner_radius_10dp">10dp</dimen>
+    <dimen name="text_size_30sp">30sp</dimen>
 </resources>
