@@ -45,7 +45,7 @@ We have the following branches :
 ### Instruction to get the latest APK
 
 To get the latest apk of master/development branch from Github Artifacts, follow these steps:
-1. Go to to the [Actions](https://github.com/openMF/mifos-mobile/actions) tab of this repository.
+1. Go to to the [Actions](https://github.com/openMF/mifos-mobile/actions?query=workflow%3A%22Workflow+for+master%2Fdevelopment+branches%22+event%3Apush) tab of this repository.
 2. Select the latest workflow for master/development branch.
 3. Click on hyperlink 'mifos-mobile' in Artifacts section.
 4. Extract the downloaded file and get the apk.
