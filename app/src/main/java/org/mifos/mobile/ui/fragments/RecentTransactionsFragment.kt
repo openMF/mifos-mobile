@@ -165,7 +165,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
      */
     override fun showEmptyTransaction() {
         sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.recent_transactions),
-                R.drawable.ic_label_black_24dp, rvRecentTransactions, layoutError)
+                R.drawable.ic_error_black_24dp, rvRecentTransactions, layoutError)
     }
 
     /**
