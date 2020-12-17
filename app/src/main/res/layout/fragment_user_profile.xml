@@ -267,9 +267,9 @@
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                             tools:text="@string/medium_text"/>
                         <TextView
-                            android:drawableLeft="@drawable/ic_beneficiary_wrapper"
+                            android:drawableLeft="@drawable/ic_gender_wrapper"
                             android:drawablePadding="@dimen/layout_padding_8dp"
-                            android:drawableStart="@drawable/ic_beneficiary_wrapper"
+                            android:drawableStart="@drawable/ic_gender_wrapper"
                             android:gravity="center"
                             android:id="@+id/tv_gender"
                             android:layout_height="wrap_content"
