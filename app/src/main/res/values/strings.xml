@@ -573,6 +573,11 @@
     <string name="transaction_period">Transaction Period</string>
     <string name="transaction_type">Transaction Type</string>
 
+    <!--Login Current User Dialog Strings-->
+    <string name="login_current_user_confirmation_text">Do you want to continue as %1$s</string>
+    <string name="login_current_user_negative_button">Login as different user</string>
+    <string name="login_current_user_positive_button">Continue</string>
+
     <string-array name="languages" translatable="false">
         <item>English</item>
         <item>हिंदी</item>

@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -15,11 +16,13 @@ import butterknife.OnClick
 import com.google.android.material.textfield.TextInputLayout
 
 import org.mifos.mobile.R
+import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.presenters.LoginPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.MaterialDialog
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 
@@ -50,7 +53,9 @@ class LoginActivity : BaseActivity(), LoginView {
     @JvmField
     @BindView(R.id.ll_login)
     var llLogin: LinearLayout? = null
+
     private var userName: String? = null
+    private var preferencesHelper: PreferencesHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +63,8 @@ class LoginActivity : BaseActivity(), LoginView {
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         loginPresenter?.attachView(this)
+        preferencesHelper = PreferencesHelper(this)
+        checkAndAskAsCurrentUser()
     }
 
     /**
@@ -155,5 +162,27 @@ class LoginActivity : BaseActivity(), LoginView {
         intent.putExtra(Constants.INTIAL_LOGIN, true)
         startActivity(intent)
         finish()
+    }
+
+    private fun checkAndAskAsCurrentUser() {
+        if (Network.isConnected(this)) {
+            if (preferencesHelper?.userName!!.isNotEmpty()) {
+                MaterialDialog.Builder().init(this@LoginActivity)
+                        .setCancelable(false)
+                        .setTitle(preferencesHelper!!.clientName)
+                        .setMessage(getString(R.string.login_current_user_confirmation_text, preferencesHelper!!.clientName))
+                        .setPositiveButton(getString(R.string.login_current_user_positive_button),
+                                DialogInterface.OnClickListener { _, _ ->
+                                    startPassCodeActivity()
+                                })
+                        .setNegativeButton(getString(R.string.login_current_user_negative_button),
+                                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                        .createMaterialDialog()
+                        .show()
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.internet_not_connected),
+                    Toast.LENGTH_SHORT).show()
+        }
     }
 }
