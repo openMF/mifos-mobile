@@ -221,6 +221,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         ivTextDrawableUserProfilePicture = ButterKnife.findById(headerView, R.id.iv_user_image)
         ivTextDrawableUserProfilePicture?.setOnClickListener(this)
         ivCircularUserProfilePicture?.setOnClickListener(this)
+        headerView.setOnClickListener(this)
     }
 
     /**
