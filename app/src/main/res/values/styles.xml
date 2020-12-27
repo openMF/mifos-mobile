@@ -78,4 +78,11 @@
     </style>
 
     <dimen name="layout_padding_2dp">2dp</dimen>
+
+    <style name="FloatingActionButtonTheme" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="borderWidth">0dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
 </resources>
