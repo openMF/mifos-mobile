@@ -43,6 +43,8 @@
     <color name="blue_bright">#ff00ddff</color>
     <!-- A really bright Holo shade of gray -->
     <color name="gray_bright">#33CCCCCC</color>
+    <!-- A dull shade of gray similar to white-->
+    <color name="gray_dull">#7A7A7A</color>
 
     <!-- Material design colors -->
 
