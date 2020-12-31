@@ -31,12 +31,15 @@
                 android:src="@drawable/mifos_logo"/>
 
             <!-- Username  Label -->
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_username"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent">
+
 
                 <EditText
                     style="@style/Base.TextAppearance.AppCompat.Medium"
@@ -56,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 app:passwordToggleEnabled="true">
 
@@ -72,12 +76,15 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:layout_marginTop="@dimen/login_margin_top"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/login_margin_top"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:background="#AD39C1"
+                android:padding="10dp"
+                android:textSize="20sp"
                 android:text="@string/login"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/Widget.AppCompat.Button.Borderless"
