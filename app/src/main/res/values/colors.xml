@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffffff</color>
+    <color name="PrimaryColor">#4C56C0</color>
+    <color name="LightGrey">#EBECF0</color>
+    <color name="GradientDark">#EEC0C6</color>
     <color name="black">#000000</color>
     <color name="background">#eaeaea</color>
     <color name="deposit_green">#ff14c416</color>
