@@ -39,6 +39,13 @@ We have the following branches :
 
     `git clone -b development --single-branch https://github.com/username/mifos-mobile.git`
 
+ * **ui-redesign**
+      All the contributions related to redesigning of the app should be pushed to this branch. If you're making a contribution,
+      you are supposed to make a pull request to _ui-redesign_.
+      Please make sure it passes a build check on Github Workflows CI.
+
+      This branch will be merged with the development branch once the redesign is complete.
+
  * **master**
    The master branch contains all the stable and bug-free working code. The development branch once complete will be merged with this branch.
 
