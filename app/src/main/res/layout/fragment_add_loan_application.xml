@@ -99,7 +99,8 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                app:hintTextAppearance="@style/Base.TextAppearance.AppCompat.Medium">
 
                 <EditText
                     android:gravity="start"
@@ -135,8 +136,7 @@
                     android:layout_marginEnd="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+                    android:layout_width="0dp" />
 
             </LinearLayout>
 
