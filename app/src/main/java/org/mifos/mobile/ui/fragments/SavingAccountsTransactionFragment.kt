@@ -198,16 +198,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                 R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction, layoutError)
     }
 
-    /**
-     * Opens up Phone Dialer
-     */
-    @OnClick(R.id.tv_help_line_number)
-    fun dialHelpLineNumber() {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
-        startActivity(intent)
-    }
-
     private fun startDatePick() {
         datePick = DatePick.START
         mfDatePicker?.show(activity?.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
