@@ -1,23 +1,28 @@
 package org.mifos.mobile.ui.fragments
 
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
-import android.os.Bundle
-import android.os.Parcelable
+import android.os.*
+import android.util.LruCache
 import android.view.*
 import android.widget.*
-
 import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
 import org.mifos.mobile.R
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
@@ -30,7 +35,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingAccountsTransactionView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.MFDatePicker.OnDatePickListener
-
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 import javax.inject.Inject
 
@@ -78,12 +84,16 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     private var isCheckBoxPeriod = false
     private var selectedRadioButtonId = 0
     var active = false
+    var directory: String? = (android.os.Environment.getExternalStorageDirectory().path +
+            File.separator + "Mifos Docs")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
+        if (!checkPermission()!!) requestPermission()
     }
 
     override fun onCreateView(
@@ -406,6 +416,14 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_filter_savings_transactions -> showFilterDialog()
+            R.id.menu_pdf_savings_transactions -> {
+                if (checkPermission()!!) createPDF()
+                else {
+                    requestPermission()
+                    if (checkPermission()!!) createPDF()
+                    else Toaster.show(view,getString(R.string.savings_transactions_permission_error))
+                }
+            }
         }
         return true
     }
@@ -414,6 +432,103 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         super.onDestroyView()
         hideProgress()
         savingAccountsTransactionPresenter?.detachView()
+    }
+
+    //Converts image to pdf and deletes image
+    private fun createPDF() {
+        var success = true;
+        val dir = File(Environment.getExternalStorageDirectory().path, "Mifos Docs")
+        if (!dir.isDirectory) {
+            dir.mkdirs()
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val listBitmap = getScreenshotFromRecyclerView()
+            var pdfDocument: PdfDocument? = null
+            pdfDocument = PdfDocument()
+            val pageInfo = PdfDocument.PageInfo.Builder(listBitmap!!.width + 20,
+                    listBitmap.height + 20, 1).create()
+            val page = pdfDocument.startPage(pageInfo)
+            if (listBitmap != null) {
+                page.canvas.drawBitmap(listBitmap, 0f, 10f, null)
+                listBitmap.recycle()
+            }
+            pdfDocument.finishPage(page)
+            val filePath: String = directory + File.separator + savingsId.toString() + ".pdf"
+            val myFile = File(filePath)
+            try {
+                pdfDocument.writeTo(FileOutputStream(myFile))
+            } catch (e: Exception) {
+                Toast.makeText(context, getString(R.string.savings_transactions_pdf_error), Toast.LENGTH_SHORT).show()
+                success = false
+            }
+            if (success)Toast.makeText(context, getString(R.string.savings_transactions_pdf_saved, myFile.path),
+                    Toast.LENGTH_SHORT).show()
+            pdfDocument.close()
+        }
+    }
+
+    private fun getScreenshotFromRecyclerView(): Bitmap? {
+        val view = rvSavingAccountsTransaction
+        val adapter = view?.adapter
+        var bigBitmap: Bitmap? = null
+        if (adapter != null) {
+            val size = adapter.itemCount
+            var height = 0
+            val paint = Paint()
+            var iHeight = 0
+            val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+
+            // Use 1/8th of the available memory for this memory cache.
+            val cacheSize = maxMemory / 8
+            val bitmapCache = LruCache<String, Bitmap>(cacheSize)
+            for (i in 0 until size) {
+                val holder = adapter.createViewHolder(view, adapter.getItemViewType(i))
+                adapter.onBindViewHolder(holder, i)
+                holder.itemView.measure(View.MeasureSpec.makeMeasureSpec(view.width,
+                        View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED))
+                holder.itemView.layout(0, 0, holder.itemView.measuredWidth,
+                        holder.itemView.measuredHeight)
+                holder.itemView.isDrawingCacheEnabled = true
+                holder.itemView.buildDrawingCache()
+                val drawingCache = holder.itemView.drawingCache
+                if (drawingCache != null) {
+                    bitmapCache.put(i.toString(), drawingCache)
+                }
+                height += holder.itemView.measuredHeight
+            }
+            bigBitmap = Bitmap.createBitmap(view.measuredWidth, height, Bitmap.Config.ARGB_8888)
+            val bigCanvas = Canvas(bigBitmap)
+            bigCanvas.drawColor(Color.WHITE)
+            for (i in 0 until size) {
+                val bitmap = bitmapCache[i.toString()]
+                bigCanvas.drawBitmap(bitmap, 0f, iHeight.toFloat(), paint)
+                iHeight += bitmap.height
+                bitmap.recycle()
+            }
+        }
+        return bigBitmap
+    }
+
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityCompat.requestPermissions(activity!!, arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE), PackageManager.PERMISSION_GRANTED)
+        }
+    }
+
+    private fun checkPermission(): Boolean? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val perm1 = ContextCompat.checkSelfPermission(context!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+            val perm2 = ContextCompat.checkSelfPermission(context!!,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            (perm1 == PackageManager.PERMISSION_GRANTED
+                    && perm2 == PackageManager.PERMISSION_GRANTED)
+        } else {
+            false
+        }
     }
 
     companion object {

@@ -8,4 +8,10 @@
         android:title="@string/savings_account_transaction"
         android:icon="@drawable/ic_filter_list_white_36dp" />
 
+    <item
+        android:id="@+id/menu_pdf_savings_transactions"
+        app:showAsAction="always"
+        android:title="Download Transactions"
+        android:icon="@drawable/ic_download"/>
+
 </menu>
