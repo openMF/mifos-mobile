@@ -352,6 +352,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                 })
                 .setNeutralButton(getString(R.string.clear_filters),
                         DialogInterface.OnClickListener { _, _ ->
+                            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvSavingAccountsTransaction, layoutError)
                             transactionListAdapter
                                     ?.setSavingAccountsTransactionList(transactionsList)
                             initializeFilterVariables()
