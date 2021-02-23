@@ -64,6 +64,7 @@ import javax.inject.Inject
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(Constants.HELP, ArrayList<Parcelable?>(faqArrayList))
+        outState.putInt(Constants.FAQ_SELECTED, faqAdapter?.alreadySelectedPosition!!)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -71,6 +72,7 @@ import javax.inject.Inject
         if (savedInstanceState != null) {
             val faqs: ArrayList<FAQ?> = savedInstanceState.getParcelableArrayList(Constants.HELP)
             showFaq(faqs)
+            faqAdapter?.updateView(savedInstanceState.getInt(Constants.FAQ_SELECTED))
         }
     }
 
