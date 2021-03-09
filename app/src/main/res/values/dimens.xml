@@ -8,6 +8,7 @@
     <dimen name="login_height">72dp</dimen>
 
     <!-- Dimen values for padding -->
+    <dimen name="layout_padding_2dp">2dp</dimen>
     <dimen name="layout_padding_4dp">4dp</dimen>
     <dimen name="layout_padding_8dp">8dp</dimen>
     <dimen name="layout_padding_16dp">16dp</dimen>

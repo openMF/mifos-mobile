@@ -84,6 +84,4 @@
         <item name="android:windowBackground">@drawable/login_bg</item>
     </style>
 
-    <dimen name="layout_padding_2dp">2dp</dimen>
-
 </resources>
