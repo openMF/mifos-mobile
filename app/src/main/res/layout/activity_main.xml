@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:elevation="25dp"
+        app:elevation="@dimen/elevation_25dp"
         app:itemIconTint="@drawable/bottomview_selector"
         app:itemTextColor="@drawable/bottomview_selector"
         app:menu="@menu/bottom_navigation_main"

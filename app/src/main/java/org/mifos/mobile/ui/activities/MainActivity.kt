@@ -14,7 +14,6 @@ import org.mifos.mobile.ui.fragments.TransferFragment
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private var bottomNavigationView: BottomNavigationView? = null
-    private var menuItem = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +29,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         clearFragmentBackStack()
         setToolbarElevation()
-        menuItem = item.itemId
         navigateFragment(item.itemId,false)
         return true
     }

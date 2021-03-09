@@ -14,7 +14,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 
 class NewHomeFragment : BaseFragment(), View.OnClickListener {
 
-    private lateinit var rootView: View
     private var currentSelectedButton = 1;
 
     companion object {
@@ -23,7 +22,7 @@ class NewHomeFragment : BaseFragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView =  inflater.inflate(R.layout.fragment_home, container, false)
+        var rootView: View =  inflater.inflate(R.layout.fragment_home, container, false)
 
         val ft = childFragmentManager.beginTransaction()
         val rt = RecentTransactionsFragment()
