@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.button.MaterialButton
 
 import com.google.android.material.textfield.TextInputLayout
 
@@ -37,7 +38,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
     @JvmField
     @BindView(R.id.btn_login)
-    var btnLogin: AppCompatButton? = null
+    var btnLogin: MaterialButton? = null
 
     @JvmField
     @BindView(R.id.til_username)
@@ -132,7 +133,7 @@ class LoginActivity : BaseActivity(), LoginView {
         }
     }
 
-    @OnClick(R.id.btn_register)
+    @OnClick(R.id.tv_register)
     fun onRegisterClicked() {
         startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))
     }

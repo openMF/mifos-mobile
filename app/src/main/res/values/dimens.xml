@@ -8,6 +8,7 @@
     <dimen name="login_height">72dp</dimen>
 
     <!-- Dimen values for padding -->
+    <dimen name="layout_padding_2dp">2dp</dimen>
     <dimen name="layout_padding_4dp">4dp</dimen>
     <dimen name="layout_padding_8dp">8dp</dimen>
     <dimen name="layout_padding_16dp">16dp</dimen>
@@ -74,4 +75,11 @@
     <dimen name="row_header_width">55dp</dimen>
     <dimen name="text_size">14sp</dimen>
     <dimen name="table_header_line">1dp</dimen>
+    <dimen name="text_size_35sp">35sp</dimen>
+    <dimen name="layout_padding_150dp">150dp</dimen>
+    <dimen name="layout_padding_65dp">65dp</dimen>
+    <dimen name="layout_padding_20dp">20dp</dimen>
+    <dimen name="layout_padding_50dp">50dp</dimen>
+    <dimen name="layout_padding_100dp">100dp</dimen>
+    <dimen name="layout_padding_15dp">15dp</dimen>
 </resources>
