@@ -112,7 +112,7 @@ dependencies {
     //Dagger dependencies
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    compileOnly 'javax.annotation:jsr250-api:1.0' 
+    compileOnly 'javax.annotation:jsr250-api:1.0-20050927.133100' 
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'  //Required by Dagger2
 
     //Butter Knife
