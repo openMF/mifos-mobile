@@ -6,5 +6,5 @@ package org.mifos.mobile.models.beneficiary
 
 data class BeneficiaryUpdatePayload @JvmOverloads constructor(
         var name: String? = null,
-        var transferLimit: Int = 0
+        var transferLimit: Long = 0
 )
