@@ -36,7 +36,7 @@
     <dimen name="margin_top">36dp</dimen>
     <dimen name="margin_4dp">4dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
-    <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="margin_32dp">50dp</dimen>
 
     <!-- Dimen values for text size -->
     <dimen name="text_headline">24sp</dimen>
@@ -66,7 +66,7 @@
     <dimen name="divider_margin">3dp</dimen>
     <dimen name="side_bar_width">5dp</dimen>
     <dimen name="pie_chart_height">160dp</dimen>
-    <dimen name="app_bar_height">225dp</dimen>
+    <dimen name="app_bar_height">450dp</dimen>
 
     <dimen name="min_frame_size">50dp</dimen>
     <dimen name="stroke_weight">1dp</dimen>

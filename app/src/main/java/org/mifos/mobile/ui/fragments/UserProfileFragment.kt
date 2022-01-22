@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -58,6 +59,10 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     var tvUsername: TextView? = null
 
     @kotlin.jvm.JvmField
+    @BindView(R.id.tv_userName)
+    var tvProfileName: TextView? = null
+
+    @kotlin.jvm.JvmField
     @BindView(R.id.tv_account_number)
     var tvAccountNumber: TextView? = null
 
@@ -107,7 +112,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
 
     @kotlin.jvm.JvmField
     @BindView(R.id.fab_edit)
-    var fabEdit: FloatingActionButton? = null
+    var fabEdit: Button? = null
 
     @kotlin.jvm.JvmField
     @Inject
@@ -164,6 +169,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     override fun showUserDetails(client: Client?) {
         this.client = client
         tvUsername?.text = nullFieldCheck(getString(R.string.username), client?.displayName)
+        tvProfileName?.text = nullFieldCheck(getString(R.string.username), client?.displayName)
         tvAccountNumber?.text = nullFieldCheck(getString(R.string.account_number),
                 client?.accountNo)
         tvActivationDate?.text = nullFieldCheck(getString(R.string.activation_date),

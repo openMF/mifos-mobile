@@ -16,7 +16,8 @@
     <color name="light_black">#1C1C1C</color>
 
     <color name="dashboard_gray_background">#B2C1C8</color>
-
+    <color name="dark_purple">#4C56C0</color>
+    <color name="profile_edit_grey">#EBECF0</color>
     <!-- A light Holo shade of blue -->
     <color name="blue_light">#ff33b5e5</color>
     <!-- A light Holo shade of gray -->

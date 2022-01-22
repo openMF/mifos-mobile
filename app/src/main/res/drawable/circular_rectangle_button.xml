@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    android:padding = "10dp"
+    android:thickness="12dp">
+    <stroke android:width = "2dp"
+        android:color = "@color/profile_edit_grey"/>
+    <corners android:radius="25dp"/>
+
+</shape>
