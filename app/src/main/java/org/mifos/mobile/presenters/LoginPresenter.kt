@@ -65,7 +65,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager?, 
                                     if (e.code() == 503) {
                                         mvpView?.showMessage(context?.getString(R.string.error_server_down))
                                     } else {
-                                        errorMessage = e.response().errorBody().string()
+                                        errorMessage = e.response()?.errorBody()?.string() ?: ""
                                         mvpView
                                                 ?.showMessage(MFErrorParser.parseError(errorMessage)
                                                         .developerMessage)
