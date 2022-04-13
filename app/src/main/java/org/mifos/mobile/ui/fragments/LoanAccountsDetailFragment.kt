@@ -96,8 +96,10 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         ButterKnife.bind(this, rootView!!)
         loanAccountDetailsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && this.loanWithAssociations == null) {
             loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
+        } else {
+            showLoanAccountsDetail(this.loanWithAssociations)
         }
         return rootView
     }
