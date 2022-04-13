@@ -115,8 +115,10 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         ButterKnife.bind(this, rootView!!)
         savingAccountsDetailPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && this.savingsWithAssociations == null) {
             savingAccountsDetailPresenter?.loadSavingsWithAssociations(savingsId)
+        } else {
+            showSavingAccountsDetail(this.savingsWithAssociations)
         }
         setHasOptionsMenu(true)
         return rootView
