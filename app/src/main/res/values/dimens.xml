@@ -2,7 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
 
     <!-- Dimen values for height -->
-
     <dimen name="toolbar_height">32dp</dimen>
     <dimen name="tab_layout_height">28dp</dimen>
     <dimen name="login_height">72dp</dimen>
@@ -55,7 +54,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_header_padding">8dp</dimen>
 
@@ -74,4 +72,7 @@
     <dimen name="row_header_width">55dp</dimen>
     <dimen name="text_size">14sp</dimen>
     <dimen name="table_header_line">1dp</dimen>
+
+    <dimen name="value_100dp">100dp</dimen>
+
 </resources>
