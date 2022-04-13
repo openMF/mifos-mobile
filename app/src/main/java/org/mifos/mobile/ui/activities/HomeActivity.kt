@@ -310,7 +310,10 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             doubleBackToExitPressedOnce = true
             Toaster.show(findViewById(android.R.id.content), getString(R.string.exit_message))
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+        } else if (fragment is TransferProcessFragment) {
+            fragment.cancelTransferProcess()
         }
+
         if (stackCount() != 0) {
             super.onBackPressed()
         }

@@ -214,11 +214,13 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         val transferPayload = TransferPayload()
         transferPayload.fromAccountId = fromAccountOption?.accountId
         transferPayload.fromClientId = fromAccountOption?.clientId
+        transferPayload.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload.fromAccountType = fromAccountOption?.accountType?.id
         transferPayload.fromOfficeId = fromAccountOption?.officeId
         transferPayload.toOfficeId = beneficiaryAccountOption?.officeId
         transferPayload.toAccountId = beneficiaryAccountOption?.accountId
         transferPayload.toClientId = beneficiaryAccountOption?.clientId
+        transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         transferPayload.toAccountType = beneficiaryAccountOption?.accountType?.id
         transferPayload.transferDate = transferDate
         transferPayload.transferAmount = etAmount?.text.toString().toDouble()
