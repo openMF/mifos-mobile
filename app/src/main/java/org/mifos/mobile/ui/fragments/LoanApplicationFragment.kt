@@ -497,7 +497,13 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
                             LoanState.UPDATE)
                 }
             }
-            R.id.sp_loan_purpose -> purposeId = loanTemplate?.loanPurposeOptions?.get(position)?.id
+            R.id.sp_loan_purpose -> {
+                loanTemplate?.loanPurposeOptions?.let {
+                    if (it.size > position) {
+                        purposeId = it[position].id
+                    }
+                }
+            }
         }
     }
 
