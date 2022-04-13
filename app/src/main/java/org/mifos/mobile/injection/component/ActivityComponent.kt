@@ -56,4 +56,5 @@ interface ActivityComponent {
     fun inject(savingsAccountApplicationFragment: SavingsAccountApplicationFragment?)
     fun inject(savingsAccountWithdrawFragment: SavingsAccountWithdrawFragment?)
     fun inject(reviewLoanApplicationFragment: ReviewLoanApplicationFragment?)
+    fun inject(qrCodeReaderFragment: QrCodeReaderFragment?)
 }
