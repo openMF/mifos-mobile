@@ -165,7 +165,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as Client)
+            showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as? Client)
             presenter?.setUserProfile(preferencesHelper?.userProfileImage)
             showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN))
             showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS))
