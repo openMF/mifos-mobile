@@ -60,6 +60,8 @@
     <color name="divider">#BDBDBD</color>
     <color name="cell_background_color">#ffffff</color>
     <color name="header_line_color">@color/blue_light</color>
+    <color name="background_default_darker">#EEEEEE</color>
+    <color name="transparent">#00000000</color>
 
     <!--Swipe Refresh Colors-->
     <array name="swipeRefreshColors">
