@@ -42,8 +42,8 @@ class ProcessView : View {
         val radius = usableWidth.coerceAtMost(usableHeight) / 2
         val cx = paddingLeft + usableWidth / 2
         val cy = paddingTop + usableHeight / 2
-        canvas.drawCircle(cx.toFloat(), cy.toFloat(), radius.toFloat(), backgroundPaint)
-        canvas.drawText(valueStr, xPos.toFloat(), yPos.toFloat(), textPaint)
+        canvas.drawCircle(cx.toFloat(), cy.toFloat(), radius.toFloat(), backgroundPaint!!)
+        canvas.drawText(valueStr!!, xPos.toFloat(), yPos.toFloat(), textPaint!!)
     }
 
     fun setCurrentActive() {

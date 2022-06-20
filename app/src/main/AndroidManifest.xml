@@ -34,7 +34,8 @@
 
         <activity
             android:name="org.mifos.mobile.ui.activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -112,7 +113,8 @@
         <activity android:name="org.mifos.mobile.ui.activities.PrivacyPolicyActivity"
                   android:windowSoftInputMode="adjustResize"/>
 
-        <receiver android:name="org.mifos.mobile.ui.widgets.ChargeAppWidget">
+        <receiver android:name="org.mifos.mobile.ui.widgets.ChargeAppWidget"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

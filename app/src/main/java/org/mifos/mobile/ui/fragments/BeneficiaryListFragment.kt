@@ -93,7 +93,7 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val beneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(Constants.BENEFICIARY)
+            val beneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(Constants.BENEFICIARY) ?: listOf()
             showBeneficiaryList(beneficiaries)
         }
     }

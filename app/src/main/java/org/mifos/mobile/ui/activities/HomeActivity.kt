@@ -381,7 +381,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     private val registerReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val token = intent.getStringExtra(Constants.TOKEN)
-            detailsPresenter?.registerNotification(token)
+            token?.let { detailsPresenter?.registerNotification(it) }
         }
     }
 

@@ -100,7 +100,7 @@ class ClientChargeFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val charges: List<Charge?> = savedInstanceState.getParcelableArrayList(Constants.CHARGES)
+            val charges: List<Charge?> = savedInstanceState.getParcelableArrayList(Constants.CHARGES) ?: listOf()
             showClientCharges(charges)
         }
     }

@@ -199,7 +199,7 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         for (option in template?.guarantorTypeOptions!!) {
             options.add(option.value)
         }
-        guarantorTypeAdapter = ArrayAdapter(context,
+        guarantorTypeAdapter = ArrayAdapter(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item, options)
         spGuarantorType?.adapter = guarantorTypeAdapter
     }

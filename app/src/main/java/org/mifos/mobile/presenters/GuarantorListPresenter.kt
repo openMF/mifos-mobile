@@ -41,7 +41,7 @@ class GuarantorListPresenter @Inject constructor(@ApplicationContext context: Co
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {}

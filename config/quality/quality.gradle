@@ -11,17 +11,20 @@
  */
 
 apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
+apply plugin: "com.github.spotbugs"
 apply plugin: 'pmd'
 
 dependencies {
     checkstyle 'com.puppycrawl.tools:checkstyle:6.5'
 }
+spotbugs {
+    toolVersion = '4.7.0'
+}
 
 def qualityConfigDir = "$project.rootDir/config/quality"
 def reportsDir = "$project.buildDir/reports"
 
-check.dependsOn 'checkstyle', 'findbugs', 'pmd'
+check.dependsOn 'checkstyle',  'pmd'
 
 task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code style checks') {
     configFile file("$qualityConfigDir/checkstyle/checkstyle-config.xml")
@@ -38,22 +41,25 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     classpath = files( )
 }
 
-task findbugs(type: FindBugs,
-        group: 'Verification',
-        description: 'Inspect java bytecode for bugs',
-        dependsOn: ['compileDebugSources','compileReleaseSources']) {
 
-    ignoreFailures = false
-    effort = "max"
-    reportLevel = "high"
-    excludeFilter = new File("$qualityConfigDir/findbugs/android-exclude-filter.xml")
-    classes = files("$project.rootDir/app/build/intermediates/javac")
 
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
+tasks.matching {task -> task.name.startsWith('spotbugs')}.forEach {
+    check.dependsOn it
+    it.dependsOn(['compileDebugSources','compileReleaseSources'])
+    it.group('Verification')
+    it.description('Inspect java bytecode for bugs')
 
-    reports {
+    it.ignoreFailures = false
+    it.effort = "max"
+    it.reportLevel = "high"
+    it.excludeFilter = new File("$qualityConfigDir/findbugs/android-exclude-filter.xml")
+    it.classes = files("$project.rootDir/app/build/intermediates/javac")
+
+    it.source 'src'
+    it.include '**/*.java'
+    it.exclude '**/gen/**'
+
+    it.reports {
         xml.enabled = false
         html.enabled = true
         xml {
@@ -64,7 +70,7 @@ task findbugs(type: FindBugs,
         }
     }
 
-    classpath = files()
+    it.classpath = files()
 }
 
 

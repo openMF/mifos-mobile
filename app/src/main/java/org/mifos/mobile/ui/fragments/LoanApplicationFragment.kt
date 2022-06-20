@@ -326,7 +326,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
     @OnClick(R.id.ll_expected_disbursement_date_edit)
     fun setTvDisbursementOnDate() {
         isDisbursementDate = true
-        mfDatePicker?.show(activity?.supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        mfDatePicker?.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
     }
 
     /**
@@ -348,12 +348,12 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView, OnDatePi
      * Initializes the layout
      */
     override fun showUserInterface() {
-        loanProductAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item,
+        loanProductAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item,
                 listLoanProducts)
         loanProductAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spLoanProducts?.adapter = loanProductAdapter
         spLoanProducts?.onItemSelectedListener = this
-        loanPurposeAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item,
+        loanPurposeAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item,
                 listLoanPurpose)
         loanPurposeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spLoanPurpose?.adapter = loanPurposeAdapter

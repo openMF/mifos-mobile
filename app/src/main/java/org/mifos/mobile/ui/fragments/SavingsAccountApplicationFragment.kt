@@ -115,7 +115,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
                 productIdList.add(name)
             }
         tvClientName?.text = template?.clientName
-        productIdAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item,
+        productIdAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item,
                 productIdList)
         productIdAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spProductId?.adapter = productIdAdapter

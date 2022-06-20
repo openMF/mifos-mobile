@@ -24,7 +24,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import org.mifos.mobile.utils.Constants
 
 class RegistrationIntentService : IntentService(TAG) {
-    override fun onHandleIntent(intent: Intent) {
+    override fun onHandleIntent(intent: Intent?) {
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
