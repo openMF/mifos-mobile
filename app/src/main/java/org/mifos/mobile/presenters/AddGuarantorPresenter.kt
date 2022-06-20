@@ -68,7 +68,7 @@ class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Contex
                         try {
                             mvpView?.submittedSuccessfully(responseBody.string(), payload)
                         } catch (e: IOException) {
-                            Log.d(TAG, e.message)
+                            Log.d(TAG, e.message ?: "")
                         }
                     }
 
@@ -94,13 +94,13 @@ class AddGuarantorPresenter @Inject constructor(@ActivityContext context: Contex
                         try {
                             mvpView?.updatedSuccessfully(responseBody.string())
                         } catch (e: IOException) {
-                            Log.d(TAG, e.message)
+                            Log.d(TAG, e.message ?: "")
                         }
                     }
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {}

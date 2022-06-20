@@ -77,7 +77,7 @@ import javax.inject.Inject
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val faqs: ArrayList<FAQ?> = savedInstanceState.getParcelableArrayList(Constants.HELP)
+            val faqs: ArrayList<FAQ?> = savedInstanceState.getParcelableArrayList(Constants.HELP) ?: arrayListOf()
             showFaq(faqs)
         }
     }
@@ -108,7 +108,7 @@ import javax.inject.Inject
                 val emailIntent = Intent(Intent.ACTION_SENDTO)
                 emailIntent.data = Uri.parse("mailto:" + getString(R.string.contact_email))
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
-                if (emailIntent.resolveActivity(activity?.packageManager) != null) {
+                if (emailIntent.resolveActivity(requireActivity().packageManager) != null) {
                     startActivity(emailIntent)
                 }
             }

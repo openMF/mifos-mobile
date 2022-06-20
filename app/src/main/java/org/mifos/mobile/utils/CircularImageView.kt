@@ -39,7 +39,8 @@ class CircularImageView @JvmOverloads constructor(context: Context, attrs: Attri
         if (image != null) {
             canvasSize = canvas.width
             if (canvas.height < canvasSize) canvasSize = canvas.height
-            val shader = BitmapShader(Bitmap.createScaledBitmap(image, canvasSize,
+            val shader = BitmapShader(Bitmap.createScaledBitmap(
+                image!!, canvasSize,
                     canvasSize, false), Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
             paint.shader = shader
 
@@ -47,7 +48,7 @@ class CircularImageView @JvmOverloads constructor(context: Context, attrs: Attri
             // radius is the radius in pixels of the cirle to be drawn
             // paint contains the shader that will texture the shape
             val circleCenter = (canvasSize - borderWidth * 2) / 2
-            canvas.drawCircle(circleCenter + borderWidth.toFloat(), circleCenter + borderWidth.toFloat(), (canvasSize - borderWidth * 2) / 2 + borderWidth - 4.0f, paintBorder)
+            canvas.drawCircle(circleCenter + borderWidth.toFloat(), circleCenter + borderWidth.toFloat(), (canvasSize - borderWidth * 2) / 2 + borderWidth - 4.0f, paintBorder!!)
             canvas.drawCircle(circleCenter + borderWidth.toFloat(), circleCenter + borderWidth.toFloat(), (canvasSize - borderWidth * 2) / 2 - 4.0f, paint)
         }
     }

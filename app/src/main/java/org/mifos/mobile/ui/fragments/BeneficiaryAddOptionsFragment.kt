@@ -82,9 +82,9 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == Constants.GALLERY_QR_PICK && data != null) {
+        if (requestCode == Constants.GALLERY_QR_PICK && data != null && data.data != null) {
             activity?.supportFragmentManager?.popBackStack()
-            (activity as BaseActivity?)?.replaceFragment(QrCodeImportFragment.newInstance(data.data), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(QrCodeImportFragment.newInstance(data.data!!), true, R.id.container)
         }
     }
 

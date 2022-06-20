@@ -91,7 +91,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val transactions: List<Transaction?> = savedInstanceState.getParcelableArrayList(Constants.RECENT_TRANSACTIONS)
+            val transactions: List<Transaction?> = savedInstanceState.getParcelableArrayList(Constants.RECENT_TRANSACTIONS) ?: listOf()
             showRecentTransactions(transactions)
         }
     }

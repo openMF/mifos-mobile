@@ -133,7 +133,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      * Setting up `accountTypeAdapter` and `` spAccountType
      */
     override fun showUserInterface() {
-        accountTypeAdapter = ArrayAdapter(activity,
+        accountTypeAdapter = ArrayAdapter(requireActivity(),
                 android.R.layout.simple_spinner_item, listAccountType)
         accountTypeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spAccountType?.onItemSelectedListener = this

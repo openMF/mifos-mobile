@@ -161,7 +161,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         if (savedInstanceState != null) {
             showThirdPartyTransferTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as AccountOptionsTemplate)
             val tempBeneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(
-                    Constants.BENEFICIARY)
+                    Constants.BENEFICIARY) ?: listOf()
             showBeneficiaryList(tempBeneficiaries)
         }
     }

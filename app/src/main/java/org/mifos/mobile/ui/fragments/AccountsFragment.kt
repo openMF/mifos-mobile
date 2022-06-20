@@ -149,19 +149,19 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
             when (accountType) {
                 Constants.SAVINGS_ACCOUNTS -> {
                     val savingAccountList: List<SavingAccount?> =
-                            savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS)
+                        savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS) ?: listOf()
                     showSavingsAccounts(savingAccountList)
                 }
                 Constants.LOAN_ACCOUNTS -> {
                     val loanAccountList: List<LoanAccount?> =
                             savedInstanceState.getParcelableArrayList(
-                                    Constants.LOAN_ACCOUNTS)
+                                    Constants.LOAN_ACCOUNTS)?: listOf()
                     showLoanAccounts(loanAccountList)
                 }
                 Constants.SHARE_ACCOUNTS -> {
                     val shareAccountList: List<ShareAccount?> =
                             savedInstanceState.getParcelableArrayList(
-                                    Constants.SHARE_ACCOUNTS)
+                                    Constants.SHARE_ACCOUNTS) ?: listOf()
                     showShareAccounts(shareAccountList)
                 }
             }
