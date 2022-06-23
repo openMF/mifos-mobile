@@ -101,7 +101,7 @@
                     android:paddingBottom="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 style="@style/Button.Base"
                 android:id="@+id/btn_beneficiary_submit"
                 android:layout_marginTop="10dp"

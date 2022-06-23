@@ -26,8 +26,9 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 22/6/16.
  */
-class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SavingAccountsListAdapter (
+    val onItemClick: (itemPosition: Int) -> Unit
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var savingAccountsList: List<SavingAccount?>? = ArrayList()
     fun setSavingAccountsList(savingAccountsList: List<SavingAccount?>?) {
@@ -48,6 +49,9 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
         val v = LayoutInflater.from(parent.context).inflate(
                 R.layout.row_saving_account, parent, false)
         vh = ViewHolder(v)
+        v.setOnClickListener {
+            onItemClick(vh.bindingAdapterPosition)
+        }
         return vh
     }
 
@@ -57,6 +61,7 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
             holder.tvClientSavingAccountNumber?.text = savingAccount?.accountNo
             holder.tvSavingAccountProductName?.text = savingAccount?.productName
             holder.tvAccountBalance?.visibility = View.GONE
+            val context = holder.itemView.context
             when {
                 savingAccount?.status?.active == true -> {
                     setSavingAccountsDetails(holder, savingAccount,
@@ -85,10 +90,10 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
             colorId: Int
     ) {
         viewHolder.tvAccountBalance?.visibility = View.VISIBLE
-        viewHolder.tvAccountBalance?.setTextColor(ContextCompat.getColor(context,
+        viewHolder.tvAccountBalance?.setTextColor(ContextCompat.getColor(viewHolder.itemView.context,
                 colorId))
-        viewHolder.tvAccountBalance?.text = context.getString(R.string.string_and_string,
-                savingAccount.currency?.displaySymbol, formatCurrency(context,
+        viewHolder.tvAccountBalance?.text = viewHolder.itemView.context.getString(R.string.string_and_string,
+                savingAccount.currency?.displaySymbol, formatCurrency(viewHolder.itemView.context,
                 savingAccount.accountBalance))
     }
 
@@ -96,7 +101,7 @@ class SavingAccountsListAdapter @Inject constructor(@param:ActivityContext priva
             holder: RecyclerView.ViewHolder, colorId: Int,
             dateStr: String
     ) {
-        (holder as ViewHolder).ivStatusIndicator?.setColorFilter(ContextCompat.getColor(context, colorId))
+        (holder as ViewHolder).ivStatusIndicator?.setColorFilter(ContextCompat.getColor(holder.itemView.context, colorId))
         holder.tvLastActive?.text = dateStr
     }
 

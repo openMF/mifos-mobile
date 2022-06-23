@@ -50,8 +50,12 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '1.4.2'
-    designLibraryVersion = '1.0.0'
+    designLibraryVersion = '1.6.1'
     daggerVersion = '2.42'
+    recyclerViewVersion = '1.2.1'
+    vectorDrawablesVersion = '1.1.0'
+    lifecycleVersion = '2.4.1'
+    lifecycleExtensionsVersion = '2.2.0'
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.6.0'
     butterKnifeVersion = '8.0.1'

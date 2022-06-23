@@ -5,10 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MaterialAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MaterialAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="colorButtonNormal">@color/primary</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="buttonStyle">@style/AppTheme.Button</item>
@@ -22,12 +23,12 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+    <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
-    <style name="MaterialAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="MaterialAlertDialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/black</item>
@@ -58,12 +59,12 @@
         <item name="android:padding">@dimen/layout_padding_8dp</item>
     </style>
 
-    <style name="MaterialDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="MaterialDatePickerTheme" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="colorAccent">@color/primary</item>
     </style>
     
     <!--Theme for Spash-->
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 

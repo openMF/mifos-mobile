@@ -29,7 +29,7 @@
                   android:layout_width="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btn_verify"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/login_margin_bottom"

@@ -40,7 +40,7 @@
             android:textAppearance="?android:textAppearanceSmall"
             tools:text="@string/small_text"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/btn_dismiss_notification"
             android:layout_gravity="right|end"
