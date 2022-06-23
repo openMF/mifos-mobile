@@ -27,14 +27,12 @@ import org.mifos.mobile.ui.views.BeneficiariesView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.RecyclerItemClickListener
-import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 14/6/17.
  */
-class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItemClickListener, OnRefreshListener, BeneficiariesView {
+class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, BeneficiariesView {
 
     @kotlin.jvm.JvmField
     @BindView(R.id.rv_beneficiaries)
@@ -56,15 +54,15 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
     @Inject
     var beneficiaryListPresenter: BeneficiaryListPresenter? = null
 
-    @kotlin.jvm.JvmField
-    @Inject
     var beneficiaryListAdapter: BeneficiaryListAdapter? = null
+
     private var rootView: View? = null
     private var beneficiaryList: List<Beneficiary?>? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_beneficiary_list, container, false)
+        beneficiaryListAdapter = BeneficiaryListAdapter(::onItemClick)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         ButterKnife.bind(this, rootView!!)
         setToolbarTitle(getString(R.string.beneficiaries))
@@ -107,9 +105,8 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
         rvBeneficiaries?.layoutManager = layoutManager
         rvBeneficiaries?.setHasFixedSize(true)
         rvBeneficiaries?.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
-        rvBeneficiaries?.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
         rvBeneficiaries?.adapter = beneficiaryListAdapter
-        swipeRefreshLayout?.setColorSchemeColors(*activity!!
+        swipeRefreshLayout?.setColorSchemeColors(*requireActivity()
                 .resources.getIntArray(R.array.swipeRefreshColors))
         swipeRefreshLayout?.setOnRefreshListener(this)
         fabAddBeneficiary?.setOnClickListener { startActivity(Intent(activity, AddBeneficiaryActivity::class.java)) }
@@ -177,11 +174,10 @@ class BeneficiaryListFragment : BaseFragment(), RecyclerItemClickListener.OnItem
         }
     }
 
-    override fun onItemClick(childView: View?, position: Int) {
+    fun onItemClick(position: Int) {
         (activity as BaseActivity?)?.replaceFragment(BeneficiaryDetailFragment.newInstance(beneficiaryList!![position]), true, R.id.container)
     }
 
-    override fun onItemLongPress(childView: View?, position: Int) {}
     private fun showSwipeRefreshLayout(show: Boolean?) {
         swipeRefreshLayout?.post { swipeRefreshLayout?.isRefreshing = (show == true) }
     }

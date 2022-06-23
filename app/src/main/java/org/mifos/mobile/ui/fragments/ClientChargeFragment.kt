@@ -23,7 +23,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.ClientChargeView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.RecyclerItemClickListener
 import org.mifos.mobile.utils.Toaster
 import java.util.*
 import javax.inject.Inject
@@ -33,8 +32,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 17/8/16.
  */
-class ClientChargeFragment :
-        BaseFragment(), RecyclerItemClickListener.OnItemClickListener, ClientChargeView {
+class ClientChargeFragment : BaseFragment(), ClientChargeView {
 
     @kotlin.jvm.JvmField
     @BindView(R.id.rv_client_charge)
@@ -52,8 +50,6 @@ class ClientChargeFragment :
     @Inject
     var clientChargePresenter: ClientChargePresenter? = null
 
-    @kotlin.jvm.JvmField
-    @Inject
     var clientChargeAdapter: ClientChargeAdapter? = null
     private var id: Long? = 0
     private var chargeType: ChargeType? = null
@@ -75,6 +71,7 @@ class ClientChargeFragment :
             savedInstanceState: Bundle?
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_client_charge, container, false)
+        clientChargeAdapter = ClientChargeAdapter(::onItemClick)
         ButterKnife.bind(this, rootView!!)
         clientChargePresenter?.attachView(this)
         setToolbarTitle(getString(R.string.charges))
@@ -82,7 +79,6 @@ class ClientChargeFragment :
         layoutManager = LinearLayoutManager(activity)
         layoutManager?.orientation = LinearLayoutManager.VERTICAL
         rvClientCharge?.layoutManager = layoutManager
-        rvClientCharge?.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
         swipeChargeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
         swipeChargeContainer?.setOnRefreshListener { loadCharges() }
         if (savedInstanceState == null) {
@@ -179,8 +175,7 @@ class ClientChargeFragment :
         swipeChargeContainer?.isRefreshing = false
     }
 
-    override fun onItemClick(childView: View?, position: Int) {}
-    override fun onItemLongPress(childView: View?, position: Int) {}
+    fun onItemClick(position: Int) {}
     override fun onDestroyView() {
         super.onDestroyView()
         clientChargePresenter?.detachView()

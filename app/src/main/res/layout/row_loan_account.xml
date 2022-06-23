@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/iv_status_indicator"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/default_margin"
@@ -44,7 +44,7 @@
             android:layout_marginTop="@dimen/default_margin"
             android:layout_width="wrap_content"
             android:text="@string/small_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="@color/light_grey"/>
 
     </LinearLayout>

@@ -192,7 +192,7 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 style="@style/Button.Base"
                 android:id="@+id/btn_loan_submit"
                 android:layout_marginEnd="@dimen/default_padding"

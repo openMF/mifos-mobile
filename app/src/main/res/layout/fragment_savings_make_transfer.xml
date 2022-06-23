@@ -72,7 +72,7 @@
                         android:prompt="@string/select_pay_to"
                         android:spinnerMode="dialog"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_to"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -141,7 +141,7 @@
                         android:spinnerMode="dialog"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_from"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -210,7 +210,7 @@
                         android:maxLines="1"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_amount"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -271,14 +271,14 @@
                         android:layout_marginTop="@dimen/default_margin"
                         android:visibility="gone">
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_review_transfer"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:text="@string/review_transfer"
                             android:textColor="@color/white"/>
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_cancel_transfer"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"

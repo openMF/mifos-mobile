@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Toolbar" parent="Theme.AppCompat.Light"/>
+    <style name="Toolbar" parent="Theme.MaterialComponents.Light"/>
 
     <style name="Toolbar.Common">
         <item name="android:layout_width">match_parent</item>
@@ -12,13 +12,13 @@
         <item name="popupTheme">@style/AppToolbarPopup</item>
     </style>
 
-    <style name="AppToolbarPopup" parent="ThemeOverlay.AppCompat.Light">
+    <style name="AppToolbarPopup" parent="ThemeOverlay.MaterialComponents.Light">
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:background">@android:color/white</item>
         <item name="android:windowActionBarOverlay">false</item>
     </style>
 
-    <style name="ToolbarTitle" parent="@style/TextAppearance.AppCompat.Title">
+    <style name="ToolbarTitle" parent="@style/TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">20sp</item>
     </style>
 </resources>

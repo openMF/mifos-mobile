@@ -41,7 +41,7 @@
                 android:paddingRight="@dimen/default_margin"
                 android:paddingStart="@dimen/default_margin">
 
-                <androidx.appcompat.widget.AppCompatCheckBox
+                <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/cb_select"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"

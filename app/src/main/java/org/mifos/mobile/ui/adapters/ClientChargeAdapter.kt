@@ -24,8 +24,9 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 17/8/16.
  */
-class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ClientChargeAdapter (
+    val onItemClick: (itemPosition: Int) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var clientChargeList: List<Charge?>? = ArrayList()
     fun setClientChargeList(clientChargeList: List<Charge?>?) {
@@ -41,6 +42,9 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
         val v = LayoutInflater.from(parent.context).inflate(
                 R.layout.row_client_charge, parent, false)
         vh = ViewHolder(v)
+        v.setOnClickListener {
+            onItemClick(vh.bindingAdapterPosition)
+        }
         return vh
     }
 
@@ -52,6 +56,7 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
         if (currencyRepresentation == null) {
             currencyRepresentation = charge?.currency?.code
         }
+        val context = holder.itemView.context
         (holder as ViewHolder).tvAmountDue?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,
                 charge?.amount))

@@ -71,7 +71,7 @@
                         android:prompt="@string/select_pay_from"
                         android:spinnerMode="dialog"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_from"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -149,7 +149,7 @@
                         android:spinnerMode="dialog"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_to"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -158,7 +158,7 @@
                         android:textColor="@color/white"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_add_beneficiary"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -228,7 +228,7 @@
                         android:paddingBottom="16dp"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_amount"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -296,7 +296,7 @@
                         android:id="@+id/ll_review"
                         android:visibility="gone">
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_cancel_transfer"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
@@ -307,7 +307,7 @@
                             android:textColor="@color/primary"
                             app:backgroundTint="@color/white"/>
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_review_transfer"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
