@@ -577,6 +577,11 @@
 
     <string name="dialog_cancel_registration_message">Do you want to cancel registering New Account ?</string>
     <string name="dialog_cancel_registration_title">Cancel Registration</string>
+    <string name="sources">Source Code</string>
+    <string name="official_website">Official Website</string>
+    <string name="app_version_text">App version</string>
+    <string name="license_string_with_value">License: MPL-2.0</string>
+    <string name="about_app_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>

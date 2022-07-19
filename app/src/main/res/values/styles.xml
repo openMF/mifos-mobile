@@ -75,4 +75,11 @@
         <item name="android:focusable">true</item>
     </style>
 
+    <style name="BoldHeading" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">sans-serif-black</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
