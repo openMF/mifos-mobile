@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/dialog_action_ok"
-            style="@style/Widget.Material3.Button.TextButton"/>
+            style="@style/Mifos.DesignSystem.Components.Button.Text"/>
 
     </LinearLayout>
 

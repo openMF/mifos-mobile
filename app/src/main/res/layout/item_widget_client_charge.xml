@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.CardTextIconSpacing">
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle">
 
         <TextView
             android:ellipsize="end"

@@ -22,7 +22,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/account_type_field_parent"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent">

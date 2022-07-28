@@ -5,45 +5,4 @@
     <style name="SplashTheme" parent="Mifos.DesignSystem.Theme.Base">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
-
-    <style name="Mifos.DesignSystem.Shape.roundedImageWithContentPadding" parent="android:Widget">
-        <item name="shapeAppearance">@style/Mifos.DesignSystem.Shape.roundedImage</item>
-        <item name="android:background">?attr/colorSurfaceVariant</item>
-        <item name="contentPadding">6dp</item>
-    </style>
-
-
-
-
-    <style name="Mifos.DesignSystem.Components.Cards.Filled" parent="Widget.Material3.CardView.Filled" />
-    <style name="Mifos.DesignSystem.Components.Cards.NoBorderOrBackground" parent="Widget.Material3.CardView.Outlined">
-        <item name="strokeWidth">0dp</item>
-    </style>
-    <dimen name="Mifos.DesignSystem.Spacing.CardTextIconSpacing">24dp</dimen>
-    <dimen name="Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">14dp</dimen>
-    <style name="Mifos.DesignSystem.TextStyle.Label" parent="TextAppearance.Material3.LabelMedium">
-        <item name="android:alpha">@dimen/alpha_low_emphasis</item>
-    </style>
-
-    <color name="mfColorSuccess">#ff14c416</color>
-    <dimen name="Mifos.DesignSystem.Size.ListItemStatusIndicatorWidth">5dp</dimen>
-
-
-    <style name="RedDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
-        <item name="alertDialogStyle">@style/MaterialAlertDialog.Material3</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Mifos.DesignSystem.Components.Button.Red</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Mifos.DesignSystem.Components.Button.Neutral</item>
-    </style>
-
-    <dimen name="Mifos.DesignSystem.Size.QRCode">300dp</dimen>
-    <style name="Mifos.DesignSystem.TextStyle.BodyLarger" parent="TextAppearance.Material3.BodyLarge">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Mifos.DesignSystem.Components.ProcessViewLine" parent="android:Widget">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">4dp</item>
-        <item name="android:background">?attr/colorOnSurface</item>
-        <item name="android:alpha">@dimen/alpha_low_emphasis</item>
-    </style>
 </resources>

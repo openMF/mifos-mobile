@@ -154,7 +154,7 @@
                             app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
                             android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                             android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Shape.roundedImageWithContentPadding"
+                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
                             app:srcCompat="@drawable/ic_surveys_48px"/>
 
                         <LinearLayout
@@ -195,7 +195,7 @@
                             app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
                             android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                             android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Shape.roundedImageWithContentPadding"
+                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
                             app:srcCompat="@drawable/ic_charges"/>
 
                         <LinearLayout
@@ -236,7 +236,7 @@
                             app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
                             android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                             android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Shape.roundedImageWithContentPadding"
+                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
                             app:srcCompat="@drawable/ic_charges"/>
 
                         <LinearLayout
@@ -276,7 +276,7 @@
                             app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
                             android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                             android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Shape.roundedImageWithContentPadding"
+                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
                             app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
 
 
@@ -317,7 +317,7 @@
                         <com.google.android.material.imageview.ShapeableImageView
                             android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                             android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Shape.roundedImageWithContentPadding"
+                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
                             app:srcCompat="@drawable/ic_qrcode_scan"/>
 
 

@@ -82,12 +82,10 @@
 
         <activity android:configChanges="orientation|screenSize"
                   android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-                  android:theme="@style/Theme.Material3.DayNight"
                   android:windowSoftInputMode="adjustResize"/>
 
         <activity android:configChanges="orientation|screenSize"
                   android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-                  android:theme="@style/Theme.Material3.DayNight"
                   android:windowSoftInputMode="adjustResize"/>
 
         <activity android:configChanges="orientation|screenSize"

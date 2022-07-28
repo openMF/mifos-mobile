@@ -14,14 +14,13 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="@string/select_mode"
-                style="@style/TextAppearance.Material3.HeadlineMedium"/>
+                style="@style/Mifos.DesignSystem.TextStyle.Heading"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent"
-                android:text="@string/add_beneficiary_option"
-                style="@style/TextAppearance.Material3.BodyMedium"/>
+                android:text="@string/add_beneficiary_option"/>
 
             <LinearLayout
                 android:layout_height="wrap_content"

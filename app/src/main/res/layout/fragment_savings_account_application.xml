@@ -71,7 +71,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
         android:layout_width="match_parent">

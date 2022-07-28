@@ -75,7 +75,7 @@ class ClientChargeAdapter (
         if (charge?.isPaid == true || charge?.isWaived == true || charge?.paid == true || charge?.waived == true) {
             holder.circle_status?.setBackgroundColor(holder.itemView.context.getThemeAttributeColor(R.attr.colorError))
         } else {
-            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.mfColorSuccess))
+            holder.circle_status?.setBackgroundColor(context.getThemeAttributeColor(R.attr.colorSuccess))
         }
     }
 
