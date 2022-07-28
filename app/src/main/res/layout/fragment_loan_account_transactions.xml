@@ -14,7 +14,8 @@
     <LinearLayout
         android:id="@+id/ll_loan_account_trans"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:visibility="gone">
@@ -22,24 +23,21 @@
         <TextView
             android:id="@+id/tv_loan_product_name"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
             android:layout_width="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/black"
+            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
             tools:text="loanProductName"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_loan_transactions"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/table_row_padding_top"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.listHeaderSpacing"
             android:layout_weight="1"
             android:layout_width="match_parent"/>
 
     </LinearLayout>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

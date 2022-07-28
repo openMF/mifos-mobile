@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import org.mifos.mobile.R
+import org.mifos.mobile.ui.getThemeAttributeColor
 
 /**
  * Created by dilpreet on 30/6/17.
@@ -47,12 +48,12 @@ class ProcessView : View {
     }
 
     fun setCurrentActive() {
-        backgroundPaint?.color = getColorCompat(R.color.primary)
+        backgroundPaint?.color = context.getThemeAttributeColor(R.attr.colorPrimary)
         invalidate()
     }
 
     fun setCurrentCompleted() {
-        backgroundPaint?.color = getColorCompat(R.color.primary)
+        backgroundPaint?.color = context.getThemeAttributeColor(R.attr.colorPrimary)
         valueStr = "\u2713"
         invalidate()
     }

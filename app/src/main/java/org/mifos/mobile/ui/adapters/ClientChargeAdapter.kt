@@ -14,6 +14,7 @@ import butterknife.ButterKnife
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.Charge
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 
@@ -72,9 +73,9 @@ class ClientChargeAdapter (
             holder.tvDueDate?.text = getDateAsString(charge.dueDate)
         }
         if (charge?.isPaid == true || charge?.isWaived == true || charge?.paid == true || charge?.waived == true) {
-            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
+            holder.circle_status?.setBackgroundColor(holder.itemView.context.getThemeAttributeColor(R.attr.colorError))
         } else {
-            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.deposit_green))
+            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.mfColorSuccess))
         }
     }
 

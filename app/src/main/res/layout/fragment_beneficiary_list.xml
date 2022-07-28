@@ -11,11 +11,10 @@
         android:layout_width="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/white"
             android:id="@+id/rv_beneficiaries"
             android:layout_centerHorizontal="true"
             android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/default_margin"
+            android:paddingBottom="@dimen/Mifos.DesignSystem.Spacing.VerticalSpaceForFab"
             android:layout_weight="1"
             android:layout_width="wrap_content"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -24,13 +23,12 @@
         android:id="@+id/fab_add_beneficiary"
         android:layout_gravity="bottom|end"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_16dp"
+        android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
         android:layout_width="wrap_content"
-        app:srcCompat="@drawable/ic_add_white_24dp"
-        style="@style/FloatingActionButtonTheme"/>
+        app:srcCompat="@drawable/ic_add_white_24dp"/>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

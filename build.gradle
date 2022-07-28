@@ -44,7 +44,7 @@ task clean(type: Delete) {
 
 ext {
     // Sdk and tools
-    minSdkVersion = 16
+    minSdkVersion = 22
     targetSdkVersion = 31
     compileSdkVersion = 31
 
@@ -64,7 +64,7 @@ ext {
     firebaseMessagingVersion = '21.0.1'
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
-    tableViewVersion = '0.8.8'
+    tableViewVersion = '0.8.9.4'
 
     jUnitVersion = '4.12'
     mockitoVersion = '3.6.28'

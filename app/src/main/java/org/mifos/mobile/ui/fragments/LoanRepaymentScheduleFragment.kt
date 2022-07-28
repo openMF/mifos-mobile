@@ -106,7 +106,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      * Initializes the layout
      */
     override fun showUserInterface() {
-        tvRepaymentSchedule?.adapter = loanRepaymentScheduleAdapter
+        tvRepaymentSchedule?.setAdapter(loanRepaymentScheduleAdapter)
     }
 
     override fun showProgress() {

@@ -1,46 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/primary"
-    android:gravity="center_vertical|bottom"
-    android:layout_height="192dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger"
+    android:clipToPadding="false">
 
-    <ImageView
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/iv_user_image"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="65dp"
-        app:srcCompat="@drawable/ic_person_black_24dp"/>
 
-    <org.mifos.mobile.utils.CircularImageView
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/iv_circular_user_image"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="65dp"
-        android:visibility="gone"
-        app:border="true"
-        app:border_width="1dp"
-        app:srcCompat="@drawable/ic_person_black_24dp"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+        android:id="@+id/user_image_round"
+        android:layout_height="@dimen/Mifos.DesignSystem.Size.BigView"
+        android:layout_width="@dimen/Mifos.DesignSystem.Size.BigView"
+        tools:srcCompat="@drawable/ic_person_black_24dp"
+        tools:background="?attr/colorTertiary"/>
 
     <TextView
         android:ellipsize="end"
         android:id="@+id/tv_user_name"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
         android:layout_width="wrap_content"
         android:lines="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/white"/>
+        tools:text="Will R Smith"
+        style="@style/Mifos.DesignSystem.TextStyle.Heading"/>
 
 </LinearLayout>

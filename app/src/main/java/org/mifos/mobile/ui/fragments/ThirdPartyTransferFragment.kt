@@ -117,7 +117,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     @Inject
     var presenter: ThirdPartyTransferPresenter? = null
     private val listBeneficiary: MutableList<BeneficiaryDetail?> = ArrayList()
-    private val listPayFrom: MutableList<AccountDetail?> = ArrayList()
+    private val listPayFrom: MutableList<AccountDetail> = ArrayList()
     private var beneficiaries: List<Beneficiary?>? = null
     private var beneficiaryAdapter: BeneficiarySpinnerAdapter? = null
     private var payFromAdapter: AccountsSpinnerAdapter? = null
@@ -171,8 +171,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     override fun showUserInterface() {
         payFromAdapter = activity?.applicationContext?.let {
-            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
-                    listPayFrom)
+            AccountsSpinnerAdapter(it, listPayFrom)
         }
         payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
         spPayFrom?.adapter = payFromAdapter
@@ -185,7 +184,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         spBeneficiary?.adapter = beneficiaryAdapter
         spBeneficiary?.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.datePickedAsString)
+                getTodayFormatted())
         pvOne?.setCurrentActive()
     }
 

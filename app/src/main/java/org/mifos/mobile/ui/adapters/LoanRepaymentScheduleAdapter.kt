@@ -1,40 +1,34 @@
 package org.mifos.mobile.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import butterknife.BindView
 import butterknife.ButterKnife
-
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder
-
 import org.mifos.mobile.R
-import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.models.accounts.loan.Periods
 import org.mifos.mobile.models.accounts.loan.tableview.Cell
 import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader
 import org.mifos.mobile.models.accounts.loan.tableview.RowHeader
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
-
 import javax.inject.Inject
 
 /**
  * Created by Rajan Maurya on 04/03/17.
  */
-class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationContext context: Context?) :
-        AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>(context) {
+class LoanRepaymentScheduleAdapter @Inject internal constructor() :
+        AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>() {
 
     private var currency: String? = ""
     fun setCurrency(currency: String?) {
         this.currency = currency
     }
 
-    internal inner class CellViewHolder(v: View?) : AbstractViewHolder(v) {
+    internal inner class CellViewHolder(v: View) : AbstractViewHolder(v) {
         @JvmField
         @BindView(R.id.cell_data)
         var tvCell: TextView? = null
@@ -51,8 +45,10 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
     }
 
     override fun onBindCellViewHolder(
-            holder: AbstractViewHolder, cellItemModel: Any,
-            columnPosition: Int, rowPosition: Int
+        holder: AbstractViewHolder,
+        cellItemModel: Cell?,
+        columnPosition: Int,
+        rowPosition: Int
     ) {
         val (data) = cellItemModel as Cell
         val period = data as Periods
@@ -68,7 +64,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
                 if (principal == null) {
                     principal = 0.00
                 }
-                viewHolder.tvCell?.text = mContext.getString(R.string.string_and_double,
+                viewHolder.tvCell?.text = holder.itemView.context.getString(R.string.string_and_double,
                         currency, principal)
             }
             2 -> {
@@ -76,35 +72,34 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
                 if (principal == null) {
                     principal = 0.00
                 }
-                viewHolder.tvCell?.text = mContext.getString(R.string.string_and_string,
-                        currency, formatCurrency(mContext, principal))
+                viewHolder.tvCell?.text = holder.itemView.context.getString(R.string.string_and_string,
+                        currency, formatCurrency(holder.itemView.context, principal))
             }
             else -> viewHolder.tvCell?.text = ""
         }
     }
 
-    internal inner class ColumnHeaderViewHolder(itemView: View?) : AbstractViewHolder(itemView) {
+    internal inner class ColumnHeaderViewHolder(itemView: View) : AbstractViewHolder(itemView) {
         @JvmField
         @BindView(R.id.column_header_textView)
         var tvColumnHeader: TextView? = null
 
         init {
-            ButterKnife.bind(this, itemView!!)
+            ButterKnife.bind(this, itemView)
         }
     }
 
     override fun onCreateColumnHeaderViewHolder(parent: ViewGroup, viewType: Int): AbstractViewHolder {
-
-        // Get Column Header xml Layout
-        val layout = LayoutInflater.from(mContext).inflate(R.layout.column_header_loan_repayment_schedule, parent, false)
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.column_header_loan_repayment_schedule, parent, false)
 
         // Create a ColumnHeader ViewHolder
         return ColumnHeaderViewHolder(layout)
     }
 
     override fun onBindColumnHeaderViewHolder(
-            holder: AbstractViewHolder,
-            columnHeaderItemModel: Any, position: Int
+        holder: AbstractViewHolder,
+        columnHeaderItemModel: ColumnHeader?,
+        position: Int
     ) {
         val (data) = columnHeaderItemModel as ColumnHeader
 
@@ -113,7 +108,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
         columnHeaderViewHolder.tvColumnHeader?.text = data.toString()
     }
 
-    internal inner class RowHeaderViewHolder(itemView: View?) : AbstractViewHolder(itemView) {
+    internal inner class RowHeaderViewHolder(itemView: View) : AbstractViewHolder(itemView) {
         @JvmField
         @BindView(R.id.row_header_textview)
         var tvRowHeader: TextView? = null
@@ -124,16 +119,15 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
     }
 
     override fun onCreateRowHeaderViewHolder(parent: ViewGroup, viewType: Int): AbstractViewHolder {
-
-//         Get Row Header xml Layout
-        val layout = LayoutInflater.from(mContext).inflate(R.layout.row_header_loan_repayment_schedule, parent, false)
-
-        // Create a Row Header ViewHolder
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.row_header_loan_repayment_schedule, parent, false)
         return RowHeaderViewHolder(layout)
-        //        return null;
     }
 
-    override fun onBindRowHeaderViewHolder(holder: AbstractViewHolder, rowHeaderItemModel: Any, position: Int) {
+    override fun onBindRowHeaderViewHolder(
+        holder: AbstractViewHolder,
+        rowHeaderItemModel: RowHeader?,
+        position: Int
+    ) {
         val (data) = rowHeaderItemModel as RowHeader
 
         // Get the holder to update row header item text
@@ -141,8 +135,8 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor(@ApplicationCont
         rowHeaderViewHolder.tvRowHeader?.text = data.toString()
     }
 
-    override fun onCreateCornerView(): View {
-        return LayoutInflater.from(mContext).inflate(R.layout.corner_view_loan_repayment_schedule, null, false)
+    override fun onCreateCornerView(parent: ViewGroup): View {
+        return LayoutInflater.from(parent.context).inflate(R.layout.corner_view_loan_repayment_schedule, parent, false)
     }
 
     override fun getColumnHeaderItemViewType(columnPosition: Int): Int {

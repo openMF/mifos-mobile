@@ -7,13 +7,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.mifos.mobile.R
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.presenters.HelpPresenter
@@ -29,14 +30,12 @@ import javax.inject.Inject
 /*
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
-*/   class HelpFragment : BaseFragment(), HelpView, BottomNavigationView.OnNavigationItemSelectedListener {
+*/
+class HelpFragment : BaseFragment(), HelpView {
     @kotlin.jvm.JvmField
     @BindView(R.id.rv_faq)
     var rvFaq: RecyclerView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.bnv_help)
-    var bnvHelp: BottomNavigationView? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.layout_error)
@@ -88,7 +87,27 @@ import javax.inject.Inject
         rvFaq?.layoutManager = layoutManager
         rvFaq?.addItemDecoration(DividerItemDecoration(activity,
                 layoutManager.orientation))
-        bnvHelp?.setOnNavigationItemSelectedListener(this)
+        rootView?.findViewById<Button>(R.id.call_button)?.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
+            startActivity(intent)
+        }
+        rootView?.findViewById<Button>(R.id.mail_button)?.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.contact_email)) )
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
+            }
+            try {
+                startActivity(intent)
+            }
+            catch (e: Exception){
+                Toast.makeText(requireContext(), getString(R.string.no_app_to_support_action),Toast.LENGTH_SHORT).show();
+            }
+        }
+        rootView?.findViewById<Button>(R.id.locations_button)?.setOnClickListener {
+            (activity as BaseActivity?)?.replaceFragment(LocationsFragment.newInstance(),true, R.id.container)
+        }
     }
 
     override fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
@@ -97,26 +116,6 @@ import javax.inject.Inject
         this.faqArrayList = faqArrayList
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_call -> {
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
-                startActivity(intent)
-            }
-            R.id.menu_email -> {
-                val emailIntent = Intent(Intent.ACTION_SENDTO)
-                emailIntent.data = Uri.parse("mailto:" + getString(R.string.contact_email))
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
-                if (emailIntent.resolveActivity(requireActivity().packageManager) != null) {
-                    startActivity(emailIntent)
-                }
-            }
-            R.id.menu_locations -> (activity as BaseActivity?)?.replaceFragment(LocationsFragment.newInstance(),
-                    true, R.id.container)
-        }
-        return true
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_help, menu)

@@ -21,7 +21,7 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86", "x86_64"
         }
 
         multiDexEnabled true
@@ -60,6 +60,7 @@ android {
 
     compileOptions {
         incremental = false
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -163,5 +164,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
+
+    implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-test'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
 }
 apply plugin: 'com.google.gms.google-services'

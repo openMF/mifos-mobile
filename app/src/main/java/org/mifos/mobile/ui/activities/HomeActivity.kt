@@ -17,14 +17,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-
 import butterknife.BindView
 import butterknife.ButterKnife
-
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -33,17 +32,17 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.UserDetailsView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
-
 import javax.inject.Inject
 
 /**
  * @author Vishwajeet
  * @since 14/07/2016
  */
-class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigationItemSelectedListener {
     @JvmField
     @BindView(R.id.navigation_view)
     var navigationView: NavigationView? = null
@@ -60,8 +59,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     @Inject
     var detailsPresenter: UserDetailsPresenter? = null
     private var tvUsername: TextView? = null
-    private var ivCircularUserProfilePicture: CircularImageView? = null
-    private var ivTextDrawableUserProfilePicture: ImageView? = null
+    private var drawerUserImage: ShapeableImageView? = null
     private var clientId: Long? = 0
     private var userProfileBitmap: Bitmap? = null
     private var client: Client? = null
@@ -172,24 +170,20 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * Asks users to confirm whether he want to logout or not
      */
     private fun showLogoutDialog() {
-        MaterialDialog.Builder().init(this@HomeActivity)
-                .setCancelable(false)
-                .setMessage(R.string.dialog_logout)
-                .setPositiveButton(getString(R.string.logout),
-                        DialogInterface.OnClickListener { _, _ ->
-                            preferencesHelper?.clear()
-                            val i = Intent(this@HomeActivity, LoginActivity::class.java)
-                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(i)
-                            finish()
-                            Toast.makeText(this,
-                                    R.string.logged_out_successfully, Toast.LENGTH_SHORT)
-                                    .show();
-                        })
-                .setNegativeButton(getString(R.string.cancel),
-                        DialogInterface.OnClickListener { _, _ -> setNavigationViewSelectedItem(R.id.item_home) })
-                .createMaterialDialog()
-                .show()
+        MaterialAlertDialogBuilder(this, R.style.RedDialog)
+            .setTitle(R.string.dialog_logout)
+            .setIcon(R.drawable.ic_logout)
+            .setPositiveButton(getString(R.string.logout)) { _, _ ->
+                preferencesHelper?.clear()
+                val i = Intent(this@HomeActivity, LoginActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+                finish()
+                Toast.makeText(this,R.string.logged_out_successfully, Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss()  }
+            .create()
+            .show()
     }
 
     /**
@@ -219,11 +213,11 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      */
     private fun setupHeaderView(headerView: View) {
         tvUsername = ButterKnife.findById(headerView, R.id.tv_user_name)
-        ivCircularUserProfilePicture = ButterKnife.findById(headerView,
-                R.id.iv_circular_user_image)
-        ivTextDrawableUserProfilePicture = ButterKnife.findById(headerView, R.id.iv_user_image)
-        ivTextDrawableUserProfilePicture?.setOnClickListener(this)
-        ivCircularUserProfilePicture?.setOnClickListener(this)
+        drawerUserImage = ButterKnife.findById(headerView, R.id.user_image_round)
+        drawerUserImage?.setOnClickListener{
+            startActivity(Intent(this, UserProfileActivity::class.java))
+            drawerLayout?.closeDrawer(GravityCompat.START)
+        }
     }
 
     /**
@@ -246,9 +240,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         if (bitmap != null) {
             runOnUiThread {
                 userProfileBitmap = bitmap
-                ivCircularUserProfilePicture?.setImageBitmap(bitmap)
-                ivCircularUserProfilePicture?.visibility = View.VISIBLE
-                ivTextDrawableUserProfilePicture?.visibility = View.GONE
+                drawerUserImage?.setImageBitmap(bitmap)
             }
         } else {
             runOnUiThread {
@@ -257,16 +249,12 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 } else {
                     getString(R.string.app_name)
                 }
-                ivCircularUserProfilePicture?.visibility = View.GONE
-                ivTextDrawableUserProfilePicture?.visibility = View.VISIBLE
                 val drawable = TextDrawable.builder()
                         .beginConfig()
                         .toUpperCase()
                         .endConfig()
-                        .buildRound(userName?.substring(0, 1),
-                                ContextCompat.getColor(
-                                        this@HomeActivity, R.color.primary_dark))
-                ivTextDrawableUserProfilePicture?.setImageDrawable(drawable)
+                        .buildRound(userName?.substring(0, 1),getThemeAttributeColor(R.attr.colorPrimaryVariant))
+                drawerUserImage?.setImageDrawable(drawable)
             }
         }
     }
@@ -351,11 +339,6 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         navigationView?.setCheckedItem(id)
     }
 
-    override fun onClick(v: View) {
-        // Click Header to view full profile of User
-        startActivity(Intent(this@HomeActivity, UserProfileActivity::class.java))
-        drawerLayout?.closeDrawer(GravityCompat.START)
-    }
 
     /**
      * Check the device to make sure it has the Google Play Services APK. If

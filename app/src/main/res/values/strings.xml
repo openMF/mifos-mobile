@@ -84,7 +84,7 @@
     <string name="waiting">Waiting</string>
     <string name="overpaid">Overpaid</string>
     <string name="in_arrears">In Arrears</string>
-    <string name="select_you_want">Select all you want to apply</string>
+    <string name="select_you_want">Select all filters you want to apply</string>
     <string name="filter_savings">Filter Savings Accounts</string>
     <string name="filter_loan">Filter Loan Accounts</string>
     <string name="filter_share">Filter Share Accounts</string>
@@ -524,6 +524,7 @@
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
+    <string name="theme_type" translatable="false">theme_type</string>
     <string name="total_saving_balance">Total Savings Balance</string>
     <string name="total_loan_balance">Total Loan Balance</string>
     <string name="total_loan_savings_description">Above Loan and Savings account balance are
@@ -582,6 +583,10 @@
     <string name="app_version_text">App version</string>
     <string name="license_string_with_value">License: MPL-2.0</string>
     <string name="about_app_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
+    <string name="or">or</string>
+    <string name="no_app_to_support_action">There is no application that support this action</string>
+    <string name="theme">Theme</string>
+    <string name="change_app_theme">Change the application theme</string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>
@@ -621,6 +626,12 @@
         <item>ru</item>
         <item>sw</item>
         <item>fa</item>
+    </string-array>
+
+    <string-array name="themes">
+        <item>System Theme</item>
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
     </string-array>
 
 </resources>

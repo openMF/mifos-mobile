@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:background="@color/primary"
+                android:background="?attr/colorPrimary"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -43,7 +43,8 @@
                         android:clickable="true"
                         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
-                    <org.mifos.mobile.utils.CircularImageView
+                    <com.google.android.material.imageview.ShapeableImageView
+                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
                         android:id="@+id/iv_circular_user_image"
                         android:layout_gravity="center"
                         android:layout_height="65dp"
@@ -168,7 +169,7 @@
                 app:cardElevation="1dp">
 
                 <LinearLayout
-                    android:background="@color/primary_dark"
+                    android:background="?attr/colorPrimary"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -209,7 +210,7 @@
                                 android:layout_width="60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="@color/primary"
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer"
                                 app:cardCornerRadius="30dp">
 
                                 <ImageView
@@ -219,7 +220,7 @@
                                     android:layout_height="60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/white"
+                                    android:tint="?attr/colorOnPrimaryContainer"
                                     app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
 
                             </androidx.cardview.widget.CardView>
@@ -257,8 +258,8 @@
                                 android:layout_width="60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="@color/primary"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="30dp"
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer">
 
                                 <ImageView
                                     android:contentDescription="@string/transfer"
@@ -268,8 +269,8 @@
                                     android:layout_height="60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/white"
-                                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
+                                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
+                                    app:tint="?attr/colorOnPrimaryContainer" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -306,8 +307,8 @@
                                 android:layout_width="60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="@color/primary"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="30dp"
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer">
 
                                 <ImageView
                                     android:contentDescription="@string/apply_for_loan"
@@ -317,8 +318,8 @@
                                     android:layout_height="60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/white"
-                                    app:srcCompat="@drawable/ic_border_color_black_24dp"/>
+                                    app:srcCompat="@drawable/ic_border_color_black_24dp"
+                                    app:tint="?attr/colorOnPrimaryContainer" />
 
                             </androidx.cardview.widget.CardView>
 

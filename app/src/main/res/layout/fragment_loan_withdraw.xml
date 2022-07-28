@@ -71,7 +71,7 @@
             android:layout_width="match_parent"/>
 
         <Button
-            android:background="@color/primary"
+            android:background="?attr/colorPrimary"
             android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/btn_withdraw_loan"
             android:layout_height="wrap_content"

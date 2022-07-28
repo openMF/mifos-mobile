@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:name="org.mifos.mobile.MifosSelfServiceApp"
         android:supportsRtl="true"
-        android:theme="@style/MaterialAppTheme"
+        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
@@ -82,12 +82,12 @@
 
         <activity android:configChanges="orientation|screenSize"
                   android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-                  android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+                  android:theme="@style/Theme.Material3.DayNight"
                   android:windowSoftInputMode="adjustResize"/>
 
         <activity android:configChanges="orientation|screenSize"
                   android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-                  android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+                  android:theme="@style/Theme.Material3.DayNight"
                   android:windowSoftInputMode="adjustResize"/>
 
         <activity android:configChanges="orientation|screenSize"
