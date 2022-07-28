@@ -77,4 +77,14 @@
     <dimen name="value_100dp">100dp</dimen>
     <dimen name="app_bar_elevation">4dp</dimen>
 
+    <dimen name="Mifos.DesignSystem.Size.BigView">85dp</dimen>
+
+    <style name="ThemeOverlay.Toolbar.Primary" parent="">
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+        <item name="actionMenuTextColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="ThemeOverlay.Toolbar.Popup.Primary" parent="">
+        <item name="colorControlNormal">?attr/colorOnSurface</item>
+    </style>
 </resources>

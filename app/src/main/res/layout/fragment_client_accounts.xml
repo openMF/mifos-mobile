@@ -7,17 +7,13 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_width="match_parent">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/white"
-            app:tabTextColor="@color/white"
-            android:background="@color/primary"
             app:tabMode="fixed"/>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,10 +27,9 @@
         android:id="@+id/fab_create_loan"
         android:layout_gravity="end|bottom"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_16dp"
+        android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
         android:layout_width="wrap_content"
         app:layout_behavior="org.mifos.mobile.utils.ScrollFabBehavior"
-        app:srcCompat="@drawable/ic_add_white_24dp"
-        style="@style/FloatingActionButtonTheme"/>
+        app:srcCompat="@drawable/ic_add_white_24dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

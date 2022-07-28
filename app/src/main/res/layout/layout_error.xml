@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/iv_status"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/Mifos.DesignSystem.Size.BigView"
+        android:layout_height="@dimen/Mifos.DesignSystem.Size.BigView"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center|center_horizontal"

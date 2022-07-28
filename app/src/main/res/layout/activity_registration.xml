@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -9,18 +9,19 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:paddingTop="@dimen/login_padding_top">
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
+
 
         <ImageView
-            android:layout_gravity="center_horizontal"
-            android:layout_height="@dimen/login_height"
-            android:layout_marginBottom="@dimen/login_margin_bottom"
+            android:layout_height="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
+            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Size.LogoImageVerticalMargin"
             android:layout_width="wrap_content"
-            android:src="@drawable/mifos_logo"/>
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/mifos_logo" />
+
 
         <FrameLayout
-            style="@style/FrameLayout.Container"
-            android:layout_margin="@dimen/default_padding"/>
+            style="@style/FrameLayout.Container"/>
 
     </LinearLayout>
 

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
+    android:layout_width="match_parent">
+<LinearLayout
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent">
 
-        <EditText android:hint="@string/account_number"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/account_number"
                   android:id="@+id/et_account_number"
                   android:inputType="text"
                   android:layout_height="wrap_content"
@@ -20,10 +25,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent">
 
-        <EditText android:hint="@string/username"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/username"
                   android:id="@+id/et_username"
                   android:inputType="textEmailAddress"
                   android:layout_height="wrap_content"
@@ -32,10 +37,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent">
 
-        <EditText android:hint="@string/first_name"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/first_name"
                   android:id="@+id/et_first_name"
                   android:inputType="text"
                   android:layout_height="wrap_content"
@@ -44,10 +49,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent">
 
-        <EditText android:hint="@string/last_name"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/last_name"
                   android:id="@+id/et_last_name"
                   android:inputType="text"
                   android:layout_height="wrap_content"
@@ -56,10 +61,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:hint="@string/phone_number"
             android:id="@+id/et_phone_number"
             android:inputType="number"
@@ -69,10 +74,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent">
 
-        <EditText android:hint="@string/email"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/email"
                   android:id="@+id/et_email"
                   android:inputType="textEmailAddress"
                   android:layout_height="wrap_content"
@@ -82,11 +87,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true">
 
-        <EditText android:hint="@string/password"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/password"
                   android:id="@+id/et_password"
                   android:inputType="textPassword"
                   android:layout_height="wrap_content"
@@ -96,15 +101,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ProgressBar
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:indeterminate="false"
-            android:maxHeight="20dip"
-            android:minHeight="20dip"
             android:layout_weight="1"
             android:progress="0"/>
         <TextView
@@ -112,18 +115,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/password_strength_weak"
-            android:layout_marginLeft="@dimen/margin_4dp"
             android:id="@+id/password_strength"
-            android:layout_marginStart="@dimen/margin_4dp" />
+            android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true">
 
-        <EditText android:hint="@string/confirm_password"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/confirm_password"
                   android:id="@+id/et_confirm_password"
                   android:inputType="textPassword"
                   android:layout_height="wrap_content"
@@ -133,7 +135,7 @@
     <LinearLayout
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
         android:layout_width="match_parent"
         android:orientation="horizontal">
 
@@ -141,8 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:text="@string/verification_mode"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+            android:text="@string/verification_mode"/>
 
         <RadioGroup
             android:id="@+id/rg_verification_mode"
@@ -155,8 +156,7 @@
                 android:checked="true"
                 android:id="@+id/rb_email"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:layout_width="wrap_content"
                 android:text="@string/rb_email"/>
 
@@ -173,10 +173,8 @@
     <Button
         android:id="@+id/btn_register"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/login_margin_bottom"
-        android:layout_marginTop="@dimen/login_margin_top"
         android:layout_width="match_parent"
-        android:text="@string/register"
-        android:textColor="@color/white"/>
+        android:text="@string/register"/>
 
 </LinearLayout>
+</androidx.core.widget.NestedScrollView>

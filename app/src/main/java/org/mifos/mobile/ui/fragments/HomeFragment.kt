@@ -7,16 +7,13 @@ import android.os.Parcelable
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-
-import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
+import com.google.android.material.imageview.ShapeableImageView
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.presenters.HomePresenter
@@ -28,9 +25,9 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeView
 import org.mifos.mobile.utils.*
-
 import javax.inject.Inject
 
 /**
@@ -44,7 +41,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
 
     @JvmField
     @BindView(R.id.iv_circular_user_image)
-    var ivCircularUserImage: CircularImageView? = null
+    var ivCircularUserImage: ShapeableImageView? = null
 
 
     @JvmField
@@ -180,8 +177,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
                     .beginConfig()
                     .toUpperCase()
                     .endConfig()
-                    .buildRound(userName?.substring(0, 1),
-                            ContextCompat.getColor(activity!!, R.color.primary_dark))
+                    .buildRound(userName?.substring(0, 1),requireActivity().getThemeAttributeColor(R.attr.colorPrimaryVariant))
             ivUserImage?.setImageDrawable(drawable)
             ivUserImage?.visibility = View.VISIBLE
             ivCircularUserImage?.visibility = View.GONE

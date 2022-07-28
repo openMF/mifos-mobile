@@ -11,10 +11,12 @@ import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import org.mifos.mobile.api.local.PreferencesHelper
 
 import org.mifos.mobile.injection.component.ApplicationComponent
 import org.mifos.mobile.injection.component.DaggerApplicationComponent
 import org.mifos.mobile.injection.module.ApplicationModule
+import org.mifos.mobile.ui.fragments.applySavedTheme
 import org.mifos.mobile.utils.LanguageHelper.onAttach
 
 import java.util.*
@@ -47,6 +49,7 @@ class MifosSelfServiceApp : MultiDexApplication() {
         instance = this
         FlowManager.init(FlowConfig.Builder(this).build())
         ForegroundChecker.init(this)
+        PreferencesHelper(this).applySavedTheme()
     }
 
     override fun attachBaseContext(base: Context) {

@@ -10,100 +10,86 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/first_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/light_grey"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
     <TextView
         android:id="@+id/tv_first_name"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/small_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
     <View
-        android:background="@color/gray_light"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_width="match_parent"/>
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/last_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/light_grey"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
     <TextView
         android:id="@+id/tv_last_name"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/small_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
     <View
-        android:background="@color/gray_light"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_width="match_parent"/>
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/office_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/light_grey"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
     <TextView
         android:id="@+id/tv_office_name"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/small_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
     <View
-        android:background="@color/gray_light"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_width="match_parent"/>
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/guarantor_type"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/light_grey"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
     <TextView
         android:id="@+id/tv_guarantor_type"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/small_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+
 
     <View
-        android:background="@color/gray_light"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_width="match_parent"/>
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/joined_date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/light_grey"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
     <TextView
         android:id="@+id/tv_joined_date"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/small_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
     <View
-        android:background="@color/gray_light"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_width="match_parent"/>
+        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
 
 </LinearLayout>

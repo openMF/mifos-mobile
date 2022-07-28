@@ -1,23 +1,19 @@
 package org.mifos.mobile.ui.fragments
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
 import android.widget.*
-
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.mifos.mobile.R
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
@@ -29,15 +25,13 @@ import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingAccountsTransactionView
 import org.mifos.mobile.utils.*
-import org.mifos.mobile.utils.MFDatePicker.OnDatePickListener
-
-import java.util.*
+import java.time.Instant
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 6/3/17.
  */
-class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView, OnDatePickListener {
+class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView {
 
     @kotlin.jvm.JvmField
     @BindView(R.id.ll_account)
@@ -62,22 +56,20 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     @kotlin.jvm.JvmField
     @Inject
     var checkBoxAdapter: CheckBoxAdapter? = null
-    private var tvStartDate: TextView? = null
-    private var tvEndDate: TextView? = null
+    private var tvStartDate: Button? = null
+    private var tvEndDate: Button? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     private var rootView: View? = null
     private var savingsId: Long = 0
     private var transactionsList: List<Transactions?>? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var datePick: DatePick? = null
-    private var mfDatePicker: MFDatePicker? = null
-    private var startDate: Long? = 0
-    private var endDate: Long? = 0
+    private var startDate: Long = Instant.now().toEpochMilli()
+    private var endDate: Long = Instant.now().toEpochMilli()
     private var isReady = false
     private var statusList: List<CheckboxStatus>? = null
     private var isCheckBoxPeriod = false
     private var selectedRadioButtonId = 0
-    var active = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -105,8 +97,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
 
     private fun initializeFilterVariables() {
         statusList = StatusUtils.getSavingsAccountTransactionList(activity)
-        startDate = -1
-        endDate = -2
         isCheckBoxPeriod = false
         isReady = false
         selectedRadioButtonId = -1
@@ -133,10 +123,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         rvSavingAccountsTransaction?.setHasFixedSize(true)
         rvSavingAccountsTransaction?.layoutManager = layoutManager
         rvSavingAccountsTransaction?.adapter = transactionListAdapter
-
-//        radioGroup.setOnCheckedChangeListener(this);
-        mfDatePicker = MFDatePicker.newInstance(this, MFDatePicker.ALL_DAYS, active)
-        active = true
+        rvSavingAccountsTransaction?.addItemDecoration(DividerItemDecoration(requireContext(),layoutManager.orientation))
     }
 
     /**
@@ -210,31 +197,20 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
 
     private fun startDatePick() {
         datePick = DatePick.START
-        mfDatePicker?.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        getDatePickerDialog(Instant.ofEpochMilli(startDate)){
+            tvEndDate?.isEnabled = true
+            tvStartDate?.text = DateHelper.getDateAsStringFromLong(it)
+            startDate = it
+        }.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
     }
 
     private fun endDatePick() {
         datePick = DatePick.END
-        mfDatePicker?.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
-    }
-
-    /**
-     * A CallBack for [MFDatePicker] which provides us with the date selected from the
-     * [android.app.DatePickerDialog] by `mfDatePicker`
-     *
-     * @param date Date selected by user in [String]
-     */
-    override fun onDatePicked(date: String?) {
-        val timeInMillis = DateHelper.getDateAsLongFromString(date, "dd-MM-yyyy")
-        if (datePick == DatePick.START) {
-            tvEndDate?.isEnabled = true
-            tvStartDate?.text = DateHelper.getDateAsStringFromLong(timeInMillis)
-            startDate = timeInMillis
-        } else {
-            endDate = timeInMillis
-            tvEndDate?.text = DateHelper.getDateAsStringFromLong(timeInMillis)
+        getDatePickerDialog(Instant.ofEpochMilli(startDate)){
+            endDate = it
+            tvEndDate?.text = DateHelper.getDateAsStringFromLong(it)
             isReady = true
-        }
+        }.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
     }
 
     /**
@@ -242,10 +218,8 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      *
      * @return Returns true if `startDate` is less than `endDate`
      */
-    private fun isEndDateLargeThanStartDate(): Boolean? {
-        return if (startDate != null && endDate != null)
-            startDate!! <= endDate!!
-        else null
+    private fun isEndDateLargeThanStartDate(): Boolean {
+        return startDate <= endDate
     }
 
     override fun showProgress() {
@@ -262,7 +236,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     private fun showFilterDialog() {
         val inflater = activity?.layoutInflater
         val dialogView = inflater?.inflate(R.layout.layout_filter_dialog, null, false)
-        val llcheckBoxPeriod = dialogView?.findViewById<LinearLayout>(R.id.ll_row_checkbox)
         val checkBoxPeriod: AppCompatCheckBox? = dialogView?.findViewById(R.id.cb_select)
         val radioGroupFilter = dialogView?.findViewById<RadioGroup>(R.id.rg_date_filter)
         tvStartDate = dialogView?.findViewById(R.id.tv_start_date)
@@ -270,10 +243,12 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         tvStartDate?.isEnabled = false
         tvEndDate?.isEnabled = false
 
+        tvStartDate?.text = DateHelper.getDateAsStringFromLong(startDate)
+        tvEndDate?.text = DateHelper.getDateAsStringFromLong(endDate)
         //setup listeners
         tvStartDate?.setOnClickListener { startDatePick() }
         tvEndDate?.setOnClickListener { endDatePick() }
-        llcheckBoxPeriod?.setOnClickListener { checkBoxPeriod?.isChecked = (checkBoxPeriod?.isChecked != true) }
+        checkBoxPeriod?.setOnClickListener { checkBoxPeriod.isChecked = (!checkBoxPeriod.isChecked) }
         checkBoxPeriod?.setOnCheckedChangeListener { _, isChecked ->
             isCheckBoxPeriod = isChecked
             if (!isChecked) {
@@ -331,34 +306,33 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         checkBoxRecyclerView?.layoutManager = layoutManager
         checkBoxRecyclerView?.adapter = checkBoxAdapter
         checkBoxAdapter?.statusList = statusList
-        MaterialDialog.Builder().init(activity)
-                .setTitle(R.string.savings_account_transaction)
-                .addView(dialogView)
-                .setPositiveButton(getString(R.string.filter), DialogInterface.OnClickListener { _, _ ->
+        MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.select_you_want)
+                .setView(dialogView)
+                .setPositiveButton(getString(R.string.filter)) { _, _ ->
                     if (checkBoxPeriod?.isChecked == true) {
                         if (!isReady) {
                             Toaster.show(rootView, getString(R.string.select_date))
-                            return@OnClickListener
-                        } else if (isEndDateLargeThanStartDate() == false) {
-                            Toaster.show(rootView,
-                                    getString(R.string.end_date_must_be_greater))
-                            return@OnClickListener
+                            return@setPositiveButton
+                        } else if (!isEndDateLargeThanStartDate()) {
+                            Toaster.show(
+                                rootView,
+                                getString(R.string.end_date_must_be_greater)
+                            )
+                            return@setPositiveButton
                         }
                         filter(startDate, endDate, checkBoxAdapter?.statusList)
                     } else {
                         filter(checkBoxAdapter?.statusList)
                     }
                     filterSavingsAccountTransactionsbyType(checkBoxAdapter?.statusList)
-                })
-                .setNeutralButton(getString(R.string.clear_filters),
-                        DialogInterface.OnClickListener { _, _ ->
-                            transactionListAdapter
-                                    ?.setSavingAccountsTransactionList(transactionsList)
-                            initializeFilterVariables()
-                        }
-                )
-                .setNegativeButton(R.string.cancel)
-                .createMaterialDialog()
+                }
+            .setNeutralButton(getString(R.string.clear_filters)) { _, _ ->
+                    transactionListAdapter?.setSavingAccountsTransactionList(transactionsList)
+                    initializeFilterVariables()
+                }
+                .setNegativeButton(R.string.cancel){_,_ -> }
+                .create()
                 .show()
     }
 
