@@ -88,7 +88,7 @@
 
 
         <Button
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
             android:id="@+id/btn_register"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

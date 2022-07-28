@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="@string/call_now"
             android:drawableTop="@drawable/ic_phone_wrapper"
-            style="@style/Widget.Material3.Button.TextButton"/>
+            style="@style/Mifos.DesignSystem.Components.Button.Text"/>
         <Button
             android:id="@+id/mail_button"
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:text="@string/leave_email"
             android:drawableTop="@drawable/ic_mail_wrapper"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
             />
         <Button
             android:id="@+id/locations_button"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/find_locations"
             android:drawableTop="@drawable/ic_location_wrapper"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
             />
     </LinearLayout>
 

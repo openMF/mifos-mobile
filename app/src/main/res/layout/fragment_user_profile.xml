@@ -69,8 +69,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/username"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -79,7 +79,7 @@
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="mifos_user"/>
             </LinearLayout>
 
@@ -97,8 +97,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/account_number"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -107,7 +107,7 @@
                     android:id="@+id/tv_account_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="25872464234"/>
             </LinearLayout>
 
@@ -123,8 +123,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/activation_date"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -133,7 +133,7 @@
                     android:id="@+id/tv_activation_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="25872464234"/>
             </LinearLayout>
 
@@ -149,8 +149,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/office_name"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -159,7 +159,7 @@
                     android:id="@+id/tv_office_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="25872464234"/>
             </LinearLayout>
 
@@ -175,8 +175,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/groups"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -185,7 +185,7 @@
                     android:id="@+id/tv_groups"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="25872464234"/>
             </LinearLayout>
 
@@ -201,8 +201,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/client_type"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -211,7 +211,7 @@
                     android:id="@+id/tv_client_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="25872464234"/>
             </LinearLayout>
 
@@ -227,8 +227,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/client_classification"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -237,7 +237,7 @@
                     android:id="@+id/tv_client_classification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.Material3.BodyLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="25872464234"/>
             </LinearLayout>
 
@@ -256,8 +256,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/change_password"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -281,8 +281,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_details"
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    />
 
                 <TextView
                     android:drawablePadding="@dimen/layout_padding_8dp"

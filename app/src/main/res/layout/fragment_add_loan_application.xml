@@ -40,7 +40,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent">
@@ -54,7 +54,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     android:layout_width="0dp"
                     android:gravity="end"
                     tools:text="US Dollar($)"
-                    style="@style/TextAppearance.Material3.BodyLarge"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
             </LinearLayout>
 

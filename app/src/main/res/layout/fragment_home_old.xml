@@ -43,14 +43,14 @@
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    style="@style/TextAppearance.Material3.TitleLarge"
+                    style="@style/Mifos.DesignSystem.TextStyle.Heading"
                     tools:text="Hello, you guys"/>
 
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.CardView.Filled"
+                style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                 android:layout_width="match_parent"
                 app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
@@ -63,7 +63,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/TextAppearance.Material3.LabelSmall"
                             android:text="@string/accounts_overview"
                             android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
 
@@ -79,7 +78,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/TextAppearance.Material3.BodySmall"
+                                style="@style/Mifos.DesignSystem.TextStyle.Label"
                                 android:text="@string/total_saving"/>
                             <View
                                 android:layout_width="0dp"
@@ -89,7 +88,8 @@
                                 android:id="@+id/tv_saving_total_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/TextAppearance.Material3.TitleMedium"
+                                tools:text="$ 1000"
+                                style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                                 android:textColor="@color/deposit_green"
                                 android:text="-"/>
                         </LinearLayout>
@@ -104,7 +104,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/TextAppearance.Material3.BodySmall"
+                                style="@style/Mifos.DesignSystem.TextStyle.Label"
                                 android:text="@string/total_loan"/>
                             <View
                                 android:layout_width="0dp"
@@ -115,7 +115,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/red"
-                                style="@style/TextAppearance.Material3.TitleMedium"
+                                style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                                 android:text="-"/>
                         </LinearLayout>
 
@@ -133,7 +133,7 @@
                 android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Filled"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:id="@+id/ll_accounts"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -165,7 +165,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Filled"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_height="wrap_content"
                     android:id="@+id/ll_transfer"
                     android:layout_columnWeight="1"
@@ -197,7 +197,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Filled"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_height="wrap_content"
                     android:id="@+id/ll_charges"
                     android:layout_columnWeight="1"
@@ -228,7 +228,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Filled"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_height="wrap_content"
                     android:id="@+id/ll_apply_for_loan"
                     android:layout_columnWeight="1"
@@ -260,7 +260,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Filled"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_height="wrap_content"
                     android:id="@+id/ll_beneficiaries"
                     android:layout_columnWeight="1"
@@ -292,7 +292,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Filled"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_height="wrap_content"
                     android:id="@+id/ll_surveys"
                     android:layout_columnWeight="1"

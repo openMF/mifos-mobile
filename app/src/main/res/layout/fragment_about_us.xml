@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.CardTextIconSpacing"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
                     android:text="@string/official_website"/>
             </LinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.CardTextIconSpacing"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
                     android:text="@string/licenses" />
             </LinearLayout>
@@ -145,7 +145,7 @@
                     android:id="@+id/forum_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.CardTextIconSpacing"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
                     android:text="@string/privacy_policy"/>
             </LinearLayout>
@@ -175,7 +175,7 @@
                     android:id="@+id/sources_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.CardTextIconSpacing"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
                     android:text="@string/sources" />
             </LinearLayout>

@@ -58,7 +58,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                         android:layout_height="wrap_content"
                         android:id="@+id/pay_to_field_wrapper"
                         android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                         style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"/>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                         android:layout_height="wrap_content"
                         android:id="@+id/pay_from_field_wrapper"
                         android:layout_width="match_parent"
@@ -274,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:text="@string/cancel"
-                            style="@style/Widget.Material3.Button.OutlinedButton"/>
+                            style="@style/Mifos.DesignSystem.Components.Button.Outline"/>
 
                     </LinearLayout>
 
