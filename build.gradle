@@ -56,7 +56,7 @@ ext {
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
     lifecycleExtensionsVersion = '2.2.0'
-    retrofitVersion = '2.2.0'
+    retrofitVersion = '2.9.0'
     okHttp3Version = '3.6.0'
     butterKnifeVersion = '8.0.1'
     dbflowVersion = '4.1.2'
