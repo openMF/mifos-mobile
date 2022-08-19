@@ -28,6 +28,13 @@
             android:summary="@string/choose_language"
             android:title="@string/language"/>
 
+        <Preference
+            android:icon="@drawable/ic_baseline_dark_mode_24"
+            android:key="@string/theme_type"
+            android:summary="@string/change_app_theme"
+            android:title="@string/theme"/>
+
+
         <org.mifos.mobile.utils.ConfigurationPreference
             android:key="@string/pref_configuration"
             android:icon="@drawable/ic_update"

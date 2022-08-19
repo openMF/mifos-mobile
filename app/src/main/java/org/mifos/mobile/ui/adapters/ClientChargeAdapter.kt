@@ -14,6 +14,7 @@ import butterknife.ButterKnife
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.Charge
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 
@@ -24,8 +25,9 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 17/8/16.
  */
-class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ClientChargeAdapter (
+    val onItemClick: (itemPosition: Int) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var clientChargeList: List<Charge?>? = ArrayList()
     fun setClientChargeList(clientChargeList: List<Charge?>?) {
@@ -41,6 +43,9 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
         val v = LayoutInflater.from(parent.context).inflate(
                 R.layout.row_client_charge, parent, false)
         vh = ViewHolder(v)
+        v.setOnClickListener {
+            onItemClick(vh.bindingAdapterPosition)
+        }
         return vh
     }
 
@@ -52,6 +57,7 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
         if (currencyRepresentation == null) {
             currencyRepresentation = charge?.currency?.code
         }
+        val context = holder.itemView.context
         (holder as ViewHolder).tvAmountDue?.text = context.getString(R.string.string_and_string,
                 currencyRepresentation, formatCurrency(context,
                 charge?.amount))
@@ -67,9 +73,9 @@ class ClientChargeAdapter @Inject constructor(@param:ActivityContext private val
             holder.tvDueDate?.text = getDateAsString(charge.dueDate)
         }
         if (charge?.isPaid == true || charge?.isWaived == true || charge?.paid == true || charge?.waived == true) {
-            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
+            holder.circle_status?.setBackgroundColor(holder.itemView.context.getThemeAttributeColor(R.attr.colorError))
         } else {
-            holder.circle_status?.setBackgroundColor(ContextCompat.getColor(context, R.color.deposit_green))
+            holder.circle_status?.setBackgroundColor(context.getThemeAttributeColor(R.attr.colorSuccess))
         }
     }
 

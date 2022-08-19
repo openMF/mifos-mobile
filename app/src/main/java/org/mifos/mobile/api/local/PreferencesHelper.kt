@@ -8,6 +8,7 @@ import android.text.TextUtils
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.SelfServiceInterceptor
 import org.mifos.mobile.injection.ApplicationContext
+import org.mifos.mobile.ui.fragments.AppTheme
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -148,6 +149,12 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
     val baseUrl: String?
         get() = getString(BASE_URL, BaseURL().defaultBaseUrl)
 
+    var appTheme
+        get() = getInt(APPLICATION_THEME, AppTheme.SYSTEM.ordinal) ?: AppTheme.SYSTEM.ordinal
+        set(value){
+            putInt(APPLICATION_THEME, value)
+        }
+
     companion object {
         private const val USER_ID = "preferences_user_id"
         private const val TOKEN = "preferences_token"
@@ -162,6 +169,8 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         private const val BASE_URL = "preferences_base_url_key"
         private const val PROFILE_IMAGE = "preferences_profile_image"
         const val CLIENT_NAME = "client_name"
+        private const val APPLICATION_THEME = "application_theme"
     }
+
 
 }

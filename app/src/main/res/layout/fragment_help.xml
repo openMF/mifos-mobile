@@ -6,45 +6,61 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/default_margin">
+    android:paddingTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
 
     <TextView
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_4dp"
         android:layout_width="match_parent"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:text="@string/faq"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textStyle="bold"/>
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.listHeaderSpacing"
+        style="@style/Mifos.DesignSystem.TextStyle.SubHeading"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_faq"
         android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginRight="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
         android:layout_weight="1"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
         android:layout_width="match_parent"/>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnv_help"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/toggleButton"
         android:layout_width="match_parent"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@drawable/bottom_nav_item_color_state"
-        app:itemTextColor="@drawable/bottom_nav_item_color_state"
-        app:menu="@menu/menu_help_bottom_bar"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/call_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/call_now"
+            android:drawableTop="@drawable/ic_phone_wrapper"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"/>
+        <Button
+            android:id="@+id/mail_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/leave_email"
+            android:drawableTop="@drawable/ic_mail_wrapper"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
+            />
+        <Button
+            android:id="@+id/locations_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/find_locations"
+            android:drawableTop="@drawable/ic_location_wrapper"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
+            />
+    </LinearLayout>
 
 </LinearLayout>

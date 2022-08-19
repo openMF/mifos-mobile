@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:focusable="true"
     android:clickable="true"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/default_margin"
+    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:paddingEnd="@dimen/row_padding_right"
-    android:paddingLeft="@dimen/row_padding_left"
-    android:paddingRight="@dimen/row_padding_right"
-    android:paddingStart="@dimen/row_padding_left">
+    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <ImageView
-        android:background="@color/accent"
+        tools:background="?attr/colorPrimary"
         android:id="@+id/circle_status"
         android:layout_gravity="center_vertical"
-        android:layout_height="25dp"
-        android:layout_width="25dp"/>
+        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"/>
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:paddingRight="@dimen/layout_padding_16dp"
-        android:paddingEnd="@dimen/layout_padding_16dp"
-        android:paddingLeft="@dimen/row_padding_left"
-        android:paddingStart="@dimen/row_padding_left">
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle">
 
         <TextView
             android:ellipsize="end"
@@ -35,16 +29,14 @@
             android:layout_width="wrap_content"
             android:lines="1"
             android:text="@string/medium_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
         <TextView
             android:id="@+id/tv_charge_amount"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/small_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@color/gray_dark"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
     </LinearLayout>
 

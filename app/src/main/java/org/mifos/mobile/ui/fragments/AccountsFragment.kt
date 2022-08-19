@@ -43,7 +43,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
-class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, RecyclerItemClickListener.OnItemClickListener {
+class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     @kotlin.jvm.JvmField
     @BindView(R.id.rv_accounts)
     var rvAccounts: RecyclerView? = null
@@ -60,17 +60,12 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
     @Inject
     var accountsPresenter: AccountsPresenter? = null
 
-    @kotlin.jvm.JvmField
-    @Inject
     var loanAccountsListAdapter: LoanAccountsListAdapter? = null
 
-    @kotlin.jvm.JvmField
-    @Inject
     var savingAccountsListAdapter: SavingAccountsListAdapter? = null
 
-    @kotlin.jvm.JvmField
-    @Inject
     var shareAccountsListAdapter: ShareAccountsListAdapter? = null
+
     private var accountType: String? = null
     private var loanAccounts: List<LoanAccount?>? = null
     private var savingAccounts: List<SavingAccount?>? = null
@@ -111,6 +106,12 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_accounts, container, false)
         ButterKnife.bind(this, rootView)
+
+
+        loanAccountsListAdapter = LoanAccountsListAdapter(::onItemClick)
+        savingAccountsListAdapter = SavingAccountsListAdapter(::onItemClick)
+        shareAccountsListAdapter = ShareAccountsListAdapter(::onItemClick)
+
         accountsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
@@ -119,8 +120,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
         rvAccounts?.setHasFixedSize(true)
         rvAccounts?.addItemDecoration(DividerItemDecoration(activity,
                 layoutManager.orientation))
-        rvAccounts?.addOnItemTouchListener(RecyclerItemClickListener(activity, this))
-        swipeRefreshLayout?.setColorSchemeColors(*activity!!
+        swipeRefreshLayout?.setColorSchemeColors(*requireActivity()
                 .resources.getIntArray(R.array.swipeRefreshColors))
         swipeRefreshLayout?.setOnRefreshListener(this)
         if (savedInstanceState == null) {
@@ -149,19 +149,19 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
             when (accountType) {
                 Constants.SAVINGS_ACCOUNTS -> {
                     val savingAccountList: List<SavingAccount?> =
-                            savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS)
+                        savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS) ?: listOf()
                     showSavingsAccounts(savingAccountList)
                 }
                 Constants.LOAN_ACCOUNTS -> {
                     val loanAccountList: List<LoanAccount?> =
                             savedInstanceState.getParcelableArrayList(
-                                    Constants.LOAN_ACCOUNTS)
+                                    Constants.LOAN_ACCOUNTS)?: listOf()
                     showLoanAccounts(loanAccountList)
                 }
                 Constants.SHARE_ACCOUNTS -> {
                     val shareAccountList: List<ShareAccount?> =
                             savedInstanceState.getParcelableArrayList(
-                                    Constants.SHARE_ACCOUNTS)
+                                    Constants.SHARE_ACCOUNTS) ?: listOf()
                     showShareAccounts(shareAccountList)
                 }
             }
@@ -429,7 +429,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
         accountsPresenter?.detachView()
     }
 
-    override fun onItemClick(childView: View?, position: Int) {
+    fun onItemClick(position: Int) {
         var intent: Intent? = null
         when (accountType) {
             Constants.SAVINGS_ACCOUNTS -> {
@@ -446,7 +446,6 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView, Recycl
         openActivity(intent)
     }
 
-    override fun onItemLongPress(childView: View?, position: Int) {}
 
     /**
      * This function opens up an activity only if the intent

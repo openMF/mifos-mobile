@@ -5,22 +5,20 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/layout_padding_16dp">
+    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <TextView
         android:id="@+id/tv_account_number"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textAppearance="?android:textAppearanceMedium"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
         tools:text="10001"/>
 
     <TextView
         android:id="@+id/tv_account_type"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_padding_4dp"
-        android:layout_marginStart="@dimen/layout_padding_4dp"
         android:layout_width="match_parent"
-        android:textAppearance="?android:textAppearanceSmall"
+        style="@style/Mifos.DesignSystem.TextStyle.Label"
         tools:text="Loan"/>
 
 </LinearLayout>

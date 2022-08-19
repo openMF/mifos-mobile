@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 
 import org.mifos.mobile.R
 import org.mifos.mobile.models.CheckboxStatus
+import org.mifos.mobile.ui.getThemeAttributeColor
 
 import java.util.*
 
@@ -20,7 +21,7 @@ object StatusUtils {
         arrayList.add(CheckboxStatus(context.getString(R.string.approval_pending), ContextCompat
                 .getColor(context, R.color.light_yellow)))
         arrayList.add(CheckboxStatus(context.getString(R.string.matured), ContextCompat.getColor(context, R.color.red_light)))
-        arrayList.add(CheckboxStatus(context.getString(R.string.closed), ContextCompat.getColor(context, R.color.black)))
+        arrayList.add(CheckboxStatus(context.getString(R.string.closed), context.getThemeAttributeColor(R.attr.colorOnSurface)))
         return arrayList
     }
 
@@ -33,8 +34,8 @@ object StatusUtils {
         arrayList.add(CheckboxStatus(context.getString(R.string.approval_pending), ContextCompat
                 .getColor(context, R.color.light_yellow)))
         arrayList.add(CheckboxStatus(context.getString(R.string.overpaid), ContextCompat.getColor(context, R.color.purple)))
-        arrayList.add(CheckboxStatus(context.getString(R.string.closed), ContextCompat.getColor(context, R.color.black)))
-        arrayList.add(CheckboxStatus(context.getString(R.string.withdrawn), ContextCompat.getColor(context, R.color.gray_dark)))
+        arrayList.add(CheckboxStatus(context.getString(R.string.closed), context.getThemeAttributeColor(R.attr.colorOnSurface)))
+        arrayList.add(CheckboxStatus(context.getString(R.string.withdrawn), context.getThemeAttributeColor(R.attr.colorOnSurfaceVariant)))
         return arrayList
     }
 

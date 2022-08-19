@@ -5,54 +5,55 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Filter
 import android.widget.TextView
-
-import androidx.annotation.LayoutRes
-
-import butterknife.BindView
-import butterknife.ButterKnife
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.AccountDetail
+import java.util.*
 
 
 /**
  * Created by dilpreet on 19/03/18.
  */
-class AccountsSpinnerAdapter(context: Context, @LayoutRes resource: Int, objects: MutableList<AccountDetail?>) :
-        ArrayAdapter<String?>(context, resource, 0, objects as List<String?>) {
-
-    private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private val accountDetails: MutableList<AccountDetail?> = objects
-    private val mResource: Int = resource
-
-    @JvmField
-    @BindView(R.id.tv_account_number)
-    var tvAccountNumber: TextView? = null
-
-    @JvmField
-    @BindView(R.id.tv_account_type)
-    var tvAccountType: TextView? = null
-    override fun getDropDownView(
-            position: Int, convertView: View?,
-            parent: ViewGroup
-    ): View {
-        return createItemView(position, convertView, parent)
-    }
+class AccountsSpinnerAdapter(
+    context: Context,
+    private val accountDetails: List<AccountDetail>
+) : ArrayAdapter<AccountDetail>(context, 0, accountDetails) {
 
     override fun getView(
-            position: Int, convertView: View?,
-            parent: ViewGroup
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup
     ): View {
-        return createItemView(position, convertView, parent)
-    }
+        val view = convertView ?: LayoutInflater.from(parent.context).inflate(R.layout.account_spinner_layout, parent, false)
+        getItem(position)?.let {
+            view.findViewById<TextView>(R.id.tv_account_number).text = it.accountNumber
+            view.findViewById<TextView>(R.id.tv_account_type).text = it.accountType
+        }
 
-    private fun createItemView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = mInflater.inflate(mResource, parent, false)
-        ButterKnife.bind(this, view)
-        val (accountNumber: String?, accountType) = accountDetails[position]!!
-        tvAccountNumber?.text = accountNumber
-        tvAccountType?.text = accountType
         return view
     }
 
+    override fun getFilter() =  object : Filter() {
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            val suggestions =
+                if (constraint.isBlank()) accountDetails
+                else accountDetails.filterIndexed { _, item -> item.accountNumber!!.contains(constraint.trim()) }
+
+            return FilterResults().apply {
+                values = suggestions
+                count = suggestions.size
+            }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            clear()
+            addAll(results.values as List<AccountDetail>)
+            notifyDataSetChanged()
+        }
+
+        override fun convertResultToString(resultValue: Any) = (resultValue as AccountDetail).accountNumber ?: ""
+
+    }
 }

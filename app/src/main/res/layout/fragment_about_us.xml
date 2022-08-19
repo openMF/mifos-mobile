@@ -10,47 +10,43 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_marginHorizontal="@dimen/activity_vertical_margin">
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_32dp"
+            android:layout_width="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
+            android:layout_height="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Size.LogoImageVerticalMargin"
             app:srcCompat="@mipmap/mifos_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
             android:text="@string/app_name"
-            style="@style/BoldHeading"/>
+            style="@style/Mifos.DesignSystem.TextStyle.MainFocusText"/>
 
         <TextView
             android:id="@+id/textView26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
             android:text="@string/about_app_description"
             android:textAlignment="center"
-            android:textColor="@color/secondary_text"/>
+            android:alpha="@dimen/alpha_low_emphasis"/>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/version_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/background_default_darker">
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.Filled"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/min_frame_size"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginHorizontal="@dimen/default_margin">
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/app_version_text"
@@ -62,27 +58,23 @@
                     android:id="@+id/app_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/icon_text_margin"
-                    android:textColor="@color/primary_text"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     tools:text="3.4.0" />
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/about_website_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/transparent">
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/min_frame_size"
-                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
@@ -94,29 +86,25 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/icon_text_margin"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
-                    android:textColor="@color/primary_text"
                     android:text="@string/official_website"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/about_licenses_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/transparent">
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/min_frame_size"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginHorizontal="@dimen/default_margin">
+                android:gravity="center_vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
@@ -127,30 +115,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/icon_text_margin"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
-                    android:textColor="@color/primary_text"
                     android:text="@string/licenses" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/about_privacy_policy_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/transparent">
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/min_frame_size"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginHorizontal="@dimen/default_margin">
+                android:gravity="center_vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
@@ -161,30 +145,26 @@
                     android:id="@+id/forum_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/icon_text_margin"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
-                    android:text="@string/privacy_policy"
-                    android:textColor="@color/primary_text"/>
+                    android:text="@string/privacy_policy"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/about_sources_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/transparent">
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/min_frame_size"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginHorizontal="@dimen/default_margin">
+                android:gravity="center_vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
@@ -195,30 +175,24 @@
                     android:id="@+id/sources_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/icon_text_margin"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
                     android:layout_weight="1"
-                    android:text="@string/sources"
-                    android:textColor="@color/primary_text" />
+                    android:text="@string/sources" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/self_license_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/background_default_darker"
-            android:layout_marginVertical="@dimen/default_margin">
+            style="@style/Mifos.DesignSystem.Components.Cards.Filled"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_margin="@dimen/default_margin">
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/tv_copy_right"
@@ -232,7 +206,7 @@
                     android:text="@string/license_string_with_value"/>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
