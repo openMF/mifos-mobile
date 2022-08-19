@@ -27,18 +27,18 @@
         app:showAsAction="always"
         android:title="@string/savings_account"
         android:visible="false"
-        android:icon="@drawable/ic_filter_list_white_36dp"/>
+        android:icon="@drawable/ic_baseline_filter_list_24"/>
     <item
         android:id="@+id/menu_filter_loan"
         app:showAsAction="always"
         android:title="@string/loan_account"
         android:visible="false"
-        android:icon="@drawable/ic_filter_list_white_36dp"/>
+        android:icon="@drawable/ic_baseline_filter_list_24"/>
     <item
         android:id="@+id/menu_filter_shares"
         app:showAsAction="always"
         android:title="@string/share_account"
         android:visible="false"
-        android:icon="@drawable/ic_filter_list_white_36dp"/>
+        android:icon="@drawable/ic_baseline_filter_list_24"/>
 
 </menu>

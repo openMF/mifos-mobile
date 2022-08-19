@@ -3,23 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:paddingEnd="@dimen/row_padding_right"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
-    android:paddingStart="@dimen/row_padding_left">
+    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:orientation="vertical"
-        android:paddingEnd="@dimen/layout_padding_16dp"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/layout_padding_16dp"
-        android:paddingStart="@dimen/row_padding_left">
+        android:orientation="vertical">
 
         <TextView
             android:ellipsize="end"
@@ -28,16 +20,14 @@
             android:layout_width="wrap_content"
             android:lines="1"
             android:text="@string/medium_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
         <TextView
             android:id="@+id/tv_clientAccountNumber"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/small_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@color/gray_dark"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
     </LinearLayout>
 

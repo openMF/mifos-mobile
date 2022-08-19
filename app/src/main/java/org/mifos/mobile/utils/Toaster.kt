@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import org.mifos.mobile.MifosSelfServiceApp
 import org.mifos.mobile.R
+import org.mifos.mobile.ui.getThemeAttributeColor
 import java.util.*
 
 object Toaster {
@@ -20,13 +21,6 @@ object Toaster {
         val imm = MifosSelfServiceApp.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         val snackbar = Snackbar.make(view!!, text!!, duration)
-        MifosSelfServiceApp.context?.resources?.getColor(R.color.primary)?.let {
-            snackbar.setActionTextColor(it)
-        }
-        val sbView = snackbar.view
-        val textView = sbView.findViewById<TextView>(R.id.snackbar_text)
-        textView.setTextColor(Color.WHITE)
-        textView.textSize = 12f
         snackbar.setAction("OK") { }
         snackbar.addCallback(object : Snackbar.Callback() {
 

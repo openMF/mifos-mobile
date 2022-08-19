@@ -26,6 +26,7 @@ import org.mifos.mobile.presenters.UserDetailsPresenter
 import org.mifos.mobile.ui.activities.EditUserDetailActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.UserDetailsView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
@@ -42,16 +43,8 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     var ivProfile: ImageView? = null
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.iv_text_drawable)
-    var ivTextDrawable: ImageView? = null
-
-    @kotlin.jvm.JvmField
     @BindView(R.id.app_bar_layout)
     var appBarLayout: AppBarLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.collapsing_toolbar)
-    var collapsingToolbarLayout: CollapsingToolbarLayout? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_user_name)
@@ -130,10 +123,6 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         presenter?.attachView(this)
         (activity as BaseActivity?)?.setSupportActionBar(toolbar)
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        collapsingToolbarLayout?.setCollapsedTitleTextColor(ContextCompat.getColor(activity!!,
-                R.color.white))
-        collapsingToolbarLayout?.setExpandedTitleColor(ContextCompat.getColor(activity!!,
-                R.color.white))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null) {
             presenter?.userDetails
@@ -174,8 +163,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                 client?.clientType?.name)
         tvGroups?.text = nullFieldCheck(getString(R.string.groups),
                 getGroups(client?.groups))
-        tvClientClassification?.text = nullFieldCheck(getString(R.string.client_classification),
-                client?.clientClassification?.name)
+        tvClientClassification?.text = client?.clientClassification?.name ?: "-"
         tvPhoneNumber?.text = nullFieldCheck(getString(R.string.phone_number),
                 client?.mobileNo)
         if (client?.dobDate?.size != 3) {  // no data entry in database for the client
@@ -231,13 +219,9 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                                 else preferencesHelper
                                         ?.clientName)
                                         ?.substring(0, 1),
-                                ContextCompat.getColor(context!!, R.color.primary_dark))
-                ivProfile?.visibility = View.GONE
-                ivTextDrawable?.visibility = View.VISIBLE
-                ivTextDrawable?.setImageDrawable(textDrawable)
+                                requireContext().getThemeAttributeColor(R.attr.colorPrimaryVariant))
+                ivProfile?.setImageDrawable(textDrawable)
             } else {
-                ivTextDrawable?.visibility = View.GONE
-                ivProfile?.visibility = View.VISIBLE
                 ivProfile?.setImageBitmap(bitmap)
             }
         }

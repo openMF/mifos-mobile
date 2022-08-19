@@ -15,6 +15,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
 import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -29,16 +30,21 @@ import org.mifos.mobile.ui.views.BeneficiaryApplicationView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
+
 import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 16/6/17.
  */
-class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationView, OnItemSelectedListener {
+class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationView {
     @kotlin.jvm.JvmField
-    @BindView(R.id.sp_account_type)
-    var spAccountType: Spinner? = null
+    @BindView(R.id.account_type_field)
+    var accountTypeField: MaterialAutoCompleteTextView? = null
+
+    @kotlin.jvm.JvmField
+    @BindView(R.id.account_type_field_parent)
+    var accountTypeFieldParent: TextInputLayout? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.ll_application_beneficiary)
@@ -72,7 +78,6 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     @Inject
     var presenter: BeneficiaryApplicationPresenter? = null
     private val listAccountType: MutableList<String?> = ArrayList()
-    private var accountTypeAdapter: ArrayAdapter<String?>? = null
     private var beneficiaryState: BeneficiaryState? = null
     private var beneficiary: Beneficiary? = null
     private var beneficiaryTemplate: BeneficiaryTemplate? = null
@@ -83,7 +88,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         super.onCreate(savedInstanceState)
         setToolbarTitle(getString(R.string.add_beneficiary))
         if (arguments != null) {
-            beneficiaryState = arguments!!
+            beneficiaryState = requireArguments()
                     .getSerializable(Constants.BENEFICIARY_STATE) as BeneficiaryState
             when (beneficiaryState) {
                 BeneficiaryState.UPDATE -> {
@@ -133,14 +138,11 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      * Setting up `accountTypeAdapter` and `` spAccountType
      */
     override fun showUserInterface() {
-        accountTypeAdapter = ArrayAdapter(activity,
-                android.R.layout.simple_spinner_item, listAccountType)
-        accountTypeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spAccountType?.onItemSelectedListener = this
-        if (!Network.isConnected(context)) {
-            spAccountType?.isEnabled = false
+        accountTypeField?.setOnItemClickListener { _, _, position, _ ->
+            accountTypeId = beneficiaryTemplate?.accountTypeOptions?.get(position)?.id
         }
-        spAccountType?.adapter = accountTypeAdapter
+        accountTypeFieldParent?.isEnabled = Network.isConnected(context)
+        accountTypeField?.setSimpleItems(listAccountType.toTypedArray())
     }
 
     /**
@@ -155,11 +157,10 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         for ((_, _, value) in beneficiaryTemplate?.accountTypeOptions!!) {
             listAccountType.add(value)
         }
-        accountTypeAdapter?.notifyDataSetChanged()
+        accountTypeField?.setSimpleItems(listAccountType.toTypedArray())
         if (beneficiaryState == BeneficiaryState.UPDATE) {
-            accountTypeAdapter?.getPosition(beneficiary
-                    ?.accountType?.value)?.let { spAccountType?.setSelection(it) }
-            spAccountType?.isEnabled = false
+            accountTypeField?.setText(beneficiary?.accountType?.value!!, false)
+            accountTypeFieldParent?.isEnabled = false
             tilAccountNumber?.editText?.setText(beneficiary?.accountNumber)
             tilAccountNumber?.isEnabled = false
             tilOfficeName?.editText?.setText(beneficiary?.officeName)
@@ -167,7 +168,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
             tilBeneficiaryName?.editText?.setText(beneficiary?.name)
             tilTransferLimit?.editText?.setText(beneficiary?.transferLimit.toString())
         } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
-            spAccountType?.setSelection(beneficiary?.accountType?.id!!)
+            accountTypeField?.setText(beneficiary?.accountType?.value!!, false)
             tilAccountNumber?.editText?.setText(beneficiary?.accountNumber)
             tilOfficeName?.editText?.setText(beneficiary?.officeName)
         }
@@ -264,11 +265,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        accountTypeId = beneficiaryTemplate?.accountTypeOptions?.get(position)?.id
-    }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     /**
      * It is called whenever any error occurs while executing a request

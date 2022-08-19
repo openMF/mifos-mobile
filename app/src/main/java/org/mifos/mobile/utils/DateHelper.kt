@@ -115,7 +115,7 @@ object DateHelper {
         try {
             date = sdf.parse(dateStr)
         } catch (e: ParseException) {
-            Log.d("TAG", e.message)
+            Log.d("TAG", e.message ?: "")
         }
         return date?.time
     }

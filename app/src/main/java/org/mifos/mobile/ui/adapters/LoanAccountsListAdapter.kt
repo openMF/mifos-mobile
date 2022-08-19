@@ -25,8 +25,9 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 22/6/16.
  */
-class LoanAccountsListAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LoanAccountsListAdapter(
+    val onItemClick: (itemPosition: Int) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var loanAccountsList: List<LoanAccount?>? = ArrayList()
 
@@ -48,6 +49,10 @@ class LoanAccountsListAdapter @Inject constructor(@param:ActivityContext private
         val v = LayoutInflater.from(parent.context).inflate(
                 R.layout.row_loan_account, parent, false)
         vh = ViewHolder(v)
+
+        v.setOnClickListener {
+            onItemClick(vh.bindingAdapterPosition)
+        }
         return vh
     }
 
@@ -57,6 +62,7 @@ class LoanAccountsListAdapter @Inject constructor(@param:ActivityContext private
             holder.tvClientLoanAccountNumber?.text = loanAccount?.accountNo
             holder.tvLoanAccountProductName?.text = loanAccount?.productName
             holder.tvAccountBalance?.visibility = View.GONE
+            val context = holder.itemView.context
             if (loanAccount?.status?.active == true && loanAccount.inArrears == true) {
                 setLoanAccountsGeneralDetails(holder, R.color.red, context.getString(
                         R.string.string_and_string, context.getString(R.string.disbursement),
@@ -99,15 +105,15 @@ class LoanAccountsListAdapter @Inject constructor(@param:ActivityContext private
     private fun setLoanAccountsDetails(viewHolder: ViewHolder, loanAccount: LoanAccount, color: Int) {
         val amountBalance: Double = if (loanAccount.loanBalance != 0.0) loanAccount.loanBalance else 0.0
         viewHolder.tvAccountBalance?.visibility = View.VISIBLE
-        viewHolder.tvAccountBalance?.text = formatCurrency(context, amountBalance)
-        viewHolder.tvAccountBalance?.setTextColor(ContextCompat.getColor(context, color))
+        viewHolder.tvAccountBalance?.text = formatCurrency(viewHolder.itemView.context, amountBalance)
+        viewHolder.tvAccountBalance?.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, color))
     }
 
     private fun setLoanAccountsGeneralDetails(
             holder: RecyclerView.ViewHolder, colorId: Int,
             dateStr: String
     ) {
-        (holder as ViewHolder).ivStatusIndicator?.setColorFilter(ContextCompat.getColor(context, colorId))
+        (holder as ViewHolder).ivStatusIndicator?.setColorFilter(ContextCompat.getColor(holder.itemView.context, colorId))
         holder.tvDate?.text = dateStr
     }
 

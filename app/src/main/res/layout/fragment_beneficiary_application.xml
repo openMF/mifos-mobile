@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
@@ -9,36 +8,41 @@
         android:id="@+id/view_flipper"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:padding="@dimen/default_padding"
         android:scrollbars="vertical">
 
         <LinearLayout
-            style="@style/LinearLayout.Base"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:id="@+id/ll_application_beneficiary"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:paddingTop="16dp"
-                android:text="@string/select_account_type"
-                android:textSize="16sp"/>
 
-            <Spinner
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:id="@+id/sp_account_type"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/account_type_field_parent"
+                style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:paddingBottom="@dimen/default_margin"
-                android:paddingTop="@dimen/default_margin"/>
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
+                android:layout_width="match_parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/account_type_field"
+                    android:hint="@string/select_account_type"
+                    android:inputType="none"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_account_number"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/default_margin">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:gravity="start"
                     android:hint="@string/account_number"
                     android:imeOptions="actionNext"
@@ -46,16 +50,16 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:maxLines="1"
-                    android:paddingBottom="16dp"/>
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_office_name"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/default_margin">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:gravity="start"
                     android:hint="@string/office_name"
                     android:imeOptions="actionNext"
@@ -63,16 +67,16 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:maxLines="1"
-                    android:paddingBottom="16dp"/>
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_transfer_limit"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/default_margin">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:gravity="start"
                     android:hint="@string/transfer_limit"
                     android:imeOptions="actionNext"
@@ -81,16 +85,17 @@
                     android:layout_width="match_parent"
                     android:maxLength="9"
                     android:maxLines="1"
-                    android:paddingBottom="16dp"/>
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_beneficiary_name"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/default_margin">
+                
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:gravity="start"
                     android:hint="@string/beneficiary_name"
                     android:imeOptions="actionDone"
@@ -98,13 +103,13 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:maxLines="1"
-                    android:paddingBottom="16dp"/>
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Button.Base"
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/btn_beneficiary_submit"
-                android:layout_marginTop="10dp"
                 android:text="@string/submit_beneficiary"/>
 
         </LinearLayout>
@@ -112,7 +117,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

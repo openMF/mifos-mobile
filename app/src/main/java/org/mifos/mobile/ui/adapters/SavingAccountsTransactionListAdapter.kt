@@ -61,10 +61,8 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
         holder.tvTransactionDate?.text = getDateAsString(date)
         val color = getColor(transactionType)
         if (color == ColorSelect.RED) {
-            holder.vIndicator?.rotation = 180f
             holder.vIndicator?.background = ContextCompat.getDrawable(context!!, R.drawable.triangular_red_view)
         } else {
-            holder.vIndicator?.rotation = 0f
             holder.vIndicator?.background = ContextCompat.getDrawable(context!!, R.drawable.triangular_green_view)
         }
     }

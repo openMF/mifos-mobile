@@ -90,7 +90,7 @@ class UpdatePasswordPresenterTest {
     fun updateAuthenticationToken() {
         val password = "password"
         presenter?.updateAuthenticationToken(password)
-        val authenticationToken = Credentials.basic(preferencesHelper?.userName, password)
+        val authenticationToken = Credentials.basic(preferencesHelper?.userName!!, password)
         Mockito.verify(preferencesHelper)?.saveToken(authenticationToken)
     }
 }

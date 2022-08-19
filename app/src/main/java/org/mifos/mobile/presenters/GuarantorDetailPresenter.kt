@@ -43,13 +43,13 @@ class GuarantorDetailPresenter @Inject constructor(
                         try {
                             mvpView?.guarantorDeletedSuccessfully(responseBody.string())
                         } catch (e: IOException) {
-                            Log.d(TAG, e.message)
+                            Log.d(TAG, e.message ?: "")
                         }
                     }
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {}

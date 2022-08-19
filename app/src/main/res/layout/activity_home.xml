@@ -8,14 +8,17 @@
     android:layout_width="match_parent"
     tools:context=".ui.activities.HomeActivity">
 
-    <LinearLayout style="@style/LinearLayout.Base">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
         <include layout="@layout/toolbar"/>
 
         <FrameLayout style="@style/FrameLayout.Container"/>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         android:id="@+id/navigation_view"
         android:layout_gravity="start"
         android:layout_height="match_parent"

@@ -100,7 +100,7 @@ class UserDetailsPresenter @Inject constructor(
                                 preferencesHelper?.userProfileImage = pureBase64Encoded
                                 setUserProfile(pureBase64Encoded)
                             } catch (e: IOException) {
-                                Log.e("userimage", e.message)
+                                Log.e("userimage", e.message ?: "")
                             }
                         }
                     })?.let {

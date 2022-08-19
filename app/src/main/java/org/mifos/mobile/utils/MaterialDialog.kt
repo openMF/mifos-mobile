@@ -7,6 +7,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 import org.mifos.mobile.R
 
@@ -23,7 +24,7 @@ class MaterialDialog {
 
         //This is the Default Builder Initialization with Material Style
         fun init(context: Context?): Builder {
-            mMaterialDialogBuilder = AlertDialog.Builder(context!!, R.style.MaterialAlertDialogStyle)
+            mMaterialDialogBuilder = MaterialAlertDialogBuilder(context!!)
             this.context = context
             return this
         }

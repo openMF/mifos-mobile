@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import org.mifos.mobile.R
+import org.mifos.mobile.ui.getThemeAttributeColor
 
 /**
  * Created by dilpreet on 30/6/17.
@@ -42,17 +43,17 @@ class ProcessView : View {
         val radius = usableWidth.coerceAtMost(usableHeight) / 2
         val cx = paddingLeft + usableWidth / 2
         val cy = paddingTop + usableHeight / 2
-        canvas.drawCircle(cx.toFloat(), cy.toFloat(), radius.toFloat(), backgroundPaint)
-        canvas.drawText(valueStr, xPos.toFloat(), yPos.toFloat(), textPaint)
+        canvas.drawCircle(cx.toFloat(), cy.toFloat(), radius.toFloat(), backgroundPaint!!)
+        canvas.drawText(valueStr!!, xPos.toFloat(), yPos.toFloat(), textPaint!!)
     }
 
     fun setCurrentActive() {
-        backgroundPaint?.color = getColorCompat(R.color.primary)
+        backgroundPaint?.color = context.getThemeAttributeColor(R.attr.colorPrimary)
         invalidate()
     }
 
     fun setCurrentCompleted() {
-        backgroundPaint?.color = getColorCompat(R.color.primary)
+        backgroundPaint?.color = context.getThemeAttributeColor(R.attr.colorPrimary)
         valueStr = "\u2713"
         invalidate()
     }

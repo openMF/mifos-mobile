@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.google.android.material.card.MaterialCardView
 
 import org.mifos.mobile.R
 import org.mifos.mobile.models.guarantor.GuarantorPayload
@@ -67,7 +67,7 @@ class GuarantorListAdapter(
 
         @JvmField
         @BindView(R.id.cv_container)
-        var cvContainer: CardView? = null
+        var cvContainer: MaterialCardView? = null
 
         init {
             ButterKnife.bind(this, itemView!!)

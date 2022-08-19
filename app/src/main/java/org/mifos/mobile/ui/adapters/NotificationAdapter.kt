@@ -18,6 +18,7 @@ import butterknife.OnClick
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.notification.MifosNotification
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.DateHelper.getDateAndTimeAsStringFromLong
 
 import java.util.*
@@ -48,7 +49,7 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
             holder.ivNotificationIcon?.setColorFilter(ContextCompat.getColor(context, R.color.gray_dark))
             holder.btnDismissNotification?.visibility = View.GONE
         } else {
-            holder.ivNotificationIcon?.setColorFilter(ContextCompat.getColor(context, R.color.primary))
+            holder.ivNotificationIcon?.setColorFilter(context.getThemeAttributeColor(R.attr.colorPrimary))
             holder.btnDismissNotification?.visibility = View.VISIBLE
         }
     }

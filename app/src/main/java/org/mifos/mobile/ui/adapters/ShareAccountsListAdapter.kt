@@ -24,8 +24,9 @@ import org.mifos.mobile.models.accounts.share.ShareAccount
 import java.util.*
 import javax.inject.Inject
 
-class ShareAccountsListAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ShareAccountsListAdapter (
+    val onItemClick: (itemPosition: Int) -> Unit
+):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var shareAccountsList: List<ShareAccount?>? = ArrayList()
     fun setShareAccountsList(shareAccountsList: List<ShareAccount?>?) {
@@ -43,6 +44,9 @@ class ShareAccountsListAdapter @Inject constructor(@param:ActivityContext privat
         val v = LayoutInflater.from(parent.context).inflate(
                 R.layout.row_share_account, parent, false)
         vh = ViewHolder(v)
+        v.setOnClickListener {
+            onItemClick(vh.bindingAdapterPosition)
+        }
         return vh
     }
 
@@ -52,6 +56,7 @@ class ShareAccountsListAdapter @Inject constructor(@param:ActivityContext privat
             holder.tvClientShareAccountsNumber?.text = shareAccount?.accountNo
             holder.tvShareAccountsProductName?.text = shareAccount?.productName
             holder.llAccountDetail?.visibility = View.GONE
+            val context = holder.itemView.context
             when {
                 shareAccount?.status?.active == true -> {
                     holder.ivStatusIndicator?.setColorFilter(ContextCompat.getColor(context, R.color.deposit_green))
@@ -84,11 +89,6 @@ class ShareAccountsListAdapter @Inject constructor(@param:ActivityContext privat
         return 0
     }
 
-    private fun setCircularBackground(colorId: Int): LayerDrawable {
-        val color: Drawable = ColorDrawable(ContextCompat.getColor(context, colorId))
-        val image = ContextCompat.getDrawable(context, R.drawable.circular_background)
-        return LayerDrawable(arrayOf(image, color))
-    }
 
     class ViewHolder(v: View?) : RecyclerView.ViewHolder(v!!) {
         @JvmField

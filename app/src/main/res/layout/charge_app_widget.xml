@@ -12,13 +12,12 @@
     android:layout_width="match_parent">
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:background="@color/primary"
+            android:background="?attr/colorPrimary"
             android:id="@+id/widget_layout_main"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_width="match_parent"
@@ -32,19 +31,16 @@
                 android:layout_gravity="center_vertical"
                 android:layout_height="32dp"
                 android:layout_width="32dp"
-                app:srcCompat="@drawable/ic_attach_money_black_24dp"/>
+                app:srcCompat="@drawable/ic_attach_money_black_24dp"
+                app:tint="?attr/colorOnPrimary" />
 
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:paddingEnd="@dimen/widget_header_padding"
-                android:paddingLeft="@dimen/widget_header_padding"
-                android:paddingRight="@dimen/widget_header_padding"
-                android:paddingStart="@dimen/widget_header_padding"
+                android:gravity="center_vertical"
+                android:textColor="?attr/colorOnPrimary"
                 android:text="@string/charges"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/white"
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -52,8 +48,7 @@
         <ListView
             android:id="@+id/lv_charges"
             android:layout_height="match_parent"
-            android:layout_width="match_parent">
-        </ListView>
+            android:layout_width="match_parent"></ListView>
 
     </LinearLayout>
 

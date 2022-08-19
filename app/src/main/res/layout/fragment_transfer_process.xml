@@ -4,18 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/layout_padding_24dp"
     android:layout_width="match_parent">
 
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:cardUseCompatPadding="true">
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
             <LinearLayout
                 android:layout_height="wrap_content"
@@ -25,183 +26,144 @@
                 <ImageView
                     android:id="@+id/iv_success"
                     android:layout_gravity="center"
-                    android:layout_height="72dp"
-                    android:layout_marginTop="@dimen/login_margin_top"
-                    android:layout_width="72dp"
+                    android:layout_height="@dimen/Mifos.DesignSystem.Size.BigView"
+                    android:layout_width="@dimen/Mifos.DesignSystem.Size.BigView"
                     android:visibility="gone"
                     app:srcCompat="@drawable/animated_check"/>
 
                 <TextView
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/row_padding_left"
                     android:layout_width="match_parent"
                     android:text="@string/amount"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/primary"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.PrimaryColorBody"/>
 
                 <TextView
                     android:gravity="center"
                     android:id="@+id/tv_amount"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="@string/amount"/>
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/login_padding_left"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                     android:layout_width="match_parent"
                     android:text="@string/transfer_from_savings"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:textColor="@color/gray_dark"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_width="match_parent"
                     android:text="@string/pay_to"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/primary"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.PrimaryColorBody"/>
 
                 <TextView
                     android:id="@+id/tv_pay_to"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     tools:text="@string/medium_text"/>
                 <View
-                    android:background="@color/light_grey"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/divider_margin"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_width="match_parent"/>
+                    style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
                     android:text="@string/pay_from"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/primary"/>
+                    android:textColor="?attr/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/tv_pay_from"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     tools:text="@string/medium_text"/>
-
                 <View
-                    android:background="@color/light_grey"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/divider_margin"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_width="match_parent"/>
+                    style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
                     android:text="@string/date"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/primary"/>
+                    android:textColor="?attr/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/tv_date"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     tools:text="@string/medium_text"/>
-
                 <View
-                    android:background="@color/light_grey"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/divider_margin"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_width="match_parent"/>
+                    style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
                     android:text="@string/remark"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/primary"/>
+                    android:textColor="?attr/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/tv_remark"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_padding_left"
-                    android:layout_marginStart="@dimen/login_padding_left"
-                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                     android:layout_width="match_parent"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     tools:text="@string/medium_text"/>
 
                 <View
-                    android:background="@color/light_grey"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/divider_margin"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:layout_width="match_parent"/>
-
+                    style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+                    android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"/>
                 <LinearLayout
                     android:gravity="end"
                     android:id="@+id/ll_transfer"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/row_padding_left"
                     android:layout_width="match_parent"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_cancel_transfer"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:text="@string/cancel"
-                        android:textColor="@color/primary"/>
+                        android:textColor="?attr/colorPrimary"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_start_transfer"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                         android:text="@string/transfer"
                         android:textColor="@color/white"/>
 
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
+                <Button
                     android:id="@+id/btn_close"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/row_padding_left"
+                    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                     android:layout_width="wrap_content"
                     android:text="@string/close"
-                    android:textColor="@color/white"
                     android:visibility="gone"/>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

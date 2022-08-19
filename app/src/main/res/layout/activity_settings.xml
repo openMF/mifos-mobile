@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <LinearLayout style="@style/LinearLayout.Base">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
         <include layout="@layout/toolbar"/>
 

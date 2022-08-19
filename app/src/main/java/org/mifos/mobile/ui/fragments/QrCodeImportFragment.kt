@@ -92,7 +92,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         if (savedInstanceState != null) {
             // restore data
             mFrameRect = savedInstanceState.getParcelable(Constants.FRAME_RECT)
-            qrUri = savedInstanceState.getParcelable(Constants.SOURCE_URI)
+            qrUri = savedInstanceState.getParcelable(Constants.SOURCE_URI)!!
         }
     }
 
