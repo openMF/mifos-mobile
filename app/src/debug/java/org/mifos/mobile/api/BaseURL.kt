@@ -16,7 +16,7 @@ class BaseURL {
     }
 
     companion object {
-        const val API_ENDPOINT = "mobile.mifos.io"
+        const val API_ENDPOINT = "fynams.sandbox.fynarfin.io"
         const val API_PATH = "/fineract-provider/api/v1/self/"
         const val PROTOCOL_HTTPS = "https://"
     }
