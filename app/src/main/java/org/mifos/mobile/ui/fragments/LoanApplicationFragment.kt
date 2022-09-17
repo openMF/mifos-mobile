@@ -424,7 +424,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
                 getString(R.string.account_number) + " ", loanTemplate?.clientAccountNo)
         tvNewLoanApplication?.text = getString(R.string.string_and_string,
                 getString(R.string.new_loan_application) + " ", loanTemplate?.clientName)
-        tilPrincipalAmount?.editText?.setText(loanTemplate?.principal.toString())
+        tilPrincipalAmount?.editText?.setText(String.format(Locale.getDefault(),
+                "%.2f", loanTemplate?.principal))
         tvCurrency?.text = loanTemplate?.currency?.displayLabel
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
@@ -461,7 +462,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
                     getString(R.string.account_number) + " ", loanTemplate?.clientAccountNo)
             tvNewLoanApplication?.text = getString(R.string.string_and_string,
                     getString(R.string.new_loan_application) + " ", loanTemplate?.clientName)
-            tilPrincipalAmount?.editText?.setText(loanTemplate?.principal.toString())
+            tilPrincipalAmount?.editText?.setText(String.format(Locale.getDefault(),
+                    "%.2f", loanTemplate?.principal))
             tvCurrency?.text = loanTemplate?.currency?.displayLabel
         }
     }
