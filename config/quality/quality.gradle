@@ -15,7 +15,7 @@ apply plugin: "com.github.spotbugs"
 apply plugin: 'pmd'
 
 dependencies {
-    checkstyle 'com.puppycrawl.tools:checkstyle:6.5'
+    checkstyle 'com.puppycrawl.tools:checkstyle:6.19'
 }
 spotbugs {
     toolVersion = '4.7.0'
