@@ -32,3 +32,10 @@ jobs:
         # Build App
       - name: Build with Gradle
         run: ./gradlew assemble
+        
+        # Upload Built APK
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          name: mifos-mobile
+          path: app/build/outputs/apk/debug/
