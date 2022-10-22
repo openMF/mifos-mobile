@@ -130,7 +130,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      * @param loanState [LoanState] is set to `LoanState.CREATE`
      * @return Instance of [LoanApplicationFragment]
      */
-    fun newInstance(loanState: LoanState): LoanApplicationFragment? {
+    fun newInstance(loanState: LoanState): LoanApplicationFragment {
         val fragment = LoanApplicationFragment()
         val args = Bundle()
         args.putSerializable(Constants.LOAN_STATE, loanState)
@@ -148,7 +148,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
     fun newInstance(
             loanState: LoanState?,
             loanWithAssociations: LoanWithAssociations?
-    ): LoanApplicationFragment? {
+    ): LoanApplicationFragment {
         val fragment = LoanApplicationFragment()
         val args = Bundle()
         args.putSerializable(Constants.LOAN_STATE, loanState)
