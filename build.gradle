@@ -11,7 +11,7 @@ buildscript {
     }
 
     ext {
-        gradleVersion = '7.2.0'
+        gradleVersion = '7.4.0'
         crashlyticsGradleVersion = '2.4.1'
         ossLicensesVersion = '0.10.5'
         googleServicesVersion = '4.3.10'
