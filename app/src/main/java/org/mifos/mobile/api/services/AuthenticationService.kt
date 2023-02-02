@@ -6,6 +6,7 @@ import org.mifos.mobile.models.payload.LoginPayload
 
 import io.reactivex.Observable
 import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 /**
@@ -14,7 +15,6 @@ import retrofit2.http.POST
  */
 
 interface AuthenticationService {
-
     @POST(ApiEndPoints.AUTHENTICATION)
     fun authenticate(@Body loginPayload: LoginPayload?): Observable<User?>?
 }
