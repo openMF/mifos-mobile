@@ -104,10 +104,14 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
         inflater.inflate(R.menu.menu_main, menu)
         val menuItem = menu.findItem(R.id.menu_notifications)
         val count = menuItem.actionView
-        tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
-        count.setOnClickListener {
-            (activity as BaseActivity?)?.replaceFragment(NotificationFragment.newInstance(),
+        if (count != null) {
+            tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
+        }
+        if (count != null) {
+            count.setOnClickListener {
+                (activity as BaseActivity?)?.replaceFragment(NotificationFragment.newInstance(),
                     true, R.id.container)
+            }
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -119,14 +123,14 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(notificationReceiver)
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(notificationReceiver)
         isReceiverRegistered = false
         super.onPause()
     }
 
     private fun registerReceiver() {
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(activity!!).registerReceiver(notificationReceiver,
+            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(notificationReceiver,
                     IntentFilter(Constants.NOTIFY_HOME_FRAGMENT))
             isReceiverRegistered = true
         }

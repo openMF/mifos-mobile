@@ -384,6 +384,8 @@
     <string name="share_msg">Download Self Service app here:
         https://play.google.com/store/apps/details?id=
     </string>
+    <string name="authentication_required">Sign in using fingerprint</string>
+    <string name="text_description_biometrics_dialog">Scan your fingerprint</string>
     <string name="choose">Choose application</string>
     <string name="not_available">NA</string>
     <string name="upload_qr_code">Upload QR</string>
