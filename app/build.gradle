@@ -168,5 +168,6 @@ dependencies {
     implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
+    implementation 'com.github.mreram:showcaseview:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'

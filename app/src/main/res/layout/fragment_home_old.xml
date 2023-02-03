@@ -49,6 +49,7 @@
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ll_account_overview"
                 android:layout_height="wrap_content"
                 style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                 android:layout_width="match_parent"
@@ -325,6 +326,7 @@
 
             </GridLayout>
             <LinearLayout
+                android:id="@+id/ll_contact_us"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"

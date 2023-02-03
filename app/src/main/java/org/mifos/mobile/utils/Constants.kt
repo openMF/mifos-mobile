@@ -65,4 +65,6 @@ object Constants {
     const val SAVINGS_ACCOUNT_STATE = "savingsaccountstate"
     const val OUTSTANDING_BALANCE = "outstanding_balance"
     const val LOAN_REPAYMENT = "loan_repayment"
+    const val SHOW_CASE_PREFERENCES = "initial_login_showcase"
+    const val SHOW_CASE = "show_case"
 }

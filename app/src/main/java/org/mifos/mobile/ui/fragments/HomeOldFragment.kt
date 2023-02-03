@@ -2,31 +2,25 @@
 package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
-import android.annotation.SuppressLint
 import android.content.*
+import android.content.ClipData.Item
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
-import android.widget.ImageView
+import android.view.View.OnFocusChangeListener
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -42,8 +36,12 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
-
+import smartdevelop.ir.eram.showcaseviewlib.GuideView
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
+import smartdevelop.ir.eram.showcaseviewlib.config.PointerType
 import javax.inject.Inject
+
 
 /**
  * Created by michaelsosnick on 1/1/17.
@@ -61,7 +59,13 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @BindView(R.id.ll_account_detail)
     var llAccountDetail: LinearLayout? = null
 
+    @kotlin.jvm.JvmField
+    @BindView(R.id.ll_contact_us)
+    var llContactUs : LinearLayout?= null
 
+    @kotlin.jvm.JvmField
+    @BindView(R.id.ll_account_overview)
+    var llAccountOverview : MaterialCardView? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.iv_circular_user_image)
@@ -95,6 +99,8 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     private var isDetailVisible: Boolean? = false
     private var isReceiverRegistered = false
     private var tvNotificationCount: TextView? = null
+    private var mGuideView: GuideView? = null
+    private var builder: GuideView.Builder? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -115,6 +121,19 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         if (savedInstanceState == null) {
             loadClientData()
         }
+
+        val sharedPreferences = requireContext().getSharedPreferences(
+            Constants.SHOW_CASE_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+        if(sharedPreferences.getBoolean(Constants.SHOW_CASE,true))
+        {
+            showcaseView()
+            val editor : SharedPreferences.Editor = sharedPreferences.edit()
+            editor.putBoolean(Constants.SHOW_CASE,false)
+            editor.apply()
+        }
+
         setToolbarTitle(getString(R.string.home))
         showUserInterface()
         return rootView
@@ -388,5 +407,33 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         fun newInstance(): HomeOldFragment {
             return HomeOldFragment()
         }
+    }
+
+    private fun showcaseView()
+    {
+
+        builder = GuideView.Builder(requireContext())
+            .setContentText(getString(R.string.show_case_user_details))
+            .setGravity(Gravity.center)
+            .setDismissType(DismissType.anywhere)
+            .setPointerType(PointerType.circle)
+            .setTargetView(ivCircularUserImage)
+            .setGuideListener { view: View ->
+                when (view.id) {
+                    R.id.iv_circular_user_image ->{
+                        builder!!.setTargetView(llAccountOverview).setContentText(getString(R.string.show_case_amount_loan)).build()
+                    }
+                    R.id.ll_account_overview -> {
+                        builder!!.setTargetView(llContactUs).setContentText(getString(R.string.show_case_contact_us)).build()
+                    }
+                    R.id.ll_contact_us -> return@setGuideListener
+                }
+                mGuideView = builder!!.build()
+                mGuideView!!.show()
+            }
+
+        mGuideView = builder!!.build()
+        mGuideView!!.show()
+
     }
 }

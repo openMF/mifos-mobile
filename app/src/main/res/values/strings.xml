@@ -587,6 +587,9 @@
     <string name="no_app_to_support_action">There is no application that support this action</string>
     <string name="theme">Theme</string>
     <string name="change_app_theme">Change the application theme</string>
+    <string name="show_case_user_details">Click here to access User Details</string>
+    <string name="show_case_amount_loan">Here you can view the total amount of savings and loans you have</string>
+    <string name="show_case_contact_us">Reach out to us using below credentials</string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>
