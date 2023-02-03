@@ -59,18 +59,29 @@
                   android:layout_width="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-        android:layout_width="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:hint="@string/phone_number"
-            android:id="@+id/et_phone_number"
-            android:inputType="number"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/countyCodePicker"
+                android:layout_gravity="center"
+                app:ccp_showNameCode="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:layout_width="match_parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:hint="@string/phone_number"
+                android:id="@+id/et_phone_number"
+                android:inputType="number"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
