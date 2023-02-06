@@ -353,6 +353,7 @@
     <string name="client_type">Client Type</string>
     <string name="client_classification">Client Classification</string>
     <string name="select_mode">Select Mode</string>
+    <string name="select_loan_product_field">Select Loan Product</string>
     <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
         enter manually or scan account QR code
     </string>
