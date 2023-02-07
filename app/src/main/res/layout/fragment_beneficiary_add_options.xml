@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
     android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
