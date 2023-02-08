@@ -141,15 +141,14 @@
 
         <TextView
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:text="@string/verification_mode"/>
 
         <RadioGroup
             android:id="@+id/rg_verification_mode"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/layout_padding_16dp"
             android:orientation="horizontal">
 
             <RadioButton
