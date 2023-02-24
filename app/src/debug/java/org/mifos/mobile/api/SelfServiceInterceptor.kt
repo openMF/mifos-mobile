@@ -22,6 +22,7 @@ class SelfServiceInterceptor(private val tenant: String?, private val authToken:
         val chainRequest = chain.request()
         val builder = chainRequest.newBuilder()
                 .header(HEADER_TENANT, tenant)
+            .header(CONTENT_TYPE,"application/json")
         if (!TextUtils.isEmpty(authToken)) {
             builder.header(HEADER_AUTH, authToken)
         }
@@ -32,6 +33,7 @@ class SelfServiceInterceptor(private val tenant: String?, private val authToken:
     companion object {
         const val HEADER_TENANT = "Fineract-Platform-TenantId"
         const val HEADER_AUTH = "Authorization"
-        const val DEFAULT_TENANT = "mobile"
+        const val DEFAULT_TENANT = "default"
+        const val CONTENT_TYPE = "Content-Type"
     }
 }
