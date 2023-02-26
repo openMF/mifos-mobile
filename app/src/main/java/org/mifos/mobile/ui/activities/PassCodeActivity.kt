@@ -3,13 +3,18 @@ package org.mifos.mobile.ui.activities
 import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.widget.NestedScrollView
 
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
 
 import org.mifos.mobile.R
+import org.mifos.mobile.ui.fragments.AppTheme
+import org.mifos.mobile.ui.fragments.applySavedTheme
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.MaterialDialog
@@ -22,6 +27,8 @@ class PassCodeActivity : MifosPassCodeActivity() {
                         Manifest.permission.READ_PHONE_STATE)) {
             requestPermission()
         }
+        val ll =findViewById<NestedScrollView>(R.id.cl_rootview)
+        ll.setBackgroundColor(android.R.attr.colorBackground)
     }
 
     /**
