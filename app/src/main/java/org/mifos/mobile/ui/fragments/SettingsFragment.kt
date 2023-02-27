@@ -54,7 +54,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
             startActivity(intent)
-            Toast.makeText(context,"Passcode clicked",Toast.LENGTH_SHORT).show()
             true
         }
         when (preference?.key) {
