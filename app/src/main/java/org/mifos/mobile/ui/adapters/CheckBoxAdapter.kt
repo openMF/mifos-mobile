@@ -33,7 +33,7 @@ class CheckBoxAdapter @Inject constructor() :
         val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
         val colors = intArrayOf(color, color)
         (holder as ViewHolder).cbStatusSelect?.isChecked = isChecked
-        holder.cbStatusSelect!!.setOnClickListener{
+        holder.cbStatusSelect?.setOnClickListener{
             isChecked = !isChecked
         }
         holder.cbStatusSelect?.supportButtonTintList = ColorStateList(states,colors)
