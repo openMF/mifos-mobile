@@ -29,10 +29,13 @@ class CheckBoxAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val (status, color, isChecked) = statusList?.get(position)!!
+        var (status, color, isChecked) = statusList?.get(position)!!
         val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
         val colors = intArrayOf(color, color)
         (holder as ViewHolder).cbStatusSelect?.isChecked = isChecked
+        holder.cbStatusSelect?.setOnClickListener{
+            isChecked = !isChecked
+        }
         holder.cbStatusSelect?.supportButtonTintList = ColorStateList(states,colors)
         holder.cbStatusSelect?.text = status
     }
