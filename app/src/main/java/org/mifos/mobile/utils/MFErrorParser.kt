@@ -20,6 +20,10 @@ object MFErrorParser {
                 errorMessage = throwableError.response().errorBody().string()
                 errorMessage = parseError(errorMessage).errors[0].defaultUserMessage
             }
+            else
+            {
+                errorMessage=throwableError?.localizedMessage.toString()
+            }
         } catch (throwable: Throwable) {
             RxJavaPlugins.getErrorHandler()
         }
