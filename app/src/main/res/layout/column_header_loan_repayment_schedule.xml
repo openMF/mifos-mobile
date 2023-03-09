@@ -13,17 +13,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-            <TextView
-                android:id="@+id/column_header_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="4"
-                android:gravity="center"
-                style="@style/Mifos.DesignSystem.TextStyle.Body"
-                tools:text="Header Data"/>
+    <TextView
+        android:id="@+id/column_header_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_0dp"
+        android:layout_gravity="center"
+        android:layout_weight="4"
+        android:gravity="center"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
+        tools:text="Header Data"/>
 
 
-        <View
-            style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+    <View
+        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
 </LinearLayout>

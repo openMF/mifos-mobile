@@ -22,15 +22,15 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingLeft="@dimen/padding_5dp"
+            android:paddingRight="@dimen/padding_5dp">
 
             <ImageView
                 android:contentDescription="@string/charges"
                 android:id="@+id/widget_img_launcher"
                 android:layout_gravity="center_vertical"
-                android:layout_height="32dp"
-                android:layout_width="32dp"
+                android:layout_height="@dimen/height_32dp"
+                android:layout_width="@dimen/width_32dp"
                 app:srcCompat="@drawable/ic_attach_money_black_24dp"
                 app:tint="?attr/colorOnPrimary" />
 
