@@ -20,7 +20,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 android:text="@string/client_name"
                 style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
@@ -28,7 +28,7 @@
                 android:id="@+id/tv_client_name"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/medium_text"/>
 
@@ -42,7 +42,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 android:text="@string/account_number"
                 style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
@@ -50,7 +50,7 @@
                 android:id="@+id/tv_account_number"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/medium_text"/>
 
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 android:text="@string/withdrawal_date"
                 style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
@@ -71,7 +71,7 @@
                 android:id="@+id/tv_withdrawal_date"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/medium_text"/>
 
