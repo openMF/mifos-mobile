@@ -1,7 +1,10 @@
 package org.mifos.mobile.ui.activities
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 
 import org.mifos.mobile.R
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -26,5 +29,13 @@ class RegistrationActivity : BaseActivity() {
                         DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                 .createMaterialDialog()
                 .show()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }
