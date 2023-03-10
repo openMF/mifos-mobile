@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/currency"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
@@ -98,7 +98,7 @@
                     android:id="@+id/tv_currency"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp" />
+                    android:layout_width="@dimen/width_0dp" />
 
             </LinearLayout>
 
@@ -112,7 +112,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/submission_date"
                     style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
@@ -121,7 +121,7 @@
                     android:id="@+id/tv_submission_date"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp" />
+                    android:layout_width="@dimen/width_0dp" />
 
             </LinearLayout>
 
@@ -135,7 +135,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/expected_disbursement_date"
                     style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
@@ -144,7 +144,7 @@
                     android:id="@+id/tv_expected_disbursement_date"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp" />
+                    android:layout_width="@dimen/width_0dp" />
 
             </LinearLayout>
 
@@ -156,7 +156,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:text="@string/submit_loan" />
 
         </LinearLayout>

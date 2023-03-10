@@ -16,7 +16,7 @@
     <com.isseiaoki.simplecropview.CropImageView
         android:adjustViewBounds="true"
         android:id="@+id/iv_crop_qr_code"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/height_0dp"
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:scaleType="centerInside"
@@ -38,10 +38,10 @@
         custom:scv_overlay_color="@color/gray_dark" />
 
 
-        <Button
-            android:id="@+id/btn_proceed"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/proceed"/>
+    <Button
+        android:id="@+id/btn_proceed"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/proceed"/>
 
 </LinearLayout>

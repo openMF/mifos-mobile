@@ -49,7 +49,7 @@
 
                 <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                     android:layout_weight="1"
@@ -106,7 +106,7 @@
 
                 <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_weight="1"
                     android:minHeight="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
@@ -170,7 +170,7 @@
 
                 <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_weight="1"
                     android:minHeight="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
@@ -225,7 +225,7 @@
 
                 <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_weight="1"
                     android:minHeight="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
