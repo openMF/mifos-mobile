@@ -104,7 +104,7 @@
                     android:id="@+id/tv_currency"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:gravity="end"
                     tools:text="US Dollar($)"
                     style="@style/Mifos.DesignSystem.TextStyle.Body"/>
@@ -130,7 +130,7 @@
                     android:id="@+id/tv_submission_date"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:gravity="end"
                     tools:text="21-07-2022"
                     style="@style/Mifos.DesignSystem.TextStyle.Body"/>
@@ -156,7 +156,7 @@
                     android:id="@+id/tv_expected_disbursement_date"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:gravity="end"
                     tools:text="21-07-2022"
                     style="@style/Mifos.DesignSystem.TextStyle.Body"/>
