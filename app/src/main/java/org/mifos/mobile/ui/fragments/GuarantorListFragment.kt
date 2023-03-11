@@ -67,7 +67,7 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val rootView: View = inflater.inflate(R.layout.fragment_guarantor_list, container, false)
         ButterKnife.bind(this, rootView)
         setToolbarTitle(getString(R.string.view_guarantor))
