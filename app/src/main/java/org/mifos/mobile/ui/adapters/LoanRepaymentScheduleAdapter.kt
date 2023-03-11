@@ -34,7 +34,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         var tvCell: TextView? = null
 
         init {
-            ButterKnife.bind(this, v!!)
+            ButterKnife.bind(this, v)
         }
     }
 
@@ -114,7 +114,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         var tvRowHeader: TextView? = null
 
         init {
-            ButterKnife.bind(this, itemView!!)
+            ButterKnife.bind(this, itemView)
         }
     }
 

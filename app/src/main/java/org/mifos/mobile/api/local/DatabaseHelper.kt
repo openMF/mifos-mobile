@@ -19,7 +19,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class DatabaseHelper @Inject constructor() {
-    fun syncCharges(charges: Page<Charge?>?): Observable<Page<Charge?>?>? {
+    fun syncCharges(charges: Page<Charge?>?): Observable<Page<Charge?>?> {
         return Observable.defer {
             if (charges != null)
                 for (charge in charges.pageItems)
@@ -28,7 +28,7 @@ class DatabaseHelper @Inject constructor() {
         }
     }
 
-    val clientCharges: Observable<Page<Charge?>?>?
+    val clientCharges: Observable<Page<Charge?>?>
         get() = Observable.defer {
             val charges = SQLite.select()
                     .from(Charge::class.java)
@@ -37,7 +37,7 @@ class DatabaseHelper @Inject constructor() {
             chargePage.pageItems = charges
             Observable.just(chargePage)
         }
-    val notifications: Observable<List<MifosNotification?>?>?
+    val notifications: Observable<List<MifosNotification?>?>
         get() = Observable.defer {
             deleteOldNotifications()
             val notifications = SQLite.select()
