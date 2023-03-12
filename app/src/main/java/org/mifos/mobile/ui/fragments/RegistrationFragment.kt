@@ -78,7 +78,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
 
     @JvmField
     @BindView(R.id.countyCodePicker)
-    var countryCode: CountryCodePicker? = null
+    var countryCodePickerView: CountryCodePicker? = null
 
     @JvmField
     @BindView(R.id.password_strength)
@@ -147,7 +147,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
             payload.email = etEmail?.text.toString()
             payload.firstName = etFirstName?.text.toString()
             payload.lastName = etLastName?.text.toString()
-            payload.mobileNumber = countryCode?.selectedCountryCode.toString() + etPhoneNumber?.text.toString()
+            payload.mobileNumber = countryCodePickerView?.selectedCountryCode.toString() + etPhoneNumber?.text.toString()
             if (etPassword?.text.toString() != etConfirmPassword?.text.toString()) {
                 Toaster.show(rootView, getString(R.string.error_password_not_match))
                 return
@@ -204,7 +204,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
             Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
                     getString(R.string.password), resources.getInteger(R.integer.password_minimum_length)))
             return false
-        } else if(!checkValidity(countyCodePicker)){
+        } else if(!checkValidityOfPhoneNumber (countyCodePicker)){
             Toaster.show(rootView,getString(R.string.invalid_phn_number))
             return false
         }
@@ -231,9 +231,9 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         super.onDestroyView()
         presenter?.detachView()
     }
-    private fun checkValidity(ccp: CountryCodePicker): Boolean {
+    private fun checkValidityOfPhoneNumber (isPhoneNumberValid: CountryCodePicker): Boolean {
         countyCodePicker.registerCarrierNumberEditText(etPhoneNumber)
-        return ccp.isValidFullNumber
+        return isPhoneNumberValid.isValidFullNumber
 
     }
     companion object {
