@@ -14,7 +14,7 @@ buildscript {
         gradleVersion = '7.2.0'
         crashlyticsGradleVersion = '2.4.1'
         ossLicensesVersion = '0.10.5'
-        googleServicesVersion = '4.3.10'
+        googleServicesVersion = '4.3.15'
         kotlinGradlePluginversion = '1.6.21'
     }
 
