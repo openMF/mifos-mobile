@@ -8,10 +8,9 @@ import androidx.lifecycle.ViewModelProviders
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_review_loan_application.*
-import kotlinx.android.synthetic.main.layout_error.*
 import okhttp3.ResponseBody
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentReviewLoanApplicationBinding
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.LoanState
@@ -67,6 +66,9 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     private lateinit var viewModel: ReviewLoanApplicationViewModel
 
+    private var _binding: FragmentReviewLoanApplicationBinding? = null
+    private val binding
+        get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -93,37 +95,43 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_loan_product.text = viewModel.getLoanProduct()
-        tv_loan_purpose.text = viewModel.getLoanPurpose()
-        tv_principal_amount.text = viewModel.getPrincipal().toString()
-        tv_expected_disbursement_date.text = viewModel.getDisbursementDate()
-        tv_submission_date.text = viewModel.getSubmissionDate()
-        tv_currency.text = viewModel.getCurrency()
-        tv_new_loan_application.text = viewModel.getLoanName()
-        tv_account_number.text = viewModel.getAccountNo()
+        _binding = FragmentReviewLoanApplicationBinding.bind(view)
+        setUpViews()
 
-        btn_loan_submit.setOnClickListener {
+    }
+
+    private fun setUpViews(): Unit = with(binding) {
+        tvLoanProduct.text = viewModel.getLoanProduct()
+        tvLoanPurpose.text = viewModel.getLoanPurpose()
+        tvPrincipalAmount.text = viewModel.getPrincipal().toString()
+        tvExpectedDisbursementDate.text = viewModel.getDisbursementDate()
+        tvSubmissionDate.text = viewModel.getSubmissionDate()
+        tvCurrency.text = viewModel.getCurrency()
+        tvNewLoanApplication.text = viewModel.getLoanName()
+        tvAccountNumber.text = viewModel.getAccountNo()
+
+        btnLoanSubmit.setOnClickListener {
             showProgress()
             viewModel.submitLoan()
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribeOn(Schedulers.io())
-                    ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
-                        override fun onComplete() {
-                        }
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
+                    override fun onComplete() {
+                    }
 
-                        override fun onNext(t: ResponseBody) {
-                            hideProgress()
-                            if (viewModel.getLoanState() == LoanState.CREATE)
-                                showLoanAccountCreatedSuccessfully()
-                            else
-                                showLoanAccountUpdatedSuccessfully()
-                        }
+                    override fun onNext(t: ResponseBody) {
+                        hideProgress()
+                        if (viewModel.getLoanState() == LoanState.CREATE)
+                            showLoanAccountCreatedSuccessfully()
+                        else
+                            showLoanAccountUpdatedSuccessfully()
+                    }
 
-                        override fun onError(e: Throwable) {
-                            hideProgress()
-                            showError(MFErrorParser.errorMessage(e))
-                        }
-                    })
+                    override fun onError(e: Throwable) {
+                        hideProgress()
+                        showError(MFErrorParser.errorMessage(e))
+                    }
+                })
         }
     }
 
@@ -132,22 +140,26 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun showError(message: String?) = if (!Network.isConnected(activity)) {
-        iv_status.setImageResource(R.drawable.ic_error_black_24dp)
-        tv_status.text = getString(R.string.internet_not_connected)
-        ll_add_loan.visibility = View.GONE
-        ll_error.visibility = View.VISIBLE
-    } else {
-        Toaster.show(rootView, message)
+    fun showError(message: String?): Unit = with(binding) {
+        val isConnected = Network.isConnected(activity)
+        if (!isConnected) {
+            Toaster.show(rootView, message)
+            return@with
+        }
+        llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
+        llError.tvStatus.text = getString(R.string.internet_not_connected)
+        llAddLoan.visibility = View.GONE
+        llError.root.visibility = View.VISIBLE
+
     }
 
     fun showProgress() {
-        ll_add_loan.visibility = View.GONE
+        binding.llAddLoan.visibility = View.GONE
         showProgressBar()
     }
 
     fun hideProgress() {
-        ll_add_loan.visibility = View.VISIBLE
+        binding.llAddLoan.visibility = View.VISIBLE
         hideProgressBar()
     }
 
