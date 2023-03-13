@@ -236,7 +236,7 @@
     <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
     </string>
     <string name="error_fetching_image">Error fetching image </string>
-    <string name="invalid_phn_number">Invalid Phone number</string>
+    <string name="invalid_phn_number">Invalid Phone Number</string>
     <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
