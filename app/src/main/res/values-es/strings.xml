@@ -415,4 +415,5 @@
     <string name="pref_base_url_desc">Haga clic aquí para cambiar las configuraciones de punto final.</string>
     <string name="enter_base_url">Introduce la URL principal</string>
     <string name="enter_tenant">Ir al inquilino</string>
+    <string name="app_info">Informacion de la applicacion</string>
 </resources>
