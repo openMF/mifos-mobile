@@ -414,4 +414,5 @@
     <string name="pref_base_url_desc">Bonyeza hapa ili kubadilisha mipangilio ya Mwisho</string>
     <string name="enter_base_url">Ingiza URL ya msingi</string>
     <string name="enter_tenant">Nenda kwa Mpangaji</string>
+    <string name="app_info">Maelezo ya Programu</string>
 </resources>

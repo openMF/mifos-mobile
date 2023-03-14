@@ -2,6 +2,7 @@ package org.mifos.mobile.ui.activities
 
 import android.content.*
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -151,6 +152,11 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
             R.id.item_settings -> startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
             R.id.item_about_us -> startActivity(Intent(this@HomeActivity, AboutUsActivity::class.java))
             R.id.item_help -> startActivity(Intent(this@HomeActivity, HelpActivity::class.java))
+            R.id.item_app_info -> {
+                val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.parse("package:$packageName")
+                startActivity(intent)
+            }
             R.id.item_share -> {
                 val i = Intent(Intent.ACTION_SEND)
                 i.type = "text/plain"

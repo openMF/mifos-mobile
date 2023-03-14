@@ -500,5 +500,6 @@
     <string name="enter_tenant">Insira o inquilino</string>
     <string name="account_type_loan" translatable="false">accountType.loan</string>
     <string name="error_loan_account_details_loading">Erro ao carregar em detalhes de contas de empréstimo</string>
+    <string name="app_info">Informações do aplicativo</string>
 
 </resources>
