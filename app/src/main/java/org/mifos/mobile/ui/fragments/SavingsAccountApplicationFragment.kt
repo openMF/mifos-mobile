@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,9 @@ import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import kotlinx.android.synthetic.main.fragment_savings_account_application.*
 
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -68,17 +71,19 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             state = requireArguments()
-                    .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
+                .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
             savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
         }
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_savings_account_application, container,
-                false)
+        rootView = inflater.inflate(
+            R.layout.fragment_savings_account_application, container,
+            false
+        )
         ButterKnife.bind(this, rootView!!)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
@@ -97,8 +102,10 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
 
     override fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?) {
         showUserInterface(template)
-        activity?.title = getString(R.string.string_savings_account,
-                getString(R.string.update))
+        activity?.title = getString(
+            R.string.string_savings_account,
+            getString(R.string.update)
+        )
         productIdField?.setText(savingsWithAssociations?.savingsProductName!!, false)
     }
 
@@ -122,23 +129,32 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     private fun submitSavingsAccountApplication() {
         val payload = SavingsAccountApplicationPayload()
         payload.clientId = template?.clientId
-        payload.productId = productIdList.indexOf(productIdField!!.text.toString()).let { productOptions?.get(it)?.id }
-        payload.submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                getTodayFormatted())
+        payload.productId = productIdList.indexOf(productIdField!!.text.toString())
+            .let { productOptions?.get(it)?.id }
+        payload.submittedOnDate = DateHelper.getSpecificFormat(
+            DateHelper.FORMAT_dd_MMMM_yyyy,
+            getTodayFormatted()
+        )
         presenter?.submitSavingsAccountApplication(payload)
     }
 
     private fun updateSavingAccount() {
         val payload = SavingsAccountUpdatePayload()
         payload.clientId = template?.clientId?.toLong()
-        payload.productId = productIdList.indexOf(productIdField!!.text.toString()).let { productOptions?.get(it)?.id }?.toLong()
+        payload.productId = productIdList.indexOf(productIdField!!.text.toString())
+            .let { productOptions?.get(it)?.id }?.toLong()
         presenter?.updateSavingsAccount(savingsWithAssociations?.id, payload)
     }
 
     @OnClick(R.id.btn_submit)
     fun onSubmit() {
         if (state == SavingsAccountState.CREATE) {
-            submitSavingsAccountApplication()
+            if (product_id_field.text.isNullOrEmpty()) {
+                product_id_field.error = getString(R.string.TXT_PRODUCT_ERROR)
+                product_id_field.requestFocus()
+            } else {
+                submitSavingsAccountApplication()
+            }
         } else {
             updateSavingAccount()
         }
@@ -169,7 +185,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     companion object {
         @kotlin.jvm.JvmStatic
         fun newInstance(
-                state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
+            state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
         ): SavingsAccountApplicationFragment {
             val fragment = SavingsAccountApplicationFragment()
             val bundle = Bundle()

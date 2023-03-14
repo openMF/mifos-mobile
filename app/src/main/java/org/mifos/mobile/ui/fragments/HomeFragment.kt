@@ -119,14 +119,14 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(notificationReceiver)
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(notificationReceiver)
         isReceiverRegistered = false
         super.onPause()
     }
 
     private fun registerReceiver() {
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(activity!!).registerReceiver(notificationReceiver,
+            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(notificationReceiver,
                     IntentFilter(Constants.NOTIFY_HOME_FRAGMENT))
             isReceiverRegistered = true
         }
