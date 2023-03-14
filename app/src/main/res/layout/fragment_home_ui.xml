@@ -347,11 +347,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.card.MaterialCardView
-                android:foreground="?selectableItemBackground"
                 android:id="@+id/ll_account_overview"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/layout_padding_24dp"
                 android:layout_width="0dp"
+                app:strokeWidth="0dp"
                 android:orientation="vertical"
                 app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardElevation="0dp"
@@ -395,6 +395,8 @@
                 android:id="@+id/ll_recent_transactions"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                app:strokeWidth="0dp"
+                android:layout_marginTop="8dp"
                 app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="@+id/ll_account_overview"
