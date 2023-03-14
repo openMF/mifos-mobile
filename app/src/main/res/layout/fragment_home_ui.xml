@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_home_container"
@@ -11,562 +10,447 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-        <LinearLayout
-            android:layout_height="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="?attr/colorPrimary"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:background="?attr/colorPrimary"
+
+            <ImageView
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:id="@+id/iv_user_image"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/height_65dp"
+                android:layout_width="@dimen/width_65dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_circular_user_image"
+                app:layout_constraintEnd_toEndOf="@+id/iv_circular_user_image"
+                app:layout_constraintStart_toStartOf="@+id/iv_circular_user_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_circular_user_image"
+                app:srcCompat="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                android:id="@+id/tv_user_name"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/layout_padding_16dp"
+                android:layout_width="0dp"
+                android:lineHeight="26dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_circular_user_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_circular_user_image"
+                tools:text="Hello,\nSmith W R" />
+
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_manage_accounts"
+                android:layout_height="@dimen/height_0dp"
+                android:layout_marginTop="@dimen/layout_padding_16dp"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/layout_padding_8dp"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding">
+                android:text="@string/manage_accounts"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toBottomOf="@+id/ll_recent_transactions"
+                tools:layout_editor_absoluteX="16dp" />
 
-                <LinearLayout
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    tools:ignore="UseCompoundDrawables">
+            <TextView
+                android:id="@+id/tv_accounts"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:text="@string/accounts"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/textView3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_accounts" />
 
-                    <ImageView
-                        android:id="@+id/iv_user_image"
-                        android:layout_gravity="center"
-                        android:layout_height="@dimen/height_65dp"
-                        android:layout_margin="@dimen/margin_16dp"
-                        android:layout_width="@dimen/width_65dp"
-                        android:visibility="visible"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        app:srcCompat="@drawable/ic_person_black_24dp"/>
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/transfer"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_accounts"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_accounts"
+                app:layout_constraintTop_toTopOf="@+id/tv_accounts" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                        android:id="@+id/iv_circular_user_image"
-                        android:layout_gravity="center"
-                        android:layout_height="@dimen/height_65dp"
-                        android:layout_margin="@dimen/margin_16dp"
-                        android:layout_width="@dimen/width_65dp"
-                        android:visibility="gone"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        tools:src="@drawable/ic_person_black_24dp"/>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_width="wrap_content"
+                android:text="Apply Loan"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
 
-                    <TextView
-                        style="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:gravity="center"
-                        android:id="@+id/tv_user_name"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:textColor="@color/white"
-                        tools:text="Hello, Smith W R"/>
 
-                </LinearLayout>
+            <TextView
+                android:gravity="center"
+                android:id="@+id/textView"
+                android:layout_height="@dimen/height_0dp"
+                android:layout_marginTop="@dimen/layout_padding_8dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:text="@string/more"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toTopOf="@id/view"
+                tools:layout_editor_absoluteX="16dp" />
 
-                <LinearLayout
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/margin_16dp"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/margin_16dp"
-                    android:paddingRight="@dimen/margin_16dp"
-                    android:paddingTop="@dimen/margin_16dp">
+            <TextView
+                android:id="@+id/tv_beneficiaries"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/layout_padding_24dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:text="@string/beneficiaries"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/tv_charges"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_beneficiaries" />
 
-                    <LinearLayout
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:id="@+id/ll_account_overview"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical">
 
-                        <View
-                            android:alpha="0.5"
-                            android:background="@color/white"
-                            android:layout_height="@dimen/height_0.1dp"
-                            android:layout_width="match_parent"/>
+            <TextView
+                android:id="@+id/tv_charges"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_width="wrap_content"
+                android:text="@string/charges"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_beneficiaries"
+                app:layout_constraintEnd_toStartOf="@+id/tv_surveys"
+                app:layout_constraintStart_toEndOf="@+id/tv_beneficiaries"
+                app:layout_constraintTop_toTopOf="@+id/tv_beneficiaries" />
 
-                        <RelativeLayout
-                            android:layout_height="match_parent"
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/layout_padding_8dp">
+            <TextView
+                android:id="@+id/tv_surveys"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="36dp"
+                android:layout_width="wrap_content"
+                android:text="@string/survey"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_charges"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_charges"
+                app:layout_constraintTop_toTopOf="@+id/tv_charges" />
 
-                            <TextView
-                                android:gravity="center"
-                                android:layout_centerVertical="true"
-                                android:layout_height="match_parent"
-                                android:layout_width="wrap_content"
-                                android:text="@string/accounts_overview"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_small"/>
-
-                            <ImageView
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true"
-                                android:layout_height="match_parent"
-                                android:layout_width="wrap_content"
-                                android:tint="@color/white"
-                                app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"/>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
-                        android:id="@+id/ll_recent_transactions"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical">
-
-                        <View
-                            android:alpha="0.5"
-                            android:background="@color/white"
-                            android:layout_height="@dimen/height_0.1dp"
-                            android:layout_width="match_parent"/>
-
-                        <RelativeLayout
-                            android:layout_height="match_parent"
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/layout_padding_8dp">
-
-                            <TextView
-                                android:layout_centerVertical="true"
-                                android:layout_height="match_parent"
-                                android:layout_width="wrap_content"
-                                android:text="@string/recent_transactions"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_small"/>
-
-                            <ImageView
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true"
-                                android:layout_height="match_parent"
-                                android:layout_width="wrap_content"
-                                android:tint="@color/white"
-                                app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"/>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <View
+                android:background="@color/dashboard_gray_background"
+                android:id="@+id/view"
+                android:layout_height="160dp"
+                android:layout_marginTop="@dimen/layout_padding_24dp"
+                android:layout_width="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView3" />
 
             <androidx.cardview.widget.CardView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                app:cardElevation="@dimen/elevation_1dp">
+                android:id="@+id/iv_accounts"
+                android:innerRadius="@dimen/inner_radius_0dp"
+                android:layout_height="@dimen/height_60dp"
+                android:layout_marginTop="@dimen/layout_padding_24dp"
+                android:layout_width="@dimen/width_60dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_accounts"
+                app:layout_constraintStart_toStartOf="@+id/tv_accounts"
+                app:layout_constraintTop_toBottomOf="@+id/tv_manage_accounts">
 
-                <LinearLayout
-                    android:background="?attr/colorPrimary"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/default_margin">
-
-                    <TextView
-                        android:gravity="center"
-                        android:layout_height="@dimen/height_0dp"
-                        android:layout_marginTop="@dimen/layout_padding_8dp"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:text="@string/manage_accounts"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small"/>
-
-                    <LinearLayout
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/layout_padding_16dp"
-                        android:paddingTop="@dimen/layout_padding_24dp">
-
-                        <LinearLayout
-                            android:background="?selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:id="@+id/ll_accounts"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            android:orientation="vertical"
-                            android:padding="@dimen/default_margin"
-                            tools:ignore="UseCompoundDrawables">
-
-                            <androidx.cardview.widget.CardView
-                                android:innerRadius="@dimen/inner_radius_0dp"
-                                android:layout_height="@dimen/height_60dp"
-                                android:layout_width="@dimen/width_60dp"
-                                android:shape="ring"
-                                android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="?attr/colorPrimaryContainer"
-                                app:cardCornerRadius="@dimen/corner_radius_30dp">
-
-                                <ImageView
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="center"
-                                    android:layout_height="@dimen/height_60dp"
-                                    android:layout_width="wrap_content"
-                                    android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="?attr/colorOnPrimaryContainer"
-                                    app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:layout_width="wrap_content"
-                                android:paddingTop="@dimen/layout_padding_8dp"
-                                android:text="@string/accounts"
-                                android:textColor="@color/white"/>
-
-                        </LinearLayout>
-
-                        <View
-                            android:background="@color/white"
-                            android:layout_height="match_parent"
-                            android:layout_width="@dimen/width_0.2dp"/>
-
-                        <LinearLayout
-                            android:background="?selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:id="@+id/ll_transfer"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            android:orientation="vertical"
-                            android:padding="@dimen/default_margin"
-                            tools:ignore="UseCompoundDrawables">
-
-                            <androidx.cardview.widget.CardView
-                                android:innerRadius="@dimen/inner_radius_0dp"
-                                android:layout_height="@dimen/height_60dp"
-                                android:layout_width="@dimen/width_60dp"
-                                android:shape="ring"
-                                android:thicknessRatio="1.9"
-                                app:cardCornerRadius="@dimen/corner_radius_30dp"
-                                app:cardBackgroundColor="?attr/colorPrimaryContainer">
-
-                                <ImageView
-                                    android:contentDescription="@string/transfer"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="center"
-                                    android:layout_height="@dimen/height_60dp"
-                                    android:layout_width="wrap_content"
-                                    android:padding="@dimen/layout_padding_16dp"
-                                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
-                                    app:tint="?attr/colorOnPrimaryContainer" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:layout_width="wrap_content"
-                                android:paddingTop="@dimen/layout_padding_8dp"
-                                android:text="@string/transfer"
-                                android:textColor="@color/white"/>
-
-                        </LinearLayout>
-
-                        <View
-                            android:background="@color/white"
-                            android:layout_height="match_parent"
-                            android:layout_width="@dimen/width_0.2dp"/>
-
-                        <LinearLayout
-                            android:background="?selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:id="@+id/ll_apply_for_loan"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            android:orientation="vertical"
-                            android:padding="@dimen/default_margin"
-                            tools:ignore="UseCompoundDrawables">
-
-                            <androidx.cardview.widget.CardView
-                                android:innerRadius="@dimen/inner_radius_0dp"
-                                android:layout_height="@dimen/height_60dp"
-                                android:layout_width="@dimen/width_60dp"
-                                android:shape="ring"
-                                android:thicknessRatio="1.9"
-                                app:cardCornerRadius="@dimen/corner_radius_30dp"
-                                app:cardBackgroundColor="?attr/colorPrimaryContainer">
-
-                                <ImageView
-                                    android:contentDescription="@string/apply_for_loan"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="center"
-                                    android:layout_height="@dimen/height_60dp"
-                                    android:layout_width="wrap_content"
-                                    android:padding="@dimen/layout_padding_16dp"
-                                    app:srcCompat="@drawable/ic_border_color_black_24dp"
-                                    app:tint="?attr/colorOnPrimaryContainer" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:layout_width="wrap_content"
-                                android:paddingTop="@dimen/layout_padding_8dp"
-                                android:text="@string/apply_for_loan"
-                                android:textColor="@color/white"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                <ImageView
+                    android:layout_height="@dimen/height_60dp"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/layout_padding_16dp"
+                    app:srcCompat="@drawable/ic_account_balance_black_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer" />
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                app:cardElevation="@dimen/elevation_1dp">
+                android:id="@+id/cardView"
+                android:innerRadius="@dimen/inner_radius_0dp"
+                android:layout_height="@dimen/height_60dp"
+                android:layout_width="@dimen/width_60dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/iv_accounts">
 
-                <LinearLayout
-                    android:background="@color/dashboard_gray_background"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/default_margin">
-
-                    <TextView
-                        android:gravity="center"
-                        android:layout_height="@dimen/height_0dp"
-                        android:layout_marginTop="@dimen/layout_padding_8dp"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:text="@string/more"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_small"/>
-
-                    <LinearLayout
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/layout_padding_16dp"
-                        android:paddingTop="@dimen/layout_padding_24dp">
-
-                        <LinearLayout
-                            android:background="?selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:id="@+id/ll_beneficiaries"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            android:orientation="vertical"
-                            android:padding="@dimen/default_margin"
-                            tools:ignore="UseCompoundDrawables">
-
-                            <androidx.cardview.widget.CardView
-                                android:innerRadius="@dimen/inner_radius_0dp"
-                                android:layout_height="@dimen/height_60dp"
-                                android:layout_width="@dimen/width_60dp"
-                                android:shape="ring"
-                                android:thicknessRatio="1.9"
-                                app:cardCornerRadius="@dimen/corner_radius_30dp">
-
-                                <ImageView
-                                    android:contentDescription="@string/beneficiaries"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="center"
-                                    android:layout_height="@dimen/height_60dp"
-                                    android:layout_width="wrap_content"
-                                    android:padding="@dimen/layout_padding_16dp"
-                                    app:srcCompat="@drawable/ic_supervisor_account_black_24dp"
-                                    app:tint="@color/black" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:layout_width="wrap_content"
-                                android:paddingTop="@dimen/layout_padding_8dp"
-                                android:text="@string/beneficiaries"
-                                android:textColor="@color/black"/>
-
-                        </LinearLayout>
-
-                        <View
-                            android:background="@color/white"
-                            android:layout_height="match_parent"
-                            android:layout_width="@dimen/width_0.2dp"/>
-
-                        <LinearLayout
-                            android:background="?selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center"
-                            android:id="@+id/ll_charges"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            android:orientation="vertical"
-                            android:padding="@dimen/default_margin"
-                            tools:ignore="UseCompoundDrawables">
-
-                            <androidx.cardview.widget.CardView
-                                android:innerRadius="@dimen/inner_radius_0dp"
-                                android:layout_height="@dimen/height_60dp"
-                                android:layout_width="@dimen/width_60dp"
-                                android:shape="ring"
-                                android:thicknessRatio="1.9"
-                                app:cardCornerRadius="@dimen/corner_radius_30dp">
-
-                                <ImageView
-                                    android:contentDescription="@string/charges"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="center"
-                                    android:layout_height="@dimen/height_60dp"
-                                    android:layout_width="wrap_content"
-                                    android:padding="@dimen/layout_padding_16dp"
-                                    app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"
-                                    app:tint="@color/black" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:layout_width="wrap_content"
-                                android:paddingTop="@dimen/layout_padding_8dp"
-                                android:text="@string/charges"
-                                android:textColor="@color/black"/>
-
-                        </LinearLayout>
-
-                        <View
-                            android:background="@color/white"
-                            android:layout_height="match_parent"
-                            android:layout_width="@dimen/width_0.2dp"/>
-
-                        <LinearLayout
-                            android:background="?selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:id="@+id/ll_surveys"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            android:orientation="vertical"
-                            android:padding="@dimen/default_margin"
-                            tools:ignore="UseCompoundDrawables">
-
-                            <androidx.cardview.widget.CardView
-                                android:innerRadius="@dimen/inner_radius_0dp"
-                                android:layout_height="@dimen/height_60dp"
-                                android:layout_width="@dimen/height_60dp"
-                                android:shape="ring"
-                                android:thicknessRatio="1.9"
-                                app:cardCornerRadius="@dimen/corner_radius_30dp">
-
-                                <ImageView
-                                    android:contentDescription="@string/survey"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="center"
-                                    android:layout_height="@dimen/height_60dp"
-                                    android:layout_width="wrap_content"
-                                    android:padding="@dimen/layout_padding_16dp"
-                                    app:srcCompat="@drawable/ic_surveys_48px"
-                                    app:tint="@color/black" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/divider_margin"
-                                android:layout_width="wrap_content"
-                                android:paddingTop="@dimen/layout_padding_8dp"
-                                android:text="@string/survey"
-                                android:textColor="@color/black"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                <ImageView
+                    android:contentDescription="@string/transfer"
+                    android:layout_gravity="center"
+                    android:layout_height="@dimen/height_60dp"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/layout_padding_16dp"
+                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer" />
 
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:innerRadius="@dimen/inner_radius_0dp"
+                android:layout_height="@dimen/height_60dp"
+                android:layout_width="@dimen/width_60dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/cardView">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_height="@dimen/height_60dp"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/layout_padding_16dp"
+                    app:srcCompat="@drawable/ic_border_color_black_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iv_beneficiaries"
+                android:innerRadius="@dimen/inner_radius_0dp"
+                android:layout_height="@dimen/height_60dp"
+                android:layout_marginTop="24dp"
+                android:layout_width="@dimen/width_60dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_beneficiaries"
+                app:layout_constraintStart_toStartOf="@+id/tv_beneficiaries"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <ImageView
+                    android:layout_height="@dimen/height_60dp"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/layout_padding_16dp"
+                    app:srcCompat="@drawable/ic_account_balance_black_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iv_charges"
+                android:innerRadius="@dimen/inner_radius_0dp"
+                android:layout_height="@dimen/height_60dp"
+                android:layout_width="@dimen/width_60dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_charges"
+                app:layout_constraintStart_toStartOf="@+id/tv_charges"
+                app:layout_constraintTop_toTopOf="@+id/iv_beneficiaries">
+
+                <ImageView
+                    android:contentDescription="@string/transfer"
+                    android:layout_gravity="center"
+                    android:layout_height="@dimen/height_60dp"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/layout_padding_16dp"
+                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iv_surveys"
+                android:innerRadius="@dimen/inner_radius_0dp"
+                android:layout_height="@dimen/height_60dp"
+                android:layout_width="@dimen/width_60dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_surveys"
+                app:layout_constraintStart_toStartOf="@+id/tv_surveys"
+                app:layout_constraintTop_toTopOf="@+id/iv_charges">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_height="@dimen/height_60dp"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/layout_padding_16dp"
+                    app:srcCompat="@drawable/ic_border_color_black_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="@color/white"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/divider_margin"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/layout_padding_8dp"
-                android:paddingTop="@dimen/layout_padding_8dp">
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/view">
+
+                <TextView
+                    android:autoLink="phone"
+                    android:id="@+id/tvPhone"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/help_line_number"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:autoLink="email"
+                    android:id="@+id/tvEmail"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/divider_margin"
+                    android:layout_width="wrap_content"
+                    android:text="@string/contact_email"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                    app:layout_constraintTop_toBottomOf="@id/tvPhone" />
 
                 <TextView
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/row_padding_right"
-                    android:layout_marginStart="@dimen/row_padding_right"
                     android:layout_marginTop="@dimen/divider_margin"
                     android:layout_weight="1"
                     android:layout_width="@dimen/width_0dp"
                     android:text="@string/need_help"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"/>
+                    android:textSize="@dimen/text_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvEmail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvPhone" />
 
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/row_padding_right"
-                    android:layout_marginRight="@dimen/row_padding_right"
-                    android:layout_width="wrap_content"
-                    android:orientation="vertical">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:foreground="?selectableItemBackground"
+                android:id="@+id/ll_account_overview"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/layout_padding_24dp"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_user_name"
+                app:layout_constraintStart_toStartOf="@+id/iv_user_image"
+                app:layout_constraintTop_toBottomOf="@+id/iv_circular_user_image">
+
+                <RelativeLayout
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/layout_padding_8dp">
+
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        app:tint="@color/white" />
 
                     <TextView
-                        android:autoLink="phone"
-                        android:gravity="end"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/divider_margin"
-                        android:layout_width="match_parent"
-                        android:text="@string/help_line_number"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
+                        android:layout_alignParentStart="true"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:text="@string/accounts_overview"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <View
+                    android:alpha="0.5"
+                    android:background="@color/white"
+                    android:layout_height="@dimen/height_0.1dp"
+                    android:layout_width="match_parent" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:foreground="?selectableItemBackground"
+                android:id="@+id/ll_recent_transactions"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="@+id/ll_account_overview"
+                app:layout_constraintStart_toStartOf="@+id/ll_account_overview"
+                app:layout_constraintTop_toBottomOf="@+id/ll_account_overview">
+
+                <RelativeLayout
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/layout_padding_8dp">
+
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        app:tint="@color/white" />
 
                     <TextView
-                        android:autoLink="email"
-                        android:gravity="end"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/divider_margin"
-                        android:layout_width="match_parent"
-                        android:text="@string/contact_email"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/black"/>
+                        android:layout_alignParentStart="true"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:text="@string/recent_transactions"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
-            </LinearLayout>
+                <View
+                    android:alpha="0.5"
+                    android:background="@color/white"
+                    android:layout_height="@dimen/height_0.1dp"
+                    android:layout_width="match_parent" />
 
-        </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:id="@+id/iv_circular_user_image"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/height_65dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/layout_padding_16dp"
+                android:layout_width="@dimen/width_65dp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+                tools:src="@drawable/ic_person_black_24dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 
