@@ -414,4 +414,5 @@
     <string name="pref_base_url_desc">Klik di sini untuk mengubah konfigurasi Endpoint</string>
     <string name="enter_base_url">Masukkan URL utama</string>
     <string name="enter_tenant">Pergi ke Tenant</string>
+    <string name="app_info">Info Aplikasi</string>
 </resources>
