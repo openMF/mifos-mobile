@@ -158,7 +158,6 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(msg,
                     rvBeneficiaries, layoutError)
-            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
         }
     }
 
