@@ -436,5 +436,6 @@
     <string name="pref_base_url_desc">اپنے اختتام پوائنٹ کی ترتیبات کو تبدیل کرنے کے لئے یہاں کلک کریں</string>
     <string name="enter_base_url">بیس یو آر ایل درج کریں</string>
     <string name="enter_tenant">کرایہ درج کریں</string>
+    <string name="app_info">ایپ کی معلومات</string>
 
 </resources>

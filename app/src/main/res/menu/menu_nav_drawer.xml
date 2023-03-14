@@ -47,7 +47,7 @@
             android:title="@string/settings"/>
         <item
             android:id="@+id/item_about_us"
-            android:icon="@drawable/ic_info_black_24dp"
+            android:icon="@drawable/ic_about_us_black_24dp"
             android:title="@string/about_us"/>
         <item
             android:id="@+id/item_help"
@@ -57,6 +57,10 @@
             android:id="@+id/item_share"
             android:icon="@drawable/ic_share_black_24dp"
             android:title="@string/share"/>
+        <item
+            android:id="@+id/item_app_info"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/app_info"/>
         <item
             android:id="@+id/item_logout"
             android:icon="@drawable/ic_logout"

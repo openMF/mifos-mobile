@@ -634,5 +634,6 @@
         <item>Light Theme</item>
         <item>Dark Theme</item>
     </string-array>
+    <string name="app_info">App Info</string>
 
 </resources>
