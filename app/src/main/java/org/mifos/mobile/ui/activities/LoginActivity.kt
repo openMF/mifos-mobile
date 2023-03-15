@@ -114,10 +114,21 @@ class LoginActivity : BaseActivity(), LoginView {
         tilPassword?.isErrorEnabled = false
     }
 
+
+// When user clicks on the mifos logo, it takes user to the HelpFragment
+    @OnClick(R.id.mifos_logo)
+    fun onLogoClicked(){
+        startActivity(Intent(this@LoginActivity, AboutUsActivity::class.java))
+    }
+// When user clicks on the help button, it takes user to the helpFragment
+    @OnClick(R.id.helpBtn)
+    fun onHelpBtnClicked(){
+        startActivity(Intent(this@LoginActivity, AboutUsActivity::class.java))
+    }
+
     /**
      * Called when Login Button is clicked, used for logging in the user
      */
-
     @OnClick(R.id.btn_login)
     fun onLoginClicked() {
         val username = tilUsername?.editText?.editableText.toString()

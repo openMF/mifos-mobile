@@ -15,6 +15,7 @@
 
 
         <ImageView
+            android:id="@+id/mifos_logo"
             android:layout_height="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
             android:layout_marginVertical="@dimen/Mifos.DesignSystem.Size.LogoImageVerticalMargin"
             android:layout_width="wrap_content"
@@ -95,6 +96,17 @@
             android:layout_gravity="center"
             android:text="@string/create_an_account"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/helpBtn"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            app:icon="@drawable/baseline_question_mark_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
+
+
     </LinearLayout>
+
 
 </androidx.core.widget.NestedScrollView>
