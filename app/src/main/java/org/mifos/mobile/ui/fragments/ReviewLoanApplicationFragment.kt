@@ -100,38 +100,40 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     }
 
-    private fun setUpViews(): Unit = with(binding) {
-        tvLoanProduct.text = viewModel.getLoanProduct()
-        tvLoanPurpose.text = viewModel.getLoanPurpose()
-        tvPrincipalAmount.text = viewModel.getPrincipal().toString()
-        tvExpectedDisbursementDate.text = viewModel.getDisbursementDate()
-        tvSubmissionDate.text = viewModel.getSubmissionDate()
-        tvCurrency.text = viewModel.getCurrency()
-        tvNewLoanApplication.text = viewModel.getLoanName()
-        tvAccountNumber.text = viewModel.getAccountNo()
+    private fun setUpViews(){
+        binding.apply {
+            tvLoanProduct.text = viewModel.getLoanProduct()
+            tvLoanPurpose.text = viewModel.getLoanPurpose()
+            tvPrincipalAmount.text = viewModel.getPrincipal().toString()
+            tvExpectedDisbursementDate.text = viewModel.getDisbursementDate()
+            tvSubmissionDate.text = viewModel.getSubmissionDate()
+            tvCurrency.text = viewModel.getCurrency()
+            tvNewLoanApplication.text = viewModel.getLoanName()
+            tvAccountNumber.text = viewModel.getAccountNo()
 
-        btnLoanSubmit.setOnClickListener {
-            showProgress()
-            viewModel.submitLoan()
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
-                    override fun onComplete() {
-                    }
+            btnLoanSubmit.setOnClickListener {
+                showProgress()
+                viewModel.submitLoan()
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.io())
+                    ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
+                        override fun onComplete() {
+                        }
 
-                    override fun onNext(t: ResponseBody) {
-                        hideProgress()
-                        if (viewModel.getLoanState() == LoanState.CREATE)
-                            showLoanAccountCreatedSuccessfully()
-                        else
-                            showLoanAccountUpdatedSuccessfully()
-                    }
+                        override fun onNext(t: ResponseBody) {
+                            hideProgress()
+                            if (viewModel.getLoanState() == LoanState.CREATE)
+                                showLoanAccountCreatedSuccessfully()
+                            else
+                                showLoanAccountUpdatedSuccessfully()
+                        }
 
-                    override fun onError(e: Throwable) {
-                        hideProgress()
-                        showError(MFErrorParser.errorMessage(e))
-                    }
-                })
+                        override fun onError(e: Throwable) {
+                            hideProgress()
+                            showError(MFErrorParser.errorMessage(e))
+                        }
+                    })
+            }
         }
     }
 
@@ -140,17 +142,17 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun showError(message: String?): Unit = with(binding) {
-        val isConnected = Network.isConnected(activity)
-        if (!isConnected) {
+    fun showError(message: String?) {
+        if (!Network.isConnected(activity)) {
             Toaster.show(rootView, message)
-            return@with
+            return
         }
-        llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
-        llError.tvStatus.text = getString(R.string.internet_not_connected)
-        llAddLoan.visibility = View.GONE
-        llError.root.visibility = View.VISIBLE
-
+        binding.apply {
+            llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
+            llError.tvStatus.text = getString(R.string.internet_not_connected)
+            llAddLoan.visibility = View.GONE
+            llError.root.visibility = View.VISIBLE
+        }
     }
 
     fun showProgress() {
@@ -166,5 +168,10 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     fun showLoanAccountCreatedSuccessfully() {
         Toaster.show(rootView, R.string.loan_application_submitted_successfully)
         activity?.supportFragmentManager?.popBackStack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
