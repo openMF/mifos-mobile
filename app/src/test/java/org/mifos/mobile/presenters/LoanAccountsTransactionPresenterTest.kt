@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -9,10 +9,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.presenters.LoanAccountsTransactionPresenter
 import org.mifos.mobile.ui.views.LoanAccountsTransactionView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants
@@ -66,7 +67,9 @@ class LoanAccountsTransactionPresenterTest {
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showLoanTransactions(loanWithTransaction)
         Mockito.verify(view, Mockito.never())?.showEmptyTransactions(null)
-        Mockito.verify(view, Mockito.never())?.showErrorFetchingLoanAccountsDetail(context?.getString(R.string.error_loan_account_details_loading))
+        Mockito.verify(view, Mockito.never())?.showErrorFetchingLoanAccountsDetail(context?.getString(
+            R.string.error_loan_account_details_loading
+        ))
     }
 
     @Test
@@ -78,7 +81,9 @@ class LoanAccountsTransactionPresenterTest {
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showEmptyTransactions(loanWithEmptyTransactions)
         Mockito.verify(view, Mockito.never())?.showLoanTransactions(null)
-        Mockito.verify(view, Mockito.never())?.showErrorFetchingLoanAccountsDetail(context?.getString(R.string.error_loan_account_details_loading))
+        Mockito.verify(view, Mockito.never())?.showErrorFetchingLoanAccountsDetail(context?.getString(
+            R.string.error_loan_account_details_loading
+        ))
     }
 
     @Test

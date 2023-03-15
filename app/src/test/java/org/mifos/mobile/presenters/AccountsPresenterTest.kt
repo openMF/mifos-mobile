@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 import io.reactivex.Observable
@@ -8,10 +8,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.client.ClientAccounts
-import org.mifos.mobile.presenters.AccountsPresenter
 import org.mifos.mobile.ui.views.AccountsView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants

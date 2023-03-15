@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -11,11 +11,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
 
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.models.register.UserVerify
-import org.mifos.mobile.presenters.RegistrationVerificationPresenter
-import org.mifos.mobile.ui.views.RegistrationVerificationView
+import org.mifos.mobile.models.register.RegisterPayload
+import org.mifos.mobile.ui.views.RegistrationView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 
 import org.mockito.Mock
@@ -23,10 +23,10 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
- * Created by Sean Kelly on 9/12/17.
+ * Created by Chirag Gupta on 11/29/17.
  */
 @RunWith(MockitoJUnitRunner::class)
-class RegistrationVerificationPresenterTest {
+class RegistrationPresenterTest {
     @Rule
     @JvmField
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
@@ -38,19 +38,19 @@ class RegistrationVerificationPresenterTest {
     var dataManager: DataManager? = null
 
     @Mock
-    var view: RegistrationVerificationView? = null
+    var view: RegistrationView? = null
 
     @Mock
     var responseBody: ResponseBody? = null
-    private var presenter: RegistrationVerificationPresenter? = null
-    private var userVerify: UserVerify? = null
+    private var presenter: RegistrationPresenter? = null
+    private var registerPayload: RegisterPayload? = null
 
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        presenter = RegistrationVerificationPresenter(dataManager!!, context!!)
-        presenter?.attachView(view)
-        userVerify = FakeRemoteDataSource.userVerify
+        presenter = RegistrationPresenter(dataManager!!, context)
+        presenter?.attachView(view!!)
+        registerPayload = FakeRemoteDataSource.registerPayload
     }
 
     @After
@@ -61,23 +61,23 @@ class RegistrationVerificationPresenterTest {
 
     @Test
     @Throws(Exception::class)
-    fun testVerifyUser() {
-        Mockito.`when`<Observable<ResponseBody?>?>(dataManager?.verifyUser(userVerify)).thenReturn(Observable.just(responseBody))
-        presenter?.verifyUser(userVerify)
+    fun testRegisterUser() {
+        Mockito.`when`<Observable<ResponseBody?>?>(dataManager?.registerUser(registerPayload)).thenReturn(Observable.just(responseBody))
+        presenter?.registerUser(registerPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
-        Mockito.verify(view)?.showVerifiedSuccessfully()
+        Mockito.verify(view)?.showRegisteredSuccessfully()
         Mockito.verify(view, Mockito.never())?.showError("")
     }
 
     @Test
     @Throws(Exception::class)
-    fun testVerifyUserFails() {
-        Mockito.`when`(dataManager?.verifyUser(userVerify)).thenReturn(Observable.error(RuntimeException()))
-        presenter?.verifyUser(userVerify)
+    fun testRegisterUserFails() {
+        Mockito.`when`(dataManager?.registerUser(registerPayload)).thenReturn(Observable.error(RuntimeException()))
+        presenter?.registerUser(registerPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
-        Mockito.verify(view, Mockito.never())?.showVerifiedSuccessfully()
+        Mockito.verify(view, Mockito.never())?.showRegisteredSuccessfully()
         Mockito.verify(view)?.showError("")
     }
 }

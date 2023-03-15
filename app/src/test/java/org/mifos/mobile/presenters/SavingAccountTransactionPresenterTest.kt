@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -8,11 +8,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.presenters.SavingAccountsDetailPresenter
-import org.mifos.mobile.ui.views.SavingAccountsDetailView
+import org.mifos.mobile.ui.views.SavingAccountsTransactionView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants
 
@@ -24,7 +25,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by dilpreet on 24/7/17.
  */
 @RunWith(MockitoJUnitRunner::class)
-class SavingAccountDetailPresenterTest {
+class SavingAccountTransactionPresenterTest {
     @Rule
     @JvmField
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
@@ -36,13 +37,13 @@ class SavingAccountDetailPresenterTest {
     var dataManager: DataManager? = null
 
     @Mock
-    var view: SavingAccountsDetailView? = null
+    var view: SavingAccountsTransactionView? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
-    private var presenter: SavingAccountsDetailPresenter? = null
+    private var presenter: SavingAccountsTransactionPresenter? = null
 
     @Before
     fun setUp() {
-        presenter = SavingAccountsDetailPresenter(dataManager!!, context)
+        presenter = SavingAccountsTransactionPresenter(dataManager!!, context)
         presenter?.attachView(view)
         savingsWithAssociations = FakeRemoteDataSource.savingsWithAssociations
     }
@@ -55,7 +56,9 @@ class SavingAccountDetailPresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showSavingAccountsDetail(savingsWithAssociations)
-        Mockito.verify(view, Mockito.never())?.showErrorFetchingSavingAccountsDetail(context?.getString(R.string.error_saving_account_details_loading))
+        Mockito.verify(view, Mockito.never())?.showErrorFetchingSavingAccountsDetail(context?.getString(
+            R.string.error_saving_account_details_loading
+        ))
     }
 
     @Test

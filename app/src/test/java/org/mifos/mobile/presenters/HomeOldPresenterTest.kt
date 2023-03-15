@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -9,6 +9,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -16,7 +18,6 @@ import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.ClientAccounts
-import org.mifos.mobile.presenters.HomeOldPresenter
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 

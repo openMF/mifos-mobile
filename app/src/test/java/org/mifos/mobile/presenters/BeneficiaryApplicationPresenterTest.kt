@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 import io.reactivex.Observable
@@ -10,11 +10,12 @@ import org.junit.Rule
 import org.junit.Test
 
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import org.mifos.mobile.presenters.BeneficiaryApplicationPresenter
 import org.mifos.mobile.ui.views.BeneficiaryApplicationView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mockito.Mock
