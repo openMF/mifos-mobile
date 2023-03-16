@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -21,6 +22,7 @@ import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat
 import org.mifos.mobile.utils.ConfigurationPreference
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LanguageHelper
+import javax.inject.Inject
 
 /**
  * Created by dilpreet on 02/10/17.
@@ -30,11 +32,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private val prefsHelper by lazy { PreferencesHelper(requireContext().applicationContext) }
     var preference: android.preference.Preference? = null
 
+    @JvmField
+    @Inject
+    var preferencesHelper: PreferencesHelper? = null
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings_preference)
         findPreference(getString(R.string.theme_type)).setOnPreferenceClickListener {
             val previouslySelectedTheme = prefsHelper.appTheme
-
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(getString(R.string.change_app_theme))
                 .setSingleChoiceItems(resources.getStringArray(R.array.themes), previouslySelectedTheme) { dialog, selectedTheme ->
@@ -109,6 +114,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         val preference = findPreference(s)
         if (preference is ListPreference) {
             LanguageHelper.setLocale(context, preference.value)
+            preferencesHelper?.language_type=preference.value
             val intent = Intent(activity, activity?.javaClass)
             intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
             startActivity(intent)

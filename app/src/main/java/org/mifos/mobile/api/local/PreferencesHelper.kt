@@ -25,7 +25,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         //prevent deletion of url and tenant
         if (sharedPreferences != null)
             for ((key) in sharedPreferences.all) {
-                if (!(key == BASE_URL || key == TENANT)) {
+                if (!(key == BASE_URL || key == TENANT||key== LANGUAGE_TYPE)) {
                     editor?.remove(key)
                 }
             }
@@ -52,7 +52,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         return sharedPreferences?.getString(preferenceKey, preferenceDefaultValue)
     }
 
-    private fun putString(preferenceKey: String?, preferenceValue: String?) {
+    fun putString(preferenceKey: String?, preferenceValue: String?) {
         sharedPreferences?.edit()?.putString(preferenceKey, preferenceValue)?.apply()
     }
 
@@ -110,7 +110,11 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         set(officeName) {
             putString(OFFICE_NAME, officeName)
         }
-
+    var language_type:String?
+        get()=getString(LANGUAGE_TYPE,"en")
+        set(language_type){
+            putString(LANGUAGE_TYPE,language_type)
+        }
     fun setOverviewState(state: Boolean) {
         putBoolean(OVERVIEW_STATE, state)
     }
@@ -170,6 +174,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         private const val PROFILE_IMAGE = "preferences_profile_image"
         const val CLIENT_NAME = "client_name"
         private const val APPLICATION_THEME = "application_theme"
+        private const val LANGUAGE_TYPE="language_type"
     }
 
 

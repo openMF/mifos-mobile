@@ -1,6 +1,9 @@
 package org.mifos.mobile.ui.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -15,13 +18,16 @@ import butterknife.OnClick
 import com.google.android.material.textfield.TextInputLayout
 
 import org.mifos.mobile.R
+import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.presenters.LoginPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.LanguageHelper
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
+import java.util.*
 
 import javax.inject.Inject
 
@@ -51,8 +57,14 @@ class LoginActivity : BaseActivity(), LoginView {
     @BindView(R.id.ll_login)
     var llLogin: LinearLayout? = null
 
+    @JvmField
+    @Inject
+    var preferencesHelper: PreferencesHelper? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        preferencesHelper?.language_type?.let { language(it) }
+        println("The language is ${preferencesHelper?.language_type?.let { language(it) }}")
         activityComponent?.inject(this)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
@@ -151,5 +163,16 @@ class LoginActivity : BaseActivity(), LoginView {
         intent.putExtra(Constants.INTIAL_LOGIN, true)
         startActivity(intent)
         finish()
+    }
+
+    fun language(lang : String){
+        val config = resources.configuration
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }
