@@ -9,8 +9,9 @@ import java.util.*
 class NotificationComparator : Comparator<MifosNotification> {
     override fun compare(mifosNotification1: MifosNotification, mifosNotification2: MifosNotification): Int {
         return when {
+            // comparator function logic to sort notifications in the descending order of their timeStamp :
             mifosNotification2.timeStamp < mifosNotification1.timeStamp -> -1
-            mifosNotification1.timeStamp > mifosNotification2.timeStamp -> 1
+            mifosNotification1.timeStamp < mifosNotification2.timeStamp -> 1
             else -> 0
         }
     }
