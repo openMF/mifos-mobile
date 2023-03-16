@@ -295,6 +295,9 @@
     <string name="total_loan">کل قرض</string>
     <string name="total_saving">کل بچت</string>
     <string name="accounts_overview">اکاؤنٹ کا جائزہ</string>
+    <string name="show_hide_total_saving_amount">بچت کی کل رقم دکھائیں یا چھپائیں۔</string>
+    <string name="show_hide_total_loan_amount">قرض کی کل رقم دکھائیں یا چھپائیں۔</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">سروے</string>
     <string name="activation_date">چالو کرنے کی تاریخ</string>
     <string name="groups">گروپ</string>
