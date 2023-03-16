@@ -290,6 +290,9 @@
     <string name="total_loan">Total pinjaman</string>
     <string name="total_saving">Penghematan total</string>
     <string name="accounts_overview">Ikhtisar akun</string>
+    <string name="show_hide_total_saving_amount">Tampilkan atau sembunyikan jumlah total tabungan</string>
+    <string name="show_hide_total_loan_amount">Tampilkan atau sembunyikan jumlah total pinjaman</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Survei</string>
     <string name="activation_date">Tanggal aktivasi</string>
     <string name="groups">Kelompok</string>

@@ -9,24 +9,22 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.imageview.ShapeableImageView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -42,7 +40,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
-
 import javax.inject.Inject
 
 /**
@@ -267,6 +264,48 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
                         .endConfig()
                         .buildRound(userName.substring(0, 1),requireContext().getThemeAttributeColor(R.attr.colorPrimary))
                 ivCircularUserImage?.setImageDrawable(drawable)
+            }
+        }
+    }
+
+    /**
+     * Toggles visibility of saving and loan total amounts on home,
+     * and updates the corresponding button icon.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val savingAmountVisibilityButton: ImageButton = view.findViewById(R.id.btn_saving_total_amount_visibility)
+        val savingAmountVisible: TextView = view.findViewById(R.id.tv_saving_total_amount)
+        val savingAmountHidden: TextView = view.findViewById(R.id.tv_saving_total_amount_hidden)
+        val loanAmountVisibilityButton: ImageButton = view.findViewById(R.id.btn_loan_amount_visibility)
+        val loanAmountVisible: TextView = view.findViewById(R.id.tv_loan_total_amount)
+        val loanAmountHidden: TextView = view.findViewById(R.id.tv_loan_total_amount_hidden)
+
+        savingAmountVisible.visibility = View.GONE
+        savingAmountHidden.visibility = View.VISIBLE
+        loanAmountVisible.visibility = View.GONE
+        loanAmountHidden.visibility = View.VISIBLE
+
+        savingAmountVisibilityButton.setOnClickListener {
+            if (savingAmountVisible.visibility == View.VISIBLE) {
+                savingAmountVisible.visibility = View.GONE
+                savingAmountHidden.visibility = View.VISIBLE
+                savingAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_24px)
+            } else {
+                savingAmountVisible.visibility = View.VISIBLE
+                savingAmountHidden.visibility = View.GONE
+                savingAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_off_24px)
+            }
+        }
+        loanAmountVisibilityButton.setOnClickListener {
+            if (loanAmountVisible.visibility == View.VISIBLE) {
+                loanAmountVisible.visibility = View.GONE
+                loanAmountHidden.visibility = View.VISIBLE
+                loanAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_24px)
+            } else {
+                loanAmountVisible.visibility = View.VISIBLE
+                loanAmountHidden.visibility = View.GONE
+                loanAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_off_24px)
             }
         }
     }

@@ -346,6 +346,9 @@
     <string name="total_loan">Total Loan</string>
     <string name="total_saving">Total Savings</string>
     <string name="accounts_overview">Account Overview</string>
+    <string name="show_hide_total_saving_amount">Show or hide the total saving amount</string>
+    <string name="show_hide_total_loan_amount">Show or hide the total loan amount</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Surveys</string>
     <string name="activation_date">Activation Date</string>
     <string name="groups">Groups</string>

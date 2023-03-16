@@ -274,6 +274,9 @@
     <string name="total_loan">कुल ऋण</string>
     <string name="total_saving">कुल बचत</string>
     <string name="accounts_overview">खाता निरीक्षण</string>
+    <string name="show_hide_total_saving_amount">कुल बचत राशि दिखाएँ या छुपाएँ</string>
+    <string name="show_hide_total_loan_amount">कुल ऋण राशि दिखाएं या छुपाएं</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">सर्वेक्षण</string>
     <string name="first_name">पहला नाम</string>
     <string name="delete_beneficiary_confirmation">क्या आप वाकई इस लाभार्थी को हटाना चाहते हैं</string>
