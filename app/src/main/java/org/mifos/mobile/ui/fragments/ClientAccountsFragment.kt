@@ -320,7 +320,7 @@ import javax.inject.Inject
         }
         wrapper.addView(checkBoxRecyclerView)
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            checkBoxRecyclerView!!.layoutParams.height = (getScreenHeight()/3.5).toInt()
+            checkBoxRecyclerView?.layoutParams?.height = (getScreenHeight()/3.5).toInt()
         }
         when (account) {
             AccountType.SAVINGS -> {
