@@ -83,6 +83,7 @@ Note: Please do not work on issues which are already being worked on by another 
 
 ### Best Practices to send Pull Requests:
   - Follow the Pull request template.
-  - Commit messages should follow this template: `Fix #<issue-no> - <issue-desc>`
+  - Commit messages should follow this template: `fix #<issue-no> - <short description of the changes>`
+  - Pull request title shoud follow this template: `fix: <issue-desc>`
   - Squash all your commits to a single commit.
   - Create a new branch before adding and committing your changes ( This allows you to send multiple Pull Requests )
