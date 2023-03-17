@@ -319,6 +319,9 @@ import javax.inject.Inject
             wrapper.setPadding(cardInnerPadding,cardInnerPadding,cardInnerPadding,cardInnerPadding)
         }
         wrapper.addView(checkBoxRecyclerView)
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            checkBoxRecyclerView!!.layoutParams.height = (getScreenHeight()/3.5).toInt()
+        }
         when (account) {
             AccountType.SAVINGS -> {
                 if ((childFragmentManager.findFragmentByTag(
@@ -327,9 +330,6 @@ import javax.inject.Inject
                 } else {
                     checkBoxAdapter?.statusList = (childFragmentManager
                             .findFragmentByTag(getFragmentTag(0)) as AccountsFragment?)?.getCurrentFilterList()
-                }
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-                    checkBoxRecyclerView!!.layoutParams.height = (getScreenHeight()/3.5).toInt()
                 }
                 title = getString(R.string.filter_savings)
             }
@@ -341,9 +341,6 @@ import javax.inject.Inject
                     checkBoxAdapter?.statusList = (childFragmentManager
                             .findFragmentByTag(getFragmentTag(1)) as AccountsFragment?)?.getCurrentFilterList()
                 }
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-                    checkBoxRecyclerView!!.layoutParams.height = (getScreenHeight()/3.5).toInt()
-                }
                 title = getString(R.string.filter_loan)
             }
             AccountType.SHARE -> {
@@ -353,9 +350,6 @@ import javax.inject.Inject
                 } else {
                     checkBoxAdapter?.statusList = (childFragmentManager
                             .findFragmentByTag(getFragmentTag(2)) as AccountsFragment?)?.getCurrentFilterList()
-                }
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-                    checkBoxRecyclerView!!.layoutParams.height = (getScreenHeight()/3.5).toInt()
                 }
                 title = getString(R.string.filter_share)
             }
