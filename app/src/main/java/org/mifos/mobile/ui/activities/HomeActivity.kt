@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.activities
 
+import android.app.UiModeManager
 import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
@@ -112,6 +113,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
 
     override fun onResume() {
         super.onResume()
+        detailsPresenter?.attachView(this)
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
                     IntentFilter(Constants.REGISTER_ON_SERVER))
