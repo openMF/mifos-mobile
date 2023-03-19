@@ -105,7 +105,7 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
         val menuItem = menu.findItem(R.id.menu_notifications)
         val count = menuItem.actionView
         tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
-        count.setOnClickListener {
+        count?.setOnClickListener {
             (activity as BaseActivity?)?.replaceFragment(NotificationFragment.newInstance(),
                     true, R.id.container)
         }
