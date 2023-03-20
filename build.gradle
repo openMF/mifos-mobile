@@ -21,7 +21,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsGradleVersion"
-        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.5'
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinGradlePluginversion"
         classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.8"
