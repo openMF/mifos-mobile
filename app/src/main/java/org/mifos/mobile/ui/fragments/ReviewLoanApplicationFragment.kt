@@ -31,8 +31,12 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         const val LOAN_STATE = "loan_state"
         const val LOAN_ID = "loan_id"
 
-        fun newInstance(loanState: LoanState, loansPayload: LoansPayload, loanName: String, accountNo: String)
-                : ReviewLoanApplicationFragment {
+        fun newInstance(
+            loanState: LoanState,
+            loansPayload: LoansPayload,
+            loanName: String,
+            accountNo: String
+        ): ReviewLoanApplicationFragment {
             val fragment = ReviewLoanApplicationFragment()
             val args = Bundle().apply {
                 putSerializable(LOAN_STATE, loanState)
@@ -44,8 +48,13 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             return fragment
         }
 
-        fun newInstance(loanState: LoanState?, loansPayload: LoansPayload?, loanId: Long?, loanName: String?, accountNo: String?)
-                : ReviewLoanApplicationFragment {
+        fun newInstance(
+            loanState: LoanState?,
+            loansPayload: LoansPayload?,
+            loanId: Long?,
+            loanName: String?,
+            accountNo: String?
+        ): ReviewLoanApplicationFragment {
             val fragment = ReviewLoanApplicationFragment()
             val args = Bundle().apply {
                 putSerializable(LOAN_STATE, loanState)
@@ -70,25 +79,31 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     private val binding
         get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
         (activity as BaseActivity).activityComponent?.inject(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReviewLoanApplicationViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(ReviewLoanApplicationViewModel::class.java)
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
             viewModel.insertData(
-                    loanState,
-                    arguments?.getParcelable(LOANS_PAYLOAD)!!,
-                    arguments?.getString(LOAN_NAME)!!,
-                    arguments?.getString(ACCOUNT_NO)!!)
+                loanState,
+                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getString(LOAN_NAME)!!,
+                arguments?.getString(ACCOUNT_NO)!!
+            )
         } else {
             viewModel.insertData(
-                    loanState,
-                    arguments?.getLong(LOAN_ID)!!,
-                    arguments?.getParcelable(LOANS_PAYLOAD)!!,
-                    arguments?.getString(LOAN_NAME)!!,
-                    arguments?.getString(ACCOUNT_NO)!!)
+                loanState,
+                arguments?.getLong(LOAN_ID)!!,
+                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getString(LOAN_NAME)!!,
+                arguments?.getString(ACCOUNT_NO)!!
+            )
         }
         return rootView
     }
@@ -100,7 +115,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     }
 
-    private fun setUpViews(){
+    private fun setUpViews() {
         binding.apply {
             tvLoanProduct.text = viewModel.getLoanProduct()
             tvLoanPurpose.text = viewModel.getLoanPurpose()
@@ -147,12 +162,12 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             Toaster.show(rootView, message)
             return
         }
-        binding.apply {
-            llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
-            llError.tvStatus.text = getString(R.string.internet_not_connected)
-            llAddLoan.visibility = View.GONE
-            llError.root.visibility = View.VISIBLE
+        binding.llError.apply {
+            ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
+            tvStatus.text = getString(R.string.internet_not_connected)
+            root.visibility = View.VISIBLE
         }
+        binding.llAddLoan.visibility = View.GONE
     }
 
     fun showProgress() {
