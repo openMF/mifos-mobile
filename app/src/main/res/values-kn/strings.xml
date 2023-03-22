@@ -414,4 +414,5 @@
     <string name="pref_base_url_desc">ಎಂಡ್ಪೋಯಿಂಟ್ ಸಂರಚನೆಗಳನ್ನು ಬದಲಾಯಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ</string>
     <string name="enter_base_url">ಪ್ರಾಥಮಿಕ URL ಅನ್ನು ನಮೂದಿಸಿ</string>
     <string name="enter_tenant">ಟೆನಂಟ್ಗೆ ಹೋಗಿ</string>
+    <string name="app_info">ಅಪ್ಲಿಕೇಶನ್ ಮಾಹಿತಿ</string>
 </resources>

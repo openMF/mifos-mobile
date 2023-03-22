@@ -437,5 +437,6 @@
     <string name="pref_base_url_desc">သင့်ရဲ့ဆုံးမှတ် Configuration ကိုပြောင်းလဲရန်ဒီနေရာကိုနှိပ်ပါ</string>
     <string name="enter_base_url">အဆိုပါအခြေစိုက်စခန်း URL ကိုရိုက်ထည့်ပါ</string>
     <string name="enter_tenant">ဥယျာဉ်စောင့် Enter</string>
+    <string name="app_info">အက်ပ်အချက်အလက်</string>
 
 </resources>
