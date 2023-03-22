@@ -25,6 +25,7 @@ import butterknife.OnClick
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.imageview.ShapeableImageView
+import kotlinx.android.synthetic.main.fragment_home_old.*
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -274,38 +275,33 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val savingAmountVisibilityButton: ImageButton = view.findViewById(R.id.btn_saving_total_amount_visibility)
-        val savingAmountVisible: TextView = view.findViewById(R.id.tv_saving_total_amount)
-        val savingAmountHidden: TextView = view.findViewById(R.id.tv_saving_total_amount_hidden)
-        val loanAmountVisibilityButton: ImageButton = view.findViewById(R.id.btn_loan_amount_visibility)
-        val loanAmountVisible: TextView = view.findViewById(R.id.tv_loan_total_amount)
-        val loanAmountHidden: TextView = view.findViewById(R.id.tv_loan_total_amount_hidden)
+        ButterKnife.bind(this, view)
 
-        savingAmountVisible.visibility = View.GONE
-        savingAmountHidden.visibility = View.VISIBLE
-        loanAmountVisible.visibility = View.GONE
-        loanAmountHidden.visibility = View.VISIBLE
+        tv_saving_total_amount.visibility = View.GONE
+        tv_saving_total_amount_hidden.visibility = View.VISIBLE
+        tv_loan_total_amount.visibility = View.GONE
+        tv_loan_total_amount_hidden.visibility = View.VISIBLE
 
-        savingAmountVisibilityButton.setOnClickListener {
-            if (savingAmountVisible.visibility == View.VISIBLE) {
-                savingAmountVisible.visibility = View.GONE
-                savingAmountHidden.visibility = View.VISIBLE
-                savingAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_24px)
+        btn_saving_total_amount_visibility.setOnClickListener {
+            if (tv_saving_total_amount.visibility == View.VISIBLE) {
+                tv_saving_total_amount.visibility = View.GONE
+                tv_saving_total_amount_hidden.visibility = View.VISIBLE
+                btn_saving_total_amount_visibility.setImageResource(R.drawable.ic_visibility_24px)
             } else {
-                savingAmountVisible.visibility = View.VISIBLE
-                savingAmountHidden.visibility = View.GONE
-                savingAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_off_24px)
+                tv_saving_total_amount.visibility = View.VISIBLE
+                tv_saving_total_amount_hidden.visibility = View.GONE
+                btn_saving_total_amount_visibility.setImageResource(R.drawable.ic_visibility_off_24px)
             }
         }
-        loanAmountVisibilityButton.setOnClickListener {
-            if (loanAmountVisible.visibility == View.VISIBLE) {
-                loanAmountVisible.visibility = View.GONE
-                loanAmountHidden.visibility = View.VISIBLE
-                loanAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_24px)
+        btn_loan_amount_visibility.setOnClickListener {
+            if (tv_loan_total_amount.visibility == View.VISIBLE) {
+                tv_loan_total_amount.visibility = View.GONE
+                tv_loan_total_amount_hidden.visibility = View.VISIBLE
+                btn_loan_amount_visibility.setImageResource(R.drawable.ic_visibility_24px)
             } else {
-                loanAmountVisible.visibility = View.VISIBLE
-                loanAmountHidden.visibility = View.GONE
-                loanAmountVisibilityButton.setImageResource(R.drawable.ic_visibility_off_24px)
+                tv_loan_total_amount.visibility = View.VISIBLE
+                tv_loan_total_amount_hidden.visibility = View.GONE
+                btn_loan_amount_visibility.setImageResource(R.drawable.ic_visibility_off_24px)
             }
         }
     }
