@@ -42,7 +42,7 @@ class AboutUsFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val rootView = inflater.inflate(R.layout.fragment_about_us, container, false)
         ButterKnife.bind(this, rootView!!)
         setToolbarTitle(getString(R.string.about_us))

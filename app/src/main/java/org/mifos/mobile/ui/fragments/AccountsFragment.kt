@@ -329,14 +329,14 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * @param statusModelList [List] of [CheckboxStatus]
      */
     fun filterSavingsAccount(statusModelList: List<CheckboxStatus?>?) {
-        val filteredSavings: MutableList<SavingAccount?>? = ArrayList()
+        val filteredSavings: MutableList<SavingAccount?> = ArrayList()
         if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
             for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
                 accountsPresenter?.getFilteredSavingsAccount(savingAccounts,
-                        status)?.let { filteredSavings?.addAll(it) }
+                        status)?.let { filteredSavings.addAll(it) }
             }
         }
-        if (filteredSavings?.size == 0) {
+        if (filteredSavings.size == 0) {
             showEmptyAccounts(getString(R.string.no_saving_account))
         } else {
             savingAccountsListAdapter?.setSavingAccountsList(filteredSavings)
@@ -350,15 +350,15 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * @param statusModelList [List] of [CheckboxStatus]
      */
     fun filterLoanAccount(statusModelList: List<CheckboxStatus?>?) {
-        val filteredSavings: MutableList<LoanAccount?>? = ArrayList()
+        val filteredSavings: MutableList<LoanAccount?> = ArrayList()
         when {
             accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null -> {
                 for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
                     accountsPresenter?.getFilteredLoanAccount(loanAccounts,
-                            status)?.let { filteredSavings?.addAll(it) }
+                            status)?.let { filteredSavings.addAll(it) }
                 }
             }
-            filteredSavings?.size == 0 -> {
+            filteredSavings.size == 0 -> {
                 showEmptyAccounts(getString(R.string.no_loan_account))
             }
             else -> {
@@ -374,15 +374,15 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * @param statusModelList [List] of [CheckboxStatus]
      */
     fun filterShareAccount(statusModelList: List<CheckboxStatus?>?) {
-        val filteredSavings: MutableList<ShareAccount?>? = ArrayList()
+        val filteredSavings: MutableList<ShareAccount?> = ArrayList()
         when {
             accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null -> {
                 for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
                     accountsPresenter?.getFilteredShareAccount(shareAccounts,
-                            status)?.let { filteredSavings?.addAll(it) }
+                            status)?.let { filteredSavings.addAll(it) }
                 }
             }
-            filteredSavings?.size == 0 -> {
+            filteredSavings.size == 0 -> {
                 showEmptyAccounts(getString(R.string.no_sharing_account))
             }
             else -> {
