@@ -20,7 +20,6 @@ import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.Utils.hideSoftKeyboard
 import javax.inject.Inject
 
 
@@ -61,16 +60,13 @@ class LoginActivity : BaseActivity(), LoginView {
 
     private fun dismissSoftKeyboardOnBkgTap(view: View) {
 
-        // If this individual view doesn't include an EditText
         if (view !is EditText) {
             view.setOnTouchListener { view, event ->
-                hideSoftKeyboard(this@LoginActivity)
+                hideKeyboard(this@LoginActivity)
                 false
             }
         }
 
-        //If it's a ViewGroup(or layout container), iterate over all its child views and
-        // recursively call dismissSoftKeyboardOnBkgTap() for each individual view.
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)
