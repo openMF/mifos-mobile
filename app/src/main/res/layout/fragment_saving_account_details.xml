@@ -257,134 +257,134 @@
                 android:textAppearance="?android:textAppearanceMedium"/>
 
 
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge">
+
                 <LinearLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:id="@+id/ll_savings_transactions"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge">
+                    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
+                    android:layout_width="match_parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
+                        app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
 
                     <LinearLayout
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="?selectableItemBackground"
                         android:gravity="center"
-                        android:id="@+id/ll_savings_transactions"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
-                        android:layout_width="match_parent">
+                        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                        android:layout_weight="1"
+                        android:layout_width="@dimen/width_0dp"
+                        android:orientation="vertical">
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                            app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
-
-                        <LinearLayout
-                            android:gravity="center"
+                        <TextView
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:orientation="vertical">
+                            android:layout_width="match_parent"
+                            android:text="@string/transactions"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
 
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="@string/transactions"
-                                style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="@string/view_transactions"
-                                style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="?selectableItemBackground"
-                        android:gravity="center"
-                        android:id="@+id/ll_savings_charges"
-                        android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent">
-
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                            app:srcCompat="@drawable/ic_charges"/>
-
-                        <LinearLayout
-                            android:gravity="center"
+                        <TextView
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="@string/savings_charges"
-                                style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="@string/view_charges"
-                                style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="?selectableItemBackground"
-                        android:gravity="center"
-                        android:id="@+id/ll_savings_qr_code"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                            style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                            app:srcCompat="@drawable/ic_qrcode_scan"/>
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="@string/qr_code"
-                                style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
-
-                            <TextView
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="@string/view_qr_code"
-                                style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
-
-                        </LinearLayout>
+                            android:layout_width="match_parent"
+                            android:text="@string/view_transactions"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:id="@+id/ll_savings_charges"
+                    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
+                        app:srcCompat="@drawable/ic_charges"/>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                        android:layout_weight="1"
+                        android:layout_width="@dimen/width_0dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@string/savings_charges"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@string/view_charges"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:id="@+id/ll_savings_qr_code"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
+                        app:srcCompat="@drawable/ic_qrcode_scan"/>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                        android:layout_weight="1"
+                        android:layout_width="@dimen/width_0dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@string/qr_code"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@string/view_qr_code"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
             <LinearLayout
@@ -394,8 +394,8 @@
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="@dimen/margin_5dp"
+                    android:layout_marginRight="@dimen/margin_5dp"
                     android:layout_width="wrap_content"
                     android:text="@string/need_help"/>
 

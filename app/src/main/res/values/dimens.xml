@@ -5,6 +5,27 @@
     <dimen name="toolbar_height">32dp</dimen>
     <dimen name="tab_layout_height">28dp</dimen>
     <dimen name="login_height">72dp</dimen>
+    <dimen name="height_0dp">0dp</dimen>
+    <dimen name="height_32dp">32dp</dimen>
+    <dimen name="height_70dp">70dp</dimen>
+    <dimen name="height_56dp">56dp</dimen>
+    <dimen name="height_65dp">65dp</dimen>
+    <dimen name="height_60dp">60dp</dimen>
+    <dimen name="height_40dp">40dp</dimen>
+    <dimen name="height_0.1dp">0.1dp</dimen>
+
+
+    <!--  Dimen values for width -->
+    <dimen name="width_0dp">0dp</dimen>
+    <dimen name="width_32dp">32dp</dimen>
+    <dimen name="width_70dp">70dp</dimen>
+    <dimen name="width_56dp">56dp</dimen>
+    <dimen name="width_65dp">65dp</dimen>
+    <dimen name="width_60dp">60dp</dimen>
+    <dimen name="width_0.2dp">0.2dp</dimen>
+    <dimen name="width_40dp">40dp</dimen>
+    <dimen name="width_4dp">4dp</dimen>
+
 
     <!-- Dimen values for padding -->
     <dimen name="layout_padding_4dp">4dp</dimen>
@@ -22,6 +43,11 @@
     <dimen name="login_padding_button">12dp</dimen>
     <dimen name="ticker">24dp</dimen>
     <dimen name="table_row_padding_top">15dp</dimen>
+    <dimen name="padding_5dp">5dp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
+
+
+
 
     <!-- Dimen values for margins-->
     <dimen name="login_margin_top">20dp</dimen>
@@ -35,6 +61,8 @@
     <dimen name="margin_4dp">4dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
     <dimen name="icon_text_margin">24dp</dimen>
 
     <!-- Dimen values for text size -->
@@ -42,6 +70,17 @@
     <dimen name="text_large">20sp</dimen>
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_small">14sp</dimen>
+    <dimen name="text_extra_small">10sp</dimen>
+
+    <!--  Dimen values for elevation -->
+    <dimen name="elevation_1dp">1dp</dimen>
+
+    <!--  Dimen values for inner radius -->
+    <dimen name="inner_radius_0dp">0dp</dimen>
+
+    <!--  Dimen values for corner radius -->
+    <dimen name="corner_radius_30dp">30dp</dimen>
+
 
     <!-- Dimen values for Account Status-->
     <dimen name="account_status_width">25dp</dimen>

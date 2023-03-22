@@ -39,7 +39,7 @@
                         android:ellipsize="end"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/width_0dp"
                         android:lines="1"
                         android:text="@string/account_short"
                         style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -48,7 +48,7 @@
                         android:id="@+id/tv_loan_account_number"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/width_0dp"
                         android:gravity="end"
                         style="@style/Mifos.DesignSystem.TextStyle.Body"
                         tools:text="loanAccountNumber"/>
@@ -65,7 +65,7 @@
                         android:ellipsize="end"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/width_0dp"
                         android:lines="1"
                         android:text="@string/loan_product"
                         style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/width_0dp"
                         style="@style/Mifos.DesignSystem.TextStyle.Body"
                         tools:text="@string/loan_product"/>
 
@@ -93,7 +93,7 @@
                         android:ellipsize="end"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/width_0dp"
                         android:lines="1"
                         android:text="@string/loan_purpose"
                         style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/width_0dp"
                         style="@style/Mifos.DesignSystem.TextStyle.Body"
                         tools:text="loanPurpose"/>
 
@@ -131,7 +131,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/principal"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -140,7 +140,7 @@
                             android:id="@+id/tv_principal"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="@string/principal"/>
@@ -157,7 +157,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/interest"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -166,7 +166,7 @@
                             android:id="@+id/tv_interest_charged"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="Interest"/>
@@ -183,7 +183,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/fees"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -192,7 +192,7 @@
                             android:id="@+id/tv_fees"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="fees"/>
@@ -209,7 +209,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/penalties"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -218,7 +218,7 @@
                             android:id="@+id/tv_penalties"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="Penalties"/>
@@ -250,7 +250,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/total_repayment"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -259,7 +259,7 @@
                             android:id="@+id/tv_total_repayment"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="repayment"/>
@@ -276,7 +276,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/total_paid"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -285,7 +285,7 @@
                             android:id="@+id/tv_total_paid"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="paid"/>
@@ -302,7 +302,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/interest_waived"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -311,7 +311,7 @@
                             android:id="@+id/tv_interest_waived"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="@string/interest_waived"/>
@@ -328,7 +328,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/penalties_waived"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -337,7 +337,7 @@
                             android:id="@+id/tv_penalties_waived"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="penalties_waived"/>
@@ -354,7 +354,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/fees_waived"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -363,7 +363,7 @@
                             android:id="@+id/tv_fees_waived"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="fees_waived"/>
@@ -395,7 +395,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/outstanding_balance"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -404,7 +404,7 @@
                             android:id="@+id/tv_outstanding_balance"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
                             tools:text="balance"/>
@@ -421,7 +421,7 @@
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:lines="1"
                             android:text="@string/account_status"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -429,7 +429,7 @@
                         <LinearLayout
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:gravity="end"
                             android:orientation="horizontal">
 

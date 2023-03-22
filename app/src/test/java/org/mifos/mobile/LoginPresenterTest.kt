@@ -98,7 +98,7 @@ class LoginPresenterTest {
     @Test
     @Throws(Exception::class)
     fun testLoadClientFails() {
-        Mockito.`when`(dataManager?.clients).thenReturn(Observable.error(RetrofitUtils.get404Exception()))
+        Mockito.`when`(dataManager?.clients).thenReturn(Observable.error(RetrofitUtils.getResponseForError(404)))
         presenter?.loadClient()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showMessage(context?.getString(R.string.error_fetching_client))
@@ -108,7 +108,7 @@ class LoginPresenterTest {
     @Test
     @Throws(Exception::class)
     fun testLoadClientUnauthorized() {
-        Mockito.`when`(dataManager?.clients).thenReturn(Observable.error(RetrofitUtils.get401Exception()))
+        Mockito.`when`(dataManager?.clients).thenReturn(Observable.error(RetrofitUtils.getResponseForError(401)))
         presenter?.loadClient()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showMessage(context?.getString(R.string.unauthorized_client))

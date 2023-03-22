@@ -414,4 +414,5 @@
     <string name="pref_base_url_desc">សូមចុចទីនេះដើម្បីប្តូរការកំណត់រចនាសម្ព័ន្ធ ចំណុចបញ្ចប់</string>
     <string name="enter_base_url">បញ្ចូល URL ចម្បង</string>
     <string name="enter_tenant">ចូលទៅកាន់ភតិកៈ</string>
+    <string name="app_info">ព័ត៌មានកម្មវិធី</string>
 </resources>

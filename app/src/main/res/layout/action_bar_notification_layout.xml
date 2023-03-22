@@ -31,7 +31,7 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:textColor="@color/white"
-        android:textSize="10sp"
+        android:textSize="@dimen/text_extra_small"
         android:visibility="gone"/>
 
 </RelativeLayout>

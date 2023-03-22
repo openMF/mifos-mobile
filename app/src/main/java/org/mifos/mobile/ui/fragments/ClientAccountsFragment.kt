@@ -2,32 +2,24 @@ package org.mifos.mobile.ui.fragments
 
 import android.app.SearchManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.TypedValue
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.annotation.Dimension
-
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
-
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
@@ -41,12 +33,9 @@ import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.ViewPagerAdapter
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.AccountsView
 import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.MaterialDialog
 import org.mifos.mobile.utils.StatusUtils
-
 import javax.inject.Inject
 
 /*
@@ -330,6 +319,9 @@ import javax.inject.Inject
             wrapper.setPadding(cardInnerPadding,cardInnerPadding,cardInnerPadding,cardInnerPadding)
         }
         wrapper.addView(checkBoxRecyclerView)
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            checkBoxRecyclerView?.layoutParams?.height = (getScreenHeight()/3.5).toInt()
+        }
         when (account) {
             AccountType.SAVINGS -> {
                 if ((childFragmentManager.findFragmentByTag(
@@ -444,6 +436,12 @@ import javax.inject.Inject
     override fun onPause() {
         super.onPause()
         (activity as BaseActivity?)?.setToolbarElevation()
+    }
+
+    private fun getScreenHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return displayMetrics.heightPixels
     }
 
     companion object {
