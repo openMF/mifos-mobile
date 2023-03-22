@@ -361,7 +361,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             sweetUIErrorHandler?.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(msg, layoutMakeTransfer, layoutError)
-            Toaster.show(rootView, msg)
+
         }
     }
 

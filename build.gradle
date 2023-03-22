@@ -12,16 +12,16 @@ buildscript {
 
     ext {
         gradleVersion = '7.2.0'
-        crashlyticsGradleVersion = '2.4.1'
+        crashlyticsGradleVersion = '2.9.4'
         ossLicensesVersion = '0.10.5'
-        googleServicesVersion = '4.3.10'
+        googleServicesVersion = '4.3.15'
         kotlinGradlePluginversion = '1.6.21'
     }
 
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsGradleVersion"
-        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.5'
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinGradlePluginversion"
         classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.8"
@@ -51,7 +51,7 @@ ext {
     // App dependencies
     supportLibraryVersion = '1.4.2'
     designLibraryVersion = '1.6.1'
-    daggerVersion = '2.42'
+    daggerVersion = '2.45'
     recyclerViewVersion = '1.2.1'
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
@@ -59,21 +59,21 @@ ext {
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.6.0'
     butterKnifeVersion = '8.0.1'
-    dbflowVersion = '4.1.2'
+    dbflowVersion = '4.2.4'
     playServicesVersion = '17.0.0'
     firebaseMessagingVersion = '21.0.1'
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
 
-    jUnitVersion = '4.12'
+    jUnitVersion = '4.13.2'
     mockitoVersion = '3.6.28'
-    runnerVersion = '1.1.0-alpha4'
-    rulesVersion = '1.3.1-alpha02'
+    runnerVersion = '1.5.3-alpha01'
+    rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.4.0-alpha02'
-    zxingcoreVersion = '3.2.1'
+    zxingcoreVersion = '3.5.1'
     zxingbarcodescannerVersion = '1.9.13'
-    rxjavaVersion = '2.2.20'
+    rxjavaVersion = '2.2.21'
     rxandroidVersion = '2.1.1'
     sweeterrorVersion = '1.0.0'
     mifosPasscodeVersion = '0.3.0'
