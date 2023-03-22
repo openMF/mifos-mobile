@@ -81,7 +81,7 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         tvWithdrawalDate?.text = getTodayFormatted()
     }
 
-    private val isFormIncomplete: Boolean?
+    private val isFormIncomplete: Boolean
         get() {
             var rv = false
             if (tilRemark?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {

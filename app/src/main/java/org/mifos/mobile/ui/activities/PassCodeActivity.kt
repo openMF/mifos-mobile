@@ -17,6 +17,8 @@ import org.mifos.mobile.utils.MaterialDialog
 import org.mifos.mobile.utils.Toaster
 
 class PassCodeActivity : MifosPassCodeActivity() {
+    private var currPassCode: String? = null
+    private var isToUpdatePassCode: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!CheckSelfPermissionAndRequest.checkSelfPermission(this,
@@ -35,6 +37,11 @@ class PassCodeActivity : MifosPassCodeActivity() {
                     BiometricAuthentication(this).authenticateWithBiometrics()
                 }
             }
+        }
+
+        intent?.let {
+            currPassCode = it.getStringExtra(Constants.CURR_PASSWORD)
+            isToUpdatePassCode = it.getBooleanExtra(Constants.IS_TO_UPDATE_PASS_CODE, false)
         }
 
     }

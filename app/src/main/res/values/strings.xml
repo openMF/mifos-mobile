@@ -153,6 +153,7 @@
     <string name="no">No</string>
     <string name="found">found</string>x
 
+    <string name="password_key" translatable="false">Password</string>
     <string name="change_passcode">Change Passcode</string>
     <string name="change_app_passcode">Change App Passcode</string>
     <string name="change_password">Change Password</string>
@@ -446,6 +447,7 @@
     </string>
     <string name="permission_denied_storage">Permission denied to storage</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
+    <string name="err_during_login">Error During Login</string>
 
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>
@@ -635,5 +637,6 @@
         <item>Light Theme</item>
         <item>Dark Theme</item>
     </string-array>
+    <string name="app_info">App Info</string>
 
 </resources>

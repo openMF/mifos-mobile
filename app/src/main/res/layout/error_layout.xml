@@ -18,9 +18,9 @@
             android:id="@+id/iv_error_no_connection"
             android:contentDescription="@string/sweet_error_image"
             android:layout_gravity="center|center_horizontal"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/height_70dp"
             android:layout_marginBottom="@dimen/layout_padding_16dp"
-            android:layout_width="70dp"
+            android:layout_width="@dimen/width_70dp"
             app:srcCompat="@drawable/ic_cloud_off_black_24dp"
             app:tint="?attr/colorControlNormal" />
 
@@ -111,9 +111,9 @@
             android:contentDescription="@string/sweet_error_image"
             android:id="@+id/iv_empty_feature_image"
             android:layout_gravity="center|center_horizontal"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/height_70dp"
             android:layout_marginBottom="@dimen/layout_padding_16dp"
-            android:layout_width="70dp"
+            android:layout_width="@dimen/width_70dp"
             app:srcCompat="@drawable/ic_adb_black_24dp"
             app:tint="?attr/colorControlNormal" />
 
@@ -149,9 +149,9 @@
             android:contentDescription="@string/sweet_error_image"
             android:id="@+id/iv_custom_feature_image"
             android:layout_gravity="center|center_horizontal"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/height_70dp"
             android:layout_marginBottom="@dimen/layout_padding_16dp"
-            android:layout_width="70dp"
+            android:layout_width="@dimen/width_70dp"
             app:srcCompat="@drawable/ic_adb_black_24dp"
             app:tint="?attr/colorControlNormal" />
 

@@ -72,8 +72,8 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     override fun showTotalLoanSavings(totalLoan: Double?, totalSavings: Double?) {
         totalLoanBalance = totalLoan!!
         totalSavingsBalance = totalSavings!!
-        tvTotalLoan?.text = CurrencyUtil.formatCurrency(context!!, totalLoan)
-        tvTotalSavings?.text = CurrencyUtil.formatCurrency(context!!, totalSavings)
+        tvTotalLoan?.text = CurrencyUtil.formatCurrency(requireContext(), totalLoan)
+        tvTotalSavings?.text = CurrencyUtil.formatCurrency(requireContext(), totalSavings)
     }
 
     override fun showError(message: String?) {

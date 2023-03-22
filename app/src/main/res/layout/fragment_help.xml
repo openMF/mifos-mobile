@@ -21,7 +21,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_faq"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/height_0dp"
         android:layout_weight="1"
         android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
         android:layout_width="match_parent"/>
@@ -37,7 +37,7 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/call_button"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/call_now"
@@ -45,7 +45,7 @@
             style="@style/Mifos.DesignSystem.Components.Button.Text"/>
         <Button
             android:id="@+id/mail_button"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/leave_email"
@@ -54,7 +54,7 @@
             />
         <Button
             android:id="@+id/locations_button"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/find_locations"
