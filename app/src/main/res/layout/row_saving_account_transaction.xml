@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/width_0dp"
         android:orientation="vertical"
         android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
@@ -48,7 +48,7 @@
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_weight="0.4"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/width_0dp"
         android:orientation="vertical"
         android:gravity="end">
 

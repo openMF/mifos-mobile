@@ -74,7 +74,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
 
     val token: String?
         get() = getString(TOKEN, "")
-    val isAuthenticated: Boolean?
+    val isAuthenticated: Boolean
         get() = !TextUtils.isEmpty(token)
     var userId: Long?
         get() = getLong(USER_ID, -1)

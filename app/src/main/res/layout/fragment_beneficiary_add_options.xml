@@ -6,6 +6,7 @@
     android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
     android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:scrollbars="none">
 
     <LinearLayout
@@ -38,7 +39,7 @@
                 android:id="@+id/ll_add_beneficiary_manually"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 android:orientation="vertical"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
@@ -64,7 +65,7 @@
                 android:id="@+id/ll_add_beneficiary_qrcode"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 android:orientation="vertical"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
@@ -98,7 +99,7 @@
                 android:id="@+id/ll_upload_beneficiary_qrcode"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/width_0dp"
                 android:orientation="vertical"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 

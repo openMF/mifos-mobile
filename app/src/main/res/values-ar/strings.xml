@@ -439,4 +439,5 @@
     <string name="pref_base_url_desc">انقر هنا لتغيير تكوينات نقطة النهاية</string>
     <string name="enter_base_url">أدخل عنوان URL الأساسي</string>
     <string name="enter_tenant">أدخل المستأجر</string>
+    <string name="app_info">معلومات التطبيق</string>
 </resources>

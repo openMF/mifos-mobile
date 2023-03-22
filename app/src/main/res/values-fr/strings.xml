@@ -413,4 +413,5 @@
     <string name="pref_base_url_desc">Cliquez ici pour modifier les configurations de point final</string>
     <string name="enter_base_url">Entrez l\'URL primaire</string>
     <string name="enter_tenant">Aller au locataire</string>
+    <string name="app_info">Informations sur l\'application</string>
 </resources>

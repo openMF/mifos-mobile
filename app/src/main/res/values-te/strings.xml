@@ -415,4 +415,5 @@
     <string name="pref_base_url_desc">తుది స్థాన కాన్ఫిగరేషన్లను మార్చడానికి ఇక్కడ క్లిక్ చేయండి</string>
     <string name="enter_base_url">బేస్ URL ను నమోదు చేయండి</string>
     <string name="enter_tenant">అద్దెదారు నమోదు చేయండి</string>
+    <string name="app_info">యాప్ సమాచారం</string>
 </resources>

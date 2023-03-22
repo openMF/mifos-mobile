@@ -51,7 +51,7 @@
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_due"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -75,7 +75,7 @@
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_paid"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -99,7 +99,7 @@
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_waived"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"/>
@@ -123,7 +123,7 @@
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_outstanding"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"/>

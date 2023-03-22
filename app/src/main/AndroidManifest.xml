@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:configChanges="screenLayout|screenSize"
+            android:configChanges="screenLayout|screenSize|orientation"
             android:label="@string/home"
             android:name="org.mifos.mobile.ui.activities.HomeActivity"
             android:windowSoftInputMode="adjustResize"/>

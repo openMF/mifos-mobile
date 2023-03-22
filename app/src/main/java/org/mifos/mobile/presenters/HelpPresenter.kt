@@ -28,7 +28,7 @@ class HelpPresenter @Inject constructor(@ApplicationContext context: Context?) :
         mvpView?.showFaq(faqArrayList)
     }
 
-    fun filterList(faqArrayList: ArrayList<FAQ?>?, query: String): ArrayList<FAQ?>? {
+    fun filterList(faqArrayList: ArrayList<FAQ?>?, query: String): ArrayList<FAQ?> {
         val filteredList = ArrayList<FAQ?>()
         if (faqArrayList != null) {
             for (faq in faqArrayList) {
