@@ -71,7 +71,7 @@
                 style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
                 android:id="@+id/le"
                 android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_width="@dimen/width_0dp" />
 
             <TextView
                 android:id="@+id/or_text"
@@ -83,7 +83,7 @@
             <View
                 style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
                 android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_width="@dimen/width_0dp" />
         </LinearLayout>
 
 

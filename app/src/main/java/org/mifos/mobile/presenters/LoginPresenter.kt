@@ -23,6 +23,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.MFErrorParser
 
 import retrofit2.HttpException
+import java.net.UnknownHostException
 
 import javax.inject.Inject
 
@@ -71,6 +72,10 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager?, 
                                                         .developerMessage)
                                     }
                                 }
+                                if (e is UnknownHostException) {
+                                    mvpView?.showMessage(
+                                        context?.getString(R.string.err_during_login))
+                                }
                             } catch (throwable: Throwable) {
                                 RxJavaPlugins.getErrorHandler()
                             }
@@ -106,6 +111,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager?, 
                         } else {
                             mvpView?.showMessage(context?.getString(R.string.error_fetching_client))
                         }
+
                         preferencesHelper?.clear()
                         reInitializeService()
                     }
