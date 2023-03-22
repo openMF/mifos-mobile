@@ -5,6 +5,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.widget.NestedScrollView
 
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
@@ -23,6 +25,19 @@ class PassCodeActivity : MifosPassCodeActivity() {
         if (!CheckSelfPermissionAndRequest.checkSelfPermission(this,
                         Manifest.permission.READ_PHONE_STATE)) {
             requestPermission()
+        }
+        if(findViewById<AppCompatButton>(R.id.btn_save).text.equals("Use Touch Id")){
+            BiometricAuthentication(this).authenticateWithBiometrics()
+        }
+        if(BiometricAuthentication(this).getBiometricCapabilities()==BiometricCapability.HAS_BIOMETRIC_AUTH){
+            val btn=findViewById<AppCompatButton>(R.id.btn_save)
+            if (btn.visibility==View.GONE){
+                btn.visibility=View.VISIBLE
+                btn.text="Use Touch Id"
+                btn.setOnClickListener {
+                    BiometricAuthentication(this).authenticateWithBiometrics()
+                }
+            }
         }
         intent?.let {
             currPassCode = it.getStringExtra(Constants.CURR_PASSWORD)
@@ -76,5 +91,11 @@ class PassCodeActivity : MifosPassCodeActivity() {
 
     override fun getEncryptionType(): Int {
         return EncryptionUtil.MOBILE_BANKING
+    }
+    override fun onResume() {
+        if(findViewById<AppCompatButton>(R.id.btn_save).text.equals("Use Touch Id")){
+            BiometricAuthentication(this).authenticateWithBiometrics()
+        }
+        super.onResume()
     }
 }

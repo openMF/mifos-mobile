@@ -490,6 +490,8 @@
     <string name="no_saving_account">Saving Accounts</string>
     <string name="no_loan_account">Loan Accounts</string>
     <string name="no_sharing_account">Sharing Accounts</string>
+    <string name="authentication_required">Sign in using fingerprint</string>
+    <string name="text_description_biometrics_dialog">Scan your fingerprint</string>
 
 
     <string-array name="faq_qs">
