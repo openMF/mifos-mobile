@@ -269,39 +269,35 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         }
     }
 
-    /**
-     * Toggles visibility of saving and loan total amounts on home,
-     * and updates the corresponding button icon.
-     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ButterKnife.bind(this, view)
+        toggleVisibilityButton(
+            btn_saving_total_amount_visibility,
+            tv_saving_total_amount,
+            tv_saving_total_amount_hidden
+        )
+        toggleVisibilityButton(
+            btn_loan_amount_visibility,
+            tv_loan_total_amount,
+            tv_loan_total_amount_hidden
+        )
+    }
 
-        tv_saving_total_amount.visibility = View.GONE
-        tv_saving_total_amount_hidden.visibility = View.VISIBLE
-        tv_loan_total_amount.visibility = View.GONE
-        tv_loan_total_amount_hidden.visibility = View.VISIBLE
-
-        btn_saving_total_amount_visibility.setOnClickListener {
-            if (tv_saving_total_amount.visibility == View.VISIBLE) {
-                tv_saving_total_amount.visibility = View.GONE
-                tv_saving_total_amount_hidden.visibility = View.VISIBLE
-                btn_saving_total_amount_visibility.setImageResource(R.drawable.ic_visibility_24px)
+    private fun toggleVisibilityButton(
+        button: ImageButton,
+        visibleView: View,
+        hiddenView: View
+    ) {
+        button.setOnClickListener {
+            if (visibleView.visibility == View.VISIBLE) {
+                visibleView.visibility = View.GONE
+                hiddenView.visibility = View.VISIBLE
+                button.setImageResource(R.drawable.ic_visibility_24px)
             } else {
-                tv_saving_total_amount.visibility = View.VISIBLE
-                tv_saving_total_amount_hidden.visibility = View.GONE
-                btn_saving_total_amount_visibility.setImageResource(R.drawable.ic_visibility_off_24px)
-            }
-        }
-        btn_loan_amount_visibility.setOnClickListener {
-            if (tv_loan_total_amount.visibility == View.VISIBLE) {
-                tv_loan_total_amount.visibility = View.GONE
-                tv_loan_total_amount_hidden.visibility = View.VISIBLE
-                btn_loan_amount_visibility.setImageResource(R.drawable.ic_visibility_24px)
-            } else {
-                tv_loan_total_amount.visibility = View.VISIBLE
-                tv_loan_total_amount_hidden.visibility = View.GONE
-                btn_loan_amount_visibility.setImageResource(R.drawable.ic_visibility_off_24px)
+                visibleView.visibility = View.VISIBLE
+                hiddenView.visibility = View.GONE
+                button.setImageResource(R.drawable.ic_visibility_off_24px)
             }
         }
     }
