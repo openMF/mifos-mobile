@@ -91,14 +91,16 @@
                             tools:text="$ 1000"
                             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:textColor="@color/deposit_green"
-                            android:text="-" />
+                            android:text="-"
+                            android:visibility="gone"/>
                         <TextView
                             android:id="@+id/tv_saving_total_amount_hidden"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/hidden_amount"
                             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                            android:textColor="@color/deposit_green" />
+                            android:textColor="@color/deposit_green"
+                            android:visibility="visible"/>
                         <ImageButton
                             android:id="@+id/btn_saving_total_amount_visibility"
                             android:layout_width="wrap_content"
@@ -131,14 +133,16 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
                             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                            android:text="-" />
+                            android:text="-"
+                            android:visibility="gone"/>
                         <TextView
                             android:id="@+id/tv_loan_total_amount_hidden"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
                             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                            android:text="@string/hidden_amount" />
+                            android:text="@string/hidden_amount"
+                            android:visibility="visible"/>
                         <ImageButton
                             android:id="@+id/btn_loan_amount_visibility"
                             android:layout_width="wrap_content"
