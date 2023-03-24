@@ -290,6 +290,9 @@
     <string name="total_loan">Préstamo total</string>
     <string name="total_saving">Ahorro total</string>
     <string name="accounts_overview">Resumen de cuenta</string>
+    <string name="show_hide_total_saving_amount">Mostrar u ocultar la cantidad total de ahorro</string>
+    <string name="show_hide_total_loan_amount">Mostrar u ocultar el monto total del préstamo</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Encuestas</string>
     <string name="activation_date">Fecha de activación</string>
     <string name="groups">Grupo</string>
@@ -415,4 +418,5 @@
     <string name="pref_base_url_desc">Haga clic aquí para cambiar las configuraciones de punto final.</string>
     <string name="enter_base_url">Introduce la URL principal</string>
     <string name="enter_tenant">Ir al inquilino</string>
+    <string name="app_info">Informacion de la applicacion</string>
 </resources>

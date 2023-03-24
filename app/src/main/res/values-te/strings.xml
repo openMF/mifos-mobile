@@ -292,6 +292,9 @@
     <string name="total_loan">మొత్తం రుణ</string>
     <string name="total_saving">మొత్తం పొదుపు</string>
     <string name="accounts_overview">ఖాతా సారాంశం</string>
+    <string name="show_hide_total_saving_amount">మొత్తం పొదుపు మొత్తాన్ని చూపండి లేదా దాచండి</string>
+    <string name="show_hide_total_loan_amount">మొత్తం లోన్ మొత్తాన్ని చూపండి లేదా దాచండి</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">సర్వేలు</string>
     <string name="activation_date">ఆక్టివేషన్ తేదీ</string>
     <string name="groups">గుంపులు</string>
@@ -415,4 +418,5 @@
     <string name="pref_base_url_desc">తుది స్థాన కాన్ఫిగరేషన్లను మార్చడానికి ఇక్కడ క్లిక్ చేయండి</string>
     <string name="enter_base_url">బేస్ URL ను నమోదు చేయండి</string>
     <string name="enter_tenant">అద్దెదారు నమోదు చేయండి</string>
+    <string name="app_info">యాప్ సమాచారం</string>
 </resources>

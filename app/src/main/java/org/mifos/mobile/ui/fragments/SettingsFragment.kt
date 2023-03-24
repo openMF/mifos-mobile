@@ -5,14 +5,17 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat
 import org.mifos.mobile.utils.ConfigurationPreference
@@ -25,6 +28,7 @@ import org.mifos.mobile.utils.LanguageHelper
 class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
 
     private val prefsHelper by lazy { PreferencesHelper(requireContext().applicationContext) }
+    var preference: android.preference.Preference? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings_preference)
@@ -40,6 +44,37 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 .show()
             return@setOnPreferenceClickListener true
         }
+        findPreference(getString(R.string.passcode)).setOnPreferenceClickListener {
+            val passCodePreferencesHelper = PasscodePreferencesHelper(activity)
+            val currPassCode = passCodePreferencesHelper.passCode
+            passCodePreferencesHelper.savePassCode("")
+            val intent = Intent(activity, PassCodeActivity::class.java).apply {
+                putExtra(Constants.CURR_PASSWORD, currPassCode)
+                putExtra(Constants.IS_TO_UPDATE_PASS_CODE, true)
+            }
+            preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+            startActivity(intent)
+            true
+        }
+        when (preference?.key) {
+            getString(R.string.password) -> {
+                //    TODO("create changePasswordActivity and implement the logic for password change")
+            }
+            getString(R.string.passcode) -> {
+                activity?.let {
+                    val passCodePreferencesHelper = PasscodePreferencesHelper(activity)
+                    val currPassCode = passCodePreferencesHelper.passCode
+                    passCodePreferencesHelper.savePassCode("")
+                    val intent = Intent(it, PassCodeActivity::class.java).apply {
+                        putExtra(Constants.CURR_PASSWORD, currPassCode)
+                        putExtra(Constants.IS_TO_UPDATE_PASS_CODE, true)
+                    }
+                    preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+                    startActivity(intent)
+                }
+            }
+        }
+
     }
 
     override fun onResume() {
