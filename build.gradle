@@ -80,7 +80,7 @@ ext {
     mifosPasscodeVersion = '0.3.0'
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
-    annotationLibraryVersion ='1.1.0'
+    annotationLibraryVersion ='1.6.0'
     firebaseCrashlyticsVersion = '17.3.0'
 
 }
