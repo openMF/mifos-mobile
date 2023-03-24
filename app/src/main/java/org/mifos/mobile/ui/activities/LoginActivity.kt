@@ -12,6 +12,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_login.*
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.presenters.LoginPresenter
@@ -55,18 +56,16 @@ class LoginActivity : BaseActivity(), LoginView {
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         loginPresenter?.attachView(this)
-        dismissSoftKeyboardOnBkgTap(findViewById(R.id.nsv_bkg))
+        dismissSoftKeyboardOnBkgTap(nsv_background)
     }
 
     private fun dismissSoftKeyboardOnBkgTap(view: View) {
-
         if (view !is EditText) {
             view.setOnTouchListener { view, event ->
                 hideKeyboard(this@LoginActivity)
                 false
             }
         }
-
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)
