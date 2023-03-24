@@ -290,6 +290,9 @@
     <string name="total_loan">ឥណទានសរុប</string>
     <string name="total_saving">ការសន្សំសរុប</string>
     <string name="accounts_overview">ទិដ្ឋភាពគណនី</string>
+    <string name="show_hide_total_saving_amount">បង្ហាញ ឬលាក់ចំនួនទឹកប្រាក់សន្សំសរុប</string>
+    <string name="show_hide_total_loan_amount">បង្ហាញ ឬលាក់ចំនួនប្រាក់កម្ចីសរុប</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">ការស្ទង់មតិ</string>
     <string name="activation_date">កាលបរិច្ឆេទសកម្ម</string>
     <string name="groups">ក្រុម</string>
