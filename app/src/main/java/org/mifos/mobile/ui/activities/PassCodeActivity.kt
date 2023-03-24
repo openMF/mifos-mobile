@@ -3,18 +3,14 @@ package org.mifos.mobile.ui.activities
 import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.NestedScrollView
-
+import butterknife.BindView
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
-
 import org.mifos.mobile.R
-import org.mifos.mobile.ui.fragments.AppTheme
-import org.mifos.mobile.ui.fragments.applySavedTheme
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.MaterialDialog
@@ -23,14 +19,19 @@ import org.mifos.mobile.utils.Toaster
 class PassCodeActivity : MifosPassCodeActivity() {
     private var currPassCode: String? = null
     private var isToUpdatePassCode: Boolean = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!CheckSelfPermissionAndRequest.checkSelfPermission(this,
                         Manifest.permission.READ_PHONE_STATE)) {
             requestPermission()
         }
-        val ll =findViewById<NestedScrollView>(R.id.cl_rootview)
-        ll.setBackgroundColor(android.R.attr.colorBackground)
+        val nestedScrollView = findViewById<NestedScrollView>(R.id.cl_rootview)
+        val colorBackground = android.R.attr.colorBackground
+        val typedValue = TypedValue()
+        theme.resolveAttribute(colorBackground, typedValue, true)
+        nestedScrollView.setBackgroundColor(typedValue.data)
 
         intent?.let {
             currPassCode = it.getStringExtra(Constants.CURR_PASSWORD)
