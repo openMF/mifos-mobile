@@ -11,8 +11,10 @@ import androidx.appcompat.widget.AppCompatButton
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import butterknife.OnTouch
 
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_login.*
 
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.LoginPayload
@@ -57,6 +59,15 @@ class LoginActivity : BaseActivity(), LoginView {
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         loginPresenter?.attachView(this)
+    }
+
+    @OnTouch(R.id.et_username, R.id.et_password)
+    fun onTouch(v : View): Boolean {
+        when(v.id) {
+            R.id.et_username -> loginPresenter?.mvpView?.clearUsernameError()
+            R.id.et_password -> loginPresenter?.mvpView?.clearPasswordError()
+        }
+        return false
     }
 
     /**
