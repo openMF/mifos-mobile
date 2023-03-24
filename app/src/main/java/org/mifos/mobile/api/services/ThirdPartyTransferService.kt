@@ -16,6 +16,6 @@ interface ThirdPartyTransferService {
     @get:GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template?type=tpt")
     val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
 
-    @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=\"tpt\"")
+    @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
     fun makeTransfer(@Body transferPayload: TransferPayload?): Observable<ResponseBody?>?
 }

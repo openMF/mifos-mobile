@@ -290,6 +290,9 @@
     <string name="total_loan">Łączna pożyczka</string>
     <string name="total_saving">Całkowite oszczędności</string>
     <string name="accounts_overview">Przegląd konta</string>
+    <string name="show_hide_total_saving_amount">Pokaż lub ukryj całkowitą kwotę oszczędności</string>
+    <string name="show_hide_total_loan_amount">Pokaż lub ukryj całkowitą kwotę pożyczki</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Ankiety</string>
     <string name="activation_date">Data aktywacji</string>
     <string name="groups">Grupy</string>

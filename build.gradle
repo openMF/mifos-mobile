@@ -24,7 +24,7 @@ buildscript {
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinGradlePluginversion"
-        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.8"
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.14"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle filesa
     }
@@ -61,8 +61,8 @@ ext {
     okHttp3Version = '3.6.0'
     butterKnifeVersion = '8.0.1'
     dbflowVersion = '4.2.4'
-    playServicesVersion = '17.0.0'
-    firebaseMessagingVersion = '21.0.1'
+    playServicesVersion = '17.0.1'
+    firebaseMessagingVersion = '21.1.0'
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
@@ -81,6 +81,6 @@ ext {
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
     annotationLibraryVersion ='1.1.0'
-    firebaseCrashlyticsVersion = '17.3.0'
+    firebaseCrashlyticsVersion = '17.4.1'
 
 }
