@@ -290,6 +290,9 @@
     <string name="total_loan">Préstamo total</string>
     <string name="total_saving">Ahorro total</string>
     <string name="accounts_overview">Resumen de cuenta</string>
+    <string name="show_hide_total_saving_amount">Mostrar u ocultar la cantidad total de ahorro</string>
+    <string name="show_hide_total_loan_amount">Mostrar u ocultar el monto total del préstamo</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Encuestas</string>
     <string name="activation_date">Fecha de activación</string>
     <string name="groups">Grupo</string>

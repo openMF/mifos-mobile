@@ -298,6 +298,8 @@
     <string name="total_loan">إجمالي القرض</string>
     <string name="total_saving">مجموع المدخرات</string>
     <string name="accounts_overview">نظرة عامة على الحساب</string>
+    <string name="show_hide_total_loan_amount">إظهار أو إخفاء إجمالي مبلغ القرض</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">الدراسات الاستقصائية</string>
     <string name="activation_date">تفعيل التسجيل</string>
     <string name="groups">المجموعات</string>
@@ -441,6 +443,12 @@
     <string name="enter_tenant">أدخل المستأجر</string>
     <string name="app_info">معلومات التطبيق</string>
 
+
+                          
+                          
+                          
+                          
     <string name="invalid_credentials">اسم المستخدم أو كلمة المرور غير صالحة</string>
+
 
 </resources>

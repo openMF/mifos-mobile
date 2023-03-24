@@ -360,6 +360,9 @@
     <string name="submit_beneficiary">ارسال ذینفع</string>
     <string name="submit_loan">" ارسال قرض"</string>
     <string name="submitted">ارسال شده</string>
+    <string name="show_hide_total_saving_amount">نمایش یا پنهان کردن کل مبلغ پس انداز</string>
+    <string name="show_hide_total_loan_amount">نمایش یا پنهان کردن کل مبلغ وام</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">بررسی ها</string>
     <string name="tap_to_add_guarantor">برای افزودن ضمانت بر روی ضربه بزنید</string>
     <string name="tenant">مستاجر</string>
