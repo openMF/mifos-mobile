@@ -62,7 +62,7 @@ ext {
     butterKnifeVersion = '8.0.1'
     dbflowVersion = '4.2.4'
     playServicesVersion = '17.0.1'
-    firebaseMessagingVersion = '21.0.1'
+    firebaseMessagingVersion = '21.1.0'
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
