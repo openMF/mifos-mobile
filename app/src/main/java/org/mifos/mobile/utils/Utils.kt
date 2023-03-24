@@ -1,6 +1,5 @@
 package org.mifos.mobile.utils
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
@@ -10,12 +9,9 @@ import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.util.Log
 import android.view.Menu
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.mifos.mobile.passcode.BasePassCodeActivity
 import org.mifos.mobile.R
-import org.mifos.mobile.ui.activities.LoginActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
