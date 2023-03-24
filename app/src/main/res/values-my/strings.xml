@@ -296,6 +296,8 @@
     <string name="total_loan">စုစုပေါင်းချေးငွေ</string>
     <string name="total_saving">စုစုပေါင်းချွေတာသုံးစွဲ</string>
     <string name="accounts_overview">အကောင့်ခြုံငုံသုံးသပ်ချက်</string>
+    <string name="show_hide_total_loan_amount">စုစုပေါင်းချေးငွေပမာဏကို ပြပါ သို့မဟုတ် ဝှက်ပါ။</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">စစ်တမ်းများ</string>
     <string name="activation_date">activation နေ့စွဲ</string>
     <string name="groups">အဖွဲ့များ</string>
@@ -438,5 +440,6 @@
     <string name="enter_base_url">အဆိုပါအခြေစိုက်စခန်း URL ကိုရိုက်ထည့်ပါ</string>
     <string name="enter_tenant">ဥယျာဉ်စောင့် Enter</string>
     <string name="app_info">အက်ပ်အချက်အလက်</string>
+    <string name="show_hide_total_saving_amount">စုစုပေါင်းချွေတာသည့်ပမာဏကို ပြပါ သို့မဟုတ် ဝှက်ပါ။</string>
 
 </resources>
