@@ -415,4 +415,6 @@
     <string name="enter_base_url">បញ្ចូល URL ចម្បង</string>
     <string name="enter_tenant">ចូលទៅកាន់ភតិកៈ</string>
     <string name="app_info">ព័ត៌មានកម្មវិធី</string>
+
+    <string name="invalid_credentials">ឈ្មោះអ្នកប្រើប្រាស់ឬលេខសំងាត់មិនត្រឹមត្រូវ</string>
 </resources>

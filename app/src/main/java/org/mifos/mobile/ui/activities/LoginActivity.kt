@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -83,6 +84,7 @@ class LoginActivity : BaseActivity(), LoginView {
     /**
      * Starts [PassCodeActivity]
      */
+    @SuppressLint("StringFormatInvalid")
     override fun showPassCodeActivity(clientName: String?) {
         showToast(getString(R.string.toast_welcome, clientName))
         startPassCodeActivity()

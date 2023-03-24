@@ -416,4 +416,6 @@
     <string name="enter_base_url">Wprowadź podstawowy adres URL</string>
     <string name="enter_tenant">Wejdź do Lokatora</string>
     <string name="app_info">Informacje o aplikacji</string>
+
+    <string name="invalid_credentials">Nieprawidłowa nazwa użytkownika lub hasło</string>
 </resources>

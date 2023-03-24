@@ -502,4 +502,6 @@
     <string name="error_loan_account_details_loading">Erro ao carregar em detalhes de contas de empréstimo</string>
     <string name="app_info">Informações do aplicativo</string>
 
+    <string name="invalid_credentials">Nome de usuário ou senha inválidos</string>
+
 </resources>

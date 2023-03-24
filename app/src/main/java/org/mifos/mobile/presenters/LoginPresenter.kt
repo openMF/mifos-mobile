@@ -1,5 +1,6 @@
 package org.mifos.mobile.presenters
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,7 +66,10 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager?, 
                                 if (e is HttpException) {
                                     if (e.code() == 503) {
                                         mvpView?.showMessage(context?.getString(R.string.error_server_down))
-                                    } else {
+                                    }
+                                    else if (e.code() == 401) {
+                                        mvpView?.showMessage(context?.getString(R.string.invalid_credentials))
+                                    }else {
                                         errorMessage = e.response().errorBody().string()
                                         mvpView
                                                 ?.showMessage(MFErrorParser.parseError(errorMessage)
@@ -136,6 +140,7 @@ class LoginPresenter @Inject constructor(private val dataManager: DataManager?, 
                 }
     }
 
+    @SuppressLint("StringFormatInvalid", "StringFormatMatches")
     private fun isCredentialsValid(loginPayload: LoginPayload?): Boolean {
         val username: String = loginPayload?.username.toString()
         val password: String = loginPayload?.password.toString()

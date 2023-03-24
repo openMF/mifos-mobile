@@ -427,4 +427,6 @@
     <string name="nine">৯</string>
     <string name="zero">০</string>
     <string name="app_info">অ্যাপের তথ্য</string>
+
+    <string name="invalid_credentials">অবৈধ ব্যবহারকারীর নাম বা পাসওয়ার্ড</string>
 </resources>

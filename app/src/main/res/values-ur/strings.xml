@@ -438,4 +438,6 @@
     <string name="enter_tenant">کرایہ درج کریں</string>
     <string name="app_info">ایپ کی معلومات</string>
 
+    <string name="invalid_credentials">غلط صارف نام یا پاس ورڈ</string>
+
 </resources>

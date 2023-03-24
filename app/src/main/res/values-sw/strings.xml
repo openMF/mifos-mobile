@@ -415,4 +415,6 @@
     <string name="enter_base_url">Ingiza URL ya msingi</string>
     <string name="enter_tenant">Nenda kwa Mpangaji</string>
     <string name="app_info">Maelezo ya Programu</string>
+
+    <string name="invalid_credentials">Jina la mtumiaji au nenosiri lisilo sahihi</string>
 </resources>

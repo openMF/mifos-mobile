@@ -415,4 +415,6 @@
     <string name="enter_base_url">Masukkan URL utama</string>
     <string name="enter_tenant">Pergi ke Tenant</string>
     <string name="app_info">Info Aplikasi</string>
+
+    <string name="invalid_credentials">Nama pengguna atau kata sandi tidak valid</string>
 </resources>

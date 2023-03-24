@@ -68,14 +68,15 @@ android {
         jvmTarget = "1.8"
     }
 
-    lintOptions {
-        abortOnError false
-        disable 'InvalidPackage'
-    }
 
     androidExtensions {
         experimental = true
     }
+    lint {
+        abortOnError false
+        disable 'InvalidPackage'
+    }
+    namespace 'org.mifos.mobile'
 }
 
 dependencies {

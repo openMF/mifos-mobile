@@ -414,4 +414,6 @@
     <string name="enter_base_url">Entrez l\'URL primaire</string>
     <string name="enter_tenant">Aller au locataire</string>
     <string name="app_info">Informations sur l\'application</string>
+
+    <string name="invalid_credentials">Nom d\'utilisateur ou mot de passe invalide</string>
 </resources>

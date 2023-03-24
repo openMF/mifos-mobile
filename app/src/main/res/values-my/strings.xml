@@ -439,4 +439,6 @@
     <string name="enter_tenant">ဥယျာဉ်စောင့် Enter</string>
     <string name="app_info">အက်ပ်အချက်အလက်</string>
 
+    <string name="invalid_credentials">အသုံးပြုသူအမည်သို့မဟုတ်စကားဝှက်မမှန်ကန်ပါ</string>
+
 </resources>

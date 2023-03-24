@@ -416,4 +416,6 @@
     <string name="enter_base_url">Введите основной URL-адрес</string>
     <string name="enter_tenant">Перейти к Арендатору</string>
     <string name="app_info">Информация о приложении</string>
+
+    <string name="invalid_credentials">Неверное имя пользователя или пароль</string>
 </resources>

@@ -421,4 +421,6 @@
     <string name="working">کار کردن</string>
     <string name="yes">بلي</string>
     <string name="app_info">اطلاعات برنامه</string>
+
+    <string name="invalid_credentials">نام کاربری یا گذرواژه نامعتبر است</string>
 </resources>
