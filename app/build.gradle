@@ -167,7 +167,7 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
     
     implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 
 }
 apply plugin: 'com.google.gms.google-services'
