@@ -290,6 +290,8 @@
     <string name="total_loan">মোট ঋণ</string>
     <string name="total_saving">মোট সঞ্চয়</string>
     <string name="accounts_overview">অ্যাকাউন্ট ওভারভিউ</string>
+    <string name="show_hide_total_loan_amount">মোট ঋণের পরিমাণ দেখান বা লুকান</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">সার্ভের</string>
     <string name="activation_date">অ্যাক্টিভেশন তারিখ</string>
     <string name="groups">গ্রুপ</string>
@@ -427,4 +429,5 @@
     <string name="nine">৯</string>
     <string name="zero">০</string>
     <string name="app_info">অ্যাপের তথ্য</string>
+    <string name="show_hide_total_saving_amount">মোট সঞ্চয় পরিমাণ দেখান বা লুকান</string>
 </resources>

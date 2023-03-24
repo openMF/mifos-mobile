@@ -289,6 +289,8 @@
     <string name="total_loan">Prêt total</string>
     <string name="total_saving">Total épargne</string>
     <string name="accounts_overview">Aperçu du compte</string>
+    <string name="show_hide_total_loan_amount">Afficher ou masquer le montant total du prêt</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Enquêtes</string>
     <string name="activation_date">Date d\'activation</string>
     <string name="groups">Groupe</string>
@@ -414,4 +416,5 @@
     <string name="enter_base_url">Entrez l\'URL primaire</string>
     <string name="enter_tenant">Aller au locataire</string>
     <string name="app_info">Informations sur l\'application</string>
+    <string name="show_hide_total_saving_amount">Afficher ou masquer le montant total de l\'épargne</string>
 </resources>

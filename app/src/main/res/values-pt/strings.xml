@@ -312,6 +312,9 @@
     <string name="total_loan">Empréstimo Total</string>
     <string name="total_saving">Poupança Total</string>
     <string name="accounts_overview">Visão Global da Conta</string>
+    <string name="show_hide_total_saving_amount">Mostrar ou ocultar o valor total economizado</string>
+    <string name="show_hide_total_loan_amount">Mostrar ou ocultar o valor total do empréstimo</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Sondagens</string>
     <string name="activation_date">Data de Ativação</string>
     <string name="groups">Grupos</string>
