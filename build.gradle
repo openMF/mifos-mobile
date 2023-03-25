@@ -59,7 +59,7 @@ ext {
     lifecycleExtensionsVersion = '2.2.0'
     retrofitVersion = '2.2.0'
     okHttp3Version = '3.14.9'
-    butterKnifeVersion = '8.0.1'
+    butterKnifeVersion = '10.2.3'
     dbflowVersion = '4.2.4'
     playServicesVersion = '17.0.1'
     firebaseMessagingVersion = '21.1.0'
