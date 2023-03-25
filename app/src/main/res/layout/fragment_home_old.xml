@@ -56,71 +56,106 @@
                 app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accounts_overview"
+                        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
+
+                    <View
+                        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
+
                     <LinearLayout
+                        android:id="@+id/ll_total_savings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
+                        android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/accounts_overview"
-                            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
-
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:text="@string/total_saving"/>
                         <View
-                            style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
-                            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
-
-                        <LinearLayout
-                            android:id="@+id/ll_total_savings"
-                            android:layout_width="match_parent"
+                            android:layout_width="@dimen/width_0dp"
+                            android:layout_height="@dimen/height_0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_saving_total_amount"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/Mifos.DesignSystem.TextStyle.Label"
-                                android:text="@string/total_saving"/>
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:id="@+id/tv_saving_total_amount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:text="$ 1000"
-                                style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                                android:textColor="@color/deposit_green"
-                                android:text="-"/>
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/ll_total_loan"
-                            android:layout_width="match_parent"
+                            tools:text="$ 1000"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                            android:textColor="@color/deposit_green"
+                            android:text="-"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_saving_total_amount_hidden"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/Mifos.DesignSystem.TextStyle.Label"
-                                android:text="@string/total_loan"/>
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:id="@+id/tv_loan_total_amount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/red"
-                                style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                                android:text="-"/>
-                        </LinearLayout>
-
+                            android:text="@string/hidden_amount"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                            android:textColor="@color/deposit_green"
+                            android:visibility="visible"/>
+                        <ImageButton
+                            android:id="@+id/btn_saving_total_amount_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:contentDescription="@string/show_hide_total_saving_amount"
+                            android:paddingStart="6dp"
+                            android:src="@drawable/ic_visibility_24px"
+                            app:tint="@color/colorPrimary" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_total_loan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:text="@string/total_loan" />
+                        <View
+                            android:layout_width="@dimen/width_0dp"
+                            android:layout_height="@dimen/height_0dp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:id="@+id/tv_loan_total_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/red"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                            android:text="-"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_loan_total_amount_hidden"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/red"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                            android:text="@string/hidden_amount"
+                            android:visibility="visible"/>
+                        <ImageButton
+                            android:id="@+id/btn_loan_amount_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:contentDescription="@string/show_hide_total_loan_amount"
+                            android:paddingStart="6dp"
+                            android:src="@drawable/ic_visibility_24px"
+                            app:tint="@color/colorPrimary" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -150,8 +185,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="56dp"
-                            android:layout_width="56dp"
+                            android:layout_height="@dimen/height_56dp"
+                            android:layout_width="@dimen/width_56dp"
                             app:srcCompat="@drawable/ic_account_balance_black_24dp" />
 
                         <TextView
@@ -182,8 +217,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="56dp"
-                            android:layout_width="56dp"
+                            android:layout_height="@dimen/height_56dp"
+                            android:layout_width="@dimen/width_56dp"
                             app:srcCompat="@drawable/ic_compare_arrows_black_24dp" />
 
                         <TextView
@@ -214,8 +249,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="56dp"
-                            android:layout_width="56dp"
+                            android:layout_height="@dimen/height_56dp"
+                            android:layout_width="@dimen/width_56dp"
                             app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp" />
 
                         <TextView
@@ -245,8 +280,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="56dp"
-                            android:layout_width="56dp"
+                            android:layout_height="@dimen/height_56dp"
+                            android:layout_width="@dimen/width_56dp"
                             app:srcCompat="@drawable/ic_account_balance_black_24dp" />
 
                         <TextView
@@ -277,8 +312,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="56dp"
-                            android:layout_width="56dp"
+                            android:layout_height="@dimen/height_56dp"
+                            android:layout_width="@dimen/width_56dp"
                             app:srcCompat="@drawable/ic_beneficiaries_48px" />
 
                         <TextView
@@ -309,8 +344,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="56dp"
-                            android:layout_width="56dp"
+                            android:layout_height="@dimen/height_56dp"
+                            android:layout_width="@dimen/width_56dp"
                             app:srcCompat="@drawable/ic_surveys_48px" />
 
                         <TextView

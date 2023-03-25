@@ -67,4 +67,6 @@ object Constants {
     const val LOAN_REPAYMENT = "loan_repayment"
     const val SHOW_CASE_PREFERENCES = "initial_login_showcase"
     const val SHOW_CASE = "show_case"
+    const val CURR_PASSWORD = "currentPassword"
+    const val IS_TO_UPDATE_PASS_CODE = "updatePassCode"
 }

@@ -290,6 +290,9 @@
     <string name="total_loan">Jumla ya mkopo</string>
     <string name="total_saving">Uhifadhi wa jumla</string>
     <string name="accounts_overview">Maelezo ya Akaunti</string>
+    <string name="show_hide_total_saving_amount">Onyesha au ufiche jumla ya kiasi kilichohifadhiwa</string>
+    <string name="show_hide_total_loan_amount">Onyesha au ufiche jumla ya kiasi cha mkopo</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Surveys</string>
     <string name="activation_date">Tarehe ya uanzishaji</string>
     <string name="groups">Kundi</string>
@@ -414,4 +417,5 @@
     <string name="pref_base_url_desc">Bonyeza hapa ili kubadilisha mipangilio ya Mwisho</string>
     <string name="enter_base_url">Ingiza URL ya msingi</string>
     <string name="enter_tenant">Nenda kwa Mpangaji</string>
+    <string name="app_info">Maelezo ya Programu</string>
 </resources>

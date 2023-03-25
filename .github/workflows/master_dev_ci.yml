@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
         # Set up JDK
       - name: Set Up JDK 1.8
@@ -35,7 +35,7 @@ jobs:
 
         # Upload Built APK
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: mifos-mobile
           path: app/build/outputs/apk/debug/
@@ -45,13 +45,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Static Analysis
         run: ./gradlew lint
 
       - name: Upload Static Analysis Report For Mifos-Mobile Module
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v3.1.2
         if: failure()
         with:
           name: Static Analysis Report
@@ -62,13 +62,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: PMD Check
         run: ./gradlew pmd
 
       - name: Upload PMD Report
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v3.1.2
         if: failure()
         with:
           name: PMD Report

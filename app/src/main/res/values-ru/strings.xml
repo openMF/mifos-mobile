@@ -290,6 +290,9 @@
     <string name="total_loan">Общий кредит</string>
     <string name="total_saving">Общая экономия</string>
     <string name="accounts_overview">Обзор учетной записи</string>
+    <string name="show_hide_total_saving_amount">Mostrar ou ocultar o valor total economizado</string>
+    <string name="show_hide_total_loan_amount">Показать или скрыть общую сумму кредита</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Обзоры</string>
     <string name="activation_date">Дата активации</string>
     <string name="groups">Группа</string>
@@ -415,4 +418,5 @@
     <string name="pref_base_url_desc">Нажмите здесь, чтобы изменить конфигурации конечных точек</string>
     <string name="enter_base_url">Введите основной URL-адрес</string>
     <string name="enter_tenant">Перейти к Арендатору</string>
+    <string name="app_info">Информация о приложении</string>
 </resources>
