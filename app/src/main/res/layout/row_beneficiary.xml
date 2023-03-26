@@ -2,14 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/default_margin"
-    android:layout_marginTop="@dimen/default_margin"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:paddingEnd="@dimen/default_padding"
-    android:paddingLeft="@dimen/row_padding_left"
-    android:paddingRight="@dimen/row_padding_right"
-    android:paddingStart="@dimen/default_padding">
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <TextView
         android:ellipsize="end"
@@ -19,8 +15,7 @@
         android:layout_width="match_parent"
         android:lines="1"
         android:text="@string/medium_text"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -33,11 +28,10 @@
             android:layout_gravity="start"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_0dp"
             android:lines="1"
             android:text="@string/medium_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@color/gray_dark"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
         <TextView
             android:ellipsize="end"
@@ -45,11 +39,10 @@
             android:id="@+id/tv_office_name"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_0dp"
             android:lines="1"
             android:text="@string/medium_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@color/gray_dark"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
     </LinearLayout>
 

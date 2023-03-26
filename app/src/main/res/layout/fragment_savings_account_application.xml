@@ -1,96 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
     android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:elevation="@dimen/cardview_default_elevation"
+    <com.google.android.material.card.MaterialCardView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:cardCornerRadius="@dimen/cardview_default_radius">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
         <LinearLayout
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/default_margin"
             android:layout_width="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent">
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/client_name"
-                    android:textColor="@color/light_grey"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="center"
                     android:id="@+id/tv_client_name"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:layout_width="0dp"
-                    tools:text="@string/medium_text"/>
+                    android:layout_width="@dimen/width_0dp"
+                    tools:text="@string/medium_text"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_width="match_parent"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/submission_date"
-                    android:textColor="@color/light_grey"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:gravity="center"
                     android:id="@+id/tv_submission_date"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     tools:text="@string/medium_text"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
-        android:layout_width="match_parent"
-        android:text="@string/select_product_id"
-        android:textColor="@color/light_grey"/>
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+        android:layout_width="match_parent">
 
-    <Spinner
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:id="@+id/sp_product_id"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
-        android:layout_width="match_parent"
-        android:spinnerMode="dropdown"/>
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/product_id_field"
+            android:hint="@string/select_product_id"
+            android:inputType="none"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+
+    <Button
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

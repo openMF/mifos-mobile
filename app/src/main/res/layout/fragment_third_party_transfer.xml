@@ -13,19 +13,22 @@
     android:layout_width="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        android:background="@color/white"
         android:id="@+id/view_flipper"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:padding="@dimen/activity_horizontal_margin">
 
         <LinearLayout
-            style="@style/LinearLayout.Base"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:id="@+id/ll_make_transfer"
             android:visibility="visible">
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_height="match_parent"
@@ -34,20 +37,21 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_one"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/height_40dp"
+                        android:layout_width="@dimen/width_40dp"
                         app:value="1"/>
 
                     <View
                         android:background="@color/light_grey"
                         android:layout_gravity="center"
                         android:layout_height="match_parent"
-                        android:layout_width="4dp"/>
+                        android:layout_width="@dimen/width_4dp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginStart="@dimen/default_padding"
@@ -67,24 +71,25 @@
                         android:id="@+id/sp_pay_from"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:paddingTop="10dp"
+                        android:paddingTop="@dimen/padding_10dp"
                         android:prompt="@string/select_pay_from"
                         android:spinnerMode="dialog"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_from"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_width="wrap_content"
-                        android:text="@string/continue_str"
-                        android:textColor="@color/white"/>
+                        android:text="@string/continue_str"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_height="match_parent"
@@ -93,20 +98,21 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_two"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/height_40dp"
+                        android:layout_width="@dimen/width_40dp"
                         app:value="2"/>
 
                     <View
                         android:background="@color/light_grey"
                         android:layout_gravity="center"
                         android:layout_height="match_parent"
-                        android:layout_width="4dp"/>
+                        android:layout_width="@dimen/width_4dp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginStart="@dimen/default_padding"
@@ -119,16 +125,14 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/beneficiary"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
                     <TextView
                         android:id="@+id/tv_select_beneficary"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/select_beneficiary"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/light_grey"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                     <TextView
                         android:id="@+id/tv_add_beneficiary_msg"
@@ -144,12 +148,12 @@
                         android:id="@+id/sp_beneficiary"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:paddingTop="10dp"
+                        android:paddingTop="@dimen/padding_10dp"
                         android:prompt="@string/select_beneficiary"
                         android:spinnerMode="dialog"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_to"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -158,7 +162,7 @@
                         android:textColor="@color/white"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_add_beneficiary"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -171,7 +175,9 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_height="match_parent"
@@ -180,20 +186,21 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_three"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/height_40dp"
+                        android:layout_width="@dimen/width_40dp"
                         app:value="3"/>
 
                     <View
                         android:background="@color/light_grey"
                         android:layout_gravity="center"
                         android:layout_height="match_parent"
-                        android:layout_width="4dp"/>
+                        android:layout_width="@dimen/width_4dp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginStart="@dimen/default_padding"
@@ -205,16 +212,14 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/amount"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
                     <TextView
                         android:id="@+id/tv_select_amount"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/enter_amount"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/light_grey"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                     <EditText
                         android:gravity="start"
@@ -225,10 +230,10 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:maxLines="1"
-                        android:paddingBottom="16dp"
+                        android:paddingBottom="@dimen/layout_padding_16dp"
                         android:visibility="gone"/>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_amount"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin"
@@ -242,7 +247,9 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <LinearLayout
                     android:layout_height="match_parent"
                     android:layout_width="wrap_content"
@@ -250,14 +257,15 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_four"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/height_40dp"
+                        android:layout_width="@dimen/width_40dp"
                         app:value="4"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginStart="@dimen/default_padding"
@@ -269,8 +277,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/remark"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
                     <EditText
                         android:gravity="start"
@@ -280,7 +287,7 @@
                         android:inputType="text"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:paddingBottom="16dp"
+                        android:paddingBottom="@dimen/layout_padding_16dp"
                         android:visibility="gone"/>
 
                     <TextView
@@ -288,30 +295,31 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/enter_remarks"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/light_grey"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                     <LinearLayout
-                        style="@style/LinearLayout.Width"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:id="@+id/ll_review"
                         android:visibility="gone">
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_cancel_transfer"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="@dimen/margin_16dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
                             android:layout_weight="0.5"
                             android:layout_width="match_parent"
                             android:text="@string/cancel"
-                            android:textColor="@color/primary"
+                            android:textColor="?attr/colorPrimary"
                             app:backgroundTint="@color/white"/>
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_review_transfer"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="@dimen/margin_16dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
                             android:layout_weight="0.5"
                             android:layout_width="match_parent"
                             android:text="@string/review_transfer"
@@ -329,7 +337,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

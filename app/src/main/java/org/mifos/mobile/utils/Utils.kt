@@ -55,7 +55,7 @@ object Utils {
         }
         val imagePath = File(context?.cacheDir, "images")
         val newFile = File(imagePath, "image.png")
-        return FileProvider.getUriForFile(context!!, "org.mifos.mobilebanking.fileprovider",
+        return FileProvider.getUriForFile(context!!, "org.mifos.mobile.fileprovider",
                 newFile)
     }
 
@@ -69,7 +69,7 @@ object Utils {
     }
 
     @kotlin.jvm.JvmStatic
-    fun formatTransactionType(type: String?): String? {
+    fun formatTransactionType(type: String?): String {
         val builder = StringBuilder()
         for (str in type?.toLowerCase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
             builder.append(str[0].toString().toUpperCase(Locale.ROOT) + str.substring(1,

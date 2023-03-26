@@ -3,25 +3,30 @@
 buildscript {
     repositories {
         google()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         jcenter()
     }
 
     ext {
-        gradleVersion = '3.3.2'
-        crashlyticsGradleVersion = '2.4.1'
-        ossLicensesVersion = '0.9.2'
-        googleServicesVersion = '4.2.0'
-        kotlinGradlePluginversion = '1.3.11'
+        gradleVersion = '7.2.0'
+        crashlyticsGradleVersion = '2.9.4'
+        ossLicensesVersion = '0.10.5'
+        googleServicesVersion = '4.3.15'
+        kotlinGradlePluginversion = '1.6.21'
     }
 
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsGradleVersion"
-        classpath "com.google.gms:oss-licenses:$ossLicensesVersion"
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinGradlePluginversion"
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.14"
         // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // in the individual module build.gradle filesa
     }
 }
 
@@ -39,39 +44,43 @@ task clean(type: Delete) {
 
 ext {
     // Sdk and tools
-    minSdkVersion = 16
-    targetSdkVersion = 28
-    compileSdkVersion = 28
-    buildToolsVersion = '28.0.3'
+    minSdkVersion = 22
+    targetSdkVersion = 31
+    compileSdkVersion = 31
 
     // App dependencies
-    supportLibraryVersion = '1.0.0'
-    designLibraryVersion = '1.0.0'
-    daggerVersion = '2.30.1'
+    countryCodePicker = '2.7.0'
+    supportLibraryVersion = '1.4.2'
+    designLibraryVersion = '1.6.1'
+    daggerVersion = '2.45'
+    recyclerViewVersion = '1.2.1'
+    vectorDrawablesVersion = '1.1.0'
+    lifecycleVersion = '2.4.1'
+    lifecycleExtensionsVersion = '2.2.0'
     retrofitVersion = '2.2.0'
-    okHttp3Version = '3.6.0'
+    okHttp3Version = '3.14.9'
     butterKnifeVersion = '8.0.1'
-    dbflowVersion = '4.1.2'
-    playServicesVersion = '17.0.0'
-    firebaseMessagingVersion = '21.0.1'
+    dbflowVersion = '4.2.4'
+    playServicesVersion = '17.0.1'
+    firebaseMessagingVersion = '21.1.0'
     oss_licenses = '17.0.0'
-    kotlinVersion = '1.3.11'
-    tableViewVersion = '0.8.8'
+    kotlinVersion = '1.6.10'
+    tableViewVersion = '0.8.9.4'
 
-    jUnitVersion = '4.12'
-    mockitoVersion = '3.6.28'
-    runnerVersion = '1.1.0-alpha4'
-    rulesVersion = '1.3.1-alpha02'
-    espressoVersion = '3.4.0-alpha02'
-    zxingcoreVersion = '3.2.1'
+    jUnitVersion = '4.13.2'
+    mockitoVersion = '5.2.0'
+    runnerVersion = '1.5.3-alpha01'
+    rulesVersion = '1.6.0-alpha01'
+    espressoVersion = '3.5.1'
+    zxingcoreVersion = '3.5.1'
     zxingbarcodescannerVersion = '1.9.13'
-    rxjavaVersion = '2.2.20'
+    rxjavaVersion = '2.2.21'
     rxandroidVersion = '2.1.1'
     sweeterrorVersion = '1.0.0'
-    mifosPasscodeVersion = '0.3.0'
+    mifosPasscodeVersion = '1.0.0'
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
     annotationLibraryVersion ='1.1.0'
-    firebaseCrashlyticsVersion = '17.3.0'
+    firebaseCrashlyticsVersion = '18.3.6'
 
 }

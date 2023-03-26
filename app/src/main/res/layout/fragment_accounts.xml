@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/white"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -15,14 +14,14 @@
             android:fadeScrollbars="false"
             android:id="@+id/rv_accounts"
             android:layout_centerHorizontal="true"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/height_0dp"
             android:layout_weight="1"
             android:layout_width="wrap_content"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

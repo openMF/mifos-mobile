@@ -19,16 +19,15 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:background="@color/white"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:cardElevation="@dimen/cardview_default_elevation"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
             app:cardUseCompatPadding="true">
 
             <TableLayout
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/login_padding_button"
                 android:layout_width="match_parent"
                 android:orientation="vertical">
 
@@ -94,7 +93,7 @@
 
             </TableLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.evrencoskun.tableview.TableView
             android:id="@+id/tv_repayment_schedule"
@@ -103,14 +102,14 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
-            app:selected_color="@color/primary"
+            app:selected_color="?attr/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

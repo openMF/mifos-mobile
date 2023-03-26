@@ -55,7 +55,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {}
@@ -75,7 +75,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {
@@ -84,7 +84,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
                 })?.let { compositeDisposable.add(it) }
     }
 
-    fun updateSavingsAccount(accountId: String?, payload: SavingsAccountUpdatePayload?) {
+    fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?) {
         checkViewAttached()
         mvpView?.showProgress()
         dataManager?.updateSavingsAccount(accountId, payload)
@@ -97,7 +97,7 @@ class SavingsAccountApplicationPresenter @Inject constructor(
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {

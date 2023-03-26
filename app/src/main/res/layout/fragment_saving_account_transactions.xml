@@ -15,7 +15,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_saving_accounts_transaction"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_0dp"
             android:layout_weight="1"
             android:layout_width="match_parent"/>
 
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
             <TextView
                 android:layout_height="wrap_content"
@@ -35,18 +35,17 @@
                 android:focusable="true"
                 android:id="@+id/tv_help_line_number"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                 android:layout_width="wrap_content"
                 android:text="@string/help_line_number"
-                android:textColor="@color/blue"/>
+                style="@style/Mifos.DesignSystem.TextStyle.Link"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

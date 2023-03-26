@@ -1,76 +1,212 @@
-<!--
-  ~ This project is licensed under the open source MPL V2.
-  ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
-  -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg_about"
-    android:layout_gravity="center"
-    android:layout_height="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
+            android:layout_height="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Size.LogoImageVerticalMargin"
+            app:srcCompat="@mipmap/mifos_icon" />
 
         <TextView
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
             android:text="@string/app_name"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"/>
+            style="@style/Mifos.DesignSystem.TextStyle.MainFocusText"/>
 
         <TextView
-            android:id="@+id/tv_app_version"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
+            android:id="@+id/textView26"
             android:layout_width="wrap_content"
-            android:text="@string/app_version"/>
-
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_height="100dp"
-            android:layout_margin="@dimen/layout_padding_16dp"
-            android:layout_width="100dp"
-            android:src="@mipmap/mifos_icon"/>
-
-        <TextView
-            android:id="@+id/tv_copy_right"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/copy_right_mifos"/>
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            android:text="@string/about_app_description"
+            android:textAlignment="center"
+            android:alpha="@dimen/alpha_low_emphasis"/>
 
-        <TextView
-            android:layout_gravity="center"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/version_card"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/all_rights_reserved"/>
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.Filled"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
-        <TextView
-            android:id="@+id/tv_licenses"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/layout_padding_4dp"
-            android:layout_marginTop="@dimen/layout_padding_48dp"
-            android:layout_width="wrap_content"
-            android:text="@string/licenses"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_medium"/>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tv_privacy_policy"
-            android:layout_gravity="center"
+                <TextView
+                    android:id="@+id/app_version_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_version_text" />
+
+                <TextView
+                    android:id="@+id/app_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                    tools:text="3.4.0" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/about_website_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/privacy_policy"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_medium"/>
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_website" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
+                    android:layout_weight="1"
+                    android:text="@string/official_website"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/about_licenses_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_law_icon" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
+                    android:layout_weight="1"
+                    android:text="@string/licenses" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/about_privacy_policy_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_privacy_policy" />
+
+                <TextView
+                    android:id="@+id/forum_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
+                    android:layout_weight="1"
+                    android:text="@string/privacy_policy"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/about_sources_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+            style="@style/Mifos.DesignSystem.Components.Cards.NoBorderOrBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_source_code" />
+
+                <TextView
+                    android:id="@+id/sources_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
+                    android:layout_weight="1"
+                    android:text="@string/sources" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/self_license_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.Components.Cards.Filled"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_copy_right"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/copy_right_mifos"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/license_string_with_value"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.core.widget.NestedScrollView>

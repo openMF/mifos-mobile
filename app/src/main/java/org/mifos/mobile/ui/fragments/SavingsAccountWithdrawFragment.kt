@@ -20,8 +20,8 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.MFDatePicker
 import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.getTodayFormatted
 
 import javax.inject.Inject
 
@@ -78,10 +78,10 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         activity?.title = getString(R.string.withdraw_savings_account)
         tvAccountNumber?.text = savingsWithAssociations?.accountNo
         tvClientName?.text = savingsWithAssociations?.clientName
-        tvWithdrawalDate?.text = MFDatePicker.datePickedAsString
+        tvWithdrawalDate?.text = getTodayFormatted()
     }
 
-    private val isFormIncomplete: Boolean?
+    private val isFormIncomplete: Boolean
         get() {
             var rv = false
             if (tilRemark?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
@@ -97,7 +97,7 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         if (isFormIncomplete == false) {
             payload = SavingsAccountWithdrawPayload()
             payload?.note = tilRemark?.editText?.text.toString()
-            payload?.withdrawnOnDate = MFDatePicker.datePickedAsString
+            payload?.withdrawnOnDate = getTodayFormatted()
             presenter?.submitWithdrawSavingsAccount(savingsWithAssociations?.accountNo, payload)
         }
     }

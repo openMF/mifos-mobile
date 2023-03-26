@@ -4,7 +4,7 @@
 
     <PreferenceCategory android:title="@string/accounts">
         <Preference
-            android:key="@string/password"
+            android:key="@string/password_key"
             android:persistent="false"
             android:icon="@drawable/ic_lock_black_24dp"
             android:summary="@string/change_account_password"
@@ -27,6 +27,13 @@
             android:key="@string/language_type"
             android:summary="@string/choose_language"
             android:title="@string/language"/>
+
+        <Preference
+            android:icon="@drawable/ic_baseline_dark_mode_24"
+            android:key="@string/theme_type"
+            android:summary="@string/change_app_theme"
+            android:title="@string/theme"/>
+
 
         <org.mifos.mobile.utils.ConfigurationPreference
             android:key="@string/pref_configuration"

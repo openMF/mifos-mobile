@@ -12,6 +12,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import com.google.android.material.imageview.ShapeableImageView
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
@@ -37,7 +38,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
 
     @kotlin.jvm.JvmField
     @BindView(R.id.iv_circle_status)
-    var ivCircularStatus: CircularImageView? = null
+    var ivCircularStatus: ShapeableImageView? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_total_withdrawals)
@@ -115,8 +116,10 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         ButterKnife.bind(this, rootView!!)
         savingAccountsDetailPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && this.savingsWithAssociations == null) {
             savingAccountsDetailPresenter?.loadSavingsWithAssociations(savingsId)
+        } else {
+            showSavingAccountsDetail(this.savingsWithAssociations)
         }
         setHasOptionsMenu(true)
         return rootView

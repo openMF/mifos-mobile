@@ -5,7 +5,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin"
+    android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
     android:layout_width="match_parent"
     android:orientation="vertical">
 
@@ -13,21 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/mifos_initiative"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/text_medium"
-        android:textStyle="bold"/>
+        style="@style/Mifos.DesignSystem.TextStyle.PrimaryColorBodyLarger"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/mifos_location"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_height="@dimen/height_0dp"
+        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
         android:layout_weight="1"
         android:layout_width="match_parent"/>
 

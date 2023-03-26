@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
 import androidx.appcompat.widget.AppCompatButton
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.presenters.TransferProcessPresenter
@@ -27,8 +24,8 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
-
 import javax.inject.Inject
+
 
 /**
  * Created by dilpreet on 1/7/17.
@@ -81,8 +78,10 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         rootView = inflater.inflate(R.layout.fragment_transfer_process, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
@@ -116,12 +115,12 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      * Cancels the Transfer and pops fragment
      */
     @OnClick(R.id.btn_cancel_transfer)
-    fun cancelTransfer() {
+    fun cancelTransferProcess() {
         Toaster.cancelTransfer(rootView, getString(R.string.cancel_transfer),
-                getString(R.string.yes), View.OnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
-            activity?.supportFragmentManager?.popBackStack()
-        })
+            getString(R.string.yes), View.OnClickListener {
+                activity?.supportFragmentManager?.popBackStack()
+                activity?.supportFragmentManager?.popBackStack()
+            })
     }
 
     /**

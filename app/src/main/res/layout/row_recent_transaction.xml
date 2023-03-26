@@ -7,45 +7,27 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:baselineAligned="false"
     android:id="@+id/linearLayout"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:paddingEnd="@dimen/default_padding"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
-    android:paddingStart="@dimen/default_padding">
+    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
-    <LinearLayout
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:orientation="vertical">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_transaction"
+        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+        style="@style/Mifos.DesignSystem.Shape.roundedImage"
+        app:srcCompat="@drawable/ic_local_atm_black_24dp"/>
 
-        <ImageView
-            style="@style/circleLayout"
-            android:contentDescription="@string/recent_transactions"
-            android:id="@+id/iv_transaction"
-            android:layout_gravity="center_vertical"
-            android:layout_height="45dp"
-            android:layout_width="45dp"
-            android:tint="@color/primary"
-            app:srcCompat="@drawable/ic_local_atm_black_24dp"/>
-
-    </LinearLayout>
 
     <LinearLayout
         android:gravity="center_vertical"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/width_0dp"
         android:orientation="vertical"
-        android:paddingEnd="@dimen/layout_padding_8dp"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/layout_padding_8dp"
-        android:paddingStart="@dimen/default_padding">
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
         <TextView
             android:ellipsize="end"
@@ -54,8 +36,7 @@
             android:layout_width="wrap_content"
             android:lines="1"
             android:text="@string/medium_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
         <LinearLayout
             android:layout_height="wrap_content"
@@ -67,8 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/small_text"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/gray_dark"/>
+                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
             <TextView
                 android:gravity="end"
@@ -77,8 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="@string/small_text"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/gray_dark"/>
+                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
         </LinearLayout>
 

@@ -15,15 +15,14 @@
         android:id="@+id/ll_faq"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:padding="@dimen/default_margin">
+        android:paddingVertical="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
         <TextView
             android:id="@+id/tv_qs"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@color/black"
+            android:layout_width="@dimen/width_0dp"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             tools:text="@string/small_text"/>
 
         <ImageView
@@ -37,13 +36,9 @@
     <TextView
         android:id="@+id/tv_ans"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginRight="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
         android:layout_width="match_parent"
-        android:textAppearance="?android:textAppearanceSmall"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
         tools:text="@string/small_text"/>
 
 </LinearLayout>

@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:background="@color/primary"
+                android:background="?attr/colorPrimary"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -35,20 +35,21 @@
                     <ImageView
                         android:id="@+id/iv_user_image"
                         android:layout_gravity="center"
-                        android:layout_height="65dp"
+                        android:layout_height="@dimen/height_65dp"
                         android:layout_margin="@dimen/margin_16dp"
-                        android:layout_width="65dp"
+                        android:layout_width="@dimen/width_65dp"
                         android:visibility="visible"
                         android:background="?selectableItemBackgroundBorderless"
                         android:clickable="true"
                         app:srcCompat="@drawable/ic_person_black_24dp"/>
 
-                    <org.mifos.mobile.utils.CircularImageView
+                    <com.google.android.material.imageview.ShapeableImageView
+                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
                         android:id="@+id/iv_circular_user_image"
                         android:layout_gravity="center"
-                        android:layout_height="65dp"
+                        android:layout_height="@dimen/height_65dp"
                         android:layout_margin="@dimen/margin_16dp"
-                        android:layout_width="65dp"
+                        android:layout_width="@dimen/width_65dp"
                         android:visibility="gone"
                         android:background="?selectableItemBackgroundBorderless"
                         android:clickable="true"
@@ -86,7 +87,7 @@
                         <View
                             android:alpha="0.5"
                             android:background="@color/white"
-                            android:layout_height="0.1dp"
+                            android:layout_height="@dimen/height_0.1dp"
                             android:layout_width="match_parent"/>
 
                         <RelativeLayout
@@ -102,7 +103,7 @@
                                 android:layout_width="wrap_content"
                                 android:text="@string/accounts_overview"
                                 android:textColor="@color/white"
-                                android:textSize="14sp"/>
+                                android:textSize="@dimen/text_small"/>
 
                             <ImageView
                                 android:layout_alignParentEnd="true"
@@ -128,7 +129,7 @@
                         <View
                             android:alpha="0.5"
                             android:background="@color/white"
-                            android:layout_height="0.1dp"
+                            android:layout_height="@dimen/height_0.1dp"
                             android:layout_width="match_parent"/>
 
                         <RelativeLayout
@@ -143,7 +144,7 @@
                                 android:layout_width="wrap_content"
                                 android:text="@string/recent_transactions"
                                 android:textColor="@color/white"
-                                android:textSize="14sp"/>
+                                android:textSize="@dimen/text_small"/>
 
                             <ImageView
                                 android:layout_alignParentEnd="true"
@@ -165,10 +166,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                app:cardElevation="1dp">
+                app:cardElevation="@dimen/elevation_1dp">
 
                 <LinearLayout
-                    android:background="@color/primary_dark"
+                    android:background="?attr/colorPrimary"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -176,20 +177,20 @@
 
                     <TextView
                         android:gravity="center"
-                        android:layout_height="0dp"
+                        android:layout_height="@dimen/height_0dp"
                         android:layout_marginTop="@dimen/layout_padding_8dp"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:text="@string/manage_accounts"
                         android:textColor="@color/white"
-                        android:textSize="14sp"/>
+                        android:textSize="@dimen/text_small"/>
 
                     <LinearLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/layout_padding_16dp"
-                        android:paddingTop="24dp">
+                        android:paddingTop="@dimen/layout_padding_24dp">
 
                         <LinearLayout
                             android:background="?selectableItemBackgroundBorderless"
@@ -198,28 +199,28 @@
                             android:id="@+id/ll_accounts"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:orientation="vertical"
                             android:padding="@dimen/default_margin"
                             tools:ignore="UseCompoundDrawables">
 
                             <androidx.cardview.widget.CardView
-                                android:innerRadius="0dp"
-                                android:layout_height="60dp"
-                                android:layout_width="60dp"
+                                android:innerRadius="@dimen/inner_radius_0dp"
+                                android:layout_height="@dimen/height_60dp"
+                                android:layout_width="@dimen/width_60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="@color/primary"
-                                app:cardCornerRadius="30dp">
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                                app:cardCornerRadius="@dimen/corner_radius_30dp">
 
                                 <ImageView
                                     android:layout_alignParentTop="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
-                                    android:layout_height="60dp"
+                                    android:layout_height="@dimen/height_60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/white"
+                                    android:tint="?attr/colorOnPrimaryContainer"
                                     app:srcCompat="@drawable/ic_account_balance_black_24dp"/>
 
                             </androidx.cardview.widget.CardView>
@@ -237,7 +238,7 @@
                         <View
                             android:background="@color/white"
                             android:layout_height="match_parent"
-                            android:layout_width="0.2dp"/>
+                            android:layout_width="@dimen/width_0.2dp"/>
 
                         <LinearLayout
                             android:background="?selectableItemBackgroundBorderless"
@@ -246,30 +247,30 @@
                             android:id="@+id/ll_transfer"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:orientation="vertical"
                             android:padding="@dimen/default_margin"
                             tools:ignore="UseCompoundDrawables">
 
                             <androidx.cardview.widget.CardView
-                                android:innerRadius="0dp"
-                                android:layout_height="60dp"
-                                android:layout_width="60dp"
+                                android:innerRadius="@dimen/inner_radius_0dp"
+                                android:layout_height="@dimen/height_60dp"
+                                android:layout_width="@dimen/width_60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="@color/primary"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer">
 
                                 <ImageView
                                     android:contentDescription="@string/transfer"
                                     android:layout_alignParentTop="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
-                                    android:layout_height="60dp"
+                                    android:layout_height="@dimen/height_60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/white"
-                                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
+                                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp"
+                                    app:tint="?attr/colorOnPrimaryContainer" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -286,7 +287,7 @@
                         <View
                             android:background="@color/white"
                             android:layout_height="match_parent"
-                            android:layout_width="0.2dp"/>
+                            android:layout_width="@dimen/width_0.2dp"/>
 
                         <LinearLayout
                             android:background="?selectableItemBackgroundBorderless"
@@ -295,30 +296,30 @@
                             android:id="@+id/ll_apply_for_loan"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:orientation="vertical"
                             android:padding="@dimen/default_margin"
                             tools:ignore="UseCompoundDrawables">
 
                             <androidx.cardview.widget.CardView
-                                android:innerRadius="0dp"
-                                android:layout_height="60dp"
-                                android:layout_width="60dp"
+                                android:innerRadius="@dimen/inner_radius_0dp"
+                                android:layout_height="@dimen/height_60dp"
+                                android:layout_width="@dimen/width_60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardBackgroundColor="@color/primary"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="@dimen/corner_radius_30dp"
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer">
 
                                 <ImageView
                                     android:contentDescription="@string/apply_for_loan"
                                     android:layout_alignParentTop="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
-                                    android:layout_height="60dp"
+                                    android:layout_height="@dimen/height_60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/white"
-                                    app:srcCompat="@drawable/ic_border_color_black_24dp"/>
+                                    app:srcCompat="@drawable/ic_border_color_black_24dp"
+                                    app:tint="?attr/colorOnPrimaryContainer" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -341,7 +342,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                app:cardElevation="1dp">
+                app:cardElevation="@dimen/elevation_1dp">
 
                 <LinearLayout
                     android:background="@color/dashboard_gray_background"
@@ -352,20 +353,20 @@
 
                     <TextView
                         android:gravity="center"
-                        android:layout_height="0dp"
+                        android:layout_height="@dimen/height_0dp"
                         android:layout_marginTop="@dimen/layout_padding_8dp"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:text="@string/more"
                         android:textColor="@color/black"
-                        android:textSize="14sp"/>
+                        android:textSize="@dimen/text_small"/>
 
                     <LinearLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/layout_padding_16dp"
-                        android:paddingTop="24dp">
+                        android:paddingTop="@dimen/layout_padding_24dp">
 
                         <LinearLayout
                             android:background="?selectableItemBackgroundBorderless"
@@ -374,29 +375,29 @@
                             android:id="@+id/ll_beneficiaries"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:orientation="vertical"
                             android:padding="@dimen/default_margin"
                             tools:ignore="UseCompoundDrawables">
 
                             <androidx.cardview.widget.CardView
-                                android:innerRadius="0dp"
-                                android:layout_height="60dp"
-                                android:layout_width="60dp"
+                                android:innerRadius="@dimen/inner_radius_0dp"
+                                android:layout_height="@dimen/height_60dp"
+                                android:layout_width="@dimen/width_60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="@dimen/corner_radius_30dp">
 
                                 <ImageView
                                     android:contentDescription="@string/beneficiaries"
                                     android:layout_alignParentTop="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
-                                    android:layout_height="60dp"
+                                    android:layout_height="@dimen/height_60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/black"
-                                    app:srcCompat="@drawable/ic_supervisor_account_black_24dp"/>
+                                    app:srcCompat="@drawable/ic_supervisor_account_black_24dp"
+                                    app:tint="@color/black" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -413,7 +414,7 @@
                         <View
                             android:background="@color/white"
                             android:layout_height="match_parent"
-                            android:layout_width="0.2dp"/>
+                            android:layout_width="@dimen/width_0.2dp"/>
 
                         <LinearLayout
                             android:background="?selectableItemBackgroundBorderless"
@@ -423,29 +424,29 @@
                             android:id="@+id/ll_charges"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:orientation="vertical"
                             android:padding="@dimen/default_margin"
                             tools:ignore="UseCompoundDrawables">
 
                             <androidx.cardview.widget.CardView
-                                android:innerRadius="0dp"
-                                android:layout_height="60dp"
-                                android:layout_width="60dp"
+                                android:innerRadius="@dimen/inner_radius_0dp"
+                                android:layout_height="@dimen/height_60dp"
+                                android:layout_width="@dimen/width_60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="@dimen/corner_radius_30dp">
 
                                 <ImageView
                                     android:contentDescription="@string/charges"
                                     android:layout_alignParentTop="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
-                                    android:layout_height="60dp"
+                                    android:layout_height="@dimen/height_60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/black"
-                                    app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"/>
+                                    app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp"
+                                    app:tint="@color/black" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -462,7 +463,7 @@
                         <View
                             android:background="@color/white"
                             android:layout_height="match_parent"
-                            android:layout_width="0.2dp"/>
+                            android:layout_width="@dimen/width_0.2dp"/>
 
                         <LinearLayout
                             android:background="?selectableItemBackgroundBorderless"
@@ -471,29 +472,29 @@
                             android:id="@+id/ll_surveys"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/width_0dp"
                             android:orientation="vertical"
                             android:padding="@dimen/default_margin"
                             tools:ignore="UseCompoundDrawables">
 
                             <androidx.cardview.widget.CardView
-                                android:innerRadius="0dp"
-                                android:layout_height="60dp"
-                                android:layout_width="60dp"
+                                android:innerRadius="@dimen/inner_radius_0dp"
+                                android:layout_height="@dimen/height_60dp"
+                                android:layout_width="@dimen/height_60dp"
                                 android:shape="ring"
                                 android:thicknessRatio="1.9"
-                                app:cardCornerRadius="30dp">
+                                app:cardCornerRadius="@dimen/corner_radius_30dp">
 
                                 <ImageView
                                     android:contentDescription="@string/survey"
                                     android:layout_alignParentTop="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
-                                    android:layout_height="60dp"
+                                    android:layout_height="@dimen/height_60dp"
                                     android:layout_width="wrap_content"
                                     android:padding="@dimen/layout_padding_16dp"
-                                    android:tint="@color/black"
-                                    app:srcCompat="@drawable/ic_surveys_48px"/>
+                                    app:srcCompat="@drawable/ic_surveys_48px"
+                                    app:tint="@color/black" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -528,10 +529,10 @@
                     android:layout_marginStart="@dimen/row_padding_right"
                     android:layout_marginTop="@dimen/divider_margin"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/need_help"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="@dimen/text_small"/>
 
                 <LinearLayout
                     android:layout_height="wrap_content"

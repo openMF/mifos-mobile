@@ -28,7 +28,7 @@ import javax.inject.Inject
  * Created by dilpreet on 19/6/17.
  */
 class HomePresenter @Inject constructor(private val dataManager: DataManager?, @ApplicationContext context: Context?) : BasePresenter<HomeView?>(context) {
-    private val compositeDisposable: CompositeDisposable? = CompositeDisposable()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     @JvmField
     @Inject
@@ -36,7 +36,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager?, @
 
     override fun detachView() {
         super.detachView()
-        compositeDisposable?.clear()
+        compositeDisposable.clear()
     }
 
     /**
@@ -64,8 +64,8 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager?, @
                             mvpView?.showUserDetails(preferencesHelper?.clientName)
                         }
                     })?.let {
-                        compositeDisposable?.add(it
-                        )
+                    compositeDisposable.add(it
+                    )
                     }
         }
 
@@ -97,8 +97,8 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager?, @
                             }
                         }
                     })?.let {
-                        compositeDisposable?.add(it
-                        )
+                    compositeDisposable.add(it
+                    )
                     }
         }
     val unreadNotificationsCount: Unit
@@ -112,7 +112,7 @@ class HomePresenter @Inject constructor(private val dataManager: DataManager?, @
                         override fun onNext(integer: Int) {
                             mvpView?.showNotificationCount(integer)
                         }
-                    })?.let { compositeDisposable?.add(it) }
+                    })?.let { compositeDisposable.add(it) }
         }
 
 }

@@ -12,14 +12,17 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_client_charge"
             android:layout_centerHorizontal="true"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/height_0dp"
+            android:paddingHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:listitem="@layout/row_client_charge"
             android:layout_weight="1"
             android:layout_width="wrap_content"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

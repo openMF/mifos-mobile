@@ -4,10 +4,9 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
@@ -17,213 +16,164 @@
         android:layout_width="match_parent">
 
         <LinearLayout
-            style="@style/LinearLayout.Base"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:id="@+id/ll_add_loan"
+            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
             android:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_new_loan_application"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_width="wrap_content"
                 android:text="@string/loan_name"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"/>
 
             <TextView
                 android:id="@+id/tv_account_number"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="wrap_content"
                 android:text="@string/account_number"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"/>
 
-            <TextView
-                android:id="@+id/tv_loan_products"
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
+                android:layout_width="match_parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/loan_products_field"
+                    android:hint="@string/select_loan_product"
+                    android:inputType="none"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent"
-                android:text="@string/select_loan_product"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/light_grey"/>
+                android:enabled="false"
+                android:id="@+id/loan_purpose_field_parent">
 
-            <Spinner
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:id="@+id/sp_loan_products"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_width="fill_parent"
-                android:paddingTop="10dp"
-                android:prompt="@string/select_loan_product"/>
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/loan_purpose_field"
+                    android:hint="@string/purpose_of_loan"
+                    android:inputType="none"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/loan_purpose"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
-                android:layout_width="match_parent"
-                android:text="@string/purpose_of_loan"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/light_grey"/>
-
-            <Spinner
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:id="@+id/sp_loan_purpose"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_width="fill_parent"
-                android:paddingTop="10dp"
-                android:prompt="@string/purpose_of_loan"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_principal_amount"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                 android:layout_width="match_parent">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:gravity="start"
                     android:hint="@string/principal_amount"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
                     android:layout_width="match_parent"
-                    android:maxLines="1"
-                    android:paddingBottom="16dp"/>
+                    android:maxLines="1"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
-                style="@style/LinearLayout.Width"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:paddingTop="@dimen/default_margin">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/currency"
-                    android:textColor="@color/light_grey"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:alpha="@dimen/alpha_low_emphasis"/>
 
                 <TextView
-                    android:gravity="end"
                     android:id="@+id/tv_currency"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/width_0dp"
+                    android:gravity="end"
+                    tools:text="US Dollar($)"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/divider_margin"
-                android:paddingTop="@dimen/divider_margin">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/submission_date"
-                    android:textColor="@color/light_grey"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:alpha="@dimen/alpha_low_emphasis"/>
 
-                <LinearLayout
-                    android:gravity="end"
-                    android:id="@+id/ll_submission_date_edit"
+
+                <TextView
+                    android:id="@+id/tv_submission_date"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_weight="0.3"
-                    android:layout_width="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_submission_date"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/layout_padding_30dp"
-                        android:layout_marginRight="@dimen/layout_padding_30dp"
-                        android:layout_width="wrap_content"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/width_0dp"
+                    android:gravity="end"
+                    tools:text="21-07-2022"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/divider_margin">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge">
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/expected_disbursement_date"
-                    android:textColor="@color/light_grey"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:alpha="@dimen/alpha_low_emphasis"/>
 
-                <LinearLayout
-                    android:gravity="end"
-                    android:id="@+id/ll_expected_disbursement_date_edit"
+
+                <TextView
+                    android:id="@+id/tv_expected_disbursement_date"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_weight="0.3"
-                    android:layout_width="wrap_content">
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/width_0dp"
+                    android:gravity="end"
+                    tools:text="21-07-2022"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
-                    <TextView
-                        android:id="@+id/tv_expected_disbursement_date"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-
-                    <ImageView
-                        android:layout_height="match_parent"
-                        android:layout_width="30dp"
-                        app:srcCompat="@drawable/ic_edit_black_24dp"/>
-
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/expected_disbursement_date_edit"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                    app:srcCompat="@drawable/ic_edit_black_24dp"/>
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Button.Base"
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:id="@+id/btn_loan_review"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="10dp"
                 android:text="@string/review" />
 
         </LinearLayout>

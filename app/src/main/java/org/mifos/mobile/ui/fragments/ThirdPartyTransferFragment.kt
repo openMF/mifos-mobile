@@ -117,7 +117,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     @Inject
     var presenter: ThirdPartyTransferPresenter? = null
     private val listBeneficiary: MutableList<BeneficiaryDetail?> = ArrayList()
-    private val listPayFrom: MutableList<AccountDetail?> = ArrayList()
+    private val listPayFrom: MutableList<AccountDetail> = ArrayList()
     private var beneficiaries: List<Beneficiary?>? = null
     private var beneficiaryAdapter: BeneficiarySpinnerAdapter? = null
     private var payFromAdapter: AccountsSpinnerAdapter? = null
@@ -161,7 +161,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         if (savedInstanceState != null) {
             showThirdPartyTransferTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as AccountOptionsTemplate)
             val tempBeneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(
-                    Constants.BENEFICIARY)
+                    Constants.BENEFICIARY) ?: listOf()
             showBeneficiaryList(tempBeneficiaries)
         }
     }
@@ -171,8 +171,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     override fun showUserInterface() {
         payFromAdapter = activity?.applicationContext?.let {
-            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
-                    listPayFrom)
+            AccountsSpinnerAdapter(it, listPayFrom)
         }
         payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
         spPayFrom?.adapter = payFromAdapter
@@ -185,7 +184,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         spBeneficiary?.adapter = beneficiaryAdapter
         spBeneficiary?.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.datePickedAsString)
+                getTodayFormatted())
         pvOne?.setCurrentActive()
     }
 
@@ -214,15 +213,19 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         val transferPayload = TransferPayload()
         transferPayload.fromAccountId = fromAccountOption?.accountId
         transferPayload.fromClientId = fromAccountOption?.clientId
+        transferPayload.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload.fromAccountType = fromAccountOption?.accountType?.id
         transferPayload.fromOfficeId = fromAccountOption?.officeId
         transferPayload.toOfficeId = beneficiaryAccountOption?.officeId
         transferPayload.toAccountId = beneficiaryAccountOption?.accountId
         transferPayload.toClientId = beneficiaryAccountOption?.clientId
+        transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         transferPayload.toAccountType = beneficiaryAccountOption?.accountType?.id
         transferPayload.transferDate = transferDate
         transferPayload.transferAmount = etAmount?.text.toString().toDouble()
         transferPayload.transferDescription = etRemark?.text.toString()
+        transferPayload.fromAccountNumber = fromAccountOption?.accountNo
+        transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
     }
 
@@ -360,7 +363,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             sweetUIErrorHandler?.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(msg, layoutMakeTransfer, layoutError)
-            Toaster.show(rootView, msg)
+
         }
     }
 
@@ -380,7 +383,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent?.id) {
             R.id.sp_beneficiary -> beneficiaryAccountOption =
-                    presenter?.searchAccount(accountOptionsTemplate?.fromAccountOptions, beneficiaryAdapter?.getItem(position))
+                    presenter?.searchAccount(accountOptionsTemplate?.toAccountOptions, beneficiaryAdapter?.getItem(position))
             R.id.sp_pay_from -> fromAccountOption =
                     accountOptionsTemplate?.fromAccountOptions?.get(position)
         }

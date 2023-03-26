@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -15,18 +15,14 @@
         <View
             android:id="@+id/circle_status"
             android:layout_height="match_parent"
-            android:layout_width="@dimen/side_bar_width"/>
+            tools:background="?attr/colorError"
+            android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemStatusIndicatorWidth"/>
 
         <LinearLayout
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?selectableItemBackground"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/row_padding_left">
+            android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
             <TextView
                 android:ellipsize="end"
@@ -34,20 +30,20 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:lines="1"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@color/black"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/medium_text" />
 
             <TextView
                 android:id="@+id/tv_due_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/medium_text" />
 
             <LinearLayout
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:layout_width="match_parent"
                 android:orientation="horizontal">
 
@@ -55,17 +51,16 @@
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_due"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
                     android:id="@+id/tv_amount"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="@string/medium_text"/>
 
             </LinearLayout>
@@ -73,23 +68,23 @@
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords">
 
                 <TextView
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_paid"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
                     android:id="@+id/tv_amount_paid"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="@string/medium_text"/>
 
             </LinearLayout>
@@ -97,23 +92,23 @@
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords">
 
                 <TextView
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_waived"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
                     android:id="@+id/tv_amount_waived"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="@string/medium_text"/>
 
             </LinearLayout>
@@ -121,23 +116,23 @@
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords">
 
                 <TextView
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:lines="1"
                     android:text="@string/amount_outstanding"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"/>
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
                     android:id="@+id/tv_amount_outstanding"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="@string/medium_text"/>
 
             </LinearLayout>
@@ -146,4 +141,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

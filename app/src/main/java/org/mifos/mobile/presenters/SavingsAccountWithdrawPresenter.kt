@@ -49,7 +49,7 @@ class SavingsAccountWithdrawPresenter @Inject constructor(
 
                     override fun onError(e: Throwable) {
                         mvpView?.hideProgress()
-                        mvpView?.showError(e.message)
+                        mvpView?.showError(e.message ?: "")
                     }
 
                     override fun onComplete() {}

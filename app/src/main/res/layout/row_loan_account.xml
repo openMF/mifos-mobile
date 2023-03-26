@@ -3,22 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger"
+    android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/iv_status_indicator"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_width="@dimen/side_bar_width"
+        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemStatusIndicatorWidth"
         android:src="@drawable/round_corner"/>
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/width_0dp"
         android:orientation="vertical"
-        android:padding="@dimen/row_padding_left">
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
         <TextView
             android:ellipsize="end"
@@ -27,36 +27,31 @@
             android:layout_width="wrap_content"
             android:lines="1"
             android:text="@string/medium_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
         <TextView
             android:id="@+id/tv_loanAccountProductName"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/small_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@color/gray_dark"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginWords"
             android:layout_width="wrap_content"
             android:text="@string/small_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@color/light_grey"/>
+            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_account_balance"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/login_padding_right"
-        android:layout_marginRight="@dimen/login_padding_right"
         android:layout_width="wrap_content"
         android:text="@string/medium_text"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
 
 </LinearLayout>

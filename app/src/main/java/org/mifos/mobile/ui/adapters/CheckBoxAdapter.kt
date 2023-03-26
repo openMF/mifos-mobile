@@ -29,13 +29,15 @@ class CheckBoxAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val (status, color, isChecked) = statusList?.get(position)!!
+        var (status, color, isChecked) = statusList?.get(position)!!
         val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
         val colors = intArrayOf(color, color)
         (holder as ViewHolder).cbStatusSelect?.isChecked = isChecked
-        holder.cbStatusSelect?.supportButtonTintList = ColorStateList(states,
-                colors)
-        holder.tvStatus?.text = status
+        holder.cbStatusSelect?.setOnClickListener{
+            isChecked = !isChecked
+        }
+        holder.cbStatusSelect?.supportButtonTintList = ColorStateList(states,colors)
+        holder.cbStatusSelect?.text = status
     }
 
     override fun getItemCount(): Int {
@@ -48,11 +50,8 @@ class CheckBoxAdapter @Inject constructor() :
         @BindView(R.id.cb_status_select)
         var cbStatusSelect: AppCompatCheckBox? = null
 
-        @JvmField
-        @BindView(R.id.tv_status)
-        var tvStatus: TextView? = null
 
-        @OnClick(R.id.ll_row_checkbox)
+        @OnClick(R.id.cb_status_select)
         fun rowClicked() {
             cbStatusSelect?.isChecked = (cbStatusSelect?.isChecked == false)
         }

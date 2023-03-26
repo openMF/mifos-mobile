@@ -5,19 +5,16 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/layout_padding_16dp">
+    android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_base_url"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
         android:layout_width="match_parent"
-        app:hintAnimationEnabled="false">
+        app:hintAnimationEnabled="false"
+        app:startIconDrawable="@drawable/ic_wrapped_lock_black_24dp">
         <EditText
-            android:drawableLeft="@drawable/ic_lock_black_24dp"
-            android:drawablePadding="@dimen/layout_padding_8dp"
-            android:drawableStart="@drawable/ic_lock_black_24dp"
             android:hint="@string/enter_base_url"
             android:id="@+id/et_base_url"
             android:layout_height="wrap_content"
@@ -28,14 +25,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_tenant"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
         android:layout_width="match_parent"
-        app:hintAnimationEnabled="false">
+        app:hintAnimationEnabled="false"
+        app:startIconDrawable="@drawable/ic_lock_black_24dp">
         <EditText
-            android:drawableLeft="@drawable/ic_lock_black_24dp"
-            android:drawablePadding="@dimen/layout_padding_8dp"
-            android:drawableStart="@drawable/ic_lock_black_24dp"
             android:hint="@string/enter_tenant"
             android:id="@+id/et_tenant"
             android:layout_height="wrap_content"

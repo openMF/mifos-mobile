@@ -12,20 +12,23 @@
     android:layout_width="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        android:background="@color/white"
         android:id="@+id/view_flipper"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
         <LinearLayout
-            style="@style/LinearLayout.Base"
-            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:id="@+id/ll_make_transfer"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
             android:visibility="visible">
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_height="match_parent"
@@ -34,58 +37,55 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_one"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         app:value="1"/>
 
                     <View
-                        android:background="@color/light_grey"
-                        android:layout_gravity="center"
-                        android:layout_height="match_parent"
-                        android:layout_width="4dp"/>
+                        style="@style/Mifos.DesignSystem.Components.ProcessViewLine"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
-                    android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_0dp"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                    android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/default_margin">
 
-                    <TextView
-                        android:id="@+id/tv_pay_to"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                         android:layout_height="wrap_content"
+                        android:id="@+id/pay_to_field_wrapper"
                         android:layout_width="match_parent"
-                        android:text="@string/pay_to"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold"/>
+                        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
-                    <Spinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/sp_pay_to"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:paddingTop="10dp"
-                        android:prompt="@string/select_pay_to"
-                        android:spinnerMode="dialog"/>
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/pay_to_field"
+                            android:hint="@string/pay_to"
+                            android:inputType="none"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_to"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
                         android:layout_width="wrap_content"
-                        android:text="@string/continue_str"
-                        android:textColor="@color/white"/>
+                        android:text="@string/continue_str"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_height="match_parent"
@@ -94,60 +94,53 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_two"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         app:value="2"/>
 
                     <View
-                        android:background="@color/light_grey"
-                        android:layout_gravity="center"
-                        android:layout_height="match_parent"
-                        android:layout_width="4dp"/>
+                        style="@style/Mifos.DesignSystem.Components.ProcessViewLine"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="@dimen/layout_padding_16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_0dp"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/default_margin">
+                    android:minHeight="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                    android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_pay_from"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/pay_from"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"/>
 
-                    <TextView
-                        android:id="@+id/tv_select_pay_from"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
                         android:layout_height="wrap_content"
+                        android:id="@+id/pay_from_field_wrapper"
                         android:layout_width="match_parent"
-                        android:text="@string/select_pay_from"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/light_grey"/>
+                        android:visibility="gone"
+                        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
-                    <Spinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/sp_pay_from"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:paddingTop="10dp"
-                        android:prompt="@string/select_pay_from"
-                        android:spinnerMode="dialog"
-                        android:visibility="gone"/>
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/pay_from_field"
+                            android:hint="@string/select_pay_from"
+                            android:inputType="none"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
                         android:id="@+id/btn_pay_from"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
                         android:layout_width="wrap_content"
                         android:text="@string/continue_str"
-                        android:textColor="@color/white"
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -155,7 +148,9 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_height="match_parent"
@@ -164,59 +159,53 @@
 
                     <org.mifos.mobile.utils.ProcessView
                         android:id="@+id/process_three"
-                        android:layout_height="40dp"
-                        android:layout_width="40dp"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         app:value="3"/>
 
                     <View
-                        android:background="@color/light_grey"
-                        android:layout_gravity="center"
-                        android:layout_height="match_parent"
-                        android:layout_width="4dp"/>
-
+                        style="@style/Mifos.DesignSystem.Components.ProcessViewLine"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
-                    android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_0dp"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/default_margin">
+                    android:minHeight="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                    android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/amount"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"/>
 
-                    <TextView
-                        android:id="@+id/tv_select_amount"
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_height="wrap_content"
+                        android:id="@+id/amount_field_wrapper"
                         android:layout_width="match_parent"
-                        android:text="@string/enter_amount"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/light_grey"/>
+                        android:visibility="gone"
+                        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
-                    <EditText
-                        android:hint="@string/enter_amount"
-                        android:id="@+id/et_amount"
-                        android:imeOptions="actionDone"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:maxLines="1"
-                        android:visibility="gone"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/amount_field"
+                            android:hint="@string/enter_amount"
+                            android:inputType="numberDecimal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatButton
+
+                    <Button
                         android:id="@+id/btn_amount"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_width="wrap_content"
                         android:text="@string/continue_str"
-                        android:textColor="@color/white"
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -224,37 +213,38 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <org.mifos.mobile.utils.ProcessView
                     android:id="@+id/process_four"
-                    android:layout_height="40dp"
-                    android:layout_width="40dp"
+                    android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                    android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                     app:value="4"/>
 
                 <LinearLayout
-                    style="@style/LinearLayout.Wrap"
-                    android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_0dp"
+                    android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/default_margin">
+                    android:minHeight="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                    android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+                    android:orientation="vertical">
 
 
                     <TextView
                         android:layout_height="match_parent"
                         android:layout_width="wrap_content"
                         android:text="@string/remark"
-                        android:textStyle="bold"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"/>
 
                     <TextView
                         android:id="@+id/tv_enter_remark"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:text="@string/enter_remarks"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/light_grey"/>
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                     <EditText
                         android:hint="@string/remark"
@@ -266,25 +256,25 @@
                         android:visibility="gone"/>
 
                     <LinearLayout
-                        style="@style/LinearLayout.Width"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:id="@+id/ll_review"
-                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:visibility="gone">
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_review_transfer"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="@string/review_transfer"
-                            android:textColor="@color/white"/>
+                            android:text="@string/review_transfer"/>
 
-                        <androidx.appcompat.widget.AppCompatButton
+                        <Button
                             android:id="@+id/btn_cancel_transfer"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:text="@string/cancel"
-                            android:textColor="@color/primary"
-                            app:backgroundTint="@color/white"/>
+                            style="@style/Mifos.DesignSystem.Components.Button.Outline"/>
 
                     </LinearLayout>
 
@@ -297,7 +287,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <include
-        layout="@layout/layout_sweet_exception_handler"
+        layout="@layout/error_layout"
         android:id="@+id/layout_error"
         android:visibility="gone"/>
 

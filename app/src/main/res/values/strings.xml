@@ -84,7 +84,7 @@
     <string name="waiting">Waiting</string>
     <string name="overpaid">Overpaid</string>
     <string name="in_arrears">In Arrears</string>
-    <string name="select_you_want">Select all you want to apply</string>
+    <string name="select_you_want">Select all filters you want to apply</string>
     <string name="filter_savings">Filter Savings Accounts</string>
     <string name="filter_loan">Filter Loan Accounts</string>
     <string name="filter_share">Filter Share Accounts</string>
@@ -133,7 +133,7 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
-    <string name="select_product_id">Select Product Id*</string>
+    <string name="select_product_id">Select Product Id</string>
     <string name="account_id">Account Id</string>
     <string name="new_saving_account_application">New Saving Account Application</string>
     <string name="update_savings_account">Update Savings Account</string>
@@ -153,6 +153,7 @@
     <string name="no">No</string>
     <string name="found">found</string>x
 
+    <string name="password_key" translatable="false">Password</string>
     <string name="change_passcode">Change Passcode</string>
     <string name="change_app_passcode">Change App Passcode</string>
     <string name="change_password">Change Password</string>
@@ -236,6 +237,7 @@
     <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
     </string>
     <string name="error_fetching_image">Error fetching image </string>
+    <string name="invalid_phn_number">Invalid Phone Number</string>
     <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
@@ -346,6 +348,9 @@
     <string name="total_loan">Total Loan</string>
     <string name="total_saving">Total Savings</string>
     <string name="accounts_overview">Account Overview</string>
+    <string name="show_hide_total_saving_amount">Show or hide the total saving amount</string>
+    <string name="show_hide_total_loan_amount">Show or hide the total loan amount</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Surveys</string>
     <string name="activation_date">Activation Date</string>
     <string name="groups">Groups</string>
@@ -409,7 +414,7 @@
     <string name="dialog_action_cancel">Cancel</string>
     <string name="dialog_action_back">Back</string>
     <string name="dialog_permission_denied">Permission Denied</string>
-    <string name="dialog_action_i_am_sure">I\'M Sure</string>
+    <string name="dialog_action_i_am_sure">I\'m Sure</string>
     <string name="dialog_action_re_try">Retry</string>
     <string name="dialog_action_app_settings">App Settings</string>
     <string name="dialog_message_camera_permission_denied_prompt">Without camera permission you will
@@ -444,6 +449,7 @@
     </string>
     <string name="permission_denied_storage">Permission denied to storage</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
+    <string name="err_during_login">Error During Login</string>
 
     <!--Format Strings-->
     <string name="hello_client">Hello, %1$s</string>
@@ -524,6 +530,7 @@
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
+    <string name="theme_type" translatable="false">theme_type</string>
     <string name="total_saving_balance">Total Savings Balance</string>
     <string name="total_loan_balance">Total Loan Balance</string>
     <string name="total_loan_savings_description">Above Loan and Savings account balance are
@@ -577,6 +584,15 @@
 
     <string name="dialog_cancel_registration_message">Do you want to cancel registering New Account ?</string>
     <string name="dialog_cancel_registration_title">Cancel Registration</string>
+    <string name="sources">Source Code</string>
+    <string name="official_website">Official Website</string>
+    <string name="app_version_text">App version</string>
+    <string name="license_string_with_value">License: MPL-2.0</string>
+    <string name="about_app_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
+    <string name="or">or</string>
+    <string name="no_app_to_support_action">There is no application that support this action</string>
+    <string name="theme">Theme</string>
+    <string name="change_app_theme">Change the application theme</string>
 
     <string-array name="languages" translatable="false">
         <item>English</item>
@@ -617,5 +633,12 @@
         <item>sw</item>
         <item>fa</item>
     </string-array>
+
+    <string-array name="themes">
+        <item>System Theme</item>
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+    </string-array>
+    <string name="app_info">App Info</string>
 
 </resources>

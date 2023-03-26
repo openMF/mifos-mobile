@@ -114,7 +114,7 @@ class DataManager @Inject constructor(
     }
 
     fun updateSavingsAccount(
-            accountId: String?, payload: SavingsAccountUpdatePayload?
+            accountId: Long?, payload: SavingsAccountUpdatePayload?
     ): Observable<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
                 ?.updateSavingsAccountUpdate(accountId, payload)
@@ -198,9 +198,9 @@ class DataManager @Inject constructor(
         return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
-    val clientLocalCharges: Observable<Page<Charge?>?>?
+    val clientLocalCharges: Observable<Page<Charge?>?>
         get() = databaseHelper.clientCharges
-    val notifications: Observable<List<MifosNotification?>?>?
+    val notifications: Observable<List<MifosNotification?>?>
         get() = databaseHelper.notifications
     val unreadNotificationsCount: Observable<Int>
         get() = databaseHelper.unreadNotificationsCount

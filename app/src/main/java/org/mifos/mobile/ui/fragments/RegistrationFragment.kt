@@ -15,6 +15,8 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 
 import org.mifos.mobile.R
+import com.hbb20.CountryCodePicker
+import kotlinx.android.synthetic.main.fragment_registration.*
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.presenters.RegistrationPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -75,6 +77,10 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     var progressBar: ProgressBar? = null
 
     @JvmField
+    @BindView(R.id.countyCodePicker)
+    var countryCodePickerView: CountryCodePicker? = null
+
+    @JvmField
     @BindView(R.id.password_strength)
     var strengthView: TextView? = null
     private var rootView: View? = null
@@ -103,7 +109,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
                     updatePasswordStrengthView(charSequence.toString())
                 }
             }
-
             override fun afterTextChanged(editable: Editable) {}
         })
         return rootView
@@ -142,7 +147,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
             payload.email = etEmail?.text.toString()
             payload.firstName = etFirstName?.text.toString()
             payload.lastName = etLastName?.text.toString()
-            payload.mobileNumber = etPhoneNumber?.text.toString()
+            payload.mobileNumber = countryCodePickerView?.selectedCountryCode.toString() + etPhoneNumber?.text.toString()
             if (etPassword?.text.toString() != etConfirmPassword?.text.toString()) {
                 Toaster.show(rootView, getString(R.string.error_password_not_match))
                 return
@@ -199,6 +204,9 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
             Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
                     getString(R.string.password), resources.getInteger(R.integer.password_minimum_length)))
             return false
+        } else if(!checkValidityOfPhoneNumber (countyCodePicker)){
+            Toaster.show(rootView,getString(R.string.invalid_phn_number))
+            return false
         }
         return true
     }
@@ -223,7 +231,11 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         super.onDestroyView()
         presenter?.detachView()
     }
+    private fun checkValidityOfPhoneNumber (isPhoneNumberValid: CountryCodePicker): Boolean {
+        countyCodePicker.registerCarrierNumberEditText(etPhoneNumber)
+        return isPhoneNumberValid.isValidFullNumber
 
+    }
     companion object {
         fun newInstance(): RegistrationFragment {
             return RegistrationFragment()

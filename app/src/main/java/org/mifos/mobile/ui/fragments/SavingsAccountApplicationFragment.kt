@@ -12,6 +12,7 @@ import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -27,7 +28,9 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountApplicationView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.MFDatePicker
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.getTodayFormatted
+
 
 import java.util.*
 import javax.inject.Inject
@@ -38,8 +41,8 @@ import javax.inject.Inject
 class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.sp_product_id)
-    var spProductId: Spinner? = null
+    @BindView(R.id.product_id_field)
+    var productIdField: MaterialAutoCompleteTextView? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_submission_date)
@@ -59,25 +62,26 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     private var rootView: View? = null
     private var state: SavingsAccountState? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
-    private var productIdAdapter: ArrayAdapter<String?>? = null
     private var template: SavingsAccountTemplate? = null
     private var productOptions: List<ProductOptions>? = null
     private val productIdList: MutableList<String?> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            state = arguments!!
-                    .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
+            state = requireArguments()
+                .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
             savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
         }
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_savings_account_application, container,
-                false)
+        rootView = inflater.inflate(
+            R.layout.fragment_savings_account_application, container,
+            false
+        )
         ButterKnife.bind(this, rootView!!)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
@@ -96,10 +100,11 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
 
     override fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?) {
         showUserInterface(template)
-        activity?.title = getString(R.string.string_savings_account,
-                getString(R.string.update))
-        productIdAdapter?.getPosition(savingsWithAssociations
-                ?.savingsProductName)?.let { spProductId?.setSelection(it) }
+        activity?.title = getString(
+            R.string.string_savings_account,
+            getString(R.string.update)
+        )
+        productIdField?.setText(savingsWithAssociations?.savingsProductName!!, false)
     }
 
     override fun showSavingsAccountUpdateSuccessfully() {
@@ -115,27 +120,34 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
                 productIdList.add(name)
             }
         tvClientName?.text = template?.clientName
-        productIdAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item,
-                productIdList)
-        productIdAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spProductId?.adapter = productIdAdapter
-        tvSubmissionDate?.text = MFDatePicker.datePickedAsString
+        productIdField?.setSimpleItems(productIdList.toTypedArray())
+        tvSubmissionDate?.text = getTodayFormatted()
     }
 
     private fun submitSavingsAccountApplication() {
         val payload = SavingsAccountApplicationPayload()
         payload.clientId = template?.clientId
-        payload.productId = spProductId?.selectedItemPosition?.let { productOptions?.get(it)?.id }
-        payload.submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.datePickedAsString)
+
+        if (productIdList.indexOf(productIdField?.text.toString()) != -1) {
+            payload.productId = productIdList.indexOf(productIdField?.text.toString())
+                .let { productOptions?.get(it)?.id }
+        } else {
+           Toaster.show(rootView,getString(R.string.select_product_id))
+            return
+        }
+        payload.submittedOnDate = DateHelper.getSpecificFormat(
+            DateHelper.FORMAT_dd_MMMM_yyyy,
+            getTodayFormatted()
+        )
         presenter?.submitSavingsAccountApplication(payload)
     }
 
     private fun updateSavingAccount() {
         val payload = SavingsAccountUpdatePayload()
         payload.clientId = template?.clientId?.toLong()
-        payload.productId = spProductId?.selectedItemPosition?.let { productOptions?.get(it)?.id }?.toLong()
-        presenter?.updateSavingsAccount(savingsWithAssociations?.accountNo, payload)
+        payload.productId = productIdList.indexOf(productIdField?.text.toString())
+            .let { productOptions?.get(it)?.id }?.toLong()
+        presenter?.updateSavingsAccount(savingsWithAssociations?.id, payload)
     }
 
     @OnClick(R.id.btn_submit)
@@ -172,7 +184,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     companion object {
         @kotlin.jvm.JvmStatic
         fun newInstance(
-                state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
+            state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
         ): SavingsAccountApplicationFragment {
             val fragment = SavingsAccountApplicationFragment()
             val bundle = Bundle()

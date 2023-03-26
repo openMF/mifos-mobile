@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
-
 import org.mifos.mobile.R
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
@@ -29,7 +26,6 @@ import org.mifos.mobile.utils.RxEvent.AddGuarantorEvent
 import org.mifos.mobile.utils.RxEvent.UpdateGuarantorEvent
 import org.mifos.mobile.utils.Toaster
 
-import java.util.*
 import javax.inject.Inject
 
 /*
@@ -38,8 +34,8 @@ import javax.inject.Inject
 class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.sp_guarantor_type)
-    var spGuarantorType: Spinner? = null
+    @BindView(R.id.guarantor_type_field)
+    var guarantorTypeField: TextInputLayout? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.til_first_name)
@@ -68,7 +64,7 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
-            guarantorState = arguments!!
+            guarantorState = requireArguments()
                     .getSerializable(Constants.GUARANTOR_STATE) as GuarantorState
             payload = arguments?.getParcelable(Constants.PAYLOAD)
             index = arguments?.getInt(Constants.INDEX)
@@ -114,7 +110,7 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     private fun generatePayload(): GuarantorApplicationPayload {
         return GuarantorApplicationPayload(
                 template?.guarantorTypeOptions
-                        ?.get(getGuarantorTypeIndex(spGuarantorType?.selectedItem.toString())),
+                        ?.get(getGuarantorTypeIndex(guarantorTypeField?.editText?.text.toString())),
                 tilFirstName?.editText?.text.toString().trim { it <= ' ' },
                 tilLastName?.editText?.text.toString().trim { it <= ' ' },
                 tilOfficeName?.editText?.text.toString().trim { it <= ' ' }
@@ -178,8 +174,8 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         tilFirstName?.editText?.setText(payload?.firstname)
         tilLastName?.editText?.setText(payload?.lastname)
         tilOfficeName?.editText?.setText(payload?.officeName)
-        spGuarantorType?.setSelection(findPreviouslySelectedGuarantorType(payload?.guarantorType
-                ?.value))
+        (guarantorTypeField?.editText as?  MaterialAutoCompleteTextView)?.setText(payload?.guarantorType?.value!!)
+
     }
 
     private fun findPreviouslySelectedGuarantorType(value: String?): Int {
@@ -196,12 +192,15 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     private fun setUpSpinner() {
         val options: MutableList<String?> = ArrayList()
+        options.addAll(listOf("choicea", "choiceB"))
         for (option in template?.guarantorTypeOptions!!) {
             options.add(option.value)
         }
-        guarantorTypeAdapter = ArrayAdapter(context,
+        guarantorTypeAdapter = ArrayAdapter(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item, options)
-        spGuarantorType?.adapter = guarantorTypeAdapter
+        guarantorTypeField?.let {
+            (it.editText as MaterialAutoCompleteTextView).setSimpleItems(options.toTypedArray())
+        }
     }
 
     override fun updatedSuccessfully(message: String?) {

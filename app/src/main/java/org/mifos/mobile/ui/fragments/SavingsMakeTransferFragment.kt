@@ -13,6 +13,10 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.AccountDetail
@@ -33,19 +37,32 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 10/03/17.
  */
-class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, OnItemSelectedListener {
+class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.sp_pay_to)
-    var spPayTo: Spinner? = null
+    @BindView(R.id.pay_to_field)
+    var payToField: MaterialAutoCompleteTextView? = null
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.sp_pay_from)
-    var spPayFrom: Spinner? = null
+    @BindView(R.id.pay_from_field)
+    var payFromField: MaterialAutoCompleteTextView? = null
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.et_amount)
-    var etAmount: EditText? = null
+    @BindView(R.id.amount_field)
+    var amountField: TextInputEditText? = null
+
+    @kotlin.jvm.JvmField
+    @BindView(R.id.pay_to_field_wrapper)
+    var payToFieldWrapper: TextInputLayout? = null
+
+    @kotlin.jvm.JvmField
+    @BindView(R.id.pay_from_field_wrapper)
+    var payFromFieldWrapper: TextInputLayout? = null
+
+
+    @kotlin.jvm.JvmField
+    @BindView(R.id.amount_field_wrapper)
+    var amountFieldWrapper: TextInputLayout? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.process_one)
@@ -80,14 +97,6 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     var llReview: LinearLayout? = null
 
     @kotlin.jvm.JvmField
-    @BindView(R.id.tv_select_pay_from)
-    var tvSelectPayFrom: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_select_amount)
-    var tvEnterAmount: TextView? = null
-
-    @kotlin.jvm.JvmField
     @BindView(R.id.tv_enter_remark)
     var tvEnterRemark: TextView? = null
 
@@ -107,10 +116,6 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     @Inject
     var savingsMakeTransferPresenter: SavingsMakeTransferPresenter? = null
     var rootView: View? = null
-    private val listPayTo: MutableList<AccountDetail?> = ArrayList()
-    private val listPayFrom: MutableList<AccountDetail?> = ArrayList()
-    private var payToAdapter: AccountsSpinnerAdapter? = null
-    private var payFromAdapter: AccountsSpinnerAdapter? = null
     private var transferPayload: TransferPayload? = null
     private var transferDate: String? = null
     private var toAccountOption: AccountOption? = null
@@ -185,7 +190,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         transferPayload?.toClientId = toAccountOption?.clientId
         transferPayload?.toAccountType = toAccountOption?.accountType?.id
         transferPayload?.transferDate = transferDate
-        transferPayload?.transferAmount = etAmount?.text.toString().toDouble()
+        transferPayload?.transferAmount = amountField?.text.toString().toDouble()
         transferPayload?.transferDescription = etRemark?.text.toString()
         transferPayload?.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload?.toAccountNumber = toAccountOption?.accountNo
@@ -215,25 +220,43 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     override fun showUserInterface() {
         pvOne?.setCurrentActive()
-        payFromAdapter = activity?.applicationContext?.let {
-            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
-                    listPayFrom)
+        payFromField?.setOnItemClickListener { parent, view, position, id ->
+            toAccountOption = accountOptionsTemplate?.toAccountOptions?.get(position)
+            payTo = toAccountOption?.accountNo
+            println("paytofield item selected payTo:$payTo")
+            updateDetails()
         }
-        payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spPayFrom?.adapter = payFromAdapter
-        spPayFrom?.onItemSelectedListener = this
-        payToAdapter = activity?.applicationContext?.let {
-            AccountsSpinnerAdapter(it, R.layout.account_spinner_layout,
-                    listPayTo)
+        payToField?.setOnItemClickListener { parent, view, position, id ->
+            fromAccountOption = accountOptionsTemplate?.fromAccountOptions?.get(position)
+            payFrom = fromAccountOption?.accountNo
+            println("payfrom item selected payFrom:$payFrom")
+            updateDetails()
         }
-        payToAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spPayTo?.adapter = payToAdapter
-        spPayTo?.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                MFDatePicker.datePickedAsString)
+                getTodayFormatted())
         if (isLoanRepayment) {
-            etAmount?.setText(outStandingBalance.toString())
-            etAmount?.isFocusable = false
+            amountField?.setText(outStandingBalance.toString())
+            amountFieldWrapper?.isFocusable = false
+        }
+    }
+
+    fun updateDetails(){
+        when (transferType) {
+            Constants.TRANSFER_PAY_TO -> {
+                setToolbarTitle(getString(R.string.deposit))
+                toAccountOption = savingsMakeTransferPresenter
+                    ?.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
+                payToFieldWrapper?.isEnabled = false
+                pvOne?.setCurrentCompleted()
+            }
+            Constants.TRANSFER_PAY_FROM -> {
+                setToolbarTitle(getString(R.string.transfer))
+                fromAccountOption = savingsMakeTransferPresenter
+                    ?.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
+                payFromFieldWrapper?.isEnabled = false
+                payFromFieldWrapper?.visibility = View.VISIBLE
+                pvTwo?.setCurrentCompleted()
+            }
         }
     }
 
@@ -245,14 +268,12 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     override fun showSavingsAccountTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
-        listPayFrom.clear()
-        savingsMakeTransferPresenter?.getAccountNumbers(
-                accountOptionsTemplate?.fromAccountOptions, true)?.let { listPayFrom.addAll(it) }
-        listPayTo.clear()
-        savingsMakeTransferPresenter?.getAccountNumbers(
-                accountOptionsTemplate?.toAccountOptions, false)?.let { listPayTo.addAll(it) }
-        payToAdapter?.notifyDataSetChanged()
-        payFromAdapter?.notifyDataSetChanged()
+        payToField?.setAdapter(AccountsSpinnerAdapter(requireContext(),
+            savingsMakeTransferPresenter?.getAccountNumbers(accountOptionsTemplate?.toAccountOptions, false)!!
+        ))
+        payFromField?.setAdapter(AccountsSpinnerAdapter(requireContext(),
+            savingsMakeTransferPresenter?.getAccountNumbers(accountOptionsTemplate?.toAccountOptions, true)!!
+        ))
     }
 
     /**
@@ -299,42 +320,6 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
     /**
      * Callback for `spPayFrom` and `spPayTo`
      */
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        when (parent?.id) {
-            R.id.sp_pay_to -> {
-                toAccountOption = accountOptionsTemplate?.toAccountOptions?.get(position)
-                payTo = toAccountOption?.accountNo
-            }
-            R.id.sp_pay_from -> {
-                fromAccountOption = accountOptionsTemplate?.fromAccountOptions?.get(position)
-                payFrom = fromAccountOption?.accountNo
-            }
-        }
-        when (transferType) {
-            Constants.TRANSFER_PAY_TO -> {
-                setToolbarTitle(getString(R.string.deposit))
-                toAccountOption = savingsMakeTransferPresenter
-                        ?.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
-                spPayTo?.setSelection(accountOptionsTemplate?.toAccountOptions
-                        ?.indexOf(toAccountOption)!!)
-                spPayTo?.isEnabled = false
-                pvOne?.setCurrentCompleted()
-            }
-            Constants.TRANSFER_PAY_FROM -> {
-                setToolbarTitle(getString(R.string.transfer))
-                fromAccountOption = savingsMakeTransferPresenter
-                        ?.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
-                spPayFrom?.setSelection(accountOptionsTemplate?.fromAccountOptions
-                        ?.indexOf(fromAccountOption)!!)
-                spPayFrom?.isEnabled = false
-                spPayFrom?.visibility = View.VISIBLE
-                tvSelectPayFrom?.visibility = View.GONE
-                pvTwo?.setCurrentCompleted()
-            }
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     /**
      * Disables `spPayTo` [Spinner] and sets `pvOne` to completed and make
@@ -345,10 +330,9 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         pvOne?.setCurrentCompleted()
         pvTwo?.setCurrentActive()
         btnPayTo?.visibility = View.GONE
-        tvSelectPayFrom?.visibility = View.GONE
         btnPayFrom?.visibility = View.VISIBLE
-        spPayFrom?.visibility = View.VISIBLE
-        spPayTo?.isEnabled = false
+        payFromFieldWrapper?.visibility = View.VISIBLE
+        payToFieldWrapper?.isEnabled = false
     }
 
     /**
@@ -365,10 +349,9 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         pvTwo?.setCurrentCompleted()
         pvThree?.setCurrentActive()
         btnPayFrom?.visibility = View.GONE
-        tvEnterAmount?.visibility = View.GONE
-        etAmount?.visibility = View.VISIBLE
+        amountFieldWrapper?.visibility = View.VISIBLE
         btnAmount?.visibility = View.VISIBLE
-        spPayFrom?.isEnabled = false
+        payFromFieldWrapper?.isEnabled = false
     }
 
     /**
@@ -378,15 +361,15 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
      */
     @OnClick(R.id.btn_amount)
     fun amountSet() {
-        if (etAmount?.text.toString() == "") {
+        if (amountField?.text.toString() == "") {
             showToaster(getString(R.string.enter_amount))
             return
         }
-        if (etAmount?.text.toString() == ".") {
+        if (amountField?.text.toString() == ".") {
             showToaster(getString(R.string.invalid_amount))
             return
         }
-        if (etAmount?.text.toString().toDouble() == 0.0) {
+        if (amountField?.text.toString().toDouble() == 0.0) {
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
@@ -396,7 +379,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         tvEnterRemark?.visibility = View.GONE
         etRemark?.visibility = View.VISIBLE
         llReview?.visibility = View.VISIBLE
-        etAmount?.isEnabled = false
+        amountFieldWrapper?.isEnabled = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -405,8 +388,8 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView, 
         Utils.setToolbarIconColor(activity, menu, R.color.white)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.menu_refresh_transfer) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_refresh_transfer) {
             val transaction = fragmentManager?.beginTransaction()
             val currFragment = activity?.supportFragmentManager
                     ?.findFragmentById(R.id.container)

@@ -6,7 +6,6 @@
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
@@ -16,190 +15,148 @@
         android:layout_width="match_parent">
 
         <LinearLayout
-            style="@style/LinearLayout.Base"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:id="@+id/ll_add_loan"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
 
             <TextView
                 android:id="@+id/tv_new_loan_application"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:layout_width="wrap_content"
-                android:text="@string/loan_name"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:text="@string/loan_name" />
 
             <TextView
                 android:id="@+id/tv_account_number"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:layout_width="wrap_content"
-                android:text="@string/account_number"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:text="@string/account_number" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"
                 android:layout_width="match_parent"
                 android:text="@string/product"
-                android:textColor="@color/black"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
             <TextView
                 android:id="@+id/tv_loan_product"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="match_parent"
-                android:text="@string/income_generating_loan"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:text="@string/income_generating_loan"/>
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_width="match_parent"
                 android:text="@string/loan_purpose"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/black" />
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+                style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
             <TextView
                 android:id="@+id/tv_loan_purpose"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="match_parent"
-                android:text="@string/not_applicable"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:text="@string/not_applicable" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_width="match_parent"
                 android:text="@string/principal"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/black" />
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
 
             <TextView
                 android:id="@+id/tv_principal_amount"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_width="match_parent"
                 tools:text="@string/dummy_principal_amount"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"/>
 
 
             <LinearLayout
-                style="@style/LinearLayout.Width"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:paddingTop="@dimen/default_margin">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/currency"
-                    android:textColor="@color/black" />
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
 
                 <TextView
                     android:gravity="end"
                     android:id="@+id/tv_currency"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                    android:layout_width="@dimen/width_0dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/divider_margin"
-                android:paddingTop="@dimen/divider_margin">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/submission_date"
-                    android:textColor="@color/black" />
+                    style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
                 <TextView
                     android:gravity="end"
                     android:id="@+id/tv_submission_date"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                    android:layout_width="@dimen/width_0dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                style="@style/LinearLayout.Width"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="@dimen/divider_margin"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="@dimen/divider_margin">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/width_0dp"
                     android:text="@string/expected_disbursement_date"
-                    android:textColor="@color/black" />
+                    style="@style/Mifos.DesignSystem.TextStyle.Label" />
 
                 <TextView
                     android:gravity="end"
                     android:id="@+id/tv_expected_disbursement_date"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
                     android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                    android:layout_width="@dimen/width_0dp" />
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Button.Base"
+            <Button
                 android:id="@+id/btn_loan_submit"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:text="@string/submit_loan" />
 
         </LinearLayout>

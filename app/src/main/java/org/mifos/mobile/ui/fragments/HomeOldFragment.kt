@@ -2,25 +2,30 @@ package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
 import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.imageview.ShapeableImageView
+import kotlinx.android.synthetic.main.fragment_home_old.*
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -34,10 +39,10 @@ import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.Constants.APPLY_LOAN
-
 import javax.inject.Inject
 
 /**
@@ -56,17 +61,11 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @BindView(R.id.ll_account_detail)
     var llAccountDetail: LinearLayout? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.iv_visibility)
-    var ivVisibility: ImageView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.iv_user_image)
-    var ivUserImage: ImageView? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.iv_circular_user_image)
-    var ivCircularUserImage: CircularImageView? = null
+    var ivCircularUserImage: ShapeableImageView? = null
 
     @kotlin.jvm.JvmField
     @BindView(R.id.tv_user_name)
@@ -144,14 +143,14 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(notificationReceiver)
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(notificationReceiver)
         isReceiverRegistered = false
         super.onPause()
     }
 
     private fun registerReceiver() {
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(activity!!).registerReceiver(notificationReceiver,
+            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(notificationReceiver,
                     IntentFilter(Constants.NOTIFY_HOME_FRAGMENT))
             isReceiverRegistered = true
         }
@@ -167,7 +166,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as Client)
+            showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as? Client)
             presenter?.setUserProfile(preferencesHelper?.userProfileImage)
             showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN))
             showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS))
@@ -186,12 +185,6 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
 
     override fun showUserInterface() {
         toolbarView = (activity as HomeActivity?)?.toolbar?.rootView
-        isDetailVisible = preferencesHelper?.overviewState()
-        if (isDetailVisible == true) {
-            showOverviewState()
-        } else {
-            hideOverviewState()
-        }
     }
 
     /**
@@ -260,26 +253,53 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     override fun showUserImage(bitmap: Bitmap?) {
         activity?.runOnUiThread {
             if (bitmap != null) {
-                ivUserImage?.visibility = View.GONE
                 ivCircularUserImage?.visibility = View.VISIBLE
                 ivCircularUserImage?.setImageBitmap(bitmap)
             } else {
-                val userName: String = (if (preferencesHelper?.clientName?.isNotEmpty() == true) {
-                    preferencesHelper?.clientName
-                } else {
-                    getString(R.string.app_name)
-                }) as String
+                val userName = preferencesHelper?.clientName.let { savedName ->
+                    if(savedName.isNullOrBlank()) getString(R.string.app_name)
+                    else savedName
+                }
 
                 val drawable = TextDrawable.builder()
                         .beginConfig()
                         .toUpperCase()
                         .endConfig()
-                        .buildRound(userName.substring(0, 1),
-                                ContextCompat.getColor(
-                                        context!!, R.color.primary))
-                ivUserImage?.visibility = View.VISIBLE
-                ivUserImage?.setImageDrawable(drawable)
-                ivCircularUserImage?.visibility = View.GONE
+                        .buildRound(userName.substring(0, 1),requireContext().getThemeAttributeColor(R.attr.colorPrimary))
+                ivCircularUserImage?.setImageDrawable(drawable)
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ButterKnife.bind(this, view)
+        toggleVisibilityButton(
+            btn_saving_total_amount_visibility,
+            tv_saving_total_amount,
+            tv_saving_total_amount_hidden
+        )
+        toggleVisibilityButton(
+            btn_loan_amount_visibility,
+            tv_loan_total_amount,
+            tv_loan_total_amount_hidden
+        )
+    }
+
+    private fun toggleVisibilityButton(
+        button: ImageButton,
+        visibleView: View,
+        hiddenView: View
+    ) {
+        button.setOnClickListener {
+            if (visibleView.visibility == View.VISIBLE) {
+                visibleView.visibility = View.GONE
+                hiddenView.visibility = View.VISIBLE
+                button.setImageResource(R.drawable.ic_visibility_24px)
+            } else {
+                visibleView.visibility = View.VISIBLE
+                hiddenView.visibility = View.GONE
+                button.setImageResource(R.drawable.ic_visibility_off_24px)
             }
         }
     }
@@ -293,44 +313,9 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         }
     }
 
-    @OnClick(R.id.iv_user_image, R.id.iv_circular_user_image)
+    @OnClick(R.id.iv_circular_user_image)
     fun userImageClicked() {
         startActivity(Intent(activity, UserProfileActivity::class.java))
-    }
-
-    /**
-     * Reverses the state of Account Overview section i.e. visible to hidden or vice a versa
-     */
-    @OnClick(R.id.iv_visibility)
-    fun reverseDetailState() {
-        if (isDetailVisible == true) {
-            isDetailVisible = false
-            preferencesHelper?.setOverviewState(false)
-            hideOverviewState()
-        } else {
-            isDetailVisible = true
-            preferencesHelper?.setOverviewState(true)
-            showOverviewState()
-        }
-    }
-
-    /**
-     * Makes Overview state visible
-     */
-    private fun showOverviewState() {
-        ivVisibility?.setImageDrawable(resources.getDrawable(R.drawable.ic_visibility_24px))
-        ivVisibility?.setColorFilter(ContextCompat.getColor(activity?.applicationContext!!, R.color.gray_dark))
-        llAccountDetail?.visibility = View.VISIBLE
-    }
-
-    /**
-     * Hides Overview state
-     */
-    private fun hideOverviewState() {
-        ivVisibility?.setImageDrawable(resources
-                .getDrawable(R.drawable.ic_visibility_off_24px))
-        ivVisibility?.setColorFilter(ContextCompat.getColor(activity?.applicationContext!!, R.color.light_grey))
-        llAccountDetail?.visibility = View.GONE
     }
 
     /**
