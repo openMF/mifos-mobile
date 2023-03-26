@@ -1,4 +1,3 @@
-
 package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
@@ -24,6 +23,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.android.synthetic.main.fragment_home_old.*
 import org.mifos.mobile.R
@@ -41,6 +41,10 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
+import smartdevelop.ir.eram.showcaseviewlib.GuideView
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
+import smartdevelop.ir.eram.showcaseviewlib.config.PointerType
 import javax.inject.Inject
 
 /**
@@ -58,7 +62,6 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @kotlin.jvm.JvmField
     @BindView(R.id.ll_account_detail)
     var llAccountDetail: LinearLayout? = null
-
 
 
     @kotlin.jvm.JvmField
@@ -82,6 +85,14 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     var presenter: HomeOldPresenter? = null
 
     @kotlin.jvm.JvmField
+    @BindView(R.id.ll_contact_us)
+    var llContactUs: LinearLayout? = null
+
+    @kotlin.jvm.JvmField
+    @BindView(R.id.ll_account_overview)
+    var llAccountOverview: MaterialCardView? = null
+
+    @kotlin.jvm.JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
     var rootView: View? = null
@@ -93,10 +104,12 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     private var isDetailVisible: Boolean? = false
     private var isReceiverRegistered = false
     private var tvNotificationCount: TextView? = null
+    private var mGuideView: GuideView? = null
+    private var builder: GuideView.Builder? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_home_old, container, false)
         (activity as HomeActivity?)?.activityComponent?.inject(this)
@@ -104,14 +117,24 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         clientId = preferencesHelper?.clientId
         presenter?.attachView(this)
         setHasOptionsMenu(true)
-        slHomeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        slHomeContainer?.setColorSchemeResources(
+            R.color.blue_light,
+            R.color.green_light,
+            R.color.orange_light,
+            R.color.red_light
+        )
         slHomeContainer?.setOnRefreshListener(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             llContainer?.layoutTransition
-                    ?.enableTransitionType(LayoutTransition.CHANGING)
+                ?.enableTransitionType(LayoutTransition.CHANGING)
         }
         if (savedInstanceState == null) {
             loadClientData()
+        }
+
+        if (PreferencesHelper(context).getBoolean(Constants.SHOW_CASE, true) == true) {
+            showcaseView()
+            PreferencesHelper(context).putBoolean(Constants.SHOW_CASE, false)
         }
         setToolbarTitle(getString(R.string.home))
         showUserInterface()
@@ -130,7 +153,14 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         val count = menuItem.actionView
         tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
         presenter?.unreadNotificationsCount
-        count.setOnClickListener { startActivity(Intent(context, NotificationActivity::class.java)) }
+        count.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    NotificationActivity::class.java
+                )
+            )
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -141,15 +171,18 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(notificationReceiver)
+        LocalBroadcastManager.getInstance(requireActivity())
+            .unregisterReceiver(notificationReceiver)
         isReceiverRegistered = false
         super.onPause()
     }
 
     private fun registerReceiver() {
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(notificationReceiver,
-                    IntentFilter(Constants.NOTIFY_HOME_FRAGMENT))
+            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(
+                notificationReceiver,
+                IntentFilter(Constants.NOTIFY_HOME_FRAGMENT)
+            )
             isReceiverRegistered = true
         }
     }
@@ -192,7 +225,8 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     fun openAccount(accountType: AccountType?) {
         (activity as BaseActivity?)?.replaceFragment(
-                ClientAccountsFragment.newInstance(accountType), true, R.id.container)
+            ClientAccountsFragment.newInstance(accountType), true, R.id.container
+        )
     }
 
     /**
@@ -255,15 +289,18 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
                 ivCircularUserImage?.setImageBitmap(bitmap)
             } else {
                 val userName = preferencesHelper?.clientName.let { savedName ->
-                    if(savedName.isNullOrBlank()) getString(R.string.app_name)
+                    if (savedName.isNullOrBlank()) getString(R.string.app_name)
                     else savedName
                 }
 
                 val drawable = TextDrawable.builder()
-                        .beginConfig()
-                        .toUpperCase()
-                        .endConfig()
-                        .buildRound(userName.substring(0, 1),requireContext().getThemeAttributeColor(R.attr.colorPrimary))
+                    .beginConfig()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(
+                        userName.substring(0, 1),
+                        requireContext().getThemeAttributeColor(R.attr.colorPrimary)
+                    )
                 ivCircularUserImage?.setImageDrawable(drawable)
             }
         }
@@ -330,22 +367,25 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_transfer)
     fun transferClicked() {
-        val transferTypes = arrayOf(getString(R.string.transfer), getString(R.string.third_party_transfer))
+        val transferTypes =
+            arrayOf(getString(R.string.transfer), getString(R.string.third_party_transfer))
         MaterialDialog.Builder().init(activity)
-                .setTitle(R.string.choose_transfer_type)
-                .setItems(transferTypes,
-                        DialogInterface.OnClickListener { _, which ->
-                            if (which == 0) {
-                                (activity as HomeActivity?)?.replaceFragment(
-                                        SavingsMakeTransferFragment.newInstance(1, ""), true,
-                                        R.id.container)
-                            } else {
-                                (activity as HomeActivity?)?.replaceFragment(
-                                        ThirdPartyTransferFragment.newInstance(), true, R.id.container)
-                            }
-                        })
-                .createMaterialDialog()
-                .show()
+            .setTitle(R.string.choose_transfer_type)
+            .setItems(transferTypes,
+                DialogInterface.OnClickListener { _, which ->
+                    if (which == 0) {
+                        (activity as HomeActivity?)?.replaceFragment(
+                            SavingsMakeTransferFragment.newInstance(1, ""), true,
+                            R.id.container
+                        )
+                    } else {
+                        (activity as HomeActivity?)?.replaceFragment(
+                            ThirdPartyTransferFragment.newInstance(), true, R.id.container
+                        )
+                    }
+                })
+            .createMaterialDialog()
+            .show()
     }
 
     /**
@@ -353,8 +393,12 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_charges)
     fun chargesClicked() {
-        (activity as HomeActivity?)?.replaceFragment(ClientChargeFragment.newInstance(clientId,
-                ChargeType.CLIENT), true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(
+            ClientChargeFragment.newInstance(
+                clientId,
+                ChargeType.CLIENT
+            ), true, R.id.container
+        )
     }
 
     /**
@@ -371,7 +415,11 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_beneficiaries)
     fun beneficiaries() {
-        (activity as HomeActivity?)?.replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(
+            BeneficiaryListFragment.newInstance(),
+            true,
+            R.id.container
+        )
     }
 
     @OnClick(R.id.ll_surveys)
@@ -419,5 +467,34 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         fun newInstance(): HomeOldFragment {
             return HomeOldFragment()
         }
+    }
+
+    private fun showcaseView() {
+
+        builder = GuideView.Builder(requireContext())
+            .setContentText(getString(R.string.show_case_user_details))
+            .setGravity(Gravity.center)
+            .setDismissType(DismissType.anywhere)
+            .setPointerType(PointerType.circle)
+            .setTargetView(ivCircularUserImage)
+            .setGuideListener { view: View ->
+                when (view.id) {
+                    R.id.iv_circular_user_image -> {
+                        builder!!.setTargetView(llAccountOverview)
+                            .setContentText(getString(R.string.show_case_amount_loan)).build()
+                    }
+                    R.id.ll_account_overview -> {
+                        builder!!.setTargetView(llContactUs)
+                            .setContentText(getString(R.string.show_case_contact_us)).build()
+                    }
+                    R.id.ll_contact_us -> return@setGuideListener
+                }
+                mGuideView = builder!!.build()
+                mGuideView!!.show()
+            }
+
+        mGuideView = builder!!.build()
+        mGuideView!!.show()
+
     }
 }

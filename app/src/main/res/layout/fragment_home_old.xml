@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_home_container"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:animateLayoutChanges="true"
             android:id="@+id/ll_container"
-            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_circular_user_image"
-                    android:layout_height="84dp"
-                    app:shapeAppearance="@dimen/Mifos.DesignSystem.Size.CircularUserImageSize"
-                    android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                     android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
                     app:border="true"
                     app:border_width="1dp"
-                    tools:src="@drawable/ic_person_black_24dp"/>
+                    app:shapeAppearance="@dimen/Mifos.DesignSystem.Size.CircularUserImageSize"
+                    tools:src="@drawable/ic_person_black_24dp" />
 
                 <TextView
                     android:id="@+id/tv_user_name"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
                     style="@style/Mifos.DesignSystem.TextStyle.Heading"
-                    tools:text="Hello, you guys"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:text="Hello, you guys" />
 
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_height="wrap_content"
+                android:id="@+id/ll_account_overview"
                 style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
 
@@ -63,44 +63,49 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/accounts_overview"
-                        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
+                        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+                        android:text="@string/accounts_overview" />
 
                     <View
                         style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
-                        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
+                        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginWords" />
 
                     <LinearLayout
                         android:id="@+id/ll_total_savings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <TextView
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"
-                            android:text="@string/total_saving"/>
+                            android:text="@string/total_saving" />
+
                         <View
                             android:layout_width="@dimen/width_0dp"
                             android:layout_height="@dimen/height_0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
+
                         <TextView
                             android:id="@+id/tv_saving_total_amount"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="$ 1000"
-                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                            android:textColor="@color/deposit_green"
                             android:text="-"
-                            android:visibility="gone"/>
+                            android:textColor="@color/deposit_green"
+                            android:visibility="gone"
+                            tools:text="$ 1000" />
+
                         <TextView
                             android:id="@+id/tv_saving_total_amount_hidden"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/hidden_amount"
-                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:textColor="@color/deposit_green"
-                            android:visibility="visible"/>
+                            android:visibility="visible" />
+
                         <ImageButton
                             android:id="@+id/btn_saving_total_amount_visibility"
                             android:layout_width="wrap_content"
@@ -116,33 +121,38 @@
                         android:id="@+id/ll_total_loan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+                        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                        android:orientation="horizontal">
+
                         <TextView
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"
                             android:text="@string/total_loan" />
+
                         <View
                             android:layout_width="@dimen/width_0dp"
                             android:layout_height="@dimen/height_0dp"
                             android:layout_weight="1" />
+
                         <TextView
                             android:id="@+id/tv_loan_total_amount"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
-                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:text="-"
-                            android:visibility="gone"/>
+                            android:textColor="@color/red"
+                            android:visibility="gone" />
+
                         <TextView
                             android:id="@+id/tv_loan_total_amount_hidden"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
-                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:text="@string/hidden_amount"
-                            android:visibility="visible"/>
+                            android:textColor="@color/red"
+                            android:visibility="visible" />
+
                         <ImageButton
                             android:id="@+id/btn_loan_amount_visibility"
                             android:layout_width="wrap_content"
@@ -160,38 +170,38 @@
 
 
             <GridLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                 android:columnCount="3"
                 android:rowCount="2"
-                android:useDefaultMargins="true"
-                android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+                android:useDefaultMargins="true">
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:id="@+id/ll_accounts"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_gravity="fill"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
                     app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="@dimen/height_56dp"
                             android:layout_width="@dimen/width_56dp"
+                            android:layout_height="@dimen/height_56dp"
                             app:srcCompat="@drawable/ic_account_balance_black_24dp" />
 
                         <TextView
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/accounts"
                             android:textAppearance="@style/Mifos.DesignSystem.TextStyle.Body" />
 
@@ -200,30 +210,30 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ll_transfer"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_gravity="fill"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
                     app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="@dimen/height_56dp"
                             android:layout_width="@dimen/width_56dp"
+                            android:layout_height="@dimen/height_56dp"
                             app:srcCompat="@drawable/ic_compare_arrows_black_24dp" />
 
                         <TextView
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/transfer"
                             android:textAppearance="@style/Mifos.DesignSystem.TextStyle.Body" />
 
@@ -232,30 +242,30 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ll_charges"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_gravity="fill"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
                     app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="@dimen/height_56dp"
                             android:layout_width="@dimen/width_56dp"
+                            android:layout_height="@dimen/height_56dp"
                             app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp" />
 
                         <TextView
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/charges"
                             android:textAppearance="@style/Mifos.DesignSystem.TextStyle.Body" />
                     </LinearLayout>
@@ -263,30 +273,30 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ll_apply_for_loan"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_gravity="fill"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
                     app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="@dimen/height_56dp"
                             android:layout_width="@dimen/width_56dp"
+                            android:layout_height="@dimen/height_56dp"
                             app:srcCompat="@drawable/ic_account_balance_black_24dp" />
 
                         <TextView
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/apply_for_loan"
                             android:textAppearance="@style/Mifos.DesignSystem.TextStyle.Body" />
 
@@ -295,30 +305,30 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ll_beneficiaries"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_gravity="fill"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
                     app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="@dimen/height_56dp"
                             android:layout_width="@dimen/width_56dp"
+                            android:layout_height="@dimen/height_56dp"
                             app:srcCompat="@drawable/ic_beneficiaries_48px" />
 
                         <TextView
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/beneficiaries"
                             android:textAppearance="@style/Mifos.DesignSystem.TextStyle.Body" />
 
@@ -327,30 +337,30 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ll_surveys"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_gravity="fill"
+                    style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
                     app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_height="@dimen/height_56dp"
                             android:layout_width="@dimen/width_56dp"
+                            android:layout_height="@dimen/height_56dp"
                             app:srcCompat="@drawable/ic_surveys_48px" />
 
                         <TextView
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/survey"
                             android:textAppearance="@style/Mifos.DesignSystem.TextStyle.Body" />
 
@@ -359,40 +369,42 @@
                 </com.google.android.material.card.MaterialCardView>
 
             </GridLayout>
+
             <LinearLayout
-                android:layout_height="wrap_content"
+                android:id="@+id/ll_contact_us"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="0dp"
-                    android:text="@string/need_help"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/need_help" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:autoLink="phone"
                         android:gravity="end"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:text="@string/help_line_number"
-                        style="@style/Mifos.DesignSystem.TextStyle.Link"/>
+                        android:text="@string/help_line_number" />
 
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:autoLink="email"
                         android:gravity="end"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:text="@string/contact_email"
-                        style="@style/Mifos.DesignSystem.TextStyle.Link"/>
+                        android:text="@string/contact_email" />
 
                 </LinearLayout>
 
