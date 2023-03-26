@@ -414,7 +414,7 @@
     <string name="dialog_action_cancel">Cancel</string>
     <string name="dialog_action_back">Back</string>
     <string name="dialog_permission_denied">Permission Denied</string>
-    <string name="dialog_action_i_am_sure">I\'M Sure</string>
+    <string name="dialog_action_i_am_sure">I\'m Sure</string>
     <string name="dialog_action_re_try">Retry</string>
     <string name="dialog_action_app_settings">App Settings</string>
     <string name="dialog_message_camera_permission_denied_prompt">Without camera permission you will

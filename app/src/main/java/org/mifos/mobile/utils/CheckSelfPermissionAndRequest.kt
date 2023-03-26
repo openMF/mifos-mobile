@@ -42,7 +42,7 @@ object CheckSelfPermissionAndRequest {
      * button and next time App ask for permission, It will show a Material Dialog and there
      * will be a message to tell the user that you have denied the permission before, So do
      * you want to give this permission to app or not, If yes then click on Re-Try dialog button
-     * and if not then click on Dialog button "I'M Sure", to not to give this permission to the
+     * and if not then click on Dialog button "I'm Sure", to not to give this permission to the
      * app.
      *
      *
