@@ -1,7 +1,7 @@
-
 package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
+import android.app.Activity
 import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
@@ -37,10 +37,12 @@ import org.mifos.mobile.ui.activities.UserProfileActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
+import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants.APPLY_LOAN
 import javax.inject.Inject
 
 /**
@@ -362,7 +364,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     @OnClick(R.id.ll_apply_for_loan)
     fun applyForLoan() {
-        startActivity(Intent(activity, LoanApplicationActivity::class.java))
+        startActivityForResult(Intent(activity, LoanApplicationActivity::class.java), APPLY_LOAN)
     }
 
     /**
@@ -419,5 +421,24 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         fun newInstance(): HomeOldFragment {
             return HomeOldFragment()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == APPLY_LOAN && resultCode == Activity.RESULT_OK && data != null) {
+            val state = data.getStringExtra(getString(R.string.loan_type))
+            if (state == LoanState.CREATE.name)
+                showLoanAccountCreatedSuccessfully()
+            else if (state == LoanState.UPDATE.name)
+                showLoanAccountUpdatedSuccessfully()
+        }
+    }
+
+    private fun showLoanAccountCreatedSuccessfully() {
+        Toaster.show(rootView, R.string.loan_application_submitted_successfully)
+    }
+
+    private fun showLoanAccountUpdatedSuccessfully() {
+        Toaster.show(rootView, R.string.loan_application_updated_successfully)
     }
 }
