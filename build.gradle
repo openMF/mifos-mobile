@@ -50,7 +50,7 @@ ext {
 
     // App dependencies
     countryCodePicker = '2.7.0'
-    supportLibraryVersion = '1.4.2'
+    supportLibraryVersion = '1.6.1'
     designLibraryVersion = '1.6.1'
     daggerVersion = '2.45'
     recyclerViewVersion = '1.2.1'
