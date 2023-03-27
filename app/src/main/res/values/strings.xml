@@ -133,7 +133,7 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
-    <string name="select_product_id">Select Product Id*</string>
+    <string name="select_product_id">Select Product Id</string>
     <string name="account_id">Account Id</string>
     <string name="new_saving_account_application">New Saving Account Application</string>
     <string name="update_savings_account">Update Savings Account</string>
@@ -415,7 +415,7 @@
     <string name="dialog_action_cancel">Cancel</string>
     <string name="dialog_action_back">Back</string>
     <string name="dialog_permission_denied">Permission Denied</string>
-    <string name="dialog_action_i_am_sure">I\'M Sure</string>
+    <string name="dialog_action_i_am_sure">I\'m Sure</string>
     <string name="dialog_action_re_try">Retry</string>
     <string name="dialog_action_app_settings">App Settings</string>
     <string name="dialog_message_camera_permission_denied_prompt">Without camera permission you will

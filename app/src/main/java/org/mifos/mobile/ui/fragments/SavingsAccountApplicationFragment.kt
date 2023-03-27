@@ -28,6 +28,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountApplicationView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
 
 
@@ -68,17 +69,19 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             state = requireArguments()
-                    .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
+                .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
             savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
         }
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_savings_account_application, container,
-                false)
+        rootView = inflater.inflate(
+            R.layout.fragment_savings_account_application, container,
+            false
+        )
         ButterKnife.bind(this, rootView!!)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
@@ -97,8 +100,10 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
 
     override fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?) {
         showUserInterface(template)
-        activity?.title = getString(R.string.string_savings_account,
-                getString(R.string.update))
+        activity?.title = getString(
+            R.string.string_savings_account,
+            getString(R.string.update)
+        )
         productIdField?.setText(savingsWithAssociations?.savingsProductName!!, false)
     }
 
@@ -122,16 +127,26 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     private fun submitSavingsAccountApplication() {
         val payload = SavingsAccountApplicationPayload()
         payload.clientId = template?.clientId
-        payload.productId = productIdList.indexOf(productIdField!!.text.toString()).let { productOptions?.get(it)?.id }
-        payload.submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
-                getTodayFormatted())
+
+        if (productIdList.indexOf(productIdField?.text.toString()) != -1) {
+            payload.productId = productIdList.indexOf(productIdField?.text.toString())
+                .let { productOptions?.get(it)?.id }
+        } else {
+           Toaster.show(rootView,getString(R.string.select_product_id))
+            return
+        }
+        payload.submittedOnDate = DateHelper.getSpecificFormat(
+            DateHelper.FORMAT_dd_MMMM_yyyy,
+            getTodayFormatted()
+        )
         presenter?.submitSavingsAccountApplication(payload)
     }
 
     private fun updateSavingAccount() {
         val payload = SavingsAccountUpdatePayload()
         payload.clientId = template?.clientId?.toLong()
-        payload.productId = productIdList.indexOf(productIdField!!.text.toString()).let { productOptions?.get(it)?.id }?.toLong()
+        payload.productId = productIdList.indexOf(productIdField?.text.toString())
+            .let { productOptions?.get(it)?.id }?.toLong()
         presenter?.updateSavingsAccount(savingsWithAssociations?.id, payload)
     }
 
@@ -169,7 +184,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     companion object {
         @kotlin.jvm.JvmStatic
         fun newInstance(
-                state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
+            state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
         ): SavingsAccountApplicationFragment {
             val fragment = SavingsAccountApplicationFragment()
             val bundle = Bundle()
