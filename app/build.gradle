@@ -90,7 +90,7 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "com.google.android.material:material:$rootProject.designLibraryVersion"
-    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.preference:preference:1.2.0"
     implementation "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
