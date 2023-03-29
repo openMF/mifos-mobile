@@ -641,4 +641,9 @@
     </string-array>
     <string name="app_info">App Info</string>
 
+    <!-- showcaseView -->
+    <string name="show_case_user_details">Click here to access User Details</string>
+    <string name="show_case_amount_loan">Here you can view the total amount of savings and loans you have</string>
+    <string name="show_case_contact_us">Reach out to us using below credentials</string>
+
 </resources>
