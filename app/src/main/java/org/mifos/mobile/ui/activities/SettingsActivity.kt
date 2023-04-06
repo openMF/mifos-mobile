@@ -27,8 +27,8 @@ class SettingsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 0) {
+            super.onBackPressed()
             if (hasSettingsChanged) {
-                super.onBackPressed()
                 ActivityCompat.finishAffinity(this)
                 startActivity(Intent(this, HomeActivity::class.java))
             }
