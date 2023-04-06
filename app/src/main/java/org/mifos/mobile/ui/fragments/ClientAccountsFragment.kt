@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -314,14 +315,14 @@ import javax.inject.Inject
         checkBoxRecyclerView = RecyclerView(requireContext())
         checkBoxRecyclerView?.layoutManager = layoutManager
         checkBoxRecyclerView?.adapter = checkBoxAdapter
-        val wrapper = LinearLayout(requireContext())
+        val wrapper = ConstraintLayout(requireContext())
         resources.getDimension(R.dimen.Mifos_DesignSystem_Spacing_CardInnerPaddingLarge).toInt().let { cardInnerPadding ->
             wrapper.setPadding(cardInnerPadding,cardInnerPadding,cardInnerPadding,cardInnerPadding)
         }
-        wrapper.addView(checkBoxRecyclerView)
-        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            checkBoxRecyclerView?.layoutParams?.height = (getScreenHeight()/3.5).toInt()
-        }
+        val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.matchConstraintMaxHeight = getScreenHeight()/3
+        wrapper.addView(checkBoxRecyclerView, layoutParams)
+
         when (account) {
             AccountType.SAVINGS -> {
                 if ((childFragmentManager.findFragmentByTag(
