@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -34,6 +35,7 @@ import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.AccountsView
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants.SAVINGS_ACCOUNT_DETAILS
 
 import java.util.*
 import javax.inject.Inject
@@ -71,6 +73,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private var savingAccounts: List<SavingAccount?>? = null
     private var shareAccounts: List<ShareAccount?>? = null
     private var currentFilterList: List<CheckboxStatus?>? = null
+    private lateinit var rootView: View
 
     /**
      * Method to get the current filter list for the fragment
@@ -104,7 +107,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_accounts, container, false)
+        rootView = inflater.inflate(R.layout.fragment_accounts, container, false)
         ButterKnife.bind(this, rootView)
 
 
@@ -455,7 +458,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * intent is null.
      */
     private fun openActivity(intent: Intent?) {
-        intent?.let { startActivity(it) }
+        intent?.let { startActivityForResult(it, SAVINGS_ACCOUNT_DETAILS) }
     }
 
     companion object {
@@ -467,5 +470,17 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SAVINGS_ACCOUNT_DETAILS && resultCode == RESULT_OK && data != null) {
+            val message = data.getStringExtra("message")
+            showAccountWithdrawnSuccessfully(message)
+        }
+    }
+
+    private fun showAccountWithdrawnSuccessfully(message: String) {
+        Toaster.show(rootView, message)
     }
 }
