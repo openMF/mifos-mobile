@@ -493,7 +493,7 @@
     <string name="no_saving_account">Saving Accounts</string>
     <string name="no_loan_account">Loan Accounts</string>
     <string name="no_sharing_account">Sharing Accounts</string>
-
+    <string name="select_loan_product_field">Select Loan Product</string>
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>
