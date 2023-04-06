@@ -128,9 +128,9 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         inflater.inflate(R.menu.menu_main, menu)
         val menuItem = menu.findItem(R.id.menu_notifications)
         val count = menuItem.actionView
-        tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
+        tvNotificationCount = count?.findViewById(R.id.tv_notification_indicator)
         presenter?.unreadNotificationsCount
-        count.setOnClickListener { startActivity(Intent(context, NotificationActivity::class.java)) }
+        count?.setOnClickListener { startActivity(Intent(context, NotificationActivity::class.java)) }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
