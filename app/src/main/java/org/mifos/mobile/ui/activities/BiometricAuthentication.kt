@@ -5,42 +5,34 @@ import androidx.biometric.BiometricManager
 import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import org.mifos.mobile.R
-
+import org.mifos.mobile.ui.enums.BiometricCapability
 
 open class BiometricAuthentication(
     val context: FragmentActivity,
-)  {
+) {
     private val executor = ContextCompat.getMainExecutor(context)
-    private val callback = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-            }
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                val intent=Intent(context,HomeActivity::class.java)
-                context.startActivity(intent)
-            }
-
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-            }
+    private val callback = object : BiometricPrompt.AuthenticationCallback() {
+        override fun onAuthenticationFailed() {
+            super.onAuthenticationFailed()
         }
-    } else {
-        TODO("VERSION.SDK_INT < P")
+
+        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+            super.onAuthenticationSucceeded(result)
+            val intent = Intent(context, HomeActivity::class.java)
+            context.startActivity(intent)
+        }
+
+        override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+            super.onAuthenticationError(errorCode, errString)
+        }
     }
 
-    private val biometricPrompt = androidx.biometric.BiometricPrompt(context, executor, callback)
-
-
+    private val biometricPrompt = BiometricPrompt(context, executor, callback)
 
     fun launchBiometricEnrollment(resultLauncher: ActivityResultLauncher<Intent>) {
         val intent: Intent = when {
@@ -66,23 +58,8 @@ open class BiometricAuthentication(
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 BiometricCapability.HAS_BIOMETRIC_AUTH
             }
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                BiometricCapability.NOT_SUPPORTED
-            }
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                BiometricCapability.NOT_SUPPORTED
-            }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 BiometricCapability.NOT_ENROLLED
-            }
-            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
-                BiometricCapability.SECURITY_UPDATE_REQUIRED
-            }
-            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-                BiometricCapability.NOT_SUPPORTED
-            }
-            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
-                BiometricCapability.NOT_SUPPORTED
             }
             else -> {
                 BiometricCapability.NOT_SUPPORTED
@@ -92,8 +69,8 @@ open class BiometricAuthentication(
 
     fun authenticateWithBiometrics() {
         val promptInfo = BiometricPrompt.PromptInfo.Builder().apply {
-            setTitle(context.getString(R.string.authentication_required))
-            setDescription(context.getString(R.string.text_description_biometrics_dialog))
+            setTitle(context.getString(R.string.sign_in_fingerprint))
+            setDescription(context.getString(R.string.scan_your_fingerprint))
             setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
         }.build()
 
@@ -101,6 +78,3 @@ open class BiometricAuthentication(
     }
 }
 
-enum class BiometricCapability {
-    HAS_BIOMETRIC_AUTH, NOT_ENROLLED, SECURITY_UPDATE_REQUIRED, NOT_SUPPORTED
-}
