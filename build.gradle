@@ -45,7 +45,7 @@ task clean(type: Delete) {
 ext {
     // Sdk and tools
     minSdkVersion = 22
-    targetSdkVersion = 31 
+    targetSdkVersion = 33
     compileSdkVersion = 33
 
     // App dependencies
@@ -66,7 +66,7 @@ ext {
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
-    biometric = '1.2.0-alpha05'
+    biometric = '1.1.0'
 
     jUnitVersion = '4.13.2'
     mockitoVersion = '3.6.28'
