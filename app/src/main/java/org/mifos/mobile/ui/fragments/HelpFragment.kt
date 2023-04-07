@@ -121,6 +121,7 @@ class HelpFragment : BaseFragment(), HelpView {
         inflater.inflate(R.menu.menu_help, menu)
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.menu_search_faq).actionView as SearchView
+        searchView.maxWidth = Integer.MAX_VALUE;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
