@@ -147,6 +147,9 @@ dependencies {
     //TableView
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
 
+    //Biometric Authentication
+    implementation "androidx.biometric:biometric:$rootProject.biometric"
+
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
