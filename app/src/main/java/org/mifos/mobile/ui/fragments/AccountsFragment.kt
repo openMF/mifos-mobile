@@ -375,19 +375,16 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      */
     fun filterShareAccount(statusModelList: List<CheckboxStatus?>?) {
         val filteredSavings: MutableList<ShareAccount?> = ArrayList()
-        when {
-            accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null -> {
-                for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
-                    accountsPresenter?.getFilteredShareAccount(shareAccounts,
-                            status)?.let { filteredSavings.addAll(it) }
-                }
+        if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
+            for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
+                accountsPresenter?.getFilteredShareAccount(shareAccounts,
+                    status)?.let { filteredSavings.addAll(it) }
             }
-            filteredSavings.size == 0 -> {
-                showEmptyAccounts(getString(R.string.no_sharing_account))
-            }
-            else -> {
-                shareAccountsListAdapter?.setShareAccountsList(filteredSavings)
-            }
+        }
+        if (filteredSavings.size == 0) {
+            showEmptyAccounts(getString(R.string.no_saving_account))
+        } else {
+            shareAccountsListAdapter?.setShareAccountsList(filteredSavings)
         }
     }
 
