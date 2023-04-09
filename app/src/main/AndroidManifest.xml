@@ -92,7 +92,7 @@
                   android:name="org.mifos.mobile.ui.activities.NotificationActivity"
                   android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:configChanges="orientation|screenSize"
+        <activity android:screenOrientation="sensor"
                   android:name="org.mifos.mobile.ui.activities.AddBeneficiaryActivity"
                   android:windowSoftInputMode="adjustResize"/>
 
