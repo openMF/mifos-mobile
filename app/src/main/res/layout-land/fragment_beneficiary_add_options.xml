@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/select_mode"
+            android:textAlignment="center"
+            style="@style/Mifos.DesignSystem.TextStyle.Heading"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="@string/add_beneficiary_option"/>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:id="@+id/ll_add_beneficiary_manually"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="1dp"
+                android:orientation="vertical"
+                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
+                <ImageView
+                    android:layout_height="@dimen/Mifos.DesignSystem.Size.BankCardSize"
+                    android:layout_width="@dimen/Mifos.DesignSystem.Size.BankCardSize"
+                    app:srcCompat="@drawable/ic_beneficiary_add_48px"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                    android:layout_width="match_parent"
+                    android:text="@string/add"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:id="@+id/ll_add_beneficiary_qrcode"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="@dimen/width_0dp"
+                android:orientation="vertical"
+                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
+                <ImageView
+                    android:layout_height="@dimen/Mifos.DesignSystem.Size.BankCardSize"
+                    android:layout_width="@dimen/Mifos.DesignSystem.Size.BankCardSize"
+                    app:srcCompat="@drawable/ic_qrcode_scan_gray_dark"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                    android:layout_width="match_parent"
+                    android:text="@string/scan"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:id="@+id/ll_upload_beneficiary_qrcode"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="@dimen/width_0.2dp"
+                android:orientation="vertical"
+                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
+                <ImageView
+                    android:layout_height="@dimen/Mifos.DesignSystem.Size.BankCardSize"
+                    android:layout_width="@dimen/Mifos.DesignSystem.Size.BankCardSize"
+                    app:srcCompat="@drawable/ic_file_upload_black_24dp"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                    android:layout_width="match_parent"
+                    android:text="@string/upload_qr_code"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
