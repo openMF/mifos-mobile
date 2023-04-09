@@ -290,6 +290,9 @@
     <string name="total_loan">ಒಟ್ಟು ಸಾಲ</string>
     <string name="total_saving">ಒಟ್ಟು ಉಳಿತಾಯ</string>
     <string name="accounts_overview">ಖಾತೆ ಅವಲೋಕನ</string>
+    <string name="show_hide_total_saving_amount">ಒಟ್ಟು ಉಳಿತಾಯದ ಮೊತ್ತವನ್ನು ತೋರಿಸಿ ಅಥವಾ ಮರೆಮಾಡಿ</string>
+    <string name="show_hide_total_loan_amount">ಒಟ್ಟು ಸಾಲದ ಮೊತ್ತವನ್ನು ತೋರಿಸಿ ಅಥವಾ ಮರೆಮಾಡಿ</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">ಸಮೀಕ್ಷೆಗಳು</string>
     <string name="activation_date">ಸಕ್ರಿಯಗೊಳಿಸುವ ದಿನಾಂಕ</string>
     <string name="groups">ಗುಂಪು</string>

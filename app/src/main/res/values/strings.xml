@@ -122,6 +122,7 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Import QR</string>
+    <string name="use_touch_id">Use Touch Id</string>
 
     <string name="view_guarantor">View Guarantor</string>
     <string name="add_guarantor">Add Guarantor</string>
@@ -133,7 +134,7 @@
     <string name="guarantor_details">Guarantor Details</string>
     <string name="joined_date">Joined Date</string>
     <string name="submit">Submit</string>
-    <string name="select_product_id">Select Product Id*</string>
+    <string name="select_product_id">Select Product Id</string>
     <string name="account_id">Account Id</string>
     <string name="new_saving_account_application">New Saving Account Application</string>
     <string name="update_savings_account">Update Savings Account</string>
@@ -237,6 +238,7 @@
     <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
     </string>
     <string name="error_fetching_image">Error fetching image </string>
+    <string name="invalid_phn_number">Invalid Phone Number</string>
     <string name="fetching_client">Fetching Client</string>
 
     <string name="not_contain_username">Spaces</string>
@@ -347,10 +349,13 @@
     <string name="total_loan">Total Loan</string>
     <string name="total_saving">Total Savings</string>
     <string name="accounts_overview">Account Overview</string>
+    <string name="show_hide_total_saving_amount">Show or hide the total saving amount</string>
+    <string name="show_hide_total_loan_amount">Show or hide the total loan amount</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">Surveys</string>
     <string name="activation_date">Activation Date</string>
     <string name="groups">Groups</string>
-    <string name="user_details">User details</string>
+    <string name="user_details">User Details</string>
     <string name="client_type">Client Type</string>
     <string name="client_classification">Client Classification</string>
     <string name="select_mode">Select Mode</string>
@@ -410,7 +415,7 @@
     <string name="dialog_action_cancel">Cancel</string>
     <string name="dialog_action_back">Back</string>
     <string name="dialog_permission_denied">Permission Denied</string>
-    <string name="dialog_action_i_am_sure">I\'M Sure</string>
+    <string name="dialog_action_i_am_sure">I\'m Sure</string>
     <string name="dialog_action_re_try">Retry</string>
     <string name="dialog_action_app_settings">App Settings</string>
     <string name="dialog_message_camera_permission_denied_prompt">Without camera permission you will
@@ -489,6 +494,8 @@
     <string name="no_saving_account">Saving Accounts</string>
     <string name="no_loan_account">Loan Accounts</string>
     <string name="no_sharing_account">Sharing Accounts</string>
+    <string name="sign_in_fingerprint">Sign in using fingerprint</string>
+    <string name="scan_your_fingerprint">Scan your fingerprint</string>
 
 
     <string-array name="faq_qs">

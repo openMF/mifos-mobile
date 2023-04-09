@@ -24,7 +24,7 @@ buildscript {
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinGradlePluginversion"
-        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.8"
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.14"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle filesa
     }
@@ -34,6 +34,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url "https://www.jitpack.io" }
     }
 }
@@ -45,10 +46,11 @@ task clean(type: Delete) {
 ext {
     // Sdk and tools
     minSdkVersion = 22
-    targetSdkVersion = 31
-    compileSdkVersion = 31
+    targetSdkVersion = 33
+    compileSdkVersion = 33
 
     // App dependencies
+    countryCodePicker = '2.7.0'
     supportLibraryVersion = '1.4.2'
     designLibraryVersion = '1.6.1'
     daggerVersion = '2.45'
@@ -57,29 +59,30 @@ ext {
     lifecycleVersion = '2.4.1'
     lifecycleExtensionsVersion = '2.2.0'
     retrofitVersion = '2.2.0'
-    okHttp3Version = '3.6.0'
+    okHttp3Version = '3.14.9'
     butterKnifeVersion = '8.0.1'
     dbflowVersion = '4.2.4'
-    playServicesVersion = '17.0.0'
-    firebaseMessagingVersion = '21.0.1'
+    playServicesVersion = '17.0.1'
+    firebaseMessagingVersion = '21.1.0'
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
+    biometric = '1.1.0'
 
     jUnitVersion = '4.13.2'
-    mockitoVersion = '3.6.28'
-    runnerVersion = '1.5.3-alpha01'
+    mockitoVersion = '5.2.0'
+    runnerVersion = '1.6.0-alpha01'
     rulesVersion = '1.6.0-alpha01'
-    espressoVersion = '3.4.0-alpha02'
+    espressoVersion = '3.5.1'
     zxingcoreVersion = '3.5.1'
     zxingbarcodescannerVersion = '1.9.13'
     rxjavaVersion = '2.2.21'
     rxandroidVersion = '2.1.1'
     sweeterrorVersion = '1.0.0'
-    mifosPasscodeVersion = '0.3.0'
+    mifosPasscodeVersion = '1.0.0'
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
     annotationLibraryVersion ='1.1.0'
-    firebaseCrashlyticsVersion = '17.3.0'
+    firebaseCrashlyticsVersion = '18.3.6'
 
 }
