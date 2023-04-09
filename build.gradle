@@ -67,6 +67,7 @@ ext {
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
+    biometric = '1.1.0'
 
     jUnitVersion = '4.13.2'
     mockitoVersion = '5.2.0'
