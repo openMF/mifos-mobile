@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -106,7 +107,17 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      * Initializes the layout
      */
     override fun showUserInterface() {
+        val columnWidth : Double
+        tvRepaymentSchedule?.setHasFixedWidth(true)
+        val orientation = resources.configuration.orientation
+        tvRepaymentSchedule?.layoutParams?.width = resources.displayMetrics.widthPixels
         tvRepaymentSchedule?.setAdapter(loanRepaymentScheduleAdapter)
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            columnWidth = 2 * (resources.displayMetrics.widthPixels / 7.2);
+        } else {
+            columnWidth = 2 * (resources.displayMetrics.widthPixels / 6.6);
+        }
+        loanRepaymentScheduleAdapter?.setColumnWidth(columnWidth)
     }
 
     override fun showProgress() {
@@ -195,6 +206,11 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
         super.onDestroyView()
         hideProgressBar()
         loanRepaymentSchedulePresenter?.detachView()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        showUserInterface()
     }
 
     companion object {
