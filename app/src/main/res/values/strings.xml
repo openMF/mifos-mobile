@@ -122,6 +122,7 @@
     <string name="verification_mode">Verification Mode</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Import QR</string>
+    <string name="use_touch_id">Use Touch Id</string>
 
     <string name="view_guarantor">View Guarantor</string>
     <string name="add_guarantor">Add Guarantor</string>
@@ -493,6 +494,8 @@
     <string name="no_saving_account">Saving Accounts</string>
     <string name="no_loan_account">Loan Accounts</string>
     <string name="no_sharing_account">Sharing Accounts</string>
+    <string name="sign_in_fingerprint">Sign in using fingerprint</string>
+    <string name="scan_your_fingerprint">Scan your fingerprint</string>
 
 
     <string-array name="faq_qs">
