@@ -9,24 +9,23 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.imageview.ShapeableImageView
-
+import kotlinx.android.synthetic.main.fragment_home_old.*
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
@@ -42,7 +41,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.*
-
 import javax.inject.Inject
 
 /**
@@ -130,9 +128,9 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         inflater.inflate(R.menu.menu_main, menu)
         val menuItem = menu.findItem(R.id.menu_notifications)
         val count = menuItem.actionView
-        tvNotificationCount = count.findViewById(R.id.tv_notification_indicator)
+        tvNotificationCount = count?.findViewById(R.id.tv_notification_indicator)
         presenter?.unreadNotificationsCount
-        count.setOnClickListener { startActivity(Intent(context, NotificationActivity::class.java)) }
+        count?.setOnClickListener { startActivity(Intent(context, NotificationActivity::class.java)) }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -267,6 +265,39 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
                         .endConfig()
                         .buildRound(userName.substring(0, 1),requireContext().getThemeAttributeColor(R.attr.colorPrimary))
                 ivCircularUserImage?.setImageDrawable(drawable)
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ButterKnife.bind(this, view)
+        toggleVisibilityButton(
+            btn_saving_total_amount_visibility,
+            tv_saving_total_amount,
+            tv_saving_total_amount_hidden
+        )
+        toggleVisibilityButton(
+            btn_loan_amount_visibility,
+            tv_loan_total_amount,
+            tv_loan_total_amount_hidden
+        )
+    }
+
+    private fun toggleVisibilityButton(
+        button: ImageButton,
+        visibleView: View,
+        hiddenView: View
+    ) {
+        button.setOnClickListener {
+            if (visibleView.visibility == View.VISIBLE) {
+                visibleView.visibility = View.GONE
+                hiddenView.visibility = View.VISIBLE
+                button.setImageResource(R.drawable.ic_visibility_24px)
+            } else {
+                visibleView.visibility = View.VISIBLE
+                hiddenView.visibility = View.GONE
+                button.setImageResource(R.drawable.ic_visibility_off_24px)
             }
         }
     }

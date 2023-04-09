@@ -4,177 +4,188 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-    <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
-        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/account_number"
-                android:id="@+id/et_account_number"
-                android:inputType="text"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/account_number"
+                  android:id="@+id/et_account_number"
+                  android:inputType="text"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/username"
+                  android:id="@+id/et_username"
+                  android:inputType="textEmailAddress"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/first_name"
+                  android:id="@+id/et_first_name"
+                  android:inputType="text"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/last_name"
+                  android:id="@+id/et_last_name"
+                  android:inputType="text"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/countyCodePicker"
+                android:layout_gravity="center"
+                app:ccp_showNameCode="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/username"
-                android:id="@+id/et_username"
-                android:inputType="textEmailAddress"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/first_name"
-                android:id="@+id/et_first_name"
-                android:inputType="text"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/last_name"
-                android:id="@+id/et_last_name"
-                android:inputType="text"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
-
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:layout_width="match_parent">
             <com.google.android.material.textfield.TextInputEditText
                 android:hint="@string/phone_number"
                 android:id="@+id/et_phone_number"
                 android:inputType="number"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/email"
-                android:id="@+id/et_email"
-                android:inputType="textEmailAddress"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/password"
-                android:id="@+id/et_password"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progressBar"
-                android:layout_width="@dimen/width_0dp"
-                android:layout_height="wrap_content"
-                android:indeterminate="false"
-                android:layout_weight="1"
-                android:progress="0"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/password_strength_weak"
-                android:id="@+id/password_strength"
-                android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent"
-            app:passwordToggleEnabled="true">
 
-            <com.google.android.material.textfield.TextInputEditText android:hint="@string/confirm_password"
-                android:id="@+id/et_confirm_password"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent">
 
-        <LinearLayout
-            android:gravity="center"
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/email"
+                  android:id="@+id/et_email"
+                  android:inputType="textEmailAddress"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/password"
+                  android:id="@+id/et_password"
+                  android:inputType="textPassword"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent"
+            android:indeterminate="false"
+            android:layout_weight="1"
+            android:progress="0"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/password_strength_weak"
+            android:id="@+id/password_strength"
+            android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"/>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText android:hint="@string/confirm_password"
+                  android:id="@+id/et_confirm_password"
+                  android:inputType="textPassword"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/verification_mode"/>
+
+        <RadioGroup
+            android:id="@+id/rg_verification_mode"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:orientation="horizontal">
 
-            <TextView
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/rb_email"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                android:text="@string/verification_mode"/>
+                android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:layout_width="wrap_content"
+                android:text="@string/rb_email"/>
 
-            <RadioGroup
-                android:id="@+id/rg_verification_mode"
+            <RadioButton
+                android:id="@+id/rb_mobile"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:text="@string/rb_mobile"/>
 
-                <RadioButton
-                    android:checked="true"
-                    android:id="@+id/rb_email"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                    android:layout_width="wrap_content"
-                    android:text="@string/rb_email"/>
-
-                <RadioButton
-                    android:id="@+id/rb_mobile"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/rb_mobile"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/register"/>
+        </RadioGroup>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/register"/>
+
+</LinearLayout>
 </androidx.core.widget.NestedScrollView>

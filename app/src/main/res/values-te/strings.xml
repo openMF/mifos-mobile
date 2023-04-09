@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mifos Mobile</string>
     <string name="login">లాగిన్</string>
-    <string name="toast_welcome">స్వాగతం% 1 $ s</string>
+    <string name="toast_welcome">స్వాగతం %1$s</string>
     <string name="about_us">మా గురించి</string>
     <string name="unable_to_connect">ఇంటర్నెట్కి కనెక్ట్ చేయబడలేదు</string>
     <string name="basic">ప్రాథమిక</string>
@@ -146,10 +146,10 @@
 
     <string name="error_unauthorised">తప్పు వినియోగదారు పేరు / పాస్వర్డ్</string>
     <string name="error_message_server">సర్వర్ నుండి అభిప్రాయాన్ని స్వీకరించడంలో లోపం</string>
-    <string name="error_validation_blank">% 1 $ s ఖాళీగా ఉండకూడదు</string>
-    <string name="error_validation_minimum_chars">% 1 $ s% 2 $ d అక్షరాల కంటే తక్కువగా ఉండకూడదు</string>
-    <string name="error_validation_cannot_contain_spaces">% 1 $ s% 2 $ s ను కలిగి ఉండకూడదు</string>
-    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">% 1 $ s ఖాళీతో ప్రారంభం కాకూడదు లేదా ముగియదు</string>
+    <string name="error_validation_blank">%1$s ఖాళీగా ఉండకూడదు</string>
+    <string name="error_validation_minimum_chars">%1$s %2$d అక్షరాల కంటే తక్కువ ఉండకూడదు</string>
+    <string name="error_validation_cannot_contain_spaces">%1$sలో %2$s ఉండకూడదు</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s ఖాళీతో ప్రారంభం కాకూడదు లేదా ముగియదు</string>
     <string name="error_internal_server">అంతర్గత సర్వర్లో లోపం, దయచేసి మళ్ళీ ప్రయత్నించండి</string>
     <string name="error_client_loading">క్లయింట్ జాబితాను లోడ్ చేయడంలో లోపం</string>
     <string name="error_loan_accounts_list_loading">రుణ ఖాతాల జాబితాలో లోడ్ చేయడంలో లోపం</string>
@@ -292,6 +292,9 @@
     <string name="total_loan">మొత్తం రుణ</string>
     <string name="total_saving">మొత్తం పొదుపు</string>
     <string name="accounts_overview">ఖాతా సారాంశం</string>
+    <string name="show_hide_total_saving_amount">మొత్తం పొదుపు మొత్తాన్ని చూపండి లేదా దాచండి</string>
+    <string name="show_hide_total_loan_amount">మొత్తం లోన్ మొత్తాన్ని చూపండి లేదా దాచండి</string>
+    <string name="hidden_amount">*****</string>
     <string name="survey">సర్వేలు</string>
     <string name="activation_date">ఆక్టివేషన్ తేదీ</string>
     <string name="groups">గుంపులు</string>
@@ -353,10 +356,10 @@
     <string name="dialog_message_phone_state_permission_never_ask_again">ఈ అనుమతి లేకుండా, కరెన్సీ సరైన స్థితిలో ప్రదర్శించబడకపోవచ్చు, పరికరం స్థితిని చదవడానికి అనుమతిని మీరు తిరస్కరించారు. సెట్టింగ్ల్లో దాన్ని ప్రారంభించండి</string>
     <string name="msg_setting_activity_not_found">సెట్టింగ్ల్లో కార్యాచరణ కోసం శోధిస్తున్నప్పుడు ఏదో తప్పు జరిగింది. \\ n \\ \'సెట్టింగులుకు వెళ్ళండి\' మరియు మానవీయంగా అనుమతులను నమోదు చేయండి.</string>
     <string name="permission_denied_storage">నిల్వకు నిల్వ అనుమతి లేదు</string>
-    <string name="dialog_are_you_sure_that_you_want_to_string">మీరు ఖచ్చితంగా% 1 $ s కావాలనుకుంటున్నారా?</string>
+    <string name="dialog_are_you_sure_that_you_want_to_string">మీరు ఖచ్చితంగా%1$s కావాలనుకుంటున్నారా?</string>
 
 
-    <string name="hello_client">హలో,% 1 $ s</string>
+    <string name="hello_client">హలో,%1$s</string>
     <string name="invalid_amount">చెల్లని మొత్తం</string>
     <string name="exit_message">నిష్క్రమించడానికి మళ్లీ మళ్లీ నొక్కండి</string>
 

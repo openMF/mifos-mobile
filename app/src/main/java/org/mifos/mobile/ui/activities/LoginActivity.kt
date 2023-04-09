@@ -3,17 +3,17 @@ package org.mifos.mobile.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
-
 import androidx.appcompat.widget.AppCompatButton
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
+import butterknife.OnTouch
 import com.google.android.material.textfield.TextInputLayout
-
+import kotlinx.android.synthetic.main.activity_login.*
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.presenters.LoginPresenter
@@ -22,8 +22,8 @@ import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
-
 import javax.inject.Inject
+
 
 /**
  * @author Vishwajeet
@@ -57,6 +57,31 @@ class LoginActivity : BaseActivity(), LoginView {
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         loginPresenter?.attachView(this)
+        dismissSoftKeyboardOnBkgTap(nsv_background)
+    }
+
+    private fun dismissSoftKeyboardOnBkgTap(view: View) {
+        if (view !is EditText) {
+            view.setOnTouchListener { view, event ->
+                hideKeyboard(this@LoginActivity)
+                false
+            }
+        }
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                dismissSoftKeyboardOnBkgTap(innerView)
+            }
+        }
+    }
+
+    @OnTouch(R.id.et_username, R.id.et_password)
+    fun onTouch(v : View): Boolean {
+        when(v.id) {
+            R.id.et_username -> loginPresenter?.mvpView?.clearUsernameError()
+            R.id.et_password -> loginPresenter?.mvpView?.clearPasswordError()
+        }
+        return false
     }
 
     /**

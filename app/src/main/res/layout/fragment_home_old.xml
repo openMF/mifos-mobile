@@ -91,9 +91,26 @@
                             tools:text="$ 1000"
                             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
                             android:textColor="@color/deposit_green"
-                            android:text="-"/>
+                            android:text="-"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_saving_total_amount_hidden"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hidden_amount"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                            android:textColor="@color/deposit_green"
+                            android:visibility="visible"/>
+                        <ImageButton
+                            android:id="@+id/btn_saving_total_amount_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:contentDescription="@string/show_hide_total_saving_amount"
+                            android:paddingStart="6dp"
+                            android:src="@drawable/ic_visibility_24px"
+                            app:tint="@color/colorPrimary" />
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:id="@+id/ll_total_loan"
@@ -105,18 +122,36 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/Mifos.DesignSystem.TextStyle.Label"
-                            android:text="@string/total_loan"/>
+                            android:text="@string/total_loan" />
                         <View
                             android:layout_width="@dimen/width_0dp"
                             android:layout_height="@dimen/height_0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
                         <TextView
                             android:id="@+id/tv_loan_total_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
                             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                            android:text="-"/>
+                            android:text="-"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_loan_total_amount_hidden"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/red"
+                            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                            android:text="@string/hidden_amount"
+                            android:visibility="visible"/>
+                        <ImageButton
+                            android:id="@+id/btn_loan_amount_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:contentDescription="@string/show_hide_total_loan_amount"
+                            android:paddingStart="6dp"
+                            android:src="@drawable/ic_visibility_24px"
+                            app:tint="@color/colorPrimary" />
                     </LinearLayout>
 
                 </LinearLayout>

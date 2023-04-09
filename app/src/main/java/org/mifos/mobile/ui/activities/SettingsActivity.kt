@@ -26,11 +26,14 @@ class SettingsActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        if (hasSettingsChanged) {
-            ActivityCompat.finishAffinity(this)
-            val i = Intent(this, HomeActivity::class.java)
-            startActivity(i)
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            super.onBackPressed()
+            if (hasSettingsChanged) {
+                ActivityCompat.finishAffinity(this)
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+        } else {
+            supportFragmentManager.popBackStack()
         }
     }
 }

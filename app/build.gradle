@@ -88,7 +88,6 @@ dependencies {
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
-
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "com.google.android.material:material:$rootProject.designLibraryVersion"
     implementation "androidx.preference:preference:1.0.0"
@@ -99,6 +98,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.oss_licenses"
     implementation "com.isseiaoki:simplecropview:$rootProject.cropviewVersion"
 
+    //Country Code picker
+    implementation "com.hbb20:ccp:$rootProject.countryCodePicker"
 
     //Square dependencies
     implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion") {
@@ -146,6 +147,9 @@ dependencies {
     //TableView
     implementation "com.evrencoskun.library:tableview:$rootProject.tableViewVersion"
 
+    //Biometric Authentication
+    implementation "androidx.biometric:biometric:$rootProject.biometric"
+
     // Unit tests dependencies
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
@@ -164,7 +168,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
-
+    
     implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 

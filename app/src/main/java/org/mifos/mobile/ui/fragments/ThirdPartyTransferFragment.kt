@@ -224,6 +224,8 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         transferPayload.transferDate = transferDate
         transferPayload.transferAmount = etAmount?.text.toString().toDouble()
         transferPayload.transferDescription = etRemark?.text.toString()
+        transferPayload.fromAccountNumber = fromAccountOption?.accountNo
+        transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
     }
 
@@ -381,7 +383,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent?.id) {
             R.id.sp_beneficiary -> beneficiaryAccountOption =
-                    presenter?.searchAccount(accountOptionsTemplate?.fromAccountOptions, beneficiaryAdapter?.getItem(position))
+                    presenter?.searchAccount(accountOptionsTemplate?.toAccountOptions, beneficiaryAdapter?.getItem(position))
             R.id.sp_pay_from -> fromAccountOption =
                     accountOptionsTemplate?.fromAccountOptions?.get(position)
         }
