@@ -28,6 +28,10 @@ class PassCodeActivity : MifosPassCodeActivity() {
     @BindView(R.id.btn_save)
     var btnSave: AppCompatButton? = null
 
+    @JvmField
+    @BindView(R.id.cl_rootview)
+    var nestedScrollView : NestedScrollView? = null
+
     private var biometricAuthentication: BiometricAuthentication? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,11 +86,9 @@ class PassCodeActivity : MifosPassCodeActivity() {
     }
 
     private fun setBackgroundColor(){
-        val nestedScrollView = findViewById<NestedScrollView>(R.id.cl_rootview)
-        val colorBackground = android.R.attr.colorBackground
         val typedValue = TypedValue()
-        theme.resolveAttribute(colorBackground, typedValue, true)
-        nestedScrollView.setBackgroundColor(typedValue.data)
+        theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true)
+        nestedScrollView?.setBackgroundColor(typedValue.data)
     }
 
     override fun getLogo(): Int {
