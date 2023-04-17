@@ -70,7 +70,7 @@ ext {
     biometric = '1.1.0'
 
     jUnitVersion = '4.13.2'
-    mockitoVersion = '5.2.0'
+    mockitoVersion = '5.3.0'
     runnerVersion = '1.6.0-alpha01'
     rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.5.1'
