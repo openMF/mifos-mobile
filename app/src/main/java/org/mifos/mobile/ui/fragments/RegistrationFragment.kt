@@ -111,7 +111,25 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
             }
             override fun afterTextChanged(editable: Editable) {}
         })
+        if (rootView != null) {
+            dismissSoftKeyboardOnBackgroundTap(rootView)
+        }
         return rootView
+    }
+
+    private fun dismissSoftKeyboardOnBackgroundTap(view: View) {
+        if (view !is EditText) {
+            view.setOnTouchListener { view, event ->
+                BaseActivity.hideKeyboard(requireContext())
+                false
+            }
+        }
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                dismissSoftKeyboardOnBackgroundTap(innerView)
+            }
+        }
     }
 
     private fun updatePasswordStrengthView(password: String) {
