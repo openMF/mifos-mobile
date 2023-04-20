@@ -176,11 +176,17 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
             savedInstanceState: Bundle?
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_add_loan_application, container, false)
-        ButterKnife.bind(this, rootView!!)
+        val rootView = this.rootView
+        if (rootView != null) {
+            ButterKnife.bind(this, rootView)
+        }
         loanApplicationPresenter?.attachView(this)
         showUserInterface()
         if (savedInstanceState == null) {
             loadLoanTemplate()
+        }
+        if(rootView != null) {
+            dismissSoftKeyboardOnBkgTap(rootView)
         }
         return rootView
     }
@@ -497,6 +503,21 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         super.onDestroyView()
         hideProgressBar()
         loanApplicationPresenter?.detachView()
+    }
+
+    private fun dismissSoftKeyboardOnBkgTap(view: View) {
+        if (view !is EditText) {
+            view.setOnTouchListener { view, event ->
+                BaseActivity.hideKeyboard(requireContext())
+                false
+            }
+        }
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                dismissSoftKeyboardOnBkgTap(innerView)
+            }
+        }
     }
 
     companion object {
