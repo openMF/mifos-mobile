@@ -64,7 +64,7 @@ ext {
     dbflowVersion = '4.2.4'
     playServicesVersion = '17.0.1'
     firebaseMessagingVersion = '21.1.0'
-    oss_licenses = '17.0.0'
+    oss_licenses = '17.0.1'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
     biometric = '1.1.0'
