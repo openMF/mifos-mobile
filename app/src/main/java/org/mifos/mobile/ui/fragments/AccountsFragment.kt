@@ -351,19 +351,16 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      */
     fun filterLoanAccount(statusModelList: List<CheckboxStatus?>?) {
         val filteredSavings: MutableList<LoanAccount?> = ArrayList()
-        when {
-            accountsPresenter != null && accountsPresenter?.getCheckedStatus(statusModelList) != null -> {
-                for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
-                    accountsPresenter?.getFilteredLoanAccount(loanAccounts,
-                            status)?.let { filteredSavings.addAll(it) }
-                }
+        if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
+            for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
+                accountsPresenter?.getFilteredLoanAccount(loanAccounts,
+                    status)?.let { filteredSavings.addAll(it) }
             }
-            filteredSavings.size == 0 -> {
-                showEmptyAccounts(getString(R.string.no_loan_account))
-            }
-            else -> {
-                loanAccountsListAdapter?.setLoanAccountsList(filteredSavings)
-            }
+        }
+        if (filteredSavings.size == 0) {
+            showEmptyAccounts(getString(R.string.no_loan_account))
+        } else {
+            loanAccountsListAdapter?.setLoanAccountsList(filteredSavings)
         }
     }
 
