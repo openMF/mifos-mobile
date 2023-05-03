@@ -3,6 +3,7 @@ package org.mifos.mobile.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -24,6 +25,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>() {
 
     private var currency: String? = ""
+    private var columnWidth : Double = 0.0
     fun setCurrency(currency: String?) {
         this.currency = currency
     }
@@ -32,6 +34,10 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         @JvmField
         @BindView(R.id.cell_data)
         var tvCell: TextView? = null
+
+        @JvmField
+        @BindView(R.id.cell_container)
+        var llCellContainer : LinearLayout? = null
 
         init {
             ButterKnife.bind(this, v)
@@ -77,12 +83,18 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
             }
             else -> viewHolder.tvCell?.text = ""
         }
+        viewHolder.llCellContainer?.layoutParams?.width = columnWidth.toInt()
+        viewHolder.tvCell?.requestLayout()
     }
 
     internal inner class ColumnHeaderViewHolder(itemView: View) : AbstractViewHolder(itemView) {
         @JvmField
         @BindView(R.id.column_header_textView)
         var tvColumnHeader: TextView? = null
+
+        @JvmField
+        @BindView(R.id.column_header_container)
+        var llColumnHeaderContainer : LinearLayout? = null
 
         init {
             ButterKnife.bind(this, itemView)
@@ -106,6 +118,9 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         // Get the holder to update cell item text
         val columnHeaderViewHolder = holder as ColumnHeaderViewHolder
         columnHeaderViewHolder.tvColumnHeader?.text = data.toString()
+
+        columnHeaderViewHolder.llColumnHeaderContainer?.layoutParams?.width = columnWidth.toInt()
+        columnHeaderViewHolder.tvColumnHeader?.requestLayout()
     }
 
     internal inner class RowHeaderViewHolder(itemView: View) : AbstractViewHolder(itemView) {
@@ -161,5 +176,9 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         // then you should fill this method to be able create different
         // type of CellViewHolder on "onCreateCellViewHolder"
         return 0
+    }
+
+    fun setColumnWidth(columnWidth : Double) {
+        this.columnWidth = columnWidth
     }
 }
