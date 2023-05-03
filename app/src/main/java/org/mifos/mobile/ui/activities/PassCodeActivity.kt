@@ -4,15 +4,15 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
+import android.util.TypedValue
 import android.view.View
-import androidx.appcompat.widget.AppCompatButton
+import androidx.core.widget.NestedScrollView
 import butterknife.BindView
+import android.provider.Settings
+import androidx.appcompat.widget.AppCompatButton
 import butterknife.ButterKnife
-
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
-
 import org.mifos.mobile.R
 import org.mifos.mobile.ui.enums.BiometricCapability
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
@@ -28,6 +28,10 @@ class PassCodeActivity : MifosPassCodeActivity() {
     @BindView(R.id.btn_save)
     var btnSave: AppCompatButton? = null
 
+    @JvmField
+    @BindView(R.id.cl_rootview)
+    var nestedScrollView : NestedScrollView? = null
+
     private var biometricAuthentication: BiometricAuthentication? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,8 @@ class PassCodeActivity : MifosPassCodeActivity() {
         ) {
             requestPermission()
         }
+        setBackgroundColor()
+
         if (btnSave?.text?.equals(getString(R.string.use_touch_id)) == true) {
             biometricAuthentication?.authenticateWithBiometrics()
         }
@@ -77,6 +83,12 @@ class PassCodeActivity : MifosPassCodeActivity() {
             resources.getString(R.string.dialog_message_phone_state_permission_never_ask_again),
             Constants.PERMISSIONS_READ_PHONE_STATE_STATUS
         )
+    }
+
+    private fun setBackgroundColor(){
+        val typedValue = TypedValue()
+        theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true)
+        nestedScrollView?.setBackgroundColor(typedValue.data)
     }
 
     override fun getLogo(): Int {
