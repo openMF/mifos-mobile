@@ -494,8 +494,11 @@
     <string name="no_saving_account">Saving Accounts</string>
     <string name="no_loan_account">Loan Accounts</string>
     <string name="no_sharing_account">Sharing Accounts</string>
+
+    <string name="select_loan_product_field">Select Loan Product</string>
     <string name="sign_in_fingerprint">Sign in using fingerprint</string>
     <string name="scan_your_fingerprint">Scan your fingerprint</string>
+
 
 
     <string-array name="faq_qs">

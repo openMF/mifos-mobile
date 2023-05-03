@@ -219,6 +219,10 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      */
     @OnClick(R.id.btn_loan_review)
     fun onReviewLoanApplication() {
+        if(loanProductField?.text.toString().isEmpty()){
+            Toast.makeText(activity,getString(R.string.select_loan_product_field),Toast.LENGTH_SHORT).show()
+            return
+        }
         if (tilPrincipalAmount?.editText?.text.toString() == "") {
             tilPrincipalAmount?.error = getString(R.string.enter_amount)
             return
@@ -379,7 +383,9 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null)
             for ((_, name) in loanTemplate.productOptions) {
-                listLoanProducts.add(name)
+                if(!listLoanProducts.contains(name)){
+                    listLoanProducts.add(name)
+                }
             }
         loanProductField?.setSimpleItems(listLoanProducts.toTypedArray())
 
@@ -394,7 +400,9 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null)
             for ((_, name) in loanTemplate.productOptions) {
-                listLoanProducts.add(name)
+                if(!listLoanProducts.contains(name)){
+                    listLoanProducts.add(name)
+                }
             }
         loanProductField?.setSimpleItems(listLoanProducts.toTypedArray())
         loanProductField?.setText(loanWithAssociations?.loanProductName!!, false)
