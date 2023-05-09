@@ -12,7 +12,7 @@ buildscript {
 
     ext {
         gradleVersion = '7.2.0'
-        crashlyticsGradleVersion = '2.9.4'
+        crashlyticsGradleVersion = '2.9.5'
         ossLicensesVersion = '0.10.5'
         googleServicesVersion = '4.3.15'
         kotlinGradlePluginversion = '1.6.21'
@@ -50,10 +50,10 @@ ext {
     compileSdkVersion = 33
 
     // App dependencies
-    countryCodePicker = '2.7.0'
+    countryCodePicker = '2.7.2'
     supportLibraryVersion = '1.4.2'
-    designLibraryVersion = '1.6.1'
-    daggerVersion = '2.45'
+    designLibraryVersion = '1.9.0'
+    daggerVersion = '2.46'
     recyclerViewVersion = '1.2.1'
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
@@ -67,10 +67,11 @@ ext {
     oss_licenses = '17.0.0'
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
+    biometric = '1.1.0'
 
     jUnitVersion = '4.13.2'
-    mockitoVersion = '5.2.0'
-    runnerVersion = '1.6.0-alpha01'
+    mockitoVersion = '5.3.1'
+    runnerVersion = '1.6.0-alpha02'
     rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.5.1'
     zxingcoreVersion = '3.5.1'
@@ -82,6 +83,6 @@ ext {
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
     annotationLibraryVersion ='1.1.0'
-    firebaseCrashlyticsVersion = '18.3.6'
+    firebaseCrashlyticsVersion = '18.3.7'
 
 }

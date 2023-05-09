@@ -37,7 +37,7 @@ object DateHelper {
      */
     fun getDateAsString(integersOfDate: List<Int?>?): String {
         val stringBuilder = StringBuilder()
-        if (integersOfDate != null) {
+        if (integersOfDate != null && integersOfDate.size >= 3) {
             stringBuilder.append(integersOfDate[2])
                     .append(' ')
                     .append(getMonthName(integersOfDate[1]))
