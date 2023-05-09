@@ -22,6 +22,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:visibility="visible"
-        tools:text="Cell Data"/>
+        tools:text="Cell Data"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

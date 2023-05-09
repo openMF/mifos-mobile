@@ -21,7 +21,8 @@
         android:layout_weight="4"
         android:gravity="center"
         style="@style/Mifos.DesignSystem.TextStyle.Body"
-        tools:text="Header Data"/>
+        tools:text="Header Data"
+        android:textColor="@color/black"/>
 
 
     <View
