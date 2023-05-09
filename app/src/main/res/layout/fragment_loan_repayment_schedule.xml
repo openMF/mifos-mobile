@@ -38,8 +38,7 @@
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:text="@string/account_number"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
                     <TextView
                         android:gravity="start"
                         android:id="@+id/tv_account_number"
@@ -59,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:text="@string/disbursement_date"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"/>
+                        />
                     <TextView
                         android:gravity="start"
                         android:id="@+id/tv_disbursement_date"
@@ -79,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:text="@string/no_of_payments"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"/>
+                        />
                     <TextView
                         android:gravity="start"
                         android:id="@+id/tv_number_of_payments"
@@ -104,7 +103,8 @@
             android:layout_marginStart="@dimen/default_margin"
             app:selected_color="?attr/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
     </LinearLayout>
 

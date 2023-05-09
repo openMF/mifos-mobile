@@ -25,10 +25,12 @@
             android:gravity="center"
             android:maxLines="1"
             style="@style/Mifos.DesignSystem.TextStyle.Body"
-            tools:text="Row Data"/>
+            tools:text="Row Data"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
 
     <View
-        style="@style/Mifos.DesignSystem.Components.VerticalSpacer"/>
+        style="@style/Mifos.DesignSystem.Components.VerticalSpacer"
+        android:layout_width="wrap_content"/>
 </RelativeLayout>
