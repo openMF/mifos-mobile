@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
         android:layout_width="wrap_content"
-        app:layout_behavior="org.mifos.mobile.utils.ScrollFabBehavior"
+
         app:srcCompat="@drawable/ic_add_white_24dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
