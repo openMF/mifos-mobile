@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -51,6 +52,15 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
     private var progress: ProgressDialog? = null
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
+        toolbar = findViewById(R.id.toolbar)
+        if (toolbar != null) {
+            setSupportActionBar(toolbar)
+            setToolbarElevation()
+        }
+    }
+
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
         toolbar = findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
