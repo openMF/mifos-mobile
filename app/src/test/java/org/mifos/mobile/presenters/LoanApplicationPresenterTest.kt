@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -11,11 +11,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.models.templates.loans.LoanTemplate
-import org.mifos.mobile.presenters.LoanApplicationPresenter
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.views.LoanApplicationMvpView
 import org.mifos.mobile.util.RxSchedulersOverrideRule

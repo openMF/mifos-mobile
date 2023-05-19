@@ -1,6 +1,7 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
+
 import io.reactivex.Observable
 
 import org.junit.After
@@ -8,11 +9,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.presenters.BeneficiaryListPresenter
-import org.mifos.mobile.ui.views.BeneficiariesView
+import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.ui.views.ThirdPartyTransferView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 
 import org.mockito.Mock
@@ -20,10 +23,10 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
- * Created by dilpreet on 27/6/17.
+ * Created by dilpreet on 24/7/17.
  */
 @RunWith(MockitoJUnitRunner::class)
-class BeneficiaryListPresenterTest {
+class ThirdPartyTransferPresenterTest {
     @Rule
     @JvmField
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
@@ -35,43 +38,49 @@ class BeneficiaryListPresenterTest {
     var dataManager: DataManager? = null
 
     @Mock
-    var view: BeneficiariesView? = null
-    private var presenter: BeneficiaryListPresenter? = null
+    var view: ThirdPartyTransferView? = null
+    private var accountOptionsTemplate: AccountOptionsTemplate? = null
+    private var presenter: ThirdPartyTransferPresenter? = null
     private var beneficiaryList: List<Beneficiary?>? = null
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
-        presenter = BeneficiaryListPresenter(dataManager!!, context!!)
+        presenter = ThirdPartyTransferPresenter(dataManager!!, context!!)
         presenter?.attachView(view)
+        accountOptionsTemplate = FakeRemoteDataSource.accountOptionsTemplate
         beneficiaryList = FakeRemoteDataSource.beneficiaries
     }
 
     @After
-    @Throws(Exception::class)
     fun tearDown() {
         presenter?.detachView()
     }
 
     @Test
-    @Throws(Exception::class)
-    fun testLoadBeneficiaries() {
+    fun testTransferTemplate() {
+        Mockito.`when`(dataManager?.thirdPartyTransferTemplate).thenReturn(Observable.just(accountOptionsTemplate))
         Mockito.`when`(dataManager?.beneficiaryList).thenReturn(Observable.just(beneficiaryList))
-        presenter?.loadBeneficiaries()
+        presenter?.loadTransferTemplate()
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
+        Mockito.verify(view)?.showThirdPartyTransferTemplate(accountOptionsTemplate)
         Mockito.verify(view)?.showBeneficiaryList(beneficiaryList)
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_beneficiaries))
+        Mockito.verify(view, Mockito.never())?.showError(context?.getString(
+            R.string.error_fetching_account_transfer_template
+        ))
     }
 
     @Test
-    @Throws(Exception::class)
-    fun testLoadBeneficiariesFails() {
+    fun testTransferTemplateFails() {
+        Mockito.`when`(dataManager?.thirdPartyTransferTemplate).thenReturn(Observable.error(RuntimeException()))
         Mockito.`when`(dataManager?.beneficiaryList).thenReturn(Observable.error(RuntimeException()))
-        presenter?.loadBeneficiaries()
+        presenter?.loadTransferTemplate()
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
-        Mockito.verify(view)?.showError(context?.getString(R.string.error_fetching_beneficiaries))
+        Mockito.verify(view)?.showError(context?.getString(
+            R.string.error_fetching_account_transfer_template
+        ))
+        Mockito.verify(view, Mockito.never())?.showThirdPartyTransferTemplate(accountOptionsTemplate)
         Mockito.verify(view, Mockito.never())?.showBeneficiaryList(beneficiaryList)
     }
 }

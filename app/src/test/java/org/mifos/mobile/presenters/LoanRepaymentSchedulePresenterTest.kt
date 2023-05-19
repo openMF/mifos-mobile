@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -9,10 +9,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.presenters.LoanRepaymentSchedulePresenter
 import org.mifos.mobile.ui.views.LoanRepaymentScheduleMvpView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants

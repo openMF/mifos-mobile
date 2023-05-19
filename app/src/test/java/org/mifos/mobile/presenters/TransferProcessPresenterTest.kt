@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -11,10 +11,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.TransferPayload
-import org.mifos.mobile.presenters.TransferProcessPresenter
 import org.mifos.mobile.ui.views.TransferProcessView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 

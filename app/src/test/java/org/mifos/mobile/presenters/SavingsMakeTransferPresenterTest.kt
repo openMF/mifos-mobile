@@ -1,4 +1,4 @@
-package org.mifos.mobile
+package org.mifos.mobile.presenters
 
 import android.content.Context
 
@@ -9,10 +9,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.R
 
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.presenters.SavingsMakeTransferPresenter
 import org.mifos.mobile.ui.views.SavingsMakeTransferMvpView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 
@@ -60,7 +61,8 @@ class SavingsMakeTransferPresenterTest {
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showSavingsAccountTemplate(accountOptionsTemplate)
         Mockito.verify(view, Mockito.never())?.showError(context?.getString(
-                R.string.error_fetching_account_transfer_template))
+            R.string.error_fetching_account_transfer_template
+        ))
     }
 
     @Test
@@ -70,7 +72,8 @@ class SavingsMakeTransferPresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showError(context?.getString(
-                R.string.error_fetching_account_transfer_template))
+            R.string.error_fetching_account_transfer_template
+        ))
         Mockito.verify(view, Mockito.never())?.showSavingsAccountTemplate(accountOptionsTemplate)
     }
 }
