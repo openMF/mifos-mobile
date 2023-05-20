@@ -5,16 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.OnTouch
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.activity_login.*
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivityLoginBinding
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.presenters.LoginPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -35,29 +28,28 @@ class LoginActivity : BaseActivity(), LoginView {
     @Inject
     var loginPresenter: LoginPresenter? = null
 
-    @JvmField
-    @BindView(R.id.btn_login)
-    var btnLogin: AppCompatButton? = null
-
-    @JvmField
-    @BindView(R.id.til_username)
-    var tilUsername: TextInputLayout? = null
-
-    @JvmField
-    @BindView(R.id.til_password)
-    var tilPassword: TextInputLayout? = null
-
-    @JvmField
-    @BindView(R.id.ll_login)
-    var llLogin: LinearLayout? = null
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         activityComponent?.inject(this)
-        setContentView(R.layout.activity_login)
-        ButterKnife.bind(this)
+        setContentView(binding.root)
         loginPresenter?.attachView(this)
-        dismissSoftKeyboardOnBkgTap(nsv_background)
+        dismissSoftKeyboardOnBkgTap(binding.nsvBackground)
+        binding.btnLogin.setOnClickListener {
+            onLoginClicked()
+        }
+        binding.btnRegister.setOnClickListener {
+            onRegisterClicked()
+        }
+        binding.etUsername.setOnTouchListener { view, event ->
+            onTouch(view)
+        }
+
+        binding.etPassword.setOnTouchListener { view, event ->
+            onTouch(view)
+        }
     }
 
     private fun dismissSoftKeyboardOnBkgTap(view: View) {
@@ -75,11 +67,10 @@ class LoginActivity : BaseActivity(), LoginView {
         }
     }
 
-    @OnTouch(R.id.et_username, R.id.et_password)
-    fun onTouch(v : View): Boolean {
-        when(v.id) {
-            R.id.et_username -> loginPresenter?.mvpView?.clearUsernameError()
-            R.id.et_password -> loginPresenter?.mvpView?.clearPasswordError()
+    fun onTouch(v: View): Boolean {
+        when (v) {
+            binding.etUsername -> loginPresenter?.mvpView?.clearUsernameError()
+            binding.etPassword -> loginPresenter?.mvpView?.clearPasswordError()
         }
         return false
     }
@@ -120,44 +111,42 @@ class LoginActivity : BaseActivity(), LoginView {
      */
     override fun showMessage(errorMessage: String?) {
         showToast(errorMessage!!, Toast.LENGTH_LONG)
-        llLogin?.visibility = View.VISIBLE
+        binding.llLogin.visibility = View.VISIBLE
     }
 
     override fun showUsernameError(error: String?) {
-        tilUsername?.error = error
+        binding.tilUsername.error = error
     }
 
     override fun showPasswordError(error: String?) {
-        tilPassword?.error = error
+        binding.tilPassword.error = error
     }
 
     override fun clearUsernameError() {
-        tilUsername?.isErrorEnabled = false
+        binding.tilUsername.isErrorEnabled = false
     }
 
     override fun clearPasswordError() {
-        tilPassword?.isErrorEnabled = false
+        binding.tilPassword.isErrorEnabled = false
     }
 
     /**
      * Called when Login Button is clicked, used for logging in the user
      */
 
-    @OnClick(R.id.btn_login)
     fun onLoginClicked() {
-        val username = tilUsername?.editText?.editableText.toString()
-        val password = tilPassword?.editText?.editableText.toString()
+        val username = binding.tilUsername.editText?.editableText.toString()
+        val password = binding.tilPassword.editText?.editableText.toString()
         if (Network.isConnected(this)) {
             val payload = LoginPayload()
             payload.username = username
             payload.password = password
             loginPresenter?.login(payload)
         } else {
-            Toaster.show(llLogin, getString(R.string.no_internet_connection))
+            Toaster.show(binding.llLogin, getString(R.string.no_internet_connection))
         }
     }
 
-    @OnClick(R.id.btn_register)
     fun onRegisterClicked() {
         startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))
     }

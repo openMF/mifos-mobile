@@ -2,9 +2,8 @@ package org.mifos.mobile.ui.activities
 
 import android.os.Bundle
 
-import butterknife.ButterKnife
-
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivityEditUserDetailBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.UpdatePasswordFragment
 
@@ -13,10 +12,12 @@ import org.mifos.mobile.ui.fragments.UpdatePasswordFragment
 */
 class EditUserDetailActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityEditUserDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_user_detail)
-        ButterKnife.bind(this)
+        binding = ActivityEditUserDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.string_and_string, getString(R.string.edit),
                 getString(R.string.user_details)))
         showBackButton()
