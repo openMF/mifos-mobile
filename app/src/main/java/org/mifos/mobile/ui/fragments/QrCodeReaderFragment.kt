@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentScanQrCodeBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
@@ -27,13 +24,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
  */
 class QrCodeReaderFragment : BaseFragment(), ResultHandler {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.view_scanner)
-    var mScannerView: ZXingScannerView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_flash)
-    var btnFlash: ImageButton? = null
+    private var _binding: FragmentScanQrCodeBinding? = null
+    private val binding get() = _binding!!
 
     private var flashOn = false
 
@@ -41,12 +33,14 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_scan_qr_code, container, false)
+        _binding = FragmentScanQrCodeBinding.inflate(inflater,container,false)
         setToolbarTitle(getString(R.string.add_beneficiary))
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView)
-        mScannerView?.setAutoFocus(true)
-        return rootView
+        binding.viewScanner.setAutoFocus(true)
+        binding.btnFlash.setOnClickListener {
+            turnOnFlash()
+        }
+        return binding.root
     }
 
     /**
@@ -55,29 +49,28 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
      */
     override fun onResume() {
         super.onResume()
-        mScannerView?.setResultHandler(this)
-        mScannerView?.startCamera()
+        binding.viewScanner.setResultHandler(this)
+        binding.viewScanner.startCamera()
     }
 
     @Suppress("DEPRECATION")
-    @OnClick(R.id.btn_flash)
     fun turnOnFlash() {
         if (flashOn) {
             flashOn = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                btnFlash?.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on, null))
+                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on, null))
             } else {
-                btnFlash?.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on))
+                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on))
             }
-            mScannerView?.flash = false
+            binding.viewScanner.flash = false
         } else {
             flashOn = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                btnFlash?.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off, null))
+                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off, null))
             } else {
-                btnFlash?.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off))
+                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off))
             }
-            mScannerView?.flash = true
+            binding.viewScanner.flash = true
         }
     }
 
@@ -86,7 +79,7 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
      */
     override fun onPause() {
         super.onPause()
-        mScannerView?.stopCamera()
+        binding.viewScanner.stopCamera()
     }
 
     /**
@@ -110,8 +103,13 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
                 activity, getString(R.string.invalid_qr),
                 Toast.LENGTH_SHORT
             ).show()
-            mScannerView?.resumeCameraPreview(this)
+            binding.viewScanner.resumeCameraPreview(this)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

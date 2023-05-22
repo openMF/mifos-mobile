@@ -5,15 +5,12 @@ import android.os.Parcelable
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import androidx.appcompat.widget.AppCompatButton
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ErrorLayoutBinding
+import org.mifos.mobile.databinding.FragmentThirdPartyTransferBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 import org.mifos.mobile.models.payload.AccountDetail
@@ -37,81 +34,9 @@ import javax.inject.Inject
  */
 class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnItemSelectedListener {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.sp_beneficiary)
-    var spBeneficiary: Spinner? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.sp_pay_from)
-    var spPayFrom: Spinner? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.et_amount)
-    var etAmount: EditText? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.et_remark)
-    var etRemark: EditText? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_make_transfer)
-    var layoutMakeTransfer: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_one)
-    var pvOne: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_two)
-    var pvTwo: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_three)
-    var pvThree: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_four)
-    var pvFour: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_pay_to)
-    var btnPayTo: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_pay_from)
-    var btnPayFrom: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_amount)
-    var btnAmount: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_add_beneficiary)
-    var btnAddBeneficiary: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_review)
-    var llReview: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_select_beneficary)
-    var tvSelectBeneficiary: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_select_amount)
-    var tvEnterAmount: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_enter_remark)
-    var tvEnterRemark: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_add_beneficiary_msg)
-    var tvAddBeneficiaryMsg: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
+    private lateinit var errorLayoutBinding: ErrorLayoutBinding
+    private var _binding: FragmentThirdPartyTransferBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -125,7 +50,6 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
     private var beneficiaryAccountOption: AccountOption? = null
     private var accountOptionsTemplate: AccountOptionsTemplate? = null
     private var transferDate: String? = null
-    private var rootView: View? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,16 +61,43 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             savedInstanceState: Bundle?
     ): View? {
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        rootView = inflater.inflate(R.layout.fragment_third_party_transfer, container, false)
+        errorLayoutBinding = ErrorLayoutBinding.inflate(inflater,container,false)
+        _binding = FragmentThirdPartyTransferBinding.inflate(inflater,container,false)
         setToolbarTitle(getString(R.string.third_party_transfer))
-        if (rootView != null ) ButterKnife.bind(this, rootView!!)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         presenter?.attachView(this)
         if (savedInstanceState == null) {
             presenter?.loadTransferTemplate()
         }
-        return rootView
+
+        binding.btnReviewTransfer.setOnClickListener {
+            reviewTransfer()
+        }
+
+        binding.btnPayFrom.setOnClickListener {
+            payFromSelected()
+        }
+
+        binding.btnPayTo.setOnClickListener {
+            payToSelected()
+        }
+
+        binding.btnAmount.setOnClickListener {
+            amountSet()
+        }
+
+        binding.btnCancelTransfer.setOnClickListener {
+            cancelTransfer()
+        }
+
+        binding.btnAddBeneficiary.setOnClickListener {
+            addBeneficiary()
+        }
+        errorLayoutBinding.btnTryAgain.setOnClickListener {
+            onRetry()
+        }
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -174,40 +125,39 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             AccountsSpinnerAdapter(it, listPayFrom)
         }
         payFromAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spPayFrom?.adapter = payFromAdapter
-        spPayFrom?.onItemSelectedListener = this
+        binding.spPayFrom.adapter = payFromAdapter
+        binding.spPayFrom.onItemSelectedListener = this
         beneficiaryAdapter = activity?.applicationContext?.let {
             BeneficiarySpinnerAdapter(it,
                     R.layout.beneficiary_spinner_layout, listBeneficiary)
         }
         beneficiaryAdapter?.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        spBeneficiary?.adapter = beneficiaryAdapter
-        spBeneficiary?.onItemSelectedListener = this
+        binding.spBeneficiary.adapter = beneficiaryAdapter
+        binding.spBeneficiary.onItemSelectedListener = this
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
                 getTodayFormatted())
-        pvOne?.setCurrentActive()
+        binding.processOne.setCurrentActive()
     }
 
     /**
      * Checks validation of `etRemark` and then opens [TransferProcessFragment] for
      * initiating the transfer
      */
-    @OnClick(R.id.btn_review_transfer)
     fun reviewTransfer() {
-        if (etAmount?.text.toString() == "") {
-            Toaster.show(rootView, getString(R.string.enter_amount))
+        if (binding.etAmount.text.toString() == "") {
+            Toaster.show(binding.root, getString(R.string.enter_amount))
             return
         }
-        if (etAmount?.text.toString() == ".") {
-            Toaster.show(rootView, getString(R.string.invalid_amount))
+        if (binding.etAmount.text.toString() == ".") {
+            Toaster.show(binding.root, getString(R.string.invalid_amount))
             return
         }
-        if (etRemark?.text.toString().trim { it <= ' ' } == "") {
-            Toaster.show(rootView, getString(R.string.remark_is_mandatory))
+        if (binding.etRemark.text.toString().trim { it <= ' ' } == "") {
+            Toaster.show(binding.root, getString(R.string.remark_is_mandatory))
             return
         }
-        if (spBeneficiary?.selectedItem.toString() == spPayFrom?.selectedItem.toString()) {
-            Toaster.show(rootView, getString(R.string.error_same_account_transfer))
+        if (binding.spBeneficiary.selectedItem.toString() == binding.spPayFrom.selectedItem.toString()) {
+            Toaster.show(binding.root, getString(R.string.error_same_account_transfer))
             return
         }
         val transferPayload = TransferPayload()
@@ -222,8 +172,8 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         transferPayload.toAccountType = beneficiaryAccountOption?.accountType?.id
         transferPayload.transferDate = transferDate
-        transferPayload.transferAmount = etAmount?.text.toString().toDouble()
-        transferPayload.transferDescription = etRemark?.text.toString()
+        transferPayload.transferAmount = binding.etAmount.text.toString().toDouble()
+        transferPayload.transferDescription = binding.etRemark.text.toString()
         transferPayload.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.newInstance(transferPayload, TransferType.TPT), true, R.id.container)
@@ -235,7 +185,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      * @param msg String to be shown
      */
     override fun showToaster(msg: String?) {
-        Toaster.show(rootView, msg)
+        Toaster.show(binding.root, msg)
     }
 
     /**
@@ -268,19 +218,18 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      * Disables `spPayFrom` [Spinner] and sets `pvOne` to completed and make
      * `pvThree` pvTwo
      */
-    @OnClick(R.id.btn_pay_from)
     fun payFromSelected() {
-        pvOne?.setCurrentCompleted()
-        pvTwo?.setCurrentActive()
-        btnPayFrom?.visibility = View.GONE
-        tvSelectBeneficiary?.visibility = View.GONE
+        binding.processOne.setCurrentCompleted()
+        binding.processTwo?.setCurrentActive()
+        binding.btnPayFrom.visibility = View.GONE
+        binding.tvSelectBeneficary.visibility = View.GONE
         if (listBeneficiary.isNotEmpty()) {
-            btnPayTo?.visibility = View.VISIBLE
-            spBeneficiary?.visibility = View.VISIBLE
-            spPayFrom?.isEnabled = false
+            binding.btnPayTo.visibility = View.VISIBLE
+            binding.spBeneficiary.visibility = View.VISIBLE
+            binding.spPayFrom.isEnabled = false
         } else {
-            tvAddBeneficiaryMsg?.visibility = View.VISIBLE
-            btnAddBeneficiary?.visibility = View.VISIBLE
+            binding.tvAddBeneficiaryMsg.visibility = View.VISIBLE
+            binding.btnAddBeneficiary.visibility = View.VISIBLE
         }
     }
 
@@ -289,19 +238,18 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      * Disables `spBeneficiary` [Spinner] and sets `pvTwo` to completed and make
      * `pvThree` active
      */
-    @OnClick(R.id.btn_pay_to)
     fun payToSelected() {
-        if (spBeneficiary?.selectedItem.toString() == spPayFrom?.selectedItem.toString()) {
+        if (binding.spBeneficiary.selectedItem.toString() == binding.spPayFrom.selectedItem.toString()) {
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        pvTwo?.setCurrentCompleted()
-        pvThree?.setCurrentActive()
-        btnPayTo?.visibility = View.GONE
-        tvEnterAmount?.visibility = View.GONE
-        etAmount?.visibility = View.VISIBLE
-        btnAmount?.visibility = View.VISIBLE
-        spBeneficiary?.isEnabled = false
+        binding.processTwo.setCurrentCompleted()
+        binding.processThree?.setCurrentActive()
+        binding.btnPayTo.visibility = View.GONE
+        binding.tvSelectAmount.visibility = View.GONE
+        binding.etAmount.visibility = View.VISIBLE
+        binding.btnAmount.visibility = View.VISIBLE
+        binding.spBeneficiary.isEnabled = false
     }
 
     /**
@@ -309,47 +257,43 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      * Disables `etAmount` and sets `pvThree` to completed and make
      * `pvFour` active
      */
-    @OnClick(R.id.btn_amount)
     fun amountSet() {
-        if (etAmount?.text.toString() == "") {
+        if (binding.etAmount.text.toString() == "") {
             showToaster(getString(R.string.enter_amount))
             return
         }
-        if (etAmount?.text.toString() == ".") {
+        if (binding.etAmount.text.toString() == ".") {
             showToaster(getString(R.string.invalid_amount))
             return
         }
-        if (etAmount?.text.toString().toDouble() == 0.0) {
+        if (binding.etAmount.text.toString().toDouble() == 0.0) {
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        pvThree?.setCurrentCompleted()
-        pvFour?.setCurrentActive()
-        btnAmount?.visibility = View.GONE
-        tvEnterRemark?.visibility = View.GONE
-        etRemark?.visibility = View.VISIBLE
-        llReview?.visibility = View.VISIBLE
-        etAmount?.isEnabled = false
+        binding.processThree.setCurrentCompleted()
+        binding.processFour.setCurrentActive()
+        binding.btnAmount.visibility = View.GONE
+        binding.tvEnterRemark.visibility = View.GONE
+        binding.etRemark.visibility = View.VISIBLE
+        binding.llReview.visibility = View.VISIBLE
+        binding.etAmount.isEnabled = false
     }
 
-    @OnClick(R.id.btn_cancel_transfer)
     fun cancelTransfer() {
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    @OnClick(R.id.btn_add_beneficiary)
     fun addBeneficiary() {
         (activity as BaseActivity?)?.replaceFragment(BeneficiaryAddOptionsFragment.newInstance(),
                 true, R.id.container)
     }
 
-    @OnClick(R.id.btn_try_again)
     fun onRetry() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.llMakeTransfer, binding.layoutError.root)
             presenter?.loadTransferTemplate()
         } else {
-            Toaster.show(rootView, getString(R.string.internet_not_connected))
+            Toaster.show(binding.root, getString(R.string.internet_not_connected))
         }
     }
 
@@ -360,21 +304,21 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.llMakeTransfer, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(msg, layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(msg, binding.llMakeTransfer, binding.layoutError.root)
 
         }
     }
 
     override fun showProgress() {
-        layoutMakeTransfer?.visibility = View.GONE
+        binding.llMakeTransfer.visibility = View.GONE
         showProgressBar()
     }
 
     override fun hideProgress() {
         hideProgressBar()
-        layoutMakeTransfer?.visibility = View.VISIBLE
+        binding.llMakeTransfer.visibility = View.VISIBLE
     }
 
     /**
@@ -414,6 +358,7 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         super.onDestroyView()
         hideProgress()
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {

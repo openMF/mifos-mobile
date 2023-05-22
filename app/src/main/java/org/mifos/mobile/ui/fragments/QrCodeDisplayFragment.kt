@@ -4,10 +4,8 @@ import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
-import butterknife.BindView
-import butterknife.ButterKnife
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentQrCodeDisplayBinding
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.QrCodeGenerator
@@ -17,10 +15,10 @@ import org.mifos.mobile.utils.Utils
  * Created by dilpreet on 16/8/17.
  */
 class QrCodeDisplayFragment : BaseFragment() {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.iv_qr_code)
-    var ivQrCode: ImageView? = null
-    private var rootView: View? = null
+
+    private var _binding : FragmentQrCodeDisplayBinding? = null
+    private val binding get() = _binding!!
+
     private var json: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +30,9 @@ class QrCodeDisplayFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_qr_code_display, container, false)
-        ButterKnife.bind(this, rootView!!)
-        ivQrCode?.setImageBitmap(QrCodeGenerator.encodeAsBitmap(json))
-        return rootView
+        _binding = FragmentQrCodeDisplayBinding.inflate(inflater,container,false)
+        binding.ivQrCode.setImageBitmap(QrCodeGenerator.encodeAsBitmap(json))
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -46,7 +43,7 @@ class QrCodeDisplayFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_qr_code_share -> {
-                val bitmapDrawable = ivQrCode?.drawable as BitmapDrawable
+                val bitmapDrawable = binding.ivQrCode.drawable as BitmapDrawable
                 val uri = Utils.getImageUri(activity, bitmapDrawable.bitmap)
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
@@ -57,6 +54,11 @@ class QrCodeDisplayFragment : BaseFragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
