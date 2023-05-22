@@ -5,14 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentTransferProcessBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.presenters.TransferProcessPresenter
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
@@ -32,42 +26,12 @@ import javax.inject.Inject
  */
 class TransferProcessFragment : BaseFragment(), TransferProcessView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_amount)
-    var tvAmount: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_pay_to)
-    var tvPayTo: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_pay_from)
-    var tvPayFrom: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_date)
-    var tvDate: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_remark)
-    var tvRemark: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.iv_success)
-    var ivSuccess: ImageView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_transfer)
-    var llTransfer: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_close)
-    var btnClose: AppCompatButton? = null
+    private var _binding: FragmentTransferProcessBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var presenter: TransferProcessPresenter? = null
-    private var rootView: View? = null
     private var payload: TransferPayload? = null
     private var transferType: TransferType? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,26 +46,34 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_transfer_process, container, false)
+        _binding = FragmentTransferProcessBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
-        ButterKnife.bind(this, rootView!!)
         presenter?.attachView(this)
-        tvAmount?.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)
-        tvPayFrom?.text = payload?.fromAccountNumber.toString()
-        tvPayTo?.text = payload?.toAccountNumber.toString()
-        tvDate?.text = payload?.transferDate
-        tvRemark?.text = payload?.transferDescription
-        return rootView
+        binding.tvAmount.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)
+        binding.tvPayFrom.text = payload?.fromAccountNumber.toString()
+        binding.tvPayTo.text = payload?.toAccountNumber.toString()
+        binding.tvDate.text = payload?.transferDate
+        binding.tvRemark.text = payload?.transferDescription
+
+        binding.btnStartTransfer.setOnClickListener {
+            startTransfer()
+        }
+        binding.btnCancelTransfer.setOnClickListener {
+            cancelTransferProcess()
+        }
+        binding.btnClose.setOnClickListener {
+            closeClicked()
+        }
+        return binding.root
     }
 
     /**
      * Initiates a transfer depending upon `transferType`
      */
-    @OnClick(R.id.btn_start_transfer)
     fun startTransfer() {
         if (!Network.isConnected(activity)) {
-            Toaster.show(rootView, getString(R.string.internet_not_connected))
+            Toaster.show(binding.root, getString(R.string.internet_not_connected))
             return
         }
         if (transferType == TransferType.SELF) {
@@ -114,9 +86,8 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     /**
      * Cancels the Transfer and pops fragment
      */
-    @OnClick(R.id.btn_cancel_transfer)
     fun cancelTransferProcess() {
-        Toaster.cancelTransfer(rootView, getString(R.string.cancel_transfer),
+        Toaster.cancelTransfer(binding.root, getString(R.string.cancel_transfer),
             getString(R.string.yes), View.OnClickListener {
                 activity?.supportFragmentManager?.popBackStack()
                 activity?.supportFragmentManager?.popBackStack()
@@ -126,7 +97,6 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     /**
      * Closes the transfer fragment
      */
-    @OnClick(R.id.btn_close)
     fun closeClicked() {
         activity?.supportFragmentManager?.popBackStack()
         activity?.supportFragmentManager?.popBackStack()
@@ -136,11 +106,11 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      * Shows a {@link Snackbar} on succesfull transfer of money
      */
     override fun showTransferredSuccessfully() {
-        Toaster.show(rootView, getString(R.string.transferred_successfully))
-        ivSuccess?.visibility = View.VISIBLE
-        (ivSuccess?.drawable as Animatable).start()
-        btnClose?.visibility = View.VISIBLE
-        llTransfer?.visibility = View.GONE
+        Toaster.show(binding.root, getString(R.string.transferred_successfully))
+        binding.ivSuccess.visibility = View.VISIBLE
+        (binding.ivSuccess.drawable as Animatable).start()
+        binding.btnClose.visibility = View.VISIBLE
+        binding.llTransfer.visibility = View.GONE
         SavingsAccountContainerActivity.transferSuccess = true
     }
 
@@ -150,7 +120,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      * @param msg Error message that tells the user about the problem.
      */
     override fun showError(msg: String?) {
-        Toaster.show(rootView, msg)
+        Toaster.show(binding.root, msg)
     }
 
     override fun showProgress() {
@@ -164,6 +134,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     override fun onDestroyView() {
         super.onDestroyView()
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {
