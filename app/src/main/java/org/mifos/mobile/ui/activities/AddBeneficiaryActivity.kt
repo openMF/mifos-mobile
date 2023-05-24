@@ -3,6 +3,7 @@ package org.mifos.mobile.ui.activities
 import android.os.Bundle
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.BeneficiaryAddOptionsFragment
 
@@ -12,9 +13,12 @@ import org.mifos.mobile.ui.fragments.BeneficiaryAddOptionsFragment
  */
 class AddBeneficiaryActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityContainerBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_container)
+        binding = ActivityContainerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         showBackButton()
         replaceFragment(BeneficiaryAddOptionsFragment.newInstance(), false, R.id.container)
     }

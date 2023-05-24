@@ -3,6 +3,7 @@ package org.mifos.mobile.ui.activities
 import android.os.Bundle
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.SavingAccountsDetailFragment
 import org.mifos.mobile.utils.Constants
@@ -12,10 +13,13 @@ import org.mifos.mobile.utils.Constants
  */
 class SavingsAccountContainerActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityContainerBinding
+
     private var savingsId: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_container)
+        binding = ActivityContainerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         savingsId = intent?.extras?.getLong(Constants.SAVINGS_ID)!!
         replaceFragment(SavingAccountsDetailFragment.newInstance(savingsId), false, R.id.container)
         showBackButton()
