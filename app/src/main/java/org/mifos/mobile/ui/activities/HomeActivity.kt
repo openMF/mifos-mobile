@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.activities
 
-import android.app.UiModeManager
 import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
@@ -10,17 +9,12 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,6 +22,8 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.databinding.ActivityHomeBinding
+import org.mifos.mobile.databinding.NavDrawerHeaderBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.presenters.UserDetailsPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -45,13 +41,9 @@ import javax.inject.Inject
  * @since 14/07/2016
  */
 class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigationItemSelectedListener {
-    @JvmField
-    @BindView(R.id.navigation_view)
-    var navigationView: NavigationView? = null
 
-    @JvmField
-    @BindView(R.id.drawer)
-    var drawerLayout: DrawerLayout? = null
+    private lateinit var binding: ActivityHomeBinding
+    private lateinit var navHeaderBinding: NavDrawerHeaderBinding
 
     @JvmField
     @Inject
@@ -71,9 +63,9 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     var doubleBackToExitPressedOnce = false
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         activityComponent?.inject(this)
-        setContentView(R.layout.activity_home)
-        ButterKnife.bind(this)
+        setContentView(binding.root)
         clientId = preferencesHelper?.clientId
         setupNavigationBar()
         setToolbarElevation()
@@ -170,7 +162,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         }
 
         // close the drawer
-        drawerLayout?.closeDrawer(GravityCompat.START)
+        binding.drawer.closeDrawer(GravityCompat.START)
         return true
     }
 
@@ -199,18 +191,18 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * self-service application
      */
     private fun setupNavigationBar() {
-        navigationView?.setNavigationItemSelectedListener(this)
+        binding.navigationView.setNavigationItemSelectedListener(this)
         val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this,
-                drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+                binding.drawer, toolbar, R.string.open_drawer, R.string.close_drawer) {
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 hideKeyboard(drawerView)
             }
         }
-        drawerLayout?.addDrawerListener(actionBarDrawerToggle)
+        binding.drawer.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        navigationView?.getHeaderView(0)?.let { setupHeaderView(it) }
+        binding.navigationView.getHeaderView(0)?.let { setupHeaderView(it) }
         setUpBackStackListener()
     }
 
@@ -220,11 +212,12 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * @param headerView Header view of NavigationView
      */
     private fun setupHeaderView(headerView: View) {
-        tvUsername = ButterKnife.findById(headerView, R.id.tv_user_name)
-        drawerUserImage = ButterKnife.findById(headerView, R.id.user_image_round)
+        navHeaderBinding = NavDrawerHeaderBinding.bind(headerView)
+        tvUsername = navHeaderBinding.tvUserName
+        drawerUserImage = navHeaderBinding.userImageRound
         drawerUserImage?.setOnClickListener{
             startActivity(Intent(this, UserProfileActivity::class.java))
-            drawerLayout?.closeDrawer(GravityCompat.START)
+            binding.drawer.closeDrawer(GravityCompat.START)
         }
     }
 
@@ -293,8 +286,8 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      * Handling back press
      */
     override fun onBackPressed() {
-        if (drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
-            drawerLayout?.closeDrawer(GravityCompat.START)
+        if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+            binding.drawer.closeDrawer(GravityCompat.START)
             return
         }
         val fragment = supportFragmentManager.findFragmentById(R.id.container)
@@ -344,7 +337,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     }
 
     fun setNavigationViewSelectedItem(id: Int) {
-        navigationView?.setCheckedItem(id)
+        binding.navigationView.setCheckedItem(id)
     }
 
 
