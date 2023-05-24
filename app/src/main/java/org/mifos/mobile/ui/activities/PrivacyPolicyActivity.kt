@@ -23,8 +23,7 @@ class PrivacyPolicyActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivacyPolicyBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.privacy_policy))
         showBackButton()
 

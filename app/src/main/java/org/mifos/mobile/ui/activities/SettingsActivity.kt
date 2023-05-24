@@ -17,8 +17,7 @@ class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.settings))
         showBackButton()
         replaceFragment(SettingsFragment.newInstance(), false, R.id.container)

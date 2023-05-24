@@ -17,8 +17,7 @@ class HelpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContainerBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.help))
         showBackButton()
         replaceFragment(HelpFragment.newInstance(), false, R.id.container)

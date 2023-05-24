@@ -17,8 +17,7 @@ class AboutUsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContainerBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.about_us))
         showBackButton()
         replaceFragment(AboutUsFragment.newInstance(), false, R.id.container)
