@@ -56,9 +56,6 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         }
         setHasOptionsMenu(true)
 
-        binding.btnProceed.setOnClickListener {
-            proceed()
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -77,6 +74,13 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         binding.ivCropQrCode.setInitialFrameScale(0.8f)
         qrCodeImportPresenter?.attachView(this)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnProceed.setOnClickListener {
+            proceed()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

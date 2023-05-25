@@ -14,7 +14,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 
 import org.mifos.mobile.R
-import org.mifos.mobile.databinding.ErrorLayoutBinding
 import org.mifos.mobile.databinding.FragmentRecentTransactionsBinding
 import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.presenters.RecentTransactionsPresenter
@@ -36,7 +35,6 @@ import javax.inject.Inject
  */
 class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRefreshListener {
 
-    private lateinit var errorLayoutBinding: ErrorLayoutBinding
     private var _binding: FragmentRecentTransactionsBinding? = null
     private val binding get() = _binding!!
 
@@ -60,7 +58,6 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
             savedInstanceState: Bundle?
     ): View? {
          _binding = FragmentRecentTransactionsBinding.inflate(inflater,container,false)
-        errorLayoutBinding = ErrorLayoutBinding.inflate(inflater,container,false)
         recentTransactionsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
@@ -68,11 +65,14 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
         if (savedInstanceState == null) {
             recentTransactionsPresenter?.loadRecentTransactions(false, 0)
         }
+        return binding.root
+    }
 
-        errorLayoutBinding.btnTryAgain.setOnClickListener {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
         }
-        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -97,7 +97,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvRecentTransactions.layoutManager = layoutManager
         binding.rvRecentTransactions.setHasFixedSize(true)
-        binding.rvRecentTransactions.addItemDecoration(DividerItemDecoration(activity!!,
+        binding.rvRecentTransactions.addItemDecoration(DividerItemDecoration(requireActivity(),
                 layoutManager.orientation))
         recentTransactionsListAdapter?.setTransactions(recentTransactionList)
         binding.rvRecentTransactions.adapter = recentTransactionsListAdapter
@@ -115,7 +115,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
                         }
                     }
                 })
-        binding.swipeTransactionContainer.setColorSchemeColors(*activity!!
+        binding.swipeTransactionContainer.setColorSchemeColors(*requireActivity()
                 .resources.getIntArray(R.array.swipeRefreshColors))
         binding.swipeTransactionContainer?.setOnRefreshListener(this)
     }
@@ -176,7 +176,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
      * @param message Error message that tells the user about the problem.
      */
     override fun showErrorFetchingRecentTransactions(message: String?) {
-        if (!isConnected(activity!!)) {
+        if (!isConnected(requireActivity())) {
             sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvRecentTransactions, binding.layoutError.root)
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(message, binding.rvRecentTransactions, binding.layoutError.root)
@@ -184,7 +184,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     }
 
     fun retryClicked() {
-        if (isConnected(context!!)) {
+        if (isConnected(requireContext())) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvRecentTransactions, binding.layoutError.root)
             recentTransactionsPresenter?.loadRecentTransactions(false, 0)
         } else {

@@ -9,7 +9,6 @@ import android.widget.AdapterView.OnItemSelectedListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 
 import org.mifos.mobile.R
-import org.mifos.mobile.databinding.ErrorLayoutBinding
 import org.mifos.mobile.databinding.FragmentThirdPartyTransferBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
@@ -34,7 +33,6 @@ import javax.inject.Inject
  */
 class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnItemSelectedListener {
 
-    private lateinit var errorLayoutBinding: ErrorLayoutBinding
     private var _binding: FragmentThirdPartyTransferBinding? = null
     private val binding get() = _binding!!
 
@@ -61,7 +59,6 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             savedInstanceState: Bundle?
     ): View? {
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        errorLayoutBinding = ErrorLayoutBinding.inflate(inflater,container,false)
         _binding = FragmentThirdPartyTransferBinding.inflate(inflater,container,false)
         setToolbarTitle(getString(R.string.third_party_transfer))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
@@ -71,6 +68,11 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
             presenter?.loadTransferTemplate()
         }
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.btnReviewTransfer.setOnClickListener {
             reviewTransfer()
         }
@@ -94,10 +96,9 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         binding.btnAddBeneficiary.setOnClickListener {
             addBeneficiary()
         }
-        errorLayoutBinding.btnTryAgain.setOnClickListener {
+        binding.layoutError.btnTryAgain.setOnClickListener {
             onRetry()
         }
-        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
