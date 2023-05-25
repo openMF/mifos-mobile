@@ -59,7 +59,6 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
         }
     }
 
-
     override fun setContentView(view: View?) {
         super.setContentView(view)
         toolbar = findViewById(R.id.toolbar)
