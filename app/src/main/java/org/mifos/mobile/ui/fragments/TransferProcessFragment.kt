@@ -56,6 +56,12 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
         binding.tvDate.text = payload?.transferDate
         binding.tvRemark.text = payload?.transferDescription
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.btnStartTransfer.setOnClickListener {
             startTransfer()
         }
@@ -65,7 +71,6 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
         binding.btnClose.setOnClickListener {
             closeClicked()
         }
-        return binding.root
     }
 
     /**
