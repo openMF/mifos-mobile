@@ -6,16 +6,18 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivitySettingsBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.SettingsFragment
 import org.mifos.mobile.utils.Constants
 
 class SettingsActivity : BaseActivity() {
-
+    private lateinit var binding : ActivitySettingsBinding
     private var hasSettingsChanged = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.settings))
         showBackButton()
         replaceFragment(SettingsFragment.newInstance(), false, R.id.container)

@@ -4,15 +4,19 @@ import android.content.DialogInterface
 import android.os.Bundle
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivityRegistrationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.RegistrationFragment
 import org.mifos.mobile.utils.MaterialDialog
 
 class RegistrationActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityRegistrationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration)
+        binding = ActivityRegistrationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         replaceFragment(RegistrationFragment.newInstance(), false, R.id.container)
     }
 
