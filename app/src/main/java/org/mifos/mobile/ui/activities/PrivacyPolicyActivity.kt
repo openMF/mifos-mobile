@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ProgressBar
 
-import butterknife.BindView
-import butterknife.ButterKnife
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.ActivityPrivacyPolicyBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 
 /**
@@ -20,39 +18,32 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
  * On 11/03/19.
  */
 class PrivacyPolicyActivity : BaseActivity() {
-
-    @JvmField
-    @BindView(R.id.webView)
-    var webView: WebView? = null
-
-    @JvmField
-    @BindView(R.id.progress_bar)
-    var progressBar: ProgressBar? = null
+    private lateinit var binding : ActivityPrivacyPolicyBinding
     private var showOrHideWebViewInitialUse = "show"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_privacy_policy)
-        ButterKnife.bind(this)
+        binding = ActivityPrivacyPolicyBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbarTitle(getString(R.string.privacy_policy))
         showBackButton()
 
         // Force links and redirects to open in the WebView instead of in a browser
-        webView?.webViewClient = WebViewClient()
+        binding.webView.webViewClient = WebViewClient()
 
         // Enable Javascript
-        val webSettings = webView?.settings
-        webSettings?.javaScriptEnabled = true
+        val webSettings = binding.webView.settings
+        webSettings.javaScriptEnabled = true
 
         // REMOTE RESOURCE
-        webView?.settings?.domStorageEnabled = true
-        webView?.overScrollMode = WebView.OVER_SCROLL_NEVER
-        webView?.loadUrl(getString(R.string.privacy_policy_host_url))
-        webView?.webViewClient = MyWebViewClient()
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.overScrollMode = WebView.OVER_SCROLL_NEVER
+        binding.webView.loadUrl(getString(R.string.privacy_policy_host_url))
+        binding.webView.webViewClient = MyWebViewClient()
     }
 
     override fun onBackPressed() {
-        if (webView?.canGoBack() == true) {
-            webView?.goBack()
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
         } else {
             super.onBackPressed()
         }
@@ -71,13 +62,13 @@ class PrivacyPolicyActivity : BaseActivity() {
         override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
             // only make it invisible the FIRST time the app is run
             if (showOrHideWebViewInitialUse == "show") {
-                webView?.visibility = View.INVISIBLE
+                binding.webView.visibility = View.INVISIBLE
             }
         }
 
         override fun onPageFinished(view: WebView, url: String) {
             showOrHideWebViewInitialUse = "hide"
-            progressBar?.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
             view.visibility = View.VISIBLE
             super.onPageFinished(view, url)
         }
