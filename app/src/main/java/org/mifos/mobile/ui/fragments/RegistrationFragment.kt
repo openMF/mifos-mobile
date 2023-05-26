@@ -158,7 +158,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
             Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
                     getString(R.string.password), resources.getInteger(R.integer.password_minimum_length)))
             return false
-        } else if(!checkValidityOfPhoneNumber (binding.countryCodePicker)){
+        } else if(!isPhoneNumberValid(binding.countryCodePicker)){
             Toaster.show(rootView,getString(R.string.invalid_phn_number))
             return false
         }
@@ -186,9 +186,9 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         presenter?.detachView()
         _binding = null
     }
-    private fun checkValidityOfPhoneNumber (isPhoneNumberValid: CountryCodePicker): Boolean {
+    private fun isPhoneNumberValid(ccp: CountryCodePicker): Boolean {
         binding.countryCodePicker.registerCarrierNumberEditText(binding.etPhoneNumber)
-        return isPhoneNumberValid.isValidFullNumber
+        return ccp.isValidFullNumber
 
     }
     companion object {
