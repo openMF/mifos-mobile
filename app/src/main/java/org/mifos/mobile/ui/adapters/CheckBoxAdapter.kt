@@ -12,6 +12,7 @@ import butterknife.ButterKnife
 import butterknife.OnCheckedChanged
 import butterknife.OnClick
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.RowCheckboxBinding
 import org.mifos.mobile.models.CheckboxStatus
 import javax.inject.Inject
 
@@ -19,50 +20,39 @@ import javax.inject.Inject
  * Created by dilpreet on 3/7/17.
  */
 class CheckBoxAdapter @Inject constructor() :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<CheckBoxAdapter.ViewHolder>() {
 
     var statusList: List<CheckboxStatus?>? = null
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(
-                R.layout.row_checkbox, parent, false)
-        return ViewHolder(v)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = RowCheckboxBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var (status, color, isChecked) = statusList?.get(position)!!
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val (status, color, isChecked) = statusList?.get(position) ?: return
         val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
         val colors = intArrayOf(color, color)
-        (holder as ViewHolder).cbStatusSelect?.isChecked = isChecked
-        holder.cbStatusSelect?.setOnClickListener{
-            isChecked = !isChecked
-        }
-        holder.cbStatusSelect?.supportButtonTintList = ColorStateList(states,colors)
-        holder.cbStatusSelect?.text = status
+
+        holder.bind(status, isChecked, states, colors)
     }
 
     override fun getItemCount(): Int {
-        return if (statusList != null) statusList!!.size
-        else 0
+        return statusList?.size ?: 0
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        @JvmField
-        @BindView(R.id.cb_status_select)
-        var cbStatusSelect: AppCompatCheckBox? = null
+    inner class ViewHolder(private val binding: RowCheckboxBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-
-        @OnClick(R.id.cb_status_select)
-        fun rowClicked() {
-            cbStatusSelect?.isChecked = (cbStatusSelect?.isChecked == false)
-        }
-
-        @OnCheckedChanged(R.id.cb_status_select)
-        fun checkChanges() {
-            statusList!![adapterPosition]?.isChecked = (cbStatusSelect?.isChecked == true)
-        }
-
-        init {
-            ButterKnife.bind(this, itemView!!)
+        fun bind(status: String?, isChecked: Boolean, states: Array<IntArray>, colors: IntArray) {
+            with(binding) {
+                cbStatusSelect.isChecked = isChecked
+                cbStatusSelect.setOnClickListener {
+                    statusList?.get(adapterPosition)?.isChecked = !isChecked
+                }
+                cbStatusSelect.supportButtonTintList = ColorStateList(states, colors)
+                cbStatusSelect.text = status
+            }
         }
     }
 }
