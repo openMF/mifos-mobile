@@ -6,20 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.databinding.FragmentUserProfileBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.Group
 import org.mifos.mobile.presenters.UserDetailsPresenter
@@ -38,69 +28,9 @@ import javax.inject.Inject
  * Created by dilpreet on 10/7/17.
  */
 class UserProfileFragment : BaseFragment(), UserDetailsView {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.iv_profile)
-    var ivProfile: ImageView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.app_bar_layout)
-    var appBarLayout: AppBarLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_user_name)
-    var tvUsername: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_account_number)
-    var tvAccountNumber: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_activation_date)
-    var tvActivationDate: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_office_name)
-    var tvOfficeName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_groups)
-    var tvGroups: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_client_type)
-    var tvClientType: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_client_classification)
-    var tvClientClassification: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_phone_number)
-    var tvPhoneNumber: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_dob)
-    var tvDOB: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_gender)
-    var tvGender: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.toolbar)
-    var toolbar: Toolbar? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_user_profile)
-    var llUserProfile: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.fab_edit)
-    var fabEdit: FloatingActionButton? = null
+    private var _binding: FragmentUserProfileBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -109,7 +39,6 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     @kotlin.jvm.JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    private lateinit var rootView: View
     private var userBitmap: Bitmap? = null
     private var client: Client? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
@@ -117,18 +46,24 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_user_profile, container, false)
+        _binding = FragmentUserProfileBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView)
         presenter?.attachView(this)
-        (activity as BaseActivity?)?.setSupportActionBar(toolbar)
+        (activity as BaseActivity?)?.setSupportActionBar(binding.toolbar) // check this part before pushing
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         if (savedInstanceState == null) {
             presenter?.userDetails
             presenter?.userImage
         }
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnChangePassword.setOnClickListener {
+            changePassword()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -152,26 +87,26 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      */
     override fun showUserDetails(client: Client?) {
         this.client = client
-        tvUsername?.text = nullFieldCheck(getString(R.string.username), client?.displayName)
-        tvAccountNumber?.text = nullFieldCheck(getString(R.string.account_number),
+        binding.tvUserName.text = nullFieldCheck(getString(R.string.username), client?.displayName)
+        binding.tvAccountNumber.text = nullFieldCheck(getString(R.string.account_number),
                 client?.accountNo)
-        tvActivationDate?.text = nullFieldCheck(getString(R.string.activation_date),
+        binding.tvActivationDate.text = nullFieldCheck(getString(R.string.activation_date),
                 DateHelper.getDateAsString(client?.activationDate))
-        tvOfficeName?.text = nullFieldCheck(getString(R.string.office_name),
+        binding.tvOfficeName.text = nullFieldCheck(getString(R.string.office_name),
                 client?.officeName)
-        tvClientType?.text = nullFieldCheck(getString(R.string.client_type),
+        binding.tvClientType.text = nullFieldCheck(getString(R.string.client_type),
                 client?.clientType?.name)
-        tvGroups?.text = nullFieldCheck(getString(R.string.groups),
+        binding.tvGroups.text = nullFieldCheck(getString(R.string.groups),
                 getGroups(client?.groups))
-        tvClientClassification?.text = client?.clientClassification?.name ?: "-"
-        tvPhoneNumber?.text = nullFieldCheck(getString(R.string.phone_number),
+        binding.tvClientClassification.text = client?.clientClassification?.name ?: "-"
+        binding.tvPhoneNumber.text = nullFieldCheck(getString(R.string.phone_number),
                 client?.mobileNo)
         if (client?.dobDate?.size != 3) {  // no data entry in database for the client
-            tvDOB?.text = getString(R.string.no_dob_found)
+            binding.tvDob.text = getString(R.string.no_dob_found)
         } else {
-            tvDOB?.text = DateHelper.getDateAsString(client.dobDate)
+            binding.tvDob.text = DateHelper.getDateAsString(client.dobDate)
         }
-        tvGender?.text = nullFieldCheck(getString(R.string.gender), client?.gender?.name)
+        binding.tvGender.text = nullFieldCheck(getString(R.string.gender), client?.gender?.name)
     }
 
     private fun nullFieldCheck(field: String, value: String?): String {
@@ -220,14 +155,13 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                                         ?.clientName)
                                         ?.substring(0, 1),
                                 requireContext().getThemeAttributeColor(R.attr.colorPrimaryVariant))
-                ivProfile?.setImageDrawable(textDrawable)
+                binding.ivProfile.setImageDrawable(textDrawable)
             } else {
-                ivProfile?.setImageBitmap(bitmap)
+                binding.ivProfile.setImageBitmap(bitmap)
             }
         }
     }
 
-    @OnClick(R.id.btn_change_password)
     fun changePassword() {
         startActivity(Intent(context, EditUserDetailActivity::class.java))
     }
@@ -238,11 +172,11 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      * @param message Error message that tells the user about the problem.
      */
     override fun showError(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
         sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.error_fetching_user_profile),
-                R.drawable.ic_error_black_24dp, appBarLayout,
-                layoutError)
-        fabEdit?.visibility = View.GONE
+                R.drawable.ic_error_black_24dp, binding.appBarLayout,
+                binding.layoutError.root)
+        binding.fabEdit.visibility = View.GONE
     }
 
     override fun showProgress() {
@@ -257,6 +191,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         super.onDestroyView()
         hideProgress()
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {

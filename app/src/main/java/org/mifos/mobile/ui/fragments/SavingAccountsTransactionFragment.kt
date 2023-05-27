@@ -9,12 +9,10 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
@@ -33,17 +31,8 @@ import javax.inject.Inject
  */
 class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_account)
-    var layoutAccount: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.rv_saving_accounts_transaction)
-    var rvSavingAccountsTransaction: RecyclerView? = null
+    private var _binding: FragmentSavingAccountTransactionsBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -59,7 +48,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     private var tvStartDate: Button? = null
     private var tvEndDate: Button? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
-    private var rootView: View? = null
     private var savingsId: Long = 0
     private var transactionsList: List<Transactions?>? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
@@ -82,17 +70,25 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
             inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_saving_account_transactions,
-                container, false)
-        ButterKnife.bind(this, rootView!!)
+        _binding = FragmentSavingAccountTransactionsBinding.inflate(inflater,container,false)
         savingAccountsTransactionPresenter?.attachView(this)
-        sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
             savingAccountsTransactionPresenter?.loadSavingsWithAssociations(savingsId)
         }
         initializeFilterVariables()
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tvHelpLineNumber.setOnClickListener {
+            dialHelpLineNumber()
+        }
+        binding.layoutError.btnTryAgain.setOnClickListener {
+            retryClicked()
+        }
     }
 
     private fun initializeFilterVariables() {
@@ -120,10 +116,10 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvSavingAccountsTransaction?.setHasFixedSize(true)
-        rvSavingAccountsTransaction?.layoutManager = layoutManager
-        rvSavingAccountsTransaction?.adapter = transactionListAdapter
-        rvSavingAccountsTransaction?.addItemDecoration(DividerItemDecoration(requireContext(),layoutManager.orientation))
+        binding.rvSavingAccountsTransaction.setHasFixedSize(true)
+        binding.rvSavingAccountsTransaction.layoutManager = layoutManager
+        binding.rvSavingAccountsTransaction.adapter = transactionListAdapter
+        binding.rvSavingAccountsTransaction.addItemDecoration(DividerItemDecoration(requireContext(),layoutManager.orientation))
     }
 
     /**
@@ -133,7 +129,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * @param savingsWithAssociations Contains [Transactions] for given Savings account.
      */
     override fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
-        layoutAccount?.visibility = View.VISIBLE
+        binding.llAccount.visibility = View.VISIBLE
         this.savingsWithAssociations = savingsWithAssociations
         transactionsList = savingsWithAssociations?.transactions
         if (transactionsList != null && transactionsList?.isNotEmpty() == true) {
@@ -151,16 +147,15 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      */
     override fun showErrorFetchingSavingAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(rvSavingAccountsTransaction, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvSavingAccountsTransaction, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message, rvSavingAccountsTransaction, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(message, binding.rvSavingAccountsTransaction, binding.layoutError.root)
         }
     }
 
-    @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvSavingAccountsTransaction, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvSavingAccountsTransaction, binding.layoutError.root)
             savingAccountsTransactionPresenter?.loadSavingsWithAssociations(savingsId)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -173,7 +168,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      */
     override fun showFilteredList(list: List<Transactions?>?) {
         if (list != null && list.isNotEmpty()) {
-            Toaster.show(rootView, getString(R.string.filtered))
+            Toaster.show(binding.root, getString(R.string.filtered))
             transactionListAdapter?.setSavingAccountsTransactionList(list)
         } else {
             showEmptyTransactions()
@@ -182,13 +177,12 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
 
     override fun showEmptyTransactions() {
         sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.transactions),
-                R.drawable.ic_compare_arrows_black_24dp, rvSavingAccountsTransaction, layoutError)
+                R.drawable.ic_compare_arrows_black_24dp, binding.rvSavingAccountsTransaction, binding.layoutError.root)
     }
 
     /**
      * Opens up Phone Dialer
      */
-    @OnClick(R.id.tv_help_line_number)
     fun dialHelpLineNumber() {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
@@ -312,11 +306,11 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                 .setPositiveButton(getString(R.string.filter)) { _, _ ->
                     if (checkBoxPeriod?.isChecked == true) {
                         if (!isReady) {
-                            Toaster.show(rootView, getString(R.string.select_date))
+                            Toaster.show(binding.root, getString(R.string.select_date))
                             return@setPositiveButton
                         } else if (!isEndDateLargeThanStartDate()) {
                             Toaster.show(
-                                rootView,
+                                binding.root,
                                 getString(R.string.end_date_must_be_greater)
                             )
                             return@setPositiveButton
@@ -388,6 +382,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         super.onDestroyView()
         hideProgress()
         savingAccountsTransactionPresenter?.detachView()
+        _binding = null
     }
 
     companion object {

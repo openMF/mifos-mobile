@@ -4,15 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-
-import com.google.android.material.textfield.TextInputLayout
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.presenters.SavingsAccountWithdrawPresenter
@@ -29,26 +23,13 @@ import javax.inject.Inject
 * Created by saksham on 02/July/2018
 */
 class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawView {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_client_name)
-    var tvClientName: TextView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_account_number)
-    var tvAccountNumber: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_withdrawal_date)
-    var tvWithdrawalDate: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_remark)
-    var tilRemark: TextInputLayout? = null
+    private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var presenter: SavingsAccountWithdrawPresenter? = null
-    private var rootView: View? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var payload: SavingsAccountWithdrawPayload? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,43 +41,47 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_savings_account_withdraw_fragment,
-                container, false)
-        ButterKnife.bind(this, rootView!!)
+        _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         showUserInterface()
-        return rootView
+        return binding.root
     }
 
-    @OnClick(R.id.btn_withdraw_savings_account)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnWithdrawSavingsAccount.setOnClickListener {
+            onWithdrawSavingsAccount()
+        }
+    }
+
     fun onWithdrawSavingsAccount() {
         submitWithdrawSavingsAccount()
     }
 
     override fun showUserInterface() {
         activity?.title = getString(R.string.withdraw_savings_account)
-        tvAccountNumber?.text = savingsWithAssociations?.accountNo
-        tvClientName?.text = savingsWithAssociations?.clientName
-        tvWithdrawalDate?.text = getTodayFormatted()
+        binding.tvAccountNumber.text = savingsWithAssociations?.accountNo
+        binding.tvClientName.text = savingsWithAssociations?.clientName
+        binding.tvWithdrawalDate.text = getTodayFormatted()
     }
 
     private val isFormIncomplete: Boolean
         get() {
             var rv = false
-            if (tilRemark?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+            if (binding.tilRemark.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
                 rv = true
-                tilRemark?.error = getString(R.string.error_validation_blank,
+                binding.tilRemark.error = getString(R.string.error_validation_blank,
                         getString(R.string.remark))
             }
             return rv
         }
 
     override fun submitWithdrawSavingsAccount() {
-        tilRemark?.isErrorEnabled = false
-        if (isFormIncomplete == false) {
+        binding.tilRemark.isErrorEnabled = false
+        if (!isFormIncomplete) {
             payload = SavingsAccountWithdrawPayload()
-            payload?.note = tilRemark?.editText?.text.toString()
+            payload?.note = binding.tilRemark.editText?.text.toString()
             payload?.withdrawnOnDate = getTodayFormatted()
             presenter?.submitWithdrawSavingsAccount(savingsWithAssociations?.accountNo, payload)
         }
@@ -108,11 +93,11 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
     }
 
     override fun showMessage(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     override fun showError(error: String?) {
-        Toaster.show(rootView, error)
+        Toaster.show(binding.root, error)
     }
 
     override fun showProgress() {
@@ -121,6 +106,11 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
 
     override fun hideProgress() {
         hideMifosProgressDialog()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {
