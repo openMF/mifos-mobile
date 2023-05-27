@@ -12,15 +12,11 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentClientAccountsBinding
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.accounts.share.ShareAccount
@@ -42,17 +38,8 @@ import javax.inject.Inject
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */   class ClientAccountsFragment : BaseFragment(), AccountsView {
-    @JvmField
-    @BindView(R.id.viewpager)
-    var viewPager: ViewPager? = null
-
-    @JvmField
-    @BindView(R.id.tabs)
-    var tabLayout: TabLayout? = null
-
-    @JvmField
-    @BindView(R.id.fab_create_loan)
-    var fabCreateLoan: FloatingActionButton? = null
+    private var _binding : FragmentClientAccountsBinding? = null
+    private val binding get() = _binding!!
 
     @JvmField
     @Inject
@@ -73,16 +60,16 @@ import javax.inject.Inject
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_client_accounts, container, false)
+        _binding = FragmentClientAccountsBinding.inflate(inflater, container, false)
+        val rootView = binding.root
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, view)
         accountsPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts))
         setUpViewPagerAndTabLayout()
         if (savedInstanceState == null) {
             accountsPresenter?.loadClientAccounts()
         }
-        return view
+        return rootView
     }
 
     /**
@@ -97,15 +84,15 @@ import javax.inject.Inject
                 getString(R.string.loan))
         viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SHARE_ACCOUNTS),
                 getString(R.string.share))
-        viewPager?.offscreenPageLimit = 2
-        viewPager?.adapter = viewPagerAdapter
+        binding.viewpager.offscreenPageLimit = 2
+        binding.viewpager.adapter = viewPagerAdapter
         when (accountType) {
-            AccountType.SAVINGS -> viewPager?.currentItem = 0
-            AccountType.LOAN -> viewPager?.currentItem = 1
-            AccountType.SHARE -> viewPager?.currentItem = 2
+            AccountType.SAVINGS -> binding.viewpager.currentItem = 0
+            AccountType.LOAN -> binding.viewpager.currentItem = 1
+            AccountType.SHARE -> binding.viewpager.currentItem = 2
         }
-        tabLayout?.setupWithViewPager(viewPager)
-        viewPager?.addOnPageChangeListener(object : OnPageChangeListener {
+        binding.tabs.setupWithViewPager(binding.viewpager)
+        binding.viewpager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(
                     position: Int, positionOffset: Float,
                     positionOffsetPixels: Int
@@ -116,9 +103,9 @@ import javax.inject.Inject
                 activity?.invalidateOptionsMenu()
                 view?.let { (activity as HomeActivity?)?.hideKeyboard(it) }
                 if (position == 0 || position == 1) {
-                    fabCreateLoan?.show()
+                    binding.fabCreateLoan.show()
                 } else {
-                    fabCreateLoan?.hide()
+                    binding.fabCreateLoan.hide()
                 }
             }
 
@@ -176,9 +163,15 @@ import javax.inject.Inject
                 ?.hideProgress()
     }
 
-    @OnClick(R.id.fab_create_loan)
-    fun createLoan() {
-        when (viewPager?.currentItem) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.fabCreateLoan.setOnClickListener {
+            createLoan()
+        }
+    }
+
+    private fun createLoan() {
+        when (binding.viewpager.currentItem) {
             0 -> startActivity(Intent(activity, SavingsAccountApplicationActivity::class.java))
             1 -> startActivity(Intent(activity, LoanApplicationActivity::class.java))
         }
@@ -206,11 +199,12 @@ import javax.inject.Inject
     override fun onDestroyView() {
         super.onDestroyView()
         accountsPresenter?.detachView()
+        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_account, menu)
-        if (viewPager?.currentItem == 0) {
+        if (binding.viewpager.currentItem == 0) {
             menu.findItem(R.id.menu_filter_savings).isVisible = true
             menu.findItem(R.id.menu_filter_loan).isVisible = false
             menu.findItem(R.id.menu_filter_shares).isVisible = false
@@ -218,7 +212,7 @@ import javax.inject.Inject
             menu.findItem(R.id.menu_search_loan).isVisible = false
             menu.findItem(R.id.menu_search_share).isVisible = false
             initSearch(menu, AccountType.SAVINGS)
-        } else if (viewPager?.currentItem == 1) {
+        } else if (binding.viewpager.currentItem == 1) {
             menu.findItem(R.id.menu_filter_savings).isVisible = false
             menu.findItem(R.id.menu_filter_loan).isVisible = true
             menu.findItem(R.id.menu_filter_shares).isVisible = false
@@ -226,7 +220,7 @@ import javax.inject.Inject
             menu.findItem(R.id.menu_search_loan).isVisible = true
             menu.findItem(R.id.menu_search_share).isVisible = false
             initSearch(menu, AccountType.LOAN)
-        } else if (viewPager?.currentItem == 2) {
+        } else if (binding.viewpager.currentItem == 2) {
             menu.findItem(R.id.menu_filter_savings).isVisible = false
             menu.findItem(R.id.menu_filter_loan).isVisible = false
             menu.findItem(R.id.menu_filter_shares).isVisible = true
@@ -257,15 +251,17 @@ import javax.inject.Inject
         val manager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         var search: SearchView? = null
 
-        when (account) {
+        search = when (account) {
             AccountType.SAVINGS -> {
-                search = menu.findItem(R.id.menu_search_saving).actionView as SearchView
+                menu.findItem(R.id.menu_search_saving).actionView as SearchView
             }
+
             AccountType.LOAN -> {
-                search = menu.findItem(R.id.menu_search_loan).actionView as SearchView
+                menu.findItem(R.id.menu_search_loan).actionView as SearchView
             }
+
             AccountType.SHARE -> {
-                search = menu.findItem(R.id.menu_search_share).actionView as SearchView
+                menu.findItem(R.id.menu_search_share).actionView as SearchView
             }
         }
         val displayMetrics = DisplayMetrics()
