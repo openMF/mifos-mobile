@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentAccountsBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
@@ -44,17 +42,8 @@ import kotlin.collections.ArrayList
  * Created by Rajan Maurya on 23/10/16.
  */
 class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.rv_accounts)
-    var rvAccounts: RecyclerView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.swipe_container)
-    var swipeRefreshLayout: SwipeRefreshLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
+    private var _binding : FragmentAccountsBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -104,8 +93,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_accounts, container, false)
-        ButterKnife.bind(this, rootView)
+        _binding = FragmentAccountsBinding.inflate(inflater, container, false)
+        val rootView = binding.root
 
 
         loanAccountsListAdapter = LoanAccountsListAdapter(::onItemClick)
@@ -116,13 +105,13 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = RecyclerView.VERTICAL
-        rvAccounts?.layoutManager = layoutManager
-        rvAccounts?.setHasFixedSize(true)
-        rvAccounts?.addItemDecoration(DividerItemDecoration(activity,
+        binding.rvAccounts.layoutManager = layoutManager
+        binding.rvAccounts.setHasFixedSize(true)
+        binding.rvAccounts.addItemDecoration(DividerItemDecoration(activity,
                 layoutManager.orientation))
-        swipeRefreshLayout?.setColorSchemeColors(*requireActivity()
+        binding.swipeContainer.setColorSchemeColors(*requireActivity()
                 .resources.getIntArray(R.array.swipeRefreshColors))
-        swipeRefreshLayout?.setOnRefreshListener(this)
+        binding.swipeContainer.setOnRefreshListener(this)
         if (savedInstanceState == null) {
             showProgress()
         }
@@ -168,13 +157,19 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.layoutError.btnTryAgain.setOnClickListener {
+            onRetry()
+        }
+    }
+
     /**
      * Used for reloading account of a particular `accountType` in case of a network error.
      */
-    @OnClick(R.id.btn_try_again)
     fun onRetry() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvAccounts, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
             accountsPresenter?.loadAccounts(accountType)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -192,7 +187,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
             accountsPresenter?.loadAccounts(accountType)
         } else {
             hideProgress()
-            sweetUIErrorHandler?.showSweetNoInternetUI(rvAccounts, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvAccounts, binding.layoutError.root)
             Toast.makeText(context, getString(R.string.internet_not_connected),
                     Toast.LENGTH_SHORT).show()
         }
@@ -203,7 +198,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * currentFilterList = null
      */
     fun clearFilter() {
-        sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvAccounts, layoutError)
+        sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
         currentFilterList = null
     }
 
@@ -223,7 +218,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         this.loanAccounts = loanAccounts
         if (loanAccounts?.isNotEmpty() == true) {
             loanAccountsListAdapter?.setLoanAccountsList(loanAccounts)
-            rvAccounts?.adapter = loanAccountsListAdapter
+            binding.rvAccounts.adapter = loanAccountsListAdapter
         } else {
             showEmptyAccounts(getString(R.string.loan_account))
         }
@@ -240,7 +235,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         this.savingAccounts = savingAccounts
         if (savingAccounts?.isNotEmpty() == true) {
             savingAccountsListAdapter?.setSavingAccountsList(savingAccounts)
-            rvAccounts?.adapter = savingAccountsListAdapter
+            binding.rvAccounts.adapter = savingAccountsListAdapter
         } else {
             showEmptyAccounts(getString(R.string.savings_account))
         }
@@ -257,7 +252,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         this.shareAccounts = shareAccounts
         if (shareAccounts?.isNotEmpty() == true) {
             shareAccountsListAdapter?.setShareAccountsList(shareAccounts)
-            rvAccounts?.adapter = shareAccountsListAdapter
+            binding.rvAccounts.adapter = shareAccountsListAdapter
         } else {
             showEmptyAccounts(getString(R.string.share_account))
         }
@@ -271,7 +266,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private fun showEmptyAccounts(emptyAccounts: String?) {
         sweetUIErrorHandler?.showSweetEmptyUI(emptyAccounts,
                 R.drawable.ic_account_balance_wallet_black_background_24dp,
-                rvAccounts, layoutError)
+                binding.rvAccounts, binding.layoutError.root)
     }
 
     /**
@@ -285,7 +280,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         if (searchResult?.size == 0) {
             showEmptyAccounts(getString(R.string.no_saving_account))
         } else {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvAccounts, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
             savingAccountsListAdapter?.setSavingAccountsList(searchResult)
         }
     }
@@ -301,7 +296,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         if (searchResult?.size == 0) {
             showEmptyAccounts(getString(R.string.no_loan_account))
         } else {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvAccounts, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
             loanAccountsListAdapter?.setLoanAccountsList(searchResult)
         }
     }
@@ -317,7 +312,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         if (searchResult?.size == 0) {
             showEmptyAccounts(getString(R.string.no_sharing_account))
         } else {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvAccounts, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
             shareAccountsListAdapter?.setShareAccountsList(searchResult)
         }
     }
@@ -392,9 +387,9 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      */
     override fun showError(errorMessage: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(rvAccounts, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvAccounts, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(errorMessage, rvAccounts, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(errorMessage, binding.rvAccounts, binding.layoutError.root)
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
         hideProgress()
@@ -415,15 +410,16 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     }
 
     private fun showSwipeRefreshLayout(show: Boolean) {
-        swipeRefreshLayout?.isRefreshing = show
+        binding.swipeContainer.isRefreshing = show
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         accountsPresenter?.detachView()
+        _binding = null
     }
 
-    fun onItemClick(position: Int) {
+    private fun onItemClick(position: Int) {
         var intent: Intent? = null
         when (accountType) {
             Constants.SAVINGS_ACCOUNTS -> {

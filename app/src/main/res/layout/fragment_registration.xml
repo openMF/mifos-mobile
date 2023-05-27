@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.hbb20.CountryCodePicker
-                android:id="@+id/countyCodePicker"
+                android:id="@+id/countryCodePicker"
                 android:layout_gravity="center"
                 app:ccp_showNameCode="false"
                 android:layout_width="wrap_content"

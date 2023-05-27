@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
 import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.presenters.RegistrationVerificationPresenter
 import org.mifos.mobile.ui.activities.LoginActivity
@@ -24,33 +21,32 @@ import javax.inject.Inject
  * Created by dilpreet on 31/7/17.
  */
 class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificationView {
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.et_request_id)
-    var etRequestId: EditText? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.et_authentication_token)
-    var etToken: EditText? = null
+    private var _binding : FragmentRegistrationVerificationBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var presenter: RegistrationVerificationPresenter? = null
-    private var rootView: View? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_registration_verification, container, false)
+        _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
+        val rootView = binding.root
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
         presenter?.attachView(this)
         return rootView
     }
 
-    @OnClick(R.id.btn_verify)
-    fun verifyClicked() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnVerify.setOnClickListener {
+            verifyClicked()
+        }
+    }
+
+    private fun verifyClicked() {
         val userVerify = UserVerify()
-        userVerify.authenticationToken = etToken?.text.toString()
-        userVerify.requestId = etRequestId?.text.toString()
+        userVerify.authenticationToken = binding.etAuthenticationToken.text.toString()
+        userVerify.requestId = binding.etRequestId.text.toString()
         presenter?.verifyUser(userVerify)
     }
 
@@ -61,7 +57,7 @@ class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificatio
     }
 
     override fun showError(msg: String?) {
-        Toaster.show(rootView, msg)
+        Toaster.show(binding.root, msg)
     }
 
     override fun showProgress() {
@@ -75,6 +71,7 @@ class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificatio
     override fun onDestroyView() {
         super.onDestroyView()
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {
