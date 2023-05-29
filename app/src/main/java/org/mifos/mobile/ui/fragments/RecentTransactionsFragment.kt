@@ -9,15 +9,12 @@ import android.widget.Toast
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentRecentTransactionsBinding
 import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.presenters.RecentTransactionsPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -38,17 +35,8 @@ import javax.inject.Inject
  */
 class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRefreshListener {
 
-    @JvmField
-    @BindView(R.id.rv_recent_transactions)
-    var rvRecentTransactions: RecyclerView? = null
-
-    @JvmField
-    @BindView(R.id.swipe_transaction_container)
-    var swipeTransactionContainer: SwipeRefreshLayout? = null
-
-    @JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
+    private var _binding: FragmentRecentTransactionsBinding? = null
+    private val binding get() = _binding!!
 
     @JvmField
     @Inject
@@ -58,7 +46,6 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     @Inject
     var recentTransactionsListAdapter: RecentTransactionListAdapter? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
-    private var rootView: View? = null
     private var recentTransactionList: MutableList<Transaction?>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,16 +57,22 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_recent_transactions, container, false)
-        ButterKnife.bind(this, rootView!!)
+         _binding = FragmentRecentTransactionsBinding.inflate(inflater,container,false)
         recentTransactionsPresenter?.attachView(this)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         setToolbarTitle(getString(R.string.recent_transactions))
         if (savedInstanceState == null) {
             recentTransactionsPresenter?.loadRecentTransactions(false, 0)
         }
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.layoutError.btnTryAgain.setOnClickListener {
+            retryClicked()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -102,13 +95,13 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     override fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvRecentTransactions?.layoutManager = layoutManager
-        rvRecentTransactions?.setHasFixedSize(true)
-        rvRecentTransactions?.addItemDecoration(DividerItemDecoration(activity!!,
+        binding.rvRecentTransactions.layoutManager = layoutManager
+        binding.rvRecentTransactions.setHasFixedSize(true)
+        binding.rvRecentTransactions.addItemDecoration(DividerItemDecoration(requireActivity(),
                 layoutManager.orientation))
         recentTransactionsListAdapter?.setTransactions(recentTransactionList)
-        rvRecentTransactions?.adapter = recentTransactionsListAdapter
-        rvRecentTransactions?.addOnScrollListener(
+        binding.rvRecentTransactions.adapter = recentTransactionsListAdapter
+        binding.rvRecentTransactions.addOnScrollListener(
                 object : EndlessRecyclerViewScrollListener(layoutManager) {
                     override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                         recentTransactionsPresenter?.loadRecentTransactions(true, totalItemsCount)
@@ -118,20 +111,20 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
                         super.onScrollStateChanged(recyclerView, newState)
                         if (!recyclerView.canScrollVertically(1) &&
                                 newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            Toaster.show(rootView, R.string.no_more_transactions_available)
+                            Toaster.show(binding.root, R.string.no_more_transactions_available)
                         }
                     }
                 })
-        swipeTransactionContainer?.setColorSchemeColors(*activity!!
+        binding.swipeTransactionContainer.setColorSchemeColors(*requireActivity()
                 .resources.getIntArray(R.array.swipeRefreshColors))
-        swipeTransactionContainer?.setOnRefreshListener(this)
+        binding.swipeTransactionContainer?.setOnRefreshListener(this)
     }
 
     /**
      * Refreshes the List of [Transaction]
      */
     override fun onRefresh() {
-        if (layoutError?.visibility == View.VISIBLE) {
+        if (binding.layoutError.root.visibility == View.VISIBLE) {
             resetUI()
         }
         recentTransactionsPresenter?.loadRecentTransactions(false, 0)
@@ -166,7 +159,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     }
 
     override fun resetUI() {
-        sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvRecentTransactions, layoutError)
+        sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvRecentTransactions, binding.layoutError.root)
     }
 
     /**
@@ -174,7 +167,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
      */
     override fun showEmptyTransaction() {
         sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.recent_transactions),
-                R.drawable.ic_error_black_24dp, rvRecentTransactions, layoutError)
+                R.drawable.ic_error_black_24dp, binding.rvRecentTransactions, binding.layoutError.root)
     }
 
     /**
@@ -183,17 +176,16 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
      * @param message Error message that tells the user about the problem.
      */
     override fun showErrorFetchingRecentTransactions(message: String?) {
-        if (!isConnected(activity!!)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(rvRecentTransactions, layoutError)
+        if (!isConnected(requireActivity())) {
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvRecentTransactions, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message, rvRecentTransactions, layoutError)
+            sweetUIErrorHandler?.showSweetErrorUI(message, binding.rvRecentTransactions, binding.layoutError.root)
         }
     }
 
-    @OnClick(R.id.btn_try_again)
     fun retryClicked() {
-        if (isConnected(context!!)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvRecentTransactions, layoutError)
+        if (isConnected(requireContext())) {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvRecentTransactions, binding.layoutError.root)
             recentTransactionsPresenter?.loadRecentTransactions(false, 0)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -210,12 +202,13 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     }
 
     override fun showSwipeRefreshLayout(show: Boolean) {
-        swipeTransactionContainer?.post { swipeTransactionContainer?.isRefreshing = show }
+        binding.swipeTransactionContainer.post { binding.swipeTransactionContainer.isRefreshing = show }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         recentTransactionsPresenter?.detachView()
+        _binding = null
     }
 
     companion object {
