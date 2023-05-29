@@ -3,16 +3,11 @@ package org.mifos.mobile.ui.fragments
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.databinding.FragmentLoanAccountDetailsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.presenters.LoanAccountsDetailPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -32,45 +27,12 @@ import javax.inject.Inject
  * @since 19/08/16
  */
 class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
+    private var _binding : FragmentLoanAccountDetailsBinding? = null
+    private val binding get() = _binding!!
+
     @kotlin.jvm.JvmField
     @Inject
     var loanAccountDetailsPresenter: LoanAccountsDetailPresenter? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_outstanding_balance)
-    var tvOutstandingBalanceName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_next_installment)
-    var tvNextInstallmentName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_due_date)
-    var tvDueDateName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_account_number)
-    var tvAccountNumberName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_loan_type)
-    var tvLoanTypeName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_currency)
-    var tvCurrencyName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_account_detail)
-    var llAccountDetail: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_make_payment)
-    var btMakePayment: Button? = null
 
     @kotlin.jvm.JvmField
     @Inject
@@ -79,7 +41,6 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     private var showLoanUpdateOption = false
     private var loanId: Long? = 0
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
-    var rootView: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -91,9 +52,9 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        rootView = inflater.inflate(R.layout.fragment_loan_account_details, container, false)
+        _binding = FragmentLoanAccountDetailsBinding.inflate(inflater, container, false)
+        val rootView = binding.root
         setToolbarTitle(getString(R.string.loan_account_details))
-        ButterKnife.bind(this, rootView!!)
         loanAccountDetailsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null && this.loanWithAssociations == null) {
@@ -123,27 +84,37 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      * @param loanWithAssociations object containing details of each loan account,
      */
     override fun showLoanAccountsDetail(loanWithAssociations: LoanWithAssociations?) {
-        llAccountDetail?.visibility = View.VISIBLE
         this.loanWithAssociations = loanWithAssociations
-        if (loanWithAssociations?.status?.active!!) {
-            val overdueSinceDate = loanWithAssociations.summary?.getOverdueSinceDate()
-            if (overdueSinceDate == null) {
-                tvDueDateName?.setText(R.string.not_available)
+        with(binding) {
+            llAccountDetail.visibility = View.VISIBLE
+            if (loanWithAssociations?.status?.active!!) {
+                val overdueSinceDate = loanWithAssociations.summary?.getOverdueSinceDate()
+                if (overdueSinceDate == null) {
+                    tvDueDate.setText(R.string.not_available)
+                } else {
+                    tvDueDate.text = DateHelper.getDateAsString(overdueSinceDate)
+                }
+                showDetails(loanWithAssociations)
+            } else if (loanWithAssociations.status?.pendingApproval!!) {
+                sweetUIErrorHandler?.showSweetCustomErrorUI(
+                    getString(R.string.approval_pending),
+                    R.drawable.ic_assignment_turned_in_black_24dp,
+                    llAccountDetail,
+                    layoutError.root
+                )
+                showLoanUpdateOption = true
+            } else if (loanWithAssociations.status?.waitingForDisbursal!!) {
+                sweetUIErrorHandler?.showSweetCustomErrorUI(
+                    getString(R.string.waiting_for_disburse),
+                    R.drawable.ic_assignment_turned_in_black_24dp,
+                    llAccountDetail,
+                    layoutError.root
+                )
             } else {
-                tvDueDateName?.text = DateHelper.getDateAsString(overdueSinceDate)
+                btnMakePayment.visibility = View.GONE
+                tvDueDate.setText(R.string.not_available)
+                showDetails(loanWithAssociations)
             }
-            showDetails(loanWithAssociations)
-        } else if (loanWithAssociations.status?.pendingApproval!!) {
-            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.approval_pending),
-                    R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError)
-            showLoanUpdateOption = true
-        } else if (loanWithAssociations.status?.waitingForDisbursal!!) {
-            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.waiting_for_disburse),
-                    R.drawable.ic_assignment_turned_in_black_24dp, llAccountDetail, layoutError)
-        } else {
-            btMakePayment?.visibility = View.GONE
-            tvDueDateName?.setText(R.string.not_available)
-            showDetails(loanWithAssociations)
         }
         activity?.invalidateOptionsMenu()
     }
@@ -153,32 +124,75 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      *
      * @param loanWithAssociations object containing details of each loan account,
      */
-    fun showDetails(loanWithAssociations: LoanWithAssociations?) {
-        tvOutstandingBalanceName?.text = resources.getString(R.string.string_and_string,
-                loanWithAssociations?.summary?.currency?.displaySymbol, CurrencyUtil.formatCurrency(activity,
-                loanWithAssociations?.summary?.totalOutstanding))
-        if (loanWithAssociations?.repaymentSchedule?.periods != null) for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations.repaymentSchedule?.periods!!) {
-            if (dueDate == loanWithAssociations.summary?.getOverdueSinceDate()) {
-                tvNextInstallmentName?.text = resources.getString(R.string.string_and_string,
+    private fun showDetails(loanWithAssociations: LoanWithAssociations?) {
+        with(binding) {
+            tvOutstandingBalance.text = resources.getString(
+                R.string.string_and_string,
+                loanWithAssociations?.summary?.currency?.displaySymbol, CurrencyUtil.formatCurrency(
+                    activity,
+                    loanWithAssociations?.summary?.totalOutstanding
+                )
+            )
+            if (loanWithAssociations?.repaymentSchedule?.periods != null) for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations.repaymentSchedule?.periods!!) {
+                if (dueDate == loanWithAssociations.summary?.getOverdueSinceDate()) {
+                    tvNextInstallment.text = resources.getString(
+                        R.string.string_and_string,
                         loanWithAssociations.summary?.currency?.displaySymbol,
-                        CurrencyUtil.formatCurrency(activity,
-                                totalDueForPeriod))
-                break
-            } else if (loanWithAssociations.summary?.getOverdueSinceDate() == null) {
-                tvNextInstallmentName?.setText(R.string.not_available)
+                        CurrencyUtil.formatCurrency(
+                            activity,
+                            totalDueForPeriod
+                        )
+                    )
+                    break
+                } else if (loanWithAssociations.summary?.getOverdueSinceDate() == null) {
+                    tvNextInstallment.setText(R.string.not_available)
+                }
+            }
+            tvAccountNumber.text = loanWithAssociations?.accountNo
+            tvLoanType.text = loanWithAssociations?.loanType?.value
+            tvCurrency.text = loanWithAssociations?.summary?.currency?.code
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            btnMakePayment.setOnClickListener {
+                onMakePaymentClicked()
+            }
+
+            llSummary.setOnClickListener {
+                onLoanSummaryClicked()
+            }
+
+            llRepayment.setOnClickListener {
+                onRepaymentScheduleClicked()
+            }
+
+            llLoanTransactions.setOnClickListener {
+                onTransactionsClicked()
+            }
+
+            llLoanCharges.setOnClickListener {
+                chargesClicked()
+            }
+
+            llLoanQrCode.setOnClickListener {
+                onQrCodeClicked()
+            }
+
+            layoutError.btnTryAgain.setOnClickListener {
+                retryClicked()
             }
         }
-        tvAccountNumberName?.text = loanWithAssociations?.accountNo
-        tvLoanTypeName?.text = loanWithAssociations?.loanType?.value
-        tvCurrencyName?.text = loanWithAssociations?.summary?.currency?.code
+
     }
 
     /**
      * Opens [SavingsMakeTransferFragment] to Make a payment for loan account with given
      * `loanId`
      */
-    @OnClick(R.id.btn_make_payment)
-    fun onMakePaymentClicked() {
+    private fun onMakePaymentClicked() {
         (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.newInstance(loanId, loanWithAssociations?.summary?.totalOutstanding,
                 Constants.TRANSFER_PAY_TO), true, R.id.container)
     }
@@ -186,34 +200,29 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     /**
      * Opens [LoanAccountSummaryFragment]
      */
-    @OnClick(R.id.ll_summary)
-    fun onLoanSummaryClicked() {
+    private fun onLoanSummaryClicked() {
         (activity as BaseActivity?)?.replaceFragment(LoanAccountSummaryFragment.newInstance(loanWithAssociations), true, R.id.container)
     }
 
     /**
      * Opens [LoanRepaymentScheduleFragment]
      */
-    @OnClick(R.id.ll_repayment)
-    fun onRepaymentScheduleClicked() {
+    private fun onRepaymentScheduleClicked() {
         (activity as BaseActivity?)?.replaceFragment(LoanRepaymentScheduleFragment.newInstance(loanId), true, R.id.container)
     }
 
     /**
      * Opens [LoanAccountTransactionFragment]
      */
-    @OnClick(R.id.ll_loan_transactions)
-    fun onTransactionsClicked() {
+    private fun onTransactionsClicked() {
         (activity as BaseActivity?)?.replaceFragment(LoanAccountTransactionFragment.newInstance(loanId), true, R.id.container)
     }
 
-    @OnClick(R.id.ll_loan_charges)
-    fun chargesClicked() {
+    private fun chargesClicked() {
         (activity as BaseActivity?)?.replaceFragment(ClientChargeFragment.newInstance(loanWithAssociations?.id?.toLong(), ChargeType.LOAN), true, R.id.container)
     }
 
-    @OnClick(R.id.ll_loan_qr_code)
-    fun onQrCodeClicked() {
+    private fun onQrCodeClicked() {
         val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanWithAssociations?.accountNo,
                 preferencesHelper?.officeName, AccountType.LOAN)
         (activity as BaseActivity?)?.replaceFragment(QrCodeDisplayFragment.newInstance(accountDetailsInJson), true, R.id.container)
@@ -226,18 +235,17 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     override fun showErrorFetchingLoanAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(llAccountDetail, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.llAccountDetail, binding.layoutError.root)
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(message,
-                    llAccountDetail, layoutError)
+                binding.llAccountDetail, binding.layoutError.root)
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
 
-    @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(llAccountDetail, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.llAccountDetail, binding.layoutError.root)
             loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -257,6 +265,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         super.onDestroyView()
         hideProgressBar()
         loanAccountDetailsPresenter?.detachView()
+        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -270,14 +279,17 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.menu_update_loan) {
-            (activity as BaseActivity?)?.replaceFragment(LoanApplicationFragment.newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container)
-            return true
-        } else if (id == R.id.menu_withdraw_loan) {
-            (activity as BaseActivity?)?.replaceFragment(LoanAccountWithdrawFragment.newInstance(loanWithAssociations), true, R.id.container)
-        } else if (id == R.id.menu_view_guarantor) {
-            (activity as BaseActivity?)?.replaceFragment(GuarantorListFragment.newInstance(loanId), true, R.id.container)
+        when (item.itemId) {
+            R.id.menu_update_loan -> {
+                (activity as BaseActivity?)?.replaceFragment(LoanApplicationFragment.newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container)
+                return true
+            }
+            R.id.menu_withdraw_loan -> {
+                (activity as BaseActivity?)?.replaceFragment(LoanAccountWithdrawFragment.newInstance(loanWithAssociations), true, R.id.container)
+            }
+            R.id.menu_view_guarantor -> {
+                (activity as BaseActivity?)?.replaceFragment(GuarantorListFragment.newInstance(loanId), true, R.id.container)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
