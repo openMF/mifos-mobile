@@ -181,7 +181,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
         }
     }
 
-    fun updateDetails(){
+    private fun updateDetails(){
         when (transferType) {
             Constants.TRANSFER_PAY_TO -> {
                 setToolbarTitle(getString(R.string.deposit))
@@ -249,7 +249,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
     }
 
     override fun showProgress() {
-        binding.llMakeTransfer?.visibility = View.GONE
+        binding.llMakeTransfer.visibility = View.GONE
         showProgressBar()
     }
 
@@ -272,7 +272,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
         binding.btnPayTo.visibility = View.GONE
         binding.btnPayFrom.visibility = View.VISIBLE
         binding.payFromFieldWrapper.visibility = View.VISIBLE
-        binding.payToFieldWrapper?.isEnabled = false
+        binding.payToFieldWrapper.isEnabled = false
     }
 
     /**
