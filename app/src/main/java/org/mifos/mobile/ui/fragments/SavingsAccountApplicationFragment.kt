@@ -131,7 +131,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     private fun updateSavingAccount() {
         val payload = SavingsAccountUpdatePayload()
         payload.clientId = template?.clientId?.toLong()
-        payload.productId = productIdList.indexOf(binding.productIdField?.text.toString())
+        payload.productId = productIdList.indexOf(binding.productIdField.text.toString())
             .let { productOptions?.get(it)?.id }?.toLong()
         presenter?.updateSavingsAccount(savingsWithAssociations?.id, payload)
     }

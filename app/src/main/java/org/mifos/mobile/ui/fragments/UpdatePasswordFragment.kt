@@ -179,9 +179,6 @@ import javax.inject.Inject
         return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
     companion object {
         @kotlin.jvm.JvmStatic
         fun newInstance(): UpdatePasswordFragment {
