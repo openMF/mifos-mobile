@@ -4,18 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.RowNotificationBinding
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.ui.getThemeAttributeColor
@@ -28,7 +22,7 @@ import javax.inject.Inject
  * Created by dilpreet on 13/9/17.
  */
 class NotificationAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     private var notificationList: List<MifosNotification?>?
     fun setNotificationList(notificationList: List<MifosNotification?>?) {
@@ -36,22 +30,14 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v = LayoutInflater.from(context).inflate(R.layout.row_notification, parent, false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = RowNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val notification = notificationList?.get(position)
-        (holder as ViewHolder).tvNotificationText?.text = notification?.msg
-        holder.tvNotificationTime?.text = getDateAndTimeAsStringFromLong(notification?.timeStamp)
-        if (notification?.isRead() == true) {
-            holder.ivNotificationIcon?.setColorFilter(ContextCompat.getColor(context, R.color.gray_dark))
-            holder.btnDismissNotification?.visibility = View.GONE
-        } else {
-            holder.ivNotificationIcon?.setColorFilter(context.getThemeAttributeColor(R.attr.colorPrimary))
-            holder.btnDismissNotification?.visibility = View.VISIBLE
-        }
+        holder.bind(notification)
     }
 
     override fun getItemCount(): Int {
@@ -59,32 +45,29 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
         else 0
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        @JvmField
-        @BindView(R.id.tv_notification_text)
-        var tvNotificationText: TextView? = null
-
-        @JvmField
-        @BindView(R.id.tv_notification_time)
-        var tvNotificationTime: TextView? = null
-
-        @JvmField
-        @BindView(R.id.iv_notification_icon)
-        var ivNotificationIcon: ImageView? = null
-
-        @JvmField
-        @BindView(R.id.btn_dismiss_notification)
-        var btnDismissNotification: Button? = null
-
-        @OnClick(R.id.btn_dismiss_notification)
-        fun dismissNotification() {
-            notificationList?.get(adapterPosition)?.setRead(true)
-            notificationList?.get(adapterPosition)?.save()
-            notifyItemChanged(adapterPosition)
+    inner class ViewHolder(private val binding : RowNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
+        private fun dismissNotification() {
+            notificationList?.get(bindingAdapterPosition)?.setRead(true)
+            notificationList?.get(bindingAdapterPosition)?.save()
+            notifyItemChanged(bindingAdapterPosition)
         }
 
-        init {
-            ButterKnife.bind(this, itemView!!)
+        fun bind(notification: MifosNotification?) {
+            with(binding) {
+                tvNotificationText.text = notification?.msg
+                tvNotificationTime.text = getDateAndTimeAsStringFromLong(notification?.timeStamp)
+                if (notification?.isRead() == true) {
+                    ivNotificationIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray_dark))
+                    btnDismissNotification.visibility = View.GONE
+                } else {
+                    ivNotificationIcon.setColorFilter(context.getThemeAttributeColor(R.attr.colorPrimary))
+                    btnDismissNotification.visibility = View.VISIBLE
+                }
+
+                btnDismissNotification.setOnClickListener {
+                    dismissNotification()
+                }
+            }
         }
     }
 
