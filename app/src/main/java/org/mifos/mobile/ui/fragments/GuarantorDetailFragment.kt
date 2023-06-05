@@ -3,12 +3,10 @@ package org.mifos.mobile.ui.fragments
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
 import io.reactivex.disposables.Disposable
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentGuarantorDetailBinding
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.presenters.GuarantorDetailPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -28,30 +26,13 @@ import javax.inject.Inject
 /*
 * Created by saksham on 24/July/2018
 */   class GuarantorDetailFragment : BaseFragment(), GuarantorDetailView {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_first_name)
-    var tvFirstName: TextView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_last_name)
-    var tvLastName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_joined_date)
-    var tvJoinedDate: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_guarantor_type)
-    var tvGuarantorType: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_office_name)
-    var tvOfficeName: TextView? = null
+    private var _binding: FragmentGuarantorDetailBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var presenter: GuarantorDetailPresenter? = null
-    var rootView: View? = null
     var loanId: Long? = 0
     private var guarantorId: Long? = 0
     var index: Int? = 0
@@ -69,40 +50,39 @@ import javax.inject.Inject
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_guarantor_detail, container, false)
+        _binding = FragmentGuarantorDetailBinding.inflate(inflater,container,false)
         setToolbarTitle(getString(R.string.guarantor_details))
         setHasOptionsMenu(true)
-        ButterKnife.bind(this, rootView!!)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (isFirstTime) {
             isFirstTime = false
             setUpRxBus()
         }
         presenter?.attachView(this)
-        return rootView
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tvFirstName?.text = payload?.firstname
-        tvLastName?.text = payload?.lastname
-        tvGuarantorType?.text = payload?.guarantorType?.value
-        tvJoinedDate?.text = DateHelper.getDateAsString(payload?.joinedDate)
-        tvOfficeName?.text = payload?.officeName
+        binding.tvFirstName.text = payload?.firstname
+        binding.tvLastName.text = payload?.lastname
+        binding.tvGuarantorType.text = payload?.guarantorType?.value
+        binding.tvJoinedDate.text = DateHelper.getDateAsString(payload?.joinedDate)
+        binding.tvOfficeName.text = payload?.officeName
     }
 
     private fun setUpRxBus() {
         disposableUpdateGuarantor = listen(UpdateGuarantorEvent::class.java)
-                .subscribe { (payload1) ->
-                    payload?.firstname = payload1?.firstName
-                    payload?.lastname = payload1?.lastName
-                    payload?.guarantorType = payload1
-                            ?.guarantorType
-                    payload?.officeName = payload1?.officeName
-                }
+            .subscribe { (payload1) ->
+                payload?.firstname = payload1?.firstName
+                payload?.lastname = payload1?.lastName
+                payload?.guarantorType = payload1
+                    ?.guarantorType
+                payload?.officeName = payload1?.officeName
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -113,19 +93,19 @@ import javax.inject.Inject
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_delete_guarantor -> MaterialDialog.Builder()
-                    .init(context)
-                    .setTitle(R.string.delete_guarantor)
-                    .setMessage(getString(R.string.dialog_are_you_sure_that_you_want_to_string,
-                            getString(R.string.delete_guarantor)))
-                    .setPositiveButton(getString(R.string.yes),
-                            DialogInterface.OnClickListener { _, _ ->
-                                presenter?.deleteGuarantor(loanId, guarantorId)
-                            })
-                    .setNegativeButton(R.string.cancel)
-                    .createMaterialDialog()
-                    .show()
+                .init(context)
+                .setTitle(R.string.delete_guarantor)
+                .setMessage(getString(R.string.dialog_are_you_sure_that_you_want_to_string,
+                    getString(R.string.delete_guarantor)))
+                .setPositiveButton(getString(R.string.yes),
+                    DialogInterface.OnClickListener { _, _ ->
+                        presenter?.deleteGuarantor(loanId, guarantorId)
+                    })
+                .setNegativeButton(R.string.cancel)
+                .createMaterialDialog()
+                .show()
             R.id.menu_update_guarantor -> (activity as BaseActivity?)?.replaceFragment(AddGuarantorFragment.newInstance(index, GuarantorState.UPDATE, payload, loanId),
-                    true, R.id.container)
+                true, R.id.container)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -137,7 +117,7 @@ import javax.inject.Inject
     }
 
     override fun showError(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     override fun showProgress() {
@@ -157,10 +137,15 @@ import javax.inject.Inject
         hideProgressBar()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
         fun newInstance(
-                index: Int, loanId: Long,
-                payload: GuarantorPayload?
+            index: Int, loanId: Long,
+            payload: GuarantorPayload?
         ): GuarantorDetailFragment {
             val fragment = GuarantorDetailFragment()
             val args = Bundle()

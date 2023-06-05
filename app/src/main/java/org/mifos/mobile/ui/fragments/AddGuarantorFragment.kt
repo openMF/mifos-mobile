@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.android.material.textfield.TextInputLayout
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentAddGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
@@ -33,21 +30,8 @@ import javax.inject.Inject
 */
 class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.guarantor_type_field)
-    var guarantorTypeField: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_first_name)
-    var tilFirstName: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_last_name)
-    var tilLastName: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_office_name)
-    var tilOfficeName: TextInputLayout? = null
+    private var _binding: FragmentAddGuarantorBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -57,7 +41,6 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     var payload: GuarantorPayload? = null
     private var guarantorState: GuarantorState? = null
     private var guarantorApplicationPayload: GuarantorApplicationPayload? = null
-    var rootView: View? = null
     var loanId: Long? = 0
     var index: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,26 +48,32 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
             guarantorState = requireArguments()
-                    .getSerializable(Constants.GUARANTOR_STATE) as GuarantorState
+                .getSerializable(Constants.GUARANTOR_STATE) as GuarantorState
             payload = arguments?.getParcelable(Constants.PAYLOAD)
             index = arguments?.getInt(Constants.INDEX)
         }
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_add_guarantor, container, false)
+        _binding = FragmentAddGuarantorBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
         presenter?.attachView(this)
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))
         } else if (guarantorState == GuarantorState.UPDATE) {
             setToolbarTitle(getString(R.string.update_guarantor))
         }
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSubmitGuarantor.setOnClickListener {
+            onSubmit()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -92,11 +81,10 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         presenter?.getGuarantorTemplate(guarantorState, loanId)
     }
 
-    @OnClick(R.id.btn_submit_guarantor)
     fun onSubmit() {
-        tilFirstName?.isErrorEnabled = false
-        tilLastName?.isErrorEnabled = false
-        tilOfficeName?.isErrorEnabled = false
+        binding.tilFirstName.isErrorEnabled = false
+        binding.tilLastName.isErrorEnabled = false
+        binding.tilOfficeName.isErrorEnabled = false
         if (isFieldsCompleted) {
             guarantorApplicationPayload = generatePayload()
             if (guarantorState == GuarantorState.CREATE) {
@@ -109,30 +97,30 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     private fun generatePayload(): GuarantorApplicationPayload {
         return GuarantorApplicationPayload(
-                template?.guarantorTypeOptions
-                        ?.get(getGuarantorTypeIndex(guarantorTypeField?.editText?.text.toString())),
-                tilFirstName?.editText?.text.toString().trim { it <= ' ' },
-                tilLastName?.editText?.text.toString().trim { it <= ' ' },
-                tilOfficeName?.editText?.text.toString().trim { it <= ' ' }
+            template?.guarantorTypeOptions
+                ?.get(getGuarantorTypeIndex(binding.guarantorTypeField.editText?.text.toString())),
+            binding.tilFirstName.editText?.text.toString().trim { it <= ' ' },
+            binding.tilLastName.editText?.text.toString().trim { it <= ' ' },
+            binding.tilOfficeName.editText?.text.toString().trim { it <= ' ' }
         )
     }
 
     private val isFieldsCompleted: Boolean
         get() {
             var rv = true
-            if (tilFirstName?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                tilFirstName?.error = getString(R.string.error_validation_blank,
-                        getString(R.string.first_name))
+            if (binding.tilFirstName.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+                binding.tilFirstName.error = getString(R.string.error_validation_blank,
+                    getString(R.string.first_name))
                 rv = false
             }
-            if (tilLastName?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                tilLastName?.error = getString(R.string.error_validation_blank,
-                        getString(R.string.last_name))
+            if (binding.tilLastName.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+                binding.tilLastName.error = getString(R.string.error_validation_blank,
+                    getString(R.string.last_name))
                 rv = false
             }
-            if (tilOfficeName?.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                tilOfficeName?.error = getString(R.string.error_validation_blank,
-                        getString(R.string.office_name))
+            if (binding.tilOfficeName.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
+                binding.tilOfficeName.error = getString(R.string.error_validation_blank,
+                    getString(R.string.office_name))
                 rv = false
             }
             return rv
@@ -163,6 +151,11 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         hideProgressBar()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
@@ -171,10 +164,10 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     override fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
-        tilFirstName?.editText?.setText(payload?.firstname)
-        tilLastName?.editText?.setText(payload?.lastname)
-        tilOfficeName?.editText?.setText(payload?.officeName)
-        (guarantorTypeField?.editText as?  MaterialAutoCompleteTextView)?.setText(payload?.guarantorType?.value!!)
+        binding.tilFirstName.editText?.setText(payload?.firstname)
+        binding.tilLastName.editText?.setText(payload?.lastname)
+        binding.tilOfficeName.editText?.setText(payload?.officeName)
+        (binding.guarantorTypeField.editText as?  MaterialAutoCompleteTextView)?.setText(payload?.guarantorType?.value!!)
 
     }
 
@@ -197,8 +190,8 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
             options.add(option.value)
         }
         guarantorTypeAdapter = ArrayAdapter(requireContext(),
-                android.R.layout.simple_spinner_dropdown_item, options)
-        guarantorTypeField?.let {
+            android.R.layout.simple_spinner_dropdown_item, options)
+        binding.guarantorTypeField.let {
             (it.editText as MaterialAutoCompleteTextView).setSimpleItems(options.toTypedArray())
         }
     }
@@ -216,13 +209,13 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     }
 
     override fun showError(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     companion object {
         fun newInstance(
-                index: Int?, guarantorState: GuarantorState?,
-                payload: GuarantorPayload?, loanId: Long?
+            index: Int?, guarantorState: GuarantorState?,
+            payload: GuarantorPayload?, loanId: Long?
         ): AddGuarantorFragment {
             val fragment = AddGuarantorFragment()
             val bundle = Bundle()
