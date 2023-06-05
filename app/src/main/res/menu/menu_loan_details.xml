@@ -4,16 +4,13 @@
     <item
         android:id="@+id/menu_view_guarantor"
         app:showAsAction="never"
-        android:visible="false"
         android:title="@string/view_guarantor"/>
     <item
         android:id="@+id/menu_update_loan"
         app:showAsAction="never"
-        android:visible="false"
         android:title="@string/update_loan"/>
     <item
         android:id="@+id/menu_withdraw_loan"
         app:showAsAction="never"
-        android:visible="false"
         android:title="@string/withdraw_loan"/>
 </menu>
