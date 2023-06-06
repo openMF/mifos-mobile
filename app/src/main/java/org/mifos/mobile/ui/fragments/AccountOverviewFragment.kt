@@ -2,15 +2,10 @@ package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
-
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 
-import butterknife.BindView
-import butterknife.ButterKnife
-
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentAccountOverviewBinding
 import org.mifos.mobile.presenters.AccountOverviewPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -27,22 +22,13 @@ import javax.inject.Inject
  * On 16/10/17.
  */
 class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefreshListener {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_total_savings)
-    var tvTotalSavings: TextView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_total_loan)
-    var tvTotalLoan: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.swipe_container)
-    var swipeRefreshLayout: SwipeRefreshLayout? = null
+    private var _binding: FragmentAccountOverviewBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var accountOverviewPresenter: AccountOverviewPresenter? = null
-    var rootView: View? = null
     private var totalLoanBalance = 0.0
     private var totalSavingsBalance = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,18 +37,17 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_account_overview, container, false)
+                              savedInstanceState: Bundle?): View {
+        _binding = FragmentAccountOverviewBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
         accountOverviewPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts_overview))
-        swipeRefreshLayout?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
-        swipeRefreshLayout?.setOnRefreshListener(this)
+        binding.swipeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        binding.swipeContainer.setOnRefreshListener(this)
         if (savedInstanceState == null) {
             accountOverviewPresenter?.loadClientAccountDetails()
         }
-        return rootView
+        return binding.root
     }
 
     override fun onRefresh() {
@@ -72,20 +57,20 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     override fun showTotalLoanSavings(totalLoan: Double?, totalSavings: Double?) {
         totalLoanBalance = totalLoan!!
         totalSavingsBalance = totalSavings!!
-        tvTotalLoan?.text = CurrencyUtil.formatCurrency(requireContext(), totalLoan)
-        tvTotalSavings?.text = CurrencyUtil.formatCurrency(requireContext(), totalSavings)
+        binding.tvTotalLoan.text = CurrencyUtil.formatCurrency(requireContext(), totalLoan)
+        binding.tvTotalSavings.text = CurrencyUtil.formatCurrency(requireContext(), totalSavings)
     }
 
     override fun showError(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     override fun showProgress() {
-        swipeRefreshLayout?.isRefreshing = true
+        binding.swipeContainer.isRefreshing = true
     }
 
     override fun hideProgress() {
-        swipeRefreshLayout?.isRefreshing = false
+        binding.swipeContainer.isRefreshing = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -121,6 +106,7 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     override fun onDestroyView() {
         super.onDestroyView()
         accountOverviewPresenter?.detachView()
+        _binding = null
     }
 
     companion object {
