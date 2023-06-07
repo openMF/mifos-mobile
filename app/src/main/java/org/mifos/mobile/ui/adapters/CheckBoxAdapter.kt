@@ -1,17 +1,9 @@
 package org.mifos.mobile.ui.adapters
-
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.core.widget.CompoundButtonCompat
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnCheckedChanged
-import butterknife.OnClick
-import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowCheckboxBinding
 import org.mifos.mobile.models.CheckboxStatus
 import javax.inject.Inject
@@ -48,10 +40,13 @@ class CheckBoxAdapter @Inject constructor() :
             with(binding) {
                 cbStatusSelect.isChecked = isChecked
                 cbStatusSelect.setOnClickListener {
-                    statusList?.get(adapterPosition)?.isChecked = !isChecked
+                    statusList?.get(bindingAdapterPosition)?.isChecked = !isChecked
                 }
-                cbStatusSelect.supportButtonTintList = ColorStateList(states, colors)
+                CompoundButtonCompat.setButtonTintList(cbStatusSelect, ColorStateList(states, colors))
                 cbStatusSelect.text = status
+                cbStatusSelect.setOnCheckedChangeListener { _, _ ->
+                    statusList?.get(bindingAdapterPosition)?.isChecked = cbStatusSelect.isChecked
+                }
             }
         }
     }
