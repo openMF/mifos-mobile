@@ -5,20 +5,16 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.presenters.LoanAccountsTransactionPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -37,22 +33,8 @@ import javax.inject.Inject
  * Created by dilpreet on 4/3/17.
  */
 class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionView {
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_loan_account_trans)
-    var llLoanAccountTrans: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_loan_product_name)
-    var tvLoanProductName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.rv_loan_transactions)
-    var rvLoanTransactions: RecyclerView? = null
+    private var _binding : FragmentLoanAccountTransactionsBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -62,7 +44,6 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     @Inject
     var loanAccountsTransactionPresenter: LoanAccountsTransactionPresenter? = null
     private var loanId: Long? = 0
-    private var rootView: View? = null
     private var loanWithAssociations: LoanWithAssociations? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +56,9 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_loan_account_transactions, container, false)
+        _binding = FragmentLoanAccountTransactionsBinding.inflate(inflater, container, false)
+        val rootView = binding.root
         setToolbarTitle(getString(R.string.transactions))
-        ButterKnife.bind(this, rootView!!)
         loanAccountsTransactionPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
         showUserInterface()
@@ -105,9 +86,11 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     override fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvLoanTransactions?.setHasFixedSize(true)
-        rvLoanTransactions?.layoutManager = layoutManager
-        rvLoanTransactions?.adapter = transactionsListAdapter
+        with(binding) {
+            rvLoanTransactions.setHasFixedSize(true)
+            rvLoanTransactions.layoutManager = layoutManager
+            rvLoanTransactions.adapter = transactionsListAdapter
+        }
     }
 
     /**
@@ -118,8 +101,8 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
      */
     override fun showLoanTransactions(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
-        llLoanAccountTrans?.visibility = View.VISIBLE
-        tvLoanProductName?.text = loanWithAssociations?.loanProductName
+        binding.llLoanAccountTrans.visibility = View.VISIBLE
+        binding.tvLoanProductName.text = loanWithAssociations?.loanProductName
         transactionsListAdapter?.setTransactions(loanWithAssociations?.transactions)
     }
 
@@ -128,7 +111,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
      */
     override fun showEmptyTransactions(loanWithAssociations: LoanWithAssociations?) {
         sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.transactions),
-                R.drawable.ic_compare_arrows_black_24dp, rvLoanTransactions, layoutError)
+                R.drawable.ic_compare_arrows_black_24dp, binding.rvLoanTransactions, binding.layoutError.root)
     }
 
     /**
@@ -137,19 +120,32 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
      * @param message Error message that tells the user about the problem.
      */
     override fun showErrorFetchingLoanAccountsDetail(message: String?) {
-        if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(rvLoanTransactions, layoutError)
-        } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message,
-                    rvLoanTransactions, layoutError)
-            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        with(binding) {
+            if (!Network.isConnected(activity)) {
+                sweetUIErrorHandler?.showSweetNoInternetUI(
+                    rvLoanTransactions,
+                    layoutError.root
+                )
+            } else {
+                sweetUIErrorHandler?.showSweetErrorUI(
+                    message,
+                    rvLoanTransactions, layoutError.root
+                )
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    @OnClick(R.id.btn_try_again)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.layoutError.btnTryAgain.setOnClickListener {
+            retryClicked()
+        }
+    }
+
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvLoanTransactions, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvLoanTransactions, binding.layoutError.root)
             loanAccountsTransactionPresenter?.loadLoanAccountDetails(loanId)
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -169,6 +165,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
         super.onDestroyView()
         hideProgressBar()
         loanAccountsTransactionPresenter?.detachView()
+        _binding = null
     }
 
     companion object {
