@@ -97,10 +97,10 @@ import javax.inject.Inject
                 .setTitle(R.string.delete_guarantor)
                 .setMessage(getString(R.string.dialog_are_you_sure_that_you_want_to_string,
                     getString(R.string.delete_guarantor)))
-                .setPositiveButton(getString(R.string.yes),
-                    DialogInterface.OnClickListener { _, _ ->
-                        presenter?.deleteGuarantor(loanId, guarantorId)
-                    })
+                .setPositiveButton(getString(R.string.yes)
+                ) { _, _ ->
+                    presenter?.deleteGuarantor(loanId, guarantorId)
+                }
                 .setNegativeButton(R.string.cancel)
                 .createMaterialDialog()
                 .show()

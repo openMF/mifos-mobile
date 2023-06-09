@@ -82,9 +82,11 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     }
 
     fun onSubmit() {
-        binding.tilFirstName.isErrorEnabled = false
-        binding.tilLastName.isErrorEnabled = false
-        binding.tilOfficeName.isErrorEnabled = false
+        with(binding) {
+            tilFirstName.isErrorEnabled = false
+            tilLastName.isErrorEnabled = false
+            tilOfficeName.isErrorEnabled = false
+        }
         if (isFieldsCompleted) {
             guarantorApplicationPayload = generatePayload()
             if (guarantorState == GuarantorState.CREATE) {
@@ -96,13 +98,16 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     }
 
     private fun generatePayload(): GuarantorApplicationPayload {
-        return GuarantorApplicationPayload(
-            template?.guarantorTypeOptions
-                ?.get(getGuarantorTypeIndex(binding.guarantorTypeField.editText?.text.toString())),
-            binding.tilFirstName.editText?.text.toString().trim { it <= ' ' },
-            binding.tilLastName.editText?.text.toString().trim { it <= ' ' },
-            binding.tilOfficeName.editText?.text.toString().trim { it <= ' ' }
-        )
+        with(binding) {
+            return GuarantorApplicationPayload(
+                template?.guarantorTypeOptions
+                    ?.get(getGuarantorTypeIndex(guarantorTypeField.editText?.text.toString())),
+                tilFirstName.editText?.text.toString().trim { it <= ' ' },
+                tilLastName.editText?.text.toString().trim { it <= ' ' },
+                tilOfficeName.editText?.text.toString().trim { it <= ' ' }
+            )
+        }
+
     }
 
     private val isFieldsCompleted: Boolean
@@ -164,23 +169,12 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
     override fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
-        binding.tilFirstName.editText?.setText(payload?.firstname)
-        binding.tilLastName.editText?.setText(payload?.lastname)
-        binding.tilOfficeName.editText?.setText(payload?.officeName)
-        (binding.guarantorTypeField.editText as?  MaterialAutoCompleteTextView)?.setText(payload?.guarantorType?.value!!)
-
-    }
-
-    private fun findPreviouslySelectedGuarantorType(value: String?): Int {
-        var rv = 0
-        var counter = 0
-        for (option in template?.guarantorTypeOptions!!) {
-            if (option.value == value) {
-                rv = counter
-            }
-            counter++
+        with(binding) {
+            tilFirstName.editText?.setText(payload?.firstname)
+            tilLastName.editText?.setText(payload?.lastname)
+            tilOfficeName.editText?.setText(payload?.officeName)
+            (guarantorTypeField.editText as? MaterialAutoCompleteTextView)?.setText(payload?.guarantorType?.value!!)
         }
-        return rv
     }
 
     private fun setUpSpinner() {
