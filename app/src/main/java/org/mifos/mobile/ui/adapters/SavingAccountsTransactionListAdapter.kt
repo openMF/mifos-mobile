@@ -4,14 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-import butterknife.BindView
-import butterknife.ButterKnife
-
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.RowSavingAccountTransactionBinding
 import org.mifos.mobile.models.accounts.savings.TransactionType
 import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
@@ -24,10 +21,15 @@ import javax.inject.Inject
  * Created by dilpreet on 6/3/17.
  */
 class SavingAccountsTransactionListAdapter @Inject constructor() :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<SavingAccountsTransactionListAdapter.ViewHolder>() {
 
     private var savingAccountsTransactionList: List<Transactions?>?
     private var context: Context? = null
+
+    init {
+        savingAccountsTransactionList = ArrayList()
+    }
+
     fun setContext(context: Context?) {
         this.context = context
     }
@@ -41,30 +43,14 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val vh: RecyclerView.ViewHolder
-        val v = LayoutInflater.from(parent.context).inflate(
-                R.layout.row_saving_account_transaction, parent, false)
-        vh = ViewHolder(v)
-        return vh
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = RowSavingAccountTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val (_, transactionType, _, _, date, currency, paymentDetailData, amount, runningBalance) = getItem(position)!!
-        (holder as ViewHolder).tvSavingAccountAmount?.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, amount!!))
-        holder.tvSavingAccountRunningBalance?.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, runningBalance!!))
-        holder.tvTransactionType?.text = transactionType?.value
-        if (paymentDetailData != null) {
-            holder.tvTransactionDetailData?.visibility = View.VISIBLE
-            holder.tvTransactionDetailData?.text = paymentDetailData.paymentType.name
-        }
-        holder.tvTransactionDate?.text = getDateAsString(date)
-        val color = getColor(transactionType)
-        if (color == ColorSelect.RED) {
-            holder.vIndicator?.background = ContextCompat.getDrawable(context!!, R.drawable.triangular_red_view)
-        } else {
-            holder.vIndicator?.background = ContextCompat.getDrawable(context!!, R.drawable.triangular_green_view)
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val transaction = getItem(position)
+        holder.bind(transaction)
     }
 
     private enum class ColorSelect {
@@ -72,8 +58,7 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
     }
 
     override fun getItemCount(): Int {
-        return if (savingAccountsTransactionList != null) savingAccountsTransactionList!!.size
-        else 0
+        return savingAccountsTransactionList?.size ?: 0
     }
 
     private fun getColor(transactionType: TransactionType?): ColorSelect {
@@ -109,38 +94,30 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
         } else ColorSelect.GREEN
     }
 
-    class ViewHolder(v: View?) : RecyclerView.ViewHolder(v!!) {
+    inner class ViewHolder(private val binding: RowSavingAccountTransactionBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        @JvmField
-        @BindView(R.id.tv_transaction_date)
-        var tvTransactionDate: TextView? = null
+        fun bind(transaction: Transactions?) {
+            with(binding) {
+                val (_, transactionType, _, _, date, currency, paymentDetailData, amount, runningBalance) = transaction!!
 
-        @JvmField
-        @BindView(R.id.tv_transaction_type)
-        var tvTransactionType: TextView? = null
+                tvSavingAccountAmount.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, amount!!))
+                tvSavingAccountRunningBalance.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, runningBalance!!))
+                tvTransactionType.text = transactionType?.value
 
-        @JvmField
-        @BindView(R.id.tv_transaction_detail_data)
-        var tvTransactionDetailData: TextView? = null
+                if (paymentDetailData != null) {
+                    tvTransactionDetailData.visibility = View.VISIBLE
+                    tvTransactionDetailData.text = paymentDetailData.paymentType.name
+                }
 
-        @JvmField
-        @BindView(R.id.tv_savingAccountAmount)
-        var tvSavingAccountAmount: TextView? = null
+                tvTransactionDate.text = getDateAsString(date)
+                val color = getColor(transactionType)
 
-        @JvmField
-        @BindView(R.id.tv_saving_account_running_balance)
-        var tvSavingAccountRunningBalance: TextView? = null
-
-        @JvmField
-        @BindView(R.id.v_indicator)
-        var vIndicator: View? = null
-
-        init {
-            ButterKnife.bind(this, v!!)
+                if (color == ColorSelect.RED) {
+                    vIndicator.background = ContextCompat.getDrawable(itemView.context, R.drawable.triangular_red_view)
+                } else {
+                    vIndicator.background = ContextCompat.getDrawable(itemView.context, R.drawable.triangular_green_view)
+                }
+            }
         }
-    }
-
-    init {
-        savingAccountsTransactionList = ArrayList()
     }
 }

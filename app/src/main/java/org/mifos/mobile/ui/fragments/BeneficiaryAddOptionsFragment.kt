@@ -8,9 +8,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
-import butterknife.OnClick
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentBeneficiaryAddOptionsBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.enums.RequestAccessType
@@ -25,23 +24,41 @@ import org.mifos.mobile.utils.Toaster
  * Created by dilpreet on 5/7/17.
  */
 class BeneficiaryAddOptionsFragment : BaseFragment() {
-    private var rootView: View? = null
+
+    private var _binding: FragmentBeneficiaryAddOptionsBinding? = null
+    private val binding get() = _binding!!
+
     private var external_storage_read_status = false
     private var external_storage_write_status = false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_beneficiary_add_options, container, false)
+        _binding = FragmentBeneficiaryAddOptionsBinding.inflate(inflater,container,false)
         setToolbarTitle(getString(R.string.add_beneficiary))
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            llAddBeneficiaryManually.setOnClickListener {
+                addManually()
+            }
+            llAddBeneficiaryQrcode.setOnClickListener {
+                addUsingQrCode()
+            }
+            binding.llUploadBeneficiaryQrcode.setOnClickListener {
+                addByImportingQrCode()
+            }
+        }
+
     }
 
     /**
      * Opens [BeneficiaryApplicationFragment] with [BeneficiaryState] as
      * `BeneficiaryState.CREATE_MANUAL`
      */
-    @OnClick(R.id.ll_add_beneficiary_manually)
     fun addManually() {
         (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.CREATE_MANUAL, null), true, R.id.container)
     }
@@ -50,7 +67,6 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
      * It first checks CAMERA runtime permission and if it returns true then it opens
      * [QrCodeReaderFragment] , if it returns false then ask for permissions.
      */
-    @OnClick(R.id.ll_add_beneficiary_qrcode)
     fun addUsingQrCode() {
         if (checkSelfPermission(activity,
                         Manifest.permission.CAMERA)) {
@@ -64,7 +80,6 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
      * It first checks Storage Read and Write Permission then if both of them are true then it opens
      * Intent to all gallery app
      */
-    @OnClick(R.id.ll_upload_beneficiary_qrcode)
     fun addByImportingQrCode() {
 
         //request permission for writing external storage
@@ -146,7 +161,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     (activity as BaseActivity?)?.replaceFragment(QrCodeReaderFragment.newInstance(), true, R.id.container)
                 } else {
-                    Toaster.show(rootView, resources
+                    Toaster.show(binding.root, resources
                             .getString(R.string.permission_denied_camera))
                 }
             }
@@ -155,7 +170,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     external_storage_read_status = true
                 } else {
-                    Toaster.show(rootView, resources
+                    Toaster.show(binding.root, resources
                             .getString(R.string.permission_denied_storage))
                 }
             }
@@ -164,11 +179,16 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     external_storage_write_status = true
                 } else {
-                    Toaster.show(rootView, resources
+                    Toaster.show(binding.root, resources
                             .getString(R.string.permission_denied_storage))
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

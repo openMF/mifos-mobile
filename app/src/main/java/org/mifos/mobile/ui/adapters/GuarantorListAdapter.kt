@@ -2,17 +2,11 @@ package org.mifos.mobile.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.google.android.material.card.MaterialCardView
-
-import org.mifos.mobile.R
+import org.mifos.mobile.databinding.RowGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 
@@ -34,16 +28,14 @@ class GuarantorListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(context)
-        return ViewHolder(inflater.inflate(R.layout.row_guarantor, parent, false))
+        val binding = RowGuarantorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvGuarantorName?.text = (list?.get(position)?.firstname + " "
-                + list?.get(position)?.lastname)
-        holder.tvJoinedDate?.text = getDateAsString(list?.get(position)
-                ?.joinedDate)
-        holder.cvContainer?.setOnClickListener { listener.setOnClickListener(position) }
+        val guarantorJoinedDate = getDateAsString(list?.get(position)?.joinedDate)
+        val guarantorFullName = list?.get(position)?.firstname + " " + list?.get(position)?.lastname
+        holder.bind(guarantorJoinedDate, guarantorFullName)
     }
 
     override fun getItemCount(): Int {
@@ -56,21 +48,17 @@ class GuarantorListAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        @JvmField
-        @BindView(R.id.tv_guarantor_name)
-        var tvGuarantorName: TextView? = null
+    inner class ViewHolder(private val binding : RowGuarantorBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        @JvmField
-        @BindView(R.id.tv_joined_date)
-        var tvJoinedDate: TextView? = null
+        fun bind(joinedDate: String, fullName: String) {
+            with(binding) {
+                tvGuarantorName.text = fullName
+                tvJoinedDate.text = joinedDate
 
-        @JvmField
-        @BindView(R.id.cv_container)
-        var cvContainer: MaterialCardView? = null
-
-        init {
-            ButterKnife.bind(this, itemView!!)
+                cvContainer.setOnClickListener {
+                    listener.setOnClickListener(bindingAdapterPosition)
+                }
+            }
         }
     }
 

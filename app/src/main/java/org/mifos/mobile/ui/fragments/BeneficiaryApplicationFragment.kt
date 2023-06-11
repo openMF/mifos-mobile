@@ -5,19 +5,9 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.Spinner
-import androidx.core.widget.NestedScrollView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.android.material.textfield.TextInputLayout
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentBeneficiaryApplicationBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
@@ -38,41 +28,9 @@ import javax.inject.Inject
  * Created by dilpreet on 16/6/17.
  */
 class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationView {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.account_type_field)
-    var accountTypeField: MaterialAutoCompleteTextView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.account_type_field_parent)
-    var accountTypeFieldParent: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_application_beneficiary)
-    var llApplicationBeneficiary: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_account_number)
-    var tilAccountNumber: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_office_name)
-    var tilOfficeName: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_transfer_limit)
-    var tilTransferLimit: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.til_beneficiary_name)
-    var tilBeneficiaryName: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.view_flipper)
-    var nsvBeneficiary: NestedScrollView? = null
+    private var _binding: FragmentBeneficiaryApplicationBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -82,7 +40,6 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     private var beneficiary: Beneficiary? = null
     private var beneficiaryTemplate: BeneficiaryTemplate? = null
     private var accountTypeId: Int? = -1
-    private var rootView: View? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,16 +67,29 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_beneficiary_application, container, false)
+        _binding = FragmentBeneficiaryApplicationBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         presenter?.attachView(this)
         if (savedInstanceState == null) {
             presenter?.loadBeneficiaryTemplate()
         }
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            btnBeneficiarySubmit.setOnClickListener {
+                submitBeneficiary()
+            }
+            layoutError.btnTryAgain.setOnClickListener {
+                onRetry()
+            }
+        }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -138,11 +108,13 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      * Setting up `accountTypeAdapter` and `` spAccountType
      */
     override fun showUserInterface() {
-        accountTypeField?.setOnItemClickListener { _, _, position, _ ->
-            accountTypeId = beneficiaryTemplate?.accountTypeOptions?.get(position)?.id
+        with(binding) {
+            accountTypeField.setOnItemClickListener { _, _, position, _ ->
+                accountTypeId = beneficiaryTemplate?.accountTypeOptions?.get(position)?.id
+            }
+            accountTypeFieldParent.isEnabled = Network.isConnected(context)
+            accountTypeField.setSimpleItems(listAccountType.toTypedArray())
         }
-        accountTypeFieldParent?.isEnabled = Network.isConnected(context)
-        accountTypeField?.setSimpleItems(listAccountType.toTypedArray())
     }
 
     /**
@@ -157,54 +129,71 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         for ((_, _, value) in beneficiaryTemplate?.accountTypeOptions!!) {
             listAccountType.add(value)
         }
-        accountTypeField?.setSimpleItems(listAccountType.toTypedArray())
+        binding.accountTypeField.setSimpleItems(listAccountType.toTypedArray())
         if (beneficiaryState == BeneficiaryState.UPDATE) {
-            accountTypeField?.setText(beneficiary?.accountType?.value!!, false)
-            accountTypeFieldParent?.isEnabled = false
-            tilAccountNumber?.editText?.setText(beneficiary?.accountNumber)
-            tilAccountNumber?.isEnabled = false
-            tilOfficeName?.editText?.setText(beneficiary?.officeName)
-            tilOfficeName?.isEnabled = false
-            tilBeneficiaryName?.editText?.setText(beneficiary?.name)
-            tilTransferLimit?.editText?.setText(beneficiary?.transferLimit.toString())
+            with(binding) {
+                accountTypeField.setText(beneficiary?.accountType?.value!!, false)
+                accountTypeFieldParent.isEnabled = false
+                tilAccountNumber.editText?.setText(beneficiary?.accountNumber)
+                tilAccountNumber.isEnabled = false
+                tilOfficeName.editText?.setText(beneficiary?.officeName)
+                tilOfficeName.isEnabled = false
+                tilBeneficiaryName.editText?.setText(beneficiary?.name)
+                tilTransferLimit.editText?.setText(beneficiary?.transferLimit.toString())
+            }
         } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
-            accountTypeField?.setText(beneficiary?.accountType?.value!!, false)
-            tilAccountNumber?.editText?.setText(beneficiary?.accountNumber)
-            tilOfficeName?.editText?.setText(beneficiary?.officeName)
+            with(binding) {
+                accountTypeField.setText(beneficiary?.accountType?.value!!, false)
+                tilAccountNumber.editText?.setText(beneficiary?.accountNumber)
+                tilOfficeName.editText?.setText(beneficiary?.officeName)
+            }
         }
     }
 
     /**
      * Used for submitting a new or updating beneficiary application
      */
-    @OnClick(R.id.btn_beneficiary_submit)
-    fun submitBeneficiary() {
-        tilAccountNumber?.isErrorEnabled = false
-        tilOfficeName?.isErrorEnabled = false
-        tilTransferLimit?.isErrorEnabled = false
-        tilBeneficiaryName?.isErrorEnabled = false
-        if (accountTypeId == -1) {
-            Toaster.show(rootView, getString(R.string.choose_account_type))
-            return
-        } else if (tilAccountNumber?.editText?.text.toString().trim { it <= ' ' } == "") {
-            tilAccountNumber?.error = getString(R.string.enter_account_number)
-            return
-        } else if (tilOfficeName?.editText?.text.toString().trim { it <= ' ' } == "") {
-            tilOfficeName?.error = getString(R.string.enter_office_name)
-            return
-        } else if (tilTransferLimit?.editText?.text.toString() == "") {
-            tilTransferLimit?.error = getString(R.string.enter_transfer_limit)
-            return
-        } else if (tilTransferLimit?.editText?.text.toString() == ".") {
-            tilTransferLimit?.error = getString(R.string.invalid_amount)
-            return
-        } else if (tilTransferLimit?.editText?.text.toString().matches("^0*".toRegex())) {
-            tilTransferLimit?.error = getString(R.string.amount_greater_than_zero)
-            return
-        } else if (tilBeneficiaryName?.editText?.text.toString().trim { it <= ' ' } == "") {
-            tilBeneficiaryName?.error = getString(R.string.enter_beneficiary_name)
-            return
+    private fun submitBeneficiary() {
+        with(binding) {
+            tilAccountNumber.isErrorEnabled = false
+            tilOfficeName.isErrorEnabled = false
+            tilTransferLimit.isErrorEnabled = false
+            tilBeneficiaryName.isErrorEnabled = false
         }
+        with(binding) {
+            when {
+                accountTypeId == -1 -> {
+                    Toaster.show(root, getString(R.string.choose_account_type))
+                    return
+                }
+                tilAccountNumber.editText?.text.isNullOrBlank() -> {
+                    tilAccountNumber.error = getString(R.string.enter_account_number)
+                    return
+                }
+                tilOfficeName.editText?.text.isNullOrBlank() -> {
+                    tilOfficeName.error = getString(R.string.enter_office_name)
+                    return
+                }
+                tilTransferLimit.editText?.text.toString().isEmpty() -> {
+                    tilTransferLimit.error = getString(R.string.enter_transfer_limit)
+                    return
+                }
+                tilTransferLimit.editText?.text.toString() == "." -> {
+                    tilTransferLimit.error = getString(R.string.invalid_amount)
+                    return
+                }
+                tilTransferLimit.editText?.text.toString().matches("^0*".toRegex()) -> {
+                    tilTransferLimit.error = getString(R.string.amount_greater_than_zero)
+                    return
+                }
+                tilBeneficiaryName.editText?.text.isNullOrBlank() -> {
+                    tilBeneficiaryName.error = getString(R.string.enter_beneficiary_name)
+                    return
+                }
+                else -> {}
+            }
+        }
+
         if (beneficiaryState == BeneficiaryState.CREATE_MANUAL ||
                 beneficiaryState == BeneficiaryState.CREATE_QR) {
             submitNewBeneficiaryApplication()
@@ -213,13 +202,12 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         }
     }
 
-    @OnClick(R.id.btn_try_again)
-    fun onRetry() {
+    private fun onRetry() {
         if (Network.isConnected(context)) {
             presenter?.loadBeneficiaryTemplate()
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(nsvBeneficiary, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.viewFlipper, binding.layoutError.root)
         } else {
-            Toaster.show(rootView, getString(R.string.internet_not_connected))
+            Toaster.show(binding.root, getString(R.string.internet_not_connected))
         }
     }
 
@@ -228,11 +216,14 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      */
     private fun submitNewBeneficiaryApplication() {
         val beneficiaryPayload = BeneficiaryPayload()
-        beneficiaryPayload.accountNumber = tilAccountNumber?.editText?.text.toString()
-        beneficiaryPayload.officeName = tilOfficeName?.editText?.text.toString()
+        with(binding) {
+            beneficiaryPayload.accountNumber = tilAccountNumber.editText?.text.toString()
+            beneficiaryPayload.officeName =tilOfficeName.editText?.text.toString()
+            beneficiaryPayload.name = tilBeneficiaryName.editText?.text.toString()
+            beneficiaryPayload.transferLimit = tilTransferLimit.editText?.text.toString().toInt().toFloat()
+        }
+
         beneficiaryPayload.accountType = accountTypeId
-        beneficiaryPayload.name = tilBeneficiaryName?.editText?.text.toString()
-        beneficiaryPayload.transferLimit = tilTransferLimit?.editText?.text.toString().toInt().toFloat()
         presenter?.createBeneficiary(beneficiaryPayload)
     }
 
@@ -241,8 +232,8 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      */
     private fun submitUpdateBeneficiaryApplication() {
         val payload = BeneficiaryUpdatePayload()
-        payload.name = tilBeneficiaryName?.editText?.text.toString()
-        payload.transferLimit = tilTransferLimit?.editText?.text.toString().toFloat()
+        payload.name = binding.tilBeneficiaryName.editText?.text.toString()
+        payload.transferLimit = binding.tilTransferLimit.editText?.text.toString().toFloat()
         presenter?.updateBeneficiary(beneficiary?.id?.toLong(), payload)
     }
 
@@ -251,7 +242,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
     override fun showBeneficiaryCreatedSuccessfully() {
-        Toaster.show(rootView, getString(R.string.beneficiary_created_successfully))
+        Toaster.show(binding.tilTransferLimit, getString(R.string.beneficiary_created_successfully))
         activity?.finish()
     }
 
@@ -260,7 +251,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
     override fun showBeneficiaryUpdatedSuccessfully() {
-        Toaster.show(rootView, getString(R.string.beneficiary_updated_successfully))
+        Toaster.show(binding.root, getString(R.string.beneficiary_updated_successfully))
         activity?.supportFragmentManager?.popBackStack()
         activity?.supportFragmentManager?.popBackStack()
     }
@@ -274,15 +265,15 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(nsvBeneficiary, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.viewFlipper, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(msg, nsvBeneficiary, layoutError)
-            Toaster.show(rootView, msg)
+            sweetUIErrorHandler?.showSweetErrorUI(msg, binding.viewFlipper, binding.layoutError.root)
+            Toaster.show(binding.root, msg)
         }
     }
 
     override fun setVisibility(state: Int) {
-        llApplicationBeneficiary?.visibility = state
+        binding.llApplicationBeneficiary.visibility = state
     }
 
     override fun showProgress() {
@@ -297,6 +288,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         super.onDestroyView()
         hideProgress()
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {

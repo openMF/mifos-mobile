@@ -4,19 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.RowFaqBinding
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.utils.FaqDiffUtil
@@ -27,41 +19,37 @@ import javax.inject.Inject
  * Created by dilpreet on 12/8/17.
  */
 class FAQAdapter @Inject constructor(@ActivityContext context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var faqArrayList: ArrayList<FAQ?>?
     private var alreadySelectedPosition = 0
     private val context: Context
+    private lateinit var binding: RowFaqBinding
+
+    init {
+        faqArrayList = ArrayList()
+        this.context = context
+    }
+
     fun setFaqArrayList(faqArrayList: ArrayList<FAQ?>?) {
         this.faqArrayList = faqArrayList
         alreadySelectedPosition = -1
     }
 
     fun updateList(faqArrayList: java.util.ArrayList<FAQ?>?) {
-        val diffResult = DiffUtil.calculateDiff(FaqDiffUtil(this.faqArrayList,
-                faqArrayList))
+        val diffResult = DiffUtil.calculateDiff(FaqDiffUtil(this.faqArrayList, faqArrayList))
         diffResult.dispatchUpdatesTo(this)
         setFaqArrayList(faqArrayList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.row_faq, parent, false)
-        return ViewHolder(v)
+        binding = RowFaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val (question, answer, isSelected) = faqArrayList?.get(position)!!
-        (holder as ViewHolder).tvFaqQs?.text = question
-        holder.tvFaqAns?.text = answer
-        if (isSelected) {
-            holder.tvFaqAns?.visibility = View.VISIBLE
-            holder.ivArrow?.setImageDrawable(ContextCompat.getDrawable(context,
-                    R.drawable.ic_arrow_up))
-        } else {
-            holder.tvFaqAns?.visibility = View.GONE
-            holder.ivArrow?.setImageDrawable(ContextCompat.getDrawable(context,
-                    R.drawable.ic_arrow_drop_down))
-        }
+        (holder as ViewHolder).bind(question, answer, isSelected)
     }
 
     private fun updateView(position: Int) {
@@ -81,39 +69,28 @@ class FAQAdapter @Inject constructor(@ActivityContext context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return if (faqArrayList != null) faqArrayList!!.size
-        else 0
+        return faqArrayList?.size ?: 0
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        @JvmField
-        @BindView(R.id.tv_qs)
-        var tvFaqQs: TextView? = null
+    inner class ViewHolder(private val binding: RowFaqBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        @JvmField
-        @BindView(R.id.tv_ans)
-        var tvFaqAns: TextView? = null
+        fun bind(question: String?, answer: String?, isSelected: Boolean) {
+            binding.tvQs.text = question
+            binding.tvAns.text = answer
 
-        @JvmField
-        @BindView(R.id.ll_faq)
-        var llFaq: LinearLayout? = null
-
-        @JvmField
-        @BindView(R.id.iv_arrow)
-        var ivArrow: ImageView? = null
-
-        @OnClick(R.id.ll_faq)
-        fun faqHeaderClicked() {
-            updateView(adapterPosition)
+            if (isSelected) {
+                binding.tvAns.visibility = View.VISIBLE
+                binding.ivArrow.setImageResource(R.drawable.ic_arrow_up)
+            } else {
+                binding.tvAns.visibility = View.GONE
+                binding.ivArrow.setImageResource(R.drawable.ic_arrow_drop_down)
+            }
         }
 
         init {
-            ButterKnife.bind(this, itemView!!)
+            binding.llFaq.setOnClickListener {
+                updateView(adapterPosition)
+            }
         }
-    }
-
-    init {
-        faqArrayList = ArrayList()
-        this.context = context
     }
 }

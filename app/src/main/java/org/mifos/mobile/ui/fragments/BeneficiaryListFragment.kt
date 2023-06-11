@@ -8,15 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentBeneficiaryListBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.presenters.BeneficiaryListPresenter
 import org.mifos.mobile.ui.activities.AddBeneficiaryActivity
@@ -34,45 +30,39 @@ import javax.inject.Inject
  */
 class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, BeneficiariesView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.rv_beneficiaries)
-    var rvBeneficiaries: RecyclerView? = null
+    private var _binding: FragmentBeneficiaryListBinding? = null
+    private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.swipe_container)
-    var swipeRefreshLayout: SwipeRefreshLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.fab_add_beneficiary)
-    var fabAddBeneficiary: FloatingActionButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
 
     @kotlin.jvm.JvmField
     @Inject
     var beneficiaryListPresenter: BeneficiaryListPresenter? = null
 
-    var beneficiaryListAdapter: BeneficiaryListAdapter? = null
+    private var beneficiaryListAdapter: BeneficiaryListAdapter? = null
 
-    private var rootView: View? = null
     private var beneficiaryList: List<Beneficiary?>? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_beneficiary_list, container, false)
+        _binding = FragmentBeneficiaryListBinding.inflate(inflater,container,false)
         beneficiaryListAdapter = BeneficiaryListAdapter(::onItemClick)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
         setToolbarTitle(getString(R.string.beneficiaries))
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         beneficiaryListPresenter?.attachView(this)
         if (savedInstanceState == null) {
             beneficiaryListPresenter?.loadBeneficiaries()
         }
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.layoutError.btnTryAgain.setOnClickListener {
+            retryClicked()
+        }
     }
 
     override fun onResume() {
@@ -102,20 +92,21 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     override fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvBeneficiaries?.layoutManager = layoutManager
-        rvBeneficiaries?.setHasFixedSize(true)
-        rvBeneficiaries?.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
-        rvBeneficiaries?.adapter = beneficiaryListAdapter
-        swipeRefreshLayout?.setColorSchemeColors(*requireActivity()
+        with(binding) {
+            rvBeneficiaries.layoutManager = layoutManager
+            rvBeneficiaries.setHasFixedSize(true)
+            rvBeneficiaries.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
+            rvBeneficiaries.adapter = beneficiaryListAdapter
+            swipeContainer.setColorSchemeColors(*requireActivity()
                 .resources.getIntArray(R.array.swipeRefreshColors))
-        swipeRefreshLayout?.setOnRefreshListener(this)
-        fabAddBeneficiary?.setOnClickListener { startActivity(Intent(activity, AddBeneficiaryActivity::class.java)) }
+            swipeContainer.setOnRefreshListener(this@BeneficiaryListFragment)
+            fabAddBeneficiary.setOnClickListener { startActivity(Intent(activity, AddBeneficiaryActivity::class.java)) }
+        }
     }
 
-    @OnClick(R.id.btn_try_again)
     fun retryClicked() {
         if (Network.isConnected((context?.applicationContext)!!)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvBeneficiaries, binding.layoutError.root)
             beneficiaryListPresenter?.loadBeneficiaries()
         } else {
             Toast.makeText(context, getString(R.string.internet_not_connected),
@@ -127,8 +118,8 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
      * Refreshes `beneficiaryList` by calling `loadBeneficiaries()`
      */
     override fun onRefresh() {
-        if (layoutError?.visibility == View.VISIBLE) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvBeneficiaries, layoutError)
+        if (binding.layoutError.root.visibility == View.VISIBLE) {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvBeneficiaries, binding.layoutError.root)
         }
         beneficiaryListPresenter?.loadBeneficiaries()
     }
@@ -154,10 +145,10 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected((activity?.applicationContext)!!)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(rvBeneficiaries, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvBeneficiaries, binding.layoutError.root)
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(msg,
-                    rvBeneficiaries, layoutError)
+                    binding.rvBeneficiaries, binding.layoutError.root)
         }
     }
 
@@ -173,27 +164,28 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
         }
     }
 
-    fun onItemClick(position: Int) {
+    private fun onItemClick(position: Int) {
         (activity as BaseActivity?)?.replaceFragment(BeneficiaryDetailFragment.newInstance(beneficiaryList!![position]), true, R.id.container)
     }
 
     private fun showSwipeRefreshLayout(show: Boolean?) {
-        swipeRefreshLayout?.post { swipeRefreshLayout?.isRefreshing = (show == true) }
+        binding.swipeContainer.post { binding.swipeContainer.isRefreshing = (show == true) }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         beneficiaryListPresenter?.detachView()
+        _binding = null
     }
 
     /**
-     * Shows an error layout when this function is called.
+     * Shows an error layout when this function is called.`
      */
     private fun showEmptyBeneficiary() {
         sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.beneficiary),
                 getString(R.string.beneficiary),
-                R.drawable.ic_beneficiaries_48px, rvBeneficiaries, layoutError)
-        rvBeneficiaries?.visibility = View.GONE
+                R.drawable.ic_beneficiaries_48px, binding.rvBeneficiaries, binding.layoutError.root)
+        binding.rvBeneficiaries.visibility = View.GONE
     }
 
     companion object {

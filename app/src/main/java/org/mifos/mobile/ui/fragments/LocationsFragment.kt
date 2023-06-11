@@ -5,12 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentLocationsBinding
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
 /*
@@ -20,23 +19,22 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
  * Created by dilpreet on 25/2/17.
  */
 class LocationsFragment : BaseFragment(), OnMapReadyCallback {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.map)
-    var mapView: MapView? = null
-    private var rootView: View? = null
+
+    private var _binding: FragmentLocationsBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_locations, container, false)
-        ButterKnife.bind(this, rootView!!)
-        mapView?.onCreate(savedInstanceState)
-        mapView?.onResume()
+        _binding = FragmentLocationsBinding.inflate(inflater,container,false)
+        binding.map.onCreate(savedInstanceState)
+        binding.map.onResume()
         try {
             MapsInitializer.initialize(activity?.applicationContext)
         } catch (e: Exception) {
             Log.d(LocationsFragment::class.java.simpleName, e.toString())
         }
-        mapView?.getMapAsync(this)
-        return rootView
+        binding.map.getMapAsync(this)
+        return binding.root
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -52,6 +50,11 @@ class LocationsFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun addAnimationToHeadquarter(googleMap: GoogleMap, headquarterLatLng: LatLng) {
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(headquarterLatLng, 16.0f))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

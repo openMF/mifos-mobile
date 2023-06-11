@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.presenters.LoanAccountWithdrawPresenter
@@ -29,22 +24,12 @@ import javax.inject.Inject
  */
 class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_client_name)
-    var tvClientName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_account_number)
-    var tvAccountNumber: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.et_withdraw_reason)
-    var etWithdrawReason: EditText? = null
+    private var _binding: FragmentLoanWithdrawBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var loanAccountWithdrawPresenter: LoanAccountWithdrawPresenter? = null
-    var rootView: View? = null
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,29 +43,34 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_loan_withdraw, container, false)
+        _binding = FragmentLoanWithdrawBinding.inflate(inflater,container,false)
         setToolbarTitle(getString(R.string.withdraw_loan))
-        ButterKnife.bind(this, rootView!!)
         showUserInterface()
         loanAccountWithdrawPresenter?.attachView(this)
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnWithdrawLoan.setOnClickListener {
+            onLoanWithdraw()
+        }
     }
 
     /**
      * Sets Basic Information about that Loan Application
      */
     private fun showUserInterface() {
-        tvClientName?.text = loanWithAssociations?.clientName
-        tvAccountNumber?.text = loanWithAssociations?.accountNo
+        binding.tvClientName.text = loanWithAssociations?.clientName
+        binding.tvAccountNumber.text = loanWithAssociations?.accountNo
     }
 
     /**
      * Sends a request to server to withdraw that Loan Account
      */
-    @OnClick(R.id.btn_withdraw_loan)
     fun onLoanWithdraw() {
         val loanWithdraw = LoanWithdraw()
-        loanWithdraw.note = etWithdrawReason?.text.toString()
+        loanWithdraw.note = binding.etWithdrawReason.text.toString()
         loanWithdraw.withdrawnOnDate = DateHelper
                 .getDateAsStringFromLong(System.currentTimeMillis())
         loanAccountWithdrawPresenter?.withdrawLoanAccount(loanWithAssociations?.id?.toLong(),
@@ -91,7 +81,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
      * Receives A confirmation after successfull withdrawing of Loan Application.
      */
     override fun showLoanAccountWithdrawSuccess() {
-        Toaster.show(rootView, R.string.loan_application_withdrawn_successfully)
+        Toaster.show(binding.root, R.string.loan_application_withdrawn_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }
 
@@ -102,7 +92,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
      * @param message Error Message displayed
      */
     override fun showLoanAccountWithdrawError(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     override fun showProgress() {
@@ -117,6 +107,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
         super.onDestroyView()
         hideProgress()
         loanAccountWithdrawPresenter?.detachView()
+        _binding = null
     }
 
     companion object {
