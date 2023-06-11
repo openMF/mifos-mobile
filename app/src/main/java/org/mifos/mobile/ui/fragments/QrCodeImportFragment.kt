@@ -9,13 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
-
 import com.isseiaoki.simplecropview.CropImageView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -26,7 +23,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.QrCodeImportView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Toaster
-
 import java.io.FileNotFoundException
 import java.io.InputStream
 import javax.inject.Inject
@@ -44,8 +40,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     private var mFrameRect: RectF? = null
     private var inputStream: InputStream? = null
 
-
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var qrCodeImportPresenter: QrCodeImportPresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,21 +50,23 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
             qrUri = Uri.parse(uriValue)
         }
         setHasOptionsMenu(true)
-
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentQrCodeImportBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentQrCodeImportBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.import_qr))
-        //load the uri
+        // load the uri
         setBitmapImage(qrUri)
         binding.ivCropQrCode.setCompressFormat(Bitmap.CompressFormat.JPEG)
         binding.ivCropQrCode.setOutputMaxSize(150, 150)
         binding.ivCropQrCode.load(qrUri)
-                ?.initialFrameRect(mFrameRect)
-                ?.executeAsCompletable()
+            ?.initialFrameRect(mFrameRect)
+            ?.executeAsCompletable()
         binding.ivCropQrCode.setCropMode(CropImageView.CropMode.FREE)
         binding.ivCropQrCode.setInitialFrameScale(0.8f)
         qrCodeImportPresenter?.attachView(this)
@@ -124,11 +121,17 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         try {
             val beneficiary = gson.fromJson(result?.text, Beneficiary::class.java)
             activity?.supportFragmentManager?.popBackStack()
-            (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.CREATE_QR, beneficiary),
-                    true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(
+                BeneficiaryApplicationFragment.newInstance(BeneficiaryState.CREATE_QR, beneficiary),
+                true,
+                R.id.container,
+            )
         } catch (e: JsonSyntaxException) {
-            Toast.makeText(activity, getString(R.string.invalid_qr),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                getString(R.string.invalid_qr),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 

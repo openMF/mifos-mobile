@@ -15,8 +15,8 @@ import retrofit2.http.Query
 interface RecentTransactionsService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/transactions")
     fun getRecentTransactionsList(
-            @Path("clientId") clientId: Long?,
-            @Query("offset") offset: Int?,
-            @Query("limit") limit: Int?
+        @Path("clientId") clientId: Long?,
+        @Query("offset") offset: Int?,
+        @Query("limit") limit: Int?,
     ): Observable<Page<Transaction?>?>?
 }

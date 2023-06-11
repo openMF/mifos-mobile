@@ -8,7 +8,8 @@ import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.ui.enums.LoanState
 import javax.inject.Inject
 
-class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataManager?) : ViewModel() {
+class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataManager?) :
+    ViewModel() {
 
     private lateinit var loansPayload: LoansPayload
     private lateinit var loanState: LoanState
@@ -16,14 +17,25 @@ class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataMa
     private lateinit var accountNo: String
     private var loanId: Long = 0
 
-    fun insertData(loanState: LoanState, loansPayload: LoansPayload, loanName: String, accountNo: String) {
+    fun insertData(
+        loanState: LoanState,
+        loansPayload: LoansPayload,
+        loanName: String,
+        accountNo: String,
+    ) {
         this.loanState = loanState
         this.loansPayload = loansPayload
         this.loanName = loanName
         this.accountNo = accountNo
     }
 
-    fun insertData(loanState: LoanState, loanId: Long, loansPayload: LoansPayload, loanName: String, accountNo: String) {
+    fun insertData(
+        loanState: LoanState,
+        loanId: Long,
+        loansPayload: LoansPayload,
+        loanName: String,
+        accountNo: String,
+    ) {
         this.loanState = loanState
         this.loanId = loanId
         this.loansPayload = loansPayload
@@ -53,9 +65,10 @@ class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataMa
         loansPayload.productName = null
         loansPayload.loanPurpose = null
         loansPayload.currency = null
-        return if (loanState == LoanState.CREATE)
+        return if (loanState == LoanState.CREATE) {
             dataManager?.createLoansAccount(loansPayload)
-        else
+        } else {
             dataManager?.updateLoanAccount(loanId, loansPayload)
+        }
     }
 }

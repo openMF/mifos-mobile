@@ -10,18 +10,18 @@ import org.mifos.mobile.models.templates.account.AccountType
 
 @Parcelize
 data class Beneficiary(
-        var id: Int? = null,
+    var id: Int? = null,
 
-        var name: String? = null,
+    var name: String? = null,
 
-        var officeName: String? = null,
+    var officeName: String? = null,
 
-        var clientName: String? = null,
+    var clientName: String? = null,
 
-        var accountType: AccountType? = null,
+    var accountType: AccountType? = null,
 
-        var accountNumber: String? = null,
+    var accountNumber: String? = null,
 
-        var transferLimit: Double? = null
+    var transferLimit: Double? = null,
 
 ) : Parcelable

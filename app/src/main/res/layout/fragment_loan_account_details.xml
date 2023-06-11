@@ -1,345 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/ll_account_detail"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:paddingVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
             android:orientation="vertical"
+            android:paddingVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
             android:visibility="gone">
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
                 <LinearLayout
-                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_height="wrap_content"
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
                         android:layout_width="wrap_content"
-                        android:text="@string/outstanding_balance"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/outstanding_balance" />
 
                     <TextView
                         android:id="@+id/tv_outstanding_balance"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
                         style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-                        tools:text="outstanding_balance"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="outstanding_balance" />
 
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:text="@string/next_installment"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/next_installment" />
 
                     <TextView
                         android:id="@+id/tv_next_installment"
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="next_installement"/>
+                        tools:text="next_installement" />
 
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                        android:layout_width="match_parent"
-                        android:text="@string/due_date"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/due_date" />
+
                     <TextView
                         android:id="@+id/tv_due_date"
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="due_date"/>
+                        tools:text="due_date" />
+
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:text="@string/account_number"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/account_number" />
 
                     <TextView
                         android:id="@+id/tv_account_number"
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="account_number"/>
+                        tools:text="account_number" />
+
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                        android:layout_width="match_parent"
-                        android:text="@string/loan_type"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/loan_type" />
 
                     <TextView
                         android:id="@+id/tv_loan_type"
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="loan_type"/>
+                        tools:text="loan_type" />
+
                     <TextView
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                        android:layout_width="match_parent"
-                        android:text="@string/currency"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/currency" />
 
                     <TextView
                         android:id="@+id/tv_currency"
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="currency"/>
+                        tools:text="currency" />
 
                     <Button
                         android:id="@+id/btn_make_payment"
-                        android:layout_gravity="end"
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="@string/make_payment"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/make_payment" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                android:layout_width="match_parent"
-                android:text="@string/monitor"
-                style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"/>
+                android:text="@string/monitor" />
 
 
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.listHeaderSpacing"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center"
                     android:id="@+id/ll_summary"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                        app:srcCompat="@drawable/ic_surveys_48px"/>
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+                        app:srcCompat="@drawable/ic_surveys_48px" />
 
                     <LinearLayout
-                        android:gravity="center"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"
                             android:layout_width="match_parent"
-                            android:text="@string/loan_summary"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/loan_summary" />
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"
                             android:layout_width="match_parent"
-                            android:text="@string/view_loan_summary"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_loan_summary" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center"
                     android:id="@+id/ll_loan_charges"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                        app:srcCompat="@drawable/ic_charges"/>
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+                        app:srcCompat="@drawable/ic_charges" />
 
                     <LinearLayout
-                        android:gravity="center"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"
                             android:layout_width="match_parent"
-                            android:text="@string/loan_charges"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/loan_charges" />
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"
                             android:layout_width="match_parent"
-                            android:text="@string/view_charges"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_charges" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center"
                     android:id="@+id/ll_repayment"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                        app:srcCompat="@drawable/ic_charges"/>
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+                        app:srcCompat="@drawable/ic_charges" />
 
                     <LinearLayout
-                        android:gravity="center"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"
                             android:layout_width="match_parent"
-                            android:text="@string/repayment_schedule"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/repayment_schedule" />
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"
                             android:layout_width="match_parent"
-                            android:text="@string/view_repayment"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_repayment" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center"
                     android:id="@+id/ll_loan_transactions"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                     <com.google.android.material.imageview.ShapeableImageView
-                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                        app:srcCompat="@drawable/ic_compare_arrows_black_24dp"/>
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+                        app:srcCompat="@drawable/ic_compare_arrows_black_24dp" />
 
 
                     <LinearLayout
-                        android:gravity="center"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"
                             android:layout_width="match_parent"
-                            android:text="@string/transactions"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/transactions" />
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"
                             android:layout_width="match_parent"
-                            android:text="@string/view_transactions"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_transactions" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_loan_qr_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?selectableItemBackground"
                     android:gravity="center"
-                    android:id="@+id/ll_loan_qr_code"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
                     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
                         style="@style/Mifos.DesignSystem.Components.roundedImageWithContentPadding"
-                        app:srcCompat="@drawable/ic_qrcode_scan"/>
+                        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
+                        app:srcCompat="@drawable/ic_qrcode_scan" />
 
 
                     <LinearLayout
-                        android:gravity="center"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"
                             android:layout_width="match_parent"
-                            android:text="@string/qr_code"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardTitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/qr_code" />
 
                         <TextView
-                            android:layout_height="wrap_content"
+                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"
                             android:layout_width="match_parent"
-                            android:text="@string/view_qr_code"
-                            style="@style/Mifos.DesignSystem.TextStyle.CardSubtitle"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_qr_code" />
 
                     </LinearLayout>
 
@@ -352,8 +356,8 @@
     </androidx.core.widget.NestedScrollView>
 
     <include
-        layout="@layout/error_layout"
         android:id="@+id/layout_error"
+        layout="@layout/error_layout"
         android:visibility="gone" />
 
 </RelativeLayout>

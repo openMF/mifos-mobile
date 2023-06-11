@@ -9,31 +9,31 @@ import org.mifos.mobile.models.accounts.savings.Currency
 @Parcelize
 data class ShareAccount(
 
-        @Expose
-        var accountNo: String? = null,
+    @Expose
+    var accountNo: String? = null,
 
-        @Expose
-        var totalApprovedShares: Int? = null,
+    @Expose
+    var totalApprovedShares: Int? = null,
 
-        @Expose
-        var totalPendingForApprovalShares: Int? = null,
+    @Expose
+    var totalPendingForApprovalShares: Int? = null,
 
-        @Expose
-        var productId: Int? = null,
+    @Expose
+    var productId: Int? = null,
 
-        @Expose
-        var productName: String? = null,
+    @Expose
+    var productName: String? = null,
 
-        @Expose
-        var shortProductName: String? = null,
+    @Expose
+    var shortProductName: String? = null,
 
-        @Expose
-        var status: Status? = null,
+    @Expose
+    var status: Status? = null,
 
-        @Expose
-        var currency: Currency? = null,
+    @Expose
+    var currency: Currency? = null,
 
-        @Expose
-        var timeline: Timeline? = null
+    @Expose
+    var timeline: Timeline? = null,
 
 ) : Account(), Parcelable

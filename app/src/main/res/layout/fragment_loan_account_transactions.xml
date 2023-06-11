@@ -1,44 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_loan_account_trans"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
-        android:layout_width="match_parent"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_loan_product_name"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
-            tools:text="loanProductName"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="loanProductName" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_loan_transactions"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/height_0dp"
             android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.listHeaderSpacing"
-            android:layout_weight="1"
-            android:layout_width="match_parent"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
     <include
-        layout="@layout/error_layout"
         android:id="@+id/layout_error"
-        android:visibility="gone"/>
+        layout="@layout/error_layout"
+        android:visibility="gone" />
 
 </RelativeLayout>

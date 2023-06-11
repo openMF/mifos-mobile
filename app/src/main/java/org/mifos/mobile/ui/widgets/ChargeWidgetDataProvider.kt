@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService.RemoteViewsFactory
 import android.widget.Toast
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
@@ -14,8 +13,6 @@ import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.presenters.ClientChargePresenter
 import org.mifos.mobile.ui.views.ClientChargeView
-
-import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
 /**
@@ -23,8 +20,8 @@ import java.util.concurrent.locks.ReentrantLock
  * providing RemoteViews to the widget in the getViewAt method.
  */
 class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Context) :
-        RemoteViewsFactory,
-        ClientChargeView {
+    RemoteViewsFactory,
+    ClientChargeView {
 
     private var chargePresenter: ClientChargePresenter? = null
     private var charges: List<Charge?>?
@@ -35,14 +32,17 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
         val preferencesHelper = PreferencesHelper(context)
         val baseApiManager = BaseApiManager(preferencesHelper)
         val databaseHelper = DatabaseHelper()
-        val dataManager = DataManager(preferencesHelper, baseApiManager,
-                databaseHelper)
+        val dataManager = DataManager(
+            preferencesHelper,
+            baseApiManager,
+            databaseHelper,
+        )
         chargePresenter = ClientChargePresenter(dataManager, context)
         chargePresenter?.attachView(this)
     }
 
     override fun onDataSetChanged() {
-        //TODO Make ClientId Dynamic
+        // TODO Make ClientId Dynamic
         chargePresenter?.loadClientLocalCharges()
         synchronized(`object`) {
             try {
@@ -56,8 +56,11 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     }
 
     override fun getCount(): Int {
-        return if (charges != null) charges!!.size
-        else 0
+        return if (charges != null) {
+            charges!!.size
+        } else {
+            0
+        }
     }
 
     override fun getViewAt(position: Int): RemoteViews {
@@ -87,8 +90,11 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     }
 
     override fun showErrorFetchingClientCharges(message: String?) {
-        Toast.makeText(context, context.getString(R.string.error_client_charge_loading),
-                Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context,
+            context.getString(R.string.error_client_charge_loading),
+            Toast.LENGTH_SHORT,
+        ).show()
     }
 
     override fun showClientCharges(clientChargesList: List<Charge?>?) {

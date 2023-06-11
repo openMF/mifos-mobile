@@ -4,7 +4,7 @@ import org.mifos.mobile.ui.views.base.MVPView
 
 /*
 * Created by saksham on 02/July/2018
-*/   interface SavingsAccountWithdrawView : MVPView {
+*/ interface SavingsAccountWithdrawView : MVPView {
     fun showUserInterface()
     fun submitWithdrawSavingsAccount()
     fun showSavingsAccountWithdrawSuccessfully()

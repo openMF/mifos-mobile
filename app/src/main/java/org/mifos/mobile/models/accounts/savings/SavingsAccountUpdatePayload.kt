@@ -10,8 +10,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class SavingsAccountUpdatePayload(
 
-        var clientId: Long? = 0,
+    var clientId: Long? = 0,
 
-        var productId: Long? = 0
+    var productId: Long? = 0,
 
 ) : Parcelable

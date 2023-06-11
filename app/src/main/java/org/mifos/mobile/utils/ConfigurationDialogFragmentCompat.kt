@@ -23,20 +23,23 @@ import java.net.URL
 /**
  * Created by dilpreet on 11/03/18.
  */
-class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), TargetFragment, TextWatcher {
-    @kotlin.jvm.JvmField
+class ConfigurationDialogFragmentCompat :
+    PreferenceDialogFragmentCompat(),
+    TargetFragment,
+    TextWatcher {
+    @JvmField
     @BindView(R.id.et_tenant)
     var etTenant: EditText? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @BindView(R.id.et_base_url)
     var etBaseUrl: EditText? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @BindView(R.id.til_tenant)
     var tilTenant: TextInputLayout? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @BindView(R.id.til_base_url)
     var tilBaseUrl: TextInputLayout? = null
     private var preferencesHelper: PreferencesHelper? = null
@@ -59,8 +62,16 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
     override fun onDialogClosed(positiveResult: Boolean) {
         if (positiveResult && !isFieldEmpty && isUrlValid) {
             val preference = preference as ConfigurationPreference
-            if (!(preference.baseUrl.toString().equals(etBaseUrl!!.text.toString()) && preference.tenant.toString().equals(etTenant!!.text.toString()))) {
-                preference.updateConfigurations(etBaseUrl?.text.toString(), etTenant?.text.toString())
+            if (!(
+                    preference.baseUrl.toString()
+                        .equals(etBaseUrl!!.text.toString()) && preference.tenant.toString()
+                        .equals(etTenant!!.text.toString())
+                    )
+            ) {
+                preference.updateConfigurations(
+                    etBaseUrl?.text.toString(),
+                    etTenant?.text.toString(),
+                )
                 preferencesHelper?.clear()
                 val baseUrl = preferencesHelper?.baseUrl
                 val tenant = preferencesHelper?.tenant
@@ -97,13 +108,17 @@ class ConfigurationDialogFragmentCompat : PreferenceDialogFragmentCompat(), Targ
         if (s.toString().isEmpty()) {
             if (etBaseUrl?.text.toString().isEmpty()) {
                 tilBaseUrl?.isErrorEnabled = true
-                tilBaseUrl?.error = getString(R.string.error_validation_blank,
-                        getString(R.string.base_url))
+                tilBaseUrl?.error = getString(
+                    R.string.error_validation_blank,
+                    getString(R.string.base_url),
+                )
             }
             if (etTenant?.text.toString().isEmpty()) {
                 tilTenant?.isErrorEnabled = true
-                tilTenant?.error = getString(R.string.error_validation_blank,
-                        getString(R.string.tenant))
+                tilTenant?.error = getString(
+                    R.string.error_validation_blank,
+                    getString(R.string.tenant),
+                )
             }
         } else {
             if (etBaseUrl?.text.toString().length != 0) {

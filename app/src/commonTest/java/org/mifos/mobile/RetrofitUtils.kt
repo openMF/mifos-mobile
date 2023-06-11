@@ -11,13 +11,14 @@ import retrofit2.Response
  */
 object RetrofitUtils {
     fun getResponseForError(errorCode: Int): Exception {
-        val message= if (errorCode==401) "UnAuthorized" else "Not Found"
-        val responseBody = ResponseBody.create(MediaType.parse("application/json"), "{\"message\":\"$message\"}")
+        val message = if (errorCode == 401) "UnAuthorized" else "Not Found"
+        val responseBody =
+            ResponseBody.create(MediaType.parse("application/json"), "{\"message\":\"$message\"}")
         val response = okhttp3.Response.Builder().code(errorCode)
             .message(message)
             .protocol(Protocol.HTTP_1_1)
             .request(okhttp3.Request.Builder().url("http://localhost/").build())
             .build()
-         return HttpException(Response.error<Any>(responseBody,response))
+        return HttpException(Response.error<Any>(responseBody, response))
     }
 }

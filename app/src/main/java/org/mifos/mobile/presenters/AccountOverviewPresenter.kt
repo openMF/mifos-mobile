@@ -1,12 +1,10 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.injection.ApplicationContext
@@ -15,7 +13,6 @@ import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.AccountOverviewMvpView
-
 import javax.inject.Inject
 
 /**
@@ -23,8 +20,8 @@ import javax.inject.Inject
  * On 16/10/17.
  */
 class AccountOverviewPresenter @Inject constructor(
-        @ApplicationContext context: Context?,
-        private val dataManager: DataManager?
+    @ApplicationContext context: Context?,
+    private val dataManager: DataManager?,
 ) : BasePresenter<AccountOverviewMvpView?>(context) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -42,25 +39,27 @@ class AccountOverviewPresenter @Inject constructor(
         checkViewAttached()
         mvpView?.showProgress()
         dataManager?.clientAccounts
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        mvpView?.hideProgress()
-                        mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
-                    }
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    mvpView?.hideProgress()
+                    mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
+                }
 
-                    override fun onNext(clientAccounts: ClientAccounts) {
-                        mvpView?.hideProgress()
-                        mvpView?.showTotalLoanSavings(
-                                getLoanAccountDetails(clientAccounts.loanAccounts),
-                                getSavingAccountDetails(clientAccounts.savingsAccounts))
-                    }
-                })?.let {
-                    compositeDisposable.add(it
+                override fun onNext(clientAccounts: ClientAccounts) {
+                    mvpView?.hideProgress()
+                    mvpView?.showTotalLoanSavings(
+                        getLoanAccountDetails(clientAccounts.loanAccounts),
+                        getSavingAccountDetails(clientAccounts.savingsAccounts),
                     )
                 }
+            })?.let {
+                compositeDisposable.add(
+                    it,
+                )
+            }
     }
 
     /**
@@ -72,10 +71,11 @@ class AccountOverviewPresenter @Inject constructor(
      */
     fun getLoanAccountDetails(loanAccountList: List<LoanAccount>?): Double {
         var totalAmount = 0.0
-        if (loanAccountList != null)
+        if (loanAccountList != null) {
             for ((_, _, _, _, _, _, _, _, _, _, _, _, _, _, loanBalance) in loanAccountList) {
                 totalAmount += loanBalance
             }
+        }
         return totalAmount
     }
 
@@ -93,5 +93,4 @@ class AccountOverviewPresenter @Inject constructor(
         }
         return totalAmount
     }
-
 }

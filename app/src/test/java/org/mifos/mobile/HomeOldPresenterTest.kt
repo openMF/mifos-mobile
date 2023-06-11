@@ -1,15 +1,12 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -19,7 +16,6 @@ import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.presenters.HomeOldPresenter
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -67,16 +63,22 @@ class HomeOldPresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         clientAccounts
-                ?.loanAccounts?.let { getLoanAccountDetails(it) }?.let { Mockito.verify(view)?.showLoanAccountDetails(it) }
-        Mockito.verify(view)?.showSavingAccountDetails(getSavingAccountDetails(clientAccounts
-                ?.savingsAccounts))
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_accounts))
+            ?.loanAccounts?.let { getLoanAccountDetails(it) }
+            ?.let { Mockito.verify(view)?.showLoanAccountDetails(it) }
+        Mockito.verify(view)?.showSavingAccountDetails(
+            getSavingAccountDetails(
+                clientAccounts
+                    ?.savingsAccounts,
+            ),
+        )
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_accounts))
     }
 
     @Test
     fun testLoadClientAccountDetailsFails() {
         Mockito.`when`(dataManager?.clientAccounts)
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         presenter?.loadClientAccountDetails()
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -86,7 +88,7 @@ class HomeOldPresenterTest {
     @Test
     fun testGetUserDetails() {
         Mockito.`when`(dataManager?.currentClient)
-                .thenReturn(Observable.just(client))
+            .thenReturn(Observable.just(client))
         presenter?.userDetails
         Mockito.verify(view)?.showUserDetails(client)
     }
@@ -94,10 +96,12 @@ class HomeOldPresenterTest {
     @Test
     fun testGetUserDetailsFails() {
         Mockito.`when`(dataManager?.currentClient)
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         presenter?.userDetails
-        Mockito.verify(view)?.showError(context
-                ?.getString(R.string.error_client_not_found))
+        Mockito.verify(view)?.showError(
+            context
+                ?.getString(R.string.error_client_not_found),
+        )
     }
 
     //    @Test
@@ -125,7 +129,7 @@ class HomeOldPresenterTest {
     fun testGetUnreadNotificationsCount() {
         val notificationCount = 10
         Mockito.`when`(dataManager?.unreadNotificationsCount)
-                .thenReturn(Observable.just(notificationCount))
+            .thenReturn(Observable.just(notificationCount))
         presenter?.unreadNotificationsCount
         Mockito.verify(view)?.showNotificationCount(notificationCount)
     }
@@ -133,7 +137,7 @@ class HomeOldPresenterTest {
     @Test
     fun testGetUnreadNotificationsCountOnError() {
         Mockito.`when`(dataManager?.unreadNotificationsCount)
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         presenter?.unreadNotificationsCount
         Mockito.verify(view)?.showNotificationCount(0)
     }

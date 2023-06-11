@@ -32,21 +32,22 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: UserDetailsPresenter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
     private var userBitmap: Bitmap? = null
     private var client: Client? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentUserProfileBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         (activity as BaseActivity?)?.setSupportActionBar(binding.toolbar) // check this part before pushing
@@ -88,20 +89,32 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     override fun showUserDetails(client: Client?) {
         this.client = client
         binding.tvUserName.text = nullFieldCheck(getString(R.string.username), client?.displayName)
-        binding.tvAccountNumber.text = nullFieldCheck(getString(R.string.account_number),
-                client?.accountNo)
-        binding.tvActivationDate.text = nullFieldCheck(getString(R.string.activation_date),
-                DateHelper.getDateAsString(client?.activationDate))
-        binding.tvOfficeName.text = nullFieldCheck(getString(R.string.office_name),
-                client?.officeName)
-        binding.tvClientType.text = nullFieldCheck(getString(R.string.client_type),
-                client?.clientType?.name)
-        binding.tvGroups.text = nullFieldCheck(getString(R.string.groups),
-                getGroups(client?.groups))
+        binding.tvAccountNumber.text = nullFieldCheck(
+            getString(R.string.account_number),
+            client?.accountNo,
+        )
+        binding.tvActivationDate.text = nullFieldCheck(
+            getString(R.string.activation_date),
+            DateHelper.getDateAsString(client?.activationDate),
+        )
+        binding.tvOfficeName.text = nullFieldCheck(
+            getString(R.string.office_name),
+            client?.officeName,
+        )
+        binding.tvClientType.text = nullFieldCheck(
+            getString(R.string.client_type),
+            client?.clientType?.name,
+        )
+        binding.tvGroups.text = nullFieldCheck(
+            getString(R.string.groups),
+            getGroups(client?.groups),
+        )
         binding.tvClientClassification.text = client?.clientClassification?.name ?: "-"
-        binding.tvPhoneNumber.text = nullFieldCheck(getString(R.string.phone_number),
-                client?.mobileNo)
-        if (client?.dobDate?.size != 3) {  // no data entry in database for the client
+        binding.tvPhoneNumber.text = nullFieldCheck(
+            getString(R.string.phone_number),
+            client?.mobileNo,
+        )
+        if (client?.dobDate?.size != 3) { // no data entry in database for the client
             binding.tvDob.text = getString(R.string.no_dob_found)
         } else {
             binding.tvDob.text = DateHelper.getDateAsString(client.dobDate)
@@ -111,8 +124,8 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
 
     private fun nullFieldCheck(field: String, value: String?): String {
         return value
-                ?: getString(R.string.no) + getString(R.string.blank) + field +
-                getString(R.string.blank) + getString(R.string.found)
+            ?: getString(R.string.no) + getString(R.string.blank) + field +
+            getString(R.string.blank) + getString(R.string.found)
     }
 
     /**
@@ -124,14 +137,16 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     private fun getGroups(groups: List<Group>?): String {
         if (groups?.isEmpty() == true) {
             return getString(
-                    R.string.not_assigned_with_any_group) // no groups entry in database for the
+                R.string.not_assigned_with_any_group,
+            ) // no groups entry in database for the
             // client
         }
         val builder = StringBuilder()
-        if (groups != null)
+        if (groups != null) {
             for ((_, _, name) in groups) {
                 builder.append(getString(R.string.string_and_string, name, " | "))
             }
+        }
         return builder.toString().substring(0, builder.toString().length - 2)
     }
 
@@ -145,16 +160,22 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
             userBitmap = bitmap
             if (userBitmap == null) {
                 val textDrawable = TextDrawable.builder()
-                        .beginConfig()
-                        .toUpperCase()
-                        .endConfig()
-                        .buildRound(
-                                (if (preferencesHelper?.clientName.isNullOrEmpty()) preferencesHelper
-                                        ?.userName
-                                else preferencesHelper
-                                        ?.clientName)
-                                        ?.substring(0, 1),
-                                requireContext().getThemeAttributeColor(R.attr.colorPrimaryVariant))
+                    .beginConfig()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(
+                        (
+                            if (preferencesHelper?.clientName.isNullOrEmpty()) {
+                                preferencesHelper
+                                    ?.userName
+                            } else {
+                                preferencesHelper
+                                    ?.clientName
+                            }
+                            )
+                            ?.substring(0, 1),
+                        requireContext().getThemeAttributeColor(R.attr.colorPrimaryVariant),
+                    )
                 binding.ivProfile.setImageDrawable(textDrawable)
             } else {
                 binding.ivProfile.setImageBitmap(bitmap)
@@ -173,9 +194,12 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      */
     override fun showError(message: String?) {
         Toaster.show(binding.root, message)
-        sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.error_fetching_user_profile),
-                R.drawable.ic_error_black_24dp, binding.appBarLayout,
-                binding.layoutError.root)
+        sweetUIErrorHandler?.showSweetCustomErrorUI(
+            getString(R.string.error_fetching_user_profile),
+            R.drawable.ic_error_black_24dp,
+            binding.appBarLayout,
+            binding.layoutError.root,
+        )
         binding.fabEdit.visibility = View.GONE
     }
 
@@ -195,7 +219,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(): UserProfileFragment {
             return UserProfileFragment()
         }

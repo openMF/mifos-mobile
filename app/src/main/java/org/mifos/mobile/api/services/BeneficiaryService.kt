@@ -24,8 +24,8 @@ interface BeneficiaryService {
 
     @PUT(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
     fun updateBeneficiary(
-            @Path("beneficiaryId") beneficiaryId: Long?,
-            @Body payload: BeneficiaryUpdatePayload?
+        @Path("beneficiaryId") beneficiaryId: Long?,
+        @Body payload: BeneficiaryUpdatePayload?,
     ): Observable<ResponseBody?>?
 
     @DELETE(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")

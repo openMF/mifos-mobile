@@ -1,22 +1,18 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.presenters.ClientChargePresenter
 import org.mifos.mobile.ui.views.ClientChargeView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -66,18 +62,21 @@ class ClientChargePresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showClientCharges(charge?.pageItems)
-        Mockito.verify(view, Mockito.never())?.showErrorFetchingClientCharges(context?.getString(R.string.error_client_charge_loading))
+        Mockito.verify(view, Mockito.never())
+            ?.showErrorFetchingClientCharges(context?.getString(R.string.error_client_charge_loading))
     }
 
     @Test
     fun testLoadClientChargesFails() {
-        Mockito.`when`(dataManager?.getClientCharges(1)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.getClientCharges(1))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.loadClientCharges(1)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view, Mockito.never())?.showClientCharges(charge?.pageItems)
         Mockito.verify(view)?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 
     @Test
@@ -88,18 +87,21 @@ class ClientChargePresenterTest {
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showClientCharges(loanCharge)
         Mockito.verify(view, Mockito.never())?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 
     @Test
     fun testLoadLoanAccountChargesFails() {
-        Mockito.`when`(dataManager?.getLoanCharges(1)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.getLoanCharges(1))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.loadLoanAccountCharges(1)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view, Mockito.never())?.showClientCharges(loanCharge)
         Mockito.verify(view)?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 
     @Test
@@ -110,35 +112,42 @@ class ClientChargePresenterTest {
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showClientCharges(savingsCharge)
         Mockito.verify(view, Mockito.never())?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 
     @Test
     fun testLoadSavingsAccountChargesFails() {
-        Mockito.`when`(dataManager?.getSavingsCharges(1)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.getSavingsCharges(1))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.loadSavingsAccountCharges(1)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view, Mockito.never())?.showClientCharges(savingsCharge)
         Mockito.verify(view)?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 
     @Test
     fun testLoadClientLocalCharges() {
-        Mockito.`when`<Observable<Page<Charge?>?>>(dataManager?.clientLocalCharges).thenReturn(Observable.just(charge))
+        Mockito.`when`<Observable<Page<Charge?>?>>(dataManager?.clientLocalCharges)
+            .thenReturn(Observable.just(charge))
         presenter?.loadClientLocalCharges()
         Mockito.verify(view)?.showClientCharges(charge?.pageItems)
         Mockito.verify(view, Mockito.never())?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 
     @Test
     fun testLoadClientLocalChargesFails() {
-        Mockito.`when`(dataManager?.clientLocalCharges).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.clientLocalCharges)
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.loadClientLocalCharges()
         Mockito.verify(view, Mockito.never())?.showClientCharges(charge?.pageItems)
         Mockito.verify(view)?.showErrorFetchingClientCharges(
-                context?.getString(R.string.error_client_charge_loading))
+            context?.getString(R.string.error_client_charge_loading),
+        )
     }
 }

@@ -4,25 +4,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowNotificationBinding
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.DateHelper.getDateAndTimeAsStringFromLong
-
-import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 13/9/17.
  */
 class NotificationAdapter @Inject constructor(@param:ActivityContext private val context: Context) :
-        RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
+    RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     private var notificationList: List<MifosNotification?>?
     fun setNotificationList(notificationList: List<MifosNotification?>?) {
@@ -31,7 +27,8 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RowNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -41,11 +38,15 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
     }
 
     override fun getItemCount(): Int {
-        return if (notificationList != null) notificationList!!.size
-        else 0
+        return if (notificationList != null) {
+            notificationList!!.size
+        } else {
+            0
+        }
     }
 
-    inner class ViewHolder(private val binding : RowNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RowNotificationBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private fun dismissNotification() {
             notificationList?.get(bindingAdapterPosition)?.setRead(true)
             notificationList?.get(bindingAdapterPosition)?.save()
@@ -57,7 +58,12 @@ class NotificationAdapter @Inject constructor(@param:ActivityContext private val
                 tvNotificationText.text = notification?.msg
                 tvNotificationTime.text = getDateAndTimeAsStringFromLong(notification?.timeStamp)
                 if (notification?.isRead() == true) {
-                    ivNotificationIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray_dark))
+                    ivNotificationIcon.setColorFilter(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.gray_dark,
+                        ),
+                    )
                     btnDismissNotification.visibility = View.GONE
                 } else {
                     ivNotificationIcon.setColorFilter(context.getThemeAttributeColor(R.attr.colorPrimary))

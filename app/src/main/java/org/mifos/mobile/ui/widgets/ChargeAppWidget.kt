@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
-
 import org.mifos.mobile.R
 
 /**
@@ -15,7 +14,11 @@ import org.mifos.mobile.R
  */
 class ChargeAppWidget : AppWidgetProvider() {
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -33,8 +36,9 @@ class ChargeAppWidget : AppWidgetProvider() {
 
     companion object {
         fun updateAppWidget(
-                context: Context, appWidgetManager: AppWidgetManager,
-                appWidgetId: Int
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int,
         ) {
             val views = RemoteViews(context.packageName, R.layout.charge_app_widget)
 
@@ -51,8 +55,10 @@ class ChargeAppWidget : AppWidgetProvider() {
          */
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         private fun setRemoteAdapter(context: Context, views: RemoteViews) {
-            views.setRemoteAdapter(R.id.lv_charges, Intent(context, ChargeWidgetService::class.java))
+            views.setRemoteAdapter(
+                R.id.lv_charges,
+                Intent(context, ChargeWidgetService::class.java),
+            )
         }
-
     }
 }

@@ -50,8 +50,9 @@ object QrCodeGenerator {
      * @return Returns a string with account details
      */
     fun getAccountDetailsInString(
-            accountNumber: String?, officeName: String?,
-            accountType: AccountType
+        accountNumber: String?,
+        officeName: String?,
+        accountType: AccountType,
     ): String {
         var accountId = -1
         if (accountType === AccountType.SAVINGS) {

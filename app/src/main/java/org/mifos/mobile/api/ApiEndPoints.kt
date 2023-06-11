@@ -5,7 +5,7 @@ package org.mifos.mobile.api
  * @since 11/06/16
  */
 object ApiEndPoints {
-    //This class contains all the Constants for API End Points
+    // This class contains all the Constants for API End Points
     const val AUTHENTICATION = "authentication"
     const val CLIENTS = "clients"
     const val SAVINGS_ACCOUNTS = "savingsaccounts"

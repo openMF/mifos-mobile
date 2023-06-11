@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:background="?selectableItemBackground"
     android:gravity="center"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
     android:orientation="horizontal"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <ImageView
         android:id="@+id/iv_notification_icon"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:srcCompat="@drawable/ic_notifications"/>
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_notifications" />
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_notification_text"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             android:layout_width="match_parent"
-            tools:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+            android:layout_height="wrap_content"
+            tools:text="@string/medium_text" />
 
         <TextView
-            android:gravity="end|right"
             android:id="@+id/tv_notification_time"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
             style="@style/Mifos.DesignSystem.TextStyle.Label"
-            tools:text="@string/small_text"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end|right"
+            tools:text="@string/small_text" />
 
         <Button
             android:id="@+id/btn_dismiss_notification"
-            android:layout_gravity="right|end"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
             android:layout_width="wrap_content"
-            android:text="@string/dialog_action_ok"
-            style="@style/Mifos.DesignSystem.Components.Button.Text"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end"
+            android:text="@string/dialog_action_ok" />
 
     </LinearLayout>
 

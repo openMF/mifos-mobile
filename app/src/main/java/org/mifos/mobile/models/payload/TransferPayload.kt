@@ -9,36 +9,36 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TransferPayload(
-        var fromOfficeId: Int? = null,
+    var fromOfficeId: Int? = null,
 
-        var fromClientId: Long? = null,
+    var fromClientId: Long? = null,
 
-        var fromAccountType: Int? = null,
+    var fromAccountType: Int? = null,
 
-        var fromAccountId: Int? = null,
+    var fromAccountId: Int? = null,
 
-        var toOfficeId: Int? = null,
+    var toOfficeId: Int? = null,
 
-        var toClientId: Long? = null,
+    var toClientId: Long? = null,
 
-        var toAccountType: Int? = null,
+    var toAccountType: Int? = null,
 
-        var toAccountId: Int? = null,
+    var toAccountId: Int? = null,
 
-        var transferDate: String? = null,
+    var transferDate: String? = null,
 
-        var transferAmount: Double? = null,
+    var transferAmount: Double? = null,
 
-        var transferDescription: String? = null,
+    var transferDescription: String? = null,
 
-        var dateFormat : String = "dd MMMM yyyy",
+    var dateFormat: String = "dd MMMM yyyy",
 
-        var locale : String = "en",
+    var locale: String = "en",
 
-        @Transient
-        var fromAccountNumber: String? = null,
+    @Transient
+    var fromAccountNumber: String? = null,
 
-        @Transient
-        var toAccountNumber: String? = null
+    @Transient
+    var toAccountNumber: String? = null,
 
 ) : Parcelable

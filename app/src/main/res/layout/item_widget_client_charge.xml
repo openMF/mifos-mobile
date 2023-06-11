@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:focusable="true"
-    android:clickable="true"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-    android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <ImageView
-        tools:background="?attr/colorPrimary"
         android:id="@+id/circle_status"
-        android:layout_gravity="center_vertical"
+        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
         android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-        android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"/>
+        android:layout_gravity="center_vertical"
+        tools:background="?attr/colorPrimary" />
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.BetweenCardImageTitle"
+        android:orientation="vertical">
 
         <TextView
-            android:ellipsize="end"
             android:id="@+id/tv_charge_name"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:lines="1"
-            android:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+            android:text="@string/medium_text" />
 
         <TextView
             android:id="@+id/tv_charge_amount"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Label"
             android:layout_width="wrap_content"
-            android:text="@string/small_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+            android:layout_height="wrap_content"
+            android:text="@string/small_text" />
 
     </LinearLayout>
 

@@ -1,7 +1,6 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,20 +10,20 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AllowAttributeOverrides(
 
-        var amortizationType: Boolean? = null,
+    var amortizationType: Boolean? = null,
 
-        var interestType: Boolean? = null,
+    var interestType: Boolean? = null,
 
-        var transactionProcessingStrategyId: Boolean? = null,
+    var transactionProcessingStrategyId: Boolean? = null,
 
-        var interestCalculationPeriodType: Boolean? = null,
+    var interestCalculationPeriodType: Boolean? = null,
 
-        var inArrearsTolerance: Boolean? = null,
+    var inArrearsTolerance: Boolean? = null,
 
-        var repaymentEvery: Boolean? = null,
+    var repaymentEvery: Boolean? = null,
 
-        var graceOnPrincipalAndInterestPayment: Boolean? = null,
+    var graceOnPrincipalAndInterestPayment: Boolean? = null,
 
-        var graceOnArrearsAgeing: Boolean? = null
+    var graceOnArrearsAgeing: Boolean? = null,
 
 ) : Parcelable

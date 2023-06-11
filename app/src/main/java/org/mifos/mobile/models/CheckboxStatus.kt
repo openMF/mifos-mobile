@@ -5,7 +5,7 @@ package org.mifos.mobile.models
  */
 
 data class CheckboxStatus @JvmOverloads constructor(
-        var status: String?,
-        var color: Int,
-        var isChecked: Boolean = false
+    var status: String?,
+    var color: Int,
+    var isChecked: Boolean = false,
 )

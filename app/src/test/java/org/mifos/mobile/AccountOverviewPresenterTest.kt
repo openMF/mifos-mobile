@@ -1,15 +1,12 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.presenters.AccountOverviewPresenter
@@ -60,9 +57,11 @@ class AccountOverviewPresenterTest {
         Mockito.verify(mvpView)?.showProgress()
         Mockito.verify(mvpView)?.hideProgress()
         Mockito.verify(mvpView)?.showTotalLoanSavings(
-                presenter?.getLoanAccountDetails(accounts?.loanAccounts),
-                presenter?.getSavingAccountDetails(accounts?.savingsAccounts))
-        Mockito.verify(mvpView, Mockito.never())?.showError(context?.getString(R.string.error_fetching_accounts))
+            presenter?.getLoanAccountDetails(accounts?.loanAccounts),
+            presenter?.getSavingAccountDetails(accounts?.savingsAccounts),
+        )
+        Mockito.verify(mvpView, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_accounts))
     }
 
     @Test
@@ -73,8 +72,9 @@ class AccountOverviewPresenterTest {
         Mockito.verify(mvpView)?.hideProgress()
         presenter?.getLoanAccountDetails(accounts?.loanAccounts)?.let {
             Mockito.verify(mvpView, Mockito.never())?.showTotalLoanSavings(
-                    it,
-                    presenter?.getSavingAccountDetails(accounts?.savingsAccounts)!!)
+                it,
+                presenter?.getSavingAccountDetails(accounts?.savingsAccounts)!!,
+            )
         }
         Mockito.verify(mvpView)?.showError(context?.getString(R.string.error_fetching_accounts))
     }

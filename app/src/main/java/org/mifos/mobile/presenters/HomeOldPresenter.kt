@@ -4,14 +4,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Base64
 import android.util.Log
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-
 import okhttp3.ResponseBody
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -23,7 +20,6 @@ import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.HomeOldView
 import org.mifos.mobile.utils.ImageUtil.Companion.instance
-
 import java.io.IOException
 import javax.inject.Inject
 
@@ -31,8 +27,9 @@ import javax.inject.Inject
  * Created by dilpreet on 19/6/17.
  */
 class HomeOldPresenter @Inject constructor(
-        private val dataManager: DataManager?, @ActivityContext context: Context?,
-        private val preferencesHelper: PreferencesHelper?
+    private val dataManager: DataManager?,
+    @ActivityContext context: Context?,
+    private val preferencesHelper: PreferencesHelper?,
 ) : BasePresenter<HomeOldView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -51,26 +48,35 @@ class HomeOldPresenter @Inject constructor(
         checkViewAttached()
         mvpView?.showProgress()
         dataManager?.clientAccounts
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        mvpView?.hideProgress()
-                        mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
-                    }
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    mvpView?.hideProgress()
+                    mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
+                }
 
-                    override fun onNext(clientAccounts: ClientAccounts) {
-                        mvpView?.hideProgress()
-                        mvpView?.showLoanAccountDetails(getLoanAccountDetails(clientAccounts
-                                .loanAccounts))
-                        mvpView?.showSavingAccountDetails(getSavingAccountDetails(clientAccounts
-                                .savingsAccounts))
-                    }
-                })?.let {
-                    compositeDisposable.add(it
+                override fun onNext(clientAccounts: ClientAccounts) {
+                    mvpView?.hideProgress()
+                    mvpView?.showLoanAccountDetails(
+                        getLoanAccountDetails(
+                            clientAccounts
+                                .loanAccounts,
+                        ),
+                    )
+                    mvpView?.showSavingAccountDetails(
+                        getSavingAccountDetails(
+                            clientAccounts
+                                .savingsAccounts,
+                        ),
                     )
                 }
+            })?.let {
+                compositeDisposable.add(
+                    it,
+                )
+            }
     }
 
     /**
@@ -82,23 +88,24 @@ class HomeOldPresenter @Inject constructor(
         get() {
             checkViewAttached()
             dataManager?.currentClient
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribeOn(Schedulers.io())
-                    ?.subscribeWith(object : DisposableObserver<Client?>() {
-                        override fun onComplete() {}
-                        override fun onError(e: Throwable) {
-                            mvpView?.showError(context?.getString(R.string.error_fetching_client))
-                            mvpView?.hideProgress()
-                        }
-
-                        override fun onNext(client: Client) {
-                            preferencesHelper?.officeName = client.officeName
-                            mvpView?.showUserDetails(client)
-                        }
-                    })?.let {
-                        compositeDisposable.add(it
-                        )
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<Client?>() {
+                    override fun onComplete() {}
+                    override fun onError(e: Throwable) {
+                        mvpView?.showError(context?.getString(R.string.error_fetching_client))
+                        mvpView?.hideProgress()
                     }
+
+                    override fun onNext(client: Client) {
+                        preferencesHelper?.officeName = client.officeName
+                        mvpView?.showUserDetails(client)
+                    }
+                })?.let {
+                    compositeDisposable.add(
+                        it,
+                    )
+                }
         }
 
     /**
@@ -110,28 +117,30 @@ class HomeOldPresenter @Inject constructor(
             checkViewAttached()
             setUserProfile(preferencesHelper?.userProfileImage)
             dataManager?.clientImage
-                    ?.observeOn(Schedulers.newThread())
-                    ?.subscribeOn(Schedulers.io())
-                    ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                        override fun onComplete() {}
-                        override fun onError(e: Throwable) {
-                            mvpView?.showUserImage(null)
-                        }
-
-                        override fun onNext(response: ResponseBody) {
-                            try {
-                                val encodedString = response.string()
-                                val pureBase64Encoded = encodedString.substring(encodedString.indexOf(',') + 1)
-                                preferencesHelper?.userProfileImage = pureBase64Encoded
-                                setUserProfile(pureBase64Encoded)
-                            } catch (e: IOException) {
-                                Log.d("userimage", e.toString())
-                            }
-                        }
-                    })?.let {
-                        compositeDisposable.add(it
-                        )
+                ?.observeOn(Schedulers.newThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
+                    override fun onComplete() {}
+                    override fun onError(e: Throwable) {
+                        mvpView?.showUserImage(null)
                     }
+
+                    override fun onNext(response: ResponseBody) {
+                        try {
+                            val encodedString = response.string()
+                            val pureBase64Encoded =
+                                encodedString.substring(encodedString.indexOf(',') + 1)
+                            preferencesHelper?.userProfileImage = pureBase64Encoded
+                            setUserProfile(pureBase64Encoded)
+                        } catch (e: IOException) {
+                            Log.d("userimage", e.toString())
+                        }
+                    }
+                })?.let {
+                    compositeDisposable.add(
+                        it,
+                    )
+                }
         }
 
     fun setUserProfile(image: String?) {
@@ -146,18 +155,18 @@ class HomeOldPresenter @Inject constructor(
     val unreadNotificationsCount: Unit
         get() {
             dataManager?.unreadNotificationsCount
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribeOn(Schedulers.computation())
-                    ?.subscribeWith(object : DisposableObserver<Int?>() {
-                        override fun onComplete() {}
-                        override fun onError(e: Throwable) {
-                            mvpView?.showNotificationCount(0)
-                        }
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.computation())
+                ?.subscribeWith(object : DisposableObserver<Int?>() {
+                    override fun onComplete() {}
+                    override fun onError(e: Throwable) {
+                        mvpView?.showNotificationCount(0)
+                    }
 
-                        override fun onNext(integer: Int) {
-                            mvpView?.showNotificationCount(integer)
-                        }
-                    })?.let { compositeDisposable.add(it) }
+                    override fun onNext(integer: Int) {
+                        mvpView?.showNotificationCount(integer)
+                    }
+                })?.let { compositeDisposable.add(it) }
         }
 
     /**
@@ -189,5 +198,4 @@ class HomeOldPresenter @Inject constructor(
         }
         return totalAmount
     }
-
 }

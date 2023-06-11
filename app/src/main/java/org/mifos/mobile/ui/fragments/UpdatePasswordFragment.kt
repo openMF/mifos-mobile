@@ -22,17 +22,20 @@ import javax.inject.Inject
 
 /*
 * Created by saksham on 13/July/2018
-*/   class UpdatePasswordFragment : BaseFragment(), UpdatePasswordView, TextWatcher, OnFocusChangeListener {
+*/ class UpdatePasswordFragment :
+    BaseFragment(),
+    UpdatePasswordView,
+    TextWatcher,
+    OnFocusChangeListener {
 
     private var _binding: FragmentUpdatePasswordBinding? = null
     private val binding get() = _binding!!
 
-
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: UpdatePasswordPresenter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
     private var payload: UpdatePasswordPayload? = null
@@ -40,10 +43,11 @@ import javax.inject.Inject
     private var isFocusLostConfirmPassword = false
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentUpdatePasswordBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.change_password))
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
@@ -71,7 +75,8 @@ import javax.inject.Inject
         get() {
             var rv = true
             val newPassword = binding.tilNewPassword.editText?.text.toString().trim { it <= ' ' }
-            val repeatPassword = binding.tilConfirmNewPassword.editText?.text.toString().trim { it <= ' ' }
+            val repeatPassword =
+                binding.tilConfirmNewPassword.editText?.text.toString().trim { it <= ' ' }
             if (!checkNewPasswordFieldsComplete()) {
                 rv = false
             }
@@ -88,7 +93,8 @@ import javax.inject.Inject
         get() {
             payload = UpdatePasswordPayload()
             payload?.password = binding.tilNewPassword.editText?.text.toString().trim { it <= ' ' }
-            payload?.repeatPassword = binding.tilConfirmNewPassword.editText?.text.toString().trim { it <= ' ' }
+            payload?.repeatPassword =
+                binding.tilConfirmNewPassword.editText?.text.toString().trim { it <= ' ' }
             return payload
         }
 
@@ -101,10 +107,20 @@ import javax.inject.Inject
     }
 
     override fun showPasswordUpdatedSuccessfully() {
-        Toast.makeText(context, getString(R.string.string_changed_successfully,
-                getString(R.string.password)), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context,
+            getString(
+                R.string.string_changed_successfully,
+                getString(R.string.password),
+            ),
+            Toast.LENGTH_SHORT,
+        ).show()
         (activity as BaseActivity).clearFragmentBackStack()
-        (activity as BaseActivity).replaceFragment(SettingsFragment.newInstance(), true, R.id.container)
+        (activity as BaseActivity).replaceFragment(
+            SettingsFragment.newInstance(),
+            true,
+            R.id.container,
+        )
     }
 
     override fun showProgress() {
@@ -147,14 +163,18 @@ import javax.inject.Inject
         val newPassword = binding.tilNewPassword.editText?.text.toString()
         isFocusLostNewPassword = true
         if (newPassword.isEmpty()) {
-            binding.tilNewPassword.error = getString(R.string.error_validation_blank,
-                    getString(R.string.new_password))
+            binding.tilNewPassword.error = getString(
+                R.string.error_validation_blank,
+                getString(R.string.new_password),
+            )
             return false
         }
         if (newPassword.length < 6) {
-            binding.tilNewPassword.error = getString(R.string.error_validation_minimum_chars,
-                    getString(R.string.new_password),
-                    resources.getInteger(R.integer.password_minimum_length))
+            binding.tilNewPassword.error = getString(
+                R.string.error_validation_minimum_chars,
+                getString(R.string.new_password),
+                resources.getInteger(R.integer.password_minimum_length),
+            )
             return false
         }
         binding.tilNewPassword.isErrorEnabled = false
@@ -165,14 +185,18 @@ import javax.inject.Inject
         val confirmPassword = binding.tilConfirmNewPassword.editText?.text.toString()
         isFocusLostConfirmPassword = true
         if (confirmPassword.isEmpty()) {
-            binding.tilConfirmNewPassword.error = getString(R.string.error_validation_blank,
-                    getString(R.string.confirm_password))
+            binding.tilConfirmNewPassword.error = getString(
+                R.string.error_validation_blank,
+                getString(R.string.confirm_password),
+            )
             return false
         }
         if (confirmPassword.length < 6) {
-            binding.tilConfirmNewPassword.error = getString(R.string.error_validation_minimum_chars,
-                    getString(R.string.confirm_password),
-                    resources.getInteger(R.integer.password_minimum_length))
+            binding.tilConfirmNewPassword.error = getString(
+                R.string.error_validation_minimum_chars,
+                getString(R.string.confirm_password),
+                resources.getInteger(R.integer.password_minimum_length),
+            )
             return false
         }
         binding.tilConfirmNewPassword.isErrorEnabled = false
@@ -180,7 +204,7 @@ import javax.inject.Inject
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(): UpdatePasswordFragment {
             return UpdatePasswordFragment()
         }

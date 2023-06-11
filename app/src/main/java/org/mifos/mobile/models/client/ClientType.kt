@@ -9,8 +9,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ClientType(
-        var id: Int,
-        var name: String? = null,
-        var active: Boolean,
-        var mandatory: Boolean
-): Parcelable
+    var id: Int,
+    var name: String? = null,
+    var active: Boolean,
+    var mandatory: Boolean,
+) : Parcelable

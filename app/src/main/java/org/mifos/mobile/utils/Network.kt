@@ -26,7 +26,7 @@ object Network {
      * @param context
      * @return
      */
-    @kotlin.jvm.JvmStatic
+    @JvmStatic
     fun isConnected(context: Context?): Boolean {
         val info = getNetworkInfo(context!!)
         if (info != null) {
@@ -91,6 +91,7 @@ object Network {
             ConnectivityManager.TYPE_WIFI -> {
                 true
             }
+
             ConnectivityManager.TYPE_MOBILE -> {
                 when (subType) {
                     TelephonyManager.NETWORK_TYPE_1xRTT -> false // ~ 50-100 kbps
@@ -112,6 +113,7 @@ object Network {
                     else -> false
                 }
             }
+
             else -> {
                 false
             }

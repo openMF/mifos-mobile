@@ -1,227 +1,225 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/ll_loan_summary"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
             android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+            android:orientation="vertical"
             android:visibility="visible">
 
             <LinearLayout
-                android:layout_height="wrap_content"
-                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
                 android:layout_width="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <TextView
-                        android:ellipsize="end"
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:ellipsize="end"
                         android:lines="1"
-                        android:text="@string/account_short"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/account_short" />
 
                     <TextView
                         android:id="@+id/tv_loan_account_number"
+                        style="@style/Mifos.DesignSystem.TextStyle.Body"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
                         android:gravity="end"
-                        style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="loanAccountNumber"/>
+                        tools:text="loanAccountNumber" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <TextView
-                        android:ellipsize="end"
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:ellipsize="end"
                         android:lines="1"
-                        android:text="@string/loan_product"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/loan_product" />
 
                     <TextView
                         android:id="@+id/tv_loan_product_name"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
                         style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="@string/loan_product"/>
+                        android:layout_width="@dimen/width_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        tools:text="@string/loan_product" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_loan_purpose"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="2">
 
                     <TextView
-                        android:ellipsize="end"
+                        style="@style/Mifos.DesignSystem.TextStyle.Label"
+                        android:layout_width="@dimen/width_0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
+                        android:ellipsize="end"
                         android:lines="1"
-                        android:text="@string/loan_purpose"
-                        style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                        android:text="@string/loan_purpose" />
 
                     <TextView
                         android:id="@+id/tv_loan_purpose"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:layout_weight="1"
-                        android:layout_width="@dimen/width_0dp"
                         style="@style/Mifos.DesignSystem.TextStyle.Body"
-                        tools:text="loanPurpose"/>
+                        android:layout_width="@dimen/width_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        tools:text="loanPurpose" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
-                android:layout_width="match_parent">
+                app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/principal"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/principal" />
 
                         <TextView
                             android:id="@+id/tv_principal"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="@string/principal"/>
+                            tools:text="@string/principal" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/interest"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/interest" />
 
                         <TextView
                             android:id="@+id/tv_interest_charged"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="Interest"/>
+                            tools:text="Interest" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/fees"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/fees" />
 
                         <TextView
                             android:id="@+id/tv_fees"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="fees"/>
+                            tools:text="fees" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/penalties"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/penalties" />
 
                         <TextView
                             android:id="@+id/tv_penalties"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="Penalties"/>
+                            tools:text="Penalties" />
 
                     </LinearLayout>
 
@@ -230,143 +228,143 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                android:layout_width="match_parent"
                 app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/total_repayment"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/total_repayment" />
 
                         <TextView
                             android:id="@+id/tv_total_repayment"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="repayment"/>
+                            tools:text="repayment" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/total_paid"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/total_paid" />
 
                         <TextView
                             android:id="@+id/tv_total_paid"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="paid"/>
+                            tools:text="paid" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/interest_waived"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/interest_waived" />
 
                         <TextView
                             android:id="@+id/tv_interest_waived"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="@string/interest_waived"/>
+                            tools:text="@string/interest_waived" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/penalties_waived"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/penalties_waived" />
 
                         <TextView
                             android:id="@+id/tv_penalties_waived"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="penalties_waived"/>
+                            tools:text="penalties_waived" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/fees_waived"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/fees_waived" />
 
                         <TextView
                             android:id="@+id/tv_fees_waived"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="fees_waived"/>
+                            tools:text="fees_waived" />
 
                     </LinearLayout>
 
@@ -375,79 +373,79 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/table_row_padding_top"
-                android:layout_width="match_parent"
                 app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge">
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/outstanding_balance"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/outstanding_balance" />
 
                         <TextView
                             android:id="@+id/tv_outstanding_balance"
+                            style="@style/Mifos.DesignSystem.TextStyle.Body"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
-                            style="@style/Mifos.DesignSystem.TextStyle.Body"
                             android:gravity="end"
-                            tools:text="balance"/>
+                            tools:text="balance" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
                         <TextView
-                            android:ellipsize="end"
+                            style="@style/Mifos.DesignSystem.TextStyle.Label"
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_width="@dimen/width_0dp"
+                            android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/account_status"
-                            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                            android:text="@string/account_status" />
 
                         <LinearLayout
+                            android:layout_width="@dimen/width_0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="@dimen/width_0dp"
                             android:gravity="end"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/tv_account_status"
-                                android:layout_gravity="center_vertical"
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
                                 style="@style/Mifos.DesignSystem.TextStyle.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:gravity="end"
-                                tools:text="@string/inactive_uc"/>
+                                tools:text="@string/inactive_uc" />
 
                             <ImageView
                                 android:id="@+id/iv_account_status"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+                                android:layout_width="@dimen/Mifos.DesignSystem.Size.SmallIcon"
                                 android:layout_height="@dimen/Mifos.DesignSystem.Size.SmallIcon"
-                                android:layout_width="@dimen/Mifos.DesignSystem.Size.SmallIcon" />
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords" />
 
                         </LinearLayout>
 
@@ -460,9 +458,9 @@
         </LinearLayout>
 
         <include
-            layout="@layout/layout_error"
             android:id="@+id/ll_error"
-            android:visibility="gone"/>
+            layout="@layout/layout_error"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

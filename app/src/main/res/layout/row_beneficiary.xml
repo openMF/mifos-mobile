@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+    android:orientation="vertical"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <TextView
-        android:ellipsize="end"
         android:id="@+id/tv_beneficiary_name"
-        android:layout_gravity="start"
-        android:layout_height="wrap_content"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:ellipsize="end"
         android:lines="1"
-        android:text="@string/medium_text"
-        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+        android:text="@string/medium_text" />
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:ellipsize="end"
             android:id="@+id/tv_account_number"
-            android:layout_gravity="start"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/Mifos.DesignSystem.TextStyle.Label"
             android:layout_width="@dimen/width_0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:ellipsize="end"
             android:lines="1"
-            android:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+            android:text="@string/medium_text" />
 
         <TextView
-            android:ellipsize="end"
-            android:gravity="end"
             android:id="@+id/tv_office_name"
+            style="@style/Mifos.DesignSystem.TextStyle.Label"
+            android:layout_width="@dimen/width_0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="@dimen/width_0dp"
+            android:ellipsize="end"
+            android:gravity="end"
             android:lines="1"
-            android:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+            android:text="@string/medium_text" />
 
     </LinearLayout>
 

@@ -9,10 +9,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoanWithdraw(
-        var withdrawnOnDate: String? = null,
+    var withdrawnOnDate: String? = null,
 
-        var note: String? = null,
+    var note: String? = null,
 
-        internal var dateFormat : String = "dd MMMM yyyy",
-        internal var locale : String = "en"
+    internal var dateFormat: String = "dd MMMM yyyy",
+    internal var locale: String = "en",
 ) : Parcelable

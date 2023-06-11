@@ -1,23 +1,18 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import okhttp3.ResponseBody
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.presenters.RegistrationPresenter
 import org.mifos.mobile.ui.views.RegistrationView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -62,7 +57,8 @@ class RegistrationPresenterTest {
     @Test
     @Throws(Exception::class)
     fun testRegisterUser() {
-        Mockito.`when`<Observable<ResponseBody?>?>(dataManager?.registerUser(registerPayload)).thenReturn(Observable.just(responseBody))
+        Mockito.`when`<Observable<ResponseBody?>?>(dataManager?.registerUser(registerPayload))
+            .thenReturn(Observable.just(responseBody))
         presenter?.registerUser(registerPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -73,7 +69,8 @@ class RegistrationPresenterTest {
     @Test
     @Throws(Exception::class)
     fun testRegisterUserFails() {
-        Mockito.`when`(dataManager?.registerUser(registerPayload)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.registerUser(registerPayload))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.registerUser(registerPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()

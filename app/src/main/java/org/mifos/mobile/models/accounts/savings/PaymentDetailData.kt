@@ -9,17 +9,17 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PaymentDetailData(
-        var id: Int? = null,
+    var id: Int? = null,
 
-        var paymentType: PaymentType,
+    var paymentType: PaymentType,
 
-        var accountNumber: String? = null,
+    var accountNumber: String? = null,
 
-        var checkNumber: String? = null,
+    var checkNumber: String? = null,
 
-        var routingCode: String? = null,
+    var routingCode: String? = null,
 
-        var receiptNumber: String? = null,
+    var receiptNumber: String? = null,
 
-        var bankNumber: String? = null
+    var bankNumber: String? = null,
 ) : Parcelable

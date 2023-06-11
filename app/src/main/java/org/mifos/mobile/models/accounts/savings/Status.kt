@@ -5,29 +5,29 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Status(
-        var id: Int? = null,
-        var code: String? = null,
+    var id: Int? = null,
+    var code: String? = null,
 
-        var value: String? = null,
+    var value: String? = null,
 
-        var submittedAndPendingApproval: Boolean? = null,
+    var submittedAndPendingApproval: Boolean? = null,
 
-        var approved: Boolean? = null,
+    var approved: Boolean? = null,
 
-        var rejected: Boolean? = null,
+    var rejected: Boolean? = null,
 
-        var withdrawnByApplicant: Boolean? = null,
+    var withdrawnByApplicant: Boolean? = null,
 
-        var active: Boolean? = null,
+    var active: Boolean? = null,
 
-        var closed: Boolean? = null,
+    var closed: Boolean? = null,
 
-        var prematureClosed: Boolean? = null,
+    var prematureClosed: Boolean? = null,
 
-        internal var transferInProgress: Boolean? = null,
+    internal var transferInProgress: Boolean? = null,
 
-        internal var transferOnHold: Boolean? = null,
+    internal var transferOnHold: Boolean? = null,
 
-        var matured: Boolean? = null
+    var matured: Boolean? = null,
 
 ) : Parcelable

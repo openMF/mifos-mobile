@@ -7,5 +7,5 @@ import javax.inject.Qualifier
  * @since 08/07/16
  */
 @Qualifier
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class ApplicationContext

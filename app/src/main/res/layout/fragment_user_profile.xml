@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -13,20 +12,21 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="?attr/collapsingToolbarLayoutMediumStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
-            app:titleEnabled="false"
             app:contentScrim="?attr/colorPrimaryContainer"
-            style="?attr/collapsingToolbarLayoutMediumStyle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                app:layout_collapseMode="pin"
                 android:layout_width="match_parent"
-                app:title="@string/user_details"
-                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
                 app:menu="@menu/edit_profile"
-                android:layout_height="?attr/actionBarSize" />
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                app:title="@string/user_details" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -34,59 +34,61 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ncv_customer_details"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:id="@+id/ll_user_profile"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/Mifos.DesignSystem.Spacing.VerticalSpaceForFab"
-            android:paddingTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
+            android:paddingTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+            android:paddingBottom="@dimen/Mifos.DesignSystem.Spacing.VerticalSpaceForFab">
 
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile"
-                app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                android:layout_height="@dimen/Mifos.DesignSystem.Size.CircularUserImageSize"
                 android:layout_width="@dimen/Mifos.DesignSystem.Size.CircularUserImageSize"
-                android:scaleType="fitXY"
+                android:layout_height="@dimen/Mifos.DesignSystem.Size.CircularUserImageSize"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
-                tools:src="@tools:sample/avatars"/>
+                android:scaleType="fitXY"
+                app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+                tools:src="@tools:sample/avatars" />
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/username"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/username" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_user_name"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="mifos_user"/>
+                    tools:text="mifos_user" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
 
 
             <LinearLayout
@@ -94,229 +96,250 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_number"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/account_number" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_account_number"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="25872464234"/>
+                    tools:text="25872464234" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activation_date"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/activation_date" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_activation_date"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="25872464234"/>
+                    tools:text="25872464234" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/office_name"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/office_name" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_office_name"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="25872464234"/>
+                    tools:text="25872464234" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/groups"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/groups" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_groups"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="25872464234"/>
+                    tools:text="25872464234" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/client_type"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/client_type" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_client_type"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="25872464234"/>
+                    tools:text="25872464234" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/client_classification"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/client_classification" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_client_classification"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    tools:text="25872464234"/>
+                    tools:text="25872464234" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
 
             <LinearLayout
                 android:id="@+id/btn_change_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:foreground="?attr/selectableItemBackground"
+                android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/change_password"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
+                    android:text="@string/change_password" />
+
                 <View
                     android:layout_width="@dimen/width_0dp"
                     android:layout_height="@dimen/height_0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
             <View
-                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+                style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"
+                android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall" />
 
             <LinearLayout
-                android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/user_details"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    />
 
                 <TextView
-                    android:drawablePadding="@dimen/layout_padding_8dp"
-                    android:gravity="center"
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_details" />
+
+                <TextView
                     android:id="@+id/tv_phone_number"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/layout_padding_8dp"
+                    android:gravity="center"
                     android:paddingTop="@dimen/layout_padding_8dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    tools:text="@string/medium_text"
                     app:drawableLeftCompat="@drawable/ic_phone_wrapper"
-                    app:drawableStartCompat="@drawable/ic_phone_wrapper" />
+                    app:drawableStartCompat="@drawable/ic_phone_wrapper"
+                    tools:text="@string/medium_text" />
+
                 <TextView
-                    android:drawablePadding="@dimen/layout_padding_8dp"
-                    android:gravity="center"
                     android:id="@+id/tv_dob"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:paddingTop="@dimen/layout_padding_8dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    tools:text="@string/medium_text"
-                    app:drawableStartCompat="@drawable/ic_cake_wrapper" />
-                <TextView
+                    android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/layout_padding_8dp"
                     android:gravity="center"
-                    android:id="@+id/tv_gender"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:paddingTop="@dimen/layout_padding_8dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    tools:text="@string/medium_text"
+                    app:drawableStartCompat="@drawable/ic_cake_wrapper"
+                    tools:text="@string/medium_text" />
+
+                <TextView
+                    android:id="@+id/tv_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/layout_padding_8dp"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/layout_padding_8dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     app:drawableLeftCompat="@drawable/ic_gender_wrapper"
-                    app:drawableStartCompat="@drawable/ic_gender_wrapper" />
+                    app:drawableStartCompat="@drawable/ic_gender_wrapper"
+                    tools:text="@string/medium_text" />
 
             </LinearLayout>
 
@@ -327,16 +350,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_edit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:layout_width="wrap_content"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_edit"/>
+        app:srcCompat="@drawable/ic_edit" />
 
     <include
-        layout="@layout/error_layout"
         android:id="@+id/layout_error"
-        android:visibility="gone"/>
+        layout="@layout/error_layout"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

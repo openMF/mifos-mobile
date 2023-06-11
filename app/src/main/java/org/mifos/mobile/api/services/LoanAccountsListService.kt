@@ -21,8 +21,8 @@ interface LoanAccountsListService {
 
     @GET(ApiEndPoints.LOANS + "/{loanId}")
     fun getLoanWithAssociations(
-            @Path("loanId") loanId: Long?,
-            @Query("associations") associationType: String?
+        @Path("loanId") loanId: Long?,
+        @Query("associations") associationType: String?,
     ): Observable<LoanWithAssociations?>?
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
@@ -30,8 +30,8 @@ interface LoanAccountsListService {
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
     fun getLoanTemplateByProduct(
-            @Query("clientId") clientId: Long?,
-            @Query("productId") productId: Int?
+        @Query("clientId") clientId: Long?,
+        @Query("productId") productId: Int?,
     ): Observable<LoanTemplate?>?
 
     @POST(ApiEndPoints.LOANS)
@@ -39,13 +39,13 @@ interface LoanAccountsListService {
 
     @PUT(ApiEndPoints.LOANS + "/{loanId}/")
     fun updateLoanAccount(
-            @Path("loanId") loanId: Long,
-            @Body loansPayload: LoansPayload?
+        @Path("loanId") loanId: Long,
+        @Body loansPayload: LoansPayload?,
     ): Observable<ResponseBody?>?
 
     @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
     fun withdrawLoanAccount(
-            @Path(Constants.LOAN_ID) loanId: Long?,
-            @Body loanWithdraw: LoanWithdraw?
+        @Path(Constants.LOAN_ID) loanId: Long?,
+        @Body loanWithdraw: LoanWithdraw?,
     ): Observable<ResponseBody?>?
 }

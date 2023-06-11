@@ -4,60 +4,59 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_transaction"
+        style="@style/Mifos.DesignSystem.Shape.roundedImage"
         android:layout_width="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
         android:layout_height="@dimen/Mifos.DesignSystem.Size.ListItemsIconSize"
-        style="@style/Mifos.DesignSystem.Shape.roundedImage"
-        app:srcCompat="@drawable/ic_local_atm_black_24dp"/>
+        app:srcCompat="@drawable/ic_local_atm_black_24dp" />
 
 
     <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_width="@dimen/width_0dp"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <TextView
-            android:ellipsize="end"
             android:id="@+id/tv_value"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:lines="1"
-            android:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+            android:text="@string/medium_text" />
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_amount"
-                android:layout_height="wrap_content"
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
                 android:layout_width="wrap_content"
-                android:text="@string/small_text"
-                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                android:layout_height="wrap_content"
+                android:text="@string/small_text" />
 
             <TextView
-                android:gravity="end"
                 android:id="@+id/tv_transactionDate"
-                android:layout_gravity="end"
-                android:layout_height="wrap_content"
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
                 android:layout_width="match_parent"
-                android:text="@string/small_text"
-                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:text="@string/small_text" />
 
         </LinearLayout>
 

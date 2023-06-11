@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -16,7 +15,6 @@ import org.mifos.mobile.ui.views.LoanAccountWithdrawView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Toaster
-
 import javax.inject.Inject
 
 /**
@@ -27,7 +25,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     private var _binding: FragmentLoanWithdrawBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var loanAccountWithdrawPresenter: LoanAccountWithdrawPresenter? = null
     private var loanWithAssociations: LoanWithAssociations? = null
@@ -40,10 +38,11 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentLoanWithdrawBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentLoanWithdrawBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.withdraw_loan))
         showUserInterface()
         loanAccountWithdrawPresenter?.attachView(this)
@@ -72,9 +71,11 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
         val loanWithdraw = LoanWithdraw()
         loanWithdraw.note = binding.etWithdrawReason.text.toString()
         loanWithdraw.withdrawnOnDate = DateHelper
-                .getDateAsStringFromLong(System.currentTimeMillis())
-        loanAccountWithdrawPresenter?.withdrawLoanAccount(loanWithAssociations?.id?.toLong(),
-                loanWithdraw)
+            .getDateAsStringFromLong(System.currentTimeMillis())
+        loanAccountWithdrawPresenter?.withdrawLoanAccount(
+            loanWithAssociations?.id?.toLong(),
+            loanWithdraw,
+        )
     }
 
     /**
@@ -112,7 +113,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
 
     companion object {
         fun newInstance(
-                loanWithAssociations: LoanWithAssociations?
+            loanWithAssociations: LoanWithAssociations?,
         ): LoanAccountWithdrawFragment {
             val fragment = LoanAccountWithdrawFragment()
             val args = Bundle()

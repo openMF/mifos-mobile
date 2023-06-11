@@ -9,70 +9,71 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Timeline(
-        var submittedOnDate: List<Int>? = null,
+    var submittedOnDate: List<Int>? = null,
 
-        var submittedByUsername: String?,
+    var submittedByUsername: String?,
 
-        var submittedByFirstname: String?,
+    var submittedByFirstname: String?,
 
-        var submittedByLastname: String?,
+    var submittedByLastname: String?,
 
-        var approvedOnDate: List<Int>? = null,
+    var approvedOnDate: List<Int>? = null,
 
-        var approvedByUsername: String?,
+    var approvedByUsername: String?,
 
-        var approvedByFirstname: String?,
+    var approvedByFirstname: String?,
 
-        var approvedByLastname: String?,
+    var approvedByLastname: String?,
 
-        var expectedDisbursementDate: List<Int>? = null,
+    var expectedDisbursementDate: List<Int>? = null,
 
-        var actualDisbursementDate: List<Int>? = null,
+    var actualDisbursementDate: List<Int>? = null,
 
-        var disbursedByUsername: String?,
+    var disbursedByUsername: String?,
 
-        var disbursedByFirstname: String?,
+    var disbursedByFirstname: String?,
 
-        var disbursedByLastname: String?,
+    var disbursedByLastname: String?,
 
-        var closedOnDate: List<Int>? = null,
+    var closedOnDate: List<Int>? = null,
 
-        var expectedMaturityDate: List<Int>? = null,
+    var expectedMaturityDate: List<Int>? = null,
 
-        var withdrawnOnDate: List<Int>
+    var withdrawnOnDate: List<Int>,
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            },
-            arrayListOf<Int>().apply {
-                parcel.readArrayList(Int::class.java.classLoader)
-            })
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+        arrayListOf<Int>().apply {
+            parcel.readArrayList(Int::class.java.classLoader)
+        },
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeList(submittedOnDate)

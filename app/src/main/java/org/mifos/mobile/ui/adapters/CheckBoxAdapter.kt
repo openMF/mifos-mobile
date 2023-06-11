@@ -1,4 +1,5 @@
 package org.mifos.mobile.ui.adapters
+
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -42,7 +43,10 @@ class CheckBoxAdapter @Inject constructor() :
                 cbStatusSelect.setOnClickListener {
                     statusList?.get(bindingAdapterPosition)?.isChecked = !isChecked
                 }
-                CompoundButtonCompat.setButtonTintList(cbStatusSelect, ColorStateList(states, colors))
+                CompoundButtonCompat.setButtonTintList(
+                    cbStatusSelect,
+                    ColorStateList(states, colors),
+                )
                 cbStatusSelect.text = status
                 cbStatusSelect.setOnCheckedChangeListener { _, _ ->
                     statusList?.get(bindingAdapterPosition)?.isChecked = cbStatusSelect.isChecked

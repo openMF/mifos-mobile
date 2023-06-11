@@ -33,8 +33,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     private var _binding: FragmentBeneficiaryListBinding? = null
     private val binding get() = _binding!!
 
-
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var beneficiaryListPresenter: BeneficiaryListPresenter? = null
 
@@ -42,9 +41,12 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
 
     private var beneficiaryList: List<Beneficiary?>? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentBeneficiaryListBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentBeneficiaryListBinding.inflate(inflater, container, false)
         beneficiaryListAdapter = BeneficiaryListAdapter(::onItemClick)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiaries))
@@ -73,15 +75,20 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (beneficiaryList != null) {
-            outState.putParcelableArrayList(Constants.BENEFICIARY, ArrayList<Parcelable?>(
-                    beneficiaryList))
+            outState.putParcelableArrayList(
+                Constants.BENEFICIARY,
+                ArrayList<Parcelable?>(
+                    beneficiaryList,
+                ),
+            )
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val beneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(Constants.BENEFICIARY) ?: listOf()
+            val beneficiaries: List<Beneficiary?> =
+                savedInstanceState.getParcelableArrayList(Constants.BENEFICIARY) ?: listOf()
             showBeneficiaryList(beneficiaries)
         }
     }
@@ -95,22 +102,42 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
         with(binding) {
             rvBeneficiaries.layoutManager = layoutManager
             rvBeneficiaries.setHasFixedSize(true)
-            rvBeneficiaries.addItemDecoration(DividerItemDecoration((activity?.applicationContext)!!, layoutManager.orientation))
+            rvBeneficiaries.addItemDecoration(
+                DividerItemDecoration(
+                    (activity?.applicationContext)!!,
+                    layoutManager.orientation,
+                ),
+            )
             rvBeneficiaries.adapter = beneficiaryListAdapter
-            swipeContainer.setColorSchemeColors(*requireActivity()
-                .resources.getIntArray(R.array.swipeRefreshColors))
+            swipeContainer.setColorSchemeColors(
+                *requireActivity()
+                    .resources.getIntArray(R.array.swipeRefreshColors),
+            )
             swipeContainer.setOnRefreshListener(this@BeneficiaryListFragment)
-            fabAddBeneficiary.setOnClickListener { startActivity(Intent(activity, AddBeneficiaryActivity::class.java)) }
+            fabAddBeneficiary.setOnClickListener {
+                startActivity(
+                    Intent(
+                        activity,
+                        AddBeneficiaryActivity::class.java,
+                    ),
+                )
+            }
         }
     }
 
     fun retryClicked() {
         if (Network.isConnected((context?.applicationContext)!!)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvBeneficiaries, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvBeneficiaries,
+                binding.layoutError.root,
+            )
             beneficiaryListPresenter?.loadBeneficiaries()
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 
@@ -119,7 +146,10 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
      */
     override fun onRefresh() {
         if (binding.layoutError.root.visibility == View.VISIBLE) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvBeneficiaries, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvBeneficiaries,
+                binding.layoutError.root,
+            )
         }
         beneficiaryListPresenter?.loadBeneficiaries()
     }
@@ -145,10 +175,16 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected((activity?.applicationContext)!!)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvBeneficiaries, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetNoInternetUI(
+                binding.rvBeneficiaries,
+                binding.layoutError.root,
+            )
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(msg,
-                    binding.rvBeneficiaries, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                msg,
+                binding.rvBeneficiaries,
+                binding.layoutError.root,
+            )
         }
     }
 
@@ -165,7 +201,13 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     }
 
     private fun onItemClick(position: Int) {
-        (activity as BaseActivity?)?.replaceFragment(BeneficiaryDetailFragment.newInstance(beneficiaryList!![position]), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            BeneficiaryDetailFragment.newInstance(
+                beneficiaryList!![position],
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     private fun showSwipeRefreshLayout(show: Boolean?) {
@@ -182,9 +224,13 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
      * Shows an error layout when this function is called.`
      */
     private fun showEmptyBeneficiary() {
-        sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.beneficiary),
-                getString(R.string.beneficiary),
-                R.drawable.ic_beneficiaries_48px, binding.rvBeneficiaries, binding.layoutError.root)
+        sweetUIErrorHandler?.showSweetEmptyUI(
+            getString(R.string.beneficiary),
+            getString(R.string.beneficiary),
+            R.drawable.ic_beneficiaries_48px,
+            binding.rvBeneficiaries,
+            binding.layoutError.root,
+        )
         binding.rvBeneficiaries.visibility = View.GONE
     }
 

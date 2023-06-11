@@ -7,15 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountsBinding
 import org.mifos.mobile.models.CheckboxStatus
@@ -31,21 +27,21 @@ import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter
 import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.AccountsView
-import org.mifos.mobile.utils.*
-
-import java.util.*
+import org.mifos.mobile.utils.ComparatorBasedOnId
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.DividerItemDecoration
+import org.mifos.mobile.utils.Network
+import java.util.Collections
 import javax.inject.Inject
-
-import kotlin.collections.ArrayList
 
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
 class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
-    private var _binding : FragmentAccountsBinding? = null
+    private var _binding: FragmentAccountsBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var accountsPresenter: AccountsPresenter? = null
 
@@ -90,12 +86,12 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentAccountsBinding.inflate(inflater, container, false)
         val rootView = binding.root
-
 
         loanAccountsListAdapter = LoanAccountsListAdapter(::onItemClick)
         savingAccountsListAdapter = SavingAccountsListAdapter(::onItemClick)
@@ -107,10 +103,16 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         layoutManager.orientation = RecyclerView.VERTICAL
         binding.rvAccounts.layoutManager = layoutManager
         binding.rvAccounts.setHasFixedSize(true)
-        binding.rvAccounts.addItemDecoration(DividerItemDecoration(activity,
-                layoutManager.orientation))
-        binding.swipeContainer.setColorSchemeColors(*requireActivity()
-                .resources.getIntArray(R.array.swipeRefreshColors))
+        binding.rvAccounts.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                layoutManager.orientation,
+            ),
+        )
+        binding.swipeContainer.setColorSchemeColors(
+            *requireActivity()
+                .resources.getIntArray(R.array.swipeRefreshColors),
+        )
         binding.swipeContainer.setOnRefreshListener(this)
         if (savedInstanceState == null) {
             showProgress()
@@ -122,12 +124,20 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         super.onSaveInstanceState(outState)
         outState.putString(Constants.ACCOUNT_TYPE, accountType)
         when (accountType) {
-            Constants.SAVINGS_ACCOUNTS -> outState.putParcelableArrayList(Constants.SAVINGS_ACCOUNTS,
-                    ArrayList<Parcelable?>(savingAccounts))
-            Constants.LOAN_ACCOUNTS -> outState.putParcelableArrayList(Constants.LOAN_ACCOUNTS,
-                    ArrayList<Parcelable?>(loanAccounts))
-            Constants.SHARE_ACCOUNTS -> outState.putParcelableArrayList(Constants.SHARE_ACCOUNTS,
-                    ArrayList<Parcelable?>(shareAccounts))
+            Constants.SAVINGS_ACCOUNTS -> outState.putParcelableArrayList(
+                Constants.SAVINGS_ACCOUNTS,
+                ArrayList<Parcelable?>(savingAccounts),
+            )
+
+            Constants.LOAN_ACCOUNTS -> outState.putParcelableArrayList(
+                Constants.LOAN_ACCOUNTS,
+                ArrayList<Parcelable?>(loanAccounts),
+            )
+
+            Constants.SHARE_ACCOUNTS -> outState.putParcelableArrayList(
+                Constants.SHARE_ACCOUNTS,
+                ArrayList<Parcelable?>(shareAccounts),
+            )
         }
     }
 
@@ -138,19 +148,24 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
             when (accountType) {
                 Constants.SAVINGS_ACCOUNTS -> {
                     val savingAccountList: List<SavingAccount?> =
-                        savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS) ?: listOf()
+                        savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS)
+                            ?: listOf()
                     showSavingsAccounts(savingAccountList)
                 }
+
                 Constants.LOAN_ACCOUNTS -> {
                     val loanAccountList: List<LoanAccount?> =
-                            savedInstanceState.getParcelableArrayList(
-                                    Constants.LOAN_ACCOUNTS)?: listOf()
+                        savedInstanceState.getParcelableArrayList(
+                            Constants.LOAN_ACCOUNTS,
+                        ) ?: listOf()
                     showLoanAccounts(loanAccountList)
                 }
+
                 Constants.SHARE_ACCOUNTS -> {
                     val shareAccountList: List<ShareAccount?> =
-                            savedInstanceState.getParcelableArrayList(
-                                    Constants.SHARE_ACCOUNTS) ?: listOf()
+                        savedInstanceState.getParcelableArrayList(
+                            Constants.SHARE_ACCOUNTS,
+                        ) ?: listOf()
                     showShareAccounts(shareAccountList)
                 }
             }
@@ -169,11 +184,17 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      */
     fun onRetry() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             accountsPresenter?.loadAccounts(accountType)
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 
@@ -188,8 +209,11 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         } else {
             hideProgress()
             sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvAccounts, binding.layoutError.root)
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 
@@ -264,9 +288,12 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * @param emptyAccounts Text to show in `noAccountText`
      */
     private fun showEmptyAccounts(emptyAccounts: String?) {
-        sweetUIErrorHandler?.showSweetEmptyUI(emptyAccounts,
-                R.drawable.ic_account_balance_wallet_black_background_24dp,
-                binding.rvAccounts, binding.layoutError.root)
+        sweetUIErrorHandler?.showSweetEmptyUI(
+            emptyAccounts,
+            R.drawable.ic_account_balance_wallet_black_background_24dp,
+            binding.rvAccounts,
+            binding.layoutError.root,
+        )
     }
 
     /**
@@ -280,7 +307,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         if (searchResult?.size == 0) {
             showEmptyAccounts(getString(R.string.no_saving_account))
         } else {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             savingAccountsListAdapter?.setSavingAccountsList(searchResult)
         }
     }
@@ -292,11 +322,15 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * @param input String which is needs to be searched in list
      */
     fun searchLoanAccount(input: String?) {
-        val searchResult: List<LoanAccount?>? = accountsPresenter?.searchInLoanList(loanAccounts, input)
+        val searchResult: List<LoanAccount?>? =
+            accountsPresenter?.searchInLoanList(loanAccounts, input)
         if (searchResult?.size == 0) {
             showEmptyAccounts(getString(R.string.no_loan_account))
         } else {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             loanAccountsListAdapter?.setLoanAccountsList(searchResult)
         }
     }
@@ -308,11 +342,15 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
      * @param input String which is needs to be searched in list
      */
     fun searchSharesAccount(input: String?) {
-        val searchResult: List<ShareAccount?>? = accountsPresenter?.searchInSharesList(shareAccounts, input)
+        val searchResult: List<ShareAccount?>? =
+            accountsPresenter?.searchInSharesList(shareAccounts, input)
         if (searchResult?.size == 0) {
             showEmptyAccounts(getString(R.string.no_sharing_account))
         } else {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             shareAccountsListAdapter?.setShareAccountsList(searchResult)
         }
     }
@@ -327,8 +365,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         val filteredSavings: MutableList<SavingAccount?> = ArrayList()
         if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
             for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
-                accountsPresenter?.getFilteredSavingsAccount(savingAccounts,
-                        status)?.let { filteredSavings.addAll(it) }
+                accountsPresenter?.getFilteredSavingsAccount(
+                    savingAccounts,
+                    status,
+                )?.let { filteredSavings.addAll(it) }
             }
         }
         if (filteredSavings.size == 0) {
@@ -348,8 +388,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         val filteredSavings: MutableList<LoanAccount?> = ArrayList()
         if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
             for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
-                accountsPresenter?.getFilteredLoanAccount(loanAccounts,
-                    status)?.let { filteredSavings.addAll(it) }
+                accountsPresenter?.getFilteredLoanAccount(
+                    loanAccounts,
+                    status,
+                )?.let { filteredSavings.addAll(it) }
             }
         }
         if (filteredSavings.size == 0) {
@@ -369,8 +411,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         val filteredSavings: MutableList<ShareAccount?> = ArrayList()
         if (accountsPresenter?.getCheckedStatus(statusModelList) != null && accountsPresenter != null) {
             for (status in accountsPresenter?.getCheckedStatus(statusModelList)!!) {
-                accountsPresenter?.getFilteredShareAccount(shareAccounts,
-                    status)?.let { filteredSavings.addAll(it) }
+                accountsPresenter?.getFilteredShareAccount(
+                    shareAccounts,
+                    status,
+                )?.let { filteredSavings.addAll(it) }
             }
         }
         if (filteredSavings.size == 0) {
@@ -389,7 +433,11 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         if (!Network.isConnected(context)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvAccounts, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(errorMessage, binding.rvAccounts, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                errorMessage,
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
         hideProgress()
@@ -424,18 +472,24 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
         when (accountType) {
             Constants.SAVINGS_ACCOUNTS -> {
                 intent = Intent(activity, SavingsAccountContainerActivity::class.java)
-                intent.putExtra(Constants.SAVINGS_ID, savingAccountsListAdapter
-                        ?.getSavingAccountsList()?.get(position)?.id)
+                intent.putExtra(
+                    Constants.SAVINGS_ID,
+                    savingAccountsListAdapter
+                        ?.getSavingAccountsList()?.get(position)?.id,
+                )
             }
+
             Constants.LOAN_ACCOUNTS -> {
                 intent = Intent(activity, LoanAccountContainerActivity::class.java)
-                intent.putExtra(Constants.LOAN_ID, loanAccountsListAdapter?.getLoanAccountsList()
-                        ?.get(position)?.id)
+                intent.putExtra(
+                    Constants.LOAN_ID,
+                    loanAccountsListAdapter?.getLoanAccountsList()
+                        ?.get(position)?.id,
+                )
             }
         }
         openActivity(intent)
     }
-
 
     /**
      * This function opens up an activity only if the intent

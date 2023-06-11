@@ -1,7 +1,6 @@
 package org.mifos.mobile.models.templates.account
 
 import android.os.Parcelable
-
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -10,18 +9,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AccountOption(
-        var accountId: Int? = null,
+    var accountId: Int? = null,
 
-        var accountNo: String? = null,
+    var accountNo: String? = null,
 
-        var accountType: AccountType? = null,
+    var accountType: AccountType? = null,
 
-        var clientId: Long? = null,
+    var clientId: Long? = null,
 
-        var clientName: String? = null,
+    var clientName: String? = null,
 
-        var officeId: Int? = null,
+    var officeId: Int? = null,
 
-        var officeName: String? = null
+    var officeName: String? = null,
 
 ) : Parcelable

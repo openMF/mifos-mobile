@@ -11,13 +11,13 @@
     <View
         android:layout_width="@dimen/table_header_line"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="?attr/colorPrimaryVariant"
-        android:layout_alignParentEnd="true" />
+        android:background="?attr/colorPrimaryVariant" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/table_header_line"
         android:layout_alignParentBottom="true"
-        android:background="?attr/colorPrimaryVariant"/>
+        android:background="?attr/colorPrimaryVariant" />
 </RelativeLayout>
