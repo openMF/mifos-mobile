@@ -2,7 +2,6 @@
 package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
-import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
 import android.os.Build
@@ -10,24 +9,13 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
-import com.google.android.material.imageview.ShapeableImageView
-import kotlinx.android.synthetic.main.fragment_home_old.*
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.databinding.FragmentHomeOldBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.presenters.HomeOldPresenter
 import org.mifos.mobile.ui.activities.HomeActivity
@@ -47,35 +35,8 @@ import javax.inject.Inject
  * Created by michaelsosnick on 1/1/17.
  */
 class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_saving_total_amount)
-    var tvSavingTotalAmount: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_loan_total_amount)
-    var tvLoanTotalAmount: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_account_detail)
-    var llAccountDetail: LinearLayout? = null
-
-
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.iv_circular_user_image)
-    var ivCircularUserImage: ShapeableImageView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_user_name)
-    var tvUserName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.swipe_home_container)
-    var slHomeContainer: SwipeRefreshLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_container)
-    var llContainer: LinearLayout? = null
+    private var _binding : FragmentHomeOldBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -84,7 +45,6 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     @kotlin.jvm.JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    var rootView: View? = null
     private var totalLoanAmount = 0.0
     private var totalSavingAmount = 0.0
     private var client: Client? = null
@@ -98,16 +58,16 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_home_old, container, false)
+        _binding = FragmentHomeOldBinding.inflate(inflater, container, false)
+        val rootView = binding.root
         (activity as HomeActivity?)?.activityComponent?.inject(this)
-        ButterKnife.bind(this, rootView!!)
         clientId = preferencesHelper?.clientId
         presenter?.attachView(this)
         setHasOptionsMenu(true)
-        slHomeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
-        slHomeContainer?.setOnRefreshListener(this)
+        binding.swipeHomeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        binding.swipeHomeContainer.setOnRefreshListener(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            llContainer?.layoutTransition
+            binding.llContainer.layoutTransition
                     ?.enableTransitionType(LayoutTransition.CHANGING)
         }
         if (savedInstanceState == null) {
@@ -190,7 +150,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      *
      * @param accountType Enum of [AccountType]
      */
-    fun openAccount(accountType: AccountType?) {
+    private fun openAccount(accountType: AccountType?) {
         (activity as BaseActivity?)?.replaceFragment(
                 ClientAccountsFragment.newInstance(accountType), true, R.id.container)
     }
@@ -202,14 +162,13 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun showLoanAccountDetails(totalLoanAmount: Double) {
         this.totalLoanAmount = totalLoanAmount
-        tvLoanTotalAmount?.text = CurrencyUtil.formatCurrency(context, totalLoanAmount)
+        binding.tvLoanTotalAmount.text = CurrencyUtil.formatCurrency(context, totalLoanAmount)
     }
 
     /**
      * Open LOAN tab under ClientAccountsFragment
      */
-    @OnClick(R.id.ll_total_loan)
-    fun onClickLoan() {
+    private fun onClickLoan() {
         openAccount(AccountType.LOAN)
         (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
     }
@@ -221,14 +180,13 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun showSavingAccountDetails(totalSavingAmount: Double) {
         this.totalSavingAmount = totalSavingAmount
-        tvSavingTotalAmount?.text = CurrencyUtil.formatCurrency(context, totalSavingAmount)
+        binding.tvSavingTotalAmount.text = CurrencyUtil.formatCurrency(context, totalSavingAmount)
     }
 
     /**
      * Open SAVINGS tab under ClientAccountsFragment
      */
-    @OnClick(R.id.ll_total_savings)
-    fun onClickSavings() {
+    private fun onClickSavings() {
         openAccount(AccountType.SAVINGS)
         (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
     }
@@ -240,7 +198,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      */
     override fun showUserDetails(client: Client?) {
         this.client = client
-        tvUserName?.text = getString(R.string.hello_client, client?.displayName)
+        binding.tvUserName.text = getString(R.string.hello_client, client?.displayName)
     }
 
     /**
@@ -251,8 +209,8 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     override fun showUserImage(bitmap: Bitmap?) {
         activity?.runOnUiThread {
             if (bitmap != null) {
-                ivCircularUserImage?.visibility = View.VISIBLE
-                ivCircularUserImage?.setImageBitmap(bitmap)
+                binding.ivCircularUserImage.visibility = View.VISIBLE
+                binding.ivCircularUserImage.setImageBitmap(bitmap)
             } else {
                 val userName = preferencesHelper?.clientName.let { savedName ->
                     if(savedName.isNullOrBlank()) getString(R.string.app_name)
@@ -264,24 +222,59 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
                         .toUpperCase()
                         .endConfig()
                         .buildRound(userName.substring(0, 1),requireContext().getThemeAttributeColor(R.attr.colorPrimary))
-                ivCircularUserImage?.setImageDrawable(drawable)
+                binding.ivCircularUserImage.setImageDrawable(drawable)
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ButterKnife.bind(this, view)
         toggleVisibilityButton(
-            btn_saving_total_amount_visibility,
-            tv_saving_total_amount,
-            tv_saving_total_amount_hidden
+            binding.btnSavingTotalAmountVisibility,
+            binding.tvSavingTotalAmount,
+            binding.tvSavingTotalAmountHidden
         )
         toggleVisibilityButton(
-            btn_loan_amount_visibility,
-            tv_loan_total_amount,
-            tv_loan_total_amount_hidden
+            binding.btnLoanAmountVisibility,
+            binding.tvLoanTotalAmount,
+            binding.tvLoanTotalAmountHidden
         )
+
+        binding.llTotalLoan.setOnClickListener {
+            onClickLoan()
+        }
+
+        binding.llTotalSavings.setOnClickListener {
+            onClickSavings()
+        }
+
+        binding.ivCircularUserImage.setOnClickListener {
+            userImageClicked()
+        }
+
+        binding.llAccounts.setOnClickListener {
+            accountsClicked()
+        }
+
+        binding.llTransfer.setOnClickListener {
+            transferClicked()
+        }
+
+        binding.llCharges.setOnClickListener {
+            chargesClicked()
+        }
+
+        binding.llApplyForLoan.setOnClickListener {
+            applyForLoan()
+        }
+
+        binding.llBeneficiaries.setOnClickListener {
+            beneficiaries()
+        }
+
+        binding.llSurveys.setOnClickListener {
+            surveys()
+        }
     }
 
     private fun toggleVisibilityButton(
@@ -311,16 +304,14 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         }
     }
 
-    @OnClick(R.id.iv_circular_user_image)
-    fun userImageClicked() {
+    private fun userImageClicked() {
         startActivity(Intent(activity, UserProfileActivity::class.java))
     }
 
     /**
      * Calls `openAccount()` for opening [ClientAccountsFragment]
      */
-    @OnClick(R.id.ll_accounts)
-    fun accountsClicked() {
+    private fun accountsClicked() {
         openAccount(AccountType.SAVINGS)
         (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
     }
@@ -328,8 +319,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     /**
      * Shows a dialog with options: Normal Transfer and Third Party Transfer
      */
-    @OnClick(R.id.ll_transfer)
-    fun transferClicked() {
+    private fun transferClicked() {
         val transferTypes = arrayOf(getString(R.string.transfer), getString(R.string.third_party_transfer))
         MaterialDialog.Builder().init(activity)
                 .setTitle(R.string.choose_transfer_type)
@@ -351,8 +341,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     /**
      * Opens [ClientChargeFragment] to display all Charges associated with client's account
      */
-    @OnClick(R.id.ll_charges)
-    fun chargesClicked() {
+    private fun chargesClicked() {
         (activity as HomeActivity?)?.replaceFragment(ClientChargeFragment.newInstance(clientId,
                 ChargeType.CLIENT), true, R.id.container)
     }
@@ -360,8 +349,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     /**
      * Opens [LoanApplicationFragment] to apply for a loan
      */
-    @OnClick(R.id.ll_apply_for_loan)
-    fun applyForLoan() {
+    private fun applyForLoan() {
         startActivity(Intent(activity, LoanApplicationActivity::class.java))
     }
 
@@ -369,13 +357,11 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      * Opens [BeneficiaryListFragment] which contains list of Beneficiaries associated with
      * Client's account
      */
-    @OnClick(R.id.ll_beneficiaries)
     fun beneficiaries() {
         (activity as HomeActivity?)?.replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container)
     }
 
-    @OnClick(R.id.ll_surveys)
-    fun surveys() {
+    private fun surveys() {
     }
 
     /**
@@ -388,30 +374,31 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         if (checkedItem == R.id.item_about_us || checkedItem == R.id.item_help || checkedItem == R.id.item_settings) {
             return
         }
-        Toaster.show(rootView, errorMessage)
+        Toaster.show(binding.root, errorMessage)
     }
 
     /**
      * Shows [SwipeRefreshLayout]
      */
     override fun showProgress() {
-        slHomeContainer?.isRefreshing = true
+        binding.swipeHomeContainer.isRefreshing = true
     }
 
     /**
      * Hides [SwipeRefreshLayout]
      */
     override fun hideProgress() {
-        slHomeContainer?.isRefreshing = false
+        binding.swipeHomeContainer.isRefreshing = false
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (slHomeContainer?.isRefreshing == true) {
-            slHomeContainer?.isRefreshing = false
-            slHomeContainer?.removeAllViews()
+        if (binding.swipeHomeContainer.isRefreshing) {
+            binding.swipeHomeContainer.isRefreshing = false
+            binding.swipeHomeContainer.removeAllViews()
         }
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {

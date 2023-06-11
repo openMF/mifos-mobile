@@ -3,10 +3,8 @@ package org.mifos.mobile.ui.fragments
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentBeneficiaryDetailBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.presenters.BeneficiaryDetailPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -23,35 +21,14 @@ import javax.inject.Inject
  * Created by dilpreet on 15/6/17.
  */
 class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_beneficiary_name)
-    var tvName: TextView? = null
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_account_number)
-    var tvAccountNumber: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_client_name)
-    var tvClientName: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_account_type)
-    var tvAccountType: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_transfer_limit)
-    var tvTransferLimit: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_office_name)
-    var tvOfficeName: TextView? = null
+    private var _binding: FragmentBeneficiaryDetailBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var presenter: BeneficiaryDetailPresenter? = null
     private var beneficiary: Beneficiary? = null
-    private var rootView: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -62,25 +39,26 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_beneficiary_detail, container, false)
+        _binding = FragmentBeneficiaryDetailBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiary_detail))
-        ButterKnife.bind(this, rootView!!)
         presenter?.attachView(this)
         showUserInterface()
-        return rootView
+        return binding.root
     }
 
     /**
      * Used for setting up of User Interface
      */
     override fun showUserInterface() {
-        tvName?.text = beneficiary?.name
-        tvAccountNumber?.text = beneficiary?.accountNumber
-        tvClientName?.text = beneficiary?.clientName
-        tvAccountType?.text = beneficiary?.accountType?.value
-        tvTransferLimit?.text = CurrencyUtil.formatCurrency(activity!!, beneficiary?.transferLimit!!)
-        tvOfficeName?.text = beneficiary?.officeName
+        with(binding) {
+            tvBeneficiaryName.text = beneficiary?.name
+            tvAccountNumber.text = beneficiary?.accountNumber
+            tvClientName.text = beneficiary?.clientName
+            tvAccountType.text = beneficiary?.accountType?.value
+            tvTransferLimit.text = CurrencyUtil.formatCurrency(requireActivity(), beneficiary?.transferLimit!!)
+            tvOfficeName.text = beneficiary?.officeName
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -112,7 +90,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
      * Beneficiary and then pops current fragment
      */
     override fun showBeneficiaryDeletedSuccessfully() {
-        Toaster.show(rootView, getString(R.string.beneficiary_deleted_successfully))
+        Toaster.show(binding.root, getString(R.string.beneficiary_deleted_successfully))
         activity?.supportFragmentManager?.popBackStack()
     }
 
@@ -122,7 +100,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
      * @param msg Error message that tells the user about the problem.
      */
     override fun showError(msg: String?) {
-        Toaster.show(rootView, msg)
+        Toaster.show(binding.root, msg)
     }
 
     /**
@@ -143,6 +121,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
         super.onDestroyView()
         hideProgress()
         presenter?.detachView()
+        _binding = null
     }
 
     companion object {

@@ -4,18 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.databinding.FragmentSavingsAccountApplicationBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
@@ -40,17 +33,8 @@ import javax.inject.Inject
 */
 class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.product_id_field)
-    var productIdField: MaterialAutoCompleteTextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_submission_date)
-    var tvSubmissionDate: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_client_name)
-    var tvClientName: TextView? = null
+    private var _binding: FragmentSavingsAccountApplicationBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
@@ -59,7 +43,6 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     @kotlin.jvm.JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    private var rootView: View? = null
     private var state: SavingsAccountState? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var template: SavingsAccountTemplate? = null
@@ -78,15 +61,18 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(
-            R.layout.fragment_savings_account_application, container,
-            false
-        )
-        ButterKnife.bind(this, rootView!!)
+        _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         presenter?.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSubmit.setOnClickListener {
+            onSubmit()
+        }
     }
 
     override fun showUserInterfaceSavingAccountApplication(template: SavingsAccountTemplate?) {
@@ -104,7 +90,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
             R.string.string_savings_account,
             getString(R.string.update)
         )
-        productIdField?.setText(savingsWithAssociations?.savingsProductName!!, false)
+        binding.productIdField.setText(savingsWithAssociations?.savingsProductName!!, false)
     }
 
     override fun showSavingsAccountUpdateSuccessfully() {
@@ -119,20 +105,20 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
             for ((_, name) in productOptions as ArrayList<ProductOptions>) {
                 productIdList.add(name)
             }
-        tvClientName?.text = template?.clientName
-        productIdField?.setSimpleItems(productIdList.toTypedArray())
-        tvSubmissionDate?.text = getTodayFormatted()
+        binding.tvClientName.text = template?.clientName
+        binding.productIdField.setSimpleItems(productIdList.toTypedArray())
+        binding.tvSubmissionDate.text = getTodayFormatted()
     }
 
     private fun submitSavingsAccountApplication() {
         val payload = SavingsAccountApplicationPayload()
         payload.clientId = template?.clientId
 
-        if (productIdList.indexOf(productIdField?.text.toString()) != -1) {
-            payload.productId = productIdList.indexOf(productIdField?.text.toString())
+        if (productIdList.indexOf(binding.productIdField.text.toString()) != -1) {
+            payload.productId = productIdList.indexOf(binding.productIdField.text.toString())
                 .let { productOptions?.get(it)?.id }
         } else {
-           Toaster.show(rootView,getString(R.string.select_product_id))
+           Toaster.show(binding.root,getString(R.string.select_product_id))
             return
         }
         payload.submittedOnDate = DateHelper.getSpecificFormat(
@@ -145,12 +131,11 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     private fun updateSavingAccount() {
         val payload = SavingsAccountUpdatePayload()
         payload.clientId = template?.clientId?.toLong()
-        payload.productId = productIdList.indexOf(productIdField?.text.toString())
+        payload.productId = productIdList.indexOf(binding.productIdField.text.toString())
             .let { productOptions?.get(it)?.id }?.toLong()
         presenter?.updateSavingsAccount(savingsWithAssociations?.id, payload)
     }
 
-    @OnClick(R.id.btn_submit)
     fun onSubmit() {
         if (state == SavingsAccountState.CREATE) {
             submitSavingsAccountApplication()
@@ -173,6 +158,11 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
 
     override fun hideProgress() {
         hideMifosProgressDialog()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {

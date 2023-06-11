@@ -4,22 +4,12 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.*
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 
-import androidx.appcompat.widget.AppCompatButton
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import com.google.gson.Gson
 
 import org.mifos.mobile.R
-import org.mifos.mobile.models.payload.AccountDetail
+import org.mifos.mobile.databinding.FragmentSavingsMakeTransferBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
@@ -31,7 +21,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsMakeTransferMvpView
 import org.mifos.mobile.utils.*
 
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -39,83 +28,12 @@ import javax.inject.Inject
  */
 class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
 
-    @kotlin.jvm.JvmField
-    @BindView(R.id.pay_to_field)
-    var payToField: MaterialAutoCompleteTextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.pay_from_field)
-    var payFromField: MaterialAutoCompleteTextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.amount_field)
-    var amountField: TextInputEditText? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.pay_to_field_wrapper)
-    var payToFieldWrapper: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.pay_from_field_wrapper)
-    var payFromFieldWrapper: TextInputLayout? = null
-
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.amount_field_wrapper)
-    var amountFieldWrapper: TextInputLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_one)
-    var pvOne: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_two)
-    var pvTwo: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_three)
-    var pvThree: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.process_four)
-    var pvFour: ProcessView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_pay_to)
-    var btnPayTo: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_pay_from)
-    var btnPayFrom: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.btn_amount)
-    var btnAmount: AppCompatButton? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_review)
-    var llReview: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.tv_enter_remark)
-    var tvEnterRemark: TextView? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.et_remark)
-    var etRemark: EditText? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.ll_make_transfer)
-    var layoutMakeTransfer: LinearLayout? = null
-
-    @kotlin.jvm.JvmField
-    @BindView(R.id.layout_error)
-    var layoutError: View? = null
+    private var _binding: FragmentSavingsMakeTransferBinding? = null
+    private val binding get() = _binding!!
 
     @kotlin.jvm.JvmField
     @Inject
     var savingsMakeTransferPresenter: SavingsMakeTransferPresenter? = null
-    var rootView: View? = null
     private var transferPayload: TransferPayload? = null
     private var transferDate: String? = null
     private var toAccountOption: AccountOption? = null
@@ -145,17 +63,43 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.fragment_savings_make_transfer, container, false)
+        _binding = FragmentSavingsMakeTransferBinding.inflate(inflater,container,false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
-        ButterKnife.bind(this, rootView!!)
         savingsMakeTransferPresenter?.attachView(this)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
+        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
             savingsMakeTransferPresenter?.loanAccountTransferTemplate()
         }
-        return rootView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnCancelTransfer.setOnClickListener {
+            cancelTransfer()
+        }
+
+        binding.btnReviewTransfer.setOnClickListener {
+            reviewTransfer()
+        }
+
+        binding.btnPayFrom.setOnClickListener {
+            payFromSelected()
+        }
+
+        binding.btnPayTo.setOnClickListener {
+            payToSelected()
+        }
+
+        binding.btnAmount.setOnClickListener {
+            amountSet()
+        }
+
+        binding.layoutError.btnTryAgain.setOnClickListener {
+            onRetry()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -174,9 +118,8 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      * Checks validation of `etRemark` and then opens [TransferProcessFragment] for
      * initiating the transfer
      */
-    @OnClick(R.id.btn_review_transfer)
     fun reviewTransfer() {
-        if (etRemark?.text.toString().trim { it <= ' ' } == "") {
+        if (binding.etRemark.text.toString().trim { it <= ' ' } == "") {
             showToaster(getString(R.string.remark_is_mandatory))
             return
         }
@@ -190,8 +133,8 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
         transferPayload?.toClientId = toAccountOption?.clientId
         transferPayload?.toAccountType = toAccountOption?.accountType?.id
         transferPayload?.transferDate = transferDate
-        transferPayload?.transferAmount = amountField?.text.toString().toDouble()
-        transferPayload?.transferDescription = etRemark?.text.toString()
+        transferPayload?.transferAmount = binding.amountField.text.toString().toDouble()
+        transferPayload?.transferDescription = binding.etRemark.text.toString()
         transferPayload?.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload?.toAccountNumber = toAccountOption?.accountNo
         (activity as BaseActivity?)?.replaceFragment(TransferProcessFragment.newInstance(transferPayload, TransferType.SELF), true, R.id.container)
@@ -200,18 +143,16 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
     /**
      * Cancels the transfer by poping current Fragment
      */
-    @OnClick(R.id.btn_cancel_transfer)
     fun cancelTransfer() {
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    @OnClick(R.id.btn_try_again)
     fun onRetry() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.llMakeTransfer, binding.layoutError.root)
             savingsMakeTransferPresenter?.loanAccountTransferTemplate()
         } else {
-            Toaster.show(rootView, getString(R.string.internet_not_connected))
+            Toaster.show(binding.root, getString(R.string.internet_not_connected))
         }
     }
 
@@ -219,14 +160,14 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      * Setting up basic components
      */
     override fun showUserInterface() {
-        pvOne?.setCurrentActive()
-        payFromField?.setOnItemClickListener { parent, view, position, id ->
+        binding.processOne.setCurrentActive()
+        binding.payFromField.setOnItemClickListener { parent, view, position, id ->
             toAccountOption = accountOptionsTemplate?.toAccountOptions?.get(position)
             payTo = toAccountOption?.accountNo
             println("paytofield item selected payTo:$payTo")
             updateDetails()
         }
-        payToField?.setOnItemClickListener { parent, view, position, id ->
+        binding.payToField.setOnItemClickListener { parent, view, position, id ->
             fromAccountOption = accountOptionsTemplate?.fromAccountOptions?.get(position)
             payFrom = fromAccountOption?.accountNo
             println("payfrom item selected payFrom:$payFrom")
@@ -235,27 +176,27 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy,
                 getTodayFormatted())
         if (isLoanRepayment) {
-            amountField?.setText(outStandingBalance.toString())
-            amountFieldWrapper?.isFocusable = false
+            binding.amountField.setText(outStandingBalance.toString())
+            binding.amountFieldWrapper.isFocusable = false
         }
     }
 
-    fun updateDetails(){
+    private fun updateDetails(){
         when (transferType) {
             Constants.TRANSFER_PAY_TO -> {
                 setToolbarTitle(getString(R.string.deposit))
                 toAccountOption = savingsMakeTransferPresenter
                     ?.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
-                payToFieldWrapper?.isEnabled = false
-                pvOne?.setCurrentCompleted()
+                binding.payToFieldWrapper.isEnabled = false
+                binding.processOne.setCurrentCompleted()
             }
             Constants.TRANSFER_PAY_FROM -> {
                 setToolbarTitle(getString(R.string.transfer))
                 fromAccountOption = savingsMakeTransferPresenter
                     ?.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
-                payFromFieldWrapper?.isEnabled = false
-                payFromFieldWrapper?.visibility = View.VISIBLE
-                pvTwo?.setCurrentCompleted()
+                binding.payFromFieldWrapper.isEnabled = false
+                binding.payFromFieldWrapper.visibility = View.VISIBLE
+                binding.processTwo.setCurrentCompleted()
             }
         }
     }
@@ -268,10 +209,10 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      */
     override fun showSavingsAccountTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
-        payToField?.setAdapter(AccountsSpinnerAdapter(requireContext(),
+        binding.payToField.setAdapter(AccountsSpinnerAdapter(requireContext(),
             savingsMakeTransferPresenter?.getAccountNumbers(accountOptionsTemplate?.toAccountOptions, false)!!
         ))
-        payFromField?.setAdapter(AccountsSpinnerAdapter(requireContext(),
+        binding.payFromField.setAdapter(AccountsSpinnerAdapter(requireContext(),
             savingsMakeTransferPresenter?.getAccountNumbers(accountOptionsTemplate?.toAccountOptions, true)!!
         ))
     }
@@ -282,7 +223,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      * @param message String to be shown
      */
     override fun showToaster(message: String?) {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     /**
@@ -292,10 +233,10 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      */
     override fun showError(message: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(layoutMakeTransfer, layoutError)
+            sweetUIErrorHandler?.showSweetNoInternetUI(binding.llMakeTransfer, binding.layoutError.root)
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message, layoutMakeTransfer, layoutError)
-            Toaster.show(rootView, message)
+            sweetUIErrorHandler?.showSweetErrorUI(message, binding.llMakeTransfer, binding.layoutError.root)
+            Toaster.show(binding.root, message)
         }
     }
 
@@ -308,12 +249,12 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
     }
 
     override fun showProgress() {
-        layoutMakeTransfer?.visibility = View.GONE
+        binding.llMakeTransfer.visibility = View.GONE
         showProgressBar()
     }
 
     override fun hideProgress() {
-        layoutMakeTransfer?.visibility = View.VISIBLE
+        binding.llMakeTransfer.visibility = View.VISIBLE
         hideProgressBar()
     }
 
@@ -325,14 +266,13 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      * Disables `spPayTo` [Spinner] and sets `pvOne` to completed and make
      * `pvTwo` active
      */
-    @OnClick(R.id.btn_pay_to)
     fun payToSelected() {
-        pvOne?.setCurrentCompleted()
-        pvTwo?.setCurrentActive()
-        btnPayTo?.visibility = View.GONE
-        btnPayFrom?.visibility = View.VISIBLE
-        payFromFieldWrapper?.visibility = View.VISIBLE
-        payToFieldWrapper?.isEnabled = false
+        binding.processOne.setCurrentCompleted()
+        binding.processTwo.setCurrentActive()
+        binding.btnPayTo.visibility = View.GONE
+        binding.btnPayFrom.visibility = View.VISIBLE
+        binding.payFromFieldWrapper.visibility = View.VISIBLE
+        binding.payToFieldWrapper.isEnabled = false
     }
 
     /**
@@ -340,18 +280,17 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      * Disables `spPayFrom` [Spinner] and sets `pvTwo` to completed and make
      * `pvThree` active
      */
-    @OnClick(R.id.btn_pay_from)
     fun payFromSelected() {
         if (payTo == payFrom) {
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        pvTwo?.setCurrentCompleted()
-        pvThree?.setCurrentActive()
-        btnPayFrom?.visibility = View.GONE
-        amountFieldWrapper?.visibility = View.VISIBLE
-        btnAmount?.visibility = View.VISIBLE
-        payFromFieldWrapper?.isEnabled = false
+        binding.processTwo.setCurrentCompleted()
+        binding.processThree.setCurrentActive()
+        binding.btnPayFrom.visibility = View.GONE
+        binding.amountFieldWrapper.visibility = View.VISIBLE
+        binding.btnAmount.visibility = View.VISIBLE
+        binding.payFromFieldWrapper.isEnabled = false
     }
 
     /**
@@ -359,27 +298,26 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
      * Disables `etAmount` and sets `pvThree` to completed and make
      * `pvFour` active
      */
-    @OnClick(R.id.btn_amount)
     fun amountSet() {
-        if (amountField?.text.toString() == "") {
+        if (binding.amountField.text.toString() == "") {
             showToaster(getString(R.string.enter_amount))
             return
         }
-        if (amountField?.text.toString() == ".") {
+        if (binding.amountField.text.toString() == ".") {
             showToaster(getString(R.string.invalid_amount))
             return
         }
-        if (amountField?.text.toString().toDouble() == 0.0) {
+        if (binding.amountField.text.toString().toDouble() == 0.0) {
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        pvThree?.setCurrentCompleted()
-        pvFour?.setCurrentActive()
-        btnAmount?.visibility = View.GONE
-        tvEnterRemark?.visibility = View.GONE
-        etRemark?.visibility = View.VISIBLE
-        llReview?.visibility = View.VISIBLE
-        amountFieldWrapper?.isEnabled = false
+        binding.processThree.setCurrentCompleted()
+        binding.processFour.setCurrentActive()
+        binding.btnAmount.visibility = View.GONE
+        binding.tvEnterRemark.visibility = View.GONE
+        binding.etRemark.visibility = View.VISIBLE
+        binding.llReview.visibility = View.VISIBLE
+        binding.amountFieldWrapper.isEnabled = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -407,6 +345,7 @@ class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
         hideProgress()
         hideMifosProgressDialog()
         savingsMakeTransferPresenter?.detachView()
+        _binding = null
     }
 
     companion object {
