@@ -7,6 +7,5 @@ enum class SavingsAccountState {
 
     CREATE,
 
-    UPDATE
-
+    UPDATE,
 }

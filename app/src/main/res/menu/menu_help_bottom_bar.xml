@@ -5,15 +5,15 @@
         android:id="@+id/menu_call"
         android:icon="@drawable/ic_phone_wrapper"
         android:title="@string/call_now"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_email"
         android:icon="@drawable/ic_mail_wrapper"
         android:title="@string/leave_email"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_locations"
         android:icon="@drawable/ic_location_wrapper"
         android:title="@string/find_locations"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 </menu>

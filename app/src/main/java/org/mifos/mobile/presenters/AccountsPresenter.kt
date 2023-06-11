@@ -1,14 +1,12 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
-
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.injection.ApplicationContext
@@ -20,15 +18,17 @@ import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.AccountsView
 import org.mifos.mobile.utils.Constants
-import java.util.*
-
+import java.util.Locale
 import javax.inject.Inject
 
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
-class AccountsPresenter @Inject constructor(@ApplicationContext context: Context?, private val dataManager: DataManager?) :
-        BasePresenter<AccountsView?>(context) {
+class AccountsPresenter @Inject constructor(
+    @ApplicationContext context: Context?,
+    private val dataManager: DataManager?,
+) :
+    BasePresenter<AccountsView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -46,25 +46,26 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
         checkViewAttached()
         mvpView?.showProgress()
         dataManager?.clientAccounts
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        mvpView?.hideProgress()
-                        mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
-                    }
-
-                    override fun onNext(clientAccounts: ClientAccounts) {
-                        mvpView?.hideProgress()
-                        mvpView?.showSavingsAccounts(clientAccounts.savingsAccounts)
-                        mvpView?.showLoanAccounts(clientAccounts.loanAccounts)
-                        mvpView?.showShareAccounts(clientAccounts.shareAccounts)
-                    }
-                })?.let {
-                    compositeDisposable.add(it
-                    )
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    mvpView?.hideProgress()
+                    mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
                 }
+
+                override fun onNext(clientAccounts: ClientAccounts) {
+                    mvpView?.hideProgress()
+                    mvpView?.showSavingsAccounts(clientAccounts.savingsAccounts)
+                    mvpView?.showLoanAccounts(clientAccounts.loanAccounts)
+                    mvpView?.showShareAccounts(clientAccounts.shareAccounts)
+                }
+            })?.let {
+                compositeDisposable.add(
+                    it,
+                )
+            }
     }
 
     /**
@@ -77,28 +78,31 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
         checkViewAttached()
         mvpView?.showProgress()
         dataManager?.getAccounts(accountType)
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        mvpView?.hideProgress()
-                        mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
-                    }
-
-                    override fun onNext(clientAccounts: ClientAccounts) {
-                        mvpView?.hideProgress()
-                        when (accountType) {
-                            Constants.SAVINGS_ACCOUNTS -> mvpView?.showSavingsAccounts(
-                                    clientAccounts.savingsAccounts)
-                            Constants.LOAN_ACCOUNTS -> mvpView?.showLoanAccounts(clientAccounts.loanAccounts)
-                            Constants.SHARE_ACCOUNTS -> mvpView?.showShareAccounts(clientAccounts.shareAccounts)
-                        }
-                    }
-                })?.let {
-                    compositeDisposable.add(it
-                    )
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    mvpView?.hideProgress()
+                    mvpView?.showError(context?.getString(R.string.error_fetching_accounts))
                 }
+
+                override fun onNext(clientAccounts: ClientAccounts) {
+                    mvpView?.hideProgress()
+                    when (accountType) {
+                        Constants.SAVINGS_ACCOUNTS -> mvpView?.showSavingsAccounts(
+                            clientAccounts.savingsAccounts,
+                        )
+
+                        Constants.LOAN_ACCOUNTS -> mvpView?.showLoanAccounts(clientAccounts.loanAccounts)
+                        Constants.SHARE_ACCOUNTS -> mvpView?.showShareAccounts(clientAccounts.shareAccounts)
+                    }
+                }
+            })?.let {
+                compositeDisposable.add(
+                    it,
+                )
+            }
     }
 
     /**
@@ -109,14 +113,18 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      * provided.
      */
     fun searchInSavingsList(
-            accounts: List<SavingAccount?>?,
-            input: String?
+        accounts: List<SavingAccount?>?,
+        input: String?,
     ): List<SavingAccount?> {
         return Observable.fromIterable(accounts)
-                .filter { (accountNo, productName) ->
-                    input?.toLowerCase(Locale.ROOT)?.let { productName?.toLowerCase(Locale.ROOT)?.contains(it) } == true ||
-                            input?.toLowerCase(Locale.ROOT)?.let { accountNo?.toLowerCase(Locale.ROOT)?.contains(it) } == true
-                }.toList().blockingGet()
+            .filter { (accountNo, productName) ->
+                input?.lowercase(Locale.ROOT)
+                    ?.let { productName?.lowercase(Locale.ROOT)?.contains(it) } == true ||
+                    input?.lowercase(Locale.ROOT)?.let {
+                        accountNo?.lowercase(Locale.ROOT)
+                            ?.contains(it)
+                    } == true
+            }.toList().blockingGet()
     }
 
     /**
@@ -127,14 +135,18 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      * provided.
      */
     fun searchInLoanList(
-            accounts: List<LoanAccount?>?,
-            input: String?
+        accounts: List<LoanAccount?>?,
+        input: String?,
     ): List<LoanAccount?>? {
         return Observable.fromIterable(accounts)
-                .filter { (_, _, _, accountNo, productName) ->
-                    input?.toLowerCase(Locale.ROOT)?.let { productName?.toLowerCase(Locale.ROOT)?.contains(it) } == true ||
-                            input?.toLowerCase(Locale.ROOT)?.let { accountNo?.toLowerCase(Locale.ROOT)?.contains(it) } == true
-                }.toList().blockingGet()
+            .filter { (_, _, _, accountNo, productName) ->
+                input?.lowercase(Locale.ROOT)
+                    ?.let { productName?.lowercase(Locale.ROOT)?.contains(it) } == true ||
+                    input?.lowercase(Locale.ROOT)?.let {
+                        accountNo?.lowercase(Locale.ROOT)
+                            ?.contains(it)
+                    } == true
+            }.toList().blockingGet()
     }
 
     /**
@@ -145,14 +157,18 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      * provided.
      */
     fun searchInSharesList(
-            accounts: Collection<ShareAccount?>?,
-            input: String?
+        accounts: Collection<ShareAccount?>?,
+        input: String?,
     ): List<ShareAccount?>? {
         return Observable.fromIterable(accounts)
-                .filter { (accountNo, _, _, _, productName) ->
-                    input?.toLowerCase(Locale.ROOT)?.let { productName?.toLowerCase(Locale.ROOT)?.contains(it) } == true ||
-                            input?.toLowerCase(Locale.ROOT)?.let { accountNo?.toLowerCase(Locale.ROOT)?.contains(it) } == true
-                }.toList().blockingGet()
+            .filter { (accountNo, _, _, _, productName) ->
+                input?.lowercase(Locale.ROOT)
+                    ?.let { productName?.lowercase(Locale.ROOT)?.contains(it) } == true ||
+                    input?.lowercase(Locale.ROOT)?.let {
+                        accountNo?.lowercase(Locale.ROOT)
+                            ?.contains(it)
+                    } == true
+            }.toList().blockingGet()
     }
 
     /**
@@ -163,7 +179,7 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      */
     fun getCheckedStatus(statusModelList: List<CheckboxStatus?>?): List<CheckboxStatus?>? {
         return Observable.fromIterable(statusModelList)
-                .filter { (_, _, isChecked) -> isChecked }.toList().blockingGet()
+            .filter { (_, _, isChecked) -> isChecked }.toList().blockingGet()
     }
 
     /**
@@ -174,24 +190,36 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      * `status` provided.
      */
     fun getFilteredSavingsAccount(
-            accounts: List<SavingAccount?>?,
-            status: CheckboxStatus?
+        accounts: List<SavingAccount?>?,
+        status: CheckboxStatus?,
     ): Collection<SavingAccount?>? {
         return Observable.fromIterable(accounts)
-                .filter(Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1) ->
-                    if (context?.getString(R.string.active)?.let { status?.status?.compareTo(it) } == 0 && status1?.active == true) {
+            .filter(
+                Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1) ->
+                    if (context?.getString(R.string.active)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.active == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.approved)?.let { status?.status?.compareTo(it) } == 0 && status1?.approved == true) {
+                    } else if (context?.getString(R.string.approved)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.approved == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.approval_pending)?.let { status?.status?.compareTo(it) } == 0 && status1?.submittedAndPendingApproval == true) {
+                    } else if (context?.getString(R.string.approval_pending)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.submittedAndPendingApproval == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.matured)?.let { status?.status?.compareTo(it) } == 0 && status1?.matured == true) {
+                    } else if (context?.getString(R.string.matured)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.matured == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.closed)?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true) {
+                    } else if (context?.getString(R.string.closed)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true
+                    ) {
                         return@Predicate true
                     }
                     false
-                }).toList().blockingGet()
+                },
+            ).toList().blockingGet()
     }
 
     /**
@@ -202,29 +230,44 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      * `status` provided.
      */
     fun getFilteredLoanAccount(
-            accounts: List<LoanAccount?>?,
-            status: CheckboxStatus?
+        accounts: List<LoanAccount?>?,
+        status: CheckboxStatus?,
     ): Collection<LoanAccount?>? {
         return Observable.fromIterable(accounts)
-                .filter(Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1, _, _, _, _, _, inArrears) ->
+            .filter(
+                Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1, _, _, _, _, _, inArrears) ->
                     if (context?.getString(R.string.in_arrears)?.let { status?.status?.compareTo(it) }
-                            == 0 && inArrears == true) {
+                        == 0 && inArrears == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.active)?.let { status?.status?.compareTo(it) } == 0 && status1?.active == true) {
+                    } else if (context?.getString(R.string.active)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.active == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.waiting_for_disburse)?.let { status?.status?.compareTo(it) } == 0 && status1?.waitingForDisbursal == true) {
+                    } else if (context?.getString(R.string.waiting_for_disburse)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.waitingForDisbursal == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.approval_pending)?.let { status?.status?.compareTo(it) } == 0 && status1?.pendingApproval == true) {
+                    } else if (context?.getString(R.string.approval_pending)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.pendingApproval == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.overpaid)?.let { status?.status?.compareTo(it) } == 0 && status1?.overpaid == true) {
+                    } else if (context?.getString(R.string.overpaid)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.overpaid == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.closed)?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true) {
+                    } else if (context?.getString(R.string.closed)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.withdrawn)?.let { status?.status?.compareTo(it) } == 0 && status1?.isLoanTypeWithdrawn() == true) {
+                    } else if (context?.getString(R.string.withdrawn)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.isLoanTypeWithdrawn() == true
+                    ) {
                         return@Predicate true
                     }
                     false
-                }).toList().blockingGet()
+                },
+            ).toList().blockingGet()
     }
 
     /**
@@ -235,23 +278,32 @@ class AccountsPresenter @Inject constructor(@ApplicationContext context: Context
      * `status` provided.
      */
     fun getFilteredShareAccount(
-            accounts: List<ShareAccount?>?,
-            status: CheckboxStatus?
+        accounts: List<ShareAccount?>?,
+        status: CheckboxStatus?,
     ): Collection<ShareAccount?>? {
         return Observable.fromIterable(accounts)
-                .filter(Predicate { (_, _, _, _, _, _, status1) ->
-                    if (context?.getString(R.string.active)?.let { status?.status?.compareTo(it) } == 0 &&
-                            status1?.active == true) {
+            .filter(
+                Predicate { (_, _, _, _, _, _, status1) ->
+                    if (context?.getString(R.string.active)
+                            ?.let { status?.status?.compareTo(it) } == 0 &&
+                        status1?.active == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.approved)?.let { status?.status?.compareTo(it) } == 0 && status1?.approved == true) {
+                    } else if (context?.getString(R.string.approved)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.approved == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.approval_pending)?.let { status?.status?.compareTo(it) } == 0 && status1?.submittedAndPendingApproval == true) {
+                    } else if (context?.getString(R.string.approval_pending)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.submittedAndPendingApproval == true
+                    ) {
                         return@Predicate true
-                    } else if (context?.getString(R.string.closed)?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true) {
+                    } else if (context?.getString(R.string.closed)
+                            ?.let { status?.status?.compareTo(it) } == 0 && status1?.closed == true
+                    ) {
                         return@Predicate true
                     }
                     false
-                }).toList().blockingGet()
+                },
+            ).toList().blockingGet()
     }
-
 }

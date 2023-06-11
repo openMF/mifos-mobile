@@ -3,7 +3,6 @@ package org.mifos.mobile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
-
 import java.io.InputStreamReader
 
 /**
@@ -26,7 +25,7 @@ class TestDataFactory {
      *
      * Object object = mTestDataFactory.getListTypePojo(
      * new TypeToken<Object>(){}, "Object.json")
-    </Object></T> */
+     </Object></T> */
     fun <T> getObjectTypePojo(model: Class<T>?, jsonName: String?): T {
         val `in` = javaClass.classLoader?.getResourceAsStream(jsonName)
         val reader = JsonReader(InputStreamReader(`in`))
@@ -57,7 +56,7 @@ class TestDataFactory {
      *
      * Object object = mTestDataFactory.getListTypePojo(
      * new TypeToken<Object>(){}, "Object.json")
-    </Object></Object></Object></T> */
+     </Object></Object></Object></T> */
     fun <T> getListTypePojo(listModel: TypeToken<T?>?, jsonName: String?): T {
         val `in` = javaClass.classLoader?.getResourceAsStream(jsonName)
         val reader = JsonReader(InputStreamReader(`in`))

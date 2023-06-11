@@ -6,5 +6,5 @@ package org.mifos.mobile.models.notification
 
 data class NotificationUserDetail(
 
-        var id: Int = 0
+    var id: Int = 0,
 )

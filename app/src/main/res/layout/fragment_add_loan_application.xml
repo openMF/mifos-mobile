@@ -7,173 +7,173 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/view_flipper"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
             android:id="@+id/ll_add_loan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
             android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+            android:orientation="vertical"
             android:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_new_loan_application"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/loan_name"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:text="@string/loan_name" />
 
             <TextView
                 android:id="@+id/tv_account_number"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/account_number"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:text="@string/account_number" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                android:layout_width="match_parent">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/loan_products_field"
-                    android:hint="@string/select_loan_product"
-                    android:inputType="none"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent" />
+                    android:hint="@string/select_loan_product"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loan_purpose_field_parent"
                 style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                android:layout_width="match_parent"
-                android:enabled="false"
-                android:id="@+id/loan_purpose_field_parent">
+                android:enabled="false">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/loan_purpose_field"
-                    android:hint="@string/purpose_of_loan"
-                    android:inputType="none"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent" />
+                    android:hint="@string/purpose_of_loan"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_principal_amount"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                android:layout_width="match_parent">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/principal_amount"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:maxLines="1"/>
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/currency"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="@dimen/alpha_low_emphasis"
+                    android:text="@string/currency" />
 
                 <TextView
                     android:id="@+id/tv_currency"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="@dimen/width_0dp"
                     android:gravity="end"
-                    tools:text="US Dollar($)"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+                    tools:text="US Dollar($)" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:orientation="horizontal">
 
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/submission_date"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="@dimen/alpha_low_emphasis"
+                    android:text="@string/submission_date" />
 
 
                 <TextView
                     android:id="@+id/tv_submission_date"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="@dimen/width_0dp"
                     android:gravity="end"
-                    tools:text="21-07-2022"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+                    tools:text="21-07-2022" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/expected_disbursement_date"
                     style="@style/Mifos.DesignSystem.TextStyle.Label"
-                    android:alpha="@dimen/alpha_low_emphasis"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="@dimen/alpha_low_emphasis"
+                    android:text="@string/expected_disbursement_date" />
 
 
                 <TextView
                     android:id="@+id/tv_expected_disbursement_date"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="@dimen/width_0dp"
                     android:gravity="end"
-                    tools:text="21-07-2022"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+                    tools:text="21-07-2022" />
 
                 <ImageView
                     android:id="@+id/expected_disbursement_date_edit"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-                    app:srcCompat="@drawable/ic_edit_black_24dp"/>
+                    app:srcCompat="@drawable/ic_edit_black_24dp" />
 
             </LinearLayout>
 
             <Button
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 android:id="@+id/btn_loan_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/review" />
 
         </LinearLayout>
@@ -181,8 +181,8 @@
     </androidx.core.widget.NestedScrollView>
 
     <include
-        layout="@layout/layout_error"
         android:id="@+id/ll_error"
-        android:visibility="gone"/>
+        layout="@layout/layout_error"
+        android:visibility="gone" />
 
 </RelativeLayout>

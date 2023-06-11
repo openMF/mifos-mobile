@@ -4,7 +4,7 @@ package org.mifos.mobile.models.register
  * Created by dilpreet on 31/7/17.
  */
 
-data class RegisterPayload (
+data class RegisterPayload(
 
     var username: String? = null,
 
@@ -20,5 +20,5 @@ data class RegisterPayload (
 
     var password: String? = null,
 
-    var authenticationMode: String? = null
+    var authenticationMode: String? = null,
 )

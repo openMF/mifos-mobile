@@ -3,7 +3,12 @@ package org.mifos.mobile.ui.fragments
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeDisplayBinding
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -16,7 +21,7 @@ import org.mifos.mobile.utils.Utils
  */
 class QrCodeDisplayFragment : BaseFragment() {
 
-    private var _binding : FragmentQrCodeDisplayBinding? = null
+    private var _binding: FragmentQrCodeDisplayBinding? = null
     private val binding get() = _binding!!
 
     private var json: String? = null
@@ -28,9 +33,12 @@ class QrCodeDisplayFragment : BaseFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentQrCodeDisplayBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentQrCodeDisplayBinding.inflate(inflater, container, false)
         binding.ivQrCode.setImageBitmap(QrCodeGenerator.encodeAsBitmap(json))
         return binding.root
     }

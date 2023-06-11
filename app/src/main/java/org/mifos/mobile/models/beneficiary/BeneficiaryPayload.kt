@@ -9,15 +9,15 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class BeneficiaryPayload(
-        internal var locale: String = "en_GB",
+    internal var locale: String = "en_GB",
 
-        var name: String? = null,
+    var name: String? = null,
 
-        var accountNumber: String? = null,
+    var accountNumber: String? = null,
 
-        var accountType: Int? = 0,
+    var accountType: Int? = 0,
 
-        var transferLimit: Float? = 0f,
+    var transferLimit: Float? = 0f,
 
-        var officeName: String? = null
+    var officeName: String? = null,
 ) : Parcelable

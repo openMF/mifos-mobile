@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.text.TextUtils
-
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.SelfServiceInterceptor
 import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.ui.fragments.AppTheme
-
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,16 +17,19 @@ import javax.inject.Singleton
  */
 @Singleton
 class PreferencesHelper @Inject constructor(@ApplicationContext context: Context?) {
-    private val sharedPreferences: SharedPreferences? = PreferenceManager.getDefaultSharedPreferences(context)
+    private val sharedPreferences: SharedPreferences? =
+        PreferenceManager.getDefaultSharedPreferences(context)
+
     fun clear() {
         val editor = sharedPreferences?.edit()
-        //prevent deletion of url and tenant
-        if (sharedPreferences != null)
+        // prevent deletion of url and tenant
+        if (sharedPreferences != null) {
             for ((key) in sharedPreferences.all) {
                 if (!(key == BASE_URL || key == TENANT)) {
                     editor?.remove(key)
                 }
             }
+        }
         editor?.apply()
     }
 
@@ -79,8 +80,9 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
     var userId: Long?
         get() = getLong(USER_ID, -1)
         set(id) {
-            if (id != null)
+            if (id != null) {
                 putLong(USER_ID, id)
+            }
         }
     val tenant: String?
         get() = getString(TENANT, SelfServiceInterceptor.DEFAULT_TENANT)
@@ -92,8 +94,9 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
     var clientId: Long?
         get() = getLong(CLIENT_ID, -1)
         set(clientId) {
-            if (clientId != null)
+            if (clientId != null) {
                 putLong(CLIENT_ID, clientId)
+            }
         }
     var userName: String?
         get() = getString(USER_NAME, "")
@@ -141,9 +144,9 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
 
     fun updateConfiguration(baseUrl: String?, tenant: String?) {
         sharedPreferences?.edit()
-                ?.putString(BASE_URL, baseUrl)
-                ?.putString(TENANT, tenant)
-                ?.apply()
+            ?.putString(BASE_URL, baseUrl)
+            ?.putString(TENANT, tenant)
+            ?.apply()
     }
 
     val baseUrl: String?
@@ -151,7 +154,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
 
     var appTheme
         get() = getInt(APPLICATION_THEME, AppTheme.SYSTEM.ordinal) ?: AppTheme.SYSTEM.ordinal
-        set(value){
+        set(value) {
             putInt(APPLICATION_THEME, value)
         }
 
@@ -171,6 +174,4 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         const val CLIENT_NAME = "client_name"
         private const val APPLICATION_THEME = "application_theme"
     }
-
-
 }

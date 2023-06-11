@@ -3,19 +3,16 @@ package org.mifos.mobile
 import android.content.Context
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.presenters.SavingsAccountWithdrawPresenter
 import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -59,7 +56,7 @@ class SavingsAccountWithdrawPresenterTest {
     fun testSubmitWithdrawSavingsAccount() {
         val accountId = "1"
         Mockito.`when`(dataManager?.submitWithdrawSavingsAccount(accountId, payload))
-                .thenReturn(Observable.just(responseBody))
+            .thenReturn(Observable.just(responseBody))
         presenter?.submitWithdrawSavingsAccount(accountId, payload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -71,7 +68,7 @@ class SavingsAccountWithdrawPresenterTest {
         val accountId = "1"
         val exception = Exception("message")
         Mockito.`when`(dataManager?.submitWithdrawSavingsAccount(accountId, payload))
-                .thenReturn(Observable.error(exception))
+            .thenReturn(Observable.error(exception))
         presenter?.submitWithdrawSavingsAccount(accountId, payload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()

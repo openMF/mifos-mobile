@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
         android:text="@string/select_region_qr" />
 
     <com.isseiaoki.simplecropview.CropImageView
-        android:adjustViewBounds="true"
         android:id="@+id/iv_crop_qr_code"
+        android:layout_width="fill_parent"
         android:layout_height="@dimen/height_0dp"
         android:layout_weight="1"
-        android:layout_width="fill_parent"
+        android:adjustViewBounds="true"
         android:scaleType="centerInside"
         custom:scv_animation_duration="200"
         custom:scv_animation_enabled="true"
@@ -40,8 +39,8 @@
 
     <Button
         android:id="@+id/btn_proceed"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="@string/proceed"/>
+        android:layout_height="wrap_content"
+        android:text="@string/proceed" />
 
 </LinearLayout>

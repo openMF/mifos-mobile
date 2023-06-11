@@ -43,11 +43,9 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     @BindView(R.id.iv_circular_user_image)
     var ivCircularUserImage: ShapeableImageView? = null
 
-
     @JvmField
     @BindView(R.id.tv_user_name)
     var tvUserName: TextView? = null
-
 
     @JvmField
     @BindView(R.id.swipe_home_container)
@@ -68,8 +66,9 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     private var isReceiverRegistered = false
     private var tvNotificationCount: TextView? = null
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         rootView = inflater.inflate(R.layout.fragment_home_ui, container, false)
         (activity as HomeActivity?)?.activityComponent?.inject(this)
@@ -77,7 +76,12 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
         clientId = preferencesHelper?.clientId
         setHasOptionsMenu(true)
         presenter?.attachView(this)
-        slHomeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        slHomeContainer?.setColorSchemeResources(
+            R.color.blue_light,
+            R.color.green_light,
+            R.color.orange_light,
+            R.color.red_light,
+        )
         slHomeContainer?.setOnRefreshListener(this)
         if (savedInstanceState == null) {
             loadClientData()
@@ -106,8 +110,11 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
         val count = menuItem.actionView
         tvNotificationCount = count?.findViewById(R.id.tv_notification_indicator)
         count?.setOnClickListener {
-            (activity as BaseActivity?)?.replaceFragment(NotificationFragment.newInstance(),
-                    true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(
+                NotificationFragment.newInstance(),
+                true,
+                R.id.container,
+            )
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -119,15 +126,18 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(notificationReceiver)
+        LocalBroadcastManager.getInstance(requireActivity())
+            .unregisterReceiver(notificationReceiver)
         isReceiverRegistered = false
         super.onPause()
     }
 
     private fun registerReceiver() {
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(notificationReceiver,
-                    IntentFilter(Constants.NOTIFY_HOME_FRAGMENT))
+            LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(
+                notificationReceiver,
+                IntentFilter(Constants.NOTIFY_HOME_FRAGMENT),
+            )
             isReceiverRegistered = true
         }
     }
@@ -154,7 +164,10 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      */
     private fun openAccount(accountType: AccountType?) {
         (activity as BaseActivity?)?.replaceFragment(
-                ClientAccountsFragment.newInstance(accountType), true, R.id.container)
+            ClientAccountsFragment.newInstance(accountType),
+            true,
+            R.id.container,
+        )
     }
 
     /**
@@ -174,10 +187,13 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
                 getString(R.string.app_name)
             }
             val drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .toUpperCase()
-                    .endConfig()
-                    .buildRound(userName?.substring(0, 1),requireActivity().getThemeAttributeColor(R.attr.colorPrimaryVariant))
+                .beginConfig()
+                .toUpperCase()
+                .endConfig()
+                .buildRound(
+                    userName?.substring(0, 1),
+                    requireActivity().getThemeAttributeColor(R.attr.colorPrimaryVariant),
+                )
             ivUserImage?.setImageDrawable(drawable)
             ivUserImage?.visibility = View.VISIBLE
             ivCircularUserImage?.visibility = View.GONE
@@ -240,22 +256,30 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      */
     @OnClick(R.id.ll_transfer)
     fun transferClicked() {
-        val transferTypes = arrayOf(getString(R.string.transfer), getString(R.string.third_party_transfer))
+        val transferTypes =
+            arrayOf(getString(R.string.transfer), getString(R.string.third_party_transfer))
         MaterialDialog.Builder().init(activity)
-                .setTitle(R.string.choose_transfer_type)
-                .setItems(transferTypes,
-                        DialogInterface.OnClickListener { _, which ->
-                            if (which == 0) {
-                                (activity as HomeActivity?)?.replaceFragment(
-                                        SavingsMakeTransferFragment.newInstance(1, ""), true,
-                                        R.id.container)
-                            } else {
-                                (activity as HomeActivity?)?.replaceFragment(
-                                        ThirdPartyTransferFragment.newInstance(), true, R.id.container)
-                            }
-                        })
-                .createMaterialDialog()
-                .show()
+            .setTitle(R.string.choose_transfer_type)
+            .setItems(
+                transferTypes,
+                DialogInterface.OnClickListener { _, which ->
+                    if (which == 0) {
+                        (activity as HomeActivity?)?.replaceFragment(
+                            SavingsMakeTransferFragment.newInstance(1, ""),
+                            true,
+                            R.id.container,
+                        )
+                    } else {
+                        (activity as HomeActivity?)?.replaceFragment(
+                            ThirdPartyTransferFragment.newInstance(),
+                            true,
+                            R.id.container,
+                        )
+                    }
+                },
+            )
+            .createMaterialDialog()
+            .show()
     }
 
     /**
@@ -263,8 +287,14 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      */
     @OnClick(R.id.ll_charges)
     fun chargesClicked() {
-        (activity as HomeActivity?)?.replaceFragment(ClientChargeFragment.newInstance(clientId,
-                ChargeType.CLIENT), true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(
+            ClientChargeFragment.newInstance(
+                clientId,
+                ChargeType.CLIENT,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     /**
@@ -281,7 +311,11 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
      */
     @OnClick(R.id.ll_beneficiaries)
     fun beneficiaries() {
-        (activity as HomeActivity?)?.replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(
+            BeneficiaryListFragment.newInstance(),
+            true,
+            R.id.container,
+        )
     }
 
     @OnClick(R.id.ll_surveys)
@@ -290,8 +324,11 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
 
     @OnClick(R.id.ll_recent_transactions)
     fun showRecentTransactions() {
-        (activity as HomeActivity?)?.replaceFragment(RecentTransactionsFragment.newInstance(),
-                true, R.id.container)
+        (activity as HomeActivity?)?.replaceFragment(
+            RecentTransactionsFragment.newInstance(),
+            true,
+            R.id.container,
+        )
     }
 
     /**
@@ -324,8 +361,9 @@ class HomeFragment : BaseFragment(), HomeView, OnRefreshListener {
     override fun onDestroyView() {
         super.onDestroyView()
         presenter?.detachView()
-        if (slHomeContainer?.isRefreshing == true)
+        if (slHomeContainer?.isRefreshing == true) {
             slHomeContainer?.isRefreshing = false
+        }
         slHomeContainer?.removeAllViews()
     }
 

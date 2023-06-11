@@ -9,37 +9,37 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TransactionType(
-        var id: Int? = null,
-        var code: String? = null,
+    var id: Int? = null,
+    var code: String? = null,
 
-        var value: String? = null,
+    var value: String? = null,
 
-        var deposit: Boolean? = null,
+    var deposit: Boolean? = null,
 
-        var dividendPayout: Boolean? = null,
+    var dividendPayout: Boolean? = null,
 
-        var withdrawal: Boolean? = null,
+    var withdrawal: Boolean? = null,
 
-        var interestPosting: Boolean? = null,
+    var interestPosting: Boolean? = null,
 
-        var feeDeduction: Boolean? = null,
+    var feeDeduction: Boolean? = null,
 
-        var initiateTransfer: Boolean? = null,
+    var initiateTransfer: Boolean? = null,
 
-        var approveTransfer: Boolean? = null,
+    var approveTransfer: Boolean? = null,
 
-        var withdrawTransfer: Boolean? = null,
+    var withdrawTransfer: Boolean? = null,
 
-        var rejectTransfer: Boolean? = null,
+    var rejectTransfer: Boolean? = null,
 
-        var overdraftInterest: Boolean? = null,
+    var overdraftInterest: Boolean? = null,
 
-        var writtenoff: Boolean? = null,
+    var writtenoff: Boolean? = null,
 
-        var overdraftFee: Boolean? = null,
+    var overdraftFee: Boolean? = null,
 
-        var withholdTax: Boolean? = null,
+    var withholdTax: Boolean? = null,
 
-        var escheat: Boolean? = null
+    var escheat: Boolean? = null,
 
 ) : Parcelable

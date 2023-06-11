@@ -30,7 +30,7 @@ object CheckSelfPermissionAndRequest {
     @JvmStatic
     fun checkSelfPermission(context: Context?, permission: String?): Boolean {
         return ContextCompat.checkSelfPermission(context!!, permission!!) ==
-                PackageManager.PERMISSION_GRANTED
+            PackageManager.PERMISSION_GRANTED
     }
 
     /**
@@ -71,61 +71,81 @@ object CheckSelfPermissionAndRequest {
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     fun requestPermission(
-            activity: AppCompatActivity,
-            permission: String,
-            permissionRequestCode: Int,
-            dialogMessageRetry: String?,
-            messageNeverAskAgain: String?,
-            permissionDeniedStatus: String?
+        activity: AppCompatActivity,
+        permission: String,
+        permissionRequestCode: Int,
+        dialogMessageRetry: String?,
+        messageNeverAskAgain: String?,
+        permissionDeniedStatus: String?,
     ) {
         // Should we show an explanation?
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-
             // Show an explanation to the user *asynchronously* -- don't block
             // this thread waiting for the user's response! After the user
             // sees the explanation, try again to request the permission.
             MaterialDialog.Builder().init(activity)
-                    .setTitle(R.string.dialog_permission_denied)
-                    .setMessage(dialogMessageRetry)
-                    .setPositiveButton(R.string.dialog_action_re_try,
-                            DialogInterface.OnClickListener { _, _ ->
-                                ActivityCompat.requestPermissions(activity, arrayOf(permission),
-                                        permissionRequestCode)
-                            })
-                    .setNegativeButton(R.string.dialog_action_i_am_sure)
-                    .createMaterialDialog()
-                    .show()
+                .setTitle(R.string.dialog_permission_denied)
+                .setMessage(dialogMessageRetry)
+                .setPositiveButton(
+                    R.string.dialog_action_re_try,
+                    DialogInterface.OnClickListener { _, _ ->
+                        ActivityCompat.requestPermissions(
+                            activity,
+                            arrayOf(permission),
+                            permissionRequestCode,
+                        )
+                    },
+                )
+                .setNegativeButton(R.string.dialog_action_i_am_sure)
+                .createMaterialDialog()
+                .show()
         } else {
-
-            //Requesting Permission, first time to the device.
+            // Requesting Permission, first time to the device.
             val preferencesHelper = PreferencesHelper(activity.applicationContext)
             if (preferencesHelper.getBoolean(permissionDeniedStatus, true) == true) {
                 preferencesHelper.putBoolean(permissionDeniedStatus, false)
-                ActivityCompat.requestPermissions(activity, arrayOf(permission),
-                        permissionRequestCode)
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(permission),
+                    permissionRequestCode,
+                )
             } else {
-                //Requesting Permission, more the one time and opening the setting to change
+                // Requesting Permission, more the one time and opening the setting to change
                 // the Permission in App Settings.
                 MaterialDialog.Builder().init(activity)
-                        .setMessage(messageNeverAskAgain)
-                        .setNegativeButton(R.string.dialog_action_cancel)
-                        .setPositiveButton(R.string.dialog_action_app_settings,
-                                DialogInterface.OnClickListener { _, _ -> //Making the Intent to grant the permission
-                                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                    val uri = Uri.fromParts(activity.resources.getString(
-                                            R.string.package_name), activity.packageName, null)
-                                    intent.data = uri
-                                    val pm = activity.packageManager
-                                    if (intent.resolveActivity(pm) != null) {
-                                        activity.startActivityForResult(intent,
-                                                Constants.REQUEST_PERMISSION_SETTING)
-                                    } else {
-                                        Toast.makeText(activity, activity.getString(
-                                                R.string.msg_setting_activity_not_found), Toast.LENGTH_LONG).show()
-                                    }
-                                })
-                        .createMaterialDialog()
-                        .show()
+                    .setMessage(messageNeverAskAgain)
+                    .setNegativeButton(R.string.dialog_action_cancel)
+                    .setPositiveButton(
+                        R.string.dialog_action_app_settings,
+                        DialogInterface.OnClickListener { _, _ -> // Making the Intent to grant the permission
+                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            val uri = Uri.fromParts(
+                                activity.resources.getString(
+                                    R.string.package_name,
+                                ),
+                                activity.packageName,
+                                null,
+                            )
+                            intent.data = uri
+                            val pm = activity.packageManager
+                            if (intent.resolveActivity(pm) != null) {
+                                activity.startActivityForResult(
+                                    intent,
+                                    Constants.REQUEST_PERMISSION_SETTING,
+                                )
+                            } else {
+                                Toast.makeText(
+                                    activity,
+                                    activity.getString(
+                                        R.string.msg_setting_activity_not_found,
+                                    ),
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        },
+                    )
+                    .createMaterialDialog()
+                    .show()
             }
         }
     }

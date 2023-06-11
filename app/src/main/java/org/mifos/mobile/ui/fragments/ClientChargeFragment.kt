@@ -27,26 +27,25 @@ import org.mifos.mobile.utils.Toaster
 import java.util.*
 import javax.inject.Inject
 
-
 /**
  * @author Vishwajeet
  * @since 17/8/16.
  */
 class ClientChargeFragment : BaseFragment(), ClientChargeView {
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @BindView(R.id.rv_client_charge)
     var rvClientCharge: RecyclerView? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @BindView(R.id.swipe_charge_container)
     var swipeChargeContainer: SwipeRefreshLayout? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @BindView(R.id.layout_error)
     var layoutError: View? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var clientChargePresenter: ClientChargePresenter? = null
 
@@ -67,8 +66,9 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_client_charge, container, false)
         clientChargeAdapter = ClientChargeAdapter(::onItemClick)
@@ -79,7 +79,12 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
         layoutManager = LinearLayoutManager(activity)
         layoutManager?.orientation = LinearLayoutManager.VERTICAL
         rvClientCharge?.layoutManager = layoutManager
-        swipeChargeContainer?.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        swipeChargeContainer?.setColorSchemeResources(
+            R.color.blue_light,
+            R.color.green_light,
+            R.color.orange_light,
+            R.color.red_light,
+        )
         swipeChargeContainer?.setOnRefreshListener { loadCharges() }
         if (savedInstanceState == null) {
             loadCharges()
@@ -89,14 +94,19 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(Constants.CHARGES, ArrayList<Parcelable>(
-                clientChargeList))
+        outState.putParcelableArrayList(
+            Constants.CHARGES,
+            ArrayList<Parcelable>(
+                clientChargeList,
+            ),
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val charges: List<Charge?> = savedInstanceState.getParcelableArrayList(Constants.CHARGES) ?: listOf()
+            val charges: List<Charge?> =
+                savedInstanceState.getParcelableArrayList(Constants.CHARGES) ?: listOf()
             showClientCharges(charges)
         }
     }
@@ -140,8 +150,11 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(rvClientCharge, layoutError)
             loadCharges()
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 
@@ -162,8 +175,12 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
             clientChargeAdapter?.setClientChargeList(clientChargeList)
             rvClientCharge?.adapter = clientChargeAdapter
         } else {
-            sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.charges), R.drawable.ic_charges,
-                    rvClientCharge, layoutError)
+            sweetUIErrorHandler?.showSweetEmptyUI(
+                getString(R.string.charges),
+                R.drawable.ic_charges,
+                rvClientCharge,
+                layoutError,
+            )
         }
     }
 
@@ -185,8 +202,9 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
         fun newInstance(clientId: Long?, chargeType: ChargeType?): ClientChargeFragment {
             val clientChargeFragment = ClientChargeFragment()
             val args = Bundle()
-            if (clientId != null)
+            if (clientId != null) {
                 args.putLong(Constants.CLIENT_ID, clientId)
+            }
             args.putSerializable(Constants.CHARGE_TYPE, chargeType)
             clientChargeFragment.arguments = args
             return clientChargeFragment

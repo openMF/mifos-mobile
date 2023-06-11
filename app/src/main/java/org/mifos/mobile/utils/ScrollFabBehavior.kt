@@ -13,22 +13,40 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton.OnV
  */
 class ScrollFabBehavior(context: Context?, attrs: AttributeSet?) : FloatingActionButton.Behavior() {
     override fun onStartNestedScroll(
-            coordinatorLayout: CoordinatorLayout,
-            child: FloatingActionButton, directTargetChild: View,
-            target: View, nestedScrollAxes: Int
+        coordinatorLayout: CoordinatorLayout,
+        child: FloatingActionButton,
+        directTargetChild: View,
+        target: View,
+        nestedScrollAxes: Int,
     ): Boolean {
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
-                super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target,
-                        nestedScrollAxes)
+            super.onStartNestedScroll(
+                coordinatorLayout,
+                child,
+                directTargetChild,
+                target,
+                nestedScrollAxes,
+            )
     }
 
     override fun onNestedScroll(
-            coordinatorLayout: CoordinatorLayout, child: FloatingActionButton,
-            target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int,
-            dyUnconsumed: Int
+        coordinatorLayout: CoordinatorLayout,
+        child: FloatingActionButton,
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
     ) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-                dyUnconsumed)
+        super.onNestedScroll(
+            coordinatorLayout,
+            child,
+            target,
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+        )
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {
             // Reason to set fab visiblity as INVISIBLE :
             // https://stackoverflow.com/a/41386278/4672688

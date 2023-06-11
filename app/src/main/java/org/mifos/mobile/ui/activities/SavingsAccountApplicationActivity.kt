@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.activities
 
 import android.os.Bundle
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivitySavingsAccountApplicationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -21,7 +20,13 @@ class SavingsAccountApplicationActivity : BaseActivity() {
         setContentView(binding.root)
         setToolbarTitle(getString(R.string.apply_savings_account))
         showBackButton()
-        replaceFragment(newInstance(SavingsAccountState.CREATE,
-                null), false, R.id.container)
+        replaceFragment(
+            newInstance(
+                SavingsAccountState.CREATE,
+                null,
+            ),
+            false,
+            R.id.container,
+        )
     }
 }

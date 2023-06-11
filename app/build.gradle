@@ -9,7 +9,7 @@ apply from: '../config/quality/quality.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    
+
     defaultConfig {
         applicationId "org.mifos.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -122,7 +122,7 @@ dependencies {
     //Dagger dependencies
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    compileOnly 'javax.annotation:jsr250-api:1.0' 
+    compileOnly 'javax.annotation:jsr250-api:1.0'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'  //Required by Dagger2
 
     //Butter Knife
@@ -172,7 +172,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
-    
+
     implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 

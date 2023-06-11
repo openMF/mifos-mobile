@@ -1,25 +1,20 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.mifos.mobile.passcode.utils.ForegroundChecker
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
-
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.mifos.mobile.api.local.PreferencesHelper
-
 import org.mifos.mobile.injection.component.ApplicationComponent
 import org.mifos.mobile.injection.component.DaggerApplicationComponent
 import org.mifos.mobile.injection.module.ApplicationModule
 import org.mifos.mobile.ui.fragments.applySavedTheme
 import org.mifos.mobile.utils.LanguageHelper.onAttach
-
-import java.util.*
+import java.util.Locale
 
 /**
  * @author ishan
@@ -59,8 +54,8 @@ class MifosSelfServiceApp : MultiDexApplication() {
     fun component(): ApplicationComponent? {
         if (applicationComponent == null) {
             applicationComponent = DaggerApplicationComponent.builder()
-                    .applicationModule(ApplicationModule(this))
-                    .build()
+                .applicationModule(ApplicationModule(this))
+                .build()
         }
         return applicationComponent
     }

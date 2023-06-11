@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
@@ -16,7 +15,6 @@ import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
-
 import javax.inject.Inject
 
 /*
@@ -27,7 +25,7 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
     private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: SavingsAccountWithdrawPresenter? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
@@ -39,9 +37,12 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         showUserInterface()
@@ -71,8 +72,10 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
             var rv = false
             if (binding.tilRemark.editText?.text.toString().trim { it <= ' ' }.isEmpty()) {
                 rv = true
-                binding.tilRemark.error = getString(R.string.error_validation_blank,
-                        getString(R.string.remark))
+                binding.tilRemark.error = getString(
+                    R.string.error_validation_blank,
+                    getString(R.string.remark),
+                )
             }
             return rv
         }
@@ -120,7 +123,8 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
 
     companion object {
         fun newInstance(
-                savingsWithAssociations: SavingsWithAssociations?): SavingsAccountWithdrawFragment {
+            savingsWithAssociations: SavingsWithAssociations?,
+        ): SavingsAccountWithdrawFragment {
             val fragment = SavingsAccountWithdrawFragment()
             val bundle = Bundle()
             bundle.putParcelable(Constants.SAVINGS_ACCOUNTS, savingsWithAssociations)

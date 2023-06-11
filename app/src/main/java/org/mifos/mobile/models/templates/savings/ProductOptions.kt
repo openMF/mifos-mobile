@@ -9,6 +9,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ProductOptions(
-        var id: Int? = null,
-        var name: String? = null
+    var id: Int? = null,
+    var name: String? = null,
 ) : Parcelable

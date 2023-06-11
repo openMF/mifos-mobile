@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/item_update_beneficiary"
-        app:showAsAction="never"
-        android:title="@string/update_beneficiary"/>
+        android:title="@string/update_beneficiary"
+        app:showAsAction="never" />
     <item
         android:id="@+id/item_delete_beneficiary"
-        app:showAsAction="never"
-        android:title="@string/delete_beneficiary"/>
+        android:title="@string/delete_beneficiary"
+        app:showAsAction="never" />
 </menu>

@@ -1,22 +1,20 @@
 package org.mifos.mobile.ui.adapters
 
-
-
 /*
 * Created by saksham on 18/June/2018
 */
-import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import org.mifos.mobile.databinding.BeneficiarySpinnerLayoutBinding
+import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 
 class BeneficiarySpinnerAdapter(
     context: Context,
     private var resource: Int,
-    private var list: MutableList<BeneficiaryDetail?>
+    private var list: MutableList<BeneficiaryDetail?>,
 ) : ArrayAdapter<String?>(context, resource, 0, list as List<String?>) {
 
     private var layoutInflater: LayoutInflater = LayoutInflater.from(context)

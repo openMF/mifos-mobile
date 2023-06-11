@@ -1,66 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
 
     <TextView
-        android:layout_height="wrap_content"
+        style="@style/Mifos.DesignSystem.TextStyle.SubHeading"
         android:layout_width="match_parent"
-        android:text="@string/faq"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
         android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.listHeaderSpacing"
-        style="@style/Mifos.DesignSystem.TextStyle.SubHeading"/>
+        android:text="@string/faq" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_faq"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/height_0dp"
-        android:layout_weight="1"
         android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
-        android:layout_width="match_parent"/>
+        android:layout_weight="1" />
 
     <include
         android:id="@+id/layout_error"
         layout="@layout/error_layout"
         android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/toggleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/call_button"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
             android:layout_width="@dimen/width_0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/call_now"
+            android:layout_weight="1"
             android:drawableTop="@drawable/ic_phone_wrapper"
-            style="@style/Mifos.DesignSystem.Components.Button.Text"/>
+            android:text="@string/call_now" />
+
         <Button
             android:id="@+id/mail_button"
-            android:layout_width="@dimen/width_0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/leave_email"
-            android:drawableTop="@drawable/ic_mail_wrapper"
             style="@style/Mifos.DesignSystem.Components.Button.Text"
-            />
+            android:layout_width="@dimen/width_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_mail_wrapper"
+            android:text="@string/leave_email" />
+
         <Button
             android:id="@+id/locations_button"
-            android:layout_width="@dimen/width_0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/find_locations"
-            android:drawableTop="@drawable/ic_location_wrapper"
             style="@style/Mifos.DesignSystem.Components.Button.Text"
-            />
+            android:layout_width="@dimen/width_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_location_wrapper"
+            android:text="@string/find_locations" />
     </LinearLayout>
 
 </LinearLayout>

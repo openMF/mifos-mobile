@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_beneficiaries"
-            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:paddingBottom="@dimen/Mifos.DesignSystem.Spacing.VerticalSpaceForFab"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:layout_width="wrap_content"/>
+            android:paddingBottom="@dimen/Mifos.DesignSystem.Spacing.VerticalSpaceForFab" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_beneficiary"
-        android:layout_gravity="bottom|end"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
         android:layout_width="wrap_content"
-        app:srcCompat="@drawable/ic_add_white_24dp"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 
     <include
-        layout="@layout/error_layout"
         android:id="@+id/layout_error"
-        android:visibility="gone"/>
+        layout="@layout/error_layout"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,9 +13,9 @@
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/cb_select"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="@string/transaction_period"/>
+            android:layout_height="wrap_content"
+            android:text="@string/transaction_period" />
 
         <RadioGroup
             android:id="@+id/rg_date_filter"
@@ -36,23 +36,23 @@
 
                 <Button
                     android:id="@+id/tv_start_date"
+                    style="@style/Mifos.DesignSystem.Components.Button.Text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/Mifos.DesignSystem.Components.Button.Text"
+                    android:enabled="false"
                     android:gravity="center"
                     android:text="@string/start_date"
-                    android:enabled="false"
                     app:icon="@drawable/ic_edit_wrapper" />
 
                 <Button
                     android:id="@+id/tv_end_date"
+                    style="@style/Mifos.DesignSystem.Components.Button.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    style="@style/Mifos.DesignSystem.Components.Button.Text"
                     android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
                     android:enabled="false"
-                    app:icon="@drawable/ic_edit_wrapper"
-                    android:text="@string/end_date" />
+                    android:text="@string/end_date"
+                    app:icon="@drawable/ic_edit_wrapper" />
 
             </LinearLayout>
 
@@ -80,9 +80,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:nestedScrollingEnabled="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false" />
 
     </LinearLayout>
 

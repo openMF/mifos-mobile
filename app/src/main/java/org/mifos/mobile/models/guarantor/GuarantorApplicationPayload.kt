@@ -6,11 +6,11 @@ package org.mifos.mobile.models.guarantor
 
 data class GuarantorApplicationPayload(
 
-        var guarantorType: GuarantorType?,
+    var guarantorType: GuarantorType?,
 
-        var firstName: String?,
+    var firstName: String?,
 
-        var lastName: String?,
+    var lastName: String?,
 
-        var officeName: String?
+    var officeName: String?,
 )

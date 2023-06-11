@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.activities
 
 import android.os.Bundle
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityLoanApplicationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -17,8 +16,11 @@ class LoanApplicationActivity : BaseActivity() {
         binding = ActivityLoanApplicationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
-            replaceFragment(LoanApplicationFragment.newInstance(LoanState.CREATE), false,
-                    R.id.container)
+            replaceFragment(
+                LoanApplicationFragment.newInstance(LoanState.CREATE),
+                false,
+                R.id.container,
+            )
         }
         showBackButton()
     }

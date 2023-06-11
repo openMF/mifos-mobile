@@ -2,7 +2,6 @@ package org.mifos.mobile.models.accounts.loan.calendardata
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 /**
  * Created by Rajan Maurya on 04/03/17.
@@ -10,49 +9,49 @@ import java.util.*
 
 @Parcelize
 data class CalendarData(
-        var id: Int? = null,
+    var id: Int? = null,
 
-        var calendarInstanceId: Int? = null,
+    var calendarInstanceId: Int? = null,
 
-        var entityId: Int? = null,
+    var entityId: Int? = null,
 
-        var entityType: EntityType,
+    var entityType: EntityType,
 
-        var title: String? = null,
+    var title: String? = null,
 
-        var startDate: List<Int> = ArrayList(),
+    var startDate: List<Int> = ArrayList(),
 
-        var endDate: List<Int> = ArrayList(),
+    var endDate: List<Int> = ArrayList(),
 
-        var duration: Double? = null,
+    var duration: Double? = null,
 
-        var type: Type,
+    var type: Type,
 
-        var repeating: Boolean? = null,
+    var repeating: Boolean? = null,
 
-        var recurrence: String? = null,
+    var recurrence: String? = null,
 
-        var frequency: Frequency,
+    var frequency: Frequency,
 
-        var interval: Double? = null,
+    var interval: Double? = null,
 
-        var repeatsOnNthDayOfMonth: RepeatsOnNthDayOfMonth,
+    var repeatsOnNthDayOfMonth: RepeatsOnNthDayOfMonth,
 
-        var firstReminder: Int? = null,
+    var firstReminder: Int? = null,
 
-        var secondReminder: Int? = null,
+    var secondReminder: Int? = null,
 
-        var humanReadable: String? = null,
+    var humanReadable: String? = null,
 
-        var createdDate: List<Int> = ArrayList(),
+    var createdDate: List<Int> = ArrayList(),
 
-        var lastUpdatedDate: List<Int> = ArrayList(),
+    var lastUpdatedDate: List<Int> = ArrayList(),
 
-        var createdByUserId: Int? = null,
+    var createdByUserId: Int? = null,
 
-        var createdByUsername: String? = null,
+    var createdByUsername: String? = null,
 
-        var lastUpdatedByUserId: Int? = null,
+    var lastUpdatedByUserId: Int? = null,
 
-        var lastUpdatedByUsername: String? = null
+    var lastUpdatedByUsername: String? = null,
 ) : Parcelable

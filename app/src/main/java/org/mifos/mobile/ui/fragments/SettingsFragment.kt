@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.preference.ListPreference
@@ -37,7 +36,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(getString(R.string.change_app_theme))
-                .setSingleChoiceItems(resources.getStringArray(R.array.themes), previouslySelectedTheme) { dialog, selectedTheme ->
+                .setSingleChoiceItems(
+                    resources.getStringArray(R.array.themes),
+                    previouslySelectedTheme,
+                ) { dialog, selectedTheme ->
                     prefsHelper.applyTheme(AppTheme.fromIndex(selectedTheme))
                     dialog.dismiss()
                 }
@@ -60,6 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             getString(R.string.password) -> {
                 //    TODO("create changePasswordActivity and implement the logic for password change")
             }
+
             getString(R.string.passcode) -> {
                 activity?.let {
                     val passCodePreferencesHelper = PasscodePreferencesHelper(activity)
@@ -74,7 +77,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 }
             }
         }
-
     }
 
     override fun onResume() {
@@ -98,8 +100,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
         if (dialogFragment != null) {
             dialogFragment.setTargetFragment(this, 0)
-            dialogFragment.show(parentFragmentManager,
-                    "android.support.v7.preference.PreferenceFragment.DIALOG")
+            dialogFragment.show(
+                parentFragmentManager,
+                "android.support.v7.preference.PreferenceFragment.DIALOG",
+            )
         } else {
             super.onDisplayPreferenceDialog(preference)
         }
@@ -118,30 +122,35 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(UpdatePasswordFragment.newInstance(), true, R.id.container)
+            Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(
+                UpdatePasswordFragment.newInstance(),
+                true,
+                R.id.container,
+            )
         }
         return super.onPreferenceTreeClick(preference)
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(): SettingsFragment {
             return SettingsFragment()
         }
     }
 }
 
-
-enum class AppTheme{
+enum class AppTheme {
     SYSTEM, LIGHT, DARK;
-    companion object{
-        fun fromIndex(index: Int): AppTheme = when (index){
+
+    companion object {
+        fun fromIndex(index: Int): AppTheme = when (index) {
             1 -> LIGHT
             2 -> DARK
             else -> SYSTEM
         }
     }
 }
+
 fun PreferencesHelper.applySavedTheme() {
     val applicationTheme = AppTheme.fromIndex(this.appTheme)
     AppCompatDelegate.setDefaultNightMode(
@@ -150,7 +159,7 @@ fun PreferencesHelper.applySavedTheme() {
             applicationTheme == AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
             Build.VERSION.SDK_INT > Build.VERSION_CODES.P -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             else -> AppCompatDelegate.MODE_NIGHT_NO
-        }
+        },
     )
 }
 
@@ -162,6 +171,6 @@ fun PreferencesHelper.applyTheme(applicationTheme: AppTheme) {
             applicationTheme == AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
             Build.VERSION.SDK_INT > Build.VERSION_CODES.P -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             else -> AppCompatDelegate.MODE_NIGHT_NO
-        }
+        },
     )
 }

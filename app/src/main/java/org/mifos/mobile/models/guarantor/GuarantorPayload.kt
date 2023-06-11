@@ -11,17 +11,17 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class GuarantorPayload(
 
-        var id: Long? = 0,
+    var id: Long? = 0,
 
-        var officeName: String? = null,
+    var officeName: String? = null,
 
-        var lastname: String? = null,
+    var lastname: String? = null,
 
-        var guarantorType: @RawValue GuarantorType? = null,
+    var guarantorType: @RawValue GuarantorType? = null,
 
-        var firstname: String? = null,
+    var firstname: String? = null,
 
-        var joinedDate: List<Int>? = null,
+    var joinedDate: List<Int>? = null,
 
-        var loanId: Long? = null
+    var loanId: Long? = null,
 ) : Parcelable

@@ -2,15 +2,11 @@ package org.mifos.mobile.models
 
 import android.os.Parcel
 import android.os.Parcelable
-
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.structure.BaseModel
-
 import org.mifos.mobile.api.local.SelfServiceDatabase
-
-import java.util.*
 
 /**
  * @author Vishwajeet
@@ -111,7 +107,7 @@ class Charge : BaseModel, Parcelable {
 
     companion object {
         val CREATOR: Parcelable.Creator<Charge?> = object : Parcelable.Creator<Charge?> {
-            override fun createFromParcel(source: Parcel): Charge? {
+            override fun createFromParcel(source: Parcel): Charge {
                 return Charge(source)
             }
 

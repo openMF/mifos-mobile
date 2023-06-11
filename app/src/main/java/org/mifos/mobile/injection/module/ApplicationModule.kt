@@ -2,14 +2,11 @@ package org.mifos.mobile.injection.module
 
 import android.app.Application
 import android.content.Context
-
 import dagger.Module
 import dagger.Provides
-
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.injection.ApplicationContext
-
 import javax.inject.Singleton
 
 /**

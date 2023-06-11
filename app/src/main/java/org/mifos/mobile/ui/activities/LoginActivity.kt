@@ -17,7 +17,6 @@ import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import javax.inject.Inject
 
-
 /**
  * @author Vishwajeet
  * @since 05/06/16

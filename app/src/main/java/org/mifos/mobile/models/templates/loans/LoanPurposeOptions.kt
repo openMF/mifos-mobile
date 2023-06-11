@@ -1,7 +1,6 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -12,15 +11,15 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class LoanPurposeOptions(
 
-        var id: Int? = null,
+    var id: Int? = null,
 
-        var name: String? = null,
+    var name: String? = null,
 
-        var position: Int? = null,
+    var position: Int? = null,
 
-        var description: String? = null,
+    var description: String? = null,
 
-        @SerializedName("isActive")
-        var active: Boolean? = null
+    @SerializedName("isActive")
+    var active: Boolean? = null,
 
 ) : Parcelable

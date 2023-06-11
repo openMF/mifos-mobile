@@ -10,6 +10,5 @@ enum class ChargeType {
 
     SAVINGS,
 
-    LOAN
-
+    LOAN,
 }

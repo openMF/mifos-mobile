@@ -4,7 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import org.mifos.mobile.models.client.Currency
 import org.mifos.mobile.models.client.Type
-import java.util.*
 
 /**
  * @author Vishwajeet
@@ -14,22 +13,22 @@ import java.util.*
 @Parcelize
 data class Transaction(
 
-        var id: Long? = null,
+    var id: Long? = null,
 
-        var officeId: Long? = null,
+    var officeId: Long? = null,
 
-        var officeName: String? = null,
+    var officeName: String? = null,
 
-        var type: Type,
+    var type: Type,
 
-        var date: List<Int> = ArrayList(),
+    var date: List<Int> = ArrayList(),
 
-        var currency: Currency? = null,
+    var currency: Currency? = null,
 
-        var amount: Double? = null,
+    var amount: Double? = null,
 
-        var submittedOnDate: List<Int> = ArrayList(),
+    var submittedOnDate: List<Int> = ArrayList(),
 
-        var reversed: Boolean? = null
+    var reversed: Boolean? = null,
 
 ) : Parcelable

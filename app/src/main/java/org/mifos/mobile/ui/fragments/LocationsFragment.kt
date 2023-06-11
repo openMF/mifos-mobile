@@ -5,7 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.mifos.mobile.R
@@ -23,9 +26,12 @@ class LocationsFragment : BaseFragment(), OnMapReadyCallback {
     private var _binding: FragmentLocationsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentLocationsBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentLocationsBinding.inflate(inflater, container, false)
         binding.map.onCreate(savedInstanceState)
         binding.map.onResume()
         try {
@@ -44,8 +50,10 @@ class LocationsFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun addMarker(googleMap: GoogleMap, headquarterLatLng: LatLng) {
-        googleMap.addMarker(MarkerOptions().position(headquarterLatLng)
-                .title(getString(R.string.mifos_initiative)))
+        googleMap.addMarker(
+            MarkerOptions().position(headquarterLatLng)
+                .title(getString(R.string.mifos_initiative)),
+        )
     }
 
     private fun addAnimationToHeadquarter(googleMap: GoogleMap, headquarterLatLng: LatLng) {

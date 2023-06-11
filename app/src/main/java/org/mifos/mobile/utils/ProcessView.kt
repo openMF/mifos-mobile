@@ -36,8 +36,16 @@ class ProcessView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val xPos = canvas.width / 2 - (textPaint?.measureText(valueStr.toString())?.div(2))?.toInt()!!
-        val yPos = (canvas.height / 2 - ((textPaint?.descent()?.plus(textPaint?.ascent()!!))?.div(2))!!).toInt()
+        val xPos =
+            canvas.width / 2 - (textPaint?.measureText(valueStr.toString())?.div(2))?.toInt()!!
+        val yPos = (
+            canvas.height / 2 - (
+                (
+                    textPaint?.descent()
+                        ?.plus(textPaint?.ascent()!!)
+                    )?.div(2)
+                )!!
+            ).toInt()
         val usableWidth = width - (paddingLeft + paddingRight)
         val usableHeight = height - (paddingTop + paddingBottom)
         val radius = usableWidth.coerceAtMost(usableHeight) / 2

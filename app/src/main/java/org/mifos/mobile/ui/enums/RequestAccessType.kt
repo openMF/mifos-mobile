@@ -9,6 +9,5 @@ enum class RequestAccessType {
 
     EXTERNAL_STORAGE_READ,
 
-    EXTERNAL_STORAGE_WRITE
-
+    EXTERNAL_STORAGE_WRITE,
 }

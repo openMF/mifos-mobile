@@ -8,8 +8,19 @@ import androidx.lifecycle.ViewModelProviders
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_review_loan_application.*
-import kotlinx.android.synthetic.main.layout_error.*
+import kotlinx.android.synthetic.main.fragment_review_loan_application.btn_loan_submit
+import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_add_loan
+import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_error
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_account_number
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_currency
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_expected_disbursement_date
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_product
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_purpose
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_new_loan_application
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_principal_amount
+import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_submission_date
+import kotlinx.android.synthetic.main.layout_error.iv_status
+import kotlinx.android.synthetic.main.layout_error.tv_status
 import okhttp3.ResponseBody
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.LoansPayload
@@ -32,8 +43,12 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         const val LOAN_STATE = "loan_state"
         const val LOAN_ID = "loan_id"
 
-        fun newInstance(loanState: LoanState, loansPayload: LoansPayload, loanName: String, accountNo: String)
-                : ReviewLoanApplicationFragment {
+        fun newInstance(
+            loanState: LoanState,
+            loansPayload: LoansPayload,
+            loanName: String,
+            accountNo: String,
+        ): ReviewLoanApplicationFragment {
             val fragment = ReviewLoanApplicationFragment()
             val args = Bundle().apply {
                 putSerializable(LOAN_STATE, loanState)
@@ -45,8 +60,13 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             return fragment
         }
 
-        fun newInstance(loanState: LoanState?, loansPayload: LoansPayload?, loanId: Long?, loanName: String?, accountNo: String?)
-                : ReviewLoanApplicationFragment {
+        fun newInstance(
+            loanState: LoanState?,
+            loansPayload: LoansPayload?,
+            loanId: Long?,
+            loanName: String?,
+            accountNo: String?,
+        ): ReviewLoanApplicationFragment {
             val fragment = ReviewLoanApplicationFragment()
             val args = Bundle().apply {
                 putSerializable(LOAN_STATE, loanState)
@@ -67,26 +87,31 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     private lateinit var viewModel: ReviewLoanApplicationViewModel
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
         (activity as BaseActivity).activityComponent?.inject(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReviewLoanApplicationViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(ReviewLoanApplicationViewModel::class.java)
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
             viewModel.insertData(
-                    loanState,
-                    arguments?.getParcelable(LOANS_PAYLOAD)!!,
-                    arguments?.getString(LOAN_NAME)!!,
-                    arguments?.getString(ACCOUNT_NO)!!)
+                loanState,
+                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getString(LOAN_NAME)!!,
+                arguments?.getString(ACCOUNT_NO)!!,
+            )
         } else {
             viewModel.insertData(
-                    loanState,
-                    arguments?.getLong(LOAN_ID)!!,
-                    arguments?.getParcelable(LOANS_PAYLOAD)!!,
-                    arguments?.getString(LOAN_NAME)!!,
-                    arguments?.getString(ACCOUNT_NO)!!)
+                loanState,
+                arguments?.getLong(LOAN_ID)!!,
+                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getString(LOAN_NAME)!!,
+                arguments?.getString(ACCOUNT_NO)!!,
+            )
         }
         return rootView
     }
@@ -105,25 +130,26 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         btn_loan_submit.setOnClickListener {
             showProgress()
             viewModel.submitLoan()
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribeOn(Schedulers.io())
-                    ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
-                        override fun onComplete() {
-                        }
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
+                    override fun onComplete() {
+                    }
 
-                        override fun onNext(t: ResponseBody) {
-                            hideProgress()
-                            if (viewModel.getLoanState() == LoanState.CREATE)
-                                showLoanAccountCreatedSuccessfully()
-                            else
-                                showLoanAccountUpdatedSuccessfully()
+                    override fun onNext(t: ResponseBody) {
+                        hideProgress()
+                        if (viewModel.getLoanState() == LoanState.CREATE) {
+                            showLoanAccountCreatedSuccessfully()
+                        } else {
+                            showLoanAccountUpdatedSuccessfully()
                         }
+                    }
 
-                        override fun onError(e: Throwable) {
-                            hideProgress()
-                            showError(MFErrorParser.errorMessage(e))
-                        }
-                    })
+                    override fun onError(e: Throwable) {
+                        hideProgress()
+                        showError(MFErrorParser.errorMessage(e))
+                    }
+                })
         }
     }
 

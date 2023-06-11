@@ -6,7 +6,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +25,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.HelpView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
-import java.util.*
 import javax.inject.Inject
 
 /*
@@ -29,21 +32,24 @@ import javax.inject.Inject
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
 class HelpFragment : BaseFragment(), HelpView {
-    private var _binding : FragmentHelpBinding? = null
+    private var _binding: FragmentHelpBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var faqAdapter: FAQAdapter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: HelpPresenter? = null
     private var faqArrayList: ArrayList<FAQ?>? = null
     private lateinit var sweetUIErrorHandler: SweetUIErrorHandler
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentHelpBinding.inflate(inflater, container, false)
         val rootView = binding.root
         setHasOptionsMenu(true)
@@ -66,7 +72,8 @@ class HelpFragment : BaseFragment(), HelpView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val faqs: ArrayList<FAQ?> = savedInstanceState.getParcelableArrayList(Constants.HELP) ?: arrayListOf()
+            val faqs: ArrayList<FAQ?> =
+                savedInstanceState.getParcelableArrayList(Constants.HELP) ?: arrayListOf()
             showFaq(faqs)
         }
     }
@@ -75,8 +82,12 @@ class HelpFragment : BaseFragment(), HelpView {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvFaq.layoutManager = layoutManager
-        binding.rvFaq.addItemDecoration(DividerItemDecoration(activity,
-                layoutManager.orientation))
+        binding.rvFaq.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                layoutManager.orientation,
+            ),
+        )
         binding.callButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
@@ -85,18 +96,25 @@ class HelpFragment : BaseFragment(), HelpView {
         binding.mailButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.contact_email)) )
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.contact_email)))
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
             }
             try {
                 startActivity(intent)
-            }
-            catch (e: Exception){
-                Toast.makeText(requireContext(), getString(R.string.no_app_to_support_action),Toast.LENGTH_SHORT).show();
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.no_app_to_support_action),
+                    Toast.LENGTH_SHORT,
+                ).show()
             }
         }
         binding.locationsButton.setOnClickListener {
-            (activity as BaseActivity?)?.replaceFragment(LocationsFragment.newInstance(),true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(
+                LocationsFragment.newInstance(),
+                true,
+                R.id.container,
+            )
         }
     }
 
@@ -105,7 +123,6 @@ class HelpFragment : BaseFragment(), HelpView {
         binding.rvFaq.adapter = faqAdapter
         this.faqArrayList = faqArrayList
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_help, menu)
@@ -121,7 +138,10 @@ class HelpFragment : BaseFragment(), HelpView {
                 val filteredFAQList = presenter?.filterList(faqArrayList, newText)
                 filteredFAQList?.let {
                     if (it.isNotEmpty()) {
-                        sweetUIErrorHandler.hideSweetErrorLayoutUI(binding.rvFaq, binding.layoutError.clErrorLayout)
+                        sweetUIErrorHandler.hideSweetErrorLayoutUI(
+                            binding.rvFaq,
+                            binding.layoutError.clErrorLayout,
+                        )
                         faqAdapter?.updateList(it)
                     } else {
                         showEmptyFAQUI()
@@ -133,8 +153,12 @@ class HelpFragment : BaseFragment(), HelpView {
     }
 
     private fun showEmptyFAQUI() {
-        sweetUIErrorHandler.showSweetEmptyUI(getString(R.string.questions),
-                R.drawable.ic_help_black_24dp, binding.rvFaq, binding.layoutError.clErrorLayout)
+        sweetUIErrorHandler.showSweetEmptyUI(
+            getString(R.string.questions),
+            R.drawable.ic_help_black_24dp,
+            binding.rvFaq,
+            binding.layoutError.clErrorLayout,
+        )
     }
 
     override fun showProgress() {
@@ -146,7 +170,7 @@ class HelpFragment : BaseFragment(), HelpView {
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(): HelpFragment {
             val fragment = HelpFragment()
             val args = Bundle()

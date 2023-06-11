@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
 import org.mifos.mobile.BuildConfig
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentNotificationBinding
@@ -22,21 +19,20 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.NotificationView
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
-
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 13/9/17.
  */
 class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener {
-    private var _binding : FragmentNotificationBinding? = null
+    private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: NotificationPresenter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var adapter: NotificationAdapter? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
@@ -47,20 +43,29 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvNotifications.layoutManager = layoutManager
-        binding.rvNotifications.addItemDecoration(DividerItemDecoration(activity,
-                layoutManager.orientation))
+        binding.rvNotifications.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                layoutManager.orientation,
+            ),
+        )
         binding.rvNotifications.adapter = adapter
-        binding.swipeNotificationContainer.setColorSchemeResources(R.color.blue_light,
-                R.color.green_light, R.color.orange_light, R.color.red_light)
+        binding.swipeNotificationContainer.setColorSchemeResources(
+            R.color.blue_light,
+            R.color.green_light,
+            R.color.orange_light,
+            R.color.red_light,
+        )
         binding.swipeNotificationContainer.setOnRefreshListener(this)
         presenter?.attachView(this)
         presenter?.loadNotifications()
@@ -74,17 +79,27 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
         if (notifications?.isNotEmpty() == true) {
             adapter?.setNotificationList(notifications as List<MifosNotification?>?)
         } else {
-            sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.notification),
-                    R.drawable.ic_notifications, binding.rvNotifications, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetEmptyUI(
+                getString(R.string.notification),
+                R.drawable.ic_notifications,
+                binding.rvNotifications,
+                binding.layoutError.root,
+            )
         }
     }
 
     override fun showError(msg: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(binding.rvNotifications, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetNoInternetUI(
+                binding.rvNotifications,
+                binding.layoutError.root,
+            )
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(msg,
-                    binding.rvNotifications, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                msg,
+                binding.rvNotifications,
+                binding.layoutError.root,
+            )
             Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
         }
     }
@@ -95,13 +110,20 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
             retryClicked()
         }
     }
+
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvNotifications, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvNotifications,
+                binding.layoutError.root,
+            )
             presenter?.loadNotifications()
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 
@@ -114,7 +136,10 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
     }
 
     override fun onRefresh() {
-        sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvNotifications, binding.layoutError.root)
+        sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+            binding.rvNotifications,
+            binding.layoutError.root,
+        )
         presenter?.loadNotifications()
     }
 
@@ -124,7 +149,7 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(): NotificationFragment {
             return NotificationFragment()
         }

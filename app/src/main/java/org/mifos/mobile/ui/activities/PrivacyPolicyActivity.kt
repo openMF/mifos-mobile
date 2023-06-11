@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityPrivacyPolicyBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -18,7 +16,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
  * On 11/03/19.
  */
 class PrivacyPolicyActivity : BaseActivity() {
-    private lateinit var binding : ActivityPrivacyPolicyBinding
+    private lateinit var binding: ActivityPrivacyPolicyBinding
     private var showOrHideWebViewInitialUse = "show"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +50,8 @@ class PrivacyPolicyActivity : BaseActivity() {
     internal inner class MyWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             if (Uri.parse(url)?.host
-                            ?.endsWith(getString(R.string.privacy_policy_host)) == true) {
+                    ?.endsWith(getString(R.string.privacy_policy_host)) == true
+            ) {
                 return false
             }
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))

@@ -2,29 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:orientation="vertical">
 
 
     <com.google.android.material.imageview.ShapeableImageView
-        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
         android:id="@+id/user_image_round"
-        android:layout_height="@dimen/Mifos.DesignSystem.Size.BigView"
         android:layout_width="@dimen/Mifos.DesignSystem.Size.BigView"
-        tools:srcCompat="@drawable/ic_person_black_24dp"
-        tools:background="?attr/colorTertiary"/>
+        android:layout_height="@dimen/Mifos.DesignSystem.Size.BigView"
+        app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
+        tools:background="?attr/colorTertiary"
+        tools:srcCompat="@drawable/ic_person_black_24dp" />
 
     <TextView
-        android:ellipsize="end"
         android:id="@+id/tv_user_name"
+        style="@style/Mifos.DesignSystem.TextStyle.Heading"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
-        android:layout_width="wrap_content"
+        android:ellipsize="end"
         android:lines="1"
-        tools:text="Will R Smith"
-        style="@style/Mifos.DesignSystem.TextStyle.Heading"/>
+        tools:text="Will R Smith" />
 
 </LinearLayout>

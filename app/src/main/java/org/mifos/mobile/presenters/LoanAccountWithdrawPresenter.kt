@@ -1,29 +1,25 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-
 import okhttp3.ResponseBody
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.LoanAccountWithdrawView
-
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 7/6/17.
  */
 class LoanAccountWithdrawPresenter @Inject constructor(
-        private val dataManager: DataManager?,
-        @ApplicationContext context: Context?
+    private val dataManager: DataManager?,
+    @ApplicationContext context: Context?,
 ) : BasePresenter<LoanAccountWithdrawView?>(context) {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -45,21 +41,21 @@ class LoanAccountWithdrawPresenter @Inject constructor(
         checkViewAttached()
         mvpView?.showProgress()
         dataManager?.withdrawLoanAccount(loanId, loanWithdraw)
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        mvpView?.hideProgress()
-                        mvpView?.showLoanAccountWithdrawError(
-                                context?.getString(R.string.error_loan_account_withdraw))
-                    }
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    mvpView?.hideProgress()
+                    mvpView?.showLoanAccountWithdrawError(
+                        context?.getString(R.string.error_loan_account_withdraw),
+                    )
+                }
 
-                    override fun onNext(responseBody: ResponseBody) {
-                        mvpView?.hideProgress()
-                        mvpView?.showLoanAccountWithdrawSuccess()
-                    }
-                })?.let { compositeDisposable.add(it) }
+                override fun onNext(responseBody: ResponseBody) {
+                    mvpView?.hideProgress()
+                    mvpView?.showLoanAccountWithdrawSuccess()
+                }
+            })?.let { compositeDisposable.add(it) }
     }
-
 }
