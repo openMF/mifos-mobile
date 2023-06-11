@@ -27,7 +27,10 @@ class ProgressBarHandler(mContext: Context) {
         val layout = (mContext as Activity).findViewById<View>(id.content).rootView as ViewGroup
         mProgressBar = ProgressBar(mContext, null, attr.progressBarStyleInverse)
         mProgressBar.isIndeterminate = true
-        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        val params = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+        )
         val rl = RelativeLayout(mContext)
         rl.gravity = Gravity.CENTER
         rl.addView(mProgressBar)

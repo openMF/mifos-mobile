@@ -12,26 +12,26 @@ import org.mifos.mobile.models.ChargeTimeType
 @Parcelize
 data class ChargeOptions(
 
-        var id: Int? = null,
+    var id: Int? = null,
 
-        var name: String? = null,
+    var name: String? = null,
 
-        var active: Boolean? = null,
+    var active: Boolean? = null,
 
-        var penalty: Boolean? = null,
+    var penalty: Boolean? = null,
 
-        var currency: Currency? = null,
+    var currency: Currency? = null,
 
-        var amount: Double? = null,
+    var amount: Double? = null,
 
-        var chargeTimeType: ChargeTimeType? = null,
+    var chargeTimeType: ChargeTimeType? = null,
 
-        var chargeAppliesTo: ChargeAppliesTo? = null,
+    var chargeAppliesTo: ChargeAppliesTo? = null,
 
-        var chargeCalculationType: ChargeCalculationType? = null,
+    var chargeCalculationType: ChargeCalculationType? = null,
 
-        var chargePaymentMode: ChargePaymentMode? = null,
+    var chargePaymentMode: ChargePaymentMode? = null,
 
-        var taxGroup: TaxGroup? = null
+    var taxGroup: TaxGroup? = null,
 
 ) : Parcelable

@@ -2,31 +2,30 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
     android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
-    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:layout_height="wrap_content"
+        style="@style/Mifos.DesignSystem.TextStyle.PrimaryColorBodyLarger"
         android:layout_width="match_parent"
-        android:text="@string/mifos_initiative"
-        style="@style/Mifos.DesignSystem.TextStyle.PrimaryColorBodyLarger"/>
+        android:layout_height="wrap_content"
+        android:text="@string/mifos_initiative" />
 
     <TextView
-        android:layout_height="wrap_content"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
         android:layout_width="match_parent"
-        android:text="@string/mifos_location"
-        style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+        android:layout_height="wrap_content"
+        android:text="@string/mifos_location" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/height_0dp"
         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
-        android:layout_weight="1"
-        android:layout_width="match_parent"/>
+        android:layout_weight="1" />
 
 </LinearLayout>

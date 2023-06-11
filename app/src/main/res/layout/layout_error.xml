@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_status"
@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center|center_horizontal"
         android:contentDescription="@string/status_image"
-        app:srcCompat="@drawable/ic_assignment_turned_in_black_24dp"/>
+        app:srcCompat="@drawable/ic_assignment_turned_in_black_24dp" />
 
     <TextView
         android:id="@+id/tv_status"
@@ -21,6 +21,6 @@
         android:layout_below="@+id/iv_status"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/error_message_server"/>
+        android:text="@string/error_message_server" />
 
 </RelativeLayout>

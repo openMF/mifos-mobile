@@ -324,7 +324,7 @@
     <string name="not_available" />
     <string name="upload_qr_code">Отправить QR</string>
     <string name="select_region_qr">Выберите регион с QR-кодом</string>
-    
+
     <string name="need_help">Как с нами связаться</string>
     <string name="transferred_successfully">Успешная передача</string>
 
@@ -336,7 +336,7 @@
     <string name="active_uc">ACTIVE</string>
     <string name="inactive_uc">АКТИВНО</string>
 
-    
+
     <string name="dialog_logout">Вы действительно хотите выйти?</string>
     <string name="dialog_action_ok">Хорошо</string>
     <string name="dialog_action_cancel">Отменить</string>
@@ -356,7 +356,7 @@
     <string name="permission_denied_storage">Отказ от хранения был отклонен</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Вы уверены, что хотите %1$s?</string>
 
-    
+
     <string name="hello_client">Привет, %1$s</string>
     <string name="invalid_amount">Недопустимая сумма</string>
     <string name="exit_message">Нажмите еще раз, чтобы выйти</string>

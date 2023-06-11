@@ -1,94 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
   -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_loan_summary"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible">
 
         <com.google.android.material.card.MaterialCardView
-            android:background="@color/white"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
-            app:cardUseCompatPadding="true">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
             <TableLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TableRow>
+
                     <TextView
-                        android:layout_gravity="start"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
                         android:text="@string/account_number"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
+
                     <TextView
-                        android:gravity="start"
                         android:id="@+id/tv_account_number"
-                        android:layout_gravity="start"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:gravity="start"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        tools:text="@string/account_number"/>
+                        tools:text="@string/account_number" />
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
-                        android:layout_gravity="start"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
                         android:text="@string/disbursement_date"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
+
                     <TextView
-                        android:gravity="start"
                         android:id="@+id/tv_disbursement_date"
-                        android:layout_gravity="start"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:gravity="start"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        tools:text="@string/disbursement_date"/>
+                        tools:text="@string/disbursement_date" />
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
-                        android:layout_gravity="start"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
                         android:text="@string/no_of_payments"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
+
                     <TextView
-                        android:gravity="start"
                         android:id="@+id/tv_number_of_payments"
-                        android:layout_gravity="start"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:gravity="start"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        tools:text="@string/no_of_payments"/>
+                        tools:text="@string/no_of_payments" />
                 </TableRow>
 
             </TableLayout>
@@ -97,20 +101,20 @@
 
         <com.evrencoskun.tableview.TableView
             android:id="@+id/tv_repayment_schedule"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            app:selected_color="?attr/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            app:selected_color="?attr/colorPrimary" />
 
     </LinearLayout>
 
     <include
-        layout="@layout/error_layout"
         android:id="@+id/layout_error"
-        android:visibility="gone"/>
+        layout="@layout/error_layout"
+        android:visibility="gone" />
 
 </RelativeLayout>

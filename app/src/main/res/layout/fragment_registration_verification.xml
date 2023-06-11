@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
-    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
+    android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+    android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-        android:layout_width="match_parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:hint="@string/request_id"
-            android:id="@+id/et_request_id"
-            android:inputType="number"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:hint="@string/authentication_token"
-            android:id="@+id/et_authentication_token"
-            android:inputType="number"
+            android:id="@+id/et_request_id"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:hint="@string/request_id"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_authentication_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/authentication_token"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_verify"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="@string/verify"/>
+        android:layout_height="wrap_content"
+        android:text="@string/verify" />
 
 </LinearLayout>

@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddLoanApplicationBinding
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -20,19 +18,23 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ReviewLoanApplicationFragment.Companion.newInstance
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanApplicationMvpView
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.DatePickerConstrainType
+import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.getDatePickerDialog
+import org.mifos.mobile.utils.getTodayFormatted
 import java.text.SimpleDateFormat
 import java.time.Instant
-
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
-
 
 /**
  * Created by Rajan Maurya on 06/03/17.
  */
 class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
-    private var _binding : FragmentAddLoanApplicationBinding? = null
+    private var _binding: FragmentAddLoanApplicationBinding? = null
     private val binding get() = _binding!!
 
     @JvmField
@@ -62,7 +64,6 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
     private var isDisbursementDate = false
     private var isLoanUpdatePurposesInitialization = true
 
-
     /**
      * Used when we want to apply for a Loan
      *
@@ -85,8 +86,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      * @return Instance of [LoanApplicationFragment]
      */
     fun newInstance(
-            loanState: LoanState?,
-            loanWithAssociations: LoanWithAssociations?
+        loanState: LoanState?,
+        loanWithAssociations: LoanWithAssociations?,
     ): LoanApplicationFragment {
         val fragment = LoanApplicationFragment()
         val args = Bundle()
@@ -111,9 +112,10 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentAddLoanApplicationBinding.inflate(inflater, container, false)
         loanApplicationPresenter?.attachView(this)
         showUserInterface()
@@ -178,7 +180,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
                 Toast.makeText(
                     activity,
                     getString(R.string.select_loan_product_field),
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
                 return
             }
@@ -233,11 +235,13 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
             loansPayload.interestType = loanTemplate?.interestType?.id
             (activity as BaseActivity?)?.replaceFragment(
                 newInstance(
-                    loanState!!, loansPayload,
+                    loanState!!,
+                    loansPayload,
                     tvNewLoanApplication.text.toString(),
-                    tvAccountNumber.text.toString()
+                    tvAccountNumber.text.toString(),
                 ),
-                true, R.id.container
+                true,
+                R.id.container,
             )
         }
     }
@@ -273,9 +277,10 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
                     loansPayload,
                     loanWithAssociations?.id?.toLong(),
                     tvNewLoanApplication.text.toString(),
-                    tvAccountNumber.text.toString()
+                    tvAccountNumber.text.toString(),
                 ),
-                false, R.id.container
+                false,
+                R.id.container,
             )
         }
     }
@@ -311,7 +316,9 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         submittedDate = binding.tvSubmissionDate.text.toString()
         submittedDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, submittedDate)
         disbursementDate = DateHelper.getSpecificFormat(
-                DateHelper.FORMAT_dd_MMMM_yyyy, disbursementDate)
+            DateHelper.FORMAT_dd_MMMM_yyyy,
+            disbursementDate,
+        )
     }
 
     /**
@@ -357,14 +364,14 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      */
     override fun showLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        if (loanTemplate?.productOptions != null)
+        if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
-                if(!listLoanProducts.contains(name)){
+                if (!listLoanProducts.contains(name)) {
                     listLoanProducts.add(name)
                 }
             }
+        }
         binding.loanProductsField.setSimpleItems(listLoanProducts.toTypedArray())
-
     }
 
     /**
@@ -374,42 +381,45 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      */
     override fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
-        if (loanTemplate?.productOptions != null)
+        if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
-                if(!listLoanProducts.contains(name)){
+                if (!listLoanProducts.contains(name)) {
                     listLoanProducts.add(name)
                 }
             }
+        }
         with(binding) {
             loanProductsField.setSimpleItems(listLoanProducts.toTypedArray())
             loanProductsField.setText(loanWithAssociations?.loanProductName!!, false)
 
             tvAccountNumber.text = getString(
                 R.string.string_and_string,
-                getString(R.string.account_number) + " ", loanWithAssociations?.accountNo
+                getString(R.string.account_number) + " ",
+                loanWithAssociations?.accountNo,
             )
             tvNewLoanApplication.text = getString(
                 R.string.string_and_string,
                 getString(R.string.update_loan_application) + " ",
-                loanWithAssociations?.clientName
+                loanWithAssociations?.clientName,
             )
             tilPrincipalAmount.editText?.setText(
                 String.format(
                     Locale.getDefault(),
-                    "%.2f", loanWithAssociations?.principal
-                )
+                    "%.2f",
+                    loanWithAssociations?.principal,
+                ),
             )
             tvCurrency.text = loanWithAssociations?.currency?.displayLabel
             tvSubmissionDate.text = DateHelper.getDateAsString(
                 loanWithAssociations?.timeline?.submittedOnDate,
-                "dd-MM-yyyy"
+                "dd-MM-yyyy",
             )
             tvExpectedDisbursementDate.text = DateHelper.getDateAsString(
                 loanWithAssociations?.timeline?.expectedDisbursementDate,
-                "dd-MM-yyyy"
+                "dd-MM-yyyy",
             )
         }
-            setSubmissionDisburseDate()
+        setSubmissionDisburseDate()
     }
 
     /**
@@ -423,20 +433,23 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         with(binding) {
             tvAccountNumber.text = getString(
                 R.string.string_and_string,
-                getString(R.string.account_number) + " ", loanTemplate?.clientAccountNo
+                getString(R.string.account_number) + " ",
+                loanTemplate?.clientAccountNo,
             )
             tvNewLoanApplication.text = getString(
                 R.string.string_and_string,
-                getString(R.string.new_loan_application) + " ", loanTemplate?.clientName
+                getString(R.string.new_loan_application) + " ",
+                loanTemplate?.clientName,
             )
             tilPrincipalAmount.editText?.setText(loanTemplate?.principal.toString())
             tvCurrency.text = loanTemplate?.currency?.displayLabel
             listLoanPurpose.clear()
             listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
-            if (loanTemplate?.loanPurposeOptions != null)
+            if (loanTemplate?.loanPurposeOptions != null) {
                 for (loanPurposeOptions in loanTemplate.loanPurposeOptions) {
                     listLoanPurpose.add(loanPurposeOptions.name)
                 }
+            }
             loanPurposeField.setSimpleItems(listLoanPurpose.toTypedArray())
             loanPurposeField.setText(listLoanPurpose[0]!!, false)
         }
@@ -452,10 +465,11 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         this.loanTemplate = loanTemplate
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
-        if (loanTemplate?.loanPurposeOptions != null)
+        if (loanTemplate?.loanPurposeOptions != null) {
             for (loanPurposeOptions in loanTemplate.loanPurposeOptions) {
                 listLoanPurpose.add(loanPurposeOptions.name)
             }
+        }
         with(binding) {
             loanPurposeField.setSimpleItems(listLoanPurpose.toTypedArray())
             loanPurposeField.setText(listLoanPurpose[0]!!, false)
@@ -467,11 +481,13 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
             } else {
                 tvAccountNumber.text = getString(
                     R.string.string_and_string,
-                    getString(R.string.account_number) + " ", loanTemplate?.clientAccountNo
+                    getString(R.string.account_number) + " ",
+                    loanTemplate?.clientAccountNo,
                 )
                 tvNewLoanApplication.text = getString(
                     R.string.string_and_string,
-                    getString(R.string.new_loan_application) + " ", loanTemplate?.clientName
+                    getString(R.string.new_loan_application) + " ",
+                    loanTemplate?.clientName,
                 )
                 tilPrincipalAmount.editText?.setText(loanTemplate?.principal.toString())
                 tvCurrency.text = loanTemplate?.currency?.displayLabel
@@ -507,7 +523,6 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         hideProgressBar()
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
@@ -538,8 +553,8 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
          * @return Instance of [LoanApplicationFragment]
          */
         fun newInstance(
-                loanState: LoanState?,
-                loanWithAssociations: LoanWithAssociations?
+            loanState: LoanState?,
+            loanWithAssociations: LoanWithAssociations?,
         ): LoanApplicationFragment {
             val fragment = LoanApplicationFragment()
             val args = Bundle()

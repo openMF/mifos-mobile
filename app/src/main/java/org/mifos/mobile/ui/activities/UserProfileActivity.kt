@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.activities
 
 import android.os.Bundle
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityUserProfileBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity

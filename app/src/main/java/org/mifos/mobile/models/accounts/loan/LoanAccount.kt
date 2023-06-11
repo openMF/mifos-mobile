@@ -9,71 +9,72 @@ import org.mifos.mobile.models.accounts.Account
  * @since 22/06/16.
  */
 data class LoanAccount(
-        var loanProductId: Long = 0,
+    var loanProductId: Long = 0,
 
-        var externalId: String? = null,
+    var externalId: String? = null,
 
-        var numberOfRepayments: Long = 0,
+    var numberOfRepayments: Long = 0,
 
-        var accountNo: String? = null,
+    var accountNo: String? = null,
 
-        var productName: String? = null,
+    var productName: String? = null,
 
-        var productId: Int? = null,
+    var productId: Int? = null,
 
-        var loanProductName: String? = null,
+    var loanProductName: String? = null,
 
-        var clientName: String? = null,
+    var clientName: String? = null,
 
-        var loanProductDescription: String? = null,
+    var loanProductDescription: String? = null,
 
-        var principal: Double = 0.toDouble(),
+    var principal: Double = 0.toDouble(),
 
-        var annualInterestRate: Double = 0.toDouble(),
+    var annualInterestRate: Double = 0.toDouble(),
 
-        var status: Status? = null,
+    var status: Status? = null,
 
-        var loanType: LoanType? = null,
+    var loanType: LoanType? = null,
 
-        var loanCycle: Int? = null,
+    var loanCycle: Int? = null,
 
-        var loanBalance: Double = 0.toDouble(),
+    var loanBalance: Double = 0.toDouble(),
 
-        var amountPaid: Double = 0.toDouble(),
+    var amountPaid: Double = 0.toDouble(),
 
-        var currency: Currency?,
+    var currency: Currency?,
 
-        var inArrears: Boolean? = null,
+    var inArrears: Boolean? = null,
 
-        var summary: Summary? = null,
+    var summary: Summary? = null,
 
-        var loanPurposeName: String? = null,
+    var loanPurposeName: String? = null,
 
-        var timeline: Timeline?
+    var timeline: Timeline?,
 
 ) : Account(), Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readLong(),
-            parcel.readString(),
-            parcel.readLong(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readDouble(),
-            parcel.readDouble(),
-            parcel.readParcelable(Status::class.java.classLoader),
-            parcel.readParcelable(LoanType::class.java.classLoader),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readDouble(),
-            parcel.readDouble(),
-            parcel.readParcelable(Currency::class.java.classLoader),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readParcelable(Summary::class.java.classLoader),
-            parcel.readString(),
-            parcel.readParcelable(Timeline::class.java.classLoader))
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readParcelable(Status::class.java.classLoader),
+        parcel.readParcelable(LoanType::class.java.classLoader),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readParcelable(Currency::class.java.classLoader),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readParcelable(Summary::class.java.classLoader),
+        parcel.readString(),
+        parcel.readParcelable(Timeline::class.java.classLoader),
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(loanProductId)

@@ -1,11 +1,11 @@
 package org.mifos.mobile.ui.activities
 
 import android.content.Intent
-import androidx.biometric.BiometricManager
 import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
 import androidx.activity.result.ActivityResultLauncher
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -17,18 +17,11 @@ open class BiometricAuthentication(
 ) {
     private val executor = ContextCompat.getMainExecutor(context)
     private val callback = object : BiometricPrompt.AuthenticationCallback() {
-        override fun onAuthenticationFailed() {
-            super.onAuthenticationFailed()
-        }
 
         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
             super.onAuthenticationSucceeded(result)
             val intent = Intent(context, HomeActivity::class.java)
             context.startActivity(intent)
-        }
-
-        override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-            super.onAuthenticationError(errorCode, errString)
         }
     }
 
@@ -39,12 +32,14 @@ open class BiometricAuthentication(
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
                 Intent(Settings.ACTION_BIOMETRIC_ENROLL).putExtra(
                     EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                    BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK
+                    BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK,
                 )
             }
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> {
                 Intent(Settings.ACTION_FINGERPRINT_ENROLL)
             }
+
             else -> {
                 Intent(Settings.ACTION_SECURITY_SETTINGS)
             }
@@ -58,9 +53,11 @@ open class BiometricAuthentication(
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 BiometricCapability.HAS_BIOMETRIC_AUTH
             }
+
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 BiometricCapability.NOT_ENROLLED
             }
+
             else -> {
                 BiometricCapability.NOT_SUPPORTED
             }
@@ -77,4 +74,3 @@ open class BiometricAuthentication(
         biometricPrompt.authenticate(promptInfo)
     }
 }
-

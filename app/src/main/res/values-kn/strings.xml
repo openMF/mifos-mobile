@@ -324,7 +324,7 @@
     <string name="not_available">ದಿ</string>
     <string name="upload_qr_code">QR ಸಲ್ಲಿಸಿ</string>
     <string name="select_region_qr">QR ಕೋಡ್ನೊಂದಿಗೆ ಪ್ರದೇಶವನ್ನು ಆರಿಸಿ</string>
-    
+
     <string name="need_help">ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
     <string name="transferred_successfully">ಯಶಸ್ವಿ ವರ್ಗಾವಣೆ</string>
 
@@ -336,7 +336,7 @@
     <string name="active_uc">ಸಕ್ರಿಯ</string>
     <string name="inactive_uc">ನಿಷ್ಕ್ರಿಯ</string>
 
-    
+
     <string name="dialog_logout">ಲಾಗ್ ಔಟ್ ಮಾಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <string name="dialog_action_ok">ಸರಿ</string>
     <string name="dialog_action_cancel">ರದ್ದು</string>
@@ -356,7 +356,7 @@
     <string name="permission_denied_storage">ಶೇಖರಣಾ ನಿರಾಕರಣೆಗಳು ನಿರಾಕರಿಸಲ್ಪಟ್ಟವು</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">%1$s ಅನ್ನು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
 
-    
+
     <string name="hello_client">ಹಲೋ, %1$s</string>
     <string name="invalid_amount">ಅಮಾನ್ಯವಾದ ಮೊತ್ತ</string>
     <string name="exit_message">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಒತ್ತಿರಿ</string>

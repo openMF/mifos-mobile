@@ -1,17 +1,13 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import okhttp3.ResponseBody
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.models.templates.loans.LoanTemplate
@@ -19,7 +15,6 @@ import org.mifos.mobile.presenters.LoanApplicationPresenter
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.views.LoanApplicationMvpView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -71,7 +66,8 @@ class LoanApplicationPresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showLoanTemplate(loanTemplate)
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_template))
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_template))
     }
 
     @Test
@@ -82,7 +78,8 @@ class LoanApplicationPresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showUpdateLoanTemplate(loanTemplate)
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_template))
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_template))
     }
 
     @Test
@@ -99,29 +96,34 @@ class LoanApplicationPresenterTest {
     @Test
     fun testLoadLoanApplicationTemplateByProductNew() {
         val loanState = LoanState.CREATE
-        Mockito.`when`(dataManager?.getLoanTemplateByProduct(1)).thenReturn(Observable.just(loanTemplateWithProduct))
+        Mockito.`when`(dataManager?.getLoanTemplateByProduct(1))
+            .thenReturn(Observable.just(loanTemplateWithProduct))
         presenter?.loadLoanApplicationTemplateByProduct(1, loanState)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showLoanTemplateByProduct(loanTemplateWithProduct)
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_template))
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_template))
     }
 
     @Test
     fun testLoadLoanApplicationTemplateByProductUpdate() {
         val loanState = LoanState.UPDATE
-        Mockito.`when`(dataManager?.getLoanTemplateByProduct(1)).thenReturn(Observable.just(loanTemplateWithProduct))
+        Mockito.`when`(dataManager?.getLoanTemplateByProduct(1))
+            .thenReturn(Observable.just(loanTemplateWithProduct))
         presenter?.loadLoanApplicationTemplateByProduct(1, loanState)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showUpdateLoanTemplateByProduct(loanTemplateWithProduct)
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_template))
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_template))
     }
 
     @Test
     fun testLoadLoanApplicationTemplateByProductFails() {
         val loanState = LoanState.CREATE
-        Mockito.`when`(dataManager?.getLoanTemplateByProduct(1)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.getLoanTemplateByProduct(1))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.loadLoanApplicationTemplateByProduct(1, loanState)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()

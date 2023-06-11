@@ -1,23 +1,18 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import okhttp3.ResponseBody
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.presenters.TransferProcessPresenter
 import org.mifos.mobile.ui.views.TransferProcessView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -59,7 +54,8 @@ class TransferProcessPresenterTest {
 
     @Test
     fun testMakeSavingsTransfer() {
-        Mockito.`when`(dataManager?.makeTransfer(transferPayload)).thenReturn(Observable.just(mockedResponseBody))
+        Mockito.`when`(dataManager?.makeTransfer(transferPayload))
+            .thenReturn(Observable.just(mockedResponseBody))
         presenter?.makeSavingsTransfer(transferPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -68,7 +64,8 @@ class TransferProcessPresenterTest {
 
     @Test
     fun testMakeSavingsTransferFails() {
-        Mockito.`when`(dataManager?.makeTransfer(transferPayload)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.makeTransfer(transferPayload))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.makeSavingsTransfer(transferPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -77,7 +74,11 @@ class TransferProcessPresenterTest {
 
     @Test
     fun testMakeTPTTransfer() {
-        Mockito.`when`<Observable<ResponseBody?>?>(dataManager?.makeThirdPartyTransfer(transferPayload)).thenReturn(Observable.just(mockedResponseBody))
+        Mockito.`when`<Observable<ResponseBody?>?>(
+            dataManager?.makeThirdPartyTransfer(
+                transferPayload,
+            ),
+        ).thenReturn(Observable.just(mockedResponseBody))
         presenter?.makeTPTTransfer(transferPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -86,7 +87,8 @@ class TransferProcessPresenterTest {
 
     @Test
     fun testMakeTPTTransferFails() {
-        Mockito.`when`(dataManager?.makeThirdPartyTransfer(transferPayload)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.makeThirdPartyTransfer(transferPayload))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.makeTPTTransfer(transferPayload)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()

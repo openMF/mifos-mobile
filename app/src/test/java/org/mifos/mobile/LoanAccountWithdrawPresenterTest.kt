@@ -1,23 +1,18 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import okhttp3.ResponseBody
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.presenters.LoanAccountWithdrawPresenter
 import org.mifos.mobile.ui.views.LoanAccountWithdrawView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -61,21 +56,25 @@ class LoanAccountWithdrawPresenterTest {
 
     @Test
     fun testWithdrawLoanAccount() {
-        Mockito.`when`(dataManager?.withdrawLoanAccount(loanId, loanWithdraw)).thenReturn(Observable.just(mockedResponseBody))
+        Mockito.`when`(dataManager?.withdrawLoanAccount(loanId, loanWithdraw))
+            .thenReturn(Observable.just(mockedResponseBody))
         presenter?.withdrawLoanAccount(loanId, loanWithdraw)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showLoanAccountWithdrawSuccess()
-        Mockito.verify(view, Mockito.never())?.showLoanAccountWithdrawError(context?.getString(R.string.error_loan_account_withdraw))
+        Mockito.verify(view, Mockito.never())
+            ?.showLoanAccountWithdrawError(context?.getString(R.string.error_loan_account_withdraw))
     }
 
     @Test
     fun testWithdrawLoanAccountFail() {
-        Mockito.`when`(dataManager?.withdrawLoanAccount(loanId, loanWithdraw)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.withdrawLoanAccount(loanId, loanWithdraw))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.withdrawLoanAccount(loanId, loanWithdraw)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
-        Mockito.verify(view)?.showLoanAccountWithdrawError(context?.getString(R.string.error_loan_account_withdraw))
+        Mockito.verify(view)
+            ?.showLoanAccountWithdrawError(context?.getString(R.string.error_loan_account_withdraw))
         Mockito.verify(view, Mockito.never())?.showLoanAccountWithdrawSuccess()
     }
 }

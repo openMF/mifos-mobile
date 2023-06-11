@@ -21,7 +21,8 @@ object FakeJsonName {
     const val LOAN_ACCOUNT_WITH_TRANSACTIONS_JSON = "loanAccountWithTransactions.json"
     const val LOAN_ACCOUNT_WITH_EMPTY_TRANSACTIONS_JSON = "loanAccountWithEmptyTransactions.json"
     const val LOAN_ACCOUNT_WITH_REPAYMENT_SCHEDULE_JSON = "loanAccountWithRepaymentSchedule.json"
-    const val LOAN_ACCOUNT_WITH_EMPTY_REPAYMENT_SCHEDULE_JSON = "loanAccountWithEmptyRepaymentSchedule.json"
+    const val LOAN_ACCOUNT_WITH_EMPTY_REPAYMENT_SCHEDULE_JSON =
+        "loanAccountWithEmptyRepaymentSchedule.json"
     const val CLIENTS_JSON = "clients.json"
     const val CLIENTS_NOT_FOUND_JSON = "clientsNotFound.json"
     const val USER_JSON = "user.json"

@@ -48,7 +48,7 @@
     <string name="remark">Observação</string>
     <string name="expected_disbursement_date">Data de desembolso esperada</string>
     <string name="submission_date">Data de submissão</string>
-	<string name="submitted">Submetido</string>
+    <string name="submitted">Submetido</string>
     <string name="disbursement">Desembolso</string>
     <string name="transfer_date">Data de transferência</string>
     <string name="apply_for_loan">Solicitar empréstimo</string>
@@ -99,7 +99,7 @@
     <string name="savings_charges">Cobranças de poupanças</string>
     <string name="active">Ativo</string>
     <string name="closed">Fechado</string>
-	<string name="withdrawn">Retirada</string>
+    <string name="withdrawn">Retirada</string>
     <string name="need_approval">Necessita de aprovação</string>
     <string name="pending">Pendente</string>
     <string name="matured">Amadurecido</string>
@@ -131,11 +131,10 @@
     <string name="submit">Submeter</string>
 
     <string name="account_not_active_to_perform_deposit">Conta deve estar ativa para depositar</string>
-	
+
 
     <string name="account_not_active_to_perform_transfer">Conta deve estar ativa para transferir</string>
-	
-	
+
 
     <string name="empty_savings_accounts">Não existe nenhuma Conta Poupança associada</string>
     <string name="empty_loan_accounts">Não existe nenhuma Conta de Empréstimo associada</string>
@@ -155,37 +154,37 @@
     <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s cannot begin or
         end with blank space
     </string>
-	<string name="error_internal_server">Erro interno do servidor, por favor, tente novamente</string>
+    <string name="error_internal_server">Erro interno do servidor, por favor, tente novamente</string>
     <string name="error_client_loading">Erro ao carregar a lista de clientes</string>
     <string name="error_loan_accounts_list_loading">Erro ao carregar a lista de contas</string>
     <string name="error_saving_accounts_list_loading">Erro ao carregar a lista de contas poupança</string>
     <string name="error_saving_account_details_loading">Erro ao carregar detalhes das contas poupança</string>
-    
-	<string name="error_recent_transactions_loading">Erro ao carregar Transações Recentes</string>
+
+    <string name="error_recent_transactions_loading">Erro ao carregar Transações Recentes</string>
     <string name="error_client_charge_loading">Erro ao carregar cobranças de cliente</string>
     <string name="error_no_charge">Nenhuma cobrança encontrada</string>
-	<string name="error_client_not_found">Cliente não encontrado</string>
+    <string name="error_client_not_found">Cliente não encontrado</string>
     <string name="error_fetching_client">Erro ao buscar cliente</string>
     <string name="error_fetching_user_profile">Falha ao buscar o perfil do usuário</string>
-	<string name="error_fetching_accounts">Erro ao buscar contas</string>
+    <string name="error_fetching_accounts">Erro ao buscar contas</string>
     <string name="error_fetching_repayment_schedule">Erro ao buscar Repayment Schedule</string>
     <string name="error_same_account_transfer">Não é possível transferir dentro da mesma conta</string>
     <string name="error_fetching_account_transfer_template">Erro ao buscar modelo de transferência de conta</string>
-    
-	
-	<string name="error_fetching_beneficiaries">Erro ao buscar Beneficiários</string>
+
+
+    <string name="error_fetching_beneficiaries">Erro ao buscar Beneficiários</string>
     <string name="error_fetching_beneficiary_template">Erro ao buscar modelo de beneficiários</string>
-	<string name="error_fetching_template">Erro ao buscar o modelo</string>
+    <string name="error_fetching_template">Erro ao buscar o modelo</string>
     <string name="error_creating_beneficiary">Erro ao criar Beneficiário</string>
     <string name="error_updating_beneficiary">Erro ao atualizar Beneficiário</string>
     <string name="error_deleting_beneficiary">Erro ao remover Beneficiário</string>
     <string name="error_loan_account_withdraw">Erro ao levantar da conta empréstimo</string>
     <string name="error_fetching_third_party_transfer_template">Erro ao buscar modelo de transferência de terceiros</string>
 
-	
-	<string name="no_beneficiary_found_please_add">Não existem Beneficiários. Por favor, adicione um.</string>
-    
-	<string name="unauthorized_client">Sem autorização</string>
+
+    <string name="no_beneficiary_found_please_add">Não existem Beneficiários. Por favor, adicione um.</string>
+
+    <string name="unauthorized_client">Sem autorização</string>
     <string name="qr_code">Código QR</string>
     <string name="share_qr_code">Partilhar código QR</string>
     <string name="monitor">Monitor</string>
@@ -204,7 +203,7 @@
     <string name="error_reading_qr"> Erro ao ler código QR, verifique se selecionou a região correta
     </string>
     <string name="error_fetching_image">Erro ao buscar imagem </string>
-	<string name="fetching_client">Buscando Cliente</string>
+    <string name="fetching_client">Buscando Cliente</string>
 
     <string name="not_contain_username">Espaços</string>
     <string name="client_name">Nome de Cliente</string>
@@ -259,10 +258,9 @@
     <string name="loan_application_submitted_successfully">Solicitação de empréstimo submetida com sucesso</string>
     <string name="loan_application_updated_successfully">Solicitação de empréstimo atualizada com sucesso</string>
     <string name="loan_application_withdrawn_successfully">Solicitação de empréstimo levantada com sucesso</string>
-    
-	
-	
-	<string name="none">Nenhuma</string>
+
+
+    <string name="none">Nenhuma</string>
     <string name="all">Todas</string>
     <string name="four_weeks">4 Semanas</string>
     <string name="three_months">3 Meses</string>
@@ -273,7 +271,7 @@
     <string name="filtered">Filtrado</string>
     <string name="select_date">Por favor, selecione a data inicial e final</string>
     <string name="end_date_must_be_greater">End date must be greater than Start date</string>
-	<string name="saving_account_transactions_details">Transações da conta poupança</string>
+    <string name="saving_account_transactions_details">Transações da conta poupança</string>
     <string name="no_internet_connection">Sem ligação à internet</string>
     <string name="disbursement_date">Data de desembolso</string>
     <string name="no_of_payments">Número de pagamentos</string>
@@ -305,8 +303,8 @@
     <string name="delete_beneficiary">Remover Beneficiário</string>
     <string name="delete_beneficiary_confirmation">Tem a certeza que deseja remover este beneficiário?</string>
 
-	
-	<string name="delete">Remover</string>
+
+    <string name="delete">Remover</string>
     <string name="beneficiary_deleted_successfully">Beneficiário removido com sucesso</string>
     <string name="third_party_transfer">Transferência de terceiros</string>
     <string name="total_loan">Empréstimo Total</string>
@@ -323,8 +321,8 @@
     <string name="client_classification">Classificação de Cliente</string>
     <string name="select_mode">Selecione Modo</string>
     <string name="add_beneficiary_option">Adicionar Terceiros Beneficiários à sua conta. Manualmente ou com código QR</string>
-	
-	
+
+
     <string name="invalid_qr">Não pode fazer ações na sua conta, por favor, digitalize outro utilizador
         Código QR de Contas poupança e empréstimo
     </string>
@@ -334,8 +332,8 @@
     <string name="error_passcode">PIN deverá ter 4 dígitos</string>
     <string name="incorrect_passcode">PIN Incorreto</string>
     <string name="incorrect_passcode_more_than_three">Introduziu um PIN incorreto mais do que 3 vezes</string>
-	
-	
+
+
     <string name="skip">Saltar</string>
     <string name="save">Guardar</string>
     <string name="passcode_setup">Configure um PIN para entrar</string>
@@ -368,23 +366,23 @@
     <string name="inactive_uc">INATIVO</string>
 
     <!--Material Dialog-->
-	<string name="dialog_logout">Tem a certeza que deseja sair?</string>
+    <string name="dialog_logout">Tem a certeza que deseja sair?</string>
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_action_cancel">Cancelar</string>
     <string name="dialog_action_back">de volta</string>
-	<string name="dialog_permission_denied">Permissão recusada</string>
+    <string name="dialog_permission_denied">Permissão recusada</string>
     <string name="dialog_action_i_am_sure">Tenho a certeza</string>
     <string name="dialog_action_re_try">Tentar novamente</string>
     <string name="dialog_action_app_settings">Definições da App</string>
     <string name="dialog_message_camera_permission_denied_prompt">Sem permissão da câmera não conseguirá
         digitalizar o código QR para adicionar beneficiário. Tem a certeza que deseja recusar esta permissão?
     </string>
-	
+
     <string name="dialog_message_camera_permission_never_ask_again">Você negou permissão para usar a câmera, sem essa permissão você não poderá adicionar beneficiários usando o QR Code. Por favor, habilite-o nas configurações</string>
     <string name="dialog_message_storage_permission_denied_prompt">Sem permissão de armazenamento não conseguirá
         enviar um código QR para adicionar beneficiário. Tem a certeza que quer recusar esta permissão?
     </string>
-	
+
     <string name="dialog_message_read_storage_permission_never_ask_again">Recusou a permissão para
         ler do armazenamento. Sem esta permissão, não conseguirá adicionar beneficiários usando código QR.
         Por favor, ative-a nas definições.
@@ -407,7 +405,7 @@
     <string name="dialog_are_you_sure_that_you_want_to_string">Tem a certeza que deseja %1$s?</string>
 
     <!--Format Strings-->
-	<string name="hello_client">Olá, %1$s</string>
+    <string name="hello_client">Olá, %1$s</string>
     <string name="double_amount">%1$.2f</string>
     <string name="double_and_string">%1$.2f %2$s</string>
     <string name="string_and_string">%1$s%2$s</string>
@@ -434,10 +432,10 @@
     <string name="leave_email">Deixar um email</string>
     <string name="find_locations">Procurar Lugares</string>
     <string name="no_withdrawals">Nenhum levantamento</string>
-	<string name="clear_filters">Limpar os Filtros</string>
+    <string name="clear_filters">Limpar os Filtros</string>
     <string name="manage_accounts">Gerir contas</string>
     <string name="more">Mais</string>
-	<string name="settings">Definições</string>
+    <string name="settings">Definições</string>
     <string name="language">Língua</string>
     <string name="choose_language">Escolha a sua língua</string>
     <string name="notification">Notificações</string>

@@ -42,9 +42,9 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
         get() {
             if (field == null) {
                 field = DaggerActivityComponent.builder()
-                        .activityModule(ActivityModule(this))
-                        .applicationComponent(MifosSelfServiceApp.get(this).component())
-                        .build()
+                    .activityModule(ActivityModule(this))
+                    .applicationComponent(MifosSelfServiceApp.get(this).component())
+                    .build()
             }
             return field
         }
@@ -190,10 +190,13 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
     fun replaceFragment(fragment: Fragment, addToBackStack: Boolean, containerId: Int) {
         invalidateOptionsMenu()
         val backStateName = fragment.javaClass.name
-        val fragmentPopped = supportFragmentManager.popBackStackImmediate(backStateName,
-                0)
+        val fragmentPopped = supportFragmentManager.popBackStackImmediate(
+            backStateName,
+            0,
+        )
         if (!fragmentPopped && supportFragmentManager.findFragmentByTag(backStateName) ==
-                null) {
+            null
+        ) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(containerId, fragment, backStateName)
             if (addToBackStack) {
@@ -223,9 +226,12 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
         fun hideKeyboard(context: Context) {
             val activity = context as Activity
             val inputMethodManager = context.getSystemService(
-                    Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                Activity.INPUT_METHOD_SERVICE,
+            ) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(
-                    activity.currentFocus?.windowToken, 0)
+                activity.currentFocus?.windowToken,
+                0,
+            )
         }
     }
 }

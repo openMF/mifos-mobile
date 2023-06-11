@@ -1,7 +1,6 @@
 package org.mifos.mobile.models.templates.beneficiary
 
 import android.os.Parcelable
-
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -10,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class BeneficiaryTemplate(
-        var accountTypeOptions: List<AccountTypeOption>? = null
+    var accountTypeOptions: List<AccountTypeOption>? = null,
 ) : Parcelable

@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowClientChargeBinding
 import org.mifos.mobile.models.Charge
@@ -12,14 +11,12 @@ import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 
-import java.util.*
-
 /**
  * @author Vishwajeet
  * @since 17/8/16.
  */
-class ClientChargeAdapter (
-    val onItemClick: (itemPosition: Int) -> Unit
+class ClientChargeAdapter(
+    val onItemClick: (itemPosition: Int) -> Unit,
 ) : RecyclerView.Adapter<ClientChargeAdapter.ViewHolder>() {
 
     private var clientChargeList: List<Charge?>? = ArrayList()
@@ -32,7 +29,8 @@ class ClientChargeAdapter (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowClientChargeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RowClientChargeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val vh = ViewHolder(binding)
         binding.root.setOnClickListener {
             onItemClick(vh.bindingAdapterPosition)
@@ -51,26 +49,46 @@ class ClientChargeAdapter (
     }
 
     override fun getItemCount(): Int {
-        return if (clientChargeList != null) clientChargeList!!.size
-        else 0
+        return if (clientChargeList != null) {
+            clientChargeList!!.size
+        } else {
+            0
+        }
     }
 
-    class ViewHolder(private val binding : RowClientChargeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: RowClientChargeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         // Binds the values for each of the stored variables to the view
         // Also changes the color of the circle depending on whether the charge is active or not
         fun bind(charge: Charge?, currencyRepresentation: String?, context: Context?) {
             with(binding) {
-                tvAmount.text = context?.getString(R.string.string_and_string,
-                    currencyRepresentation, formatCurrency(context,
-                        charge?.amount))
-                tvAmountPaid.text = context?.getString(R.string.string_and_string,
-                    currencyRepresentation, formatCurrency(context,
-                        charge?.amountPaid))
-                tvAmountWaived.text = context?.getString(R.string.string_and_string, currencyRepresentation,
-                    formatCurrency(context, charge?.amountWaived))
-                tvAmountOutstanding.text = context?.getString(R.string.string_and_string, currencyRepresentation,
-                    formatCurrency(context, charge?.amountOutstanding))
+                tvAmount.text = context?.getString(
+                    R.string.string_and_string,
+                    currencyRepresentation,
+                    formatCurrency(
+                        context,
+                        charge?.amount,
+                    ),
+                )
+                tvAmountPaid.text = context?.getString(
+                    R.string.string_and_string,
+                    currencyRepresentation,
+                    formatCurrency(
+                        context,
+                        charge?.amountPaid,
+                    ),
+                )
+                tvAmountWaived.text = context?.getString(
+                    R.string.string_and_string,
+                    currencyRepresentation,
+                    formatCurrency(context, charge?.amountWaived),
+                )
+                tvAmountOutstanding.text = context?.getString(
+                    R.string.string_and_string,
+                    currencyRepresentation,
+                    formatCurrency(context, charge?.amountOutstanding),
+                )
                 tvClientName.text = charge?.name
                 if (charge?.dueDate?.isNotEmpty() == true) {
                     tvDueDate.text = getDateAsString(charge.dueDate)

@@ -324,9 +324,9 @@
     <string name="not_available">LA</string>
     <string name="upload_qr_code">Enviar QR</string>
     <string name="select_region_qr">Elija región con código QR</string>
-    
+
     <string name="need_help">Contactanos</string>
-    
+
     <string name="transferred_successfully">Transferencia exitosa</string>
 
     <string name="total">Total:</string>
@@ -337,7 +337,7 @@
     <string name="active_uc">ACTIVO</string>
     <string name="inactive_uc">INACTIVO</string>
 
-    
+
     <string name="dialog_logout">¿Estás seguro de que quieres cerrar sesión?</string>
     <string name="dialog_action_ok">Bueno</string>
     <string name="dialog_action_cancel">Cancelar</string>
@@ -357,7 +357,7 @@
     <string name="permission_denied_storage">Las denegaciones de almacenamiento fueron rechazadas.</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">¿Estás seguro de que quieres %1$s?</string>
 
-    
+
     <string name="hello_client">Hola, %1$s.</string>
     <string name="invalid_amount">Cantidad inválida</string>
     <string name="exit_message">Presione de nuevo para salir</string>

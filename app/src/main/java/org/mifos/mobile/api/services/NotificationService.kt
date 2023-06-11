@@ -19,7 +19,7 @@ interface NotificationService {
 
     @PUT(ApiEndPoints.DEVICE + "/registration/{id}")
     fun updateRegisterNotification(
-            @Path("id") id: Long,
-            @Body payload: NotificationRegisterPayload?
+        @Path("id") id: Long,
+        @Body payload: NotificationRegisterPayload?,
     ): Observable<ResponseBody?>?
 }

@@ -4,6 +4,6 @@
     <item
         android:id="@+id/item_qr_code_share"
         android:icon="@drawable/ic_share_wrapper"
-        app:showAsAction="always"
-        android:title="@string/share_qr_code"/>
+        android:title="@string/share_qr_code"
+        app:showAsAction="always" />
 </menu>

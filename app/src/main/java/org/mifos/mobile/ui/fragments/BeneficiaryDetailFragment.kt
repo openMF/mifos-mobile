@@ -2,7 +2,12 @@ package org.mifos.mobile.ui.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryDetailBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -25,7 +30,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
     private var _binding: FragmentBeneficiaryDetailBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: BeneficiaryDetailPresenter? = null
     private var beneficiary: Beneficiary? = null
@@ -37,9 +42,12 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentBeneficiaryDetailBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentBeneficiaryDetailBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiary_detail))
         presenter?.attachView(this)
@@ -56,7 +64,8 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
             tvAccountNumber.text = beneficiary?.accountNumber
             tvClientName.text = beneficiary?.clientName
             tvAccountType.text = beneficiary?.accountType?.value
-            tvTransferLimit.text = CurrencyUtil.formatCurrency(requireActivity(), beneficiary?.transferLimit!!)
+            tvTransferLimit.text =
+                CurrencyUtil.formatCurrency(requireActivity(), beneficiary?.transferLimit!!)
             tvOfficeName.text = beneficiary?.officeName
         }
     }
@@ -68,19 +77,28 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_update_beneficiary -> (activity as BaseActivity?)?.replaceFragment(BeneficiaryApplicationFragment.newInstance(BeneficiaryState.UPDATE, beneficiary), true, R.id.container)
+            R.id.item_update_beneficiary -> (activity as BaseActivity?)?.replaceFragment(
+                BeneficiaryApplicationFragment.newInstance(BeneficiaryState.UPDATE, beneficiary),
+                true,
+                R.id.container,
+            )
+
             R.id.item_delete_beneficiary -> MaterialDialog.Builder().init(activity)
-                    .setTitle(getString(R.string.delete_beneficiary))
-                    .setMessage(getString(R.string.delete_beneficiary_confirmation))
-                    .setPositiveButton(getString(R.string.delete),
-                            DialogInterface.OnClickListener { dialog, _ ->
-                                dialog.dismiss()
-                                presenter?.deleteBeneficiary(beneficiary?.id?.toLong())
-                            })
-                    .setNegativeButton(getString(R.string.cancel),
-                            DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
-                    .createMaterialDialog()
-                    .show()
+                .setTitle(getString(R.string.delete_beneficiary))
+                .setMessage(getString(R.string.delete_beneficiary_confirmation))
+                .setPositiveButton(
+                    getString(R.string.delete),
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.dismiss()
+                        presenter?.deleteBeneficiary(beneficiary?.id?.toLong())
+                    },
+                )
+                .setNegativeButton(
+                    getString(R.string.cancel),
+                    DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() },
+                )
+                .createMaterialDialog()
+                .show()
         }
         return true
     }

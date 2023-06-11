@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
 import io.reactivex.disposables.Disposable
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentGuarantorListBinding
 import org.mifos.mobile.models.guarantor.GuarantorPayload
@@ -25,7 +21,6 @@ import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.RxBus.listen
 import org.mifos.mobile.utils.RxEvent.AddGuarantorEvent
 import org.mifos.mobile.utils.RxEvent.DeleteGuarantorEvent
-
 import javax.inject.Inject
 
 /*
@@ -36,7 +31,7 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     private var _binding: FragmentGuarantorListBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: GuarantorListPresenter? = null
     var adapter: GuarantorListAdapter? = null
@@ -51,23 +46,29 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentGuarantorListBinding.inflate(inflater,container,false)
+        _binding = FragmentGuarantorListBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.view_guarantor))
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         if (list == null) {
             presenter?.getGuarantorList(loanId)
-            adapter = GuarantorListAdapter(context,
+            adapter = GuarantorListAdapter(
+                context,
                 object : GuarantorListAdapter.OnClickListener {
                     override fun setOnClickListener(position: Int) {
-                        (activity as BaseActivity?)?.replaceFragment(GuarantorDetailFragment
-                            .newInstance(position, loanId, list!![position]),
-                            true, R.id.container)
+                        (activity as BaseActivity?)?.replaceFragment(
+                            GuarantorDetailFragment
+                                .newInstance(position, loanId, list!![position]),
+                            true,
+                            R.id.container,
+                        )
                     }
-                })
+                },
+            )
             setUpRxBus()
         }
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
@@ -85,9 +86,13 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (list != null && list?.size == 0) {
-            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.no_guarantors),
+            sweetUIErrorHandler?.showSweetCustomErrorUI(
+                getString(R.string.no_guarantors),
                 getString(R.string.tap_to_add_guarantor),
-                R.drawable.ic_person_black_24dp, binding.llContainer, binding.layoutError.root)
+                R.drawable.ic_person_black_24dp,
+                binding.llContainer,
+                binding.layoutError.root,
+            )
         }
         binding.rvGuarantors.adapter = adapter
         binding.rvGuarantors.layoutManager = LinearLayoutManager(context)
@@ -95,15 +100,21 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
 
     private fun setUpRxBus() {
         disposableAddGuarantor = listen(AddGuarantorEvent::class.java)
-            .subscribe { (payload, index) -> //TODO wrong guarantor id is assigned, although it wont affect the working
-                if (index != null)
-                    list?.add(index, GuarantorPayload(list?.size?.toLong(),
-                        payload?.officeName,
-                        payload?.lastName,
-                        payload?.guarantorType,
-                        payload?.firstName,
-                        DateHelper.getCurrentDate("yyyy-MM-dd", "-"),
-                        loanId))
+            .subscribe { (payload, index) -> // TODO wrong guarantor id is assigned, although it wont affect the working
+                if (index != null) {
+                    list?.add(
+                        index,
+                        GuarantorPayload(
+                            list?.size?.toLong(),
+                            payload?.officeName,
+                            payload?.lastName,
+                            payload?.guarantorType,
+                            payload?.firstName,
+                            DateHelper.getCurrentDate("yyyy-MM-dd", "-"),
+                            loanId,
+                        ),
+                    )
+                }
                 adapter?.setGuarantorList(list)
             }
         disposableDeleteGuarantor = listen(DeleteGuarantorEvent::class.java)
@@ -114,7 +125,16 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     }
 
     fun addGuarantor() {
-        (activity as BaseActivity?)?.replaceFragment(AddGuarantorFragment.newInstance(0, GuarantorState.CREATE, null, loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            AddGuarantorFragment.newInstance(
+                0,
+                GuarantorState.CREATE,
+                null,
+                loanId,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     override fun showProgress() {
@@ -128,9 +148,13 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     override fun showGuarantorListSuccessfully(list: List<GuarantorPayload?>?) {
         this.list = list as MutableList<GuarantorPayload?>?
         if (list?.size == 0) {
-            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.no_guarantors),
+            sweetUIErrorHandler?.showSweetCustomErrorUI(
+                getString(R.string.no_guarantors),
                 getString(R.string.tap_to_add_guarantor),
-                R.drawable.ic_person_black_24dp, binding.llContainer, binding.layoutError.root)
+                R.drawable.ic_person_black_24dp,
+                binding.llContainer,
+                binding.layoutError.root,
+            )
         } else {
             adapter?.setGuarantorList(list)
         }

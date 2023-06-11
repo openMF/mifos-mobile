@@ -8,10 +8,10 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-
-import org.mifos.mobile.R
+import android.widget.RadioButton
+import android.widget.TextView
 import com.hbb20.CountryCodePicker
+import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationBinding
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.presenters.RegistrationPresenter
@@ -21,23 +21,23 @@ import org.mifos.mobile.ui.views.RegistrationView
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.PasswordStrength
 import org.mifos.mobile.utils.Toaster
-
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 31/7/17.
  */
 class RegistrationFragment : BaseFragment(), RegistrationView {
-    private var _binding : FragmentRegistrationBinding? = null
+    private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
     @JvmField
     @Inject
     var presenter: RegistrationPresenter? = null
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val rootView = binding.root
         (activity as BaseActivity?)?.activityComponent?.inject(this)
@@ -56,6 +56,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
                     updatePasswordStrengthView(charSequence.toString())
                 }
             }
+
             override fun afterTextChanged(editable: Editable) {}
         })
         return rootView
@@ -93,14 +94,17 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
 
     private fun registerClicked() {
         if (areFieldsValidated()) {
-            val radioButton = binding.rgVerificationMode.checkedRadioButtonId.let { binding.root.findViewById<RadioButton>(it) }
+            val radioButton = binding.rgVerificationMode.checkedRadioButtonId.let {
+                binding.root.findViewById<RadioButton>(it)
+            }
             val payload = RegisterPayload()
             payload.accountNumber = binding.etAccountNumber.text.toString()
             payload.authenticationMode = radioButton?.text.toString()
             payload.email = binding.etEmail.text.toString()
             payload.firstName = binding.etFirstName.text.toString()
             payload.lastName = binding.etLastName.text.toString()
-            payload.mobileNumber = binding.countryCodePicker.selectedCountryCode.toString() + binding.etPhoneNumber.text.toString()
+            payload.mobileNumber =
+                binding.countryCodePicker.selectedCountryCode.toString() + binding.etPhoneNumber.text.toString()
             if (binding.etPassword.text.toString() != binding.etConfirmPassword.text.toString()) {
                 Toaster.show(binding.root, getString(R.string.error_password_not_match))
                 return
@@ -120,53 +124,95 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     private fun areFieldsValidated(): Boolean {
         val rootView = binding.root
         if (binding.etAccountNumber.text.toString().trim { it <= ' ' }.isEmpty()) {
-            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.account_number)))
+            Toaster.show(
+                rootView,
+                getString(R.string.error_validation_blank, getString(R.string.account_number)),
+            )
             return false
         } else if (binding.etUsername.text.toString().trim { it <= ' ' }.isEmpty()) {
-            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.username)))
+            Toaster.show(
+                rootView,
+                getString(R.string.error_validation_blank, getString(R.string.username)),
+            )
             return false
         } else if (binding.etUsername.text.toString().trim { it <= ' ' }.length < 6) {
             Toaster.show(rootView, getString(R.string.error_username_greater_than_six))
             return false
         } else if (binding.etUsername.text.toString().trim { it <= ' ' }.contains(" ")) {
-            Toaster.show(rootView, getString(R.string.error_validation_cannot_contain_spaces,
-                    getString(R.string.username), getString(R.string.not_contain_username)))
+            Toaster.show(
+                rootView,
+                getString(
+                    R.string.error_validation_cannot_contain_spaces,
+                    getString(R.string.username),
+                    getString(R.string.not_contain_username),
+                ),
+            )
             return false
         } else if (binding.etFirstName.text?.isEmpty() == true) {
-            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.first_name)))
+            Toaster.show(
+                rootView,
+                getString(R.string.error_validation_blank, getString(R.string.first_name)),
+            )
             return false
         } else if (binding.etLastName.text.toString().trim { it <= ' ' }.isEmpty()) {
-            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.last_name)))
+            Toaster.show(
+                rootView,
+                getString(R.string.error_validation_blank, getString(R.string.last_name)),
+            )
             return false
         } else if (binding.etEmail.text.toString().trim { it <= ' ' }.isEmpty()) {
-            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.email)))
+            Toaster.show(
+                rootView,
+                getString(R.string.error_validation_blank, getString(R.string.email)),
+            )
             return false
         } else if (binding.etPassword.text.toString().trim { it <= ' ' }.isEmpty()) {
-            Toaster.show(rootView, getString(R.string.error_validation_blank, getString(R.string.password)))
+            Toaster.show(
+                rootView,
+                getString(R.string.error_validation_blank, getString(R.string.password)),
+            )
             return false
         } else if (binding.etPassword.text.toString().trim { it <= ' ' }.length
-                < binding.etPassword.text.toString().length) {
-            Toaster.show(rootView,
-                    getString(R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
-                            getString(R.string.password)))
+            < binding.etPassword.text.toString().length
+        ) {
+            Toaster.show(
+                rootView,
+                getString(
+                    R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
+                    getString(R.string.password),
+                ),
+            )
             return false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.text.toString().trim { it <= ' ' })
-                        .matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                binding.etEmail.text.toString().trim { it <= ' ' },
+            )
+                .matches()
+        ) {
             Toaster.show(rootView, getString(R.string.error_invalid_email))
             return false
         } else if (binding.etPassword.text.toString().trim { it <= ' ' }.length < 6) {
-            Toaster.show(rootView, getString(R.string.error_validation_minimum_chars,
-                    getString(R.string.password), resources.getInteger(R.integer.password_minimum_length)))
+            Toaster.show(
+                rootView,
+                getString(
+                    R.string.error_validation_minimum_chars,
+                    getString(R.string.password),
+                    resources.getInteger(R.integer.password_minimum_length),
+                ),
+            )
             return false
-        } else if(!isPhoneNumberValid(binding.countryCodePicker)){
-            Toaster.show(rootView,getString(R.string.invalid_phn_number))
+        } else if (!isPhoneNumberValid(binding.countryCodePicker)) {
+            Toaster.show(rootView, getString(R.string.invalid_phn_number))
             return false
         }
         return true
     }
 
     override fun showRegisteredSuccessfully() {
-        (activity as BaseActivity?)?.replaceFragment(RegistrationVerificationFragment.newInstance(), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            RegistrationVerificationFragment.newInstance(),
+            true,
+            R.id.container,
+        )
     }
 
     override fun showError(msg: String?) {
@@ -186,11 +232,12 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         presenter?.detachView()
         _binding = null
     }
+
     private fun isPhoneNumberValid(ccp: CountryCodePicker): Boolean {
         binding.countryCodePicker.registerCarrierNumberEditText(binding.etPhoneNumber)
         return ccp.isValidFullNumber
-
     }
+
     companion object {
         fun newInstance(): RegistrationFragment {
             return RegistrationFragment()

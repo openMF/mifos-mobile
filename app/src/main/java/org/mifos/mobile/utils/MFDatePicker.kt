@@ -10,21 +10,20 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.time.Instant
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
-enum class DatePickerConstrainType{
+enum class DatePickerConstrainType {
     ONLY_FUTURE_DAYS, ONLY_PAST_DAYS, NONE
 }
-
 
 fun getDatePickerDialog(
     selectedInstant: Instant = Instant.now(),
     constrainType: DatePickerConstrainType = DatePickerConstrainType.NONE,
-    onDatePick: (dateLong: Long) -> Unit = {}
+    onDatePick: (dateLong: Long) -> Unit = {},
 ): MaterialDatePicker<Long> {
-
     val constrainsBuilder = CalendarConstraints.Builder().apply {
-        when(constrainType){
+        when (constrainType) {
             DatePickerConstrainType.ONLY_FUTURE_DAYS -> setValidator(DateValidatorPointForward.now())
             DatePickerConstrainType.ONLY_PAST_DAYS -> setValidator(DateValidatorPointBackward.now())
             DatePickerConstrainType.NONE -> {}
@@ -35,10 +34,11 @@ fun getDatePickerDialog(
         .setSelection(selectedInstant.toEpochMilli())
         .setCalendarConstraints(constrainsBuilder.build())
         .build()
-    dialog.addOnPositiveButtonClickListener{
+    dialog.addOnPositiveButtonClickListener {
         onDatePick(it)
     }
     return dialog
 }
 
-fun getTodayFormatted(): String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+fun getTodayFormatted(): String =
+    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)

@@ -2,135 +2,136 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_account_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
     android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
-    android:id="@+id/ll_account_detail"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <TableLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
         <TableRow>
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:text="@string/beneficiary_name"
-                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                android:text="@string/beneficiary_name" />
 
             <TextView
                 android:id="@+id/tv_beneficiary_name"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/beneficiary_name" />
         </TableRow>
 
         <TableRow android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:text="@string/account_number"
-                style="@style/Mifos.DesignSystem.TextStyle.Label" />
+                android:text="@string/account_number" />
 
             <TextView
                 android:id="@+id/tv_account_number"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                style="@style/Mifos.DesignSystem.TextStyle.Body"
                 tools:text="@string/account_number" />
         </TableRow>
 
     </TableLayout>
 
     <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
-        android:layout_width="match_parent"
         app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
         <TableLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TableRow>
 
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:text="@string/client_name"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label" />
+                    android:text="@string/client_name" />
 
                 <TextView
                     android:id="@+id/tv_client_name"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="client_name" />
             </TableRow>
 
 
             <TableRow android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:text="@string/account_type"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label" />
+                    android:text="@string/account_type" />
 
                 <TextView
                     android:id="@+id/tv_account_type"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="account_type" />
             </TableRow>
 
             <TableRow android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:text="@string/transfer_limit"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label" />
+                    android:text="@string/transfer_limit" />
 
                 <TextView
                     android:id="@+id/tv_transfer_limit"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="transfer_limit" />
             </TableRow>
 
             <TableRow android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:text="@string/office_name"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label" />
+                    android:text="@string/office_name" />
 
                 <TextView
                     android:id="@+id/tv_office_name"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
                     tools:text="office_name" />
             </TableRow>
 

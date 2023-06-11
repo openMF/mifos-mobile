@@ -4,9 +4,9 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<LinearLayout android:id="@+id/cell_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_container"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/cell_height"
     android:gravity="center"
@@ -22,6 +22,6 @@
         android:gravity="center"
         android:maxLines="1"
         android:visibility="visible"
-        tools:text="Cell Data"/>
+        tools:text="Cell Data" />
 
 </LinearLayout>

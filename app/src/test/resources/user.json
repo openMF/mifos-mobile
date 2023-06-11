@@ -24,6 +24,6 @@
   "permissions": [
     "ALL_FUNCTIONS",
     "UPDATERUNNINGBALANCE_JOURNALENTRY"
-    ],
+  ],
   "shouldRenewPassword": false
 }

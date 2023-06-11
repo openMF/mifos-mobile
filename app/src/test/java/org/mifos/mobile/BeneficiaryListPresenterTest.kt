@@ -2,19 +2,16 @@ package org.mifos.mobile
 
 import android.content.Context
 import io.reactivex.Observable
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.presenters.BeneficiaryListPresenter
 import org.mifos.mobile.ui.views.BeneficiariesView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -61,13 +58,15 @@ class BeneficiaryListPresenterTest {
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showBeneficiaryList(beneficiaryList)
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_fetching_beneficiaries))
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_fetching_beneficiaries))
     }
 
     @Test
     @Throws(Exception::class)
     fun testLoadBeneficiariesFails() {
-        Mockito.`when`(dataManager?.beneficiaryList).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.beneficiaryList)
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.loadBeneficiaries()
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()

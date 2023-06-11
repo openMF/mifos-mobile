@@ -1,13 +1,17 @@
 package org.mifos.mobile.utils
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.Paint
 import android.util.Log
 
 /**
  * Created by dilpreet on 10/8/17.
  */
 class ImageUtil {
-    //Default width and height
+    // Default width and height
     fun compressImage(decodedBytes: ByteArray): Bitmap? {
         return compress(decodedBytes, 816.0f, 612.0f)
     }
@@ -74,15 +78,29 @@ class ImageUtil {
         scaleMatrix.setScale(ratioX, ratioY, middleX, middleY)
         val canvas = Canvas(scaledBitmap!!)
         canvas.setMatrix(scaleMatrix)
-        canvas.drawBitmap(bmp, middleX - bmp.width / 2, middleY - bmp.height / 2,
-                Paint(Paint.FILTER_BITMAP_FLAG))
-        scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
-                scaledBitmap.width, scaledBitmap.height, null,
-                true)
+        canvas.drawBitmap(
+            bmp,
+            middleX - bmp.width / 2,
+            middleY - bmp.height / 2,
+            Paint(Paint.FILTER_BITMAP_FLAG),
+        )
+        scaledBitmap = Bitmap.createBitmap(
+            scaledBitmap,
+            0,
+            0,
+            scaledBitmap.width,
+            scaledBitmap.height,
+            null,
+            true,
+        )
         return scaledBitmap
     }
 
-    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+    private fun calculateInSampleSize(
+        options: BitmapFactory.Options,
+        reqWidth: Int,
+        reqHeight: Int,
+    ): Int {
         val height = options.outHeight
         val width = options.outWidth
         var inSampleSize = 1
@@ -105,7 +123,7 @@ class ImageUtil {
          * And for scaling :
          * https://stackoverflow.com/questions/8722359/scale-rotate-bitmap-using-matrix-in-android/8722592#8722592
          */
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         var instance: ImageUtil? = null
             get() {
                 if (field == null) {

@@ -6,7 +6,7 @@ import org.mifos.mobile.ui.views.base.MVPView
 
 /*
 * Created by saksham on 23/July/2018
-*/   interface AddGuarantorView : MVPView {
+*/ interface AddGuarantorView : MVPView {
     fun updatedSuccessfully(message: String?)
     fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?)
     fun showGuarantorUpdation(template: GuarantorTemplatePayload?)

@@ -20,7 +20,6 @@ import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import javax.inject.Inject
 
-
 /**
  * Created by dilpreet on 1/7/17.
  */
@@ -29,7 +28,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     private var _binding: FragmentTransferProcessBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: TransferProcessPresenter? = null
     private var payload: TransferPayload? = null
@@ -43,10 +42,11 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentTransferProcessBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentTransferProcessBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
         presenter?.attachView(this)
@@ -92,11 +92,15 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      * Cancels the Transfer and pops fragment
      */
     fun cancelTransferProcess() {
-        Toaster.cancelTransfer(binding.root, getString(R.string.cancel_transfer),
-            getString(R.string.yes), View.OnClickListener {
+        Toaster.cancelTransfer(
+            binding.root,
+            getString(R.string.cancel_transfer),
+            getString(R.string.yes),
+            View.OnClickListener {
                 activity?.supportFragmentManager?.popBackStack()
                 activity?.supportFragmentManager?.popBackStack()
-            })
+            },
+        )
     }
 
     /**

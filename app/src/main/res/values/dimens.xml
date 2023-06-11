@@ -47,8 +47,6 @@
     <dimen name="padding_10dp">10dp</dimen>
 
 
-
-
     <!-- Dimen values for margins-->
     <dimen name="login_margin_top">20dp</dimen>
     <dimen name="login_margin_bottom">30dp</dimen>

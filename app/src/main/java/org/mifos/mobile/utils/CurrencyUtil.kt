@@ -2,9 +2,8 @@ package org.mifos.mobile.utils
 
 import android.content.Context
 import android.telephony.TelephonyManager
-
 import java.text.DecimalFormat
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by dilpreet on 21/8/17.
@@ -20,7 +19,7 @@ object CurrencyUtil {
         return getDecimalFormatter(context).format(amt)
     }
 
-    @kotlin.jvm.JvmStatic
+    @JvmStatic
     fun formatCurrency(context: Context?, amt: Double?): String {
         return getDecimalFormatter(context).format(amt)
     }
@@ -30,7 +29,7 @@ object CurrencyUtil {
         val locale: Locale?
         val tm = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         locale = try {
-            Locale("en", tm.networkCountryIso.toUpperCase(Locale.ROOT))
+            Locale("en", tm.networkCountryIso.uppercase(Locale.ROOT))
         } catch (e: Exception) {
             defaultLocale
         }

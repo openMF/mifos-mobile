@@ -1,17 +1,13 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import okhttp3.ResponseBody
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.presenters.BeneficiaryDetailPresenter
 import org.mifos.mobile.ui.views.BeneficiaryDetailView
@@ -56,17 +52,20 @@ class BeneficiaryDetailPresenterTest {
 
     @Test
     fun testDeleteBeneficiary() {
-        Mockito.`when`(dataManager?.deleteBeneficiary(beneficiaryId)).thenReturn(Observable.just(mockedResponseBody))
+        Mockito.`when`(dataManager?.deleteBeneficiary(beneficiaryId))
+            .thenReturn(Observable.just(mockedResponseBody))
         presenter?.deleteBeneficiary(beneficiaryId)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showBeneficiaryDeletedSuccessfully()
-        Mockito.verify(view, Mockito.never())?.showError(context?.getString(R.string.error_deleting_beneficiary))
+        Mockito.verify(view, Mockito.never())
+            ?.showError(context?.getString(R.string.error_deleting_beneficiary))
     }
 
     @Test
     fun testDeleteBeneficiaryFails() {
-        Mockito.`when`(dataManager?.deleteBeneficiary(beneficiaryId)).thenReturn(Observable.error(RuntimeException()))
+        Mockito.`when`(dataManager?.deleteBeneficiary(beneficiaryId))
+            .thenReturn(Observable.error(RuntimeException()))
         presenter?.deleteBeneficiary(beneficiaryId)
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()

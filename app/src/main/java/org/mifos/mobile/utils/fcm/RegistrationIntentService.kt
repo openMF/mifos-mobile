@@ -26,7 +26,8 @@ import org.mifos.mobile.utils.Constants
 class RegistrationIntentService : IntentService(TAG) {
     override fun onHandleIntent(intent: Intent?) {
         FirebaseInstanceId.getInstance().instanceId
-                .addOnCompleteListener(OnCompleteListener { task ->
+            .addOnCompleteListener(
+                OnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         Log.w(TAG, "getInstanceId failed", task.exception)
                         return@OnCompleteListener
@@ -35,7 +36,8 @@ class RegistrationIntentService : IntentService(TAG) {
                     // Get new Instance ID token
                     val token = task.result?.token
                     sendRegistrationToServer(token)
-                })
+                },
+            )
     }
 
     private fun sendRegistrationToServer(token: String?) {

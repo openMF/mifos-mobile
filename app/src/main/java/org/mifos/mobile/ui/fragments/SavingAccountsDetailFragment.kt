@@ -4,7 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import org.mifos.mobile.R
@@ -19,7 +24,14 @@ import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingAccountsDetailView
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.CurrencyUtil
+import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.QrCodeGenerator
+import org.mifos.mobile.utils.SymbolsUtils
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.Utils
 import javax.inject.Inject
 
 /**
@@ -31,18 +43,18 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     private var _binding: FragmentSavingAccountDetailsBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var savingAccountsDetailPresenter: SavingAccountsDetailPresenter? = null
     private var savingsId: Long? = 0
     private var status: Status? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
-    private var isMenuVisible:Boolean? = false
+    private var isMenuVisible: Boolean? = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -50,9 +62,12 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentSavingAccountDetailsBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentSavingAccountDetailsBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_details))
         savingAccountsDetailPresenter?.attachView(this)
@@ -123,7 +138,14 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
      */
     fun deposit() {
         if (status?.active == true) {
-            (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.newInstance(savingsId, Constants.TRANSFER_PAY_TO), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(
+                SavingsMakeTransferFragment.newInstance(
+                    savingsId,
+                    Constants.TRANSFER_PAY_TO,
+                ),
+                true,
+                R.id.container,
+            )
         } else {
             Toaster.show(binding.root, getString(R.string.account_not_active_to_perform_deposit))
         }
@@ -135,7 +157,14 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
      */
     fun transfer() {
         if (status?.active == true) {
-            (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.newInstance(savingsId, Constants.TRANSFER_PAY_FROM), true, R.id.container)
+            (activity as BaseActivity?)?.replaceFragment(
+                SavingsMakeTransferFragment.newInstance(
+                    savingsId,
+                    Constants.TRANSFER_PAY_FROM,
+                ),
+                true,
+                R.id.container,
+            )
         } else {
             Toaster.show(binding.root, getString(R.string.account_not_active_to_perform_transfer))
         }
@@ -148,8 +177,12 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
      */
     override fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
         if (savingsWithAssociations?.status?.submittedAndPendingApproval == true) {
-            sweetUIErrorHandler?.showSweetCustomErrorUI(getString(R.string.approval_pending),
-                    R.drawable.ic_assignment_turned_in_black_24dp, binding.llAccount, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetCustomErrorUI(
+                getString(R.string.approval_pending),
+                R.drawable.ic_assignment_turned_in_black_24dp,
+                binding.llAccount,
+                binding.layoutError.root,
+            )
             isMenuVisible = (savingsWithAssociations.status?.submittedAndPendingApproval == true)
         } else {
             binding.llAccount.visibility = View.VISIBLE
@@ -157,35 +190,62 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
             val accountBalance = savingsWithAssociations?.summary?.accountBalance
             binding.tvAccountStatus.text = savingsWithAssociations?.clientName
             if (savingsWithAssociations?.minRequiredOpeningBalance != null) {
-                binding.tvMinReqBal.text = getString(R.string.string_and_string, currencySymbol,
-                        CurrencyUtil.formatCurrency(activity, savingsWithAssociations.minRequiredOpeningBalance!!))
+                binding.tvMinReqBal.text = getString(
+                    R.string.string_and_string,
+                    currencySymbol,
+                    CurrencyUtil.formatCurrency(
+                        activity,
+                        savingsWithAssociations.minRequiredOpeningBalance!!,
+                    ),
+                )
             } else {
                 binding.tvMinRequiredBalance.visibility = View.GONE
                 binding.tvMinReqBal.visibility = View.GONE
             }
             if (savingsWithAssociations?.summary?.totalWithdrawals != null) {
-                binding.tvTotalWithdrawals.text = getString(R.string.string_and_string, currencySymbol,
-                        CurrencyUtil.formatCurrency(activity, savingsWithAssociations.summary?.totalWithdrawals!!))
+                binding.tvTotalWithdrawals.text = getString(
+                    R.string.string_and_string,
+                    currencySymbol,
+                    CurrencyUtil.formatCurrency(
+                        activity,
+                        savingsWithAssociations.summary?.totalWithdrawals!!,
+                    ),
+                )
             } else {
                 binding.tvTotalWithdrawals.setText(R.string.no_withdrawals)
             }
-            binding.tvAccBalance.text = getString(R.string.string_and_string,
-                    currencySymbol, CurrencyUtil.formatCurrency(activity, accountBalance!!))
-            binding.tvNominalInterestRate.text = getString(R.string.double_and_string,
-                    savingsWithAssociations.getNominalAnnualInterestRate(), SymbolsUtils.PERCENT)
+            binding.tvAccBalance.text = getString(
+                R.string.string_and_string,
+                currencySymbol,
+                CurrencyUtil.formatCurrency(activity, accountBalance!!),
+            )
+            binding.tvNominalInterestRate.text = getString(
+                R.string.double_and_string,
+                savingsWithAssociations.getNominalAnnualInterestRate(),
+                SymbolsUtils.PERCENT,
+            )
             binding.tvSavingAccountNumber.text = savingsWithAssociations.accountNo.toString()
             if (savingsWithAssociations.summary?.totalDeposits != null) {
-                binding.tvTotalDeposits.text = getString(R.string.string_and_string, currencySymbol,
-                        CurrencyUtil.formatCurrency(activity, savingsWithAssociations.summary?.totalDeposits!!))
+                binding.tvTotalDeposits.text = getString(
+                    R.string.string_and_string,
+                    currencySymbol,
+                    CurrencyUtil.formatCurrency(
+                        activity,
+                        savingsWithAssociations.summary?.totalDeposits!!,
+                    ),
+                )
             } else {
                 binding.tvTotalDeposits.text = getString(R.string.not_available)
             }
             if (savingsWithAssociations.transactions.isNotEmpty()) {
-                binding.tvLastTransaction.text = getString(R.string.string_and_double,
-                        currencySymbol,
-                        savingsWithAssociations.transactions[0].amount)
+                binding.tvLastTransaction.text = getString(
+                    R.string.string_and_double,
+                    currencySymbol,
+                    savingsWithAssociations.transactions[0].amount,
+                )
                 binding.tvMadeOn.text = DateHelper.getDateAsString(
-                        savingsWithAssociations.lastActiveTransactionDate)
+                    savingsWithAssociations.lastActiveTransactionDate,
+                )
             } else {
                 binding.tvLastTransaction.setText(R.string.no_transaction)
                 binding.tvMadeOn.visibility = View.GONE
@@ -206,18 +266,28 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     override fun showErrorFetchingSavingAccountsDetail(message: String?) {
         if (!Network.isConnected(context)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(binding.llAccount, binding.layoutError.root)
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message, binding.llAccount, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                message,
+                binding.llAccount,
+                binding.layoutError.root,
+            )
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
 
     fun onRetry() {
         if (!Network.isConnected(context)) {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         } else {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.llAccount, binding.layoutError.root)
             savingAccountsDetailPresenter?.loadSavingsWithAssociations(savingsId)
@@ -235,27 +305,36 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         when {
             status?.active == true -> {
                 binding.ivCircleStatus.setImageDrawable(
-                        Utils.setCircularBackground(R.color.deposit_green, activity))
+                    Utils.setCircularBackground(R.color.deposit_green, activity),
+                )
                 binding.tvAccountStatus.setText(R.string.active)
             }
+
             status?.approved == true -> {
                 binding.ivCircleStatus.setImageDrawable(
-                        Utils.setCircularBackground(R.color.blue, activity))
+                    Utils.setCircularBackground(R.color.blue, activity),
+                )
                 binding.tvAccountStatus.setText(R.string.need_approval)
             }
+
             status?.submittedAndPendingApproval == true -> {
                 binding.ivCircleStatus.setImageDrawable(
-                        Utils.setCircularBackground(R.color.light_yellow, activity))
+                    Utils.setCircularBackground(R.color.light_yellow, activity),
+                )
                 binding.tvAccountStatus.setText(R.string.pending)
             }
+
             status?.matured == true -> {
                 binding.ivCircleStatus.setImageDrawable(
-                        Utils.setCircularBackground(R.color.red_light, activity))
+                    Utils.setCircularBackground(R.color.red_light, activity),
+                )
                 binding.tvAccountStatus.setText(R.string.matured)
             }
+
             else -> {
                 binding.ivCircleStatus.setImageDrawable(
-                        Utils.setCircularBackground(R.color.black, activity))
+                    Utils.setCircularBackground(R.color.black, activity),
+                )
                 binding.tvAccountStatus.setText(R.string.closed)
             }
         }
@@ -280,18 +359,39 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     }
 
     fun transactionsClicked() {
-        (activity as BaseActivity?)?.replaceFragment(SavingAccountsTransactionFragment.newInstance(savingsId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            SavingAccountsTransactionFragment.newInstance(
+                savingsId,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     fun chargeClicked() {
-        (activity as BaseActivity?)?.replaceFragment(ClientChargeFragment.newInstance(savingsId, ChargeType.SAVINGS), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            ClientChargeFragment.newInstance(
+                savingsId,
+                ChargeType.SAVINGS,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     fun qrCodeClicked() {
         val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
-                savingsWithAssociations?.accountNo, preferencesHelper?.officeName,
-                AccountType.SAVINGS)
-        (activity as BaseActivity?)?.replaceFragment(QrCodeDisplayFragment.newInstance(accountDetailsInJson), true, R.id.container)
+            savingsWithAssociations?.accountNo,
+            preferencesHelper?.officeName,
+            AccountType.SAVINGS,
+        )
+        (activity as BaseActivity?)?.replaceFragment(
+            QrCodeDisplayFragment.newInstance(
+                accountDetailsInJson,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -306,16 +406,25 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         val id = item.itemId
         when (id) {
             R.id.menu_withdraw_savings_account -> (activity as BaseActivity?)?.replaceFragment(
-                    SavingsAccountWithdrawFragment.newInstance(savingsWithAssociations),
-                    true, R.id.container)
-            R.id.menu_update_savings_account -> (activity as BaseActivity?)?.replaceFragment(SavingsAccountApplicationFragment.newInstance(SavingsAccountState.UPDATE, savingsWithAssociations),
-                    true, R.id.container)
+                SavingsAccountWithdrawFragment.newInstance(savingsWithAssociations),
+                true,
+                R.id.container,
+            )
+
+            R.id.menu_update_savings_account -> (activity as BaseActivity?)?.replaceFragment(
+                SavingsAccountApplicationFragment.newInstance(
+                    SavingsAccountState.UPDATE,
+                    savingsWithAssociations,
+                ),
+                true,
+                R.id.container,
+            )
         }
         return super.onOptionsItemSelected(item)
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(savingsId: Long): SavingAccountsDetailFragment {
             val fragment = SavingAccountsDetailFragment()
             val args = Bundle()

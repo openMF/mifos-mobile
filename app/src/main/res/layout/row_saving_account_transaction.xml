@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <ImageView
         android:id="@+id/v_indicator"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:src="@drawable/triangular_green_view"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/triangular_green_view" />
 
     <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_width="@dimen/width_0dp"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_transaction_date"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             android:layout_width="match_parent"
-            android:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+            android:layout_height="wrap_content"
+            android:text="@string/medium_text" />
 
         <TextView
             android:id="@+id/tv_transaction_type"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Label"
             android:layout_width="match_parent"
-            android:text="@string/small_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+            android:layout_height="wrap_content"
+            android:text="@string/small_text" />
 
         <TextView
             android:id="@+id/tv_transaction_detail_data"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/small_text"
             style="@style/Mifos.DesignSystem.TextStyle.Label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/small_text"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="@dimen/width_0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.4"
-        android:layout_width="@dimen/width_0dp"
-        android:orientation="vertical"
-        android:gravity="end">
+        android:gravity="end"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_savingAccountAmount"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             android:layout_width="wrap_content"
-            android:text="@string/medium_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+            android:layout_height="wrap_content"
+            android:text="@string/medium_text" />
 
         <TextView
-            android:gravity="end"
             android:id="@+id/tv_saving_account_running_balance"
-            android:layout_height="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.Label"
             android:layout_width="match_parent"
-            android:text="@string/small_text"
-            style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/small_text" />
 
     </LinearLayout>
 

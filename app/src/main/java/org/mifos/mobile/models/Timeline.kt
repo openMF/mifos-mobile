@@ -2,7 +2,6 @@ package org.mifos.mobile.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 /**
  * Created by ishankhanna for mifos android-client on 09/02/14.
@@ -16,16 +15,16 @@ import java.util.*
 
 @Parcelize
 data class Timeline(
-        var submittedOnDate: List<Int> = ArrayList(),
-        var submittedByUsername: String? = null,
-        var submittedByFirstname: String? = null,
-        var submittedByLastname: String? = null,
-        var activatedOnDate: List<Int> = ArrayList(),
-        var activatedByUsername: String? = null,
-        var activatedByFirstname: String? = null,
-        var activatedByLastname: String? = null,
-        var closedOnDate: List<Int> = ArrayList(),
-        var closedByUsername: String? = null,
-        var closedByFirstname: String? = null,
-        var closedByLastname: String? = null
+    var submittedOnDate: List<Int> = ArrayList(),
+    var submittedByUsername: String? = null,
+    var submittedByFirstname: String? = null,
+    var submittedByLastname: String? = null,
+    var activatedOnDate: List<Int> = ArrayList(),
+    var activatedByUsername: String? = null,
+    var activatedByFirstname: String? = null,
+    var activatedByLastname: String? = null,
+    var closedOnDate: List<Int> = ArrayList(),
+    var closedByUsername: String? = null,
+    var closedByFirstname: String? = null,
+    var closedByLastname: String? = null,
 ) : Parcelable

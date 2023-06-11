@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
     <TextView
         android:id="@+id/tv_account_number"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         style="@style/Mifos.DesignSystem.TextStyle.Body"
-        tools:text="10001"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="10001" />
 
     <TextView
         android:id="@+id/tv_account_type"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         style="@style/Mifos.DesignSystem.TextStyle.Label"
-        tools:text="Loan"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Loan" />
 
 </LinearLayout>

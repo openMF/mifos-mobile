@@ -22,18 +22,19 @@ import javax.inject.Inject
  * Created by Rajan Maurya on 04/03/17.
  */
 class LoanRepaymentScheduleAdapter @Inject internal constructor() :
-        AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>() {
+    AbstractTableAdapter<ColumnHeader?, RowHeader?, Cell?>() {
 
     private var currency: String? = ""
-    private var columnWidth : Double = 0.0
+    private var columnWidth: Double = 0.0
     fun setCurrency(currency: String?) {
         this.currency = currency
     }
 
-    internal inner class CellViewHolder(private val bindingCellView : CellLoanRepaymentScheduleBinding) : AbstractViewHolder(bindingCellView.root) {
+    internal inner class CellViewHolder(private val bindingCellView: CellLoanRepaymentScheduleBinding) :
+        AbstractViewHolder(bindingCellView.root) {
         fun bind(columnPosition: Int, period: Periods) {
             with(bindingCellView) {
-                var principal : Double?
+                var principal: Double?
                 when (columnPosition) {
                     0 -> cellData.text = getDateAsString(period.dueDate)
                     1 -> {
@@ -41,17 +42,25 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
                         if (principal == null) {
                             principal = 0.00
                         }
-                        cellData.text = itemView.context.getString(R.string.string_and_double,
-                            currency, principal)
+                        cellData.text = itemView.context.getString(
+                            R.string.string_and_double,
+                            currency,
+                            principal,
+                        )
                     }
+
                     2 -> {
                         principal = period.principalLoanBalanceOutstanding
                         if (principal == null) {
                             principal = 0.00
                         }
-                        cellData.text = itemView.context.getString(R.string.string_and_string,
-                            currency, formatCurrency(itemView.context, principal))
+                        cellData.text = itemView.context.getString(
+                            R.string.string_and_string,
+                            currency,
+                            formatCurrency(itemView.context, principal),
+                        )
                     }
+
                     else -> cellData.text = ""
                 }
                 cellContainer.layoutParams?.width = columnWidth.toInt()
@@ -61,7 +70,11 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
     }
 
     override fun onCreateCellViewHolder(parent: ViewGroup, viewType: Int): AbstractViewHolder {
-        val bindingCellView = CellLoanRepaymentScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bindingCellView = CellLoanRepaymentScheduleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        )
         return CellViewHolder(bindingCellView)
     }
 
@@ -69,7 +82,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         holder: AbstractViewHolder,
         cellItemModel: Cell?,
         columnPosition: Int,
-        rowPosition: Int
+        rowPosition: Int,
     ) {
         val (data) = cellItemModel as Cell
         val period = data as Periods
@@ -78,7 +91,8 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         holder.bind(columnPosition, period)
     }
 
-    internal inner class ColumnHeaderViewHolder(private val bindingColumnHeader : ColumnHeaderLoanRepaymentScheduleBinding) : AbstractViewHolder(bindingColumnHeader.root) {
+    internal inner class ColumnHeaderViewHolder(private val bindingColumnHeader: ColumnHeaderLoanRepaymentScheduleBinding) :
+        AbstractViewHolder(bindingColumnHeader.root) {
         fun bind(columnHeaderText: String) {
             with(bindingColumnHeader) {
                 columnHeaderTextView.text = columnHeaderText
@@ -88,15 +102,22 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         }
     }
 
-    override fun onCreateColumnHeaderViewHolder(parent: ViewGroup, viewType: Int): AbstractViewHolder {
-        val bindingColumnHeader = ColumnHeaderLoanRepaymentScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateColumnHeaderViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): AbstractViewHolder {
+        val bindingColumnHeader = ColumnHeaderLoanRepaymentScheduleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        )
         return ColumnHeaderViewHolder(bindingColumnHeader)
     }
 
     override fun onBindColumnHeaderViewHolder(
         holder: AbstractViewHolder,
         columnHeaderItemModel: ColumnHeader?,
-        position: Int
+        position: Int,
     ) {
         val (data) = columnHeaderItemModel as ColumnHeader
 
@@ -104,21 +125,26 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         holder.bind(data.toString())
     }
 
-    internal inner class RowHeaderViewHolder(private val bindingRowHeader : RowHeaderLoanRepaymentScheduleBinding) : AbstractViewHolder(bindingRowHeader.root) {
+    internal inner class RowHeaderViewHolder(private val bindingRowHeader: RowHeaderLoanRepaymentScheduleBinding) :
+        AbstractViewHolder(bindingRowHeader.root) {
         fun bind(rowHeaderText: String) {
             bindingRowHeader.rowHeaderTextview.text = rowHeaderText
         }
     }
 
     override fun onCreateRowHeaderViewHolder(parent: ViewGroup, viewType: Int): AbstractViewHolder {
-        val bindingRowHeader = RowHeaderLoanRepaymentScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bindingRowHeader = RowHeaderLoanRepaymentScheduleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        )
         return RowHeaderViewHolder(bindingRowHeader)
     }
 
     override fun onBindRowHeaderViewHolder(
         holder: AbstractViewHolder,
         rowHeaderItemModel: RowHeader?,
-        position: Int
+        position: Int,
     ) {
         val (data) = rowHeaderItemModel as RowHeader
         holder as RowHeaderViewHolder
@@ -126,7 +152,11 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
     }
 
     override fun onCreateCornerView(parent: ViewGroup): View {
-        val bindingRowHeader = CornerViewLoanRepaymentScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bindingRowHeader = CornerViewLoanRepaymentScheduleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        )
         return bindingRowHeader.root
     }
 
@@ -154,7 +184,7 @@ class LoanRepaymentScheduleAdapter @Inject internal constructor() :
         return 0
     }
 
-    fun setColumnWidth(columnWidth : Double) {
+    fun setColumnWidth(columnWidth: Double) {
         this.columnWidth = columnWidth
     }
 }

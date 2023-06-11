@@ -10,7 +10,7 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
  * Created by dilpreet on 15/6/17.
  */
 class BeneficiaryListAdapter constructor(
-    val onItemClick: (itemPosition: Int) -> Unit
+    val onItemClick: (itemPosition: Int) -> Unit,
 ) :
     RecyclerView.Adapter<BeneficiaryListAdapter.ViewHolder>() {
 
@@ -20,7 +20,7 @@ class BeneficiaryListAdapter constructor(
         val binding = RowBeneficiaryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
+            false,
         )
         return ViewHolder(binding)
     }
@@ -39,7 +39,8 @@ class BeneficiaryListAdapter constructor(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(val binding: RowBeneficiaryBinding) :  RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: RowBeneficiaryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
@@ -47,7 +48,7 @@ class BeneficiaryListAdapter constructor(
             }
         }
 
-        fun bind (beneficiary: Beneficiary?) {
+        fun bind(beneficiary: Beneficiary?) {
             with(binding) {
                 tvAccountNumber.text = beneficiary?.accountNumber
                 tvBeneficiaryName.text = beneficiary?.name
@@ -56,4 +57,3 @@ class BeneficiaryListAdapter constructor(
         }
     }
 }
-

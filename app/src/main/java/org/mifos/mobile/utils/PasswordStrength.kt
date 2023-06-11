@@ -2,7 +2,6 @@ package org.mifos.mobile.utils
 
 import android.content.Context
 import android.graphics.Color
-
 import org.mifos.mobile.R
 
 enum class PasswordStrength(private var resId: Int, var color: Int) {
@@ -10,14 +9,15 @@ enum class PasswordStrength(private var resId: Int, var color: Int) {
     WEAK(R.string.password_strength_weak, Color.RED),
     MEDIUM(R.string.password_strength_medium, Color.argb(255, 220, 185, 0)),
     STRONG(R.string.password_strength_strong, Color.GREEN),
-    VERY_STRONG(R.string.password_strength_very_strong, Color.BLUE);
+    VERY_STRONG(R.string.password_strength_very_strong, Color.BLUE),
+    ;
 
     fun getText(ctx: Context?): CharSequence? {
         return ctx?.getText(resId)
     }
 
     companion object {
-        //--------REQUIREMENTS--------
+        // --------REQUIREMENTS--------
         private var REQUIRED_LENGTH = 8
         private var MAXIMUM_LENGTH = 15
         private var REQUIRE_SPECIAL_CHARACTERS = true
@@ -51,10 +51,11 @@ enum class PasswordStrength(private var resId: Int, var color: Int) {
                 }
             }
             if (password.length > REQUIRED_LENGTH) {
-                if (REQUIRE_SPECIAL_CHARACTERS && !sawSpecial
-                        || REQUIRE_UPPER_CASE && !sawUpper
-                        || REQUIRE_LOWER_CASE && !sawLower
-                        || REQUIRE_DIGITS && !sawDigit) {
+                if (REQUIRE_SPECIAL_CHARACTERS && !sawSpecial ||
+                    REQUIRE_UPPER_CASE && !sawUpper ||
+                    REQUIRE_LOWER_CASE && !sawLower ||
+                    REQUIRE_DIGITS && !sawDigit
+                ) {
                     currentScore = 1
                 } else {
                     currentScore = 2

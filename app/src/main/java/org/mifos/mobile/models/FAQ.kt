@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 
 data class FAQ @JvmOverloads constructor(
-        var question: String? = null,
-        var answer: String? = null,
-        var isSelected: Boolean = false
+    var question: String? = null,
+    var answer: String? = null,
+    var isSelected: Boolean = false,
 ) : Parcelable

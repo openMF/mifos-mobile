@@ -20,8 +20,6 @@ import org.mifos.mobile.ui.views.BeneficiaryApplicationView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
-
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -32,7 +30,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     private var _binding: FragmentBeneficiaryApplicationBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: BeneficiaryApplicationPresenter? = null
     private val listAccountType: MutableList<String?> = ArrayList()
@@ -46,16 +44,18 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         setToolbarTitle(getString(R.string.add_beneficiary))
         if (arguments != null) {
             beneficiaryState = requireArguments()
-                    .getSerializable(Constants.BENEFICIARY_STATE) as BeneficiaryState
+                .getSerializable(Constants.BENEFICIARY_STATE) as BeneficiaryState
             when (beneficiaryState) {
                 BeneficiaryState.UPDATE -> {
                     beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
                     setToolbarTitle(getString(R.string.update_beneficiary))
                 }
+
                 BeneficiaryState.CREATE_QR -> {
                     beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
                     setToolbarTitle(getString(R.string.add_beneficiary))
                 }
+
                 else -> {
                     setToolbarTitle(getString(R.string.add_beneficiary))
                 }
@@ -64,10 +64,11 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentBeneficiaryApplicationBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentBeneficiaryApplicationBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
@@ -89,7 +90,6 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
                 onRetry()
             }
         }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -166,36 +166,44 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
                     Toaster.show(root, getString(R.string.choose_account_type))
                     return
                 }
+
                 tilAccountNumber.editText?.text.isNullOrBlank() -> {
                     tilAccountNumber.error = getString(R.string.enter_account_number)
                     return
                 }
+
                 tilOfficeName.editText?.text.isNullOrBlank() -> {
                     tilOfficeName.error = getString(R.string.enter_office_name)
                     return
                 }
+
                 tilTransferLimit.editText?.text.toString().isEmpty() -> {
                     tilTransferLimit.error = getString(R.string.enter_transfer_limit)
                     return
                 }
+
                 tilTransferLimit.editText?.text.toString() == "." -> {
                     tilTransferLimit.error = getString(R.string.invalid_amount)
                     return
                 }
+
                 tilTransferLimit.editText?.text.toString().matches("^0*".toRegex()) -> {
                     tilTransferLimit.error = getString(R.string.amount_greater_than_zero)
                     return
                 }
+
                 tilBeneficiaryName.editText?.text.isNullOrBlank() -> {
                     tilBeneficiaryName.error = getString(R.string.enter_beneficiary_name)
                     return
                 }
+
                 else -> {}
             }
         }
 
         if (beneficiaryState == BeneficiaryState.CREATE_MANUAL ||
-                beneficiaryState == BeneficiaryState.CREATE_QR) {
+            beneficiaryState == BeneficiaryState.CREATE_QR
+        ) {
             submitNewBeneficiaryApplication()
         } else if (beneficiaryState == BeneficiaryState.UPDATE) {
             submitUpdateBeneficiaryApplication()
@@ -205,7 +213,10 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     private fun onRetry() {
         if (Network.isConnected(context)) {
             presenter?.loadBeneficiaryTemplate()
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.viewFlipper, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.viewFlipper,
+                binding.layoutError.root,
+            )
         } else {
             Toaster.show(binding.root, getString(R.string.internet_not_connected))
         }
@@ -218,9 +229,10 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         val beneficiaryPayload = BeneficiaryPayload()
         with(binding) {
             beneficiaryPayload.accountNumber = tilAccountNumber.editText?.text.toString()
-            beneficiaryPayload.officeName =tilOfficeName.editText?.text.toString()
+            beneficiaryPayload.officeName = tilOfficeName.editText?.text.toString()
             beneficiaryPayload.name = tilBeneficiaryName.editText?.text.toString()
-            beneficiaryPayload.transferLimit = tilTransferLimit.editText?.text.toString().toInt().toFloat()
+            beneficiaryPayload.transferLimit =
+                tilTransferLimit.editText?.text.toString().toInt().toFloat()
         }
 
         beneficiaryPayload.accountType = accountTypeId
@@ -256,8 +268,6 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         activity?.supportFragmentManager?.popBackStack()
     }
 
-
-
     /**
      * It is called whenever any error occurs while executing a request
      *
@@ -265,9 +275,16 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      */
     override fun showError(msg: String?) {
         if (!Network.isConnected(context)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(binding.viewFlipper, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetNoInternetUI(
+                binding.viewFlipper,
+                binding.layoutError.root,
+            )
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(msg, binding.viewFlipper, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                msg,
+                binding.viewFlipper,
+                binding.layoutError.root,
+            )
             Toaster.show(binding.root, msg)
         }
     }
@@ -293,8 +310,8 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
 
     companion object {
         fun newInstance(
-                beneficiaryState: BeneficiaryState?,
-                beneficiary: Beneficiary?
+            beneficiaryState: BeneficiaryState?,
+            beneficiary: Beneficiary?,
         ): BeneficiaryApplicationFragment {
             val fragment = BeneficiaryApplicationFragment()
             val args = Bundle()

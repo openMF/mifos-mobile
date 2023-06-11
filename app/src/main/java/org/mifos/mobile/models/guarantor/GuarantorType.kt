@@ -6,7 +6,7 @@ package org.mifos.mobile.models.guarantor
 
 class GuarantorType(
 
-        var id: Long? = null,
-        var value: String? = null,
-        var code: String? = null
+    var id: Long? = null,
+    var value: String? = null,
+    var code: String? = null,
 )

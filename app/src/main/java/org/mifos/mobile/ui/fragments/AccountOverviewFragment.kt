@@ -1,9 +1,13 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountOverviewBinding
 import org.mifos.mobile.presenters.AccountOverviewPresenter
@@ -14,7 +18,6 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
-
 import javax.inject.Inject
 
 /**
@@ -26,7 +29,7 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     private var _binding: FragmentAccountOverviewBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var accountOverviewPresenter: AccountOverviewPresenter? = null
     private var totalLoanBalance = 0.0
@@ -36,13 +39,21 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        _binding = FragmentAccountOverviewBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentAccountOverviewBinding.inflate(inflater, container, false)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         accountOverviewPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts_overview))
-        binding.swipeContainer.setColorSchemeResources(R.color.blue_light, R.color.green_light, R.color.orange_light, R.color.red_light)
+        binding.swipeContainer.setColorSchemeResources(
+            R.color.blue_light,
+            R.color.green_light,
+            R.color.orange_light,
+            R.color.red_light,
+        )
         binding.swipeContainer.setOnRefreshListener(this)
         if (savedInstanceState == null) {
             accountOverviewPresenter?.loadClientAccountDetails()
@@ -110,7 +121,7 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(): AccountOverviewFragment {
             val fragment = AccountOverviewFragment()
             val args = Bundle()

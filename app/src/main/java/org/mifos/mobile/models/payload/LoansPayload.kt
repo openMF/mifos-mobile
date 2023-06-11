@@ -5,7 +5,6 @@
 package org.mifos.mobile.models.payload
 
 import android.os.Parcelable
-
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -15,51 +14,51 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class LoansPayload(
 
-        var clientId: Int? = null,
+    var clientId: Int? = null,
 
-        var productId: Int? = null,
+    var productId: Int? = null,
 
-        var productName: String? = null,
+    var productName: String? = null,
 
-        var principal: Double? = null,
+    var principal: Double? = null,
 
-        var loanTermFrequency: Int? = null,
+    var loanTermFrequency: Int? = null,
 
-        var loanTermFrequencyType: Int? = null,
+    var loanTermFrequencyType: Int? = null,
 
-        var loanType: String? = null,
+    var loanType: String? = null,
 
-        var numberOfRepayments: Int? = null,
+    var numberOfRepayments: Int? = null,
 
-        var repaymentEvery: Int? = null,
+    var repaymentEvery: Int? = null,
 
-        var repaymentFrequencyType: Int? = null,
+    var repaymentFrequencyType: Int? = null,
 
-        var interestRatePerPeriod: Double? = null,
+    var interestRatePerPeriod: Double? = null,
 
-        var amortizationType: Int? = null,
+    var amortizationType: Int? = null,
 
-        var interestType: Int? = null,
+    var interestType: Int? = null,
 
-        var interestCalculationPeriodType: Int? = null,
+    var interestCalculationPeriodType: Int? = null,
 
-        var transactionProcessingStrategyId: Int? = null,
+    var transactionProcessingStrategyId: Int? = null,
 
-        var expectedDisbursementDate: String? = null,
+    var expectedDisbursementDate: String? = null,
 
-        var submittedOnDate: String? = null,
+    var submittedOnDate: String? = null,
 
-        var linkAccountId: Int? = null,
+    var linkAccountId: Int? = null,
 
-        var loanPurposeId: Int? = null,
+    var loanPurposeId: Int? = null,
 
-        var loanPurpose: String? = null,
+    var loanPurpose: String? = null,
 
-        var maxOutstandingLoanBalance: Double? = null,
+    var maxOutstandingLoanBalance: Double? = null,
 
-        var currency: String? = null,
+    var currency: String? = null,
 
-        var dateFormat: String = "dd MMMM yyyy",
+    var dateFormat: String = "dd MMMM yyyy",
 
-        var locale: String = "en"
+    var locale: String = "en",
 ) : Parcelable

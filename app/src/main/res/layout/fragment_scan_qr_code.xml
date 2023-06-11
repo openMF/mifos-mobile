@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:background="@null"
             android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenSections"
+            android:background="@null"
             app:srcCompat="@drawable/ic_flash_on" />
 
     </FrameLayout>

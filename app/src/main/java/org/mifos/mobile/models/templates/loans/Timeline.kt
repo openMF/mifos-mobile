@@ -9,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Timeline(
-        var expectedDisbursementDate: List<Int>
+    var expectedDisbursementDate: List<Int>,
 ) : Parcelable

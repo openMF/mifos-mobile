@@ -1,15 +1,12 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -20,7 +17,6 @@ import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.presenters.LoginPresenter
 import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -55,7 +51,8 @@ class LoginPresenterTest {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        Mockito.`when`(mockHelper?.baseUrl).thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT)
+        Mockito.`when`(mockHelper?.baseUrl)
+            .thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT)
         Mockito.`when`(dataManager?.preferencesHelper).thenReturn(mockHelper)
         presenter = LoginPresenter(dataManager, context)
         presenter?.attachView(view)
@@ -82,7 +79,8 @@ class LoginPresenterTest {
         presenter?.loadClient()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showPassCodeActivity(clientName)
-        Mockito.verify(view, Mockito.never())?.showMessage(context?.getString(R.string.error_fetching_client))
+        Mockito.verify(view, Mockito.never())
+            ?.showMessage(context?.getString(R.string.error_fetching_client))
     }
 
     @Test
@@ -98,7 +96,8 @@ class LoginPresenterTest {
     @Test
     @Throws(Exception::class)
     fun testLoadClientFails() {
-        Mockito.`when`(dataManager?.clients).thenReturn(Observable.error(RetrofitUtils.getResponseForError(404)))
+        Mockito.`when`(dataManager?.clients)
+            .thenReturn(Observable.error(RetrofitUtils.getResponseForError(404)))
         presenter?.loadClient()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showMessage(context?.getString(R.string.error_fetching_client))
@@ -108,7 +107,8 @@ class LoginPresenterTest {
     @Test
     @Throws(Exception::class)
     fun testLoadClientUnauthorized() {
-        Mockito.`when`(dataManager?.clients).thenReturn(Observable.error(RetrofitUtils.getResponseForError(401)))
+        Mockito.`when`(dataManager?.clients)
+            .thenReturn(Observable.error(RetrofitUtils.getResponseForError(401)))
         presenter?.loadClient()
         Mockito.verify(view)?.hideProgress()
         Mockito.verify(view)?.showMessage(context?.getString(R.string.unauthorized_client))

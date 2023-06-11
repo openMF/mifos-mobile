@@ -1,16 +1,10 @@
 package org.mifos.mobile.utils
 
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-
 import com.google.android.material.snackbar.Snackbar
 import org.mifos.mobile.MifosSelfServiceApp
-import org.mifos.mobile.R
-import org.mifos.mobile.ui.getThemeAttributeColor
-import java.util.*
 
 object Toaster {
 
@@ -18,7 +12,8 @@ object Toaster {
 
     @JvmOverloads
     fun show(view: View?, text: String?, duration: Int = Snackbar.LENGTH_LONG) {
-        val imm = MifosSelfServiceApp.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            MifosSelfServiceApp.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         val snackbar = Snackbar.make(view!!, text!!, duration)
         snackbar.setAction("OK") { }
@@ -45,14 +40,15 @@ object Toaster {
     }
 
     fun cancelTransfer(
-            view: View?, text: String?, buttonText: String?,
-            listener: View.OnClickListener?
+        view: View?,
+        text: String?,
+        buttonText: String?,
+        listener: View.OnClickListener?,
     ) {
         val snackbar = Snackbar.make(view!!, text!!, Snackbar.LENGTH_LONG)
         snackbar.setAction(buttonText, listener)
         snackbar.show()
     }
-
 
     fun show(view: View?, res: Int) {
         show(view, MifosSelfServiceApp.context?.resources?.getString(res))

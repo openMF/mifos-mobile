@@ -4,12 +4,12 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.TypedValue
 import android.view.View
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.widget.NestedScrollView
 import butterknife.BindView
-import android.provider.Settings
-import androidx.appcompat.widget.AppCompatButton
 import butterknife.ButterKnife
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
@@ -30,7 +30,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
 
     @JvmField
     @BindView(R.id.cl_rootview)
-    var nestedScrollView : NestedScrollView? = null
+    var nestedScrollView: NestedScrollView? = null
 
     private var biometricAuthentication: BiometricAuthentication? = null
 
@@ -41,7 +41,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
 
         if (!CheckSelfPermissionAndRequest.checkSelfPermission(
                 this,
-                Manifest.permission.READ_PHONE_STATE
+                Manifest.permission.READ_PHONE_STATE,
             )
         ) {
             requestPermission()
@@ -78,14 +78,14 @@ class PassCodeActivity : MifosPassCodeActivity() {
             Manifest.permission.READ_PHONE_STATE,
             Constants.PERMISSIONS_REQUEST_READ_PHONE_STATE,
             resources.getString(
-                R.string.dialog_message_phone_state_permission_denied_prompt
+                R.string.dialog_message_phone_state_permission_denied_prompt,
             ),
             resources.getString(R.string.dialog_message_phone_state_permission_never_ask_again),
-            Constants.PERMISSIONS_READ_PHONE_STATE_STATUS
+            Constants.PERMISSIONS_READ_PHONE_STATE_STATUS,
         )
     }
 
-    private fun setBackgroundColor(){
+    private fun setBackgroundColor() {
         val typedValue = TypedValue()
         theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true)
         nestedScrollView?.setBackgroundColor(typedValue.data)
@@ -103,18 +103,22 @@ class PassCodeActivity : MifosPassCodeActivity() {
         MaterialDialog.Builder().init(this@PassCodeActivity)
             .setCancelable(false)
             .setMessage(R.string.login_using_password_confirmation)
-            .setPositiveButton(getString(R.string.logout),
+            .setPositiveButton(
+                getString(R.string.logout),
                 DialogInterface.OnClickListener { _, _ ->
                     val i = Intent(
                         this@PassCodeActivity,
-                        LoginActivity::class.java
+                        LoginActivity::class.java,
                     )
                     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(i)
                     finish()
-                })
-            .setNegativeButton(getString(R.string.cancel),
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                },
+            )
+            .setNegativeButton(
+                getString(R.string.cancel),
+                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() },
+            )
             .createMaterialDialog()
             .show()
     }

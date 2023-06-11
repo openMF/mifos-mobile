@@ -1,8 +1,12 @@
 package org.mifos.mobile.ui.fragments
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import io.reactivex.disposables.Disposable
 import org.mifos.mobile.R
@@ -25,12 +29,12 @@ import javax.inject.Inject
 
 /*
 * Created by saksham on 24/July/2018
-*/   class GuarantorDetailFragment : BaseFragment(), GuarantorDetailView {
+*/ class GuarantorDetailFragment : BaseFragment(), GuarantorDetailView {
 
     private var _binding: FragmentGuarantorDetailBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: GuarantorDetailPresenter? = null
     var loanId: Long? = 0
@@ -50,10 +54,11 @@ import javax.inject.Inject
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentGuarantorDetailBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentGuarantorDetailBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.guarantor_details))
         setHasOptionsMenu(true)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
@@ -95,17 +100,26 @@ import javax.inject.Inject
             R.id.menu_delete_guarantor -> MaterialDialog.Builder()
                 .init(context)
                 .setTitle(R.string.delete_guarantor)
-                .setMessage(getString(R.string.dialog_are_you_sure_that_you_want_to_string,
-                    getString(R.string.delete_guarantor)))
-                .setPositiveButton(getString(R.string.yes)
+                .setMessage(
+                    getString(
+                        R.string.dialog_are_you_sure_that_you_want_to_string,
+                        getString(R.string.delete_guarantor),
+                    ),
+                )
+                .setPositiveButton(
+                    getString(R.string.yes),
                 ) { _, _ ->
                     presenter?.deleteGuarantor(loanId, guarantorId)
                 }
                 .setNegativeButton(R.string.cancel)
                 .createMaterialDialog()
                 .show()
-            R.id.menu_update_guarantor -> (activity as BaseActivity?)?.replaceFragment(AddGuarantorFragment.newInstance(index, GuarantorState.UPDATE, payload, loanId),
-                true, R.id.container)
+
+            R.id.menu_update_guarantor -> (activity as BaseActivity?)?.replaceFragment(
+                AddGuarantorFragment.newInstance(index, GuarantorState.UPDATE, payload, loanId),
+                true,
+                R.id.container,
+            )
         }
         return super.onOptionsItemSelected(item)
     }
@@ -144,8 +158,9 @@ import javax.inject.Inject
 
     companion object {
         fun newInstance(
-            index: Int, loanId: Long,
-            payload: GuarantorPayload?
+            index: Int,
+            loanId: Long,
+            payload: GuarantorPayload?,
         ): GuarantorDetailFragment {
             val fragment = GuarantorDetailFragment()
             val args = Bundle()

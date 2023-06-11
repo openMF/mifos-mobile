@@ -1,14 +1,48 @@
 package org.mifos.mobile.injection.component
 
 import dagger.Component
-
 import org.mifos.mobile.injection.PerActivity
 import org.mifos.mobile.injection.module.ActivityModule
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoginActivity
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.SplashActivity
-import org.mifos.mobile.ui.fragments.*
+import org.mifos.mobile.ui.fragments.AccountOverviewFragment
+import org.mifos.mobile.ui.fragments.AccountsFragment
+import org.mifos.mobile.ui.fragments.AddGuarantorFragment
+import org.mifos.mobile.ui.fragments.BeneficiaryAddOptionsFragment
+import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
+import org.mifos.mobile.ui.fragments.BeneficiaryDetailFragment
+import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
+import org.mifos.mobile.ui.fragments.ClientAccountsFragment
+import org.mifos.mobile.ui.fragments.ClientChargeFragment
+import org.mifos.mobile.ui.fragments.GuarantorDetailFragment
+import org.mifos.mobile.ui.fragments.GuarantorListFragment
+import org.mifos.mobile.ui.fragments.HelpFragment
+import org.mifos.mobile.ui.fragments.HomeFragment
+import org.mifos.mobile.ui.fragments.HomeOldFragment
+import org.mifos.mobile.ui.fragments.LoanAccountSummaryFragment
+import org.mifos.mobile.ui.fragments.LoanAccountTransactionFragment
+import org.mifos.mobile.ui.fragments.LoanAccountWithdrawFragment
+import org.mifos.mobile.ui.fragments.LoanAccountsDetailFragment
+import org.mifos.mobile.ui.fragments.LoanApplicationFragment
+import org.mifos.mobile.ui.fragments.LoanRepaymentScheduleFragment
+import org.mifos.mobile.ui.fragments.NotificationFragment
+import org.mifos.mobile.ui.fragments.QrCodeImportFragment
+import org.mifos.mobile.ui.fragments.QrCodeReaderFragment
+import org.mifos.mobile.ui.fragments.RecentTransactionsFragment
+import org.mifos.mobile.ui.fragments.RegistrationFragment
+import org.mifos.mobile.ui.fragments.RegistrationVerificationFragment
+import org.mifos.mobile.ui.fragments.ReviewLoanApplicationFragment
+import org.mifos.mobile.ui.fragments.SavingAccountsDetailFragment
+import org.mifos.mobile.ui.fragments.SavingAccountsTransactionFragment
+import org.mifos.mobile.ui.fragments.SavingsAccountApplicationFragment
+import org.mifos.mobile.ui.fragments.SavingsAccountWithdrawFragment
+import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
+import org.mifos.mobile.ui.fragments.ThirdPartyTransferFragment
+import org.mifos.mobile.ui.fragments.TransferProcessFragment
+import org.mifos.mobile.ui.fragments.UpdatePasswordFragment
+import org.mifos.mobile.ui.fragments.UserProfileFragment
 
 /**
  * @author ishan

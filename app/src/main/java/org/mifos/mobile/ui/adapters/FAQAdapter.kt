@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowFaqBinding
 import org.mifos.mobile.injection.ActivityContext
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.utils.FaqDiffUtil
-
 import javax.inject.Inject
 
 /**
@@ -72,7 +70,8 @@ class FAQAdapter @Inject constructor(@ActivityContext context: Context) :
         return faqArrayList?.size ?: 0
     }
 
-    inner class ViewHolder(private val binding: RowFaqBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RowFaqBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(question: String?, answer: String?, isSelected: Boolean) {
             binding.tvQs.text = question
