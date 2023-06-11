@@ -1,25 +1,20 @@
 package org.mifos.mobile
 
 import android.content.Context
-
 import io.reactivex.Observable
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.presenters.NotificationPresenter
 import org.mifos.mobile.ui.views.NotificationView
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-
 import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
@@ -55,7 +50,7 @@ class NotificationPresenterTest {
     fun testLoadNotifications() {
         val list: List<MifosNotification?> = ArrayList()
         Mockito.`when`<Observable<List<MifosNotification?>?>?>(dataManager?.notifications)
-                .thenReturn(Observable.just(list))
+            .thenReturn(Observable.just(list))
         presenter?.loadNotifications()
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
@@ -65,11 +60,13 @@ class NotificationPresenterTest {
     @Test
     fun testLoadNotificationsOnError() {
         Mockito.`when`(dataManager?.notifications)
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         presenter?.loadNotifications()
         Mockito.verify(view)?.showProgress()
         Mockito.verify(view)?.hideProgress()
-        Mockito.verify(view)?.showError(context
-                ?.getString(R.string.notification))
+        Mockito.verify(view)?.showError(
+            context
+                ?.getString(R.string.notification),
+        )
     }
 }

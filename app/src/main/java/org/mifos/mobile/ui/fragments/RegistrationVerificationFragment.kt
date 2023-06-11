@@ -21,14 +21,17 @@ import javax.inject.Inject
  * Created by dilpreet on 31/7/17.
  */
 class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificationView {
-    private var _binding : FragmentRegistrationVerificationBinding? = null
+    private var _binding: FragmentRegistrationVerificationBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: RegistrationVerificationPresenter? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
         (activity as BaseActivity?)?.activityComponent?.inject(this)

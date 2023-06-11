@@ -9,7 +9,7 @@ import retrofit2.http.PUT
 
 /*
 * Created by saksham on 13/July/2018
-*/   interface UserDetailsService {
+*/ interface UserDetailsService {
     @PUT(ApiEndPoints.USER)
     fun updateAccountPassword(@Body payload: UpdatePasswordPayload?): Observable<ResponseBody?>?
 }

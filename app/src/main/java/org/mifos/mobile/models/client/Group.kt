@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Group(
-        var id: Int,
-        var accountNo: String? = null,
-        var name: String? = null
-): Parcelable
+    var id: Int,
+    var accountNo: String? = null,
+    var name: String? = null,
+) : Parcelable

@@ -11,7 +11,11 @@ import org.mifos.mobile.api.local.PreferencesHelper
 class ConfigurationPreference : DialogPreference {
     private var preferencesHelper: PreferencesHelper? = null
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr,
+    ) {
         init()
     }
 

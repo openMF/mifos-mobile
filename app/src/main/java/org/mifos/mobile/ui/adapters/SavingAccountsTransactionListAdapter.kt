@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowSavingAccountTransactionBinding
 import org.mifos.mobile.models.accounts.savings.TransactionType
 import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
-
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -39,12 +36,19 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
     }
 
     fun setSavingAccountsTransactionList(savingAccountsTransactionList: List<Transactions?>?) {
-        if (savingAccountsTransactionList != null) this.savingAccountsTransactionList = savingAccountsTransactionList
+        if (savingAccountsTransactionList != null) {
+            this.savingAccountsTransactionList =
+                savingAccountsTransactionList
+        }
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowSavingAccountTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RowSavingAccountTransactionBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        )
         return ViewHolder(binding)
     }
 
@@ -91,17 +95,28 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
         }
         return if (transactionType?.overdraftFee == true) {
             ColorSelect.RED
-        } else ColorSelect.GREEN
+        } else {
+            ColorSelect.GREEN
+        }
     }
 
-    inner class ViewHolder(private val binding: RowSavingAccountTransactionBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RowSavingAccountTransactionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(transaction: Transactions?) {
             with(binding) {
                 val (_, transactionType, _, _, date, currency, paymentDetailData, amount, runningBalance) = transaction!!
 
-                tvSavingAccountAmount.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, amount!!))
-                tvSavingAccountRunningBalance.text = context?.getString(R.string.string_and_string, currency?.displaySymbol, formatCurrency(context, runningBalance!!))
+                tvSavingAccountAmount.text = context?.getString(
+                    R.string.string_and_string,
+                    currency?.displaySymbol,
+                    formatCurrency(context, amount!!),
+                )
+                tvSavingAccountRunningBalance.text = context?.getString(
+                    R.string.string_and_string,
+                    currency?.displaySymbol,
+                    formatCurrency(context, runningBalance!!),
+                )
                 tvTransactionType.text = transactionType?.value
 
                 if (paymentDetailData != null) {
@@ -113,9 +128,13 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
                 val color = getColor(transactionType)
 
                 if (color == ColorSelect.RED) {
-                    vIndicator.background = ContextCompat.getDrawable(itemView.context, R.drawable.triangular_red_view)
+                    vIndicator.background =
+                        ContextCompat.getDrawable(itemView.context, R.drawable.triangular_red_view)
                 } else {
-                    vIndicator.background = ContextCompat.getDrawable(itemView.context, R.drawable.triangular_green_view)
+                    vIndicator.background = ContextCompat.getDrawable(
+                        itemView.context,
+                        R.drawable.triangular_green_view,
+                    )
                 }
             }
         }

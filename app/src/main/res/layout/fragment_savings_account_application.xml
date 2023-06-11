@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
     android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
-    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
         <LinearLayout
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-                android:layout_width="match_parent">
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_width="@dimen/width_0dp"
-                    android:text="@string/client_name"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                    android:text="@string/client_name" />
 
                 <TextView
-                    android:gravity="center"
                     android:id="@+id/tv_client_name"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:layout_width="@dimen/width_0dp"
-                    tools:text="@string/medium_text"
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"/>
+                    android:gravity="center"
+                    tools:text="@string/medium_text" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Label"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_width="@dimen/width_0dp"
-                    android:text="@string/submission_date"
-                    style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                    android:text="@string/submission_date" />
 
                 <TextView
-                    style="@style/Mifos.DesignSystem.TextStyle.Body"
-                    android:gravity="center"
                     android:id="@+id/tv_submission_date"
+                    style="@style/Mifos.DesignSystem.TextStyle.Body"
+                    android:layout_width="@dimen/width_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:layout_width="@dimen/width_0dp"
-                    tools:text="@string/medium_text"/>
+                    android:gravity="center"
+                    tools:text="@string/medium_text" />
 
             </LinearLayout>
 
@@ -72,16 +72,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Mifos.DesignSystem.Components.ExposedDropdownMenuField"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
-        android:layout_width="match_parent">
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/product_id_field"
-            android:hint="@string/select_product_id"
-            android:inputType="none"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:hint="@string/select_product_id"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -89,6 +89,6 @@
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit"/>
+        android:text="@string/submit" />
 
 </LinearLayout>

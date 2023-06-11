@@ -15,7 +15,7 @@ import retrofit2.http.Query
  * @since 20/6/16.
  */
 interface ClientService {
-    //This is a default call and Loads client from 0 to 200
+    // This is a default call and Loads client from 0 to 200
     @get:GET(ApiEndPoints.CLIENTS)
     val clients: Observable<Page<Client?>?>?
 
@@ -30,8 +30,8 @@ interface ClientService {
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
     fun getAccounts(
-            @Path(CLIENT_ID) clientId: Long?,
-            @Query("fields") accountType: String?
+        @Path(CLIENT_ID) clientId: Long?,
+        @Query("fields") accountType: String?,
     ): Observable<ClientAccounts?>?
 
     companion object {

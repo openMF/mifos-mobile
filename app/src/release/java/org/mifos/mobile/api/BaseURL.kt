@@ -1,7 +1,5 @@
 package org.mifos.mobile.api
 
-import org.mifos.mobile.api.BaseURL
-
 /**
  * @author Vishwajeet
  * @since 09/06/16
@@ -9,7 +7,7 @@ import org.mifos.mobile.api.BaseURL
 class BaseURL {
     val url: String? = null
         get() = field
-                ?: PROTOCOL_HTTPS + API_ENDPOINT + API_PATH
+            ?: PROTOCOL_HTTPS + API_ENDPOINT + API_PATH
     val defaultBaseUrl: String
         get() = PROTOCOL_HTTPS + API_ENDPOINT
 

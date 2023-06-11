@@ -7,5 +7,5 @@ enum class LoanState {
 
     CREATE,
 
-    UPDATE
+    UPDATE,
 }

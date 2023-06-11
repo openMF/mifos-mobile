@@ -11,6 +11,5 @@ enum class AccountType {
 
     LOAN,
 
-    SHARE
-
+    SHARE,
 }

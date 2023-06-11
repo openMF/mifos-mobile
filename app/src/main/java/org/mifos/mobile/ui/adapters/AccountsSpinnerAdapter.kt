@@ -11,21 +11,21 @@ import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.AccountDetail
 import java.util.*
 
-
 /**
  * Created by dilpreet on 19/03/18.
  */
 class AccountsSpinnerAdapter(
     context: Context,
-    private val accountDetails: List<AccountDetail>
+    private val accountDetails: List<AccountDetail>,
 ) : ArrayAdapter<AccountDetail>(context, 0, accountDetails) {
 
     override fun getView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup
+        parent: ViewGroup,
     ): View {
-        val view = convertView ?: LayoutInflater.from(parent.context).inflate(R.layout.account_spinner_layout, parent, false)
+        val view = convertView ?: LayoutInflater.from(parent.context)
+            .inflate(R.layout.account_spinner_layout, parent, false)
         getItem(position)?.let {
             view.findViewById<TextView>(R.id.tv_account_number).text = it.accountNumber
             view.findViewById<TextView>(R.id.tv_account_type).text = it.accountType
@@ -34,11 +34,18 @@ class AccountsSpinnerAdapter(
         return view
     }
 
-    override fun getFilter() =  object : Filter() {
+    override fun getFilter() = object : Filter() {
         override fun performFiltering(constraint: CharSequence): FilterResults {
             val suggestions =
-                if (constraint.isBlank()) accountDetails
-                else accountDetails.filterIndexed { _, item -> item.accountNumber!!.contains(constraint.trim()) }
+                if (constraint.isBlank()) {
+                    accountDetails
+                } else {
+                    accountDetails.filterIndexed { _, item ->
+                        item.accountNumber!!.contains(
+                            constraint.trim(),
+                        )
+                    }
+                }
 
             return FilterResults().apply {
                 values = suggestions
@@ -53,7 +60,7 @@ class AccountsSpinnerAdapter(
             notifyDataSetChanged()
         }
 
-        override fun convertResultToString(resultValue: Any) = (resultValue as AccountDetail).accountNumber ?: ""
-
+        override fun convertResultToString(resultValue: Any) =
+            (resultValue as AccountDetail).accountNumber ?: ""
     }
 }

@@ -3,21 +3,17 @@ package org.mifos.mobile.ui.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import androidx.recyclerview.widget.RecyclerView
-
 import org.mifos.mobile.databinding.RowGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.utils.DateHelper.getDateAsString
-
-import java.util.*
 
 /*
 * Created by saksham on 24/July/2018
 */
 class GuarantorListAdapter(
-        var context: Context?,
-        listener: OnClickListener
+    var context: Context?,
+    listener: OnClickListener,
 ) : RecyclerView.Adapter<GuarantorListAdapter.ViewHolder>() {
 
     var list: MutableList<GuarantorPayload?>?
@@ -28,7 +24,8 @@ class GuarantorListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowGuarantorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RowGuarantorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -39,8 +36,11 @@ class GuarantorListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (list?.size != null) list?.size!!
-        else 0
+        return if (list?.size != null) {
+            list?.size!!
+        } else {
+            0
+        }
     }
 
     fun setGuarantorList(payload: MutableList<GuarantorPayload?>?) {
@@ -48,7 +48,8 @@ class GuarantorListAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(private val binding : RowGuarantorBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RowGuarantorBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(joinedDate: String, fullName: String) {
             with(binding) {

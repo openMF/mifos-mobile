@@ -323,7 +323,7 @@
     <string name="not_available">দ্য</string>
     <string name="upload_qr_code">QR জমা দিন</string>
     <string name="select_region_qr">QR কোড সঙ্গে অঞ্চল নির্বাচন করুন</string>
-    
+
     <string name="need_help">আমাদের সাথে যোগাযোগ করুন</string>
     <string name="transferred_successfully">সফল স্থানান্তর</string>
 
@@ -355,7 +355,7 @@
     <string name="permission_denied_storage">স্টোরেজ refusesals প্রত্যাখ্যান করা হয়</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">আপনি কি নিশ্চিত %1$s চান?</string>
 
-    
+
     <string name="hello_client">হ্যালো, %1$s</string>
     <string name="invalid_amount">অবৈধ পরিমাণ</string>
     <string name="exit_message">প্রস্থান করার জন্য আবার চাপুন</string>

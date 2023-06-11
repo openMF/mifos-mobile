@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-
 import org.mifos.mobile.ui.views.BaseActivityCallback
 import org.mifos.mobile.utils.LanguageHelper
 import org.mifos.mobile.utils.ProgressBarHandler
@@ -61,8 +60,10 @@ open class BaseFragment : Fragment() {
         callback = try {
             activity as BaseActivityCallback?
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity.toString()
-                    + " must implement BaseActivityCallback methods")
+            throw ClassCastException(
+                activity.toString() +
+                    " must implement BaseActivityCallback methods",
+            )
         }
     }
 

@@ -1,178 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_error_layout"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:gravity="center"
         android:id="@+id/ll_error_to_load"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_error_no_connection"
-            android:contentDescription="@string/sweet_error_image"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_height="@dimen/height_70dp"
-            android:layout_marginBottom="@dimen/layout_padding_16dp"
             android:layout_width="@dimen/width_70dp"
+            android:layout_height="@dimen/height_70dp"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="@dimen/layout_padding_16dp"
+            android:contentDescription="@string/sweet_error_image"
             app:srcCompat="@drawable/ic_cloud_off_black_24dp"
             app:tint="?attr/colorControlNormal" />
 
         <!--Views for Any error occurred while make REST API call-->
         <LinearLayout
             android:id="@+id/ll_error"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Medium"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/error_sorry_not_able_to_load"
                 android:textColor="?attr/colorControlNormal"
                 android:textSize="@dimen/text_size_14sp"
-                android:typeface="monospace"/>
+                android:typeface="monospace" />
 
             <TextView
                 android:id="@+id/tv_error_feature_name"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textColor="?attr/colorControlNormal"
                 android:textSize="@dimen/text_size_14sp"
-                tools:text="Sweet Things"/>
+                tools:text="Sweet Things" />
 
         </LinearLayout>
 
         <!--Views for No Internet connection-->
         <LinearLayout
             android:id="@+id/ll_no_internet"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/oh_no"
                 android:textColor="?attr/colorControlNormal"
-                android:typeface="monospace"/>
+                android:typeface="monospace" />
 
             <TextView
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/no_internet_connection"
                 android:textColor="?attr/colorControlNormal"
-                android:textSize="@dimen/text_size_14sp"/>
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/or_try_again"
                 android:textColor="?attr/colorControlNormal"
-                android:textSize="@dimen/text_size_14sp"/>
+                android:textSize="@dimen/text_size_14sp" />
 
         </LinearLayout>
 
         <!--Button to retry again-->
         <Button
             android:id="@+id/btn_try_again"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_padding_16dp"
-            android:layout_width="wrap_content"
             android:paddingLeft="@dimen/layout_padding_24dp"
             android:paddingRight="@dimen/layout_padding_24dp"
-            android:text="@string/try_again"/>
+            android:text="@string/try_again" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center"
         android:id="@+id/ll_empty_ui"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
 
         <ImageView
-            android:contentDescription="@string/sweet_error_image"
             android:id="@+id/iv_empty_feature_image"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_height="@dimen/height_70dp"
-            android:layout_marginBottom="@dimen/layout_padding_16dp"
             android:layout_width="@dimen/width_70dp"
+            android:layout_height="@dimen/height_70dp"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="@dimen/layout_padding_16dp"
+            android:contentDescription="@string/sweet_error_image"
             app:srcCompat="@drawable/ic_adb_black_24dp"
             app:tint="?attr/colorControlNormal" />
 
         <TextView
-            style="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/tv_empty_feature_name"
-            android:layout_height="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="?attr/colorControlNormal"
             android:textSize="@dimen/text_size_20sp"
             android:typeface="monospace"
-            tools:text="No Deposit accounts Found"/>
+            tools:text="No Deposit accounts Found" />
 
         <TextView
             android:id="@+id/tv_empty_sub_feature_name"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="?attr/colorControlNormal"
             android:textSize="@dimen/text_size_14sp"
-            tools:text="Top to add Deposit account"/>
+            tools:text="Top to add Deposit account" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center"
         android:id="@+id/ll_custom_ui"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
 
         <ImageView
-            android:contentDescription="@string/sweet_error_image"
             android:id="@+id/iv_custom_feature_image"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_height="@dimen/height_70dp"
-            android:layout_marginBottom="@dimen/layout_padding_16dp"
             android:layout_width="@dimen/width_70dp"
+            android:layout_height="@dimen/height_70dp"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="@dimen/layout_padding_16dp"
+            android:contentDescription="@string/sweet_error_image"
             app:srcCompat="@drawable/ic_adb_black_24dp"
             app:tint="?attr/colorControlNormal" />
 
         <TextView
-            style="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/tv_custom_feature_name"
-            android:layout_height="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="?attr/colorControlNormal"
             android:textSize="@dimen/text_size_20sp"
             android:typeface="monospace"
-            tools:text="No Cases Found with 'CR/232'"/>
+            tools:text="No Cases Found with 'CR/232'" />
 
         <TextView
             android:id="@+id/tv_custom_sub_feature_name"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="?attr/colorControlNormal"
             android:textSize="@dimen/text_size_14sp"
-            tools:text="Top to add Deposit account"/>
+            tools:text="Top to add Deposit account" />
 
     </LinearLayout>
 

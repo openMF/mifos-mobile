@@ -1,11 +1,17 @@
 package org.mifos.mobile.utils
 
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.Paint
+import android.graphics.PixelFormat
+import android.graphics.RectF
+import android.graphics.Typeface
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.graphics.drawable.shapes.RectShape
 import android.graphics.drawable.shapes.RoundRectShape
-import java.util.*
+import java.util.Locale
 
 class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder.shape) {
     private val textPaint: Paint
@@ -19,15 +25,16 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
     private val radius: Float
     private val borderThickness: Int
     private fun getDarkerShade(color: Int): Int {
-        return Color.rgb((SHADE_FACTOR * Color.red(color)).toInt(),
-                (SHADE_FACTOR * Color.green(color)).toInt(),
-                (SHADE_FACTOR * Color.blue(color)).toInt())
+        return Color.rgb(
+            (SHADE_FACTOR * Color.red(color)).toInt(),
+            (SHADE_FACTOR * Color.green(color)).toInt(),
+            (SHADE_FACTOR * Color.blue(color)).toInt(),
+        )
     }
 
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
         val r = bounds
-
 
         // draw border
         if (borderThickness > 0) {
@@ -41,8 +48,12 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
         val height = if (height < 0) r.height() else height
         val fontSize = if (fontSize < 0) Math.min(width, height) / 2 else fontSize
         textPaint.textSize = fontSize.toFloat()
-        canvas.drawText(text, width / 2.toFloat(),
-                height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
+        canvas.drawText(
+            text,
+            width / 2.toFloat(),
+            height / 2 - (textPaint.descent() + textPaint.ascent()) / 2,
+            textPaint,
+        )
         canvas.restoreToCount(count)
     }
 
@@ -151,7 +162,16 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 
         override fun roundRect(radius: Int): IBuilder {
             this.radius = radius.toFloat()
-            val radii = floatArrayOf(radius.toFloat(), radius.toFloat(), radius.toFloat(), radius.toFloat(), radius.toFloat(), radius.toFloat(), radius.toFloat(), radius.toFloat())
+            val radii = floatArrayOf(
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+            )
             shape = RoundRectShape(radii, null, null)
             return this
         }
@@ -233,7 +253,7 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
         radius = builder.radius
 
         // text and color
-        text = if (builder.iconToUpperCase) builder.text.toUpperCase(Locale.ROOT) else builder.text
+        text = if (builder.iconToUpperCase) builder.text.uppercase(Locale.ROOT) else builder.text
         color = builder.color
 
         // text paint settings

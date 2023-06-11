@@ -5,5 +5,6 @@ package org.mifos.mobile.models.notification
  */
 
 data class NotificationRegisterPayload(
-        var clientId: Long,
-        var registrationId: String)
+    var clientId: Long,
+    var registrationId: String,
+)

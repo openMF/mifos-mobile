@@ -4,9 +4,9 @@
   ~ This project is licensed under the open source MPL V2.
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
-<RelativeLayout android:id="@+id/root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="@dimen/row_header_width"
     android:layout_height="@dimen/cell_height">
 
@@ -19,17 +19,17 @@
 
         <TextView
             android:id="@+id/row_header_textview"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"
-            tools:text="Row Data"/>
+            tools:text="Row Data" />
     </LinearLayout>
 
 
     <View
-        android:layout_width="wrap_content"
-        style="@style/Mifos.DesignSystem.Components.VerticalSpacer"/>
+        style="@style/Mifos.DesignSystem.Components.VerticalSpacer"
+        android:layout_width="wrap_content" />
 </RelativeLayout>

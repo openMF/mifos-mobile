@@ -15,7 +15,8 @@ import org.mifos.mobile.models.client.Client
  * @author Vishwajeet
  * @since 20/06/16
  */
-class ClientListAdapter(context: Context, private var listItems: List<Client>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ClientListAdapter(context: Context, private var listItems: List<Client>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var layoutInflater: LayoutInflater = LayoutInflater.from(context)
     private val mContext: Context = context
     fun getItem(position: Int): Client {
@@ -25,7 +26,10 @@ class ClientListAdapter(context: Context, private var listItems: List<Client>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-                R.layout.row_client_name, parent, false)
+            R.layout.row_client_name,
+            parent,
+            false,
+        )
         vh = ViewHolder(v)
         return vh
     }
@@ -33,7 +37,7 @@ class ClientListAdapter(context: Context, private var listItems: List<Client>) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val client = getItem(position)
         (holder as ViewHolder).tv_clientName?.text = client.firstname + " " + client
-                .lastname
+            .lastname
         holder.tv_clientAccountNumber?.text = client.accountNo
     }
 
@@ -58,5 +62,4 @@ class ClientListAdapter(context: Context, private var listItems: List<Client>) :
             ButterKnife.bind(this, v!!)
         }
     }
-
 }

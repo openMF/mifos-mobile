@@ -7,6 +7,5 @@ enum class TransferType {
 
     TPT,
 
-    SELF
-
+    SELF,
 }

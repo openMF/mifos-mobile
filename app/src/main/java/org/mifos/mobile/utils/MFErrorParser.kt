@@ -12,7 +12,7 @@ object MFErrorParser {
         return gson.fromJson(serverResponse, MifosError::class.java)
     }
 
-    @kotlin.jvm.JvmStatic
+    @JvmStatic
     fun errorMessage(throwableError: Throwable?): String? {
         var errorMessage: String? = ""
         try {

@@ -1,12 +1,21 @@
 package org.mifos.mobile.api
 
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.api.services.*
-
+import org.mifos.mobile.api.services.AuthenticationService
+import org.mifos.mobile.api.services.BeneficiaryService
+import org.mifos.mobile.api.services.ClientChargeService
+import org.mifos.mobile.api.services.ClientService
+import org.mifos.mobile.api.services.GuarantorService
+import org.mifos.mobile.api.services.LoanAccountsListService
+import org.mifos.mobile.api.services.NotificationService
+import org.mifos.mobile.api.services.RecentTransactionsService
+import org.mifos.mobile.api.services.RegistrationService
+import org.mifos.mobile.api.services.SavingAccountsListService
+import org.mifos.mobile.api.services.ThirdPartyTransferService
+import org.mifos.mobile.api.services.UserDetailsService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
 import javax.inject.Inject
 
 /**
@@ -76,17 +85,20 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
         @JvmStatic
         fun createService(endpoint: String?, tenant: String?, authToken: String?) {
             retrofit = Retrofit.Builder()
-                    .baseUrl(BaseURL().getUrl(endpoint!!))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(SelfServiceOkHttpClient(tenant, authToken).mifosOkHttpClient)
-                    .build()
+                .baseUrl(BaseURL().getUrl(endpoint!!))
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(SelfServiceOkHttpClient(tenant, authToken).mifosOkHttpClient)
+                .build()
             init()
         }
     }
 
     init {
-        createService(preferencesHelper.baseUrl, preferencesHelper.tenant,
-                preferencesHelper.token)
+        createService(
+            preferencesHelper.baseUrl,
+            preferencesHelper.tenant,
+            preferencesHelper.token,
+        )
     }
 }

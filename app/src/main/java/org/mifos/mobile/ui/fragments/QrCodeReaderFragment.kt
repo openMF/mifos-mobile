@@ -18,7 +18,6 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
-
 /**
  * Created by dilpreet on 6/7/17.
  */
@@ -30,10 +29,11 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
     private var flashOn = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentScanQrCodeBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentScanQrCodeBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.add_beneficiary))
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         binding.viewScanner.setAutoFocus(true)
@@ -58,7 +58,12 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
         if (flashOn) {
             flashOn = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on, null))
+                binding.btnFlash.setImageDrawable(
+                    resources.getDrawable(
+                        R.drawable.ic_flash_on,
+                        null,
+                    ),
+                )
             } else {
                 binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on))
             }
@@ -66,7 +71,12 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
         } else {
             flashOn = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off, null))
+                binding.btnFlash.setImageDrawable(
+                    resources.getDrawable(
+                        R.drawable.ic_flash_off,
+                        null,
+                    ),
+                )
             } else {
                 binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off))
             }
@@ -95,13 +105,16 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
             (activity as BaseActivity?)?.replaceFragment(
                 BeneficiaryApplicationFragment.newInstance(
                     BeneficiaryState.CREATE_QR,
-                    beneficiary
-                ), true, R.id.container
+                    beneficiary,
+                ),
+                true,
+                R.id.container,
             )
         } catch (e: JsonSyntaxException) {
             Toast.makeText(
-                activity, getString(R.string.invalid_qr),
-                Toast.LENGTH_SHORT
+                activity,
+                getString(R.string.invalid_qr),
+                Toast.LENGTH_SHORT,
             ).show()
             binding.viewScanner.resumeCameraPreview(this)
         }

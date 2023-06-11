@@ -8,6 +8,5 @@ enum class GuarantorState {
 
     CREATE,
 
-    UPDATE
-
+    UPDATE,
 }

@@ -6,7 +6,12 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -37,8 +42,8 @@ import javax.inject.Inject
 /*
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
-*/   class ClientAccountsFragment : BaseFragment(), AccountsView {
-    private var _binding : FragmentClientAccountsBinding? = null
+*/ class ClientAccountsFragment : BaseFragment(), AccountsView {
+    private var _binding: FragmentClientAccountsBinding? = null
     private val binding get() = _binding!!
 
     @JvmField
@@ -59,7 +64,11 @@ import javax.inject.Inject
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentClientAccountsBinding.inflate(inflater, container, false)
         val rootView = binding.root
         (activity as BaseActivity?)?.activityComponent?.inject(this)
@@ -78,12 +87,18 @@ import javax.inject.Inject
      */
     private fun setUpViewPagerAndTabLayout() {
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SAVINGS_ACCOUNTS),
-                getString(R.string.savings))
-        viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.LOAN_ACCOUNTS),
-                getString(R.string.loan))
-        viewPagerAdapter.addFragment(AccountsFragment.newInstance(Constants.SHARE_ACCOUNTS),
-                getString(R.string.share))
+        viewPagerAdapter.addFragment(
+            AccountsFragment.newInstance(Constants.SAVINGS_ACCOUNTS),
+            getString(R.string.savings),
+        )
+        viewPagerAdapter.addFragment(
+            AccountsFragment.newInstance(Constants.LOAN_ACCOUNTS),
+            getString(R.string.loan),
+        )
+        viewPagerAdapter.addFragment(
+            AccountsFragment.newInstance(Constants.SHARE_ACCOUNTS),
+            getString(R.string.share),
+        )
         binding.viewpager.offscreenPageLimit = 2
         binding.viewpager.adapter = viewPagerAdapter
         when (accountType) {
@@ -94,8 +109,9 @@ import javax.inject.Inject
         binding.tabs.setupWithViewPager(binding.viewpager)
         binding.viewpager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(
-                    position: Int, positionOffset: Float,
-                    positionOffsetPixels: Int
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
             ) {
             }
 
@@ -131,7 +147,9 @@ import javax.inject.Inject
      * @param shareAccounts [List] of [ShareAccount]
      */
     override fun showShareAccounts(shareAccounts: List<ShareAccount?>?) {
-        (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)?.showShareAccounts(shareAccounts)
+        (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)?.showShareAccounts(
+            shareAccounts,
+        )
         (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)?.hideProgress()
     }
 
@@ -144,9 +162,9 @@ import javax.inject.Inject
      */
     override fun showLoanAccounts(loanAccounts: List<LoanAccount?>?) {
         (childFragmentManager.findFragmentByTag(getFragmentTag(1)) as AccountsView?)
-                ?.showLoanAccounts(loanAccounts)
+            ?.showLoanAccounts(loanAccounts)
         (childFragmentManager.findFragmentByTag(getFragmentTag(1)) as AccountsView?)
-                ?.hideProgress()
+            ?.hideProgress()
     }
 
     /**
@@ -158,9 +176,9 @@ import javax.inject.Inject
      */
     override fun showSavingsAccounts(savingAccounts: List<SavingAccount?>?) {
         (childFragmentManager.findFragmentByTag(getFragmentTag(0)) as AccountsView?)
-                ?.showSavingsAccounts(savingAccounts)
+            ?.showSavingsAccounts(savingAccounts)
         (childFragmentManager.findFragmentByTag(getFragmentTag(0)) as AccountsView?)
-                ?.hideProgress()
+            ?.hideProgress()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -186,11 +204,11 @@ import javax.inject.Inject
      */
     override fun showError(errorMessage: String?) {
         (childFragmentManager.findFragmentByTag(getFragmentTag(0)) as AccountsView?)
-                ?.showError(getString(R.string.error_fetching_accounts))
+            ?.showError(getString(R.string.error_fetching_accounts))
         (childFragmentManager.findFragmentByTag(getFragmentTag(1)) as AccountsView?)
-                ?.showError(getString(R.string.error_fetching_accounts))
+            ?.showError(getString(R.string.error_fetching_accounts))
         (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)
-                ?.showError(getString(R.string.error_fetching_accounts))
+            ?.showError(getString(R.string.error_fetching_accounts))
         Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
     }
 
@@ -277,16 +295,27 @@ import javax.inject.Inject
             override fun onQueryTextChange(newText: String): Boolean {
                 when (account) {
                     AccountType.SAVINGS -> {
-                        (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0)) as AccountsFragment?)?.searchSavingsAccount(newText)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(0),
+                            ) as AccountsFragment?
+                            )?.searchSavingsAccount(newText)
                     }
+
                     AccountType.LOAN -> {
-                        (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1)) as AccountsFragment?)?.searchLoanAccount(newText)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(1),
+                            ) as AccountsFragment?
+                            )?.searchLoanAccount(newText)
                     }
+
                     AccountType.SHARE -> {
-                        (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2)) as AccountsFragment?)?.searchSharesAccount(newText)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(2),
+                            ) as AccountsFragment?
+                            )?.searchSharesAccount(newText)
                     }
                 }
                 return false
@@ -311,117 +340,164 @@ import javax.inject.Inject
         checkBoxRecyclerView?.layoutManager = layoutManager
         checkBoxRecyclerView?.adapter = checkBoxAdapter
         val wrapper = LinearLayout(requireContext())
-        resources.getDimension(R.dimen.Mifos_DesignSystem_Spacing_CardInnerPaddingLarge).toInt().let { cardInnerPadding ->
-            wrapper.setPadding(cardInnerPadding,cardInnerPadding,cardInnerPadding,cardInnerPadding)
-        }
+        resources.getDimension(R.dimen.Mifos_DesignSystem_Spacing_CardInnerPaddingLarge).toInt()
+            .let { cardInnerPadding ->
+                wrapper.setPadding(
+                    cardInnerPadding,
+                    cardInnerPadding,
+                    cardInnerPadding,
+                    cardInnerPadding,
+                )
+            }
         wrapper.addView(checkBoxRecyclerView)
-        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            checkBoxRecyclerView?.layoutParams?.height = (getScreenHeight()/3.5).toInt()
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            checkBoxRecyclerView?.layoutParams?.height = (getScreenHeight() / 3.5).toInt()
         }
         when (account) {
             AccountType.SAVINGS -> {
-                if ((childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0)) as AccountsFragment?)?.getCurrentFilterList() == null) {
+                if ((
+                        childFragmentManager.findFragmentByTag(
+                            getFragmentTag(0),
+                        ) as AccountsFragment?
+                        )?.getCurrentFilterList() == null
+                ) {
                     checkBoxAdapter?.statusList = StatusUtils.getSavingsAccountStatusList(activity)
                 } else {
-                    checkBoxAdapter?.statusList = (childFragmentManager
-                            .findFragmentByTag(getFragmentTag(0)) as AccountsFragment?)?.getCurrentFilterList()
+                    checkBoxAdapter?.statusList = (
+                        childFragmentManager
+                            .findFragmentByTag(getFragmentTag(0)) as AccountsFragment?
+                        )?.getCurrentFilterList()
                 }
                 title = getString(R.string.filter_savings)
             }
+
             AccountType.LOAN -> {
-                if ((childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1)) as AccountsFragment?)?.getCurrentFilterList() == null) {
+                if ((
+                        childFragmentManager.findFragmentByTag(
+                            getFragmentTag(1),
+                        ) as AccountsFragment?
+                        )?.getCurrentFilterList() == null
+                ) {
                     checkBoxAdapter?.statusList = StatusUtils.getLoanAccountStatusList(activity)
                 } else {
-                    checkBoxAdapter?.statusList = (childFragmentManager
-                            .findFragmentByTag(getFragmentTag(1)) as AccountsFragment?)?.getCurrentFilterList()
+                    checkBoxAdapter?.statusList = (
+                        childFragmentManager
+                            .findFragmentByTag(getFragmentTag(1)) as AccountsFragment?
+                        )?.getCurrentFilterList()
                 }
                 title = getString(R.string.filter_loan)
             }
+
             AccountType.SHARE -> {
-                if ((childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2)) as AccountsFragment?)?.getCurrentFilterList() == null) {
+                if ((
+                        childFragmentManager.findFragmentByTag(
+                            getFragmentTag(2),
+                        ) as AccountsFragment?
+                        )?.getCurrentFilterList() == null
+                ) {
                     checkBoxAdapter?.statusList = StatusUtils.getShareAccountStatusList(activity)
                 } else {
-                    checkBoxAdapter?.statusList = (childFragmentManager
-                            .findFragmentByTag(getFragmentTag(2)) as AccountsFragment?)?.getCurrentFilterList()
+                    checkBoxAdapter?.statusList = (
+                        childFragmentManager
+                            .findFragmentByTag(getFragmentTag(2)) as AccountsFragment?
+                        )?.getCurrentFilterList()
                 }
                 title = getString(R.string.filter_share)
             }
         }
         MaterialAlertDialogBuilder(requireActivity())
-                .setTitle(title)
-                .setCancelable(false)
-                .setMessage(getString(R.string.select_you_want))
-                .setView(wrapper)
-                .setPositiveButton(getString(R.string.filter)) { _, _ ->
-                    isDialogBoxSelected = false
-                    when (account) {
-                        AccountType.SAVINGS -> {
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0)
-                            ) as AccountsFragment?)
-                                ?.setCurrentFilterList(checkBoxAdapter?.statusList)
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0)
-                            ) as AccountsFragment?)
-                                ?.filterSavingsAccount(checkBoxAdapter?.statusList)
-                        }
-                        AccountType.LOAN -> {
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1)
-                            ) as AccountsFragment?)
-                                ?.setCurrentFilterList(checkBoxAdapter?.statusList)
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1)
-                            ) as AccountsFragment?)
-                                ?.filterLoanAccount(checkBoxAdapter?.statusList)
-                        }
-                        AccountType.SHARE -> {
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2)
-                            ) as AccountsFragment?)
-                                ?.setCurrentFilterList(checkBoxAdapter?.statusList)
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2)
-                            ) as AccountsFragment?)
-                                ?.filterShareAccount(checkBoxAdapter?.statusList)
-                        }
-                    }
-                }
-                .setNeutralButton(R.string.clear_filters) { _, _ ->
-                    isDialogBoxSelected = false
-                    when (account) {
-                        AccountType.SAVINGS -> {
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0)
-                            ) as AccountsFragment?)?.clearFilter()
-                            checkBoxAdapter?.statusList =
-                                StatusUtils.getSavingsAccountStatusList(activity)
-                            accountsPresenter?.loadAccounts(Constants.SAVINGS_ACCOUNTS)
-                        }
-                        AccountType.LOAN -> {
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1)
-                            ) as AccountsFragment?)?.clearFilter()
-                            checkBoxAdapter?.statusList = StatusUtils.getLoanAccountStatusList(activity)
-                            accountsPresenter?.loadAccounts(Constants.LOAN_ACCOUNTS)
-                        }
-                        AccountType.SHARE -> {
-                            (childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2)
-                            ) as AccountsFragment?)?.clearFilter()
-                            checkBoxAdapter?.statusList =
-                                StatusUtils.getShareAccountStatusList(activity)
-                            accountsPresenter?.loadAccounts(Constants.SHARE_ACCOUNTS)
-                        }
+            .setTitle(title)
+            .setCancelable(false)
+            .setMessage(getString(R.string.select_you_want))
+            .setView(wrapper)
+            .setPositiveButton(getString(R.string.filter)) { _, _ ->
+                isDialogBoxSelected = false
+                when (account) {
+                    AccountType.SAVINGS -> {
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(0),
+                            ) as AccountsFragment?
+                            )
+                            ?.setCurrentFilterList(checkBoxAdapter?.statusList)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(0),
+                            ) as AccountsFragment?
+                            )
+                            ?.filterSavingsAccount(checkBoxAdapter?.statusList)
                     }
 
+                    AccountType.LOAN -> {
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(1),
+                            ) as AccountsFragment?
+                            )
+                            ?.setCurrentFilterList(checkBoxAdapter?.statusList)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(1),
+                            ) as AccountsFragment?
+                            )
+                            ?.filterLoanAccount(checkBoxAdapter?.statusList)
+                    }
+
+                    AccountType.SHARE -> {
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(2),
+                            ) as AccountsFragment?
+                            )
+                            ?.setCurrentFilterList(checkBoxAdapter?.statusList)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(2),
+                            ) as AccountsFragment?
+                            )
+                            ?.filterShareAccount(checkBoxAdapter?.statusList)
+                    }
                 }
-                .setNegativeButton(getString(R.string.cancel)) { _, _ -> isDialogBoxSelected = false }
-                .create()
-                .show()
+            }
+            .setNeutralButton(R.string.clear_filters) { _, _ ->
+                isDialogBoxSelected = false
+                when (account) {
+                    AccountType.SAVINGS -> {
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(0),
+                            ) as AccountsFragment?
+                            )?.clearFilter()
+                        checkBoxAdapter?.statusList =
+                            StatusUtils.getSavingsAccountStatusList(activity)
+                        accountsPresenter?.loadAccounts(Constants.SAVINGS_ACCOUNTS)
+                    }
+
+                    AccountType.LOAN -> {
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(1),
+                            ) as AccountsFragment?
+                            )?.clearFilter()
+                        checkBoxAdapter?.statusList = StatusUtils.getLoanAccountStatusList(activity)
+                        accountsPresenter?.loadAccounts(Constants.LOAN_ACCOUNTS)
+                    }
+
+                    AccountType.SHARE -> {
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(2),
+                            ) as AccountsFragment?
+                            )?.clearFilter()
+                        checkBoxAdapter?.statusList =
+                            StatusUtils.getShareAccountStatusList(activity)
+                        accountsPresenter?.loadAccounts(Constants.SHARE_ACCOUNTS)
+                    }
+                }
+            }
+            .setNegativeButton(getString(R.string.cancel)) { _, _ -> isDialogBoxSelected = false }
+            .create()
+            .show()
     }
 
     override fun onResume() {

@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_faq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground"
         android:gravity="center"
-        android:id="@+id/ll_faq"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         android:paddingVertical="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
         <TextView
             android:id="@+id/tv_qs"
+            style="@style/Mifos.DesignSystem.TextStyle.Body"
+            android:layout_width="@dimen/width_0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="@dimen/width_0dp"
-            style="@style/Mifos.DesignSystem.TextStyle.Body"
-            tools:text="@string/small_text"/>
+            tools:text="@string/small_text" />
 
         <ImageView
             android:id="@+id/iv_arrow"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_arrow_drop_down"/>
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_arrow_drop_down" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_ans"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding"
-        android:layout_width="match_parent"
-        style="@style/Mifos.DesignSystem.TextStyle.Body"
-        tools:text="@string/small_text"/>
+        tools:text="@string/small_text" />
 
 </LinearLayout>

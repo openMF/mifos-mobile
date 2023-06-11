@@ -5,25 +5,24 @@
   ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
   -->
 
-<LinearLayout android:id="@+id/column_header_container"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/column_header_container"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/default_column_header_height"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/column_header_textView"
+        style="@style/Mifos.DesignSystem.TextStyle.Body"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/height_0dp"
         android:layout_gravity="center"
         android:layout_weight="4"
         android:gravity="center"
-        style="@style/Mifos.DesignSystem.TextStyle.Body"
-        tools:text="Header Data"/>
+        tools:text="Header Data" />
 
 
-    <View
-        style="@style/Mifos.DesignSystem.Components.HorizontalSpacer"/>
+    <View style="@style/Mifos.DesignSystem.Components.HorizontalSpacer" />
 </LinearLayout>

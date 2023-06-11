@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PaymentType(
-        var id: Int? = null,
+    var id: Int? = null,
 
-        var name: String? = null
+    var name: String? = null,
 ) : Parcelable

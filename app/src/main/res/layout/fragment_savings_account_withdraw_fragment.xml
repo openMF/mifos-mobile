@@ -1,102 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
-        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin">
+        android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
+            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
+                android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                android:text="@string/client_name"
-                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                android:text="@string/client_name" />
 
             <TextView
                 android:id="@+id/tv_client_name"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
+                android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                style="@style/Mifos.DesignSystem.TextStyle.Body"
-                tools:text="@string/medium_text"/>
+                tools:text="@string/medium_text" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
-            android:layout_width="match_parent">
+            android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall">
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
+                android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                android:text="@string/account_number"
-                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                android:text="@string/account_number" />
 
             <TextView
                 android:id="@+id/tv_account_number"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
+                android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                style="@style/Mifos.DesignSystem.TextStyle.Body"
-                tools:text="@string/medium_text"/>
+                tools:text="@string/medium_text" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.Label"
+                android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                android:text="@string/withdrawal_date"
-                style="@style/Mifos.DesignSystem.TextStyle.Label"/>
+                android:text="@string/withdrawal_date" />
 
             <TextView
                 android:id="@+id/tv_withdrawal_date"
+                style="@style/Mifos.DesignSystem.TextStyle.Body"
+                android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="@dimen/width_0dp"
-                style="@style/Mifos.DesignSystem.TextStyle.Body"
-                tools:text="@string/medium_text"/>
+                tools:text="@string/medium_text" />
 
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_remark"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
-            android:layout_width="match_parent">
+            android:layout_marginVertical="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium">
 
             <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/remark"
                 android:imeOptions="actionDone"
-                android:inputType="text"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_withdraw_savings_account"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="@string/withdraw_savings_account"/>
+            android:layout_height="wrap_content"
+            android:text="@string/withdraw_savings_account" />
 
     </LinearLayout>
 

@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AccountOptionsTemplate(
 
-        var fromAccountOptions: List<AccountOption> = ArrayList(),
+    var fromAccountOptions: List<AccountOption> = ArrayList(),
 
-        var toAccountOptions: List<AccountOption> = ArrayList()
+    var toAccountOptions: List<AccountOption> = ArrayList(),
 ) : Parcelable

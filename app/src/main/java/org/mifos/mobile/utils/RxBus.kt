@@ -3,7 +3,6 @@ package org.mifos.mobile.utils
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-
 /*
  * Created by saksham on 31/July/2018
 */
@@ -22,5 +21,4 @@ object RxBus {
     fun <T> listen(eventType: Class<T>): Observable<T> {
         return publisher.ofType(eventType)
     }
-
 }

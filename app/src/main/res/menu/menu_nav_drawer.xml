@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- dummy ids are given to ech group to make dividers between each group -->
-    <group android:id="@+id/group1"
+    <group
+        android:id="@+id/group1"
         android:checkableBehavior="single">
 
         <item
             android:id="@+id/item_home"
             android:checked="true"
             android:icon="@drawable/ic_account_balance_black_24dp"
-            android:title="@string/home"/>
+            android:title="@string/home" />
 
         <item
             android:id="@+id/item_accounts"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="@string/accounts"/>
+            android:title="@string/accounts" />
 
         <item
             android:id="@+id/item_recent_transactions"
             android:checked="false"
             android:icon="@drawable/ic_label_black_24dp"
-            android:title="@string/recent_transactions"/>
+            android:title="@string/recent_transactions" />
 
         <item
             android:id="@+id/item_charges"
             android:checked="false"
             android:icon="@drawable/ic_charges"
-            android:title="@string/charges"/>
+            android:title="@string/charges" />
         <item
             android:id="@+id/item_third_party_transfer"
             android:checked="false"
             android:icon="@drawable/ic_compare_arrows_black_24dp"
-            android:title="@string/third_party_transfer"/>
+            android:title="@string/third_party_transfer" />
         <item
             android:id="@+id/item_beneficiaries"
             android:checked="false"
             android:icon="@drawable/ic_beneficiaries_48px"
-            android:title="@string/manage_beneficiaries"/>
+            android:title="@string/manage_beneficiaries" />
 
     </group>
 
@@ -44,27 +45,27 @@
         <item
             android:id="@+id/item_settings"
             android:icon="@drawable/ic_settings"
-            android:title="@string/settings"/>
+            android:title="@string/settings" />
         <item
             android:id="@+id/item_about_us"
             android:icon="@drawable/ic_about_us_black_24dp"
-            android:title="@string/about_us"/>
+            android:title="@string/about_us" />
         <item
             android:id="@+id/item_help"
             android:icon="@drawable/ic_help_black_24dp"
-            android:title="@string/help"/>
+            android:title="@string/help" />
         <item
             android:id="@+id/item_share"
             android:icon="@drawable/ic_share_black_24dp"
-            android:title="@string/share"/>
+            android:title="@string/share" />
         <item
             android:id="@+id/item_app_info"
             android:icon="@drawable/ic_info_black_24dp"
-            android:title="@string/app_info"/>
+            android:title="@string/app_info" />
         <item
             android:id="@+id/item_logout"
             android:icon="@drawable/ic_logout"
-            android:title="@string/logout"/>
+            android:title="@string/logout" />
     </group>
 
 </menu>

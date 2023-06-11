@@ -56,5 +56,5 @@ data class Client(
 
     var gender: Gender? = null,
 
-    var groups: List<Group> = ArrayList()
-): Parcelable
+    var groups: List<Group> = ArrayList(),
+) : Parcelable

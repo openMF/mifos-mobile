@@ -10,6 +10,5 @@ enum class BeneficiaryState {
 
     CREATE_QR,
 
-    UPDATE
-
+    UPDATE,
 }

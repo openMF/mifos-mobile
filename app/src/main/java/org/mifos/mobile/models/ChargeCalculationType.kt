@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ChargeCalculationType(
-        var id: Int = 0,
-        var code: String? = null, // example "chargeCalculationType.flat"
-        var value: String? = null
+    var id: Int = 0,
+    var code: String? = null, // example "chargeCalculationType.flat"
+    var value: String? = null,
 ) : Parcelable

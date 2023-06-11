@@ -2,7 +2,12 @@ package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import org.mifos.mobile.R
@@ -16,7 +21,11 @@ import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanAccountsDetailView
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.CurrencyUtil
+import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.QrCodeGenerator
 import javax.inject.Inject
 
 /*
@@ -27,14 +36,14 @@ import javax.inject.Inject
  * @since 19/08/16
  */
 class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
-    private var _binding : FragmentLoanAccountDetailsBinding? = null
+    private var _binding: FragmentLoanAccountDetailsBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var loanAccountDetailsPresenter: LoanAccountsDetailPresenter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
     private var loanWithAssociations: LoanWithAssociations? = null
@@ -49,8 +58,11 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         _binding = FragmentLoanAccountDetailsBinding.inflate(inflater, container, false)
         val rootView = binding.root
@@ -100,7 +112,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
                     getString(R.string.approval_pending),
                     R.drawable.ic_assignment_turned_in_black_24dp,
                     llAccountDetail,
-                    layoutError.root
+                    layoutError.root,
                 )
                 showLoanUpdateOption = true
             } else if (loanWithAssociations.status?.waitingForDisbursal!!) {
@@ -108,7 +120,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
                     getString(R.string.waiting_for_disburse),
                     R.drawable.ic_assignment_turned_in_black_24dp,
                     llAccountDetail,
-                    layoutError.root
+                    layoutError.root,
                 )
             } else {
                 btnMakePayment.visibility = View.GONE
@@ -128,24 +140,27 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         with(binding) {
             tvOutstandingBalance.text = resources.getString(
                 R.string.string_and_string,
-                loanWithAssociations?.summary?.currency?.displaySymbol, CurrencyUtil.formatCurrency(
+                loanWithAssociations?.summary?.currency?.displaySymbol,
+                CurrencyUtil.formatCurrency(
                     activity,
-                    loanWithAssociations?.summary?.totalOutstanding
-                )
+                    loanWithAssociations?.summary?.totalOutstanding,
+                ),
             )
-            if (loanWithAssociations?.repaymentSchedule?.periods != null) for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations.repaymentSchedule?.periods!!) {
-                if (dueDate == loanWithAssociations.summary?.getOverdueSinceDate()) {
-                    tvNextInstallment.text = resources.getString(
-                        R.string.string_and_string,
-                        loanWithAssociations.summary?.currency?.displaySymbol,
-                        CurrencyUtil.formatCurrency(
-                            activity,
-                            totalDueForPeriod
+            if (loanWithAssociations?.repaymentSchedule?.periods != null) {
+                for ((_, _, dueDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, totalDueForPeriod) in loanWithAssociations.repaymentSchedule?.periods!!) {
+                    if (dueDate == loanWithAssociations.summary?.getOverdueSinceDate()) {
+                        tvNextInstallment.text = resources.getString(
+                            R.string.string_and_string,
+                            loanWithAssociations.summary?.currency?.displaySymbol,
+                            CurrencyUtil.formatCurrency(
+                                activity,
+                                totalDueForPeriod,
+                            ),
                         )
-                    )
-                    break
-                } else if (loanWithAssociations.summary?.getOverdueSinceDate() == null) {
-                    tvNextInstallment.setText(R.string.not_available)
+                        break
+                    } else if (loanWithAssociations.summary?.getOverdueSinceDate() == null) {
+                        tvNextInstallment.setText(R.string.not_available)
+                    }
                 }
             }
             tvAccountNumber.text = loanWithAssociations?.accountNo
@@ -185,7 +200,6 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
                 retryClicked()
             }
         }
-
     }
 
     /**
@@ -193,39 +207,80 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      * `loanId`
      */
     private fun onMakePaymentClicked() {
-        (activity as BaseActivity?)?.replaceFragment(SavingsMakeTransferFragment.newInstance(loanId, loanWithAssociations?.summary?.totalOutstanding,
-                Constants.TRANSFER_PAY_TO), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            SavingsMakeTransferFragment.newInstance(
+                loanId,
+                loanWithAssociations?.summary?.totalOutstanding,
+                Constants.TRANSFER_PAY_TO,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     /**
      * Opens [LoanAccountSummaryFragment]
      */
     private fun onLoanSummaryClicked() {
-        (activity as BaseActivity?)?.replaceFragment(LoanAccountSummaryFragment.newInstance(loanWithAssociations), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            LoanAccountSummaryFragment.newInstance(
+                loanWithAssociations,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     /**
      * Opens [LoanRepaymentScheduleFragment]
      */
     private fun onRepaymentScheduleClicked() {
-        (activity as BaseActivity?)?.replaceFragment(LoanRepaymentScheduleFragment.newInstance(loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            LoanRepaymentScheduleFragment.newInstance(
+                loanId,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     /**
      * Opens [LoanAccountTransactionFragment]
      */
     private fun onTransactionsClicked() {
-        (activity as BaseActivity?)?.replaceFragment(LoanAccountTransactionFragment.newInstance(loanId), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            LoanAccountTransactionFragment.newInstance(
+                loanId,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     private fun chargesClicked() {
-        (activity as BaseActivity?)?.replaceFragment(ClientChargeFragment.newInstance(loanWithAssociations?.id?.toLong(), ChargeType.LOAN), true, R.id.container)
+        (activity as BaseActivity?)?.replaceFragment(
+            ClientChargeFragment.newInstance(
+                loanWithAssociations?.id?.toLong(),
+                ChargeType.LOAN,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     private fun onQrCodeClicked() {
-        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(loanWithAssociations?.accountNo,
-                preferencesHelper?.officeName, AccountType.LOAN)
-        (activity as BaseActivity?)?.replaceFragment(QrCodeDisplayFragment.newInstance(accountDetailsInJson), true, R.id.container)
+        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
+            loanWithAssociations?.accountNo,
+            preferencesHelper?.officeName,
+            AccountType.LOAN,
+        )
+        (activity as BaseActivity?)?.replaceFragment(
+            QrCodeDisplayFragment.newInstance(
+                accountDetailsInJson,
+            ),
+            true,
+            R.id.container,
+        )
     }
 
     /**
@@ -235,21 +290,33 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      */
     override fun showErrorFetchingLoanAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(binding.llAccountDetail, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetNoInternetUI(
+                binding.llAccountDetail,
+                binding.layoutError.root,
+            )
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message,
-                binding.llAccountDetail, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                message,
+                binding.llAccountDetail,
+                binding.layoutError.root,
+            )
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
 
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.llAccountDetail, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.llAccountDetail,
+                binding.layoutError.root,
+            )
             loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 
@@ -281,21 +348,42 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_update_loan -> {
-                (activity as BaseActivity?)?.replaceFragment(LoanApplicationFragment.newInstance(LoanState.UPDATE, loanWithAssociations), true, R.id.container)
+                (activity as BaseActivity?)?.replaceFragment(
+                    LoanApplicationFragment.newInstance(
+                        LoanState.UPDATE,
+                        loanWithAssociations,
+                    ),
+                    true,
+                    R.id.container,
+                )
                 return true
             }
+
             R.id.menu_withdraw_loan -> {
-                (activity as BaseActivity?)?.replaceFragment(LoanAccountWithdrawFragment.newInstance(loanWithAssociations), true, R.id.container)
+                (activity as BaseActivity?)?.replaceFragment(
+                    LoanAccountWithdrawFragment.newInstance(
+                        loanWithAssociations,
+                    ),
+                    true,
+                    R.id.container,
+                )
             }
+
             R.id.menu_view_guarantor -> {
-                (activity as BaseActivity?)?.replaceFragment(GuarantorListFragment.newInstance(loanId), true, R.id.container)
+                (activity as BaseActivity?)?.replaceFragment(
+                    GuarantorListFragment.newInstance(
+                        loanId,
+                    ),
+                    true,
+                    R.id.container,
+                )
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(loanId: Long): LoanAccountsDetailFragment {
             val fragment = LoanAccountsDetailFragment()
             val args = Bundle()

@@ -324,7 +324,7 @@
     <string name="not_available">THE</string>
     <string name="upload_qr_code">Kirim QR</string>
     <string name="select_region_qr">Pilih wilayah dengan kode QR</string>
-    
+
     <string name="need_help">Hubungi kami</string>
     <string name="transferred_successfully">Transfer berhasil</string>
 
@@ -336,7 +336,7 @@
     <string name="active_uc">AKTIF</string>
     <string name="inactive_uc">NON-AKTIF</string>
 
-    
+
     <string name="dialog_logout">Anda yakin ingin keluar?</string>
     <string name="dialog_action_ok">Oke</string>
     <string name="dialog_action_cancel">Membatalkan</string>
@@ -356,7 +356,7 @@
     <string name="permission_denied_storage">Penolakan penyimpanan ditolak</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Anda yakin ingin %1$s?</string>
 
-    
+
     <string name="hello_client">Halo, %1$s.</string>
     <string name="invalid_amount">Jumlah tidak valid</string>
     <string name="exit_message">Tekan lagi untuk keluar</string>

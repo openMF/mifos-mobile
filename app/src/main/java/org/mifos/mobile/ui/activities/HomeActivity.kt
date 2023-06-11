@@ -1,6 +1,9 @@
 package org.mifos.mobile.ui.activities
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -11,7 +14,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -29,10 +31,19 @@ import org.mifos.mobile.presenters.UserDetailsPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.fragments.*
+import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
+import org.mifos.mobile.ui.fragments.ClientAccountsFragment
+import org.mifos.mobile.ui.fragments.ClientChargeFragment
+import org.mifos.mobile.ui.fragments.HomeOldFragment
+import org.mifos.mobile.ui.fragments.NotificationFragment
+import org.mifos.mobile.ui.fragments.RecentTransactionsFragment
+import org.mifos.mobile.ui.fragments.ThirdPartyTransferFragment
+import org.mifos.mobile.ui.fragments.TransferProcessFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.views.UserDetailsView
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.TextDrawable
+import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
 import javax.inject.Inject
 
@@ -40,7 +51,10 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 14/07/2016
  */
-class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity :
+    BaseActivity(),
+    UserDetailsView,
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navHeaderBinding: NavDrawerHeaderBinding
@@ -71,8 +85,11 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         setToolbarElevation()
         setToolbarTitle(getString(R.string.home))
         replaceFragment(HomeOldFragment.newInstance(), false, R.id.container)
-        if (intent != null && intent.getBooleanExtra(getString(R.string.notification),
-                        false)) {
+        if (intent != null && intent.getBooleanExtra(
+                getString(R.string.notification),
+                false,
+            )
+        ) {
             replaceFragment(NotificationFragment.newInstance(), true, R.id.container)
         }
         if (savedInstanceState == null) {
@@ -107,8 +124,10 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         super.onResume()
         detailsPresenter?.attachView(this)
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver,
-                    IntentFilter(Constants.REGISTER_ON_SERVER))
+            LocalBroadcastManager.getInstance(this).registerReceiver(
+                registerReceiver,
+                IntentFilter(Constants.REGISTER_ON_SERVER),
+            )
             isReceiverRegistered = true
         }
     }
@@ -133,31 +152,75 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 hideToolbarElevation()
                 replaceFragment(HomeOldFragment.newInstance(), true, R.id.container)
             }
+
             R.id.item_accounts -> {
                 hideToolbarElevation()
-                replaceFragment(ClientAccountsFragment.newInstance(AccountType.SAVINGS),
-                        true, R.id.container)
+                replaceFragment(
+                    ClientAccountsFragment.newInstance(AccountType.SAVINGS),
+                    true,
+                    R.id.container,
+                )
             }
-            R.id.item_recent_transactions -> replaceFragment(RecentTransactionsFragment.newInstance(), true, R.id.container)
-            R.id.item_charges -> replaceFragment(ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT), true,
-                    R.id.container)
-            R.id.item_third_party_transfer -> replaceFragment(ThirdPartyTransferFragment.newInstance(), true, R.id.container)
-            R.id.item_beneficiaries -> replaceFragment(BeneficiaryListFragment.newInstance(), true, R.id.container)
-            R.id.item_settings -> startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
-            R.id.item_about_us -> startActivity(Intent(this@HomeActivity, AboutUsActivity::class.java))
+
+            R.id.item_recent_transactions -> replaceFragment(
+                RecentTransactionsFragment.newInstance(),
+                true,
+                R.id.container,
+            )
+
+            R.id.item_charges -> replaceFragment(
+                ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT),
+                true,
+                R.id.container,
+            )
+
+            R.id.item_third_party_transfer -> replaceFragment(
+                ThirdPartyTransferFragment.newInstance(),
+                true,
+                R.id.container,
+            )
+
+            R.id.item_beneficiaries -> replaceFragment(
+                BeneficiaryListFragment.newInstance(),
+                true,
+                R.id.container,
+            )
+
+            R.id.item_settings -> startActivity(
+                Intent(
+                    this@HomeActivity,
+                    SettingsActivity::class.java,
+                ),
+            )
+
+            R.id.item_about_us -> startActivity(
+                Intent(
+                    this@HomeActivity,
+                    AboutUsActivity::class.java,
+                ),
+            )
+
             R.id.item_help -> startActivity(Intent(this@HomeActivity, HelpActivity::class.java))
             R.id.item_app_info -> {
                 val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 intent.data = Uri.parse("package:$packageName")
                 startActivity(intent)
             }
+
             R.id.item_share -> {
                 val i = Intent(Intent.ACTION_SEND)
                 i.type = "text/plain"
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.playstore_link,
-                        getString(R.string.share_msg), application.packageName))
+                i.putExtra(
+                    Intent.EXTRA_TEXT,
+                    getString(
+                        R.string.playstore_link,
+                        getString(R.string.share_msg),
+                        application.packageName,
+                    ),
+                )
                 startActivity(Intent.createChooser(i, getString(R.string.choose)))
             }
+
             R.id.item_logout -> showLogoutDialog()
         }
 
@@ -179,9 +242,9 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(i)
                 finish()
-                Toast.makeText(this,R.string.logged_out_successfully, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.logged_out_successfully, Toast.LENGTH_SHORT).show()
             }
-            .setNegativeButton(getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss()  }
+            .setNegativeButton(getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }
             .create()
             .show()
     }
@@ -192,8 +255,13 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
      */
     private fun setupNavigationBar() {
         binding.navigationView.setNavigationItemSelectedListener(this)
-        val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this,
-                binding.drawer, toolbar, R.string.open_drawer, R.string.close_drawer) {
+        val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this,
+            binding.drawer,
+            toolbar,
+            R.string.open_drawer,
+            R.string.close_drawer,
+        ) {
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
@@ -215,7 +283,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         navHeaderBinding = NavDrawerHeaderBinding.bind(headerView)
         tvUsername = navHeaderBinding.tvUserName
         drawerUserImage = navHeaderBinding.userImageRound
-        drawerUserImage?.setOnClickListener{
+        drawerUserImage?.setOnClickListener {
             startActivity(Intent(this, UserProfileActivity::class.java))
             binding.drawer.closeDrawer(GravityCompat.START)
         }
@@ -251,21 +319,24 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                     getString(R.string.app_name)
                 }
                 val drawable = TextDrawable.builder()
-                        .beginConfig()
-                        .toUpperCase()
-                        .endConfig()
-                        .buildRound(userName?.substring(0, 1),getThemeAttributeColor(R.attr.colorPrimaryVariant))
+                    .beginConfig()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(
+                        userName?.substring(0, 1),
+                        getThemeAttributeColor(R.attr.colorPrimaryVariant),
+                    )
                 drawerUserImage?.setImageDrawable(drawable)
             }
         }
     }
 
     override fun showProgress() {
-        //empty, no need to show/hide progress in headerview
+        // empty, no need to show/hide progress in headerview
     }
 
     override fun hideProgress() {
-        //empty
+        // empty
     }
 
     /**
@@ -316,19 +387,24 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
                 is HomeOldFragment -> {
                     setNavigationViewSelectedItem(R.id.item_home)
                 }
+
                 is ClientAccountsFragment -> {
                     hideToolbarElevation()
                     setNavigationViewSelectedItem(R.id.item_accounts)
                 }
+
                 is RecentTransactionsFragment -> {
                     setNavigationViewSelectedItem(R.id.item_recent_transactions)
                 }
+
                 is ClientChargeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_charges)
                 }
+
                 is ThirdPartyTransferFragment -> {
                     setNavigationViewSelectedItem(R.id.item_third_party_transfer)
                 }
+
                 is BeneficiaryListFragment -> {
                     setNavigationViewSelectedItem(R.id.item_beneficiaries)
                 }
@@ -339,7 +415,6 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
     fun setNavigationViewSelectedItem(id: Int) {
         binding.navigationView.setCheckedItem(id)
     }
-
 
     /**
      * Check the device to make sure it has the Google Play Services APK. If
@@ -352,7 +427,7 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
                 apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show()
+                    .show()
             } else {
                 Log.i(HomeActivity::class.java.name, "This device is not supported.")
                 finish()
@@ -371,8 +446,11 @@ class HomeActivity : BaseActivity(), UserDetailsView, NavigationView.OnNavigatio
 
     fun hideKeyboard(view: View) {
         val inputManager = this
-                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(
+            view.windowToken,
+            InputMethodManager.RESULT_UNCHANGED_SHOWN,
+        )
     }
 
     companion object {

@@ -10,14 +10,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class SavingsAccountApplicationPayload(
 
-        var submittedOnDate: String? = null,
+    var submittedOnDate: String? = null,
 
-        var clientId: Int? = null,
+    var clientId: Int? = null,
 
-        var productId: Int? = null,
+    var productId: Int? = null,
 
-        var locale: String = "en",
+    var locale: String = "en",
 
-        var dateFormat: String = "dd MMMM yyyy"
+    var dateFormat: String = "dd MMMM yyyy",
 
 ) : Parcelable

@@ -2,10 +2,8 @@ package org.mifos.mobile.injection.module
 
 import android.app.Activity
 import android.content.Context
-
 import dagger.Module
 import dagger.Provides
-
 import org.mifos.mobile.injection.ActivityContext
 
 /**

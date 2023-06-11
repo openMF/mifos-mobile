@@ -5,7 +5,7 @@ import org.mifos.mobile.ui.views.base.MVPView
 
 /*
 * Created by saksham on 30/June/2018
-*/   interface SavingsAccountApplicationView : MVPView {
+*/ interface SavingsAccountApplicationView : MVPView {
     fun showUserInterfaceSavingAccountApplication(template: SavingsAccountTemplate?)
     fun showSavingsAccountApplicationSuccessfully()
     fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?)

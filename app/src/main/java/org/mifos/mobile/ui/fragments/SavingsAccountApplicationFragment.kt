@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingsAccountApplicationBinding
@@ -23,9 +22,6 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
-
-
-import java.util.*
 import javax.inject.Inject
 
 /*
@@ -36,11 +32,11 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     private var _binding: FragmentSavingsAccountApplicationBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var presenter: SavingsAccountApplicationPresenter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
     private var state: SavingsAccountState? = null
@@ -58,9 +54,10 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
         (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
@@ -88,7 +85,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         showUserInterface(template)
         activity?.title = getString(
             R.string.string_savings_account,
-            getString(R.string.update)
+            getString(R.string.update),
         )
         binding.productIdField.setText(savingsWithAssociations?.savingsProductName!!, false)
     }
@@ -101,10 +98,11 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     fun showUserInterface(template: SavingsAccountTemplate?) {
         this.template = template
         productOptions = template?.productOptions
-        if (productOptions != null)
+        if (productOptions != null) {
             for ((_, name) in productOptions as ArrayList<ProductOptions>) {
                 productIdList.add(name)
             }
+        }
         binding.tvClientName.text = template?.clientName
         binding.productIdField.setSimpleItems(productIdList.toTypedArray())
         binding.tvSubmissionDate.text = getTodayFormatted()
@@ -118,12 +116,12 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
             payload.productId = productIdList.indexOf(binding.productIdField.text.toString())
                 .let { productOptions?.get(it)?.id }
         } else {
-           Toaster.show(binding.root,getString(R.string.select_product_id))
+            Toaster.show(binding.root, getString(R.string.select_product_id))
             return
         }
         payload.submittedOnDate = DateHelper.getSpecificFormat(
             DateHelper.FORMAT_dd_MMMM_yyyy,
-            getTodayFormatted()
+            getTodayFormatted(),
         )
         presenter?.submitSavingsAccountApplication(payload)
     }
@@ -172,9 +170,10 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     }
 
     companion object {
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun newInstance(
-            state: SavingsAccountState?, savingsWithAssociations: SavingsWithAssociations?
+            state: SavingsAccountState?,
+            savingsWithAssociations: SavingsWithAssociations?,
         ): SavingsAccountApplicationFragment {
             val fragment = SavingsAccountApplicationFragment()
             val bundle = Bundle()

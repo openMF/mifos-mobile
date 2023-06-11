@@ -16,7 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.DateFormatSymbols
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by michaelsosnick on 12/12/16.
@@ -32,7 +32,9 @@ object Utils {
             if (drawable != null) {
                 drawable.mutate()
                 drawable.setColorFilter(
-                        ContextCompat.getColor(context!!, color), PorterDuff.Mode.SRC_IN)
+                    ContextCompat.getColor(context!!, color),
+                    PorterDuff.Mode.SRC_IN,
+                )
             }
         }
     }
@@ -55,8 +57,11 @@ object Utils {
         }
         val imagePath = File(context?.cacheDir, "images")
         val newFile = File(imagePath, "image.png")
-        return FileProvider.getUriForFile(context!!, "org.mifos.mobile.fileprovider",
-                newFile)
+        return FileProvider.getUriForFile(
+            context!!,
+            "org.mifos.mobile.fileprovider",
+            newFile,
+        )
     }
 
     fun generateFormString(data: Array<Array<String?>>): String {
@@ -68,12 +73,16 @@ object Utils {
         return formString.toString()
     }
 
-    @kotlin.jvm.JvmStatic
+    @JvmStatic
     fun formatTransactionType(type: String?): String {
         val builder = StringBuilder()
-        for (str in type?.toLowerCase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
-            builder.append(str[0].toString().toUpperCase(Locale.ROOT) + str.substring(1,
-                    str.length) + " ")
+        for (str in type?.lowercase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
+            builder.append(
+                str[0].toString().uppercase(Locale.ROOT) + str.substring(
+                    1,
+                    str.length,
+                ) + " ",
+            )
         }
         return builder.toString()
     }

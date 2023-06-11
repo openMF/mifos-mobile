@@ -1,12 +1,10 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.injection.ApplicationContext
@@ -14,7 +12,6 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.SavingAccountsDetailView
 import org.mifos.mobile.utils.Constants
-
 import javax.inject.Inject
 
 /**
@@ -22,8 +19,8 @@ import javax.inject.Inject
  * @since 18/8/16.
  */
 class SavingAccountsDetailPresenter @Inject constructor(
-        private val dataManager: DataManager?,
-        @ApplicationContext context: Context?
+    private val dataManager: DataManager?,
+    @ApplicationContext context: Context?,
 ) : BasePresenter<SavingAccountsDetailView?>(context) {
 
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
@@ -43,26 +40,29 @@ class SavingAccountsDetailPresenter @Inject constructor(
     fun loadSavingsWithAssociations(accountId: Long?) {
         checkViewAttached()
         mvpView?.showProgress()
-        dataManager?.getSavingsWithAssociations(accountId,
-                Constants.TRANSACTIONS)
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<SavingsWithAssociations?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        mvpView?.hideProgress()
-                        mvpView?.showErrorFetchingSavingAccountsDetail(
-                                context?.getString(R.string.error_saving_account_details_loading))
-                    }
-
-                    override fun onNext(savingAccount: SavingsWithAssociations) {
-                        mvpView?.hideProgress()
-                        mvpView?.showSavingAccountsDetail(savingAccount)
-                    }
-                })?.let {
-                    compositeDisposables.add(it
+        dataManager?.getSavingsWithAssociations(
+            accountId,
+            Constants.TRANSACTIONS,
+        )
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<SavingsWithAssociations?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    mvpView?.hideProgress()
+                    mvpView?.showErrorFetchingSavingAccountsDetail(
+                        context?.getString(R.string.error_saving_account_details_loading),
                     )
                 }
-    }
 
+                override fun onNext(savingAccount: SavingsWithAssociations) {
+                    mvpView?.hideProgress()
+                    mvpView?.showSavingAccountsDetail(savingAccount)
+                }
+            })?.let {
+                compositeDisposables.add(
+                    it,
+                )
+            }
+    }
 }

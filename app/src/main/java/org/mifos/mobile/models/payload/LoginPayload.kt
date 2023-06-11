@@ -6,7 +6,7 @@ package org.mifos.mobile.models.payload
 
 data class LoginPayload(
 
-        var username: String? = null,
+    var username: String? = null,
 
-        var password: String? = null
+    var password: String? = null,
 )

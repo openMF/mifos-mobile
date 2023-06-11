@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -23,7 +20,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanAccountsTransactionView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
-
 import javax.inject.Inject
 
 /*
@@ -33,14 +29,14 @@ import javax.inject.Inject
  * Created by dilpreet on 4/3/17.
  */
 class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionView {
-    private var _binding : FragmentLoanAccountTransactionsBinding? = null
+    private var _binding: FragmentLoanAccountTransactionsBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var transactionsListAdapter: RecentTransactionListAdapter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var loanAccountsTransactionPresenter: LoanAccountsTransactionPresenter? = null
     private var loanId: Long? = 0
@@ -54,8 +50,11 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentLoanAccountTransactionsBinding.inflate(inflater, container, false)
         val rootView = binding.root
         setToolbarTitle(getString(R.string.transactions))
@@ -110,8 +109,12 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
      * Sets a [TextView] with a msg if Transactions list is empty
      */
     override fun showEmptyTransactions(loanWithAssociations: LoanWithAssociations?) {
-        sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.transactions),
-                R.drawable.ic_compare_arrows_black_24dp, binding.rvLoanTransactions, binding.layoutError.root)
+        sweetUIErrorHandler?.showSweetEmptyUI(
+            getString(R.string.transactions),
+            R.drawable.ic_compare_arrows_black_24dp,
+            binding.rvLoanTransactions,
+            binding.layoutError.root,
+        )
     }
 
     /**
@@ -124,12 +127,13 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
             if (!Network.isConnected(activity)) {
                 sweetUIErrorHandler?.showSweetNoInternetUI(
                     rvLoanTransactions,
-                    layoutError.root
+                    layoutError.root,
                 )
             } else {
                 sweetUIErrorHandler?.showSweetErrorUI(
                     message,
-                    rvLoanTransactions, layoutError.root
+                    rvLoanTransactions,
+                    layoutError.root,
                 )
                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
             }
@@ -145,11 +149,17 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
 
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvLoanTransactions, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvLoanTransactions,
+                binding.layoutError.root,
+            )
             loanAccountsTransactionPresenter?.loadLoanAccountDetails(loanId)
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 

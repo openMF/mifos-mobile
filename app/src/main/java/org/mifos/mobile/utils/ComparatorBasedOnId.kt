@@ -15,8 +15,10 @@ open class ComparatorBasedOnId : Comparator<Account?> {
      * second.
      */
     override fun compare(o1: Account?, o2: Account?): Int {
-        return if (o1 != null && o2 != null)
+        return if (o1 != null && o2 != null) {
             o2.id.toFloat().compareTo(o1.id.toFloat())
-        else 0
+        } else {
+            0
+        }
     }
 }

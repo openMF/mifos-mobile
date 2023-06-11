@@ -5,6 +5,6 @@ package org.mifos.mobile.models.register
  */
 
 data class UserVerify(
-        var requestId: String? = null,
-        var authenticationToken: String? = null
+    var requestId: String? = null,
+    var authenticationToken: String? = null,
 )

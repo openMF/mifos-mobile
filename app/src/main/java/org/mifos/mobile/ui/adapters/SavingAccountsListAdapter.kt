@@ -5,21 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowSavingAccountBinding
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 
-import java.util.*
-
 /**
  * @author Vishwajeet
  * @since 22/6/16.
  */
 class SavingAccountsListAdapter(
-    private val onItemClick: (itemPosition: Int) -> Unit
+    private val onItemClick: (itemPosition: Int) -> Unit,
 ) : RecyclerView.Adapter<SavingAccountsListAdapter.ViewHolder>() {
 
     private var savingAccountsList: List<SavingAccount?>? = ArrayList()
@@ -38,7 +35,8 @@ class SavingAccountsListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowSavingAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RowSavingAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -50,7 +48,9 @@ class SavingAccountsListAdapter(
     override fun getItemCount(): Int {
         return savingAccountsList?.size ?: 0
     }
-    inner class ViewHolder(private val binding: RowSavingAccountBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class ViewHolder(private val binding: RowSavingAccountBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
@@ -68,20 +68,51 @@ class SavingAccountsListAdapter(
                 when {
                     savingAccount?.status?.active == true -> {
                         setSavingAccountsDetails(savingAccount, R.color.deposit_green)
-                        setSavingAccountsGeneralDetails(R.color.deposit_green, getDateAsString(savingAccount.lastActiveTransactionDate))
+                        setSavingAccountsGeneralDetails(
+                            R.color.deposit_green,
+                            getDateAsString(savingAccount.lastActiveTransactionDate),
+                        )
                     }
+
                     savingAccount?.status?.approved == true -> {
-                        setSavingAccountsGeneralDetails(R.color.light_green, context.getString(R.string.string_and_string, context.getString(R.string.approved), getDateAsString(savingAccount.timeLine?.approvedOnDate)))
+                        setSavingAccountsGeneralDetails(
+                            R.color.light_green,
+                            context.getString(
+                                R.string.string_and_string,
+                                context.getString(R.string.approved),
+                                getDateAsString(savingAccount.timeLine?.approvedOnDate),
+                            ),
+                        )
                     }
+
                     savingAccount?.status?.submittedAndPendingApproval == true -> {
-                        setSavingAccountsGeneralDetails(R.color.light_yellow, context.getString(R.string.string_and_string, context.getString(R.string.submitted), getDateAsString(savingAccount.timeLine?.submittedOnDate)))
+                        setSavingAccountsGeneralDetails(
+                            R.color.light_yellow,
+                            context.getString(
+                                R.string.string_and_string,
+                                context.getString(R.string.submitted),
+                                getDateAsString(savingAccount.timeLine?.submittedOnDate),
+                            ),
+                        )
                     }
+
                     savingAccount?.status?.matured == true -> {
                         setSavingAccountsDetails(savingAccount, R.color.red_light)
-                        setSavingAccountsGeneralDetails(R.color.red_light, getDateAsString(savingAccount.lastActiveTransactionDate))
+                        setSavingAccountsGeneralDetails(
+                            R.color.red_light,
+                            getDateAsString(savingAccount.lastActiveTransactionDate),
+                        )
                     }
+
                     else -> {
-                        setSavingAccountsGeneralDetails(R.color.black, context.getString(R.string.string_and_string, context.getString(R.string.closed), getDateAsString(savingAccount?.timeLine?.closedOnDate)))
+                        setSavingAccountsGeneralDetails(
+                            R.color.black,
+                            context.getString(
+                                R.string.string_and_string,
+                                context.getString(R.string.closed),
+                                getDateAsString(savingAccount?.timeLine?.closedOnDate),
+                            ),
+                        )
                     }
                 }
             }
@@ -91,9 +122,11 @@ class SavingAccountsListAdapter(
             with(binding) {
                 tvAccountBalance.visibility = View.VISIBLE
                 tvAccountBalance.setTextColor(ContextCompat.getColor(itemView.context, colorId))
-                tvAccountBalance.text = itemView.context.getString(R.string.string_and_string,
+                tvAccountBalance.text = itemView.context.getString(
+                    R.string.string_and_string,
                     savingAccount.currency?.displaySymbol,
-                    formatCurrency(itemView.context, savingAccount.accountBalance))
+                    formatCurrency(itemView.context, savingAccount.accountBalance),
+                )
             }
         }
 
@@ -104,5 +137,4 @@ class SavingAccountsListAdapter(
             }
         }
     }
-
 }

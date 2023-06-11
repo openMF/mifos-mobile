@@ -11,5 +11,4 @@ interface Presenter<V : MVPView?> {
     fun attachView(mvpView: V)
 
     fun detachView()
-
 }

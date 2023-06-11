@@ -6,10 +6,10 @@ import org.mifos.mobile.api.ApiEndPoints
 
 @Parcelize
 data class DepositType(
-        var id: Int? = null,
-        var code: String? = null,
+    var id: Int? = null,
+    var code: String? = null,
 
-        var value: String? = null
+    var value: String? = null,
 ) : Parcelable {
 
     fun isRecurring(): Boolean {
@@ -24,12 +24,15 @@ data class DepositType(
         return ServerTypes.fromId(id!!)
     }
 
-
-    enum class ServerTypes constructor(val id: Int?, val code: String? = null, val endpoint: String) {
+    enum class ServerTypes constructor(
+        val id: Int?,
+        val code: String? = null,
+        val endpoint: String,
+    ) {
         SAVINGS(100, "depositAccountType.savingsDeposit", ApiEndPoints.SAVINGS_ACCOUNTS),
         FIXED(200, "depositAccountType.fixedDeposit", ApiEndPoints.SAVINGS_ACCOUNTS),
-        RECURRING(300, "depositAccountType.recurringDeposit", ApiEndPoints.RECURRING_ACCOUNTS);
-
+        RECURRING(300, "depositAccountType.recurringDeposit", ApiEndPoints.RECURRING_ACCOUNTS),
+        ;
 
         companion object {
 

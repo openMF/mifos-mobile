@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanRepaymentScheduleBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -25,8 +23,6 @@ import org.mifos.mobile.ui.views.LoanRepaymentScheduleMvpView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
-
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -37,11 +33,11 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     private var _binding: FragmentLoanRepaymentScheduleBinding? = null
     private val binding get() = _binding!!
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var loanRepaymentSchedulePresenter: LoanRepaymentSchedulePresenter? = null
 
-    @kotlin.jvm.JvmField
+    @JvmField
     @Inject
     var loanRepaymentScheduleAdapter: LoanRepaymentScheduleAdapter? = null
     var sweetUIErrorHandler: SweetUIErrorHandler? = null
@@ -55,10 +51,11 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentLoanRepaymentScheduleBinding.inflate(inflater,container,false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentLoanRepaymentScheduleBinding.inflate(inflater, container, false)
         loanRepaymentSchedulePresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         showUserInterface()
@@ -91,15 +88,15 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      * Initializes the layout
      */
     override fun showUserInterface() {
-        val columnWidth : Double
+        val columnWidth: Double
         binding.tvRepaymentSchedule.setHasFixedWidth(true)
         val orientation = resources.configuration.orientation
         binding.tvRepaymentSchedule.layoutParams?.width = resources.displayMetrics.widthPixels
         binding.tvRepaymentSchedule.setAdapter(loanRepaymentScheduleAdapter)
-        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
-            columnWidth = 2 * (resources.displayMetrics.widthPixels / 7.2);
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            columnWidth = 2 * (resources.displayMetrics.widthPixels / 7.2)
         } else {
-            columnWidth = 2 * (resources.displayMetrics.widthPixels / 6.6);
+            columnWidth = 2 * (resources.displayMetrics.widthPixels / 6.6)
         }
         loanRepaymentScheduleAdapter?.setColumnWidth(columnWidth)
     }
@@ -121,10 +118,11 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
         this.loanWithAssociations = loanWithAssociations
         var currencyRepresentation = loanWithAssociations?.currency?.displaySymbol
         loanRepaymentScheduleAdapter
-                ?.setCurrency(currencyRepresentation)
+            ?.setCurrency(currencyRepresentation)
         setTableViewList(loanWithAssociations?.repaymentSchedule?.periods)
         binding.tvAccountNumber.text = loanWithAssociations?.accountNo
-        binding.tvDisbursementDate.text = DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
+        binding.tvDisbursementDate.text =
+            DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
         binding.tvNumberOfPayments.text = loanWithAssociations?.numberOfRepayments.toString()
     }
 
@@ -135,7 +133,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
         mColumnHeaderList.add(ColumnHeader(getString(R.string.date)))
         mColumnHeaderList.add(ColumnHeader(getString(R.string.loan_balance)))
         mColumnHeaderList.add(ColumnHeader(getString(R.string.repayment)))
-        if (periods != null)
+        if (periods != null) {
             for ((i, period) in periods.withIndex()) {
                 val cells: MutableList<Cell> = ArrayList()
                 cells.add(Cell(period))
@@ -144,6 +142,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
                 mCellList.add(cells)
                 mRowHeaders.add(RowHeader(i + 1))
             }
+        }
         loanRepaymentScheduleAdapter?.setAllItems(mColumnHeaderList, mRowHeaders, mCellList)
     }
 
@@ -154,10 +153,15 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      */
     override fun showEmptyRepaymentsSchedule(loanWithAssociations: LoanWithAssociations?) {
         binding.tvAccountNumber.text = loanWithAssociations?.accountNo
-        binding.tvDisbursementDate.text = DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
+        binding.tvDisbursementDate.text =
+            DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
         binding.tvNumberOfPayments.text = loanWithAssociations?.numberOfRepayments.toString()
-        sweetUIErrorHandler?.showSweetEmptyUI(getString(R.string.repayment_schedule),
-                R.drawable.ic_charges, binding.tvRepaymentSchedule, binding.layoutError.root)
+        sweetUIErrorHandler?.showSweetEmptyUI(
+            getString(R.string.repayment_schedule),
+            R.drawable.ic_charges,
+            binding.tvRepaymentSchedule,
+            binding.layoutError.root,
+        )
     }
 
     /**
@@ -167,21 +171,33 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      */
     override fun showError(message: String?) {
         if (!Network.isConnected(activity)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(binding.tvRepaymentSchedule, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetNoInternetUI(
+                binding.tvRepaymentSchedule,
+                binding.layoutError.root,
+            )
         } else {
-            sweetUIErrorHandler?.showSweetErrorUI(message,
-                    binding.tvRepaymentSchedule, binding.layoutError.root)
+            sweetUIErrorHandler?.showSweetErrorUI(
+                message,
+                binding.tvRepaymentSchedule,
+                binding.layoutError.root,
+            )
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
 
     fun retryClicked() {
         if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.tvRepaymentSchedule, binding.layoutError.root)
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.tvRepaymentSchedule,
+                binding.layoutError.root,
+            )
             loanRepaymentSchedulePresenter?.loanLoanWithAssociations(loanId)
         } else {
-            Toast.makeText(context, getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.internet_not_connected),
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 

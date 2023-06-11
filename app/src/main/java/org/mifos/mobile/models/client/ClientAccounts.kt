@@ -5,14 +5,13 @@ import kotlinx.android.parcel.Parcelize
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.accounts.share.ShareAccount
-import java.util.*
 
 @Parcelize
 data class ClientAccounts(
-        var loanAccounts: List<LoanAccount> = ArrayList(),
-        var savingsAccounts: List<SavingAccount>? = ArrayList(),
+    var loanAccounts: List<LoanAccount> = ArrayList(),
+    var savingsAccounts: List<SavingAccount>? = ArrayList(),
 
-        var shareAccounts: List<ShareAccount> = ArrayList()
+    var shareAccounts: List<ShareAccount> = ArrayList(),
 
 ) : Parcelable {
 
@@ -36,4 +35,3 @@ data class ClientAccounts(
         return result
     }
 }
-

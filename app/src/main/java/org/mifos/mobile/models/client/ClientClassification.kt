@@ -8,8 +8,8 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class ClientClassification(
-        var id: Int,
-        var name: String? = null,
-        var active: Boolean,
-        var mandatory: Boolean
+    var id: Int,
+    var name: String? = null,
+    var active: Boolean,
+    var mandatory: Boolean,
 ) : Parcelable
