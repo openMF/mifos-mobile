@@ -2,10 +2,14 @@ package org.mifos.mobile.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityLoginBinding
 import org.mifos.mobile.models.payload.LoginPayload
@@ -15,18 +19,20 @@ import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.viewModels.LoginViewModel
+import org.mifos.mobile.viewModels.LoginViewModelFactory
 import javax.inject.Inject
 
 /**
  * @author Vishwajeet
  * @since 05/06/16
  */
-class LoginActivity : BaseActivity(), LoginView {
+class LoginActivity : BaseActivity() {
 
-    @JvmField
     @Inject
-    var loginPresenter: LoginPresenter? = null
+    lateinit var viewModelFactory: LoginViewModelFactory
 
+    private lateinit var viewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +40,24 @@ class LoginActivity : BaseActivity(), LoginView {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         activityComponent?.inject(this)
         setContentView(binding.root)
-        loginPresenter?.attachView(this)
         dismissSoftKeyboardOnBkgTap(binding.nsvBackground)
+        viewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        )[LoginViewModel::class.java]
+        viewModel.success.observe(this) {
+            if(it.equals("success")) {
+                hideProgressDialog()
+                startPassCodeActivity()
+                viewModel.loadClient()
+            }
+        }
+        viewModel.error.observe(this) {
+            if (it.equals("error_validation_blank")){
+                hideProgressDialog()
+                Toast.makeText(this, "Blank",Toast.LENGTH_SHORT).show()
+            }
+        }
         binding.btnLogin.setOnClickListener {
             onLoginClicked()
         }
@@ -68,66 +90,35 @@ class LoginActivity : BaseActivity(), LoginView {
 
     fun onTouch(v: View): Boolean {
         when (v) {
-            binding.etUsername -> loginPresenter?.mvpView?.clearUsernameError()
-            binding.etPassword -> loginPresenter?.mvpView?.clearPasswordError()
+//            binding.etUsername -> loginPresenter?.mvpView?.clearUsernameError()
+//            binding.etPassword -> loginPresenter?.mvpView?.clearPasswordError()
         }
         return false
     }
-
-    /**
-     * Called when Login is user has successfully logged in
-     */
-    override fun onLoginSuccess() {
-        loginPresenter?.loadClient()
-    }
-
-    /**
-     * Shows ProgressDialog when called
-     */
-    override fun showProgress() {
-        showProgressDialog(getString(R.string.progress_message_login))
-    }
-
-    /**
-     * Hides the progressDialog which is being shown
-     */
-    override fun hideProgress() {
-        hideProgressDialog()
-    }
-
-    /**
-     * Starts [PassCodeActivity]
-     */
-    override fun showPassCodeActivity(clientName: String?) {
-        showToast(getString(R.string.toast_welcome, clientName))
-        startPassCodeActivity()
-    }
-
-    /**
-     * It is called whenever any error occurs while executing a request
-     *
-     * @param errorMessage Error message that tells the user about the problem.
-     */
-    override fun showMessage(errorMessage: String?) {
-        showToast(errorMessage!!, Toast.LENGTH_LONG)
-        binding.llLogin.visibility = View.VISIBLE
-    }
-
-    override fun showUsernameError(error: String?) {
-        binding.tilUsername.error = error
-    }
-
-    override fun showPasswordError(error: String?) {
-        binding.tilPassword.error = error
-    }
-
-    override fun clearUsernameError() {
-        binding.tilUsername.isErrorEnabled = false
-    }
-
-    override fun clearPasswordError() {
-        binding.tilPassword.isErrorEnabled = false
-    }
+//    override fun showPassCodeActivity(clientName: String?) {
+//        showToast(getString(R.string.toast_welcome, clientName))
+//        startPassCodeActivity()
+//    }
+//    override fun showMessage(errorMessage: String?) {
+//        showToast(errorMessage!!, Toast.LENGTH_LONG)
+//        binding.llLogin.visibility = View.VISIBLE
+//    }
+//
+//    override fun showUsernameError(error: String?) {
+//        binding.tilUsername.error = error
+//    }
+//
+//    override fun showPasswordError(error: String?) {
+//        binding.tilPassword.error = error
+//    }
+//
+//    override fun clearUsernameError() {
+//        binding.tilUsername.isErrorEnabled = false
+//    }
+//
+//    override fun clearPasswordError() {
+//        binding.tilPassword.isErrorEnabled = false
+//    }
 
     /**
      * Called when Login Button is clicked, used for logging in the user
@@ -140,19 +131,15 @@ class LoginActivity : BaseActivity(), LoginView {
             val payload = LoginPayload()
             payload.username = username
             payload.password = password
-            loginPresenter?.login(payload)
+            showProgressDialog()
+            viewModel.login(payload)
         } else {
             Toaster.show(binding.llLogin, getString(R.string.no_internet_connection))
         }
     }
 
-    fun onRegisterClicked() {
+    private fun onRegisterClicked() {
         startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        loginPresenter?.detachView()
     }
 
     /**
