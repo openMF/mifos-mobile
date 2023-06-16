@@ -2,20 +2,15 @@ package org.mifos.mobile.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityLoginBinding
 import org.mifos.mobile.models.payload.LoginPayload
-import org.mifos.mobile.presenters.LoginPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.views.LoginView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
@@ -46,31 +41,106 @@ class LoginActivity : BaseActivity() {
             viewModelFactory
         )[LoginViewModel::class.java]
         viewModel.success.observe(this) {
-            if(it.equals("success")) {
+            if (it.equals("success")) {
                 hideProgressDialog()
-                startPassCodeActivity()
+                viewModel.navigateToPassCodeActivity.observe(this) { clientName ->
+                    showToast(getString(R.string.toast_welcome, clientName))
+                    startPassCodeActivity()
+                }
                 viewModel.loadClient()
             }
         }
         viewModel.error.observe(this) {
-            if (it.equals("error_validation_blank")){
-                hideProgressDialog()
-                Toast.makeText(this, "Blank",Toast.LENGTH_SHORT).show()
+            hideProgressDialog()
+            if (it.equals("error_validation_blank")) {
+                viewModel.userName.observe(this) {
+                    if (it.equals("Username cannot be blank")) {
+                        binding.tilUsername.error = showUsernameError(
+                            getString(
+                                R.string.error_validation_blank,
+                                getString(R.string.username)
+                            )
+                        )
+                    } else binding.tilUsername.isErrorEnabled = false
+                }
+                viewModel.Password.observe(this) {
+                    if (it.equals("Password cannot be blank")) {
+                        binding.tilPassword.error = showPasswordError(
+                            getString(
+                                R.string.error_validation_blank,
+                                getString(R.string.password)
+                            )
+                        )
+                    } else binding.tilPassword.isErrorEnabled = false
+                }
+            }
+            if (it.equals("error_validation_cannot_contain_spaces")) {
+                binding.tilUsername.error =
+                    showUsernameError(
+                        getString(
+                            R.string.error_validation_cannot_contain_spaces,
+                            resources?.getString(R.string.username),
+                            getString(R.string.not_contain_username)
+                        )
+                    )
+            }
+            if (it.equals("error_validation_minimum_chars")) {
+                viewModel.userName.observe(this) {
+                    if (it.equals("Username is less than 5")) {
+                        binding.tilUsername.error = showUsernameError(
+                            getString(
+                                R.string.error_validation_minimum_chars,
+                                resources?.getString(R.string.username),
+                                resources?.getInteger(R.integer.username_minimum_length),
+                            )
+                        )
+                    } else binding.tilUsername.isErrorEnabled = false
+                }
+                viewModel.Password.observe(this) {
+                    if (it.equals("Password is less than 6")) {
+                        binding.tilPassword.error = showUsernameError(
+                            getString(
+                                R.string.error_validation_minimum_chars,
+                                resources?.getString(R.string.password),
+                                resources?.getInteger(R.integer.password_minimum_length),
+                            )
+                        )
+                    } else binding.tilPassword.isErrorEnabled = false
+                }
+            }
+            if (it.equals("server down")) {
+                showMessage(getString(R.string.error_server_down))
+            }
+            if (it.equals("error during sign in")) {
+                showMessage(getString(R.string.err_during_login))
+            }
+            if (it.equals("not authorized")) {
+                showMessage(getString(R.string.unauthorized_client))
+            }
+            if (it.equals("error_fetching_client")) {
+                showMessage(getString(R.string.error_fetching_client))
+            }
+            if (it.equals("error_client_not_found")) {
+                showMessage(getString(R.string.error_client_not_found))
             }
         }
-        binding.btnLogin.setOnClickListener {
-            onLoginClicked()
-        }
-        binding.btnRegister.setOnClickListener {
-            onRegisterClicked()
-        }
-        binding.etUsername.setOnTouchListener { view, event ->
-            onTouch(view)
+
+        with(binding) {
+            btnLogin.setOnClickListener {
+                onLoginClicked()
+            }
+            btnRegister.setOnClickListener {
+                onRegisterClicked()
+            }
+            etUsername.setOnTouchListener { view, event ->
+                onTouch(view)
+            }
+            etPassword.setOnTouchListener { view, event ->
+                onTouch(view)
+            }
+
         }
 
-        binding.etPassword.setOnTouchListener { view, event ->
-            onTouch(view)
-        }
     }
 
     private fun dismissSoftKeyboardOnBkgTap(view: View) {
@@ -90,35 +160,24 @@ class LoginActivity : BaseActivity() {
 
     fun onTouch(v: View): Boolean {
         when (v) {
-//            binding.etUsername -> loginPresenter?.mvpView?.clearUsernameError()
-//            binding.etPassword -> loginPresenter?.mvpView?.clearPasswordError()
+            binding.etUsername -> binding.tilUsername.isErrorEnabled = false
+            binding.etPassword -> binding.tilPassword.isErrorEnabled = false
         }
         return false
     }
-//    override fun showPassCodeActivity(clientName: String?) {
-//        showToast(getString(R.string.toast_welcome, clientName))
-//        startPassCodeActivity()
-//    }
-//    override fun showMessage(errorMessage: String?) {
-//        showToast(errorMessage!!, Toast.LENGTH_LONG)
-//        binding.llLogin.visibility = View.VISIBLE
-//    }
-//
-//    override fun showUsernameError(error: String?) {
-//        binding.tilUsername.error = error
-//    }
-//
-//    override fun showPasswordError(error: String?) {
-//        binding.tilPassword.error = error
-//    }
-//
-//    override fun clearUsernameError() {
-//        binding.tilUsername.isErrorEnabled = false
-//    }
-//
-//    override fun clearPasswordError() {
-//        binding.tilPassword.isErrorEnabled = false
-//    }
+
+    fun showMessage(errorMessage: String?) {
+        showToast(errorMessage!!, Toast.LENGTH_LONG)
+        binding.llLogin.visibility = View.VISIBLE
+    }
+
+    fun showUsernameError(error: String): String {
+        return error
+    }
+
+    fun showPasswordError(error: String): String {
+        return error
+    }
 
     /**
      * Called when Login Button is clicked, used for logging in the user
@@ -131,7 +190,7 @@ class LoginActivity : BaseActivity() {
             val payload = LoginPayload()
             payload.username = username
             payload.password = password
-            showProgressDialog()
+            showProgressDialog(getString(R.string.progress_message_login))
             viewModel.login(payload)
         } else {
             Toaster.show(binding.llLogin, getString(R.string.no_internet_connection))

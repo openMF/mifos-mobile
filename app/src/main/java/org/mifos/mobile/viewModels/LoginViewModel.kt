@@ -7,8 +7,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
-import org.mifos.mobile.MifosSelfServiceApp.Companion.context
-import org.mifos.mobile.R
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -17,7 +15,6 @@ import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.MFErrorParser
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -27,6 +24,9 @@ class LoginViewModel @Inject constructor(private val dataManager: DataManager?) 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     var error = MutableLiveData<String>()
     var success = MutableLiveData<String>()
+    val navigateToPassCodeActivity = MutableLiveData<String>()
+    val userName = MutableLiveData<String>()
+    val Password = MutableLiveData<String>()
 
 
     fun login(loginPayload: LoginPayload?) {
@@ -98,7 +98,7 @@ class LoginViewModel @Inject constructor(private val dataManager: DataManager?) 
                         preferencesHelper?.clientId = clientId
                         dataManager.clientId = clientId
                         reInitializeService()
-//                        mvpView?.showPassCodeActivity(clientName)
+                        navigateToPassCodeActivity.value = clientName
                     } else {
                         error.value = "error_client_not_found"
                     }
@@ -117,36 +117,18 @@ class LoginViewModel @Inject constructor(private val dataManager: DataManager?) 
         val correctUsername = username.replaceFirst("\\s++$".toRegex(), "").trim { it <= ' ' }
         when {
             username.isEmpty() -> {
-//                mvpView?.showUsernameError(
-//                    context?.getString(
-//                        R.string.error_validation_blank,
-//                        context?.getString(R.string.username),
-//                    ),
-//                )
+                userName.value = "Username cannot be blank"
                 error.value = "error_validation_blank"
                 credentialValid = false
             }
 
             username.length < 5 -> {
-//                mvpView?.showUsernameError(
-//                    context?.getString(
-//                        R.string.error_validation_minimum_chars,
-//                        resources?.getString(R.string.username),
-//                        resources?.getInteger(R.integer.username_minimum_length),
-//                    ),
-//                )
+                userName.value = "Username is less than 5"
                 error.value = "error_validation_minimum_chars"
                 credentialValid = false
             }
 
             correctUsername.contains(" ") -> {
-//                mvpView?.showUsernameError(
-//                    context?.getString(
-//                        R.string.error_validation_cannot_contain_spaces,
-//                        resources?.getString(R.string.username),
-//                        context?.getString(R.string.not_contain_username),
-//                    ),
-//                )
                 error.value = "error_validation_cannot_contain_spaces"
                 credentialValid = false
             }
@@ -157,24 +139,13 @@ class LoginViewModel @Inject constructor(private val dataManager: DataManager?) 
         }
         when {
             password.isEmpty() -> {
-//                mvpView?.showPasswordError(
-//                    context?.getString(
-//                        R.string.error_validation_blank,
-//                        context?.getString(R.string.password),
-//                    ),
-//                )
+                Password.value = "Password cannot be blank"
                 error.value = "error_validation_blank"
                 credentialValid = false
             }
 
             password.length < 6 -> {
-//                mvpView?.showPasswordError(
-//                    context?.getString(
-//                        R.string.error_validation_minimum_chars,
-//                        resources?.getString(R.string.password),
-//                        resources?.getInteger(R.integer.password_minimum_length),
-//                    ),
-//                )
+                Password.value = "Password is less than 6"
                 error.value = "error_validation_minimum_chars"
                 credentialValid = false
             }
