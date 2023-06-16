@@ -148,7 +148,7 @@
     <string name="error_unauthorised">اسم المتسخدم / كلمة المرور غير صحيحة</string>
     <string name="error_message_server">خطأ في تحميل الاستجابة من الخادم</string>
     <string name="error_validation_blank">%1$s لا يمكن أن يكون فارغًا </string>
-    <string name="error_validation_minimum_chars">لا يمكن أن يكون %1$s أقل من %2$s من الأحرف</string>
+    <string name="error_validation_minimum_chars">لا يمكن أن يكون %1$s أقل من %2$d من الأحرف</string>
     <string name="error_validation_cannot_contain_spaces">لا يمكن أن تحتوي %1$s على %2$s</string>
     <string name="error_validation_cannot_contain_leading_or_trailing_spaces">لا يمكن بد %1$s أو
          نهاية مع مساحة فارغة
