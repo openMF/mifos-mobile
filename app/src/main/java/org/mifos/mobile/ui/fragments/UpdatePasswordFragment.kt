@@ -8,32 +8,34 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentUpdatePasswordBinding
 import org.mifos.mobile.models.UpdatePasswordPayload
-import org.mifos.mobile.presenters.UpdatePasswordPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.UpdatePasswordView
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.viewModels.UpdatePasswordViewModel
+import org.mifos.mobile.viewModels.UpdatePasswordViewModelFactory
 import javax.inject.Inject
 
 /*
 * Created by saksham on 13/July/2018
 */ class UpdatePasswordFragment :
     BaseFragment(),
-    UpdatePasswordView,
     TextWatcher,
     OnFocusChangeListener {
 
     private var _binding: FragmentUpdatePasswordBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
+
     @Inject
-    var presenter: UpdatePasswordPresenter? = null
+    lateinit var viewModelFactory: UpdatePasswordViewModelFactory
+
+    private lateinit var viewModel: UpdatePasswordViewModel
 
     @JvmField
     @Inject
@@ -50,7 +52,7 @@ import javax.inject.Inject
         _binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.change_password))
         (activity as BaseActivity?)?.activityComponent?.inject(this)
-        presenter?.attachView(this)
+        viewModel = ViewModelProvider(this, viewModelFactory)[UpdatePasswordViewModel::class.java]
         binding.tilNewPassword.editText?.addTextChangedListener(this)
         binding.tilConfirmNewPassword.editText?.addTextChangedListener(this)
         binding.tilNewPassword.editText?.onFocusChangeListener = this
@@ -60,14 +62,27 @@ import javax.inject.Inject
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.passwordUpdateStatus.observe(viewLifecycleOwner) {
+            if (it == true) {
+                hideProgress()
+                showPasswordUpdatedSuccessfully()
+            } else {
+                hideProgress()
+                viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                    showError(errorMessage)
+                }
+            }
+        }
+
         binding.btnUpdatePassword.setOnClickListener {
             updatePassword()
         }
     }
 
-    fun updatePassword() {
+    private fun updatePassword() {
         if (isFieldsCompleted) {
-            presenter?.updateAccountPassword(updatePasswordPayload)
+            viewModel.updateAccountPassword(updatePasswordPayload)
         }
     }
 
@@ -98,7 +113,7 @@ import javax.inject.Inject
             return payload
         }
 
-    override fun showError(message: String?) {
+    fun showError(message: String?) {
         var message = message
         if (!Network.isConnected(activity)) {
             message = getString(R.string.no_internet_connection)
@@ -106,7 +121,7 @@ import javax.inject.Inject
         Toaster.show(binding.root, message)
     }
 
-    override fun showPasswordUpdatedSuccessfully() {
+    fun showPasswordUpdatedSuccessfully() {
         Toast.makeText(
             context,
             getString(
@@ -123,17 +138,17 @@ import javax.inject.Inject
         )
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showMifosProgressDialog(getString(R.string.progress_message_loading))
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideMifosProgressDialog()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter?.detachView()
+//        presenter?.detachView()
         _binding = null
     }
 
