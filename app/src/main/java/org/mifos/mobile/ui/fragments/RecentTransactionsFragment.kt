@@ -70,27 +70,26 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
 
         viewModel.transactionLoadingStateLiveData.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is TransactionLoadingState.ShowProgress -> {
-                    showProgress()
+                is TransactionUiState.Loading -> {
+                    if (state.showProgress) {
+                        showProgress()
+                    } else {
+                        hideProgress()
+                    }
                 }
-                is TransactionLoadingState.HideProgress -> {
+                is TransactionUiState.RecentTransactions -> {
                     hideProgress()
+                    showRecentTransactions(state.transactions)
                 }
-                is TransactionLoadingState.RecentTransactions -> {
+                is TransactionUiState.LoadMoreTransactions -> {
                     hideProgress()
-                    val transactions: List<Transaction> = state.transactions
-                    showRecentTransactions(transactions)
+                    showLoadMoreRecentTransactions(state.transactions)
                 }
-                is TransactionLoadingState.LoadMoreTransactions -> {
-                    hideProgress()
-                    val transactions: List<Transaction> = state.transactions
-                    showLoadMoreRecentTransactions(transactions)
-                }
-                is TransactionLoadingState.EmptyTransaction -> {
+                is TransactionUiState.EmptyTransaction -> {
                     hideProgress()
                     showEmptyTransaction()
                 }
-                is TransactionLoadingState.ErrorFetchingTransactions -> {
+                is TransactionUiState.ErrorFetchingTransactions -> {
                     hideProgress()
                     val errorMessageResId: Int = state.errorMessageResId
                     val errorMessage: String = getString(errorMessageResId)

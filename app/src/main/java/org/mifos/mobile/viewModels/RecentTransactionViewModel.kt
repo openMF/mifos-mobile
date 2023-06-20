@@ -10,7 +10,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.utils.TransactionLoadingState
+import org.mifos.mobile.utils.TransactionUiState
 import javax.inject.Inject
 
 class RecentTransactionViewModel @Inject constructor(
@@ -21,7 +21,7 @@ class RecentTransactionViewModel @Inject constructor(
     private val limit = 50
     private var loadmore = false
 
-    val transactionLoadingStateLiveData: MutableLiveData<TransactionLoadingState> =
+    val transactionLoadingStateLiveData: MutableLiveData<TransactionUiState> =
         MutableLiveData()
 
     override fun onCleared() {
@@ -53,7 +53,7 @@ class RecentTransactionViewModel @Inject constructor(
      * @param limit  Maximum size of List of [Transaction] which is fetched from server
      */
     private fun loadRecentTransactions(offset: Int, limit: Int) {
-        transactionLoadingStateLiveData.postValue(TransactionLoadingState.ShowProgress)
+        transactionLoadingStateLiveData.postValue(TransactionUiState.SHOW_PROGRESS)
         dataManager?.getRecentTransactions(offset, limit)
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
@@ -61,25 +61,25 @@ class RecentTransactionViewModel @Inject constructor(
                 override fun onComplete() {}
 
                 override fun onError(e: Throwable) {
-                    transactionLoadingStateLiveData.postValue(TransactionLoadingState.HideProgress)
+                    transactionLoadingStateLiveData.postValue(TransactionUiState.HIDE_PROGRESS)
                     transactionLoadingStateLiveData.postValue(
-                        TransactionLoadingState.ErrorFetchingTransactions(
+                        TransactionUiState.ErrorFetchingTransactions(
                             R.string.recent_transactions
                         )
                     )
                 }
 
                 override fun onNext(transactions: Page<Transaction?>) {
-                    transactionLoadingStateLiveData.postValue(TransactionLoadingState.HideProgress)
+                    transactionLoadingStateLiveData.postValue(TransactionUiState.HIDE_PROGRESS)
                     if (transactions.totalFilteredRecords == 0) {
-                        transactionLoadingStateLiveData.postValue(TransactionLoadingState.EmptyTransaction)
+                        transactionLoadingStateLiveData.postValue(TransactionUiState.EmptyTransaction)
                     } else if (loadmore && transactions.pageItems.isNotEmpty()) {
                         transactionLoadingStateLiveData.postValue(
-                            TransactionLoadingState.LoadMoreTransactions(transactions.pageItems as List<Transaction>)
+                            TransactionUiState.LoadMoreTransactions(transactions.pageItems as List<Transaction>)
                         )
                     } else if (transactions.pageItems.isNotEmpty()) {
                         transactionLoadingStateLiveData.postValue(
-                            TransactionLoadingState.RecentTransactions(transactions.pageItems as List<Transaction>)
+                            TransactionUiState.RecentTransactions(transactions.pageItems as List<Transaction>)
                         )
                     }
                 }
