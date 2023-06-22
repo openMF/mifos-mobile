@@ -9,51 +9,66 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
+import org.mifos.mobile.RegistrationRepository
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.register.RegisterPayload
+import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
 class RegistrationViewModel @Inject constructor(var dataManager : DataManager?) : ViewModel() {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
-    private var registrationResultSuccess = MutableLiveData<Boolean>()
-    val readRegistrationResultSuccess : LiveData<Boolean> get() = registrationResultSuccess
-    private var exceptionOnRegistration : Throwable? = null
-    val readExceptionOnRegistration : Throwable get() = exceptionOnRegistration!!
+    private val registrationRepository = RegistrationRepository(dataManager)
+    private val _registrationUiState = MutableLiveData<RegistrationUiState>()
+    val registrationUiState : LiveData<RegistrationUiState> get() = _registrationUiState
 
     fun isInputFieldBlank(fieldText : String) : Boolean {
-        return fieldText.trim { it <= ' '}.isEmpty()
+        return fieldText.trim().isEmpty()
     }
 
     fun isInputLengthInadequate(fieldText : String) : Boolean {
-        return fieldText.trim { it <= ' '}.length < 6
+        return fieldText.trim().length < 6
     }
 
     fun inputHasSpaces(fieldText: String) : Boolean {
-        return fieldText.trim { it <= ' '}.contains(" ")
+        return fieldText.trim().contains(" ")
     }
 
     fun hasLeadingTrailingSpaces(fieldText: String) : Boolean {
-        return fieldText.trim { it <= ' ' }.length < fieldText.length
+        return fieldText.trim().length < fieldText.length
     }
 
     fun isEmailInvalid(emailText : String) : Boolean {
-        return !Patterns.EMAIL_ADDRESS.matcher(emailText.trim { it <= ' ' }).matches()
+        return !Patterns.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
+    }
+
+    fun createRegisterPayload(
+        accountNumber: String,
+        authenticationMode: String,
+        email: String,
+        firstName: String,
+        lastName: String,
+        mobileNumber: String,
+        password: String,
+        username: String
+    ) : RegisterPayload {
+        return registrationRepository.createRegisterPayload(accountNumber, authenticationMode, email, firstName,
+        lastName, mobileNumber, password, username)
     }
 
     fun registerUser(registerPayload: RegisterPayload?) {
-        dataManager?.registerUser(registerPayload)
+        _registrationUiState.value = RegistrationUiState.Loading
+        registrationRepository.registerUser(registerPayload)
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
-                    exceptionOnRegistration = e
-                    registrationResultSuccess.value = false
+                    _registrationUiState.value = RegistrationUiState.ErrorOnRegistration(e)
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
-                    registrationResultSuccess.value = true
+                    _registrationUiState.value = RegistrationUiState.RegistrationSuccessful
                 }
             })?.let { compositeDisposables.add(it) }
     }
