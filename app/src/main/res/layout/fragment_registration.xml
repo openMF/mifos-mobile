@@ -129,6 +129,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:indeterminate="false"
                 android:progress="0" />
 
@@ -137,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+                android:visibility="gone"
                 android:gravity="center_horizontal"
                 android:text="@string/password_strength_weak" />
         </LinearLayout>
