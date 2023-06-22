@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import org.mifos.mobile.BuildConfig
+import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentNotificationBinding
 import org.mifos.mobile.models.notification.MifosNotification
@@ -108,12 +109,17 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.readLoadNotificationsResultSuccess.observe(viewLifecycleOwner) { loadNotificationsResultSuccess ->
-            hideProgress()
-            if(loadNotificationsResultSuccess == true) {
-                showNotifications(viewModel.readLoadedNotifications)
-            } else {
-                showError(context?.getString(R.string.notification))
+        viewModel.notificationUiState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                NotificationUiState.Loading -> showProgress()
+                NotificationUiState.Error -> {
+                    hideProgress()
+                    showError(context?.getString(R.string.notification))
+                }
+                is NotificationUiState.LoadNotificationsSuccessful -> {
+                    hideProgress()
+                    showNotifications(state.notifications)
+                }
             }
         }
 
@@ -123,7 +129,6 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     }
 
     private fun loadNotifications() {
-        showProgress()
         viewModel.loadNotifications()
     }
 
