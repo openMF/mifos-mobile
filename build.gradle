@@ -29,7 +29,9 @@ buildscript {
         // in the individual module build.gradle filesa
     }
 }
-
+plugins {
+    id("com.google.dagger.hilt.android") version "2.44" apply false
+}
 allprojects {
     repositories {
         google()
