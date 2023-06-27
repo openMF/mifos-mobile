@@ -71,7 +71,7 @@ ext {
 
     jUnitVersion = '4.13.2'
     mockitoVersion = '5.4.0'
-    runnerVersion = '1.6.0-alpha02'
+    runnerVersion = '1.6.0-alpha03'
     rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.5.1'
     zxingcoreVersion = '3.5.1'
