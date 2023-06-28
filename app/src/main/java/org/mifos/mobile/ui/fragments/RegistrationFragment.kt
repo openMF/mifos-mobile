@@ -129,11 +129,9 @@ class RegistrationFragment : BaseFragment() {
                 val password = etPassword.text.toString()
                 val username = etUsername.text.toString().replace(" ", "")
 
-                val payload = viewModel.createRegisterPayload(accountNumber, authenticationMode, email, firstName,
-                lastName, mobileNumber, password, username)
-
                 if (Network.isConnected(context)) {
-                    viewModel.registerUser(payload)
+                    viewModel.registerUser(accountNumber, authenticationMode, email, firstName,
+                        lastName, mobileNumber, password, username)
                 } else {
                     Toaster.show(root, getString(R.string.no_internet_connection))
                 }
