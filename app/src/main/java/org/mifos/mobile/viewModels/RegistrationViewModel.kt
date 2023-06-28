@@ -1,6 +1,6 @@
 package org.mifos.mobile.viewModels
 
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,16 +9,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
-import org.mifos.mobile.RegistrationRepository
-import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.models.register.RegisterPayload
+import org.mifos.mobile.repositories.UserAuthRepositoryImp
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
-class RegistrationViewModel @Inject constructor(var dataManager : DataManager?) : ViewModel() {
+class RegistrationViewModel @Inject constructor(private var userAuthRepositoryImp: UserAuthRepositoryImp?) : ViewModel() {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
-    private val registrationRepository = RegistrationRepository(dataManager)
     private val _registrationUiState = MutableLiveData<RegistrationUiState>()
     val registrationUiState : LiveData<RegistrationUiState> get() = _registrationUiState
 
@@ -39,26 +36,15 @@ class RegistrationViewModel @Inject constructor(var dataManager : DataManager?) 
     }
 
     fun isEmailInvalid(emailText : String) : Boolean {
-        return !Patterns.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
+        return !PatternsCompat.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
     }
 
-    fun createRegisterPayload(
-        accountNumber: String,
-        authenticationMode: String,
-        email: String,
-        firstName: String,
-        lastName: String,
-        mobileNumber: String,
-        password: String,
-        username: String
-    ) : RegisterPayload {
-        return registrationRepository.createRegisterPayload(accountNumber, authenticationMode, email, firstName,
-        lastName, mobileNumber, password, username)
-    }
-
-    fun registerUser(registerPayload: RegisterPayload?) {
+    fun registerUser(accountNumber: String, authenticationMode: String, email: String,
+                     firstName: String, lastName: String, mobileNumber: String, password: String,
+                     username: String) {
         _registrationUiState.value = RegistrationUiState.Loading
-        registrationRepository.registerUser(registerPayload)
+        userAuthRepositoryImp?.registerUser(accountNumber, authenticationMode, email, firstName,
+            lastName, mobileNumber, password, username)
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
