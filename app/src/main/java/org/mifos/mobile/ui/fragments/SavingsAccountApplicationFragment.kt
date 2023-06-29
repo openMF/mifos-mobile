@@ -59,7 +59,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         presenter?.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
         return binding.root

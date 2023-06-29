@@ -47,7 +47,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentTransferProcessBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
         presenter?.attachView(this)
         binding.tvAmount.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)

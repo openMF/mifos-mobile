@@ -31,7 +31,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
         }

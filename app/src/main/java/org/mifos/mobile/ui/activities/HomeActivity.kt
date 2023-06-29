@@ -78,7 +78,7 @@ class HomeActivity :
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        activityComponent?.inject(this)
+        //activityComponent?.inject(this)
         setContentView(binding.root)
         clientId = preferencesHelper?.clientId
         setupNavigationBar()

@@ -99,7 +99,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanState = arguments?.getSerializable(Constants.LOAN_STATE) as LoanState
             if (loanState == LoanState.CREATE) {
