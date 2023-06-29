@@ -45,7 +45,7 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     private var recentTransactionList: MutableList<Transaction?>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         recentTransactionList = ArrayList()
     }
 

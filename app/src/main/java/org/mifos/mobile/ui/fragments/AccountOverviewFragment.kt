@@ -45,7 +45,7 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAccountOverviewBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         accountOverviewPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts_overview))
         binding.swipeContainer.setColorSchemeResources(

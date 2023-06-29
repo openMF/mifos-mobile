@@ -34,7 +34,7 @@ class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificatio
     ): View {
         _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         return rootView
     }

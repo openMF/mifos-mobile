@@ -40,7 +40,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         binding.progressBar.visibility = View.GONE
         binding.passwordStrength.visibility = View.GONE

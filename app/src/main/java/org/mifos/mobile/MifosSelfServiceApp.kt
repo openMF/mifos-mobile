@@ -8,6 +8,8 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.mifos.mobile.passcode.utils.ForegroundChecker
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.HiltAndroidApp
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.injection.component.ApplicationComponent
 import org.mifos.mobile.injection.component.DaggerApplicationComponent
@@ -20,6 +22,7 @@ import java.util.Locale
  * @author ishan
  * @since 08/07/16
  */
+@HiltAndroidApp
 class MifosSelfServiceApp : MultiDexApplication() {
     private var applicationComponent: ApplicationComponent? = null
 
@@ -53,9 +56,7 @@ class MifosSelfServiceApp : MultiDexApplication() {
 
     fun component(): ApplicationComponent? {
         if (applicationComponent == null) {
-            applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .build()
+            applicationComponent = EntryPointAccessors.fromApplication(this, ApplicationComponent::class.java)
         }
         return applicationComponent
     }

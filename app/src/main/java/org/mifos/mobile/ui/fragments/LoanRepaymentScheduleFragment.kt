@@ -45,7 +45,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.loan_repayment_schedule))
         if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }

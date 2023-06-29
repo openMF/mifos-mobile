@@ -58,7 +58,7 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             id = arguments?.getLong(Constants.CLIENT_ID)
             chargeType = arguments?.getSerializable(Constants.CHARGE_TYPE) as ChargeType

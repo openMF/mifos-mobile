@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.injection.ApplicationContext
@@ -14,16 +16,17 @@ import javax.inject.Singleton
  * @since 08/07/16
  */
 @Module
-class ApplicationModule(private val application: Application) {
+@InstallIn(SingletonComponent::class)
+class ApplicationModule(private val application: Application? = null) {
     @Provides
     fun provideApplication(): Application {
-        return application
+        return application!!
     }
 
     @Provides
     @ApplicationContext
     fun provideContext(): Context {
-        return application
+        return application!!
     }
 
     @Provides

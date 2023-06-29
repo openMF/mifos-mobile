@@ -76,7 +76,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
     }

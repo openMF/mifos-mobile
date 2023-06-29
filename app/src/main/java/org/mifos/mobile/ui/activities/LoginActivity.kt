@@ -32,7 +32,7 @@ class LoginActivity : BaseActivity(), LoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        activityComponent?.inject(this)
+        //activityComponent?.inject(this)
         setContentView(binding.root)
         loginPresenter?.attachView(this)
         dismissSoftKeyboardOnBkgTap(binding.nsvBackground)

@@ -43,7 +43,7 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         showUserInterface()
         return binding.root

@@ -39,7 +39,7 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbarTitle(getString(R.string.notification))
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
     }
 
     override fun onCreateView(
