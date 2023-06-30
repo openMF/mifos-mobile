@@ -154,7 +154,10 @@ dependencies {
     //Biometric Authentication
     implementation "androidx.biometric:biometric:$rootProject.biometric"
 
-    // Unit tests dependencies
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
+
+    // Unit tests dependencies  
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
