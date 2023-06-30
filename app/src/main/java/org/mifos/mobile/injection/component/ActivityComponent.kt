@@ -1,6 +1,9 @@
 package org.mifos.mobile.injection.component
 
 import dagger.Component
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.injection.PerActivity
 import org.mifos.mobile.injection.module.ActivityModule
 import org.mifos.mobile.ui.activities.HomeActivity
@@ -49,6 +52,8 @@ import org.mifos.mobile.ui.fragments.UserProfileFragment
  * @since 08/07/16
  */
 @PerActivity
+@InstallIn(SingletonComponent::class)
+@EntryPoint
 @Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
 interface ActivityComponent {
     fun inject(loginActivity: LoginActivity?)

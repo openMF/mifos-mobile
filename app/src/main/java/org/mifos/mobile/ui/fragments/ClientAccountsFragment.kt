@@ -71,7 +71,7 @@ import javax.inject.Inject
     ): View {
         _binding = FragmentClientAccountsBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         accountsPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts))
         setUpViewPagerAndTabLayout()

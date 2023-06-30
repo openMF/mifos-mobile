@@ -76,7 +76,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         loanAccounts = ArrayList()
         savingAccounts = ArrayList()
         shareAccounts = ArrayList()

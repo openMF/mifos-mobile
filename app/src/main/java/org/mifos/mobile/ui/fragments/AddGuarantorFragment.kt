@@ -59,7 +59,7 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddGuarantorBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))

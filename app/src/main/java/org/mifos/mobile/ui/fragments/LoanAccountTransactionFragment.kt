@@ -44,7 +44,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
+        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
         }

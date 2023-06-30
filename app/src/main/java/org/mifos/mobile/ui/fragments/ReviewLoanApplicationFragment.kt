@@ -31,8 +31,6 @@ import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
-import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModelFactory
-import javax.inject.Inject
 
 class ReviewLoanApplicationFragment : BaseFragment() {
 
@@ -80,8 +78,6 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         }
     }
 
-    @Inject
-    lateinit var viewModelFactory: ReviewLoanApplicationViewModelFactory
 
     lateinit var rootView: View
 
@@ -94,7 +90,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     ): View {
         rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
         (activity as BaseActivity).activityComponent?.inject(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProviders.of(this)
             .get(ReviewLoanApplicationViewModel::class.java)
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
