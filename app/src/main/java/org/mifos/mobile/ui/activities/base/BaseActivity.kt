@@ -13,11 +13,9 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.mifos.mobile.passcode.BasePassCodeActivity
-import org.mifos.mobile.MifosSelfServiceApp
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.injection.component.ActivityComponent
-import org.mifos.mobile.injection.component.DaggerActivityComponent
-import org.mifos.mobile.injection.module.ActivityModule
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.views.BaseActivityCallback
 import org.mifos.mobile.utils.LanguageHelper
@@ -26,6 +24,7 @@ import org.mifos.mobile.utils.LanguageHelper
  * @author ishan
  * @since 08/07/16
  */
+@AndroidEntryPoint
 @SuppressLint("Registered")
 open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
     /**
@@ -38,17 +37,17 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
      * Used for dependency injection
      * @return [ActivityComponent] which is used for injection
      */
-    var activityComponent: ActivityComponent? = null
-        get() {
-            if (field == null) {
-                field = DaggerActivityComponent.builder()
-                    .activityModule(ActivityModule(this))
-                    .applicationComponent(MifosSelfServiceApp.get(this).component())
-                    .build()
-            }
-            return field
-        }
-        private set
+//    var activityComponent: ActivityComponent? = null
+//        get() {
+//            if (field == null) {
+//                field = DaggerActivityComponent.builder()
+//                    .activityModule(ActivityModule(this))
+//                    .applicationComponent(MifosSelfServiceApp.get(this).component())
+//                    .build()
+//            }
+//            return field
+//        }
+//        private set
     private var progress: ProgressDialog? = null
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)

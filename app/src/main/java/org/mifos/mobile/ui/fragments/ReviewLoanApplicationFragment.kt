@@ -89,7 +89,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
-        (activity as BaseActivity).activityComponent?.inject(this)
+//        (activity as BaseActivity).activityComponent?.inject(this)
         viewModel = ViewModelProviders.of(this)
             .get(ReviewLoanApplicationViewModel::class.java)
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
