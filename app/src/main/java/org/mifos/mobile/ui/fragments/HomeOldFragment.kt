@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentHomeOldBinding
@@ -45,6 +46,7 @@ import javax.inject.Inject
 /**
  * Created by michaelsosnick on 1/1/17.
  */
+@AndroidEntryPoint
 class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     private var _binding: FragmentHomeOldBinding? = null
     private val binding get() = _binding!!

@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowFaqBinding
-import org.mifos.mobile.injection.ActivityContext
+import dagger.hilt.android.qualifiers.ActivityContext
+
+
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.utils.FaqDiffUtil
 import javax.inject.Inject

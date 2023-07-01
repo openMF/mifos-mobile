@@ -6,7 +6,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.mifos.mobile.injection.ActivityContext
+import dagger.hilt.android.qualifiers.ActivityContext
+
+
 
 /**
  * @author ishan
@@ -15,14 +17,14 @@ import org.mifos.mobile.injection.ActivityContext
 @Module
 @InstallIn(SingletonComponent::class)
 class ActivityModule(private val activity: Activity? = null) {
-    @Provides
-    fun providesActivity(): Activity {
-        return activity!!
-    }
+//    @Provides
+//    fun providesActivity(): Activity {
+//        return activity!!
+//    }
 
-    @Provides
-    @ActivityContext
-    fun providesContext(): Context {
-        return activity!!
-    }
+//    @Provides
+//    @ActivityContext
+//    fun providesContext(): Context {
+//        return activity!!
+//    }
 }

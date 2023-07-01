@@ -51,10 +51,10 @@ import org.mifos.mobile.ui.fragments.UserProfileFragment
  * @author ishan
  * @since 08/07/16
  */
-@PerActivity
-@InstallIn(SingletonComponent::class)
-@EntryPoint
-@Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
+//@PerActivity
+//@InstallIn(SingletonComponent::class)
+//@EntryPoint
+//@Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
 interface ActivityComponent {
     fun inject(loginActivity: LoginActivity?)
     fun inject(homeActivity: HomeActivity?)

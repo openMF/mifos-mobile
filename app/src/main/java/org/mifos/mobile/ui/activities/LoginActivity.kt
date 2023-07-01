@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityLoginBinding
 import org.mifos.mobile.models.payload.LoginPayload
@@ -21,6 +22,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 05/06/16
  */
+@AndroidEntryPoint
 class LoginActivity : BaseActivity(), LoginView {
 
     @JvmField
