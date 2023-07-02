@@ -1,6 +1,5 @@
 package org.mifos.mobile.injection.module
 
-import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -19,17 +18,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-class ApplicationModule(private val application: Application? = null) {
-//    @Provides
-//    fun provideApplication(): Application {
-//        return application!!
-//    }
-
-//    @Provides
-//    @ApplicationContext
-//    fun provideContext(): Context {
-//        return application!!
-//    }
+class ApplicationModule() {
 
     @Provides
     @Singleton

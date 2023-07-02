@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentGuarantorDetailBinding
@@ -29,7 +30,9 @@ import javax.inject.Inject
 
 /*
 * Created by saksham on 24/July/2018
-*/ class GuarantorDetailFragment : BaseFragment(), GuarantorDetailView {
+*/
+@AndroidEntryPoint
+class GuarantorDetailFragment : BaseFragment(), GuarantorDetailView {
 
     private var _binding: FragmentGuarantorDetailBinding? = null
     private val binding get() = _binding!!

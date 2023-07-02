@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -28,6 +29,7 @@ import javax.inject.Inject
 */ /**
  * Created by dilpreet on 4/3/17.
  */
+@AndroidEntryPoint
 class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionView {
     private var _binding: FragmentLoanAccountTransactionsBinding? = null
     private val binding get() = _binding!!

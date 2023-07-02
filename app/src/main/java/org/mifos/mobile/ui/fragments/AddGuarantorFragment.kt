@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
@@ -27,6 +28,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 23/July/2018
 */
+@AndroidEntryPoint
 class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     private var _binding: FragmentAddGuarantorBinding? = null

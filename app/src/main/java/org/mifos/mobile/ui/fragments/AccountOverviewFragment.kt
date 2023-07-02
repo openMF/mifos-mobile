@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountOverviewBinding
 import org.mifos.mobile.presenters.AccountOverviewPresenter
@@ -24,6 +25,7 @@ import javax.inject.Inject
  * @author Rajan Maurya
  * On 16/10/17.
  */
+@AndroidEntryPoint
 class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefreshListener {
 
     private var _binding: FragmentAccountOverviewBinding? = null

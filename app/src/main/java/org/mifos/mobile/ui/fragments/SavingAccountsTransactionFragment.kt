@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
@@ -44,6 +45,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 6/3/17.
  */
+@AndroidEntryPoint
 class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView {
 
     private var _binding: FragmentSavingAccountTransactionsBinding? = null

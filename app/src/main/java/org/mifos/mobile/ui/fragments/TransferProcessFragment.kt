@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentTransferProcessBinding
 import org.mifos.mobile.models.payload.TransferPayload
@@ -23,6 +24,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 1/7/17.
  */
+@AndroidEntryPoint
 class TransferProcessFragment : BaseFragment(), TransferProcessView {
 
     private var _binding: FragmentTransferProcessBinding? = null

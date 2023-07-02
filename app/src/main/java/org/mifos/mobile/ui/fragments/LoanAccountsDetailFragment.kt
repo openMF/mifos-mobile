@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentLoanAccountDetailsBinding
@@ -35,6 +36,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 19/08/16
  */
+@AndroidEntryPoint
 class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     private var _binding: FragmentLoanAccountDetailsBinding? = null
     private val binding get() = _binding!!

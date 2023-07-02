@@ -8,10 +8,8 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.mifos.mobile.passcode.utils.ForegroundChecker
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
-import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.HiltAndroidApp
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.injection.component.ApplicationComponent
 import org.mifos.mobile.ui.fragments.applySavedTheme
 import org.mifos.mobile.utils.LanguageHelper.onAttach
 import java.util.Locale
@@ -22,7 +20,6 @@ import java.util.Locale
  */
 @HiltAndroidApp
 class MifosSelfServiceApp : MultiDexApplication() {
-    private var applicationComponent: ApplicationComponent? = null
 
     companion object {
         private var instance: MifosSelfServiceApp? = null
@@ -50,17 +47,5 @@ class MifosSelfServiceApp : MultiDexApplication() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(onAttach(base, Locale.getDefault().language))
-    }
-
-    fun component(): ApplicationComponent? {
-        if (applicationComponent == null) {
-            applicationComponent = EntryPointAccessors.fromApplication(this, ApplicationComponent::class.java)
-        }
-        return applicationComponent
-    }
-
-    // Needed to replace the component with a test specific one
-    fun setComponent(applicationComponent: ApplicationComponent?) {
-        this.applicationComponent = applicationComponent
     }
 }

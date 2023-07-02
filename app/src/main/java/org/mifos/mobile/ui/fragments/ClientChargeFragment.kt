@@ -13,6 +13,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.presenters.ClientChargePresenter
@@ -31,6 +32,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 17/8/16.
  */
+@AndroidEntryPoint
 class ClientChargeFragment : BaseFragment(), ClientChargeView {
 
     @JvmField

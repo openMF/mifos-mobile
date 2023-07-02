@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountSummaryBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -18,6 +19,7 @@ import org.mifos.mobile.utils.CurrencyUtil
 */ /**
  * Created by dilpreet on 25/2/17.
  */
+@AndroidEntryPoint
 class LoanAccountSummaryFragment : BaseFragment() {
     private var _binding: FragmentLoanAccountSummaryBinding? = null
     private val binding get() = _binding!!

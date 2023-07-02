@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -32,6 +33,7 @@ import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
 
+@AndroidEntryPoint
 class ReviewLoanApplicationFragment : BaseFragment() {
 
     companion object {

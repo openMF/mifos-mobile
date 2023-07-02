@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountsBinding
 import org.mifos.mobile.models.CheckboxStatus
@@ -37,6 +38,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
+@AndroidEntryPoint
 class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private var _binding: FragmentAccountsBinding? = null
     private val binding get() = _binding!!
