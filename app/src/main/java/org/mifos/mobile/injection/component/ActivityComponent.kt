@@ -3,6 +3,7 @@ package org.mifos.mobile.injection.component
 import dagger.Component
 import org.mifos.mobile.injection.PerActivity
 import org.mifos.mobile.injection.module.ActivityModule
+import org.mifos.mobile.injection.module.RepositoryModule
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoginActivity
 import org.mifos.mobile.ui.activities.PassCodeActivity
@@ -49,7 +50,7 @@ import org.mifos.mobile.ui.fragments.UserProfileFragment
  * @since 08/07/16
  */
 @PerActivity
-@Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
+@Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class, RepositoryModule::class])
 interface ActivityComponent {
     fun inject(loginActivity: LoginActivity?)
     fun inject(homeActivity: HomeActivity?)

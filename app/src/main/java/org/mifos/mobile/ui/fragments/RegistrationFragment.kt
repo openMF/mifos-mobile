@@ -30,7 +30,7 @@ import javax.inject.Inject
 class RegistrationFragment : BaseFragment() {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : RegistrationViewModel
+    private lateinit var viewModel: RegistrationViewModel
 
     @Inject
     lateinit var viewModelFactory: RegistrationViewModelFactory
@@ -46,7 +46,11 @@ class RegistrationFragment : BaseFragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[RegistrationViewModel::class.java]
         with(binding) {
             etPassword.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int ) {}
+                override fun beforeTextChanged(
+                    charSequence: CharSequence, i: Int, i1: Int, i2: Int
+                ) {
+                }
+
                 override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                     if (charSequence.isEmpty()) {
                         progressBar.visibility = View.GONE
@@ -57,6 +61,7 @@ class RegistrationFragment : BaseFragment() {
                         updatePasswordStrengthView(charSequence.toString())
                     }
                 }
+
                 override fun afterTextChanged(editable: Editable) {}
             })
         }
@@ -76,7 +81,7 @@ class RegistrationFragment : BaseFragment() {
             passwordStrength.setTextColor(str.color)
             val mode = PorterDuff.Mode.SRC_IN
             progressBar.progressDrawable?.setColorFilter(str.color, mode)
-            when(str.getText(context)) {
+            when (str.getText(context)) {
                 getString(R.string.password_strength_weak) -> progressBar.progress = 25
                 getString(R.string.password_strength_medium) -> progressBar.progress = 50
                 getString(R.string.password_strength_strong) -> progressBar.progress = 75
@@ -87,9 +92,9 @@ class RegistrationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         viewModel.registrationUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 RegistrationUiState.Loading -> showProgress()
 
                 RegistrationUiState.RegistrationSuccessful -> {
@@ -121,7 +126,7 @@ class RegistrationFragment : BaseFragment() {
                 val firstName = etFirstName.text.toString()
                 val lastName = etLastName.text.toString()
                 val mobileNumber =
-                        countryCodePicker.selectedCountryCode.toString() + etPhoneNumber.text.toString()
+                    countryCodePicker.selectedCountryCode.toString() + etPhoneNumber.text.toString()
                 if (etPassword.text.toString() != etConfirmPassword.text.toString()) {
                     Toaster.show(root, getString(R.string.error_password_not_match))
                     return
@@ -130,8 +135,16 @@ class RegistrationFragment : BaseFragment() {
                 val username = etUsername.text.toString().replace(" ", "")
 
                 if (Network.isConnected(context)) {
-                    viewModel.registerUser(accountNumber, authenticationMode, email, firstName,
-                        lastName, mobileNumber, password, username)
+                    viewModel.registerUser(
+                        accountNumber,
+                        authenticationMode,
+                        email,
+                        firstName,
+                        lastName,
+                        mobileNumber,
+                        password,
+                        username
+                    )
                 } else {
                     Toaster.show(root, getString(R.string.no_internet_connection))
                 }
@@ -147,8 +160,7 @@ class RegistrationFragment : BaseFragment() {
                     Toaster.show(
                         rootView,
                         getString(
-                            R.string.error_validation_blank,
-                            getString(R.string.account_number)
+                            R.string.error_validation_blank, getString(R.string.account_number)
                         ),
                     )
                     false

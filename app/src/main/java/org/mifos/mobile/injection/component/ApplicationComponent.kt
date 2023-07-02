@@ -21,7 +21,7 @@ interface ApplicationComponent {
     @ApplicationContext
     fun context(): Context?
     fun application(): Application?
-    fun dataManager(): DataManager?
+    fun dataManager(): DataManager
     fun prefManager(): PreferencesHelper?
     fun baseApiManager(): BaseApiManager?
     fun databaseHelper(): DatabaseHelper?
