@@ -17,7 +17,6 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val intent: Intent?
         super.onCreate(savedInstanceState)
-        //activityComponent?.inject(this)
         passcodePreferencesHelper = PasscodePreferencesHelper(this)
         if (passcodePreferencesHelper?.passCode?.isNotEmpty() == true) {
             intent = Intent(this, PassCodeActivity::class.java)
