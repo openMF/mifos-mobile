@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingAccountDetailsBinding
@@ -38,6 +39,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 18/8/16.
  */
+@AndroidEntryPoint
 class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
 
     private var _binding: FragmentSavingAccountDetailsBinding? = null

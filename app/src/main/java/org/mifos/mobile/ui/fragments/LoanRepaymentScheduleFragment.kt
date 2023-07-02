@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanRepaymentScheduleBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -28,6 +29,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 03/03/17.
  */
+@AndroidEntryPoint
 class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpView {
 
     private var _binding: FragmentLoanRepaymentScheduleBinding? = null

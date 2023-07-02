@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentGuarantorListBinding
@@ -26,6 +27,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 23/July/2018
 */
+@AndroidEntryPoint
 class GuarantorListFragment : BaseFragment(), GuarantorListView {
 
     private var _binding: FragmentGuarantorListBinding? = null

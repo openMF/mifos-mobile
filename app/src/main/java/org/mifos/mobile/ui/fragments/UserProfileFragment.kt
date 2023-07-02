@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentUserProfileBinding
@@ -27,6 +28,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 10/7/17.
  */
+@AndroidEntryPoint
 class UserProfileFragment : BaseFragment(), UserDetailsView {
 
     private var _binding: FragmentUserProfileBinding? = null

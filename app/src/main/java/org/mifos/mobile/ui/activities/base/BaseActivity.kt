@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentManager
 import com.mifos.mobile.passcode.BasePassCodeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
-import org.mifos.mobile.injection.component.ActivityComponent
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.views.BaseActivityCallback
 import org.mifos.mobile.utils.LanguageHelper
@@ -33,21 +32,6 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
     var toolbar: Toolbar? = null
         protected set
 
-    /**
-     * Used for dependency injection
-     * @return [ActivityComponent] which is used for injection
-     */
-//    var activityComponent: ActivityComponent? = null
-//        get() {
-//            if (field == null) {
-//                field = DaggerActivityComponent.builder()
-//                    .activityModule(ActivityModule(this))
-//                    .applicationComponent(MifosSelfServiceApp.get(this).component())
-//                    .build()
-//            }
-//            return field
-//        }
-//        private set
     private var progress: ProgressDialog? = null
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)

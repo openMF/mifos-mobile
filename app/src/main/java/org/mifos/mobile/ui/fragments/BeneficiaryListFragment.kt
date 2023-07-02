@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryListBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -28,6 +29,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 14/6/17.
  */
+@AndroidEntryPoint
 class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, BeneficiariesView {
 
     private var _binding: FragmentBeneficiaryListBinding? = null

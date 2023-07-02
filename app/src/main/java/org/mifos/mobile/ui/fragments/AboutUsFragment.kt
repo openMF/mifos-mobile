@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.BuildConfig
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAboutUsBinding
@@ -18,6 +19,7 @@ import java.util.Calendar
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
+@AndroidEntryPoint
 class AboutUsFragment : BaseFragment() {
     private var _binding: FragmentAboutUsBinding? = null
     private val binding get() = _binding!!

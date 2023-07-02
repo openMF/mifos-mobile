@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
@@ -20,6 +21,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 02/July/2018
 */
+@AndroidEntryPoint
 class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawView {
 
     private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Spinner
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsMakeTransferBinding
 import org.mifos.mobile.models.payload.TransferPayload
@@ -33,6 +34,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 10/03/17.
  */
+@AndroidEntryPoint
 class SavingsMakeTransferFragment : BaseFragment(), SavingsMakeTransferMvpView {
 
     private var _binding: FragmentSavingsMakeTransferBinding? = null

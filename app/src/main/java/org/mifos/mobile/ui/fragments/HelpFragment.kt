@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentHelpBinding
 import org.mifos.mobile.models.FAQ
@@ -31,6 +32,7 @@ import javax.inject.Inject
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
+@AndroidEntryPoint
 class HelpFragment : BaseFragment(), HelpView {
     private var _binding: FragmentHelpBinding? = null
     private val binding get() = _binding!!

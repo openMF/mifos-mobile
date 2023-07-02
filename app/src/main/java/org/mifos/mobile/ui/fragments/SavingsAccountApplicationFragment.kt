@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingsAccountApplicationBinding
@@ -27,6 +28,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 30/June/2018
 */
+@AndroidEntryPoint
 class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
 
     private var _binding: FragmentSavingsAccountApplicationBinding? = null

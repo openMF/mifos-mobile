@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -20,6 +21,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 7/6/17.
  */
+@AndroidEntryPoint
 class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
 
     private var _binding: FragmentLoanWithdrawBinding? = null
