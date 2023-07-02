@@ -74,7 +74,6 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     ): View {
         _binding = FragmentHomeOldBinding.inflate(inflater, container, false)
         val rootView = binding.root
-//        (activity as HomeActivity?)?.activityComponent?.inject(this)
         clientId = preferencesHelper?.clientId
         presenter?.attachView(this)
         setHasOptionsMenu(true)

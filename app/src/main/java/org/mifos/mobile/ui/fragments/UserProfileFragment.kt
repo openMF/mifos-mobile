@@ -50,7 +50,6 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         (activity as BaseActivity?)?.setSupportActionBar(binding.toolbar) // check this part before pushing
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)

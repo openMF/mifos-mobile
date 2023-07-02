@@ -14,7 +14,6 @@ import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.presenters.AddGuarantorPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.AddGuarantorView
@@ -61,7 +60,6 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddGuarantorBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))

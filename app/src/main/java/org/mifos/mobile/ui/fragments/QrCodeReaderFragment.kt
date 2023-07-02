@@ -37,7 +37,6 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
     ): View {
         _binding = FragmentScanQrCodeBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.add_beneficiary))
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         binding.viewScanner.setAutoFocus(true)
         binding.btnFlash.setOnClickListener {
             turnOnFlash()

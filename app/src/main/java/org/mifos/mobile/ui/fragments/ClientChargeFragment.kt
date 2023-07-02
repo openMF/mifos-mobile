@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.presenters.ClientChargePresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.ClientChargeAdapter
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -60,7 +59,6 @@ class ClientChargeFragment : BaseFragment(), ClientChargeView {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             id = arguments?.getLong(Constants.CLIENT_ID)
             chargeType = arguments?.getSerializable(Constants.CHARGE_TYPE) as ChargeType

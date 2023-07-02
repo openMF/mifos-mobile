@@ -52,7 +52,6 @@ class UpdatePasswordFragment :
     ): View {
         _binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.change_password))
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         binding.tilNewPassword.editText?.addTextChangedListener(this)
         binding.tilConfirmNewPassword.editText?.addTextChangedListener(this)

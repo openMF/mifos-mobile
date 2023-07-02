@@ -54,7 +54,6 @@ class GuarantorListFragment : BaseFragment(), GuarantorListView {
     ): View {
         _binding = FragmentGuarantorListBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.view_guarantor))
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         if (list == null) {
             presenter?.getGuarantorList(loanId)

@@ -17,7 +17,6 @@ import org.mifos.mobile.models.accounts.loan.tableview.Cell
 import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader
 import org.mifos.mobile.models.accounts.loan.tableview.RowHeader
 import org.mifos.mobile.presenters.LoanRepaymentSchedulePresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.LoanRepaymentScheduleAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanRepaymentScheduleMvpView
@@ -47,7 +46,6 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.loan_repayment_schedule))
         if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }

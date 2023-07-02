@@ -64,7 +64,6 @@ class GuarantorDetailFragment : BaseFragment(), GuarantorDetailView {
         _binding = FragmentGuarantorDetailBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.guarantor_details))
         setHasOptionsMenu(true)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (isFirstTime) {
             isFirstTime = false
             setUpRxBus()

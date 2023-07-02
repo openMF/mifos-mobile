@@ -50,7 +50,6 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     ): View {
         _binding = FragmentBeneficiaryListBinding.inflate(inflater, container, false)
         beneficiaryListAdapter = BeneficiaryListAdapter(::onItemClick)
-        ////(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiaries))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()

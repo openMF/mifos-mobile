@@ -65,7 +65,6 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         _binding = FragmentLoanAccountDetailsBinding.inflate(inflater, container, false)
         val rootView = binding.root
         setToolbarTitle(getString(R.string.loan_account_details))

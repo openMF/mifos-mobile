@@ -14,7 +14,6 @@ import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.presenters.BeneficiaryApplicationPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.BeneficiaryApplicationView
@@ -71,7 +70,6 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryApplicationBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         presenter?.attachView(this)

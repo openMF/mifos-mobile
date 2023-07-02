@@ -15,7 +15,6 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.savings.ProductOptions
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.presenters.SavingsAccountApplicationPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountApplicationView
@@ -61,7 +60,6 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         presenter?.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
         return binding.root
