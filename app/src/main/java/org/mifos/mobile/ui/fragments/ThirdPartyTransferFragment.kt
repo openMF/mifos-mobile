@@ -69,7 +69,6 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         _binding = FragmentThirdPartyTransferBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.third_party_transfer))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)

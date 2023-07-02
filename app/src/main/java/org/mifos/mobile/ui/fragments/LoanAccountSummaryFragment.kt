@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountSummaryBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
@@ -26,7 +25,6 @@ class LoanAccountSummaryFragment : BaseFragment() {
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
         }

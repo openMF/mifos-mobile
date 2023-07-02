@@ -50,7 +50,6 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryDetailBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiary_detail))
         presenter?.attachView(this)
         showUserInterface()

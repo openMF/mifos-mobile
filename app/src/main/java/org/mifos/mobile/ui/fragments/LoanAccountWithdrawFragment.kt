@@ -10,7 +10,6 @@ import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.presenters.LoanAccountWithdrawPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanAccountWithdrawView
 import org.mifos.mobile.utils.Constants
@@ -33,7 +32,6 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
         }

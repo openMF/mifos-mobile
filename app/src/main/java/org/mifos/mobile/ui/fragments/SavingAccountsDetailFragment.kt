@@ -70,7 +70,6 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingAccountDetailsBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_details))
         savingAccountsDetailPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)

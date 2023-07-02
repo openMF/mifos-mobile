@@ -60,7 +60,6 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentQrCodeImportBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.import_qr))
         // load the uri
         setBitmapImage(qrUri)

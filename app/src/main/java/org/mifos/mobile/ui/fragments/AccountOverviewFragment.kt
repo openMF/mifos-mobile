@@ -12,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountOverviewBinding
 import org.mifos.mobile.presenters.AccountOverviewPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.AccountOverviewMvpView
 import org.mifos.mobile.utils.Constants
@@ -47,7 +46,6 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAccountOverviewBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         accountOverviewPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts_overview))
         binding.swipeContainer.setColorSchemeResources(

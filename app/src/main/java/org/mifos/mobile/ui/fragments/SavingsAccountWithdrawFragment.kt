@@ -10,7 +10,6 @@ import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBindin
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.presenters.SavingsAccountWithdrawPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.utils.Constants
@@ -45,7 +44,6 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater, container, false)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         showUserInterface()
         return binding.root

@@ -12,7 +12,6 @@ import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
 import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.presenters.RegistrationVerificationPresenter
 import org.mifos.mobile.ui.activities.LoginActivity
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.RegistrationVerificationView
 import org.mifos.mobile.utils.Toaster
@@ -36,7 +35,6 @@ class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificatio
     ): View {
         _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         return rootView
     }

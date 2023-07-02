@@ -39,7 +39,6 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
     ): View {
         _binding = FragmentBeneficiaryAddOptionsBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.add_beneficiary))
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         return binding.root
     }
 

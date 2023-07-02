@@ -26,7 +26,6 @@ import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.presenters.SavingAccountsTransactionPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -78,7 +77,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
     }

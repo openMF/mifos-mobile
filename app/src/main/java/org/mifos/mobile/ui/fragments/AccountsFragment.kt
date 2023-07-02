@@ -22,7 +22,6 @@ import org.mifos.mobile.models.accounts.share.ShareAccount
 import org.mifos.mobile.presenters.AccountsPresenter
 import org.mifos.mobile.ui.activities.LoanAccountContainerActivity
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.LoanAccountsListAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter
 import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
@@ -78,7 +77,6 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         loanAccounts = ArrayList()
         savingAccounts = ArrayList()
         shareAccounts = ArrayList()

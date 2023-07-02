@@ -55,7 +55,6 @@ class HelpFragment : BaseFragment(), HelpView {
         _binding = FragmentHelpBinding.inflate(inflater, container, false)
         val rootView = binding.root
         setHasOptionsMenu(true)
-        //(activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         setToolbarTitle(getString(R.string.help))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
