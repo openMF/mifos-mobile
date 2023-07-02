@@ -9,44 +9,58 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
-import org.mifos.mobile.repositories.UserAuthRepositoryImp
+import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
-class RegistrationViewModel @Inject constructor(private var userAuthRepositoryImp: UserAuthRepositoryImp?) : ViewModel() {
+class RegistrationViewModel @Inject constructor(private val userAuthRepositoryImp: UserAuthRepository) :
+    ViewModel() {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
     private val _registrationUiState = MutableLiveData<RegistrationUiState>()
-    val registrationUiState : LiveData<RegistrationUiState> get() = _registrationUiState
+    val registrationUiState: LiveData<RegistrationUiState> get() = _registrationUiState
 
-    fun isInputFieldBlank(fieldText : String) : Boolean {
+    fun isInputFieldBlank(fieldText: String): Boolean {
         return fieldText.trim().isEmpty()
     }
 
-    fun isInputLengthInadequate(fieldText : String) : Boolean {
+    fun isInputLengthInadequate(fieldText: String): Boolean {
         return fieldText.trim().length < 6
     }
 
-    fun inputHasSpaces(fieldText: String) : Boolean {
+    fun inputHasSpaces(fieldText: String): Boolean {
         return fieldText.trim().contains(" ")
     }
 
-    fun hasLeadingTrailingSpaces(fieldText: String) : Boolean {
+    fun hasLeadingTrailingSpaces(fieldText: String): Boolean {
         return fieldText.trim().length < fieldText.length
     }
 
-    fun isEmailInvalid(emailText : String) : Boolean {
+    fun isEmailInvalid(emailText: String): Boolean {
         return !PatternsCompat.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
     }
 
-    fun registerUser(accountNumber: String, authenticationMode: String, email: String,
-                     firstName: String, lastName: String, mobileNumber: String, password: String,
-                     username: String) {
+    fun registerUser(
+        accountNumber: String,
+        authenticationMode: String,
+        email: String,
+        firstName: String,
+        lastName: String,
+        mobileNumber: String,
+        password: String,
+        username: String
+    ) {
         _registrationUiState.value = RegistrationUiState.Loading
-        userAuthRepositoryImp?.registerUser(accountNumber, authenticationMode, email, firstName,
-            lastName, mobileNumber, password, username)
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
+        userAuthRepositoryImp.registerUser(
+            accountNumber,
+            authenticationMode,
+            email,
+            firstName,
+            lastName,
+            mobileNumber,
+            password,
+            username
+        )?.observeOn(AndroidSchedulers.mainThread())?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {

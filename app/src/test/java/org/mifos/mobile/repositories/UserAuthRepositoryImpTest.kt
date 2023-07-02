@@ -2,7 +2,6 @@ package org.mifos.mobile.repositories
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -18,7 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class UserAuthRepositoryImpTest {
 
     @Mock
-    lateinit var dataManager : DataManager
+    lateinit var dataManager: DataManager
 
     private lateinit var userAuthRepositoryImp: UserAuthRepositoryImp
 
@@ -30,7 +29,8 @@ class UserAuthRepositoryImpTest {
 
     @Test
     fun testRegisterUser_SuccessResponseReceivedFromDataManager_ReturnSuccessfulRegistration() {
-        val successResponse : Observable<ResponseBody?> = Observable.just(Mockito.mock(ResponseBody::class.java))
+        val successResponse: Observable<ResponseBody?> =
+            Observable.just(Mockito.mock(ResponseBody::class.java))
         val registerPayload = RegisterPayload().apply {
             this.accountNumber = "accountNumber"
             this.authenticationMode = "authenticationMode"
@@ -42,12 +42,18 @@ class UserAuthRepositoryImpTest {
             this.username = "username"
         }
 
-        Mockito.`when`(dataManager.registerUser(registerPayload))
-            .thenReturn(successResponse)
+        Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(successResponse)
 
-        val result = userAuthRepositoryImp.registerUser(registerPayload.accountNumber,
-            registerPayload.authenticationMode, registerPayload.email, registerPayload.firstName,
-        registerPayload.lastName, registerPayload.mobileNumber, registerPayload.password, registerPayload.username)
+        val result = userAuthRepositoryImp.registerUser(
+            registerPayload.accountNumber,
+            registerPayload.authenticationMode,
+            registerPayload.email,
+            registerPayload.firstName,
+            registerPayload.lastName,
+            registerPayload.mobileNumber,
+            registerPayload.password,
+            registerPayload.username
+        )
 
         Mockito.verify(dataManager).registerUser(registerPayload)
         Assert.assertEquals(result, successResponse)
@@ -55,7 +61,7 @@ class UserAuthRepositoryImpTest {
 
     @Test
     fun testRegisterUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistration() {
-        val error : Observable<ResponseBody?> = Observable.error(Throwable("Registration Failed"))
+        val error: Observable<ResponseBody?> = Observable.error(Throwable("Registration Failed"))
         val registerPayload = RegisterPayload().apply {
             this.accountNumber = "accountNumber"
             this.authenticationMode = "authenticationMode"
@@ -67,12 +73,18 @@ class UserAuthRepositoryImpTest {
             this.username = "username"
         }
 
-        Mockito.`when`(dataManager.registerUser(registerPayload))
-            .thenReturn(error)
+        Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(error)
 
-        val result = userAuthRepositoryImp.registerUser(registerPayload.accountNumber,
-            registerPayload.authenticationMode, registerPayload.email, registerPayload.firstName,
-            registerPayload.lastName, registerPayload.mobileNumber, registerPayload.password, registerPayload.username)
+        val result = userAuthRepositoryImp.registerUser(
+            registerPayload.accountNumber,
+            registerPayload.authenticationMode,
+            registerPayload.email,
+            registerPayload.firstName,
+            registerPayload.lastName,
+            registerPayload.mobileNumber,
+            registerPayload.password,
+            registerPayload.username
+        )
 
         Mockito.verify(dataManager).registerUser(registerPayload)
         Assert.assertEquals(result, error)

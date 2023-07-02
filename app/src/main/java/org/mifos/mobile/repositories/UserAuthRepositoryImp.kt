@@ -6,14 +6,19 @@ import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.register.RegisterPayload
 import javax.inject.Inject
 
-class UserAuthRepositoryImp @Inject constructor(private var dataManager : DataManager?) :
+class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) :
     UserAuthRepository {
 
     override fun registerUser(
-        accountNumber: String?, authenticationMode: String?, email: String?,
-        firstName: String?, lastName: String?, mobileNumber: String?, password: String?,
+        accountNumber: String?,
+        authenticationMode: String?,
+        email: String?,
+        firstName: String?,
+        lastName: String?,
+        mobileNumber: String?,
+        password: String?,
         username: String?
-    ) : Observable<ResponseBody?>? {
+    ): Observable<ResponseBody?>? {
         val registerPayload = RegisterPayload().apply {
             this.accountNumber = accountNumber
             this.authenticationMode = authenticationMode
@@ -24,6 +29,6 @@ class UserAuthRepositoryImp @Inject constructor(private var dataManager : DataMa
             this.password = password
             this.username = username
         }
-        return dataManager?.registerUser(registerPayload)
+        return dataManager.registerUser(registerPayload)
     }
 }
