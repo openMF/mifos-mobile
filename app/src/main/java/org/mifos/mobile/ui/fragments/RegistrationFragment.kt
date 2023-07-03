@@ -22,8 +22,6 @@ import org.mifos.mobile.utils.PasswordStrength
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.RegistrationViewModel
-import org.mifos.mobile.viewModels.RegistrationViewModelFactory
-import javax.inject.Inject
 
 /**
  * Created by dilpreet on 31/7/17.
@@ -34,9 +32,6 @@ class RegistrationFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: RegistrationViewModel
 
-    @Inject
-    lateinit var viewModelFactory: RegistrationViewModelFactory
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,8 +39,7 @@ class RegistrationFragment : BaseFragment() {
     ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[RegistrationViewModel::class.java]
+        viewModel = ViewModelProvider(this)[RegistrationViewModel::class.java]
         with(binding) {
             etPassword.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
