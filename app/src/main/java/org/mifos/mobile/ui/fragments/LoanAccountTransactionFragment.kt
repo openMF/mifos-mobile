@@ -10,11 +10,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.presenters.LoanAccountsTransactionPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanAccountsTransactionView
@@ -28,6 +28,7 @@ import javax.inject.Inject
 */ /**
  * Created by dilpreet on 4/3/17.
  */
+@AndroidEntryPoint
 class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionView {
     private var _binding: FragmentLoanAccountTransactionsBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +45,6 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
         }

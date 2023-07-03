@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddLoanApplicationBinding
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -33,6 +34,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 06/03/17.
  */
+@AndroidEntryPoint
 class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
     private var _binding: FragmentAddLoanApplicationBinding? = null
     private val binding get() = _binding!!
@@ -99,7 +101,6 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanState = arguments?.getSerializable(Constants.LOAN_STATE) as LoanState
             if (loanState == LoanState.CREATE) {

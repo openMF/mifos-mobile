@@ -19,13 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.presenters.SavingAccountsTransactionPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -44,6 +44,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 6/3/17.
  */
+@AndroidEntryPoint
 class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView {
 
     private var _binding: FragmentSavingAccountTransactionsBinding? = null
@@ -76,7 +77,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
     }

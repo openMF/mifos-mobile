@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.text.TextUtils
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.SelfServiceInterceptor
-import org.mifos.mobile.injection.ApplicationContext
 import org.mifos.mobile.ui.fragments.AppTheme
 import javax.inject.Inject
 import javax.inject.Singleton

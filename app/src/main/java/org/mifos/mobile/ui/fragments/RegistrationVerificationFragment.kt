@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
 import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.presenters.RegistrationVerificationPresenter
 import org.mifos.mobile.ui.activities.LoginActivity
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.RegistrationVerificationView
 import org.mifos.mobile.utils.Toaster
@@ -20,6 +20,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 31/7/17.
  */
+@AndroidEntryPoint
 class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificationView {
     private var _binding: FragmentRegistrationVerificationBinding? = null
     private val binding get() = _binding!!
@@ -34,7 +35,6 @@ class RegistrationVerificationFragment : BaseFragment(), RegistrationVerificatio
     ): View {
         _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         return rootView
     }
