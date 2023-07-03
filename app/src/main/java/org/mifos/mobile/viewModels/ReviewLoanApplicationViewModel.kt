@@ -1,6 +1,7 @@
 package org.mifos.mobile.viewModels
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
@@ -8,6 +9,7 @@ import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.ui.enums.LoanState
 import javax.inject.Inject
 
+@HiltViewModel
 class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataManager?) :
     ViewModel() {
 

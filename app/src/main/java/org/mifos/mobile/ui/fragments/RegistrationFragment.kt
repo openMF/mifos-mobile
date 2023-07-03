@@ -11,6 +11,7 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.hbb20.CountryCodePicker
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -27,6 +28,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 31/7/17.
  */
+@AndroidEntryPoint
 class RegistrationFragment : BaseFragment() {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!

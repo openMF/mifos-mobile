@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentTransferProcessBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.presenters.TransferProcessPresenter
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.TransferProcessView
@@ -23,6 +23,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 1/7/17.
  */
+@AndroidEntryPoint
 class TransferProcessFragment : BaseFragment(), TransferProcessView {
 
     private var _binding: FragmentTransferProcessBinding? = null
@@ -47,7 +48,6 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentTransferProcessBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.transfer))
         presenter?.attachView(this)
         binding.tvAmount.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)

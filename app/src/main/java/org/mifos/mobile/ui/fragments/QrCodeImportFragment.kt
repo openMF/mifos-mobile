@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
 import com.isseiaoki.simplecropview.CropImageView
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -30,6 +31,7 @@ import javax.inject.Inject
 /**
  * Created by manishkumar on 19/05/18.
  */
+@AndroidEntryPoint
 class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
 
     private var _binding: FragmentQrCodeImportBinding? = null
@@ -58,7 +60,6 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentQrCodeImportBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.import_qr))
         // load the uri
         setBitmapImage(qrUri)

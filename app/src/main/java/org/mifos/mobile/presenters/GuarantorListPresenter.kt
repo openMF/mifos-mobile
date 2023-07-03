@@ -6,7 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.GuarantorListView
