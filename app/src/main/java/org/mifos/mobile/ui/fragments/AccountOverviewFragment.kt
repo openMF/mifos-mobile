@@ -8,10 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountOverviewBinding
 import org.mifos.mobile.presenters.AccountOverviewPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.AccountOverviewMvpView
 import org.mifos.mobile.utils.Constants
@@ -24,6 +24,7 @@ import javax.inject.Inject
  * @author Rajan Maurya
  * On 16/10/17.
  */
+@AndroidEntryPoint
 class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefreshListener {
 
     private var _binding: FragmentAccountOverviewBinding? = null
@@ -45,7 +46,6 @@ class AccountOverviewFragment : BaseFragment(), AccountOverviewMvpView, OnRefres
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAccountOverviewBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         accountOverviewPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts_overview))
         binding.swipeContainer.setColorSchemeResources(

@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
+import dagger.hilt.android.AndroidEntryPoint
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler
 import org.mifos.mobile.R
@@ -21,6 +22,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 /**
  * Created by dilpreet on 6/7/17.
  */
+@AndroidEntryPoint
 class QrCodeReaderFragment : BaseFragment(), ResultHandler {
 
     private var _binding: FragmentScanQrCodeBinding? = null
@@ -35,7 +37,6 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
     ): View {
         _binding = FragmentScanQrCodeBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.add_beneficiary))
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         binding.viewScanner.setAutoFocus(true)
         binding.btnFlash.setOnClickListener {
             turnOnFlash()
