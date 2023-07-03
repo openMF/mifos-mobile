@@ -4,6 +4,7 @@ import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
@@ -13,6 +14,7 @@ import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
+@HiltViewModel
 class RegistrationViewModel @Inject constructor(private val userAuthRepositoryImp: UserAuthRepository) :
     ViewModel() {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
