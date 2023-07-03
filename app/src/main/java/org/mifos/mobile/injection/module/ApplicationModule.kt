@@ -1,12 +1,15 @@
 package org.mifos.mobile.injection.module
 
-import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.BaseApiManager
+import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.injection.ApplicationContext
 import javax.inject.Singleton
 
 /**
@@ -14,17 +17,8 @@ import javax.inject.Singleton
  * @since 08/07/16
  */
 @Module
-class ApplicationModule(private val application: Application) {
-    @Provides
-    fun provideApplication(): Application {
-        return application
-    }
-
-    @Provides
-    @ApplicationContext
-    fun provideContext(): Context {
-        return application
-    }
+@InstallIn(SingletonComponent::class)
+class ApplicationModule() {
 
     @Provides
     @Singleton
@@ -36,5 +30,11 @@ class ApplicationModule(private val application: Application) {
     @Singleton
     fun provideBaseApiManager(preferencesHelper: PreferencesHelper?): BaseApiManager {
         return BaseApiManager(preferencesHelper!!)
+    }
+
+    @Provides
+    @Singleton
+    fun providesDataManager(preferencesHelper: PreferencesHelper?, baseApiManager: BaseApiManager?, databaseHelper: DatabaseHelper): DataManager {
+        return DataManager(preferencesHelper!!, baseApiManager!!, databaseHelper!!)
     }
 }

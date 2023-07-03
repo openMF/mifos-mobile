@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.BuildConfig
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentNotificationBinding
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.presenters.NotificationPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.NotificationAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.NotificationView
@@ -24,6 +24,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 13/9/17.
  */
+@AndroidEntryPoint
 class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +40,6 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbarTitle(getString(R.string.notification))
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
     }
 
     override fun onCreateView(

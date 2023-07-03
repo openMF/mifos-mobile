@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAccountsBinding
 import org.mifos.mobile.models.CheckboxStatus
@@ -21,7 +22,6 @@ import org.mifos.mobile.models.accounts.share.ShareAccount
 import org.mifos.mobile.presenters.AccountsPresenter
 import org.mifos.mobile.ui.activities.LoanAccountContainerActivity
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.LoanAccountsListAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter
 import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
@@ -37,6 +37,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 23/10/16.
  */
+@AndroidEntryPoint
 class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private var _binding: FragmentAccountsBinding? = null
     private val binding get() = _binding!!
@@ -76,7 +77,6 @@ class AccountsFragment : BaseFragment(), OnRefreshListener, AccountsView {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         loanAccounts = ArrayList()
         savingAccounts = ArrayList()
         shareAccounts = ArrayList()

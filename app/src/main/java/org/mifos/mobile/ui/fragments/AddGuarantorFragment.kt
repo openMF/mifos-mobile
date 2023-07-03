@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.presenters.AddGuarantorPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.AddGuarantorView
@@ -27,6 +27,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 23/July/2018
 */
+@AndroidEntryPoint
 class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     private var _binding: FragmentAddGuarantorBinding? = null
@@ -59,7 +60,6 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddGuarantorBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))

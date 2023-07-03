@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryDetailBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -25,6 +26,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 15/6/17.
  */
+@AndroidEntryPoint
 class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
 
     private var _binding: FragmentBeneficiaryDetailBinding? = null
@@ -48,7 +50,6 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryDetailBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.beneficiary_detail))
         presenter?.attachView(this)
         showUserInterface()

@@ -4,6 +4,7 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.dagger.hilt.android'
 
 apply from: '../config/quality/quality.gradle'
 
@@ -79,6 +80,10 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 }
 
@@ -178,6 +183,10 @@ dependencies {
 
     implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
 
 }
 apply plugin: 'com.google.gms.google-services'

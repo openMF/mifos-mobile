@@ -7,7 +7,9 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.injection.ActivityContext
+import dagger.hilt.android.qualifiers.ActivityContext
+
+
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.presenters.base.BasePresenter

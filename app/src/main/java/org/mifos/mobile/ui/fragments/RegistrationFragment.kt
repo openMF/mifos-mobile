@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
 import com.hbb20.CountryCodePicker
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationBinding
 import org.mifos.mobile.models.register.RegisterPayload
@@ -26,6 +27,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 31/7/17.
  */
+@AndroidEntryPoint
 class RegistrationFragment : BaseFragment(), RegistrationView {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
@@ -40,7 +42,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         binding.progressBar.visibility = View.GONE
         binding.passwordStrength.visibility = View.GONE
