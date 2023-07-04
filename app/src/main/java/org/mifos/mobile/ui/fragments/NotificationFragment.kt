@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.BuildConfig
 import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.R
@@ -26,6 +27,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 13/9/17.
  */
+@AndroidEntryPoint
 class NotificationFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +43,6 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbarTitle(getString(R.string.notification))
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
     }
 
     override fun onCreateView(

@@ -9,7 +9,7 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
