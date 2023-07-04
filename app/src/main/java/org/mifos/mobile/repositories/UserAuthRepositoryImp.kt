@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.register.RegisterPayload
+import org.mifos.mobile.models.register.UserVerify
 import javax.inject.Inject
 
 class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) :
@@ -30,5 +31,9 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
             this.username = username
         }
         return dataManager.registerUser(registerPayload)
+    }
+
+    override fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody?>? {
+        return dataManager.verifyUser(userVerify)
     }
 }

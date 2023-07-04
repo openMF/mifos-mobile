@@ -10,8 +10,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
+import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.utils.RegistrationVerificationUiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +23,10 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
 
     private val _registrationUiState = MutableLiveData<RegistrationUiState>()
     val registrationUiState: LiveData<RegistrationUiState> get() = _registrationUiState
+
+    private val _registrationVerificationUiState =
+        MutableLiveData<RegistrationVerificationUiState>()
+    val registrationVerificationUiState: LiveData<RegistrationVerificationUiState> get() = _registrationVerificationUiState
 
     fun isInputFieldBlank(fieldText: String): Boolean {
         return fieldText.trim().isEmpty()
@@ -71,6 +77,24 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
 
                 override fun onNext(responseBody: ResponseBody) {
                     _registrationUiState.value = RegistrationUiState.RegistrationSuccessful
+                }
+            })?.let { compositeDisposables.add(it) }
+    }
+
+    fun verifyUser(userVerify: UserVerify?) {
+        _registrationVerificationUiState.value = RegistrationVerificationUiState.Loading
+        userAuthRepositoryImp.verifyUser(userVerify)?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    _registrationVerificationUiState.value =
+                        RegistrationVerificationUiState.ErrorOnRegistrationVerification(e)
+                }
+
+                override fun onNext(responseBody: ResponseBody) {
+                    _registrationVerificationUiState.value =
+                        RegistrationVerificationUiState.RegistrationVerificationSuccessful
                 }
             })?.let { compositeDisposables.add(it) }
     }
