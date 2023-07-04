@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRecentTransactionsBinding
 import org.mifos.mobile.models.Transaction
@@ -29,6 +30,7 @@ import javax.inject.Inject
  * @author Vishwwajeet
  * @since 09/08/16
  */
+@AndroidEntryPoint
 class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRefreshListener {
 
     private var _binding: FragmentRecentTransactionsBinding? = null
@@ -45,7 +47,6 @@ class RecentTransactionsFragment : BaseFragment(), RecentTransactionsView, OnRef
     private var recentTransactionList: MutableList<Transaction?>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         recentTransactionList = ArrayList()
     }
 

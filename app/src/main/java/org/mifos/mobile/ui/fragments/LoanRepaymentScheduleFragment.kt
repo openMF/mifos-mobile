@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanRepaymentScheduleBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -16,7 +17,6 @@ import org.mifos.mobile.models.accounts.loan.tableview.Cell
 import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader
 import org.mifos.mobile.models.accounts.loan.tableview.RowHeader
 import org.mifos.mobile.presenters.LoanRepaymentSchedulePresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.LoanRepaymentScheduleAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.LoanRepaymentScheduleMvpView
@@ -28,6 +28,7 @@ import javax.inject.Inject
 /**
  * Created by Rajan Maurya on 03/03/17.
  */
+@AndroidEntryPoint
 class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpView {
 
     private var _binding: FragmentLoanRepaymentScheduleBinding? = null
@@ -45,7 +46,6 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.loan_repayment_schedule))
         if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }

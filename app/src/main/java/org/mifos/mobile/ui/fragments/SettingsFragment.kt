@@ -12,6 +12,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.ui.activities.PassCodeActivity
@@ -24,6 +25,7 @@ import org.mifos.mobile.utils.LanguageHelper
 /**
  * Created by dilpreet on 02/10/17.
  */
+@AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
 
     private val prefsHelper by lazy { PreferencesHelper(requireContext().applicationContext) }

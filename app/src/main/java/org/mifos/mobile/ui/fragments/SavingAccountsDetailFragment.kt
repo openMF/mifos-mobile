@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingAccountDetailsBinding
@@ -38,6 +39,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 18/8/16.
  */
+@AndroidEntryPoint
 class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
 
     private var _binding: FragmentSavingAccountDetailsBinding? = null
@@ -68,7 +70,6 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingAccountDetailsBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.saving_account_details))
         savingAccountsDetailPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
