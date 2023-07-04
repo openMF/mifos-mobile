@@ -6,6 +6,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource.userVerify
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mockito.Mock
@@ -19,7 +20,7 @@ class UserAuthRepositoryImpTest {
     @Mock
     lateinit var dataManager: DataManager
 
-    private lateinit var userAuthRepositoryImp: UserAuthRepositoryImp
+    private lateinit var userAuthRepositoryImp: UserAuthRepository
 
     @Before
     fun setUp() {
@@ -88,5 +89,33 @@ class UserAuthRepositoryImpTest {
 
         Mockito.verify(dataManager).registerUser(registerPayload)
         Assert.assertEquals(result, error)
+    }
+
+    @Test
+    fun testVerifyUser_SuccessResponseReceivedFromDataManager_ReturnsSuccessfulRegistrationVerification() {
+        val successResponse: Observable<ResponseBody?> =
+            Observable.just(Mockito.mock(ResponseBody::class.java))
+        Mockito.`when`(
+            dataManager.verifyUser(userVerify)
+        ).thenReturn(successResponse)
+
+        val result = userAuthRepositoryImp.verifyUser(userVerify)
+
+        Mockito.verify(dataManager).verifyUser(userVerify)
+        Assert.assertEquals(result, successResponse)
+    }
+
+    @Test
+    fun testVerifyUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistrationVerification() {
+        val errorResponse: Observable<ResponseBody?> =
+            Observable.error(Throwable("RegistrationVerification failed"))
+        Mockito.`when`(
+            dataManager.verifyUser(userVerify)
+        ).thenReturn(errorResponse)
+
+        val result = userAuthRepositoryImp.verifyUser(userVerify)
+        Mockito.verify(dataManager).verifyUser(userVerify)
+        Assert.assertEquals(result, errorResponse)
+
     }
 }

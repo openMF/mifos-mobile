@@ -14,10 +14,9 @@ import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.ui.activities.LoginActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
+import org.mifos.mobile.utils.RegistrationVerificationUiState
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.viewModels.RegistrationVerificationViewModel
-import org.mifos.mobile.viewModels.RegistrationVerificationViewModelFactory
-import javax.inject.Inject
+import org.mifos.mobile.viewModels.RegistrationViewModel
 
 /**
  * Created by dilpreet on 31/7/17.
@@ -26,10 +25,7 @@ import javax.inject.Inject
 class RegistrationVerificationFragment : BaseFragment() {
     private var _binding: FragmentRegistrationVerificationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : RegistrationVerificationViewModel
-
-    @Inject
-    lateinit var viewModelFactory : RegistrationVerificationViewModelFactory
+    private lateinit var viewModel: RegistrationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,20 +34,26 @@ class RegistrationVerificationFragment : BaseFragment() {
     ): View {
         _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[RegistrationVerificationViewModel::class.java]
+        viewModel = ViewModelProvider(this)[RegistrationViewModel::class.java]
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.readVerificationResultSuccess.observe(viewLifecycleOwner) { verificationResultSuccess ->
-            hideProgress()
-            if (verificationResultSuccess == true) {
-                showVerifiedSuccessfully()
-            } else {
-                showError(MFErrorParser.errorMessage(viewModel.readExceptionOnVerification))
+        viewModel.registrationVerificationUiState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                RegistrationVerificationUiState.Loading -> showProgress()
+
+                RegistrationVerificationUiState.RegistrationVerificationSuccessful -> {
+                    hideProgress()
+                    showVerifiedSuccessfully()
+                }
+
+                is RegistrationVerificationUiState.ErrorOnRegistrationVerification -> {
+                    hideProgress()
+                    showError(MFErrorParser.errorMessage(state.exception))
+                }
             }
         }
 
