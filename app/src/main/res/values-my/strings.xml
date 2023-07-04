@@ -148,9 +148,9 @@
     <string name="error_unauthorised">မှားနေသောအသုံးပြုသူအမည် / Password ကို</string>
     <string name="error_message_server">server ကနေတင်ပေးမှုအမှားတုန့်ပြန်</string>
     <string name="error_validation_blank">%1$s ကိုအလွတ်မဖွစျနိုငျ</string>
-    <string name="error_validation_minimum_chars">%1$s ကို %2$ ဃဇာတ်ကောင်ထက်လျော့နည်းမဖွစျနိုငျ</string>
+    <string name="error_validation_minimum_chars">%1$s ကို %2$d ဃဇာတ်ကောင်ထက်လျော့နည်းမဖွစျနိုငျ</string>
     <string name="error_validation_cannot_contain_spaces">%1$s ကို %2$s ကိုဆံ့မခံနိုင်သည်</string>
-    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">s ကိုစတင်မနိုင် %1$ သို့မဟုတ်ဗလာဖြင့်အဆုံး</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">ကိုစတင်မနိုင် %1$s သို့မဟုတ်ဗလာဖြင့်အဆုံး</string>
     <string name="error_internal_server">ပြည်တွင်းရေး server ကိုအမှား,ျေးဇူးပြု.ထပ်ကြိုးစား</string>
     <string name="error_client_loading">မှားယွင်းနေသည်တင်clientကိုစာရင်း</string>
     <string name="error_loan_accounts_list_loading">ချေးငွေအကောင့်စာရင်းထဲတွင်တင်ပေးမှုအမှား</string>

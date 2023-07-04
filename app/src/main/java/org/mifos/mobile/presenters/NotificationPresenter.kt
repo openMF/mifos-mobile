@@ -1,13 +1,16 @@
 package org.mifos.mobile.presenters
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.injection.ActivityContext
+import dagger.hilt.android.qualifiers.ActivityContext
+
+
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.NotificationView
@@ -18,7 +21,7 @@ import javax.inject.Inject
  */
 class NotificationPresenter @Inject constructor(
     private val manager: DataManager?,
-    @ActivityContext context: Context?,
+    @ApplicationContext context: Context?,
 ) :
     BasePresenter<NotificationView?>(context) {
 

@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
 import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.ui.activities.LoginActivity
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Toaster
@@ -22,6 +22,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 31/7/17.
  */
+@AndroidEntryPoint
 class RegistrationVerificationFragment : BaseFragment() {
     private var _binding: FragmentRegistrationVerificationBinding? = null
     private val binding get() = _binding!!

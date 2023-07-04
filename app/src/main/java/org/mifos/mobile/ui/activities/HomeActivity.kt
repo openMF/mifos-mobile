@@ -22,6 +22,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.ActivityHomeBinding
@@ -51,6 +52,7 @@ import javax.inject.Inject
  * @author Vishwajeet
  * @since 14/07/2016
  */
+@AndroidEntryPoint
 class HomeActivity :
     BaseActivity(),
     UserDetailsView,
@@ -78,7 +80,6 @@ class HomeActivity :
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        activityComponent?.inject(this)
         setContentView(binding.root)
         clientId = preferencesHelper?.clientId
         setupNavigationBar()
