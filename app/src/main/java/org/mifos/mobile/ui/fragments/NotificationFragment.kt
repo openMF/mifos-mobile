@@ -15,13 +15,11 @@ import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentNotificationBinding
 import org.mifos.mobile.models.notification.MifosNotification
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.NotificationAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.viewModels.NotificationViewModel
-import org.mifos.mobile.viewModels.NotificationViewModelFactory
 import javax.inject.Inject
 
 /**
@@ -32,9 +30,6 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel : NotificationViewModel
-
-    @Inject
-    lateinit var viewModelFactory : NotificationViewModelFactory
 
     @JvmField
     @Inject
@@ -52,7 +47,7 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        viewModel = ViewModelProvider(this, viewModelFactory)[NotificationViewModel::class.java]
+        viewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
