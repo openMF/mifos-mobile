@@ -29,7 +29,9 @@ buildscript {
         // in the individual module build.gradle filesa
     }
 }
-
+plugins {
+    id("com.google.dagger.hilt.android") version "2.44" apply false
+}
 allprojects {
     repositories {
         google()
@@ -68,7 +70,8 @@ ext {
     kotlinVersion = '1.6.10'
     tableViewVersion = '0.8.9.4'
     biometric = '1.1.0'
-
+    archCoreVersion = '2.2.0'
+    coroutines = '1.6.4'
     jUnitVersion = '4.13.2'
     mockitoVersion = '5.3.1'
     runnerVersion = '1.6.0-alpha02'

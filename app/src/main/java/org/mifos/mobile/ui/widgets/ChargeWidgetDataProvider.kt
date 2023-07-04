@@ -9,7 +9,7 @@ import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.presenters.ClientChargePresenter
 import org.mifos.mobile.ui.views.ClientChargeView
