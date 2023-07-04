@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
-import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.ui.activities.LoginActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
@@ -63,11 +62,9 @@ class RegistrationVerificationFragment : BaseFragment() {
     }
 
     private fun verifyClicked() {
-        val userVerify = UserVerify()
-        userVerify.authenticationToken = binding.etAuthenticationToken.text.toString()
-        userVerify.requestId = binding.etRequestId.text.toString()
-        showProgress()
-        viewModel.verifyUser(userVerify)
+        val authenticationToken = binding.etAuthenticationToken.text.toString()
+        val requestId = binding.etRequestId.text.toString()
+        viewModel.verifyUser(authenticationToken, requestId)
     }
 
     private fun showVerifiedSuccessfully() {
