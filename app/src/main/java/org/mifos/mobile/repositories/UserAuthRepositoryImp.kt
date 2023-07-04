@@ -33,7 +33,11 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         return dataManager.registerUser(registerPayload)
     }
 
-    override fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody?>? {
+    override fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>? {
+        val userVerify = UserVerify().apply {
+            this.authenticationToken = authenticationToken
+            this.requestId = requestId
+        }
         return dataManager.verifyUser(userVerify)
     }
 }

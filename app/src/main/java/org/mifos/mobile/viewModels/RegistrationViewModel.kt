@@ -10,7 +10,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
-import org.mifos.mobile.models.register.UserVerify
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.RegistrationVerificationUiState
@@ -81,9 +80,9 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
             })?.let { compositeDisposables.add(it) }
     }
 
-    fun verifyUser(userVerify: UserVerify?) {
+    fun verifyUser(authenticationToken: String?, requestId: String?) {
         _registrationVerificationUiState.value = RegistrationVerificationUiState.Loading
-        userAuthRepositoryImp.verifyUser(userVerify)?.observeOn(AndroidSchedulers.mainThread())
+        userAuthRepositoryImp.verifyUser(authenticationToken, requestId)?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}

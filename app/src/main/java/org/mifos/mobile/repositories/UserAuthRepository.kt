@@ -2,7 +2,6 @@ package org.mifos.mobile.repositories
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import org.mifos.mobile.models.register.UserVerify
 
 interface UserAuthRepository {
 
@@ -17,5 +16,5 @@ interface UserAuthRepository {
         username: String?
     ): Observable<ResponseBody?>?
 
-    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody?>?
+    fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>?
 }

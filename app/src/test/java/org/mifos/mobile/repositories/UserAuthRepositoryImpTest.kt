@@ -99,7 +99,8 @@ class UserAuthRepositoryImpTest {
             dataManager.verifyUser(userVerify)
         ).thenReturn(successResponse)
 
-        val result = userAuthRepositoryImp.verifyUser(userVerify)
+        val result =
+            userAuthRepositoryImp.verifyUser(userVerify.authenticationToken, userVerify.requestId)
 
         Mockito.verify(dataManager).verifyUser(userVerify)
         Assert.assertEquals(result, successResponse)
@@ -113,7 +114,8 @@ class UserAuthRepositoryImpTest {
             dataManager.verifyUser(userVerify)
         ).thenReturn(errorResponse)
 
-        val result = userAuthRepositoryImp.verifyUser(userVerify)
+        val result =
+            userAuthRepositoryImp.verifyUser(userVerify.authenticationToken, userVerify.requestId)
         Mockito.verify(dataManager).verifyUser(userVerify)
         Assert.assertEquals(result, errorResponse)
 

@@ -10,7 +10,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mifos.mobile.FakeRemoteDataSource.userVerify
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.RegistrationUiState
@@ -177,10 +176,10 @@ class RegistrationViewModelTest {
     @Test
     fun testVerifyUser_SuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationSuccessful() {
         Mockito.`when`(
-            userAuthRepositoryImp.verifyUser(userVerify)
+            userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
         ).thenReturn(Observable.just(Mockito.mock(ResponseBody::class.java)))
 
-        registrationViewModel.verifyUser(userVerify)
+        registrationViewModel.verifyUser("authenticationToken", "requestId")
 
         Mockito.verify(registrationVerificationUiStateObserver)
             .onChanged(RegistrationVerificationUiState.Loading)
@@ -193,10 +192,10 @@ class RegistrationViewModelTest {
     fun testVerifyUser_UnsuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationUnsuccessful() {
         val error = RuntimeException("RegistrationVerification Failed")
         Mockito.`when`(
-            userAuthRepositoryImp.verifyUser(userVerify)
+            userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
         ).thenReturn(Observable.error(error))
 
-        registrationViewModel.verifyUser(userVerify)
+        registrationViewModel.verifyUser("authenticationToken", "requestId")
 
         Mockito.verify(registrationVerificationUiStateObserver)
             .onChanged(RegistrationVerificationUiState.Loading)
