@@ -3,26 +3,28 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import org.mifos.mobile.NotificationRepository
+import org.mifos.mobile.repositories.NotificationRepositoryImp
 import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.notification.MifosNotification
+import org.mifos.mobile.repositories.NotificationRepository
 import javax.inject.Inject
 
-class NotificationViewModel @Inject constructor(private val dataManager : DataManager?): ViewModel() {
+@HiltViewModel
+class NotificationViewModel @Inject constructor(private val notificationRepositoryImp: NotificationRepository): ViewModel() {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
-    private val notificationRepository = NotificationRepository(dataManager)
     private val _notificationUiState = MutableLiveData<NotificationUiState>()
     val notificationUiState : LiveData<NotificationUiState> get() = _notificationUiState
 
     fun loadNotifications() {
         _notificationUiState.value = NotificationUiState.Loading
-        notificationRepository.loadNotifications()
+        notificationRepositoryImp.loadNotifications()
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<List<MifosNotification?>?>() {
