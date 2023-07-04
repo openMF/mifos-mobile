@@ -8,9 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import org.mifos.mobile.repositories.NotificationRepositoryImp
 import org.mifos.mobile.utils.NotificationUiState
-import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.repositories.NotificationRepository
 import javax.inject.Inject
@@ -25,7 +23,7 @@ class NotificationViewModel @Inject constructor(private val notificationReposito
     fun loadNotifications() {
         _notificationUiState.value = NotificationUiState.Loading
         notificationRepositoryImp.loadNotifications()
-            ?.observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<List<MifosNotification?>?>() {
                 override fun onComplete() {}

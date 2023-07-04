@@ -5,5 +5,5 @@ import org.mifos.mobile.models.notification.MifosNotification
 
 interface NotificationRepository {
 
-    fun loadNotifications(): Observable<List<MifosNotification?>?>?
+    fun loadNotifications(): Observable<List<MifosNotification?>?>
 }
