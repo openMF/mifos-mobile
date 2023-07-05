@@ -5,33 +5,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentTransferProcessBinding
 import org.mifos.mobile.models.payload.TransferPayload
-import org.mifos.mobile.presenters.TransferProcessPresenter
+import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.TransferProcessView
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.Toaster
-import javax.inject.Inject
+import org.mifos.mobile.utils.*
+import org.mifos.mobile.viewModels.TransferProcessViewModel
 
 /**
  * Created by dilpreet on 1/7/17.
  */
 @AndroidEntryPoint
-class TransferProcessFragment : BaseFragment(), TransferProcessView {
+class TransferProcessFragment : BaseFragment() {
 
     private var _binding: FragmentTransferProcessBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: TransferProcessViewModel
 
-    @JvmField
-    @Inject
-    var presenter: TransferProcessPresenter? = null
+    private var toAccountOption: AccountOption? = null
+    private var fromAccountOption: AccountOption? = null
+
     private var payload: TransferPayload? = null
     private var transferType: TransferType? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +47,14 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     ): View {
         _binding = FragmentTransferProcessBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.transfer))
-        presenter?.attachView(this)
-        binding.tvAmount.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)
-        binding.tvPayFrom.text = payload?.fromAccountNumber.toString()
-        binding.tvPayTo.text = payload?.toAccountNumber.toString()
-        binding.tvDate.text = payload?.transferDate
-        binding.tvRemark.text = payload?.transferDescription
+        viewModel = ViewModelProvider(this)[TransferProcessViewModel::class.java]
+        with(binding) {
+            tvAmount.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)
+            tvPayFrom.text = payload?.fromAccountNumber.toString()
+            tvPayTo.text = payload?.toAccountNumber.toString()
+            tvDate.text = payload?.transferDate
+            tvRemark.text = payload?.transferDescription
+        }
 
         return binding.root
     }
@@ -62,29 +62,113 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnStartTransfer.setOnClickListener {
-            startTransfer()
+        viewModel.transferUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is TransferUiState.Loading -> showProgress()
+                is TransferUiState.TransferSuccess -> {
+                    hideProgress()
+                    showTransferredSuccessfully()
+                }
+                is TransferUiState.Error -> {
+                    hideProgress()
+                    showError(MFErrorParser.errorMessage(it.errorMessage))
+                }
+            }
         }
-        binding.btnCancelTransfer.setOnClickListener {
-            cancelTransferProcess()
-        }
-        binding.btnClose.setOnClickListener {
-            closeClicked()
+
+        with(binding) {
+            btnStartTransfer.setOnClickListener {
+                startTransfer()
+            }
+            btnCancelTransfer.setOnClickListener {
+                cancelTransferProcess()
+            }
+            btnClose.setOnClickListener {
+                closeClicked()
+            }
         }
     }
 
     /**
      * Initiates a transfer depending upon `transferType`
      */
-    fun startTransfer() {
+    private fun startTransfer() {
         if (!Network.isConnected(activity)) {
             Toaster.show(binding.root, getString(R.string.internet_not_connected))
             return
         }
+        val fromOfficeId = fromAccountOption?.officeId
+        val fromClientId = fromAccountOption?.clientId
+        val fromAccountType = fromAccountOption?.accountType?.id
+        val fromAccountId = fromAccountOption?.accountId
+        val toOfficeId = toAccountOption?.officeId
+        val toClientId = toAccountOption?.clientId
+        val toAccountType = toAccountOption?.accountType?.id
+        val toAccountId = toAccountOption?.accountId
+        val transferDate = DateHelper.getSpecificFormat(
+            DateHelper.FORMAT_dd_MMMM_yyyy,
+            getTodayFormatted(),
+        )
+        val transferAmount = binding.tvAmount.text.toString().toDouble()
+        val transferDescription = binding.tvRemark.text.toString()
+        var dateFormat: String = "dd MMMM yyyy"
+        var locale: String = "en"
+        val fromAccountNumber = fromAccountOption?.accountNo
+        val toAccountNumber = toAccountOption?.accountNo
         if (transferType == TransferType.SELF) {
-            presenter?.makeSavingsTransfer(payload)
+            viewModel.makeSavingsTransfer(
+                fromOfficeId,
+                fromClientId,
+                fromAccountType,
+                fromAccountId,
+                toOfficeId,
+                toClientId,
+                toAccountType,
+                toAccountId,
+                transferDate,
+                transferAmount,
+                transferDescription,
+                dateFormat,
+                locale,
+                fromAccountNumber,
+                toAccountNumber
+            )
         } else if (transferType == TransferType.TPT) {
-            presenter?.makeTPTTransfer(payload)
+            val fromOfficeId = fromAccountOption?.officeId
+            val fromClientId = fromAccountOption?.clientId
+            val fromAccountType = fromAccountOption?.accountType?.id
+            val fromAccountId = fromAccountOption?.accountId
+            val toOfficeId = toAccountOption?.officeId
+            val toClientId = toAccountOption?.clientId
+            val toAccountType = toAccountOption?.accountType?.id
+            val toAccountId = toAccountOption?.accountId
+            val transferDate = DateHelper.getSpecificFormat(
+                DateHelper.FORMAT_dd_MMMM_yyyy,
+                getTodayFormatted(),
+            )
+            val transferAmount = binding.tvAmount.text.toString().toDouble()
+            val transferDescription = binding.tvRemark.text.toString()
+            var dateFormat: String = "dd MMMM yyyy"
+            var locale: String = "en"
+            val fromAccountNumber = fromAccountOption?.accountNo
+            val toAccountNumber = toAccountOption?.accountNo
+            viewModel.makeTPTTransfer(
+                fromOfficeId,
+                fromClientId,
+                fromAccountType,
+                fromAccountId,
+                toOfficeId,
+                toClientId,
+                toAccountType,
+                toAccountId,
+                transferDate,
+                transferAmount,
+                transferDescription,
+                dateFormat,
+                locale,
+                fromAccountNumber,
+                toAccountNumber
+            )
         }
     }
 
@@ -106,7 +190,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     /**
      * Closes the transfer fragment
      */
-    fun closeClicked() {
+    private fun closeClicked() {
         activity?.supportFragmentManager?.popBackStack()
         activity?.supportFragmentManager?.popBackStack()
     }
@@ -114,7 +198,7 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
     /**
      * Shows a {@link Snackbar} on succesfull transfer of money
      */
-    override fun showTransferredSuccessfully() {
+    fun showTransferredSuccessfully() {
         Toaster.show(binding.root, getString(R.string.transferred_successfully))
         binding.ivSuccess.visibility = View.VISIBLE
         (binding.ivSuccess.drawable as Animatable).start()
@@ -128,21 +212,20 @@ class TransferProcessFragment : BaseFragment(), TransferProcessView {
      *
      * @param msg Error message that tells the user about the problem.
      */
-    override fun showError(msg: String?) {
+    fun showError(msg: String?) {
         Toaster.show(binding.root, msg)
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showMifosProgressDialog(getString(R.string.please_wait))
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideMifosProgressDialog()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter?.detachView()
         _binding = null
     }
 
