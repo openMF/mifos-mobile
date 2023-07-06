@@ -69,7 +69,7 @@ class TransferProcessViewModelTest {
 
     @Test
     fun makeSavings_transfer_unsuccessful() {
-        val error = RuntimeException("Registration Failed")
+        val error = RuntimeException("Savings Transfer Failed")
         Mockito.`when`(
             transferProcessImp.makeTransfer(
                 Mockito.anyInt(),Mockito.anyLong(),Mockito.anyInt(),
@@ -118,7 +118,7 @@ class TransferProcessViewModelTest {
 
     @Test
     fun makeTPTTransfer_transfer_unsuccessful() {
-        val error = RuntimeException("Registration Failed")
+        val error = RuntimeException("TPTT Transfer Failed")
         Mockito.`when`(
             transferProcessImp.makeTransfer(
                 Mockito.anyInt(),Mockito.anyLong(),Mockito.anyInt(),
