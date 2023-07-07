@@ -14,8 +14,6 @@ import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.LoginUiState
-import retrofit2.HttpException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,17 +54,7 @@ class LoginViewModel @Inject constructor(private val userAuthRepositoryImp: User
                     override fun onComplete() {}
                     override fun onError(e: Throwable) {
                         try {
-                            if (e is HttpException) {
-                                if (e.code() == 503) {
-                                    _loginUiState.value = LoginUiState.ServerDownError
-                                } else {
-                                    _loginUiState.value =
-                                        LoginUiState.DynamicError(e.response().errorBody().string())
-                                }
-                            }
-                            if (e is UnknownHostException) {
-                                _loginUiState.value = LoginUiState.DuringLoginError
-                            }
+                            _loginUiState.value = LoginUiState.Error
                         } catch (throwable: Throwable) {
                             RxJavaPlugins.getErrorHandler()
                         }
@@ -89,11 +77,7 @@ class LoginViewModel @Inject constructor(private val userAuthRepositoryImp: User
             ?.subscribeWith(object : DisposableObserver<Page<Client?>?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
-                    if ((e as HttpException).code() == 401) {
-                        _loginUiState.value = LoginUiState.UnauthorisedClientError
-                    } else {
-                        _loginUiState.value = LoginUiState.FetchingClientError
-                    }
+                    _loginUiState.value = LoginUiState.Error
                     userAuthRepositoryImp.clearPrefHelper()
                     userAuthRepositoryImp.reInitializeService()
                 }
@@ -106,7 +90,7 @@ class LoginViewModel @Inject constructor(private val userAuthRepositoryImp: User
                         userAuthRepositoryImp.reInitializeService()
                         _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
                     } else {
-                        _loginUiState.value = LoginUiState.ClientNotFoundError
+                        _loginUiState.value = LoginUiState.Error
                     }
                 }
             })?.let {

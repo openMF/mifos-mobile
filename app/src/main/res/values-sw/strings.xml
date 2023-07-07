@@ -418,4 +418,5 @@
     <string name="enter_base_url">Ingiza URL ya msingi</string>
     <string name="enter_tenant">Nenda kwa Mpangaji</string>
     <string name="app_info">Maelezo ya Programu</string>
+    <string name="login_failed">Kuingia Kumeshindwa, Tafadhali Jaribu Tena Baadaye.</string>
 </resources>
