@@ -14,7 +14,6 @@ import org.mifos.mobile.databinding.ActivityLoginBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoginUiState
-import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.LoginViewModel
@@ -53,38 +52,13 @@ class LoginActivity : BaseActivity() {
             when (state) {
                 LoginUiState.Loading -> showProgress()
 
-                LoginUiState.DuringLoginError -> {
+                LoginUiState.Error -> {
                     hideProgress()
-                    showMessage(context?.getString(R.string.err_during_login))
-                }
-
-                LoginUiState.ServerDownError -> {
-                    hideProgress()
-                    showMessage(context?.getString(R.string.error_server_down))
+                    showMessage(context?.getString(R.string.login_failed))
                 }
 
                 LoginUiState.LoginSuccess -> {
                     onLoginSuccess()
-                }
-
-                is LoginUiState.DynamicError -> {
-                    hideProgress()
-                    showMessage(MFErrorParser.parseError(state.errorMessage).developerMessage)
-                }
-
-                LoginUiState.UnauthorisedClientError -> {
-                    hideProgress()
-                    showMessage(context?.getString(R.string.unauthorized_client))
-                }
-
-                LoginUiState.FetchingClientError -> {
-                    hideProgress()
-                    showMessage(context?.getString(R.string.error_fetching_client))
-                }
-
-                LoginUiState.ClientNotFoundError -> {
-                    hideProgress()
-                    showMessage(context?.getString(R.string.error_client_not_found))
                 }
 
                 is LoginUiState.LoadClientSuccess -> {

@@ -440,5 +440,6 @@
     <string name="enter_base_url">بیس یو آر ایل درج کریں</string>
     <string name="enter_tenant">کرایہ درج کریں</string>
     <string name="app_info">ایپ کی معلومات</string>
+    <string name="login_failed">لاگ ان ناکام ہوگیا، براہ کرم بعد میں دوبارہ کوشش کریں۔</string>
 
 </resources>

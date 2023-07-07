@@ -502,5 +502,6 @@
     <string name="account_type_loan" translatable="false">accountType.loan</string>
     <string name="error_loan_account_details_loading">Erro ao carregar em detalhes de contas de empréstimo</string>
     <string name="app_info">Informações do aplicativo</string>
+    <string name="login_failed">O login falhou por favor tente novamente mais tarde.</string>
 
 </resources>
