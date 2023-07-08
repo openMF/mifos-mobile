@@ -9,6 +9,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
@@ -19,8 +20,10 @@ import org.mifos.mobile.utils.LoginUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 import java.lang.RuntimeException
 
+@RunWith(MockitoJUnitRunner::class)
 class LoginViewModelTest {
 
     @JvmField
@@ -110,6 +113,7 @@ class LoginViewModelTest {
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Loading)
         Mockito.verify(userAuthRepositoryImp).saveAuthenticationTokenForSession(mockUser)
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.LoginSuccess)
+        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
 
     @Test
@@ -123,6 +127,7 @@ class LoginViewModelTest {
 
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Loading)
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
+        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
 
     @Test
@@ -137,6 +142,7 @@ class LoginViewModelTest {
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
         Mockito.verify(userAuthRepositoryImp).clearPrefHelper()
         Mockito.verify(userAuthRepositoryImp).reInitializeService()
+        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
 
     @Test
@@ -148,6 +154,7 @@ class LoginViewModelTest {
         loginViewModel.loadClient()
 
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
+        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
 
     @Test
@@ -163,6 +170,7 @@ class LoginViewModelTest {
         Mockito.verify(userAuthRepositoryImp).setClientId(clientId)
         Mockito.verify(userAuthRepositoryImp).reInitializeService()
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.LoadClientSuccess(clientName))
+        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
 
     @After
