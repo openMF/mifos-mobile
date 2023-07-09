@@ -12,7 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.UserAuthRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.utils.UiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -33,7 +33,7 @@ class RegistrationViewModelTest {
     lateinit var userAuthRepositoryImp: UserAuthRepositoryImp
 
     @Mock
-    lateinit var registrationUiStateObserver: Observer<RegistrationUiState>
+    lateinit var registrationUiStateObserver: Observer<UiState>
 
     private lateinit var registrationViewModel: RegistrationViewModel
 
@@ -127,9 +127,8 @@ class RegistrationViewModelTest {
             "userName"
         )
 
-        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationUiStateObserver)
-            .onChanged(RegistrationUiState.RegistrationSuccessful)
+        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Loading)
+        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Success)
         Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
     }
 
@@ -160,9 +159,8 @@ class RegistrationViewModelTest {
             "username"
         )
 
-        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationUiStateObserver)
-            .onChanged(RegistrationUiState.ErrorOnRegistration(error))
+        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Loading)
+        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Error(error))
         Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
     }
 
