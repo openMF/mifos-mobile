@@ -14,6 +14,7 @@ import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.LoginUiState
@@ -37,6 +38,9 @@ class LoginViewModelTest {
     lateinit var userAuthRepositoryImp : UserAuthRepository
 
     @Mock
+    lateinit var clientRepositoryImp : ClientRepository
+
+    @Mock
     lateinit var loginUiStateObserver : Observer<LoginUiState>
 
     private lateinit var mockUser : User
@@ -47,7 +51,7 @@ class LoginViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        loginViewModel = LoginViewModel(userAuthRepositoryImp)
+        loginViewModel = LoginViewModel(userAuthRepositoryImp, clientRepositoryImp)
         loginViewModel.loginUiState.observeForever(loginUiStateObserver)
         mockUser = FakeRemoteDataSource.user
         emptyClientPage = FakeRemoteDataSource.noClients
@@ -111,7 +115,7 @@ class LoginViewModelTest {
         loginViewModel.login("username", "password")
 
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Loading)
-        Mockito.verify(userAuthRepositoryImp).saveAuthenticationTokenForSession(mockUser)
+        Mockito.verify(clientRepositoryImp).saveAuthenticationTokenForSession(mockUser)
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.LoginSuccess)
         Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
@@ -134,21 +138,21 @@ class LoginViewModelTest {
     fun testLoadClient_UnsuccessfulLoadClientReceivedFromRepository_ReturnsError() {
         val error = RuntimeException("Load Client Failed")
         Mockito.`when`(
-            userAuthRepositoryImp.loadClient()
+            clientRepositoryImp.loadClient()
         ).thenReturn(Observable.error(error))
 
         loginViewModel.loadClient()
 
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
-        Mockito.verify(userAuthRepositoryImp).clearPrefHelper()
-        Mockito.verify(userAuthRepositoryImp).reInitializeService()
+        Mockito.verify(clientRepositoryImp).clearPrefHelper()
+        Mockito.verify(clientRepositoryImp).reInitializeService()
         Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }
 
     @Test
     fun testLoadClient_EmptyClientPageReceivedFromRepository_ReturnsError() {
         Mockito.`when`(
-            userAuthRepositoryImp.loadClient()
+            clientRepositoryImp.loadClient()
         ).thenReturn(Observable.just(emptyClientPage))
 
         loginViewModel.loadClient()
@@ -162,13 +166,13 @@ class LoginViewModelTest {
         val clientId = clientPage?.pageItems?.get(0)?.id?.toLong()
         val clientName = clientPage?.pageItems?.get(0)?.displayName
         Mockito.`when`(
-            userAuthRepositoryImp.loadClient()
+            clientRepositoryImp.loadClient()
         ).thenReturn(Observable.just(clientPage))
 
         loginViewModel.loadClient()
 
-        Mockito.verify(userAuthRepositoryImp).setClientId(clientId)
-        Mockito.verify(userAuthRepositoryImp).reInitializeService()
+        Mockito.verify(clientRepositoryImp).setClientId(clientId)
+        Mockito.verify(clientRepositoryImp).reInitializeService()
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.LoadClientSuccess(clientName))
         Mockito.verifyNoMoreInteractions(loginUiStateObserver)
     }

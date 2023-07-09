@@ -12,12 +12,16 @@ import io.reactivex.schedulers.Schedulers
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.LoginUiState
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val userAuthRepositoryImp: UserAuthRepository) :
+class LoginViewModel @Inject constructor(
+    private val userAuthRepositoryImp: UserAuthRepository,
+    private val clientRepositoryImp: ClientRepository
+) :
     ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -61,7 +65,7 @@ class LoginViewModel @Inject constructor(private val userAuthRepositoryImp: User
                     }
 
                     override fun onNext(user: User) {
-                        userAuthRepositoryImp.saveAuthenticationTokenForSession(user)
+                        clientRepositoryImp.saveAuthenticationTokenForSession(user)
                         _loginUiState.value = LoginUiState.LoginSuccess
                     }
                 }),
@@ -72,22 +76,22 @@ class LoginViewModel @Inject constructor(private val userAuthRepositoryImp: User
      * This method fetches the Client, associated with current Access Token.
      */
     fun loadClient() {
-        userAuthRepositoryImp.loadClient()?.observeOn(AndroidSchedulers.mainThread())
+        clientRepositoryImp.loadClient()?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<Page<Client?>?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
                     _loginUiState.value = LoginUiState.Error
-                    userAuthRepositoryImp.clearPrefHelper()
-                    userAuthRepositoryImp.reInitializeService()
+                    clientRepositoryImp.clearPrefHelper()
+                    clientRepositoryImp.reInitializeService()
                 }
 
                 override fun onNext(clientPage: Page<Client?>) {
                     if (clientPage.pageItems.isNotEmpty()) {
                         val clientId = clientPage.pageItems[0]?.id?.toLong()
                         val clientName = clientPage.pageItems[0]?.displayName
-                        userAuthRepositoryImp.setClientId(clientId)
-                        userAuthRepositoryImp.reInitializeService()
+                        clientRepositoryImp.setClientId(clientId)
+                        clientRepositoryImp.reInitializeService()
                         _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
                     } else {
                         _loginUiState.value = LoginUiState.Error
