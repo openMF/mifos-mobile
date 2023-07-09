@@ -19,7 +19,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.PasswordStrength
-import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.utils.UiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.RegistrationViewModel
 
@@ -91,14 +91,14 @@ class RegistrationFragment : BaseFragment() {
 
         viewModel.registrationUiState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                RegistrationUiState.Loading -> showProgress()
+                UiState.Loading -> showProgress()
 
-                RegistrationUiState.RegistrationSuccessful -> {
+                UiState.Success -> {
                     hideProgress()
                     showRegisteredSuccessfully()
                 }
 
-                is RegistrationUiState.ErrorOnRegistration -> {
+                is UiState.Error -> {
                     hideProgress()
                     showError(MFErrorParser.errorMessage(state.exception))
                 }
