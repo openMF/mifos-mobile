@@ -7,6 +7,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.client.Client
 import org.mockito.Mock
@@ -19,13 +20,17 @@ class ClientRepositoryImpTest {
 
     @Mock
     lateinit var dataManager: DataManager
+
+    @Mock
+    lateinit var preferencesHelper: PreferencesHelper
+
     private var mockClientPage: Page<Client?>? = null
     private lateinit var clientRepositoryImp: ClientRepositoryImp
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        clientRepositoryImp = ClientRepositoryImp(dataManager)
+        clientRepositoryImp = ClientRepositoryImp(dataManager, preferencesHelper)
         mockClientPage = FakeRemoteDataSource.clients
     }
 
