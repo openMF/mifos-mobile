@@ -50,7 +50,7 @@ ext {
     compileSdkVersion = 33
 
     // App dependencies
-    countryCodePicker = '2.7.2'
+    countryCodePicker = '2.7.3'
     supportLibraryVersion = '1.4.2'
     designLibraryVersion = '1.9.0'
     daggerVersion = '2.46.1'
