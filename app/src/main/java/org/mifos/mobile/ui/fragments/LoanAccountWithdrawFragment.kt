@@ -4,31 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
-import org.mifos.mobile.presenters.LoanAccountWithdrawPresenter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.LoanAccountWithdrawView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Toaster
-import javax.inject.Inject
+import org.mifos.mobile.viewModels.LoanAccountWithdrawViewModel
 
 /**
  * Created by dilpreet on 7/6/17.
  */
 @AndroidEntryPoint
-class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
+class LoanAccountWithdrawFragment : BaseFragment() {
 
     private var _binding: FragmentLoanWithdrawBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var loanAccountWithdrawPresenter: LoanAccountWithdrawPresenter? = null
+    lateinit var viewModel: LoanAccountWithdrawViewModel
+
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +42,29 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoanWithdrawBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[LoanAccountWithdrawViewModel::class.java]
         setToolbarTitle(getString(R.string.withdraw_loan))
         showUserInterface()
-        loanAccountWithdrawPresenter?.attachView(this)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loanUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is LoanUiState.Loading -> showProgress()
+                is LoanUiState.ShowError -> {
+                    hideProgress()
+                    showLoanAccountWithdrawError(getString(it.message))
+                }
+                is LoanUiState.WithdrawSuccess -> {
+                    hideProgress()
+                    showLoanAccountWithdrawSuccess()
+                }
+            }
+        }
+
         binding.btnWithdrawLoan.setOnClickListener {
             onLoanWithdraw()
         }
@@ -72,7 +86,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
         loanWithdraw.note = binding.etWithdrawReason.text.toString()
         loanWithdraw.withdrawnOnDate = DateHelper
             .getDateAsStringFromLong(System.currentTimeMillis())
-        loanAccountWithdrawPresenter?.withdrawLoanAccount(
+        viewModel.withdrawLoanAccount(
             loanWithAssociations?.id?.toLong(),
             loanWithdraw,
         )
@@ -81,7 +95,7 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
     /**
      * Receives A confirmation after successfull withdrawing of Loan Application.
      */
-    override fun showLoanAccountWithdrawSuccess() {
+    fun showLoanAccountWithdrawSuccess() {
         Toaster.show(binding.root, R.string.loan_application_withdrawn_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }
@@ -92,22 +106,21 @@ class LoanAccountWithdrawFragment : BaseFragment(), LoanAccountWithdrawView {
      *
      * @param message Error Message displayed
      */
-    override fun showLoanAccountWithdrawError(message: String?) {
+    fun showLoanAccountWithdrawError(message: String?) {
         Toaster.show(binding.root, message)
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        loanAccountWithdrawPresenter?.detachView()
         _binding = null
     }
 
