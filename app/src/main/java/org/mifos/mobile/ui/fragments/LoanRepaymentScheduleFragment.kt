@@ -82,6 +82,7 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
                     hideProgress()
                     showEmptyRepaymentsSchedule(loanWithAssociations)
                 }
+                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

@@ -62,6 +62,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
                     hideProgress()
                     showLoanAccountWithdrawSuccess()
                 }
+                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

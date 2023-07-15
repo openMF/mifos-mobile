@@ -158,6 +158,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
                     hideProgress()
                     showEmptyTransactions(it.loanWithAssociations)
                 }
+                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 
