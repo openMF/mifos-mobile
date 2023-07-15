@@ -172,6 +172,7 @@ class LoanApplicationFragment : BaseFragment() {
                     hideProgress()
                     showUpdateLoanTemplateByProduct(it.template)
                 }
+                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 
