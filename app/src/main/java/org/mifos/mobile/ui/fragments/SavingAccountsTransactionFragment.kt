@@ -15,6 +15,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
@@ -25,19 +26,22 @@ import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
-import org.mifos.mobile.presenters.SavingAccountsTransactionPresenter
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingAccountsTransactionView
+import org.mifos.mobile.utils.CheckBoxStatusUtil
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.DatePick
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getDatePickerDialog
+import org.mifos.mobile.viewModels.SavingAccountsTransactionViewModel
+import java.lang.IllegalStateException
 import java.time.Instant
 import javax.inject.Inject
 
@@ -49,14 +53,11 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
 
     private var _binding: FragmentSavingAccountTransactionsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel : SavingAccountsTransactionViewModel
 
     @JvmField
     @Inject
     var transactionListAdapter: SavingAccountsTransactionListAdapter? = null
-
-    @JvmField
-    @Inject
-    var savingAccountsTransactionPresenter: SavingAccountsTransactionPresenter? = null
 
     @JvmField
     @Inject
@@ -87,11 +88,11 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingAccountTransactionsBinding.inflate(inflater, container, false)
-        savingAccountsTransactionPresenter?.attachView(this)
+        viewModel = ViewModelProvider(this)[SavingAccountsTransactionViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
-            savingAccountsTransactionPresenter?.loadSavingsWithAssociations(savingsId)
+            viewModel.loadSavingsWithAssociations(savingsId)
         }
         initializeFilterVariables()
         return binding.root
@@ -104,6 +105,28 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         }
         binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
+        }
+
+        viewModel.savingAccountsTransactionUiState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                SavingsAccountUiState.Loading -> showProgress()
+
+                SavingsAccountUiState.Error -> {
+                    hideProgress()
+                    showErrorFetchingSavingAccountsDetail(context?.getString(R.string.saving_account_details))
+                }
+
+                is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
+                    hideProgress()
+                    showSavingAccountsDetail(state.savingAccount)
+                }
+
+                is SavingsAccountUiState.ShowFilteredTransactionsList -> {
+                    showFilteredList(state.savingAccountsTransactionList)
+                }
+
+                else -> throw IllegalStateException("Unexpected State : $state")
+            }
         }
     }
 
@@ -181,13 +204,13 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvSavingAccountsTransaction,
                 binding.layoutError.root,
             )
-            savingAccountsTransactionPresenter?.loadSavingsWithAssociations(savingsId)
+            viewModel.loadSavingsWithAssociations(savingsId)
         } else {
             Toast.makeText(
                 context,
@@ -201,7 +224,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * Provides with a filtered list according to the constraints used in `filter()` function
      */
     override fun showFilteredList(list: List<Transactions?>?) {
-        if (list != null && list.isNotEmpty()) {
+        if (!list.isNullOrEmpty()) {
             Toaster.show(binding.root, getString(R.string.filtered))
             transactionListAdapter?.setSavingAccountsTransactionList(list)
         } else {
@@ -221,7 +244,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     /**
      * Opens up Phone Dialer
      */
-    fun dialHelpLineNumber() {
+    private fun dialHelpLineNumber() {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
         startActivity(intent)
@@ -362,7 +385,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
                 } else {
                     filter(checkBoxAdapter?.statusList)
                 }
-                filterSavingsAccountTransactionsbyType(checkBoxAdapter?.statusList)
+                filterSavingsAccountTransactionsByType(checkBoxAdapter?.statusList)
             }
             .setNeutralButton(getString(R.string.clear_filters)) { _, _ ->
                 transactionListAdapter?.setSavingAccountsTransactionList(transactionsList)
@@ -385,8 +408,8 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * @param endDate   Ending date
      */
     private fun filter(startDate: Long?, endDate: Long?, statusModelList: List<CheckboxStatus?>?) {
-        val dummyTransactionList = filterSavingsAccountTransactionsbyType(statusModelList)
-        savingAccountsTransactionPresenter?.filterTransactionList(
+        val dummyTransactionList = filterSavingsAccountTransactionsByType(statusModelList)
+        viewModel.filterTransactionList(
             dummyTransactionList,
             startDate,
             endDate,
@@ -399,26 +422,36 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      * @param statusModelList Status Model List
      */
     private fun filter(statusModelList: List<CheckboxStatus?>?) {
-        showFilteredList(filterSavingsAccountTransactionsbyType(statusModelList))
+        showFilteredList(filterSavingsAccountTransactionsByType(statusModelList))
     }
 
     /**
      * Will filter `transactionsList` according to `startDate` and `endDate`
      * @param statusModelList Status Model List
      */
-    private fun filterSavingsAccountTransactionsbyType(statusModelList: List<CheckboxStatus?>?): List<Transactions?>? {
+    private fun filterSavingsAccountTransactionsByType(statusModelList: List<CheckboxStatus?>?): List<Transactions?> {
         val filteredSavingsTransactions: MutableList<Transactions?> = ArrayList()
-        if (savingAccountsTransactionPresenter != null) {
-            for (status in savingAccountsTransactionPresenter
-                ?.getCheckedStatus(statusModelList)!!) {
-                savingAccountsTransactionPresenter
-                    ?.filterTranactionListbyType(transactionsList, status)
-                    ?.let { filteredSavingsTransactions?.addAll(it) }
+            for (status in viewModel
+                .getCheckedStatus(statusModelList)!!) {
+                viewModel
+                    .filterTransactionListByType(transactionsList, status, getCheckBoxStatusStrings())
+                    ?.let { filteredSavingsTransactions.addAll(it) }
             }
-        }
         return filteredSavingsTransactions
     }
 
+    private fun getCheckBoxStatusStrings() : CheckBoxStatusUtil{
+        return CheckBoxStatusUtil().apply {
+            this.depositString = context?.getString(R.string.deposit)
+            this.dividendPayoutString = context?.getString(R.string.dividend_payout)
+            this.withdrawalString = context?.getString(R.string.withdrawal)
+            this.interestPostingString = context?.getString(R.string.interest_posting)
+            this.feeDeductionString = context?.getString(R.string.fee_deduction)
+            this.withdrawalTransferString = context?.getString(R.string.withdrawal_transfer)
+            this.rejectedTransferString = context?.getString(R.string.rejected_transfer)
+            this.overdraftFeeString = context?.getString(R.string.overdraft_fee)
+        }
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_filter_savings_transactions -> showFilterDialog()
@@ -429,7 +462,6 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        savingAccountsTransactionPresenter?.detachView()
         _binding = null
     }
 

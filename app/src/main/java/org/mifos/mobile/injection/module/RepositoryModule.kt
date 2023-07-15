@@ -5,6 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.repositories.SavingsAccountRepository
+import org.mifos.mobile.repositories.SavingsAccountRepositoryImp
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.repositories.UserAuthRepositoryImp
 
@@ -15,5 +17,10 @@ class RepositoryModule {
     @Provides
     fun providesUserAuthRepository(dataManager: DataManager): UserAuthRepository {
         return UserAuthRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesSavingsAccountRepository(dataManager: DataManager) : SavingsAccountRepository {
+        return SavingsAccountRepositoryImp(dataManager)
     }
 }
