@@ -83,6 +83,6 @@ ext {
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
     annotationLibraryVersion ='1.1.0'
-    firebaseCrashlyticsVersion = '18.3.7'
+    firebaseCrashlyticsVersion = '18.4.0'
 
 }
