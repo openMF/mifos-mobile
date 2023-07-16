@@ -12,7 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.UserAuthRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.UiState
+import org.mifos.mobile.utils.RegistrationUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -33,7 +33,7 @@ class RegistrationViewModelTest {
     lateinit var userAuthRepositoryImp: UserAuthRepositoryImp
 
     @Mock
-    lateinit var registrationUiStateObserver: Observer<UiState>
+    lateinit var registrationUiStateObserver: Observer<RegistrationUiState>
 
     private lateinit var registrationViewModel: RegistrationViewModel
 
@@ -70,7 +70,7 @@ class RegistrationViewModelTest {
 
     @Test
     fun testInputHasSpaces_WithSpacesInput_ReturnsTrue() {
-        val result = registrationViewModel.inputHasSpaces("test string")
+        val result = registrationViewModel.inputHasSpaces("testUpdateAuthenticationToken string")
         Assert.assertTrue(result)
     }
 
@@ -94,7 +94,7 @@ class RegistrationViewModelTest {
 
     @Test
     fun testIsEmailInvalid_WithValidEmailInput_ReturnsFalse() {
-        val result = registrationViewModel.isEmailInvalid("test@example.com")
+        val result = registrationViewModel.isEmailInvalid("testUpdateAuthenticationToken@example.com")
         Assert.assertFalse(result)
     }
 
@@ -127,8 +127,8 @@ class RegistrationViewModelTest {
             "userName"
         )
 
-        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Loading)
-        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Success)
+        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
+        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Success)
         Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
     }
 
@@ -159,8 +159,8 @@ class RegistrationViewModelTest {
             "username"
         )
 
-        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Loading)
-        Mockito.verify(registrationUiStateObserver).onChanged(UiState.Error(error))
+        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
+        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Error(error))
         Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
     }
 

@@ -11,7 +11,7 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import org.mifos.mobile.repositories.UserAuthRepository
-import org.mifos.mobile.utils.UiState
+import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,8 +19,8 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     ViewModel() {
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
-    private val _registrationUiState = MutableLiveData<UiState>()
-    val registrationUiState: LiveData<UiState> get() = _registrationUiState
+    private val _registrationUiState = MutableLiveData<RegistrationUiState>()
+    val registrationUiState: LiveData<RegistrationUiState> get() = _registrationUiState
 
     fun isInputFieldBlank(fieldText: String): Boolean {
         return fieldText.trim().isEmpty()
@@ -52,7 +52,7 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         password: String,
         username: String
     ) {
-        _registrationUiState.value = UiState.Loading
+        _registrationUiState.value = RegistrationUiState.Loading
         userAuthRepositoryImp.registerUser(
             accountNumber,
             authenticationMode,
@@ -66,11 +66,11 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
-                    _registrationUiState.value = UiState.Error(e)
+                    _registrationUiState.value = RegistrationUiState.Error(e)
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
-                    _registrationUiState.value = UiState.Success
+                    _registrationUiState.value = RegistrationUiState.Success
                 }
             })?.let { compositeDisposables.add(it) }
     }

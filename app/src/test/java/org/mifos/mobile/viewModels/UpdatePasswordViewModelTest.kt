@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.UiState
+import org.mifos.mobile.utils.RegistrationUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -38,7 +38,7 @@ class UpdatePasswordViewModelTest {
     lateinit var clientRepositoryImp: ClientRepository
 
     @Mock
-    private lateinit var updatePasswordUiStateObserver: Observer<UiState>
+    private lateinit var updatePasswordUiStateObserver: Observer<RegistrationUiState>
 
     private lateinit var updatePasswordViewModel: UpdatePasswordViewModel
 
@@ -94,8 +94,8 @@ class UpdatePasswordViewModelTest {
         ).thenReturn(Observable.just(responseBody))
 
         updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
-        Mockito.verify(updatePasswordUiStateObserver).onChanged(UiState.Loading)
-        Mockito.verify(updatePasswordUiStateObserver).onChanged(UiState.Success)
+        Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Loading)
+        Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Success)
         Mockito.verify(clientRepositoryImp).updateAuthenticationToken("newPassword")
         Mockito.verifyNoMoreInteractions(updatePasswordUiStateObserver)
     }
@@ -109,8 +109,8 @@ class UpdatePasswordViewModelTest {
 
         updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
 
-        Mockito.verify(updatePasswordUiStateObserver).onChanged(UiState.Loading)
-        Mockito.verify(updatePasswordUiStateObserver).onChanged(UiState.Error(error))
+        Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Loading)
+        Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Error(error))
         Mockito.verifyNoMoreInteractions(updatePasswordUiStateObserver)
     }
 
