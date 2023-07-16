@@ -7,6 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.repositories.TransferRepository
 import org.mifos.mobile.repositories.TransferRepositoryImp
+import org.mifos.mobile.repositories.RecentTransactionRepository
+import org.mifos.mobile.repositories.RecentTransactionRepositoryImp
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.repositories.UserAuthRepositoryImp
 
@@ -20,7 +22,13 @@ class RepositoryModule {
     }
 
     @Provides
+    fun providesRecentTransactionRepository(dataManager: DataManager): RecentTransactionRepository {
+        return  RecentTransactionRepositoryImp(dataManager)
+    }
+    
+    @Provides
     fun providesTransferRepository(dataManager: DataManager): TransferRepository {
         return TransferRepositoryImp(dataManager)
     }
+    
 }
