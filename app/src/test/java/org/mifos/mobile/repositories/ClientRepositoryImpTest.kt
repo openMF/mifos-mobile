@@ -26,7 +26,7 @@ class ClientRepositoryImpTest {
     }
 
     @Test
-    fun test() {
+    fun testUpdateAuthenticationToken() {
         val mockPassword = "testPassword"
         val mockUsername = "testUsername"
         Mockito.`when`(preferencesHelper.userName).thenReturn(mockUsername)

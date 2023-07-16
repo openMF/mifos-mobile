@@ -17,7 +17,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.UiState
+import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.viewModels.UpdatePasswordViewModel
 
 /*
@@ -55,13 +55,13 @@ class UpdatePasswordFragment : BaseFragment(), TextWatcher, OnFocusChangeListene
 
         viewModel.updatePasswordUiState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                UiState.Loading -> showProgress()
-                UiState.Success -> {
+                RegistrationUiState.Loading -> showProgress()
+                RegistrationUiState.Success -> {
                     hideProgress()
                     showPasswordUpdatedSuccessfully()
                 }
 
-                is UiState.Error -> {
+                is RegistrationUiState.Error -> {
                     hideProgress()
                     showError(MFErrorParser.errorMessage(state.exception))
                 }

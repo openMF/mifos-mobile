@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
-import org.mifos.mobile.utils.UiState
+import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,8 +21,8 @@ class UpdatePasswordViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    private val _updatePasswordUiState = MutableLiveData<UiState>()
-    val updatePasswordUiState: LiveData<UiState> get() = _updatePasswordUiState
+    private val _updatePasswordUiState = MutableLiveData<RegistrationUiState>()
+    val updatePasswordUiState: LiveData<RegistrationUiState> get() = _updatePasswordUiState
     fun isInputFieldEmpty(fieldText: String): Boolean {
         return fieldText.isEmpty()
     }
@@ -36,18 +36,18 @@ class UpdatePasswordViewModel @Inject constructor(
     }
 
     fun updateAccountPassword(newPassword: String, confirmPassword: String) {
-        _updatePasswordUiState.value = UiState.Loading
+        _updatePasswordUiState.value = RegistrationUiState.Loading
         userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onNext(responseBody: ResponseBody) {
-                    _updatePasswordUiState.value = UiState.Success
+                    _updatePasswordUiState.value = RegistrationUiState.Success
                     clientRepositoryImp.updateAuthenticationToken(newPassword)
                 }
 
                 override fun onError(e: Throwable) {
-                    _updatePasswordUiState.value = UiState.Error(e)
+                    _updatePasswordUiState.value = RegistrationUiState.Error(e)
                 }
 
                 override fun onComplete() {}
