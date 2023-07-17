@@ -93,12 +93,12 @@ class RegistrationFragment : BaseFragment() {
             when (state) {
                 RegistrationUiState.Loading -> showProgress()
 
-                RegistrationUiState.RegistrationSuccessful -> {
+                RegistrationUiState.Success -> {
                     hideProgress()
                     showRegisteredSuccessfully()
                 }
 
-                is RegistrationUiState.ErrorOnRegistration -> {
+                is RegistrationUiState.Error -> {
                     hideProgress()
                     showError(MFErrorParser.errorMessage(state.exception))
                 }
