@@ -71,11 +71,11 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
-                    _registrationUiState.value = RegistrationUiState.ErrorOnRegistration(e)
+                    _registrationUiState.value = RegistrationUiState.Error(e)
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
-                    _registrationUiState.value = RegistrationUiState.RegistrationSuccessful
+                    _registrationUiState.value = RegistrationUiState.Success
                 }
             })?.let { compositeDisposables.add(it) }
     }
