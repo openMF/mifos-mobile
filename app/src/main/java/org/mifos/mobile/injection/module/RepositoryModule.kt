@@ -7,6 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.repositories.SavingsAccountRepositoryImp
+import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.repositories.ClientRepository
+import org.mifos.mobile.repositories.ClientRepositoryImp
 import org.mifos.mobile.repositories.RecentTransactionRepository
 import org.mifos.mobile.repositories.RecentTransactionRepositoryImp
 import org.mifos.mobile.repositories.UserAuthRepository
@@ -24,6 +27,11 @@ class RepositoryModule {
     @Provides
     fun providesSavingsAccountRepository(dataManager: DataManager) : SavingsAccountRepository {
         return SavingsAccountRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesClientRepository(preferencesHelper: PreferencesHelper): ClientRepository {
+        return ClientRepositoryImp(preferencesHelper)
     }
 
     @Provides
