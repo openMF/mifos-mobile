@@ -12,7 +12,6 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
-import org.mifos.mobile.utils.RegistrationVerificationUiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,8 +23,8 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     val registrationUiState: LiveData<RegistrationUiState> get() = _registrationUiState
 
     private val _registrationVerificationUiState =
-        MutableLiveData<RegistrationVerificationUiState>()
-    val registrationVerificationUiState: LiveData<RegistrationVerificationUiState> get() = _registrationVerificationUiState
+        MutableLiveData<RegistrationUiState>()
+    val registrationVerificationUiState: LiveData<RegistrationUiState> get() = _registrationVerificationUiState
 
     fun isInputFieldBlank(fieldText: String): Boolean {
         return fieldText.trim().isEmpty()
@@ -81,19 +80,19 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     }
 
     fun verifyUser(authenticationToken: String?, requestId: String?) {
-        _registrationVerificationUiState.value = RegistrationVerificationUiState.Loading
+        _registrationVerificationUiState.value = RegistrationUiState.Loading
         userAuthRepositoryImp.verifyUser(authenticationToken, requestId)?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
                     _registrationVerificationUiState.value =
-                        RegistrationVerificationUiState.ErrorOnRegistrationVerification(e)
+                        RegistrationUiState.Error(e)
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
                     _registrationVerificationUiState.value =
-                        RegistrationVerificationUiState.RegistrationVerificationSuccessful
+                        RegistrationUiState.Success
                 }
             })?.let { compositeDisposables.add(it) }
     }
