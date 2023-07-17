@@ -13,7 +13,7 @@ import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
 import org.mifos.mobile.ui.activities.LoginActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
-import org.mifos.mobile.utils.RegistrationVerificationUiState
+import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.RegistrationViewModel
 
@@ -42,14 +42,14 @@ class RegistrationVerificationFragment : BaseFragment() {
 
         viewModel.registrationVerificationUiState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                RegistrationVerificationUiState.Loading -> showProgress()
+                RegistrationUiState.Loading -> showProgress()
 
-                RegistrationVerificationUiState.RegistrationVerificationSuccessful -> {
+                RegistrationUiState.Success -> {
                     hideProgress()
                     showVerifiedSuccessfully()
                 }
 
-                is RegistrationVerificationUiState.ErrorOnRegistrationVerification -> {
+                is RegistrationUiState.Error -> {
                     hideProgress()
                     showError(MFErrorParser.errorMessage(state.exception))
                 }
