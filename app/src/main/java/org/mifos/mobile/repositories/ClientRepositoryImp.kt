@@ -1,6 +1,7 @@
 package org.mifos.mobile.repositories
 
 import io.reactivex.Observable
+import okhttp3.Credentials
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -48,5 +49,15 @@ class ClientRepositoryImp @Inject constructor(
 
     override fun clearPrefHelper() {
         preferencesHelper.clear()
+    }
+
+    override fun updateAuthenticationToken(password: String) {
+        val authenticationToken = Credentials.basic(preferencesHelper.userName!!, password)
+        preferencesHelper.saveToken(authenticationToken)
+        BaseApiManager.createService(
+            preferencesHelper.baseUrl,
+            preferencesHelper.tenant,
+            preferencesHelper.token,
+        )
     }
 }

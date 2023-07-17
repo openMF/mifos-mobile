@@ -1,6 +1,8 @@
 package org.mifos.mobile.repositories
 
 import io.reactivex.Observable
+import okhttp3.Credentials
+import org.mifos.mobile.api.BaseURL
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -59,5 +61,20 @@ class ClientRepositoryImpTest {
 
         Mockito.verify(dataManager).clients
         Assert.assertEquals(result, errorResponse)
+    }
+
+    @Test
+    fun testUpdateAuthenticationToken() {
+        val mockPassword = "testPassword"
+        val mockUsername = "testUsername"
+        Mockito.`when`(preferencesHelper.userName).thenReturn(mockUsername)
+
+        Mockito.`when`(preferencesHelper.baseUrl)
+            .thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT)
+
+        clientRepositoryImp.updateAuthenticationToken(mockPassword)
+        val authenticationToken = Credentials.basic(preferencesHelper.userName!!, mockPassword)
+
+        Mockito.verify(preferencesHelper).saveToken(authenticationToken)
     }
 }

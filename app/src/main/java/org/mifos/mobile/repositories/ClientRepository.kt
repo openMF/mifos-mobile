@@ -16,4 +16,6 @@ interface ClientRepository {
     fun setClientId(clientId: Long?)
 
     fun clearPrefHelper()
+
+    fun updateAuthenticationToken(password: String)
 }
