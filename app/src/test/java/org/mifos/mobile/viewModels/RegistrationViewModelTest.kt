@@ -77,7 +77,7 @@ class RegistrationViewModelTest {
 
     @Test
     fun testInputHasSpaces_WithSpacesInput_ReturnsTrue() {
-        val result = registrationViewModel.inputHasSpaces("test string")
+        val result = registrationViewModel.inputHasSpaces("testUpdateAuthenticationToken string")
         Assert.assertTrue(result)
     }
 
@@ -101,7 +101,7 @@ class RegistrationViewModelTest {
 
     @Test
     fun testIsEmailInvalid_WithValidEmailInput_ReturnsFalse() {
-        val result = registrationViewModel.isEmailInvalid("test@example.com")
+        val result = registrationViewModel.isEmailInvalid("testUpdateAuthenticationToken@example.com")
         Assert.assertFalse(result)
     }
 
@@ -135,8 +135,7 @@ class RegistrationViewModelTest {
         )
 
         Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationUiStateObserver)
-            .onChanged(RegistrationUiState.RegistrationSuccessful)
+        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Success)
         Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
     }
 
@@ -168,8 +167,7 @@ class RegistrationViewModelTest {
         )
 
         Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationUiStateObserver)
-            .onChanged(RegistrationUiState.ErrorOnRegistration(error))
+        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Error(error))
         Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
     }
 

@@ -3,12 +3,12 @@ package org.mifos.mobile.repositories
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.models.register.UserVerify
 import javax.inject.Inject
 
-class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) :
-    UserAuthRepository {
+class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
 
     override fun registerUser(
         accountNumber: String?,
@@ -40,4 +40,16 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         }
         return dataManager.verifyUser(userVerify)
     }
+
+    override fun updateAccountPassword(
+        newPassword: String, confirmPassword: String
+    ): Observable<ResponseBody?>? {
+        val payload = UpdatePasswordPayload().apply {
+            this.password = newPassword
+            this.repeatPassword = confirmPassword
+        }
+
+        return dataManager.updateAccountPassword(payload)
+    }
+
 }
