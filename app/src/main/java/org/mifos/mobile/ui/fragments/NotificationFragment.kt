@@ -5,33 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.BuildConfig
+import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentNotificationBinding
 import org.mifos.mobile.models.notification.MifosNotification
-import org.mifos.mobile.presenters.NotificationPresenter
 import org.mifos.mobile.ui.adapters.NotificationAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.NotificationView
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.viewModels.NotificationViewModel
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 13/9/17.
  */
 @AndroidEntryPoint
-class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener {
+class NotificationFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
-
-    @JvmField
-    @Inject
-    var presenter: NotificationPresenter? = null
+    private lateinit var viewModel : NotificationViewModel
 
     @JvmField
     @Inject
@@ -49,6 +47,7 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
+        viewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -67,12 +66,11 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
             R.color.red_light,
         )
         binding.swipeNotificationContainer.setOnRefreshListener(this)
-        presenter?.attachView(this)
-        presenter?.loadNotifications()
+        loadNotifications()
         return rootView
     }
 
-    override fun showNotifications(notifications: List<MifosNotification?>?) {
+    private fun showNotifications(notifications: List<MifosNotification?>?) {
         if (BuildConfig.DEBUG && notifications == null) {
             error("Assertion failed")
         }
@@ -88,7 +86,7 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
         }
     }
 
-    override fun showError(msg: String?) {
+    fun showError(msg: String?) {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.rvNotifications,
@@ -106,18 +104,37 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.notificationUiState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                NotificationUiState.Loading -> showProgress()
+                NotificationUiState.Error -> {
+                    hideProgress()
+                    showError(context?.getString(R.string.notification))
+                }
+                is NotificationUiState.LoadNotificationsSuccessful -> {
+                    hideProgress()
+                    showNotifications(state.notifications)
+                }
+            }
+        }
+
         binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
         }
     }
 
-    fun retryClicked() {
+    private fun loadNotifications() {
+        viewModel.loadNotifications()
+    }
+
+    private fun retryClicked() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvNotifications,
                 binding.layoutError.root,
             )
-            presenter?.loadNotifications()
+            loadNotifications()
         } else {
             Toast.makeText(
                 context,
@@ -127,11 +144,11 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
         }
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         binding.swipeNotificationContainer.isRefreshing = true
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         binding.swipeNotificationContainer.isRefreshing = false
     }
 
@@ -140,7 +157,7 @@ class NotificationFragment : BaseFragment(), NotificationView, OnRefreshListener
             binding.rvNotifications,
             binding.layoutError.root,
         )
-        presenter?.loadNotifications()
+        loadNotifications()
     }
 
     override fun onDestroyView() {
