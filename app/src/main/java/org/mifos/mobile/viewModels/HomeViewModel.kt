@@ -139,10 +139,10 @@ class HomeViewModel @Inject constructor(private val homeRepositoryImp: HomeRepos
      * @return Returns `totalAmount` which is calculated by adding all [LoanAccount]
      * balance.
      */
-    private fun getLoanAccountDetails(loanAccountList: List<LoanAccount>): Double {
+    fun getLoanAccountDetails(loanAccountList: List<LoanAccount>): Double {
         var totalAmount = 0.0
-        for ((_, _, _, _, _, _, _, _, _, _, _, _, _, _, loanBalance) in loanAccountList) {
-            totalAmount += loanBalance
+        for (loanAccount in loanAccountList) {
+            totalAmount += loanAccount.loanBalance
         }
         return totalAmount
     }
@@ -154,10 +154,10 @@ class HomeViewModel @Inject constructor(private val homeRepositoryImp: HomeRepos
      * @return Returns `totalAmount` which is calculated by adding all [SavingAccount]
      * balance.
      */
-    private fun getSavingAccountDetails(savingAccountList: List<SavingAccount>?): Double {
+    fun getSavingAccountDetails(savingAccountList: List<SavingAccount>?): Double {
         var totalAmount = 0.0
-        for ((_, _, _, _, _, accountBalance) in savingAccountList!!) {
-            totalAmount += accountBalance
+        for (loanAccount in savingAccountList!!) {
+            totalAmount += loanAccount.accountBalance
         }
         return totalAmount
     }
