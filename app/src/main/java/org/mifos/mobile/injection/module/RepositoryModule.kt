@@ -4,9 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.mifos.mobile.repositories.NotificationRepositoryImp
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.repositories.SavingsAccountRepositoryImp
+import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.ClientRepositoryImp
@@ -27,6 +29,11 @@ class RepositoryModule {
     @Provides
     fun providesSavingsAccountRepository(dataManager: DataManager) : SavingsAccountRepository {
         return SavingsAccountRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesNotificationRepository(dataManager: DataManager) : NotificationRepository {
+        return NotificationRepositoryImp(dataManager)
     }
 
     @Provides

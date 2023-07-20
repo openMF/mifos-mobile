@@ -5,6 +5,7 @@ import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.register.RegisterPayload
+import org.mifos.mobile.models.register.UserVerify
 import javax.inject.Inject
 
 class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
@@ -30,6 +31,14 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
             this.username = username
         }
         return dataManager.registerUser(registerPayload)
+    }
+
+    override fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>? {
+        val userVerify = UserVerify().apply {
+            this.authenticationToken = authenticationToken
+            this.requestId = requestId
+        }
+        return dataManager.verifyUser(userVerify)
     }
 
     override fun updateAccountPassword(
