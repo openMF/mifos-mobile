@@ -19,6 +19,8 @@ interface UserAuthRepository {
 
     fun login(username: String, password: String): Observable<User?>?
 
+    fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>?
+
     fun updateAccountPassword(
         newPassword: String, confirmPassword: String
     ): Observable<ResponseBody?>?
