@@ -7,6 +7,7 @@ import org.mifos.mobile.models.User
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.register.RegisterPayload
+import org.mifos.mobile.models.register.UserVerify
 import javax.inject.Inject
 
 class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
@@ -42,6 +43,14 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         return dataManager.login(loginPayload)
     }
 
+
+    override fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>? {
+        val userVerify = UserVerify().apply {
+            this.authenticationToken = authenticationToken
+            this.requestId = requestId
+        }
+        return dataManager.verifyUser(userVerify)
+    }
 
     override fun updateAccountPassword(
         newPassword: String, confirmPassword: String
