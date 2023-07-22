@@ -22,6 +22,10 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     private val _registrationUiState = MutableLiveData<RegistrationUiState>()
     val registrationUiState: LiveData<RegistrationUiState> get() = _registrationUiState
 
+    private val _registrationVerificationUiState =
+        MutableLiveData<RegistrationUiState>()
+    val registrationVerificationUiState: LiveData<RegistrationUiState> get() = _registrationVerificationUiState
+
     fun isInputFieldBlank(fieldText: String): Boolean {
         return fieldText.trim().isEmpty()
     }
@@ -66,11 +70,29 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
             ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
                 override fun onComplete() {}
                 override fun onError(e: Throwable) {
-                    _registrationUiState.value = RegistrationUiState.ErrorOnRegistration(e)
+                    _registrationUiState.value = RegistrationUiState.Error(e)
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
-                    _registrationUiState.value = RegistrationUiState.RegistrationSuccessful
+                    _registrationUiState.value = RegistrationUiState.Success
+                }
+            })?.let { compositeDisposables.add(it) }
+    }
+
+    fun verifyUser(authenticationToken: String?, requestId: String?) {
+        _registrationVerificationUiState.value = RegistrationUiState.Loading
+        userAuthRepositoryImp.verifyUser(authenticationToken, requestId)?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeOn(Schedulers.io())
+            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {
+                    _registrationVerificationUiState.value =
+                        RegistrationUiState.Error(e)
+                }
+
+                override fun onNext(responseBody: ResponseBody) {
+                    _registrationVerificationUiState.value =
+                        RegistrationUiState.Success
                 }
             })?.let { compositeDisposables.add(it) }
     }

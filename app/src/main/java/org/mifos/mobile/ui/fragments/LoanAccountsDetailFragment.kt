@@ -9,24 +9,20 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentLoanAccountDetailsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.presenters.LoanAccountsDetailPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.LoanAccountsDetailView
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.QrCodeGenerator
+import org.mifos.mobile.utils.*
+import org.mifos.mobile.viewModels.LoanAccountsDetailViewModel
 import javax.inject.Inject
 
 /*
@@ -37,13 +33,11 @@ import javax.inject.Inject
  * @since 19/08/16
  */
 @AndroidEntryPoint
-class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
+class LoanAccountsDetailFragment : BaseFragment() {
     private var _binding: FragmentLoanAccountDetailsBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var loanAccountDetailsPresenter: LoanAccountsDetailPresenter? = null
+    lateinit var viewModel: LoanAccountsDetailViewModel
 
     @JvmField
     @Inject
@@ -67,11 +61,11 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
     ): View {
         _binding = FragmentLoanAccountDetailsBinding.inflate(inflater, container, false)
         val rootView = binding.root
+        viewModel = ViewModelProvider(this)[LoanAccountsDetailViewModel::class.java]
         setToolbarTitle(getString(R.string.loan_account_details))
-        loanAccountDetailsPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null && this.loanWithAssociations == null) {
-            loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
+            viewModel.loadLoanAccountDetails(loanId)
         } else {
             showLoanAccountsDetail(this.loanWithAssociations)
         }
@@ -96,7 +90,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      *
      * @param loanWithAssociations object containing details of each loan account,
      */
-    override fun showLoanAccountsDetail(loanWithAssociations: LoanWithAssociations?) {
+    private fun showLoanAccountsDetail(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
         with(binding) {
             llAccountDetail.visibility = View.VISIBLE
@@ -172,6 +166,22 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loanUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is LoanUiState.Loading -> showProgress()
+                is LoanUiState.ShowError -> {
+                    hideProgress()
+                    showErrorFetchingLoanAccountsDetail(getString(it.message))
+                }
+                is LoanUiState.ShowLoan -> {
+                    hideProgress()
+                    showLoanAccountsDetail(it.loanWithAssociations)
+                }
+                else -> throw IllegalStateException("Unexpected state: $it")
+            }
+        }
+
         with(binding) {
             btnMakePayment.setOnClickListener {
                 onMakePaymentClicked()
@@ -289,7 +299,7 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showErrorFetchingLoanAccountsDetail(message: String?) {
+    fun showErrorFetchingLoanAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.llAccountDetail,
@@ -305,13 +315,13 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.llAccountDetail,
                 binding.layoutError.root,
             )
-            loanAccountDetailsPresenter?.loadLoanAccountDetails(loanId)
+            viewModel.loadLoanAccountDetails(loanId)
         } else {
             Toast.makeText(
                 context,
@@ -321,18 +331,17 @@ class LoanAccountsDetailFragment : BaseFragment(), LoanAccountsDetailView {
         }
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanAccountDetailsPresenter?.detachView()
         _binding = null
     }
 

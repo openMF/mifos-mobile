@@ -419,4 +419,5 @@
     <string name="enter_base_url">బేస్ URL ను నమోదు చేయండి</string>
     <string name="enter_tenant">అద్దెదారు నమోదు చేయండి</string>
     <string name="app_info">యాప్ సమాచారం</string>
+    <string name="login_failed">లాగిన్ విఫలమైంది, దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.</string>
 </resources>

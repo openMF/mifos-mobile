@@ -419,4 +419,5 @@
     <string name="enter_base_url">Введите основной URL-адрес</string>
     <string name="enter_tenant">Перейти к Арендатору</string>
     <string name="app_info">Информация о приложении</string>
+    <string name="login_failed">Войти не удалось, пожалуйста, повторите попытку позже.</string>
 </resources>

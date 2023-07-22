@@ -424,4 +424,5 @@
     <string name="working">کار کردن</string>
     <string name="yes">بلي</string>
     <string name="app_info">اطلاعات برنامه</string>
+    <string name="login_failed">ورود ناموفق بود، لطفاً بعداً دوباره امتحان کنید.</string>
 </resources>
