@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.repositories.NotificationRepositoryImp
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.repositories.LoanRepository
+import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.ClientRepository
@@ -24,6 +26,11 @@ class RepositoryModule {
         return UserAuthRepositoryImp(dataManager)
     }
 
+    @Provides
+    fun providesLoanRepository(dataManager: DataManager): LoanRepository {
+        return LoanRepositoryImp(dataManager)
+    }
+    
     @Provides
     fun providesNotificationRepository(dataManager: DataManager) : NotificationRepository {
         return NotificationRepositoryImp(dataManager)
