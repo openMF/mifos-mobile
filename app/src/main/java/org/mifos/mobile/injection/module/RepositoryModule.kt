@@ -37,8 +37,10 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesClientRepository(preferencesHelper: PreferencesHelper): ClientRepository {
-        return ClientRepositoryImp(preferencesHelper)
+    fun providesClientRepository(
+        dataManager: DataManager, preferencesHelper: PreferencesHelper
+    ): ClientRepository {
+        return ClientRepositoryImp(dataManager, preferencesHelper)
     }
 
     @Provides

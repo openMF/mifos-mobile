@@ -443,4 +443,5 @@
     <string name="enter_tenant">أدخل المستأجر</string>
     <string name="app_info">معلومات التطبيق</string>
     <string name="show_hide_total_saving_amount">إظهار أو إخفاء إجمالي مبلغ التوفير</string>
+    <string name="login_failed">فشل تسجيل الدخول يرجى المحاولة مرة أخرى في وقت لاحق.</string>
 </resources>

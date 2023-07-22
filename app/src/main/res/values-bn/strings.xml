@@ -430,4 +430,5 @@
     <string name="zero">০</string>
     <string name="app_info">অ্যাপের তথ্য</string>
     <string name="show_hide_total_saving_amount">মোট সঞ্চয় পরিমাণ দেখান বা লুকান</string>
+    <string name="login_failed">পরে আবার চেষ্টা করুন ব্যর্থ লগইন.</string>
 </resources>
