@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.TransferRepositoryImp
+import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.TransferUiState
 import org.mockito.Mock
@@ -44,23 +45,24 @@ class TransferProcessViewModelTest {
     }
 
     @Test
-    fun makeSavingsTransfer_transfer_successful() {
+    fun makeTransfer_successful() {
         val responseBody = Mockito.mock(ResponseBody::class.java)
         Mockito.`when`(
             transferProcessImp.makeTransfer(
-                Mockito.anyInt(),Mockito.anyLong(),Mockito.anyInt(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyLong(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyString(),
-                Mockito.anyDouble(),Mockito.anyString(),Mockito.anyString(),
-                Mockito.anyString(),Mockito.anyString(),Mockito.anyString()
+                1,2,3,
+                4,5,6,7,
+                8,"06 July 2023 ",100.0,"Transfer",
+                "dd MMMM yyyy", "en", "0000001","0000002",
+                TransferType.SELF
             )
         ).thenReturn(Observable.just(responseBody))
 
-        viewModel.makeSavingsTransfer(
+        viewModel.makeTransfer(
             1,2,3,
             4,5,6,7,
             8,"06 July 2023 ",100.0,"Transfer",
-            "dd MMMM yyyy", "en", "0000001","0000002"
+            "dd MMMM yyyy", "en", "0000001","0000002",
+            TransferType.SELF
         )
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.TransferSuccess)
@@ -68,74 +70,25 @@ class TransferProcessViewModelTest {
     }
 
     @Test
-    fun makeSavings_transfer_unsuccessful() {
+    fun makeTransfer_unsuccessful() {
         val error = RuntimeException("Savings Transfer Failed")
         Mockito.`when`(
             transferProcessImp.makeTransfer(
-                Mockito.anyInt(),Mockito.anyLong(),Mockito.anyInt(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyLong(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyString(),
-                Mockito.anyDouble(),Mockito.anyString(),Mockito.anyString(),
-                Mockito.anyString(),Mockito.anyString(),Mockito.anyString()
+                1,2,3,
+                4,5,6,7,
+                8,"06 July 2023 ",100.0,"Transfer",
+                "dd MMMM yyyy", "en", "0000001","0000002",
+                TransferType.SELF
             )
         ).thenReturn(Observable.error(error))
 
-        viewModel.makeSavingsTransfer(
+        viewModel.makeTransfer(
             1,2,3,
             4,5,6,7,
             8,"06 July 2023 ",100.0,"Transfer",
-            "dd MMMM yyyy", "en", "0000001","0000002"
+            "dd MMMM yyyy", "en", "0000001","0000002",
+            TransferType.SELF
         )
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Error(error))
-        Mockito.verifyNoMoreInteractions(transferUiStateObserver)
-    }
-
-    @Test
-    fun makeTPTTransfer_transfer_successful() {
-        val responseBody = Mockito.mock(ResponseBody::class.java)
-        Mockito.`when`(
-            transferProcessImp.makeTransfer(
-                Mockito.anyInt(),Mockito.anyLong(),Mockito.anyInt(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyLong(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyString(),
-                Mockito.anyDouble(),Mockito.anyString(),Mockito.anyString(),
-                Mockito.anyString(),Mockito.anyString(),Mockito.anyString()
-            )
-        ).thenReturn(Observable.just(responseBody))
-
-        viewModel.makeTPTTransfer(
-            1,2,3,
-            4,5,6,7,
-            8,"06 July 2023 ",100.0,"Transfer",
-            "dd MMMM yyyy", "en", "0000001","0000002"
-        )
-
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.TransferSuccess)
-        Mockito.verifyNoMoreInteractions(transferUiStateObserver)
-    }
-
-    @Test
-    fun makeTPTTransfer_transfer_unsuccessful() {
-        val error = RuntimeException("TPTT Transfer Failed")
-        Mockito.`when`(
-            transferProcessImp.makeTransfer(
-                Mockito.anyInt(),Mockito.anyLong(),Mockito.anyInt(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyLong(),
-                Mockito.anyInt(),Mockito.anyInt(),Mockito.anyString(),
-                Mockito.anyDouble(),Mockito.anyString(),Mockito.anyString(),
-                Mockito.anyString(),Mockito.anyString(),Mockito.anyString()
-            )
-        ).thenReturn(Observable.error(error))
-
-        viewModel.makeTPTTransfer(
-            1,2,3,
-            4,5,6,7,
-            8,"06 July 2023 ",100.0,"Transfer",
-            "dd MMMM yyyy", "en", "0000001","0000002"
-        )
-
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Error(error))
         Mockito.verifyNoMoreInteractions(transferUiStateObserver)
