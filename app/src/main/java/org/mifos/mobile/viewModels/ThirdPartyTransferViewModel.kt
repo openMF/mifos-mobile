@@ -26,7 +26,7 @@ class ThirdPartyTransferViewModel @Inject constructor(private val thirdPartyTran
     private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
     private val _thirdPartyTransferUiState = MutableLiveData<ThirdPartyTransferUiState>()
-    val loanUiState: LiveData<ThirdPartyTransferUiState> get() = _thirdPartyTransferUiState
+    val thirdPartyTransferUiState: LiveData<ThirdPartyTransferUiState> get() = _thirdPartyTransferUiState
 
     fun loadTransferTemplate() {
         _thirdPartyTransferUiState.value = ThirdPartyTransferUiState.Loading

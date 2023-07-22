@@ -28,12 +28,7 @@ import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.adapters.BeneficiarySpinnerAdapter
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.Utils
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.utils.*
 import org.mifos.mobile.viewModels.ThirdPartyTransferViewModel
 
 /**
@@ -81,6 +76,24 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.thirdPartyTransferUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is ThirdPartyTransferUiState.Loading -> showProgress()
+                is ThirdPartyTransferUiState.Error -> {
+                    hideProgress()
+                    getString(it.message)
+                }
+                is ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate -> {
+                    hideProgress()
+                    showThirdPartyTransferTemplate(it.accountOptionsTemplate)
+                }
+                is ThirdPartyTransferUiState.ShowBeneficiaryList -> {
+                    hideProgress()
+                    showBeneficiaryList(it.beneficiaries)
+                }
+            }
+        }
 
         with(binding) {
             btnReviewTransfer.setOnClickListener {
@@ -245,7 +258,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
         this.beneficiaries = beneficiaries
         listBeneficiary.clear()
         viewModel.getAccountNumbersFromBeneficiaries(beneficiaries)
-            ?.let { listBeneficiary.addAll(it) }
+            .let { listBeneficiary.addAll(it) }
         beneficiaryAdapter?.notifyDataSetChanged()
     }
 
