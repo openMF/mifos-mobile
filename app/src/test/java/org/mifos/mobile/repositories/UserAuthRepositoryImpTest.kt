@@ -6,8 +6,11 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.FakeRemoteDataSource.userVerify
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.models.User
+import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -21,11 +24,14 @@ class UserAuthRepositoryImpTest {
     lateinit var dataManager: DataManager
 
     private lateinit var userAuthRepositoryImp: UserAuthRepository
+    private lateinit var mockUser : User
+
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         userAuthRepositoryImp = UserAuthRepositoryImp(dataManager)
+        mockUser = FakeRemoteDataSource.user
     }
 
     @Test
@@ -89,6 +95,40 @@ class UserAuthRepositoryImpTest {
 
         Mockito.verify(dataManager).registerUser(registerPayload)
         Assert.assertEquals(result, error)
+    }
+
+    @Test
+    fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() {
+        val mockLoginPayload = LoginPayload().apply {
+            this.username = "username"
+            this.password = "password"
+        }
+        val successResponse : Observable<User?> = Observable.just(mockUser)
+        Mockito.`when`(
+            dataManager.login(mockLoginPayload)
+        ).thenReturn(successResponse)
+
+        val result = userAuthRepositoryImp.login("username", "password")
+
+        Mockito.verify(dataManager).login(mockLoginPayload)
+        Assert.assertEquals(result, successResponse)
+    }
+
+    @Test
+    fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() {
+        val mockLoginPayload = LoginPayload().apply {
+            this.username = "username"
+            this.password = "password"
+        }
+        val errorResponse : Observable<User?> = Observable.error(Throwable("Login Failed"))
+        Mockito.`when`(
+            dataManager.login(mockLoginPayload)
+        ).thenReturn(errorResponse)
+
+        val result = userAuthRepositoryImp.login("username", "password")
+
+        Mockito.verify(dataManager).login(mockLoginPayload)
+        Assert.assertEquals(result, errorResponse)
     }
 
     @Test

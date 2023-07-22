@@ -8,6 +8,8 @@ import org.mifos.mobile.repositories.NotificationRepositoryImp
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.repositories.HomeRepository
 import org.mifos.mobile.repositories.HomeRepositoryImp
+import org.mifos.mobile.repositories.LoanRepository
+import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.ClientRepository
@@ -32,13 +34,20 @@ class RepositoryModule {
     }
     
     @Provides
+    fun providesLoanRepository(dataManager: DataManager): LoanRepository {
+        return LoanRepositoryImp(dataManager)
+    }
+    
+    @Provides
     fun providesNotificationRepository(dataManager: DataManager) : NotificationRepository {
         return NotificationRepositoryImp(dataManager)
     }
 
     @Provides
-    fun providesClientRepository(preferencesHelper: PreferencesHelper): ClientRepository {
-        return ClientRepositoryImp(preferencesHelper)
+    fun providesClientRepository(
+        dataManager: DataManager, preferencesHelper: PreferencesHelper
+    ): ClientRepository {
+        return ClientRepositoryImp(dataManager, preferencesHelper)
     }
 
     @Provides

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddLoanApplicationBinding
@@ -13,35 +14,26 @@ import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.models.templates.loans.LoanTemplate
-import org.mifos.mobile.presenters.LoanApplicationPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ReviewLoanApplicationFragment.Companion.newInstance
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.LoanApplicationMvpView
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.DatePickerConstrainType
-import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.getDatePickerDialog
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.utils.*
+import org.mifos.mobile.viewModels.LoanApplicationViewModel
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.Locale
-import javax.inject.Inject
 
 /**
  * Created by Rajan Maurya on 06/03/17.
  */
 @AndroidEntryPoint
-class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
+class LoanApplicationFragment : BaseFragment() {
     private var _binding: FragmentAddLoanApplicationBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var loanApplicationPresenter: LoanApplicationPresenter? = null
+    lateinit var viewModel: LoanApplicationViewModel
+
     private val listLoanProducts: MutableList<String?> = ArrayList()
     private val listLoanPurpose: MutableList<String?> = ArrayList()
     private var loanTemplate: LoanTemplate? = null
@@ -118,7 +110,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddLoanApplicationBinding.inflate(inflater, container, false)
-        loanApplicationPresenter?.attachView(this)
+        viewModel = ViewModelProvider(this)[LoanApplicationViewModel::class.java]
         showUserInterface()
         if (savedInstanceState == null) {
             loadLoanTemplate()
@@ -148,14 +140,42 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      */
     private fun loadLoanTemplate() {
         if (loanState == LoanState.CREATE) {
-            loanApplicationPresenter?.loadLoanApplicationTemplate(LoanState.CREATE)
+            viewModel.loadLoanApplicationTemplate(LoanState.CREATE)
         } else {
-            loanApplicationPresenter?.loadLoanApplicationTemplate(LoanState.UPDATE)
+            viewModel.loadLoanApplicationTemplate(LoanState.UPDATE)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loanUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is LoanUiState.Loading -> showProgress()
+                is LoanUiState.ShowError -> {
+                    hideProgress()
+                    showError(getString(it.message))
+                }
+                is LoanUiState.ShowLoanTemplate -> {
+                    hideProgress()
+                    showLoanTemplate(it.template)
+                }
+                is LoanUiState.ShowUpdateLoanTemplate -> {
+                    hideProgress()
+                    showUpdateLoanTemplate(it.template)
+                }
+                is LoanUiState.ShowLoanTemplateByProduct -> {
+                    hideProgress()
+                    showLoanTemplateByProduct(it.template)
+                }
+                is LoanUiState.ShowUpdateLoanTemplateByProduct -> {
+                    hideProgress()
+                    showUpdateLoanTemplateByProduct(it.template)
+                }
+                else -> throw IllegalStateException("Unexpected state: $it")
+            }
+        }
+
         with(binding) {
             btnLoanReview.setOnClickListener {
                 onReviewLoanApplication()
@@ -333,7 +353,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
     /**
      * Initializes the layout
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         with(binding) {
             loanProductsField.setSimpleItems(listLoanProducts.toTypedArray())
             loanPurposeField.setSimpleItems(listLoanPurpose.toTypedArray())
@@ -341,7 +361,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
             loanProductsField.setOnItemClickListener { _, _, position, _ ->
                 println("loan_products_field clicked")
                 productId = loanTemplate?.productOptions?.get(position)?.id
-                loanApplicationPresenter?.loadLoanApplicationTemplateByProduct(productId, loanState)
+                viewModel.loadLoanApplicationTemplateByProduct(productId, loanState)
                 loanPurposeFieldParent.isEnabled = true
             }
             loanPurposeField.setOnItemClickListener { _, _, position, _ ->
@@ -363,7 +383,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      *
      * @param loanTemplate Template for Loan Application
      */
-    override fun showLoanTemplate(loanTemplate: LoanTemplate?) {
+    fun showLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
@@ -380,7 +400,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      *
      * @param loanTemplate Template for Loan Application
      */
-    override fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
+    fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
@@ -429,7 +449,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      *
      * @param loanTemplate Template for Loan Application
      */
-    override fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
+    fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         with(binding) {
             tvAccountNumber.text = getString(
@@ -462,7 +482,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      *
      * @param loanTemplate Template for Loan Application
      */
-    override fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
+    fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
@@ -501,7 +521,7 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showError(message: String?) {
+    fun showError(message: String?) {
         with(binding) {
             if (!Network.isConnected(activity)) {
                 llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
@@ -514,12 +534,12 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
         }
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         binding.llAddLoan.visibility = View.GONE
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         binding.llAddLoan.visibility = View.VISIBLE
         hideProgressBar()
     }
@@ -527,7 +547,6 @@ class LoanApplicationFragment : BaseFragment(), LoanApplicationMvpView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanApplicationPresenter?.detachView()
         _binding = null
     }
 
