@@ -97,79 +97,28 @@ class TransferProcessFragment : BaseFragment() {
             Toaster.show(binding.root, getString(R.string.internet_not_connected))
             return
         }
-        val fromOfficeId = fromAccountOption?.officeId
-        val fromClientId = fromAccountOption?.clientId
-        val fromAccountType = fromAccountOption?.accountType?.id
-        val fromAccountId = fromAccountOption?.accountId
-        val toOfficeId = toAccountOption?.officeId
-        val toClientId = toAccountOption?.clientId
-        val toAccountType = toAccountOption?.accountType?.id
-        val toAccountId = toAccountOption?.accountId
-        val transferDate = DateHelper.getSpecificFormat(
-            DateHelper.FORMAT_dd_MMMM_yyyy,
-            getTodayFormatted(),
-        )
-        val transferAmount = binding.tvAmount.text.toString().toDouble()
-        val transferDescription = binding.tvRemark.text.toString()
-        var dateFormat: String = "dd MMMM yyyy"
-        var locale: String = "en"
-        val fromAccountNumber = fromAccountOption?.accountNo
-        val toAccountNumber = toAccountOption?.accountNo
-        if (transferType == TransferType.SELF) {
-            viewModel.makeSavingsTransfer(
-                fromOfficeId,
-                fromClientId,
-                fromAccountType,
-                fromAccountId,
-                toOfficeId,
-                toClientId,
-                toAccountType,
-                toAccountId,
-                transferDate,
-                transferAmount,
-                transferDescription,
-                dateFormat,
-                locale,
-                fromAccountNumber,
-                toAccountNumber
-            )
-        } else if (transferType == TransferType.TPT) {
-            val fromOfficeId = fromAccountOption?.officeId
-            val fromClientId = fromAccountOption?.clientId
-            val fromAccountType = fromAccountOption?.accountType?.id
-            val fromAccountId = fromAccountOption?.accountId
-            val toOfficeId = toAccountOption?.officeId
-            val toClientId = toAccountOption?.clientId
-            val toAccountType = toAccountOption?.accountType?.id
-            val toAccountId = toAccountOption?.accountId
-            val transferDate = DateHelper.getSpecificFormat(
+        viewModel.makeTransfer(
+            fromAccountOption?.officeId,
+            fromAccountOption?.clientId,
+            fromAccountOption?.accountType?.id,
+            fromAccountOption?.accountId,
+            toAccountOption?.officeId,
+            toAccountOption?.clientId,
+            toAccountOption?.accountType?.id,
+            toAccountOption?.accountId,
+            DateHelper.getSpecificFormat(
                 DateHelper.FORMAT_dd_MMMM_yyyy,
                 getTodayFormatted(),
-            )
-            val transferAmount = binding.tvAmount.text.toString().toDouble()
-            val transferDescription = binding.tvRemark.text.toString()
-            var dateFormat: String = "dd MMMM yyyy"
-            var locale: String = "en"
-            val fromAccountNumber = fromAccountOption?.accountNo
-            val toAccountNumber = toAccountOption?.accountNo
-            viewModel.makeTPTTransfer(
-                fromOfficeId,
-                fromClientId,
-                fromAccountType,
-                fromAccountId,
-                toOfficeId,
-                toClientId,
-                toAccountType,
-                toAccountId,
-                transferDate,
-                transferAmount,
-                transferDescription,
-                dateFormat,
-                locale,
-                fromAccountNumber,
-                toAccountNumber
-            )
-        }
+            ),
+            binding.tvAmount.text.toString().toDouble(),
+            binding.tvRemark.text.toString(),
+            "dd MMMM yyyy",
+            "en",
+            fromAccountOption?.accountNo,
+            toAccountOption?.accountNo,
+            transferType
+        )
+
     }
 
     /**

@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.TransferPayload
+import org.mifos.mobile.ui.enums.TransferType
 import javax.inject.Inject
 
 class TransferRepositoryImp @Inject constructor(private val dataManager: DataManager) :
@@ -23,7 +24,8 @@ class TransferRepositoryImp @Inject constructor(private val dataManager: DataMan
         dateFormat: String,
         locale: String,
         fromAccountNumber: String?,
-        toAccountNumber: String?
+        toAccountNumber: String?,
+        transferType: TransferType?
     ): Observable<ResponseBody?>? {
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = fromOfficeId
@@ -42,6 +44,10 @@ class TransferRepositoryImp @Inject constructor(private val dataManager: DataMan
             this.fromAccountNumber = fromAccountNumber
             this.toAccountNumber = toAccountNumber
         }
-        return dataManager.makeTransfer(transferPayload)
+        return when (transferType) {
+            TransferType.SELF -> dataManager.makeTransfer(transferPayload)
+            else -> dataManager.makeThirdPartyTransfer(transferPayload)
+        }
+
     }
 }

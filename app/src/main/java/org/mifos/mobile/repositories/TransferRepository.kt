@@ -2,6 +2,7 @@ package org.mifos.mobile.repositories
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import org.mifos.mobile.ui.enums.TransferType
 
 interface TransferRepository {
 
@@ -21,5 +22,6 @@ interface TransferRepository {
         locale: String = "en",
         fromAccountNumber: String?,
         toAccountNumber: String?,
+        transferType: TransferType?
     ): Observable<ResponseBody?>?
 }
