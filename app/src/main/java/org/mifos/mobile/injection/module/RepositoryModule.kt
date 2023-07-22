@@ -58,4 +58,9 @@ class RepositoryModule {
     fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
         return BeneficiaryRepositoryImp(dataManager)
     }
+
+    @Provides
+    fun providesClientChargeRepository(dataManager: DataManager): ClientChargeRepository {
+        return ClientChargeRepositoryImp(dataManager)
+    }
 }
