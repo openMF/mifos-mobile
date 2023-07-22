@@ -419,4 +419,5 @@
     <string name="enter_base_url">Wprowadź podstawowy adres URL</string>
     <string name="enter_tenant">Wejdź do Lokatora</string>
     <string name="app_info">Informacje o aplikacji</string>
+    <string name="login_failed">Zły login, proszę spróbować ponownie.</string>
 </resources>
