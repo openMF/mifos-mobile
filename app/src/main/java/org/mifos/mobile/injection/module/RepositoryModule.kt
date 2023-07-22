@@ -4,18 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.mifos.mobile.repositories.NotificationRepositoryImp
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.repositories.LoanRepository
-import org.mifos.mobile.repositories.LoanRepositoryImp
-import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.repositories.ClientRepository
-import org.mifos.mobile.repositories.ClientRepositoryImp
-import org.mifos.mobile.repositories.RecentTransactionRepository
-import org.mifos.mobile.repositories.RecentTransactionRepositoryImp
-import org.mifos.mobile.repositories.UserAuthRepository
-import org.mifos.mobile.repositories.UserAuthRepositoryImp
+import org.mifos.mobile.repositories.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -46,5 +37,10 @@ class RepositoryModule {
     @Provides
     fun providesRecentTransactionRepository(dataManager: DataManager): RecentTransactionRepository {
         return  RecentTransactionRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesThirdPartyTransferRepository(dataManager: DataManager): ThirdPartyTransferRepository {
+        return ThirdPartyTransferRepositoryImp(dataManager)
     }
 }
