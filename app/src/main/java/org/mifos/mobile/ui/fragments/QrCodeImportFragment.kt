@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
@@ -17,34 +18,32 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.presenters.QrCodeImportPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.QrCodeImportView
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.QrCodeUiState
 import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.viewModels.QrCodeImportViewModel
 import java.io.FileNotFoundException
 import java.io.InputStream
-import javax.inject.Inject
 
 /**
  * Created by manishkumar on 19/05/18.
  */
 @AndroidEntryPoint
-class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
+class QrCodeImportFragment : BaseFragment() {
 
     private var _binding: FragmentQrCodeImportBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewModel: QrCodeImportViewModel
 
     private lateinit var qrUri: Uri
     private var uriValue: String? = null
     private var mFrameRect: RectF? = null
     private var inputStream: InputStream? = null
 
-    @JvmField
-    @Inject
-    var qrCodeImportPresenter: QrCodeImportPresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -60,22 +59,40 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentQrCodeImportBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[QrCodeImportViewModel::class.java]
         setToolbarTitle(getString(R.string.import_qr))
         // load the uri
         setBitmapImage(qrUri)
-        binding.ivCropQrCode.setCompressFormat(Bitmap.CompressFormat.JPEG)
-        binding.ivCropQrCode.setOutputMaxSize(150, 150)
-        binding.ivCropQrCode.load(qrUri)
-            ?.initialFrameRect(mFrameRect)
-            ?.executeAsCompletable()
-        binding.ivCropQrCode.setCropMode(CropImageView.CropMode.FREE)
-        binding.ivCropQrCode.setInitialFrameScale(0.8f)
-        qrCodeImportPresenter?.attachView(this)
+        with(binding) {
+            ivCropQrCode.setCompressFormat(Bitmap.CompressFormat.JPEG)
+            ivCropQrCode.setOutputMaxSize(150, 150)
+            ivCropQrCode.load(qrUri)
+                ?.initialFrameRect(mFrameRect)
+                ?.executeAsCompletable()
+            ivCropQrCode.setCropMode(CropImageView.CropMode.FREE)
+            ivCropQrCode.setInitialFrameScale(0.8f)
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.qrCodeUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is QrCodeUiState.Loading -> showProgress()
+                is QrCodeUiState.ShowError -> {
+                    hideProgress()
+                    showErrorReadingQr(getString(it.message))
+                }
+                is QrCodeUiState.HandleDecodedResult -> {
+                    hideProgress()
+                    handleDecodedResult(it.result)
+                }
+            }
+        }
+
         binding.btnProceed.setOnClickListener {
             proceed()
         }
@@ -98,7 +115,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     }
 
     fun proceed() {
-        qrCodeImportPresenter?.getDecodedResult(qrUri, binding.ivCropQrCode)
+        viewModel.getDecodedResult(qrUri, binding.ivCropQrCode)
     }
 
     /**
@@ -106,7 +123,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showErrorReadingQr(message: String?) {
+    fun showErrorReadingQr(message: String?) {
         Toaster.show(binding.root, message)
     }
 
@@ -117,7 +134,7 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
      *
      * @param result contains the results from decoded QR bitmap
      */
-    override fun handleDecodedResult(result: Result?) {
+    fun handleDecodedResult(result: Result?) {
         val gson = Gson()
         try {
             val beneficiary = gson.fromJson(result?.text, Beneficiary::class.java)
@@ -139,21 +156,20 @@ class QrCodeImportFragment : BaseFragment(), QrCodeImportView {
     /**
      * Shows [org.mifos.mobile.utils.ProgressBarHandler]
      */
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
     /**
      * Hides [org.mifos.mobile.utils.ProgressBarHandler]
      */
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        qrCodeImportPresenter?.detachView()
         _binding = null
     }
 
