@@ -8,33 +8,28 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryDetailBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.presenters.BeneficiaryDetailPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.BeneficiaryDetailView
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.MaterialDialog
-import org.mifos.mobile.utils.Toaster
-import javax.inject.Inject
+import org.mifos.mobile.utils.*
+import org.mifos.mobile.viewModels.BeneficiaryDetailViewModel
 
 /**
  * Created by dilpreet on 15/6/17.
  */
 @AndroidEntryPoint
-class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
+class BeneficiaryDetailFragment : BaseFragment() {
 
     private var _binding: FragmentBeneficiaryDetailBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var presenter: BeneficiaryDetailPresenter? = null
+    private lateinit var viewModel: BeneficiaryDetailViewModel
+
     private var beneficiary: Beneficiary? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +45,35 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryDetailBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[BeneficiaryDetailViewModel::class.java]
         setToolbarTitle(getString(R.string.beneficiary_detail))
-        presenter?.attachView(this)
         showUserInterface()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.beneficiaryUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is BeneficiaryUiState.Loading -> showProgress()
+                is BeneficiaryUiState.ShowError -> {
+                    hideProgress()
+                    showError(getString(it.message))
+                }
+                is BeneficiaryUiState.DeletedSuccessfully -> {
+                    hideProgress()
+                    showBeneficiaryDeletedSuccessfully()
+                }
+                else -> throw IllegalStateException("Undesired $it")
+            }
+        }
     }
 
     /**
      * Used for setting up of User Interface
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         with(binding) {
             tvBeneficiaryName.text = beneficiary?.name
             tvAccountNumber.text = beneficiary?.accountNumber
@@ -91,7 +105,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
                     getString(R.string.delete),
                     DialogInterface.OnClickListener { dialog, _ ->
                         dialog.dismiss()
-                        presenter?.deleteBeneficiary(beneficiary?.id?.toLong())
+                        viewModel.deleteBeneficiary(beneficiary?.id?.toLong())
                     },
                 )
                 .setNegativeButton(
@@ -108,7 +122,7 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
      * Shows a {@link Snackbar} on successfull deletion of a
      * Beneficiary and then pops current fragment
      */
-    override fun showBeneficiaryDeletedSuccessfully() {
+    fun showBeneficiaryDeletedSuccessfully() {
         Toaster.show(binding.root, getString(R.string.beneficiary_deleted_successfully))
         activity?.supportFragmentManager?.popBackStack()
     }
@@ -118,28 +132,27 @@ class BeneficiaryDetailFragment : BaseFragment(), BeneficiaryDetailView {
      *
      * @param msg Error message that tells the user about the problem.
      */
-    override fun showError(msg: String?) {
+    fun showError(msg: String?) {
         Toaster.show(binding.root, msg)
     }
 
     /**
      * Shows [org.mifos.mobile.utils.ProgressBarHandler]
      */
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
     /**
      * Hides [org.mifos.mobile.utils.ProgressBarHandler]
      */
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        presenter?.detachView()
         _binding = null
     }
 
