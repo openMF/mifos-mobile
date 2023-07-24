@@ -419,4 +419,5 @@
     <string name="enter_base_url">Introduce la URL principal</string>
     <string name="enter_tenant">Ir al inquilino</string>
     <string name="app_info">Informacion de la applicacion</string>
+    <string name="login_failed">No se pudo entrar Inténtelo más tarde.</string>
 </resources>
