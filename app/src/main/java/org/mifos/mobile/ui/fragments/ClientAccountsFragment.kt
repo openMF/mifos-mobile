@@ -13,8 +13,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -23,10 +23,6 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentClientAccountsBinding
-import org.mifos.mobile.models.accounts.loan.LoanAccount
-import org.mifos.mobile.models.accounts.savings.SavingAccount
-import org.mifos.mobile.models.accounts.share.ShareAccount
-import org.mifos.mobile.presenters.AccountsPresenter
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.SavingsAccountApplicationActivity
@@ -35,9 +31,9 @@ import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.ViewPagerAdapter
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.AccountsView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.StatusUtils
+import org.mifos.mobile.viewModels.AccountsViewModel
 import javax.inject.Inject
 
 /*
@@ -45,13 +41,10 @@ import javax.inject.Inject
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
 @AndroidEntryPoint
-class ClientAccountsFragment : BaseFragment(), AccountsView {
+class ClientAccountsFragment : BaseFragment() {
     private var _binding: FragmentClientAccountsBinding? = null
     private val binding get() = _binding!!
-
-    @JvmField
-    @Inject
-    var accountsPresenter: AccountsPresenter? = null
+    private lateinit var viewModel : AccountsViewModel
 
     @JvmField
     @Inject
@@ -73,12 +66,12 @@ class ClientAccountsFragment : BaseFragment(), AccountsView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentClientAccountsBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[AccountsViewModel::class.java]
         val rootView = binding.root
-        accountsPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts))
         setUpViewPagerAndTabLayout()
         if (savedInstanceState == null) {
-            accountsPresenter?.loadClientAccounts()
+            viewModel.loadClientAccounts()
         }
         return rootView
     }
@@ -141,48 +134,6 @@ class ClientAccountsFragment : BaseFragment(), AccountsView {
         return "android:switcher:" + R.id.viewpager + ":" + position
     }
 
-    /**
-     * It provides with `shareAccounts` fetched from server which is then passed to fragment
-     * implementing [AccountsView] i.e. [AccountsFragment] which further displays them
-     * in a recyclerView
-     *
-     * @param shareAccounts [List] of [ShareAccount]
-     */
-    override fun showShareAccounts(shareAccounts: List<ShareAccount?>?) {
-        (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)?.showShareAccounts(
-            shareAccounts,
-        )
-        (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)?.hideProgress()
-    }
-
-    /**
-     * It provides with `loanAccounts` fetched from server which is then passed to fragment
-     * implementing [AccountsView] i.e. [AccountsFragment] which further displays them
-     * in a recyclerView
-     *
-     * @param loanAccounts [List] of [LoanAccount]
-     */
-    override fun showLoanAccounts(loanAccounts: List<LoanAccount?>?) {
-        (childFragmentManager.findFragmentByTag(getFragmentTag(1)) as AccountsView?)
-            ?.showLoanAccounts(loanAccounts)
-        (childFragmentManager.findFragmentByTag(getFragmentTag(1)) as AccountsView?)
-            ?.hideProgress()
-    }
-
-    /**
-     * It provides with `savingAccounts` fetched from server which is then passed to fragment
-     * implementing [AccountsView] i.e. [AccountsFragment] which further displays them
-     * in a recyclerView
-     *
-     * @param savingAccounts [List] of [SavingAccount]
-     */
-    override fun showSavingsAccounts(savingAccounts: List<SavingAccount?>?) {
-        (childFragmentManager.findFragmentByTag(getFragmentTag(0)) as AccountsView?)
-            ?.showSavingsAccounts(savingAccounts)
-        (childFragmentManager.findFragmentByTag(getFragmentTag(0)) as AccountsView?)
-            ?.hideProgress()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fabCreateLoan.setOnClickListener {
@@ -197,57 +148,41 @@ class ClientAccountsFragment : BaseFragment(), AccountsView {
         }
     }
 
-    /**
-     * It is called whenever any error occurs while executing a request which passes errorMessage to
-     * fragment implementing [AccountsView] i.e. [AccountsFragment] which further
-     * displays the errorMessage
-     *
-     * @param errorMessage Error message that tells the user about the problem.
-     */
-    override fun showError(errorMessage: String?) {
-        (childFragmentManager.findFragmentByTag(getFragmentTag(0)) as AccountsView?)
-            ?.showError(getString(R.string.error_fetching_accounts))
-        (childFragmentManager.findFragmentByTag(getFragmentTag(1)) as AccountsView?)
-            ?.showError(getString(R.string.error_fetching_accounts))
-        (childFragmentManager.findFragmentByTag(getFragmentTag(2)) as AccountsView?)
-            ?.showError(getString(R.string.error_fetching_accounts))
-        Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showProgress() {}
-    override fun hideProgress() {}
     override fun onDestroyView() {
         super.onDestroyView()
-        accountsPresenter?.detachView()
         _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_account, menu)
-        if (binding.viewpager.currentItem == 0) {
-            menu.findItem(R.id.menu_filter_savings).isVisible = true
-            menu.findItem(R.id.menu_filter_loan).isVisible = false
-            menu.findItem(R.id.menu_filter_shares).isVisible = false
-            menu.findItem(R.id.menu_search_saving).isVisible = true
-            menu.findItem(R.id.menu_search_loan).isVisible = false
-            menu.findItem(R.id.menu_search_share).isVisible = false
-            initSearch(menu, AccountType.SAVINGS)
-        } else if (binding.viewpager.currentItem == 1) {
-            menu.findItem(R.id.menu_filter_savings).isVisible = false
-            menu.findItem(R.id.menu_filter_loan).isVisible = true
-            menu.findItem(R.id.menu_filter_shares).isVisible = false
-            menu.findItem(R.id.menu_search_saving).isVisible = false
-            menu.findItem(R.id.menu_search_loan).isVisible = true
-            menu.findItem(R.id.menu_search_share).isVisible = false
-            initSearch(menu, AccountType.LOAN)
-        } else if (binding.viewpager.currentItem == 2) {
-            menu.findItem(R.id.menu_filter_savings).isVisible = false
-            menu.findItem(R.id.menu_filter_loan).isVisible = false
-            menu.findItem(R.id.menu_filter_shares).isVisible = true
-            menu.findItem(R.id.menu_search_saving).isVisible = false
-            menu.findItem(R.id.menu_search_loan).isVisible = false
-            menu.findItem(R.id.menu_search_share).isVisible = true
-            initSearch(menu, AccountType.SHARE)
+        when (binding.viewpager.currentItem) {
+            0 -> {
+                menu.findItem(R.id.menu_filter_savings).isVisible = true
+                menu.findItem(R.id.menu_filter_loan).isVisible = false
+                menu.findItem(R.id.menu_filter_shares).isVisible = false
+                menu.findItem(R.id.menu_search_saving).isVisible = true
+                menu.findItem(R.id.menu_search_loan).isVisible = false
+                menu.findItem(R.id.menu_search_share).isVisible = false
+                initSearch(menu, AccountType.SAVINGS)
+            }
+            1 -> {
+                menu.findItem(R.id.menu_filter_savings).isVisible = false
+                menu.findItem(R.id.menu_filter_loan).isVisible = true
+                menu.findItem(R.id.menu_filter_shares).isVisible = false
+                menu.findItem(R.id.menu_search_saving).isVisible = false
+                menu.findItem(R.id.menu_search_loan).isVisible = true
+                menu.findItem(R.id.menu_search_share).isVisible = false
+                initSearch(menu, AccountType.LOAN)
+            }
+            2 -> {
+                menu.findItem(R.id.menu_filter_savings).isVisible = false
+                menu.findItem(R.id.menu_filter_loan).isVisible = false
+                menu.findItem(R.id.menu_filter_shares).isVisible = true
+                menu.findItem(R.id.menu_search_saving).isVisible = false
+                menu.findItem(R.id.menu_search_loan).isVisible = false
+                menu.findItem(R.id.menu_search_share).isVisible = true
+                initSearch(menu, AccountType.SHARE)
+            }
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -472,7 +407,7 @@ class ClientAccountsFragment : BaseFragment(), AccountsView {
                             )?.clearFilter()
                         checkBoxAdapter?.statusList =
                             StatusUtils.getSavingsAccountStatusList(activity)
-                        accountsPresenter?.loadAccounts(Constants.SAVINGS_ACCOUNTS)
+                        viewModel.loadAccounts(Constants.SAVINGS_ACCOUNTS)
                     }
 
                     AccountType.LOAN -> {
@@ -482,7 +417,7 @@ class ClientAccountsFragment : BaseFragment(), AccountsView {
                             ) as AccountsFragment?
                             )?.clearFilter()
                         checkBoxAdapter?.statusList = StatusUtils.getLoanAccountStatusList(activity)
-                        accountsPresenter?.loadAccounts(Constants.LOAN_ACCOUNTS)
+                        viewModel.loadAccounts(Constants.LOAN_ACCOUNTS)
                     }
 
                     AccountType.SHARE -> {
@@ -493,7 +428,7 @@ class ClientAccountsFragment : BaseFragment(), AccountsView {
                             )?.clearFilter()
                         checkBoxAdapter?.statusList =
                             StatusUtils.getShareAccountStatusList(activity)
-                        accountsPresenter?.loadAccounts(Constants.SHARE_ACCOUNTS)
+                        viewModel.loadAccounts(Constants.SHARE_ACCOUNTS)
                     }
                 }
             }

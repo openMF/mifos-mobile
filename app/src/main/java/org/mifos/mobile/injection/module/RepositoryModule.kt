@@ -10,6 +10,8 @@ import org.mifos.mobile.repositories.LoanRepository
 import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.repositories.AccountsRepository
+import org.mifos.mobile.repositories.AccountsRepositoryImp
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.ClientRepositoryImp
 import org.mifos.mobile.repositories.RecentTransactionRepository
@@ -46,5 +48,10 @@ class RepositoryModule {
     @Provides
     fun providesRecentTransactionRepository(dataManager: DataManager): RecentTransactionRepository {
         return  RecentTransactionRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun provideAccountsRepository(dataManager: DataManager) : AccountsRepository {
+        return AccountsRepositoryImp(dataManager)
     }
 }
