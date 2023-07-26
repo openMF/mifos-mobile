@@ -3,6 +3,10 @@ package org.mifos.mobile.viewModels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,7 +49,9 @@ class LoanApplicationViewModelTest {
     }
 
     @Test
-    fun testLoadLoanApplicationTemplate_Successful() {
+    fun testLoadLoanApplicationTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+
         val response = mock(LoanTemplate::class.java)
         val mockLoanState = mock(LoanState::class.java)
         `when`(loanRepositoryImp.template()).thenReturn(Observable.just(response))
@@ -63,10 +69,14 @@ class LoanApplicationViewModelTest {
             )
             verifyNoMoreInteractions(loanUiStateObserver)
         }
+
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testLoadLoanApplicationTemplate_Unsuccessful() {
+    fun testLoadLoanApplicationTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+
         val error = RuntimeException("Error Response")
         val loanState = mock(LoanState::class.java)
         `when`(loanRepositoryImp.template()).thenReturn(Observable.error(error))
@@ -74,10 +84,14 @@ class LoanApplicationViewModelTest {
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_fetching_template))
         verifyNoMoreInteractions(loanUiStateObserver)
+
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun loadLoanApplicationTemplateByProduct_Successful() {
+    fun loadLoanApplicationTemplateByProduct_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+
         val response = mock(LoanTemplate::class.java)
         val mockLoanState = mock(LoanState::class.java)
 
@@ -96,10 +110,13 @@ class LoanApplicationViewModelTest {
             verifyNoMoreInteractions(loanUiStateObserver)
         }
 
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun loadLoanApplicationTemplateByProduct_Unsuccessful() {
+    fun loadLoanApplicationTemplateByProduct_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+
         val error = RuntimeException("Error Response")
         val mockLoanState = mock(LoanState::class.java)
         `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(Observable.error(error))
@@ -107,6 +124,8 @@ class LoanApplicationViewModelTest {
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_fetching_template))
         verifyNoMoreInteractions(loanUiStateObserver)
+
+        Dispatchers.resetMain()
     }
 
     @After

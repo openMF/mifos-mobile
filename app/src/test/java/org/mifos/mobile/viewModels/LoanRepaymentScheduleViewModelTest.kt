@@ -3,6 +3,10 @@ package org.mifos.mobile.viewModels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,7 +49,9 @@ class LoanRepaymentScheduleViewModelTest {
     }
 
     @Test
-    fun testLoanLoanWithAssociations_Successful() {
+    fun testLoanLoanWithAssociations_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+
         val response = mock(LoanWithAssociations::class.java)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
@@ -63,10 +69,13 @@ class LoanRepaymentScheduleViewModelTest {
             verify(loanUiStateObserver).onChanged(LoanUiState.ShowEmpty(response))
             verifyNoMoreInteractions(loanUiStateObserver)
         }
+
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testLoanLoanWithAssociations_Unsuccessful() {
+    fun testLoanLoanWithAssociations_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val error = RuntimeException("Error Response")
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
@@ -79,6 +88,8 @@ class LoanRepaymentScheduleViewModelTest {
         viewModel.loanLoanWithAssociations(1)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.repayment_schedule))
+
+        Dispatchers.resetMain()
     }
 
     @After
