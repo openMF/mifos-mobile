@@ -158,19 +158,19 @@ class LoanApplicationFragment : BaseFragment() {
                 }
                 is LoanUiState.ShowLoanTemplate -> {
                     hideProgress()
-                    showLoanTemplate(it.template)
+                    showLoanTemplateByProduct(it.template)
                 }
                 is LoanUiState.ShowUpdateLoanTemplate -> {
                     hideProgress()
-                    showUpdateLoanTemplate(it.template)
+                    showUpdateLoanTemplateByProduct(it.template)
                 }
                 is LoanUiState.ShowLoanTemplateByProduct -> {
                     hideProgress()
-                    showLoanTemplateByProduct(it.template)
+                    showLoanTemplate(it.template)
                 }
                 is LoanUiState.ShowUpdateLoanTemplateByProduct -> {
                     hideProgress()
-                    showUpdateLoanTemplateByProduct(it.template)
+                    showUpdateLoanTemplate(it.template)
                 }
                 else -> throw IllegalStateException("Unexpected state: $it")
             }
