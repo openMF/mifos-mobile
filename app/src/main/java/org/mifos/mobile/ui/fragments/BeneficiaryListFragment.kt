@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
@@ -15,29 +16,26 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryListBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.presenters.BeneficiaryListPresenter
 import org.mifos.mobile.ui.activities.AddBeneficiaryActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.BeneficiaryListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.BeneficiariesView
+import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
-import javax.inject.Inject
+import org.mifos.mobile.viewModels.BeneficiaryListViewModel
 
 /**
  * Created by dilpreet on 14/6/17.
  */
 @AndroidEntryPoint
-class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, BeneficiariesView {
+class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
 
     private var _binding: FragmentBeneficiaryListBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var beneficiaryListPresenter: BeneficiaryListPresenter? = null
+    private lateinit var viewModel: BeneficiaryListViewModel
 
     private var beneficiaryListAdapter: BeneficiaryListAdapter? = null
 
@@ -49,19 +47,34 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryListBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[BeneficiaryListViewModel::class.java]
         beneficiaryListAdapter = BeneficiaryListAdapter(::onItemClick)
         setToolbarTitle(getString(R.string.beneficiaries))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
-        beneficiaryListPresenter?.attachView(this)
         if (savedInstanceState == null) {
-            beneficiaryListPresenter?.loadBeneficiaries()
+            viewModel.loadBeneficiaries()
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.beneficiaryUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is BeneficiaryUiState.Loading -> showProgress()
+                is BeneficiaryUiState.ShowError -> {
+                    hideProgress()
+                    showError(getString(it.message))
+                }
+                is BeneficiaryUiState.ShowBeneficiaryList -> {
+                    hideProgress()
+                    showBeneficiaryList(it.beneficiaries)
+                }
+                else -> throw IllegalStateException("Undesired $it")
+            }
+        }
 
         binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
@@ -70,7 +83,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
 
     override fun onResume() {
         super.onResume()
-        beneficiaryListPresenter?.loadBeneficiaries()
+        viewModel.loadBeneficiaries()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -97,7 +110,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     /**
      * Setup Initial User Interface
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         with(binding) {
@@ -132,7 +145,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
                 binding.rvBeneficiaries,
                 binding.layoutError.root,
             )
-            beneficiaryListPresenter?.loadBeneficiaries()
+            viewModel.loadBeneficiaries()
         } else {
             Toast.makeText(
                 context,
@@ -152,20 +165,20 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
                 binding.layoutError.root,
             )
         }
-        beneficiaryListPresenter?.loadBeneficiaries()
+        viewModel.loadBeneficiaries()
     }
 
     /**
      * Shows [SwipeRefreshLayout]
      */
-    override fun showProgress() {
+    fun showProgress() {
         showSwipeRefreshLayout(true)
     }
 
     /**
      * Hides [SwipeRefreshLayout]
      */
-    override fun hideProgress() {
+    fun hideProgress() {
         showSwipeRefreshLayout(false)
     }
 
@@ -174,7 +187,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
      *
      * @param msg Error message that tells the user about the problem.
      */
-    override fun showError(msg: String?) {
+    fun showError(msg: String?) {
         if (!Network.isConnected((activity?.applicationContext)!!)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.rvBeneficiaries,
@@ -192,7 +205,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
     /**
      * Set the `beneficiaryList` fetched from server to `beneficiaryListAdapter`
      */
-    override fun showBeneficiaryList(beneficiaryList: List<Beneficiary?>?) {
+    fun showBeneficiaryList(beneficiaryList: List<Beneficiary?>?) {
         this.beneficiaryList = beneficiaryList
         if (beneficiaryList?.isNotEmpty() == true) {
             beneficiaryListAdapter?.setBeneficiaryList(beneficiaryList)
@@ -217,7 +230,6 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener, Beneficiaries
 
     override fun onDestroyView() {
         super.onDestroyView()
-        beneficiaryListPresenter?.detachView()
         _binding = null
     }
 
