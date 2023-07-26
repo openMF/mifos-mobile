@@ -8,19 +8,19 @@ import org.mifos.mobile.models.templates.loans.LoanTemplate
 
 interface LoanRepository {
 
-    fun getLoanWithAssociations(
+    suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
     ): Observable<LoanWithAssociations?>?
 
-    fun withdrawLoanAccount(
+    suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
     ): Observable<ResponseBody?>?
 
-    fun template(): Observable<LoanTemplate?>?
+    suspend fun template(): Observable<LoanTemplate?>?
 
-    fun getLoanTemplateByProduct(
+    suspend fun getLoanTemplateByProduct(
         productId: Int?
     ): Observable<LoanTemplate?>?
 }

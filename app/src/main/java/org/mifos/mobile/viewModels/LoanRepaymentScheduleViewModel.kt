@@ -3,11 +3,13 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.repositories.LoanRepository
@@ -25,33 +27,35 @@ class LoanRepaymentScheduleViewModel @Inject constructor(private val loanReposit
     val loanUiState: LiveData<LoanUiState> get() = _loanUiState
 
     fun loanLoanWithAssociations(loanId: Long?) {
-        _loanUiState.value = LoanUiState.Loading
-        loanRepositoryImp.getLoanWithAssociations(
-            Constants.REPAYMENT_SCHEDULE,
-            loanId,
-        )?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<LoanWithAssociations?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _loanUiState.value =
-                        LoanUiState.ShowError(R.string.repayment_schedule)
-                }
-
-                override fun onNext(loanWithAssociations: LoanWithAssociations) {
-                    if (loanWithAssociations.repaymentSchedule?.periods?.isNotEmpty() == true) {
+        viewModelScope.launch {
+            _loanUiState.value = LoanUiState.Loading
+            loanRepositoryImp.getLoanWithAssociations(
+                Constants.REPAYMENT_SCHEDULE,
+                loanId,
+            )?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribeWith(object : DisposableObserver<LoanWithAssociations?>() {
+                    override fun onComplete() {}
+                    override fun onError(e: Throwable) {
                         _loanUiState.value =
-                            LoanUiState.ShowLoan(loanWithAssociations)
-                    } else {
-                        _loanUiState.value =
-                            LoanUiState.ShowEmpty(loanWithAssociations)
+                            LoanUiState.ShowError(R.string.repayment_schedule)
                     }
+
+                    override fun onNext(loanWithAssociations: LoanWithAssociations) {
+                        if (loanWithAssociations.repaymentSchedule?.periods?.isNotEmpty() == true) {
+                            _loanUiState.value =
+                                LoanUiState.ShowLoan(loanWithAssociations)
+                        } else {
+                            _loanUiState.value =
+                                LoanUiState.ShowEmpty(loanWithAssociations)
+                        }
+                    }
+                })?.let {
+                    compositeDisposables.add(
+                        it,
+                    )
                 }
-            })?.let {
-                compositeDisposables.add(
-                    it,
-                )
-            }
+        }
     }
 
     override fun onCleared() {

@@ -10,25 +10,25 @@ import javax.inject.Inject
 
 class LoanRepositoryImp @Inject constructor(private val dataManager: DataManager) : LoanRepository {
 
-    override fun getLoanWithAssociations(
+    override suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
     ): Observable<LoanWithAssociations?>? {
         return dataManager.getLoanWithAssociations(associationType, loanId)
     }
 
-    override fun withdrawLoanAccount(
+    override suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?
     ): Observable<ResponseBody?>? {
         return dataManager.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    override fun template(): Observable<LoanTemplate?>? {
+    override suspend fun template(): Observable<LoanTemplate?>? {
         return dataManager.loanTemplate
     }
 
-    override fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate?>? {
+    override suspend fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate?>? {
         return dataManager.getLoanTemplateByProduct(productId)
     }
 }
