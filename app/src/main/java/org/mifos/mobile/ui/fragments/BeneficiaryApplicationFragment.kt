@@ -5,6 +5,8 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
@@ -13,27 +15,25 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import org.mifos.mobile.presenters.BeneficiaryApplicationPresenter
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.BeneficiaryApplicationView
+import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
-import javax.inject.Inject
+import org.mifos.mobile.viewModels.BeneficiaryApplicationViewModel
 
 /**
  * Created by dilpreet on 16/6/17.
  */
 @AndroidEntryPoint
-class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationView {
+class BeneficiaryApplicationFragment : BaseFragment() {
 
     private var _binding: FragmentBeneficiaryApplicationBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var presenter: BeneficiaryApplicationPresenter? = null
+    private lateinit var viewModel: BeneficiaryApplicationViewModel
+
     private val listAccountType: MutableList<String?> = ArrayList()
     private var beneficiaryState: BeneficiaryState? = null
     private var beneficiary: Beneficiary? = null
@@ -70,17 +70,44 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryApplicationBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[BeneficiaryApplicationViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
-        presenter?.attachView(this)
         if (savedInstanceState == null) {
-            presenter?.loadBeneficiaryTemplate()
+            viewModel.loadBeneficiaryTemplate()
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.beneficiaryUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is BeneficiaryUiState.Loading -> showProgress()
+                is BeneficiaryUiState.ShowError -> {
+                    hideProgress()
+                    showError(getString(it.message))
+                }
+                is BeneficiaryUiState.SetVisibility -> {
+                    hideProgress()
+                    setVisibility(it.visibility)
+                }
+                is BeneficiaryUiState.ShowBeneficiaryTemplate -> {
+                    hideProgress()
+                    showBeneficiaryTemplate(it.beneficiaryTemplate)
+                }
+                is BeneficiaryUiState.CreatedSuccessfully -> {
+                    hideProgress()
+                    showBeneficiaryCreatedSuccessfully()
+                }
+                is BeneficiaryUiState.UpdatedSuccessfully -> {
+                    hideProgress()
+                    showBeneficiaryUpdatedSuccessfully()
+                }
+                else -> throw IllegalStateException("Undesired $it")
+            }
+        }
 
         with(binding) {
             btnBeneficiarySubmit.setOnClickListener {
@@ -107,7 +134,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
     /**
      * Setting up `accountTypeAdapter` and `` spAccountType
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         with(binding) {
             accountTypeField.setOnItemClickListener { _, _, position, _ ->
                 accountTypeId = beneficiaryTemplate?.accountTypeOptions?.get(position)?.id
@@ -124,7 +151,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      *
      * @param beneficiaryTemplate [BeneficiaryTemplate] fetched from server
      */
-    override fun showBeneficiaryTemplate(beneficiaryTemplate: BeneficiaryTemplate?) {
+    fun showBeneficiaryTemplate(beneficiaryTemplate: BeneficiaryTemplate?) {
         this.beneficiaryTemplate = beneficiaryTemplate
         for ((_, _, value) in beneficiaryTemplate?.accountTypeOptions!!) {
             listAccountType.add(value)
@@ -212,7 +239,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
 
     private fun onRetry() {
         if (Network.isConnected(context)) {
-            presenter?.loadBeneficiaryTemplate()
+            viewModel.loadBeneficiaryTemplate()
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.viewFlipper,
                 binding.layoutError.root,
@@ -236,7 +263,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         }
 
         beneficiaryPayload.accountType = accountTypeId
-        presenter?.createBeneficiary(beneficiaryPayload)
+        viewModel.createBeneficiary(beneficiaryPayload)
     }
 
     /**
@@ -246,14 +273,14 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         val payload = BeneficiaryUpdatePayload()
         payload.name = binding.tilBeneficiaryName.editText?.text.toString()
         payload.transferLimit = binding.tilTransferLimit.editText?.text.toString().toFloat()
-        presenter?.updateBeneficiary(beneficiary?.id?.toLong(), payload)
+        viewModel.updateBeneficiary(beneficiary?.id?.toLong(), payload)
     }
 
     /**
      * Displays a {@link Snackbar} on successfully creation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
-    override fun showBeneficiaryCreatedSuccessfully() {
+    fun showBeneficiaryCreatedSuccessfully() {
         Toaster.show(binding.tilTransferLimit, getString(R.string.beneficiary_created_successfully))
         activity?.finish()
     }
@@ -262,7 +289,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      * Displays a {@link Snackbar} on successfully updation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
-    override fun showBeneficiaryUpdatedSuccessfully() {
+    fun showBeneficiaryUpdatedSuccessfully() {
         Toaster.show(binding.root, getString(R.string.beneficiary_updated_successfully))
         activity?.supportFragmentManager?.popBackStack()
         activity?.supportFragmentManager?.popBackStack()
@@ -273,7 +300,7 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
      *
      * @param msg Error message that tells the user about the problem.
      */
-    override fun showError(msg: String?) {
+    fun showError(msg: String?) {
         if (!Network.isConnected(context)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.viewFlipper,
@@ -289,22 +316,21 @@ class BeneficiaryApplicationFragment : BaseFragment(), BeneficiaryApplicationVie
         }
     }
 
-    override fun setVisibility(state: Int) {
+    fun setVisibility(state: Int) {
         binding.llApplicationBeneficiary.visibility = state
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        presenter?.detachView()
         _binding = null
     }
 
