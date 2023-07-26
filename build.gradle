@@ -54,7 +54,7 @@ ext {
     supportLibraryVersion = '1.4.2'
     designLibraryVersion = '1.9.0'
     daggerVersion = '2.47'
-    recyclerViewVersion = '1.2.1'
+    recyclerViewVersion = '1.3.1'
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
     lifecycleExtensionsVersion = '2.2.0'
