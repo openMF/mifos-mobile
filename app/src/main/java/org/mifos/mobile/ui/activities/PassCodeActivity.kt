@@ -12,7 +12,9 @@ import androidx.core.widget.NestedScrollView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.mifos.mobile.passcode.MifosPassCodeActivity
+import com.mifos.mobile.passcode.MifosPassCodeView
 import com.mifos.mobile.passcode.utils.EncryptionUtil
+import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
 import org.mifos.mobile.R
 import org.mifos.mobile.ui.enums.BiometricCapability
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
@@ -23,6 +25,11 @@ import org.mifos.mobile.utils.Toaster
 class PassCodeActivity : MifosPassCodeActivity() {
     private var currPassCode: String? = null
     private var isToUpdatePassCode: Boolean = false
+
+
+    @JvmField
+    @BindView(R.id.btn_forgot_passcode)
+    var forgetPasswordButton: AppCompatButton? = null
 
     @JvmField
     @BindView(R.id.btn_save)
@@ -48,6 +55,32 @@ class PassCodeActivity : MifosPassCodeActivity() {
         }
         setBackgroundColor()
 
+        forgetPasswordButton?.setOnClickListener {
+            MaterialDialog.Builder().init(this@PassCodeActivity)
+                .setCancelable(false)
+                .setMessage(R.string.login_using_password_confirmation)
+                .setPositiveButton(
+                    getString(R.string.logout),
+                    DialogInterface.OnClickListener { _, _ ->
+                        clearTokenPreferences()
+                        val i = Intent(
+                            this@PassCodeActivity,
+                            LoginActivity::class.java,
+                        )
+                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(i)
+                        finish()
+                    },
+                )
+                .setNegativeButton(
+                    getString(R.string.cancel),
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .createMaterialDialog()
+                .show()
+        }
+
         if (btnSave?.text?.equals(getString(R.string.use_touch_id)) == true) {
             biometricAuthentication?.authenticateWithBiometrics()
         }
@@ -67,6 +100,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
             currPassCode = it.getStringExtra(Constants.CURR_PASSWORD)
             isToUpdatePassCode = it.getBooleanExtra(Constants.IS_TO_UPDATE_PASS_CODE, false)
         }
+
     }
 
     /**
@@ -100,27 +134,7 @@ class PassCodeActivity : MifosPassCodeActivity() {
     }
 
     override fun startLoginActivity() {
-        MaterialDialog.Builder().init(this@PassCodeActivity)
-            .setCancelable(false)
-            .setMessage(R.string.login_using_password_confirmation)
-            .setPositiveButton(
-                getString(R.string.logout),
-                DialogInterface.OnClickListener { _, _ ->
-                    val i = Intent(
-                        this@PassCodeActivity,
-                        LoginActivity::class.java,
-                    )
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(i)
-                    finish()
-                },
-            )
-            .setNegativeButton(
-                getString(R.string.cancel),
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() },
-            )
-            .createMaterialDialog()
-            .show()
+        TODO()
     }
 
     override fun showToaster(view: View, msg: Int) {
