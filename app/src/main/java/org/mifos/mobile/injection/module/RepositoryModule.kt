@@ -40,6 +40,11 @@ class RepositoryModule {
     }
 
     @Provides
+    fun providesGuarantorRepository(dataManager: DataManager): GuarantorRepository {
+        return GuarantorRepositoryImp(dataManager)
+    }
+    
+    @Provides
     fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
         return BeneficiaryRepositoryImp(dataManager)
     }
