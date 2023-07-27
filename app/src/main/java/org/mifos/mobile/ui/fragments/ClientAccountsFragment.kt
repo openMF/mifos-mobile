@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentClientAccountsBinding
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -42,7 +43,9 @@ import javax.inject.Inject
 /*
 ~This project is licensed under the open source MPL V2.
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
-*/ class ClientAccountsFragment : BaseFragment(), AccountsView {
+*/
+@AndroidEntryPoint
+class ClientAccountsFragment : BaseFragment(), AccountsView {
     private var _binding: FragmentClientAccountsBinding? = null
     private val binding get() = _binding!!
 
@@ -71,7 +74,6 @@ import javax.inject.Inject
     ): View {
         _binding = FragmentClientAccountsBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         accountsPresenter?.attachView(this)
         setToolbarTitle(getString(R.string.accounts))
         setUpViewPagerAndTabLayout()

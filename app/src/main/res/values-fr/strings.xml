@@ -417,4 +417,5 @@
     <string name="enter_tenant">Aller au locataire</string>
     <string name="app_info">Informations sur l\'application</string>
     <string name="show_hide_total_saving_amount">Afficher ou masquer le montant total de l\'épargne</string>
+    <string name="login_failed">Authentification échouée, essayez plus tard.</string>
 </resources>

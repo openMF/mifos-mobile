@@ -7,19 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.presenters.LoanAccountsTransactionPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.LoanAccountsTransactionView
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.viewModels.LoanAccountTransactionViewModel
 import javax.inject.Inject
 
 /*
@@ -28,7 +29,8 @@ import javax.inject.Inject
 */ /**
  * Created by dilpreet on 4/3/17.
  */
-class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionView {
+@AndroidEntryPoint
+class LoanAccountTransactionFragment : BaseFragment() {
     private var _binding: FragmentLoanAccountTransactionsBinding? = null
     private val binding get() = _binding!!
 
@@ -36,15 +38,13 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     @Inject
     var transactionsListAdapter: RecentTransactionListAdapter? = null
 
-    @JvmField
-    @Inject
-    var loanAccountsTransactionPresenter: LoanAccountsTransactionPresenter? = null
+    lateinit var viewModel: LoanAccountTransactionViewModel
+
     private var loanId: Long? = 0
     private var loanWithAssociations: LoanWithAssociations? = null
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
         }
@@ -56,13 +56,13 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoanAccountTransactionsBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[LoanAccountTransactionViewModel::class.java]
         val rootView = binding.root
         setToolbarTitle(getString(R.string.transactions))
-        loanAccountsTransactionPresenter?.attachView(this)
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
         showUserInterface()
         if (savedInstanceState == null) {
-            loanAccountsTransactionPresenter?.loadLoanAccountDetails(loanId)
+            viewModel.loadLoanAccountDetails(loanId)
         }
         return rootView
     }
@@ -82,7 +82,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     /**
      * Initialized [RecyclerView] `rvLoanTransactions`
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         with(binding) {
@@ -98,7 +98,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
      *
      * @param loanWithAssociations object containing details about a Loan Account with Associations
      */
-    override fun showLoanTransactions(loanWithAssociations: LoanWithAssociations?) {
+    fun showLoanTransactions(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
         binding.llLoanAccountTrans.visibility = View.VISIBLE
         binding.tvLoanProductName.text = loanWithAssociations?.loanProductName
@@ -108,7 +108,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
     /**
      * Sets a [TextView] with a msg if Transactions list is empty
      */
-    override fun showEmptyTransactions(loanWithAssociations: LoanWithAssociations?) {
+    fun showEmptyTransactions(loanWithAssociations: LoanWithAssociations?) {
         sweetUIErrorHandler?.showSweetEmptyUI(
             getString(R.string.transactions),
             R.drawable.ic_compare_arrows_black_24dp,
@@ -122,7 +122,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showErrorFetchingLoanAccountsDetail(message: String?) {
+    fun showErrorFetchingLoanAccountsDetail(message: String?) {
         with(binding) {
             if (!Network.isConnected(activity)) {
                 sweetUIErrorHandler?.showSweetNoInternetUI(
@@ -142,6 +142,26 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loanUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is LoanUiState.Loading -> showProgress()
+                is LoanUiState.ShowError -> {
+                    hideProgress()
+                    showErrorFetchingLoanAccountsDetail(getString(it.message))
+                }
+                is LoanUiState.ShowLoan -> {
+                    hideProgress()
+                    showLoanTransactions(it.loanWithAssociations)
+                }
+                is LoanUiState.ShowEmpty -> {
+                    hideProgress()
+                    showEmptyTransactions(it.loanWithAssociations)
+                }
+                else -> throw IllegalStateException("Unexpected state: $it")
+            }
+        }
+
         binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
         }
@@ -153,7 +173,7 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
                 binding.rvLoanTransactions,
                 binding.layoutError.root,
             )
-            loanAccountsTransactionPresenter?.loadLoanAccountDetails(loanId)
+            viewModel.loadLoanAccountDetails(loanId)
         } else {
             Toast.makeText(
                 context,
@@ -163,18 +183,17 @@ class LoanAccountTransactionFragment : BaseFragment(), LoanAccountsTransactionVi
         }
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanAccountsTransactionPresenter?.detachView()
         _binding = null
     }
 

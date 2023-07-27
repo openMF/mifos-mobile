@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeDisplayBinding
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -19,6 +20,7 @@ import org.mifos.mobile.utils.Utils
 /**
  * Created by dilpreet on 16/8/17.
  */
+@AndroidEntryPoint
 class QrCodeDisplayFragment : BaseFragment() {
 
     private var _binding: FragmentQrCodeDisplayBinding? = null

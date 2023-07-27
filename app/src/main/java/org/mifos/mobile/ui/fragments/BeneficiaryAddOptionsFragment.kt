@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryAddOptionsBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -23,6 +24,7 @@ import org.mifos.mobile.utils.Toaster
 /**
  * Created by dilpreet on 5/7/17.
  */
+@AndroidEntryPoint
 class BeneficiaryAddOptionsFragment : BaseFragment() {
 
     private var _binding: FragmentBeneficiaryAddOptionsBinding? = null
@@ -37,7 +39,6 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
     ): View {
         _binding = FragmentBeneficiaryAddOptionsBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.add_beneficiary))
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         return binding.root
     }
 

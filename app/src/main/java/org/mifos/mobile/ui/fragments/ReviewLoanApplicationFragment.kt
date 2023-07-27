@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -24,16 +25,14 @@ import kotlinx.android.synthetic.main.layout_error.tv_status
 import okhttp3.ResponseBody
 import org.mifos.mobile.R
 import org.mifos.mobile.models.payload.LoansPayload
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
-import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModelFactory
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class ReviewLoanApplicationFragment : BaseFragment() {
 
     companion object {
@@ -80,8 +79,6 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         }
     }
 
-    @Inject
-    lateinit var viewModelFactory: ReviewLoanApplicationViewModelFactory
 
     lateinit var rootView: View
 
@@ -93,8 +90,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
-        (activity as BaseActivity).activityComponent?.inject(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProviders.of(this)
             .get(ReviewLoanApplicationViewModel::class.java)
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {

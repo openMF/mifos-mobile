@@ -2,7 +2,7 @@ package org.mifos.mobile.presenters
 
 import android.content.Context
 import org.mifos.mobile.R
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.HelpView
