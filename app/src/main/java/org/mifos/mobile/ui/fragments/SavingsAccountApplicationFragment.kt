@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingsAccountApplicationBinding
@@ -14,7 +15,6 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.savings.ProductOptions
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.presenters.SavingsAccountApplicationPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountApplicationView
@@ -27,6 +27,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 30/June/2018
 */
+@AndroidEntryPoint
 class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
 
     private var _binding: FragmentSavingsAccountApplicationBinding? = null
@@ -59,7 +60,6 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         presenter?.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
         return binding.root

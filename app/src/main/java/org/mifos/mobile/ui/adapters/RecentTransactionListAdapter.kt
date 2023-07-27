@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import org.mifos.mobile.MifosSelfServiceApp.Companion.context
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowRecentTransactionBinding
-import org.mifos.mobile.injection.ActivityContext
+import dagger.hilt.android.qualifiers.ActivityContext
+
+
 import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.models.client.Type
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency

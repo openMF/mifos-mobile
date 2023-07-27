@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.EditText
 import android.widget.Spinner
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentThirdPartyTransferBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -39,6 +40,7 @@ import javax.inject.Inject
 /**
  * Created by dilpreet on 21/6/17.
  */
+@AndroidEntryPoint
 class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnItemSelectedListener {
 
     private var _binding: FragmentThirdPartyTransferBinding? = null
@@ -67,7 +69,6 @@ class ThirdPartyTransferFragment : BaseFragment(), ThirdPartyTransferView, OnIte
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         _binding = FragmentThirdPartyTransferBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.third_party_transfer))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)

@@ -7,7 +7,7 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.presenters.base.BasePresenter
 import org.mifos.mobile.ui.views.RegistrationView

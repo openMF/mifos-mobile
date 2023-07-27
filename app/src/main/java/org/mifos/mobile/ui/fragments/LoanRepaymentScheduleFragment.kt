@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanRepaymentScheduleBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -15,27 +17,25 @@ import org.mifos.mobile.models.accounts.loan.Periods
 import org.mifos.mobile.models.accounts.loan.tableview.Cell
 import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader
 import org.mifos.mobile.models.accounts.loan.tableview.RowHeader
-import org.mifos.mobile.presenters.LoanRepaymentSchedulePresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.LoanRepaymentScheduleAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.LoanRepaymentScheduleMvpView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.viewModels.LoanRepaymentScheduleViewModel
 import javax.inject.Inject
 
 /**
  * Created by Rajan Maurya on 03/03/17.
  */
-class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpView {
+@AndroidEntryPoint
+class LoanRepaymentScheduleFragment : BaseFragment() {
 
     private var _binding: FragmentLoanRepaymentScheduleBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var loanRepaymentSchedulePresenter: LoanRepaymentSchedulePresenter? = null
+    lateinit var viewModel: LoanRepaymentScheduleViewModel
 
     @JvmField
     @Inject
@@ -45,7 +45,6 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         setToolbarTitle(getString(R.string.loan_repayment_schedule))
         if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }
@@ -56,17 +55,37 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoanRepaymentScheduleBinding.inflate(inflater, container, false)
-        loanRepaymentSchedulePresenter?.attachView(this)
+        viewModel = ViewModelProvider(this)[LoanRepaymentScheduleViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
-            loanRepaymentSchedulePresenter?.loanLoanWithAssociations(loanId)
+            viewModel.loanLoanWithAssociations(loanId)
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loanUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is LoanUiState.Loading -> showProgress()
+                is LoanUiState.ShowError -> {
+                    hideProgress()
+                    showError(getString(it.message))
+                }
+                is LoanUiState.ShowLoan -> {
+                    hideProgress()
+                    showLoanRepaymentSchedule(it.loanWithAssociations)
+                }
+                is LoanUiState.ShowEmpty -> {
+                    hideProgress()
+                    showEmptyRepaymentsSchedule(loanWithAssociations)
+                }
+                else -> throw IllegalStateException("Unexpected state: $it")
+            }
+        }
+
         binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
         }
@@ -87,7 +106,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     /**
      * Initializes the layout
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         val columnWidth: Double
         binding.tvRepaymentSchedule.setHasFixedWidth(true)
         val orientation = resources.configuration.orientation
@@ -101,11 +120,11 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
         loanRepaymentScheduleAdapter?.setColumnWidth(columnWidth)
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
@@ -114,7 +133,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      *
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
-    override fun showLoanRepaymentSchedule(loanWithAssociations: LoanWithAssociations?) {
+    fun showLoanRepaymentSchedule(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
         var currencyRepresentation = loanWithAssociations?.currency?.displaySymbol
         loanRepaymentScheduleAdapter
@@ -151,7 +170,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      *
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
-    override fun showEmptyRepaymentsSchedule(loanWithAssociations: LoanWithAssociations?) {
+    fun showEmptyRepaymentsSchedule(loanWithAssociations: LoanWithAssociations?) {
         binding.tvAccountNumber.text = loanWithAssociations?.accountNo
         binding.tvDisbursementDate.text =
             DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
@@ -169,7 +188,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showError(message: String?) {
+    fun showError(message: String?) {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.tvRepaymentSchedule,
@@ -191,7 +210,7 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
                 binding.tvRepaymentSchedule,
                 binding.layoutError.root,
             )
-            loanRepaymentSchedulePresenter?.loanLoanWithAssociations(loanId)
+            viewModel.loanLoanWithAssociations(loanId)
         } else {
             Toast.makeText(
                 context,
@@ -204,7 +223,6 @@ class LoanRepaymentScheduleFragment : BaseFragment(), LoanRepaymentScheduleMvpVi
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        loanRepaymentSchedulePresenter?.detachView()
         _binding = null
     }
 

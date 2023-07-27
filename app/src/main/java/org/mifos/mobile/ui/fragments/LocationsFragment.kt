@@ -11,6 +11,7 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLocationsBinding
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -21,6 +22,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 */ /**
  * Created by dilpreet on 25/2/17.
  */
+@AndroidEntryPoint
 class LocationsFragment : BaseFragment(), OnMapReadyCallback {
 
     private var _binding: FragmentLocationsBinding? = null

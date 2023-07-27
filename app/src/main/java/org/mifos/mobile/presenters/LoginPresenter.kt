@@ -10,7 +10,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client

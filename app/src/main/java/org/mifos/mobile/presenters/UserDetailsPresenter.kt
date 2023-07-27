@@ -12,7 +12,7 @@ import okhttp3.ResponseBody
 import org.mifos.mobile.R
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.injection.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.notification.NotificationRegisterPayload
 import org.mifos.mobile.models.notification.NotificationUserDetail

@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.presenters.SavingsAccountWithdrawPresenter
-import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.utils.Constants
@@ -20,6 +20,7 @@ import javax.inject.Inject
 /*
 * Created by saksham on 02/July/2018
 */
+@AndroidEntryPoint
 class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawView {
 
     private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null
@@ -43,7 +44,6 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.activityComponent?.inject(this)
         presenter?.attachView(this)
         showUserInterface()
         return binding.root
