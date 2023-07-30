@@ -77,7 +77,7 @@ ext {
     runnerVersion = '1.6.0-alpha03'
     rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.5.1'
-    zxingcoreVersion = '3.5.1'
+    zxingcoreVersion = '3.5.2'
     zxingbarcodescannerVersion = '1.9.13'
     rxjavaVersion = '2.2.21'
     rxandroidVersion = '2.1.1'
