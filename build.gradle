@@ -30,7 +30,7 @@ buildscript {
     }
 }
 plugins {
-    id("com.google.dagger.hilt.android") version "2.44" apply false
+    id("com.google.dagger.hilt.android") version "2.47" apply false
 }
 allprojects {
     repositories {
