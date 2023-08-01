@@ -35,6 +35,7 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
      * details it notifies the view.
      */
     fun loadClientAccounts() {
+        _accountsUiState.value = AccountsUiState.Loading
         accountsRepositoryImp.loadClientAccounts()
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
@@ -63,6 +64,7 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
      * @param accountType Type of account for which we need to fetch details
      */
     fun loadAccounts(accountType: String?) {
+        _accountsUiState.value = AccountsUiState.Loading
         accountsRepositoryImp.loadAccounts(accountType)
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
