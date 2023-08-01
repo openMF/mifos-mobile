@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
@@ -13,29 +14,27 @@ import org.mifos.mobile.databinding.FragmentAddGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
-import org.mifos.mobile.presenters.AddGuarantorPresenter
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.AddGuarantorView
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.GuarantorUiState
 import org.mifos.mobile.utils.RxBus.publish
 import org.mifos.mobile.utils.RxEvent.AddGuarantorEvent
 import org.mifos.mobile.utils.RxEvent.UpdateGuarantorEvent
 import org.mifos.mobile.utils.Toaster
-import javax.inject.Inject
+import org.mifos.mobile.viewModels.AddGuarantorViewModel
 
 /*
 * Created by saksham on 23/July/2018
 */
 @AndroidEntryPoint
-class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
+class AddGuarantorFragment : BaseFragment() {
 
     private var _binding: FragmentAddGuarantorBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var presenter: AddGuarantorPresenter? = null
+    private lateinit var viewModel: AddGuarantorViewModel
+
     var guarantorTypeAdapter: ArrayAdapter<String?>? = null
     var template: GuarantorTemplatePayload? = null
     var payload: GuarantorPayload? = null
@@ -60,7 +59,7 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddGuarantorBinding.inflate(inflater, container, false)
-        presenter?.attachView(this)
+        viewModel = ViewModelProvider(this)[AddGuarantorViewModel::class.java]
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))
         } else if (guarantorState == GuarantorState.UPDATE) {
@@ -71,6 +70,34 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.guarantorUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is GuarantorUiState.Loading -> showProgress()
+                is GuarantorUiState.ShowError -> {
+                    hideProgress()
+                    showError(it.message)
+                }
+                is GuarantorUiState.ShowGuarantorApplication -> {
+                    hideProgress()
+                    showGuarantorApplication(it.template)
+                }
+                is GuarantorUiState.ShowGuarantorUpdation -> {
+                    hideProgress()
+                    showGuarantorUpdation(it.template)
+                }
+                is GuarantorUiState.SubmittedSuccessfully -> {
+                    hideProgress()
+                    submittedSuccessfully(it.message, it.payload)
+                }
+                is GuarantorUiState.GuarantorUpdatedSuccessfully -> {
+                    hideProgress()
+                    updatedSuccessfully(it.message)
+                }
+                else -> throw IllegalStateException("Undesired $it")
+            }
+        }
+
         binding.btnSubmitGuarantor.setOnClickListener {
             onSubmit()
         }
@@ -78,7 +105,7 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter?.getGuarantorTemplate(guarantorState, loanId)
+        viewModel.getGuarantorTemplate(guarantorState, loanId)
     }
 
     fun onSubmit() {
@@ -90,9 +117,9 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         if (isFieldsCompleted) {
             guarantorApplicationPayload = generatePayload()
             if (guarantorState == GuarantorState.CREATE) {
-                presenter?.createGuarantor(loanId, guarantorApplicationPayload)
+                viewModel.createGuarantor(loanId, guarantorApplicationPayload)
             } else if (guarantorState == GuarantorState.UPDATE) {
-                presenter?.updateGuarantor(guarantorApplicationPayload, loanId, payload?.id)
+                viewModel.updateGuarantor(guarantorApplicationPayload, loanId, payload?.id)
             }
         }
     }
@@ -147,17 +174,16 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         return rv
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter?.detachView()
         hideProgressBar()
     }
 
@@ -166,12 +192,12 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         _binding = null
     }
 
-    override fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
+    fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
     }
 
-    override fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
+    fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
         with(binding) {
@@ -198,19 +224,19 @@ class AddGuarantorFragment : BaseFragment(), AddGuarantorView {
         }
     }
 
-    override fun updatedSuccessfully(message: String?) {
+    fun updatedSuccessfully(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         publish(UpdateGuarantorEvent(guarantorApplicationPayload, index))
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
+    fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         publish(AddGuarantorEvent(payload, index))
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun showError(message: String?) {
+    fun showError(message: String?) {
         Toaster.show(binding.root, message)
     }
 
