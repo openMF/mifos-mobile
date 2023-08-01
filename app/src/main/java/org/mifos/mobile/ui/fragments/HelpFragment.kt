@@ -13,19 +13,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentHelpBinding
 import org.mifos.mobile.models.FAQ
-import org.mifos.mobile.presenters.HelpPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.FAQAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.HelpView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
+import org.mifos.mobile.utils.HelpUiState
+import org.mifos.mobile.viewModels.HelpViewModel
 import javax.inject.Inject
 
 /*
@@ -33,7 +34,7 @@ import javax.inject.Inject
 ~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
 */
 @AndroidEntryPoint
-class HelpFragment : BaseFragment(), HelpView {
+class HelpFragment : BaseFragment() {
     private var _binding: FragmentHelpBinding? = null
     private val binding get() = _binding!!
 
@@ -41,9 +42,8 @@ class HelpFragment : BaseFragment(), HelpView {
     @Inject
     var faqAdapter: FAQAdapter? = null
 
-    @JvmField
-    @Inject
-    var presenter: HelpPresenter? = null
+    private lateinit var viewModel: HelpViewModel
+
     private var faqArrayList: ArrayList<FAQ?>? = null
     private lateinit var sweetUIErrorHandler: SweetUIErrorHandler
 
@@ -53,16 +53,30 @@ class HelpFragment : BaseFragment(), HelpView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHelpBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[HelpViewModel::class.java]
         val rootView = binding.root
         setHasOptionsMenu(true)
-        presenter?.attachView(this)
         setToolbarTitle(getString(R.string.help))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         showUserInterface()
         if (savedInstanceState == null) {
-            presenter?.loadFaq()
+            viewModel.loadFaq(
+                context?.resources?.getStringArray(R.array.faq_qs),
+                context?.resources?.getStringArray(R.array.faq_ans)
+            )
         }
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.helpUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is HelpUiState.ShowFaq -> {
+                    showFaq(it.faqArrayList)
+                }
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -119,7 +133,7 @@ class HelpFragment : BaseFragment(), HelpView {
         }
     }
 
-    override fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
+    fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
         faqAdapter?.setFaqArrayList(faqArrayList)
         binding.rvFaq.adapter = faqAdapter
         this.faqArrayList = faqArrayList
@@ -136,8 +150,8 @@ class HelpFragment : BaseFragment(), HelpView {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val filteredFAQList = presenter?.filterList(faqArrayList, newText)
-                filteredFAQList?.let {
+                val filteredFAQList = viewModel.filterList(faqArrayList, newText)
+                filteredFAQList.let {
                     if (it.isNotEmpty()) {
                         sweetUIErrorHandler.hideSweetErrorLayoutUI(
                             binding.rvFaq,
@@ -162,11 +176,11 @@ class HelpFragment : BaseFragment(), HelpView {
         )
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
