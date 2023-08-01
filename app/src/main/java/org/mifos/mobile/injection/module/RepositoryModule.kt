@@ -18,6 +18,7 @@ import org.mifos.mobile.repositories.RecentTransactionRepository
 import org.mifos.mobile.repositories.RecentTransactionRepositoryImp
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.repositories.UserAuthRepositoryImp
+import org.mifos.mobile.repositories.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -39,7 +40,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesNotificationRepository(dataManager: DataManager) : NotificationRepository {
+    fun providesNotificationRepository(dataManager: DataManager): NotificationRepository {
         return NotificationRepositoryImp(dataManager)
     }
 
@@ -52,6 +53,16 @@ class RepositoryModule {
 
     @Provides
     fun providesRecentTransactionRepository(dataManager: DataManager): RecentTransactionRepository {
-        return  RecentTransactionRepositoryImp(dataManager)
+        return RecentTransactionRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesGuarantorRepository(dataManager: DataManager): GuarantorRepository {
+        return GuarantorRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
+        return BeneficiaryRepositoryImp(dataManager)
     }
 }
