@@ -5,10 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.repositories.HomeRepository
-import org.mifos.mobile.repositories.HomeRepositoryImp
-import org.mifos.mobile.repositories.UserAuthRepository
-import org.mifos.mobile.repositories.UserAuthRepositoryImp
+import org.mifos.mobile.repositories.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,7 +17,12 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesHomeRepository(dataManager: DataManager) : HomeRepository {
+    fun providesHomeRepository(dataManager: DataManager): HomeRepository {
         return HomeRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesUserDetailRepository(dataManager: DataManager): UserDetailRepository {
+        return UserDetailRepositoryImp(dataManager)
     }
 }
