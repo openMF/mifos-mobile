@@ -441,5 +441,6 @@
     <string name="enter_tenant">ဥယျာဉ်စောင့် Enter</string>
     <string name="app_info">အက်ပ်အချက်အလက်</string>
     <string name="show_hide_total_saving_amount">စုစုပေါင်းချွေတာသည့်ပမာဏကို ပြပါ သို့မဟုတ် ဝှက်ပါ။</string>
+    <string name="login_failed">အကောင့်ဝင်ခြင်း မအောင်မြင်ပါ၊ ကျေးဇူးပြု၍ နောက်မှ ထပ်စမ်းကြည့်ပါ။</string>
 
 </resources>

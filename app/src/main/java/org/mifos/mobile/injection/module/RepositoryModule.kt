@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.*
 
 @Module
@@ -25,4 +26,37 @@ class RepositoryModule {
     fun providesUserDetailRepository(dataManager: DataManager): UserDetailRepository {
         return UserDetailRepositoryImp(dataManager)
     }
+    
+    @Provides
+    fun providesLoanRepository(dataManager: DataManager): LoanRepository {
+        return LoanRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesNotificationRepository(dataManager: DataManager): NotificationRepository {
+        return NotificationRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesClientRepository(
+        dataManager: DataManager, preferencesHelper: PreferencesHelper
+    ): ClientRepository {
+        return ClientRepositoryImp(dataManager, preferencesHelper)
+    }
+
+    @Provides
+    fun providesRecentTransactionRepository(dataManager: DataManager): RecentTransactionRepository {
+        return RecentTransactionRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesGuarantorRepository(dataManager: DataManager): GuarantorRepository {
+        return GuarantorRepositoryImp(dataManager)
+    }
+    
+    @Provides
+    fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
+        return BeneficiaryRepositoryImp(dataManager)
+    }
+    
 }
