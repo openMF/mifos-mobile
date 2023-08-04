@@ -1,13 +1,17 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.Credentials
-import org.mifos.mobile.api.BaseURL
+import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
+import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.Page
@@ -16,6 +20,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class ClientRepositoryImpTest {
@@ -37,30 +42,35 @@ class ClientRepositoryImpTest {
     }
 
     @Test
-    fun testLoadClient_SuccessResponseReceivedFromDataManager_ReturnsClientPageSuccessfully() {
-        val successResponse: Observable<Page<Client?>?> = Observable.just(mockClientPage)
-        Mockito.`when`(
-            dataManager.clients
-        ).thenReturn(successResponse)
+    fun testLoadClient_SuccessResponseReceivedFromDataManager_ReturnsClientPageSuccessfully() =
+        runBlocking {
+            Dispatchers.setMain(Dispatchers.Unconfined)
+            val successResponse: Response<Page<Client?>?> = Response.success(mockClientPage)
+            Mockito.`when`(
+                dataManager.clients()
+            ).thenReturn(successResponse)
 
-        val result = clientRepositoryImp.loadClient()
+            val result = clientRepositoryImp.loadClient()
 
-        Mockito.verify(dataManager).clients
-        Assert.assertEquals(result, successResponse)
-    }
+            Mockito.verify(dataManager).clients()
+            Assert.assertEquals(result, successResponse)
+            Dispatchers.resetMain()
+        }
 
     @Test
-    fun testLoadClient_ErrorResponseReceivedFromDataManager_ReturnsError() {
-        val errorResponse: Observable<Page<Client?>?> =
-            Observable.error(Throwable("Load Client Failed"))
+    fun testLoadClient_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking{
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val errorResponse: Response<Page<Client?>?> =
+            Response.error(404, ResponseBody.create(null,"error"))
         Mockito.`when`(
-            dataManager.clients
+            dataManager.clients()
         ).thenReturn(errorResponse)
 
         val result = clientRepositoryImp.loadClient()
 
-        Mockito.verify(dataManager).clients
+        Mockito.verify(dataManager).clients()
         Assert.assertEquals(result, errorResponse)
+        Dispatchers.resetMain()
     }
 
     @Test

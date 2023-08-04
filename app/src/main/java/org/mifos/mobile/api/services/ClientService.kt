@@ -6,6 +6,7 @@ import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.ClientAccounts
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -16,8 +17,8 @@ import retrofit2.http.Query
  */
 interface ClientService {
     // This is a default call and Loads client from 0 to 200
-    @get:GET(ApiEndPoints.CLIENTS)
-    val clients: Observable<Page<Client?>?>?
+    @GET(ApiEndPoints.CLIENTS)
+    suspend fun clients(): Response<Page<Client?>?>?
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
     fun getClientForId(@Path(CLIENT_ID) clientId: Long?): Observable<Client?>?
