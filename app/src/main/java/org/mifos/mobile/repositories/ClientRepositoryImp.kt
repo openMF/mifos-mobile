@@ -9,14 +9,15 @@ import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.utils.Constants
+import retrofit2.Response
 import javax.inject.Inject
 
 class ClientRepositoryImp @Inject constructor(
     private val dataManager: DataManager, private val preferencesHelper: PreferencesHelper
 ) : ClientRepository {
 
-    override fun loadClient(): Observable<Page<Client?>?>? {
-        return dataManager.clients
+    override suspend fun loadClient(): Response<Page<Client?>?>? {
+        return dataManager.clients()
     }
 
     /**
