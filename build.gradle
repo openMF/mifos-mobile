@@ -12,7 +12,7 @@ buildscript {
 
     ext {
         gradleVersion = '7.2.0'
-        crashlyticsGradleVersion = '2.9.5'
+        crashlyticsGradleVersion = '2.9.7'
         ossLicensesVersion = '0.10.5'
         googleServicesVersion = '4.3.15'
         kotlinGradlePluginversion = '1.6.21'
@@ -55,7 +55,7 @@ ext {
     countryCodePicker = '2.7.2'
     supportLibraryVersion = '1.4.2'
     designLibraryVersion = '1.9.0'
-    daggerVersion = '2.46.1'
+    daggerVersion = '2.47'
     recyclerViewVersion = '1.2.1'
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
@@ -74,11 +74,11 @@ ext {
     archCoreVersion = '2.2.0'
     coroutines = '1.6.4'
     jUnitVersion = '4.13.2'
-    mockitoVersion = '5.3.1'
-    runnerVersion = '1.6.0-alpha02'
+    mockitoVersion = '5.4.0'
+    runnerVersion = '1.6.0-alpha03'
     rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.5.1'
-    zxingcoreVersion = '3.5.1'
+    zxingcoreVersion = '3.5.2'
     zxingbarcodescannerVersion = '1.9.13'
     rxjavaVersion = '2.2.21'
     rxandroidVersion = '2.1.1'
@@ -86,7 +86,7 @@ ext {
     mifosPasscodeVersion = '1.0.0'
     cropviewVersion = '1.1.8'
     multiDexVersion = '2.0.1'
-    annotationLibraryVersion = '1.1.0'
-    firebaseCrashlyticsVersion = '18.3.7'
+    annotationLibraryVersion ='1.1.0'
+    firebaseCrashlyticsVersion = '18.4.0'
 
 }
