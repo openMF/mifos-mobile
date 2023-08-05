@@ -2,7 +2,11 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -18,6 +22,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class LoanApplicationViewModelTest {
@@ -45,10 +50,11 @@ class LoanApplicationViewModelTest {
     }
 
     @Test
-    fun testLoadLoanApplicationTemplate_Successful() {
+    fun testLoadLoanApplicationTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanTemplate::class.java)
         val mockLoanState = mock(LoanState::class.java)
-        `when`(loanRepositoryImp.template()).thenReturn(Observable.just(response))
+        `when`(loanRepositoryImp.template()).thenReturn(Response.success(response))
         viewModel.loadLoanApplicationTemplate(mockLoanState)
 
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
@@ -63,25 +69,33 @@ class LoanApplicationViewModelTest {
             )
             verifyNoMoreInteractions(loanUiStateObserver)
         }
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testLoadLoanApplicationTemplate_Unsuccessful() {
-        val error = RuntimeException("Error Response")
+    fun testLoadLoanApplicationTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val loanState = mock(LoanState::class.java)
-        `when`(loanRepositoryImp.template()).thenReturn(Observable.error(error))
+        `when`(loanRepositoryImp.template()).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "error")
+            )
+        )
         viewModel.loadLoanApplicationTemplate(loanState)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_fetching_template))
         verifyNoMoreInteractions(loanUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun loadLoanApplicationTemplateByProduct_Successful() {
+    fun loadLoanApplicationTemplateByProduct_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanTemplate::class.java)
         val mockLoanState = mock(LoanState::class.java)
 
-        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(Observable.just(response))
+        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(Response.success(response))
         viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         if (mockLoanState == LoanState.CREATE) {
@@ -95,18 +109,25 @@ class LoanApplicationViewModelTest {
             )
             verifyNoMoreInteractions(loanUiStateObserver)
         }
+        Dispatchers.resetMain()
 
     }
 
     @Test
-    fun loadLoanApplicationTemplateByProduct_Unsuccessful() {
-        val error = RuntimeException("Error Response")
+    fun loadLoanApplicationTemplateByProduct_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoanState = mock(LoanState::class.java)
-        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(Observable.error(error))
+        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "error")
+            )
+        )
         viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_fetching_template))
         verifyNoMoreInteractions(loanUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @After

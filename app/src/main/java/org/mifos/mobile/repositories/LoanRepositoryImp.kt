@@ -1,34 +1,34 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.models.templates.loans.LoanTemplate
+import retrofit2.Response
 import javax.inject.Inject
 
 class LoanRepositoryImp @Inject constructor(private val dataManager: DataManager) : LoanRepository {
 
-    override fun getLoanWithAssociations(
+    override suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
-    ): Observable<LoanWithAssociations?>? {
+    ): Response<LoanWithAssociations?>? {
         return dataManager.getLoanWithAssociations(associationType, loanId)
     }
 
-    override fun withdrawLoanAccount(
+    override suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return dataManager.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    override fun template(): Observable<LoanTemplate?>? {
-        return dataManager.loanTemplate
+    override suspend fun template(): Response<LoanTemplate?>? {
+        return dataManager.loanTemplate()
     }
 
-    override fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate?>? {
+    override suspend fun getLoanTemplateByProduct(productId: Int?): Response<LoanTemplate?>? {
         return dataManager.getLoanTemplateByProduct(productId)
     }
 }

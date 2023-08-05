@@ -1,7 +1,10 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
@@ -16,6 +19,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class LoanRepositoryImpTest {
@@ -34,9 +38,10 @@ class LoanRepositoryImpTest {
     }
 
     @Test
-    fun testGetLoanWithAssociations_Successful() {
-        val success: Observable<LoanWithAssociations?> =
-            Observable.just(Mockito.mock(LoanWithAssociations::class.java))
+    fun testGetLoanWithAssociations_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<LoanWithAssociations?> =
+            Response.success(Mockito.mock(LoanWithAssociations::class.java))
 
         `when`(
             dataManager.getLoanWithAssociations(
@@ -51,12 +56,14 @@ class LoanRepositoryImpTest {
         )
         verify(dataManager).getLoanWithAssociations(Mockito.anyString(), Mockito.anyLong())
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetLoanWithAssociations_Unsuccessful() {
-        val error: Observable<LoanWithAssociations?> =
-            Observable.error(Throwable("Failed to fetch loan with associations"))
+    fun testGetLoanWithAssociations_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<LoanWithAssociations?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         `when`(
             dataManager.getLoanWithAssociations(
                 Mockito.anyString(),
@@ -71,12 +78,14 @@ class LoanRepositoryImpTest {
 
         verify(dataManager).getLoanWithAssociations(Mockito.anyString(), Mockito.anyLong())
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testWithdrawLoanAccount_Successful() {
-        val success: Observable<ResponseBody?> =
-            Observable.just(Mockito.mock(ResponseBody::class.java))
+    fun testWithdrawLoanAccount_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<ResponseBody?> =
+            Response.success(Mockito.mock(ResponseBody::class.java))
 
         `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(success)
 
@@ -86,57 +95,67 @@ class LoanRepositoryImpTest {
     }
 
     @Test
-    fun testWithdrawLoanAccount_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Failed to withdraw loan account"))
+    fun testWithdrawLoanAccount_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(error)
 
         val result = loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
         verify(dataManager).withdrawLoanAccount(1, loanWithdraw)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testTemplate_Successful() {
-        val success: Observable<LoanTemplate?> =
-            Observable.just(Mockito.mock(LoanTemplate::class.java))
-        `when`(dataManager.loanTemplate).thenReturn(success)
+    fun testTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<LoanTemplate?> =
+            Response.success(Mockito.mock(LoanTemplate::class.java))
+        `when`(dataManager.loanTemplate()).thenReturn(success)
 
         val result = loanRepositoryImp.template()
-        verify(dataManager).loanTemplate
+        verify(dataManager).loanTemplate()
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testTemplate_Unsuccessful() {
-        val error: Observable<LoanTemplate?> =
-            Observable.error(Throwable("Failed to load template"))
-        `when`(dataManager.loanTemplate).thenReturn(error)
+    fun testTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<LoanTemplate?> =
+            Response.error(404, ResponseBody.create(null, "error"))
+        `when`(dataManager.loanTemplate()).thenReturn(error)
 
         val result = loanRepositoryImp.template()
-        verify(dataManager).loanTemplate
+        verify(dataManager).loanTemplate()
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetLoanTemplateByProduct_Successful() {
-        val success: Observable<LoanTemplate?> =
-            Observable.just(Mockito.mock(LoanTemplate::class.java))
+    fun testGetLoanTemplateByProduct_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<LoanTemplate?> =
+            Response.success(Mockito.mock(LoanTemplate::class.java))
         `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(success)
 
         val result = loanRepositoryImp.getLoanTemplateByProduct(1)
         verify(dataManager).getLoanTemplateByProduct(1)
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetLoanTemplateByProduct_Unsuccessful() {
-        val error: Observable<LoanTemplate?> =
-            Observable.error(Throwable("Failed to get loan template by product"))
+    fun testGetLoanTemplateByProduct_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<LoanTemplate?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(error)
 
         val result = loanRepositoryImp.getLoanTemplateByProduct(1)
         verify(dataManager).getLoanTemplateByProduct(1)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 }

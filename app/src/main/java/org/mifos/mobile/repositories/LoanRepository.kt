@@ -1,26 +1,26 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.models.templates.loans.LoanTemplate
+import retrofit2.Response
 
 interface LoanRepository {
 
-    fun getLoanWithAssociations(
+    suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
-    ): Observable<LoanWithAssociations?>?
+    ): Response<LoanWithAssociations?>?
 
-    fun withdrawLoanAccount(
+    suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
-    fun template(): Observable<LoanTemplate?>?
+    suspend fun template(): Response<LoanTemplate?>?
 
-    fun getLoanTemplateByProduct(
+    suspend fun getLoanTemplateByProduct(
         productId: Int?
-    ): Observable<LoanTemplate?>?
+    ): Response<LoanTemplate?>?
 }
