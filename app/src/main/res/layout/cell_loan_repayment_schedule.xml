@@ -9,6 +9,7 @@
     android:id="@+id/cell_container"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/cell_height"
+    android:backgroundTint="?android:attr/windowBackground"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
@@ -21,6 +22,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center"
         android:maxLines="1"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:visibility="visible"
         tools:text="Cell Data" />
 

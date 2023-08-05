@@ -10,6 +10,7 @@
     android:id="@+id/column_header_container"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/default_column_header_height"
+    android:backgroundTint="?android:attr/windowBackground"
     android:orientation="vertical">
 
 
@@ -21,6 +22,7 @@
         android:layout_gravity="center"
         android:layout_weight="4"
         android:gravity="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         tools:text="Header Data" />
 
 
