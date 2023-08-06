@@ -1,14 +1,14 @@
 package org.mifos.mobile.repositories
 
 
-import io.reactivex.Observable
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.Transaction
+import retrofit2.Response
 
 interface RecentTransactionRepository {
 
-    fun recentTransactions(
+    suspend fun recentTransactions(
         offset: Int?,
         limit: Int?
-    ): Observable<Page<Transaction?>?>?
+    ): Response<Page<Transaction?>?>?
 }

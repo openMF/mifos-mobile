@@ -8,11 +8,7 @@ import okhttp3.ResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.Charge
-import org.mifos.mobile.models.Page
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.models.UpdatePasswordPayload
-import org.mifos.mobile.models.User
+import org.mifos.mobile.models.*
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
@@ -71,7 +67,7 @@ class DataManager @Inject constructor(
         return baseApiManager.clientsApi?.getAccounts(clientId, accountType)
     }
 
-    fun getRecentTransactions(offset: Int, limit: Int): Observable<Page<Transaction?>?>? {
+    suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
         return baseApiManager.recentTransactionsApi
             ?.getRecentTransactionsList(clientId, offset, limit)
     }
