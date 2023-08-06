@@ -8,11 +8,7 @@ import okhttp3.ResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.Charge
-import org.mifos.mobile.models.Page
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.models.UpdatePasswordPayload
-import org.mifos.mobile.models.User
+import org.mifos.mobile.models.*
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
@@ -233,7 +229,7 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi?.getUserNotificationId(id)
     }
 
-    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody?>? {
+    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
         return baseApiManager.userDetailsService?.updateAccountPassword(payload)
     }
 

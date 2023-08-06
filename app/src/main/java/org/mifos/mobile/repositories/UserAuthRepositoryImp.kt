@@ -3,9 +3,9 @@ package org.mifos.mobile.repositories
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.payload.LoginPayload
-import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.models.register.UserVerify
 import retrofit2.Response
@@ -53,9 +53,9 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         return dataManager.verifyUser(userVerify)
     }
 
-    override fun updateAccountPassword(
+    override suspend fun updateAccountPassword(
         newPassword: String, confirmPassword: String
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         val payload = UpdatePasswordPayload().apply {
             this.password = newPassword
             this.repeatPassword = confirmPassword
