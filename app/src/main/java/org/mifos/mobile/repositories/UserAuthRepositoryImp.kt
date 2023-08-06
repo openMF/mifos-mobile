@@ -8,6 +8,7 @@ import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.models.register.UserVerify
+import retrofit2.Response
 import javax.inject.Inject
 
 class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
@@ -35,7 +36,7 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         return dataManager.registerUser(registerPayload)
     }
 
-    override fun login(username: String, password: String): Observable<User?>? {
+    override suspend fun login(username: String, password: String): Response<User?>? {
         val loginPayload = LoginPayload().apply {
             this.username = username
             this.password = password
