@@ -2,7 +2,11 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -18,6 +22,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 
 @RunWith(MockitoJUnitRunner::class)
@@ -46,7 +51,8 @@ class LoanAccountsDetailViewModelTest {
     }
 
     @Test
-    fun testLoadLoanAccountDetails_Successful() {
+    fun testLoadLoanAccountDetails_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanWithAssociations::class.java)
 
         `when`(
@@ -54,28 +60,30 @@ class LoanAccountsDetailViewModelTest {
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(Observable.just(response))
+        ).thenReturn(Response.success(response))
 
         viewModel.loadLoanAccountDetails(1)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowLoan(response))
         verifyNoMoreInteractions(loanUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testLoadLoanAccountDetails_Unsuccessful() {
-        val error = RuntimeException("Error Response")
+    fun testLoadLoanAccountDetails_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(Observable.error(error))
+        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
 
         viewModel.loadLoanAccountDetails(1)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.loan_account_details))
         verifyNoMoreInteractions(loanUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @After
