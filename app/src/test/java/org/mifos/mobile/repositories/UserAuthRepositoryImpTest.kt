@@ -1,6 +1,10 @@
 package org.mifos.mobile.repositories
 
 import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
@@ -16,6 +20,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class UserAuthRepositoryImpTest {
@@ -24,7 +29,7 @@ class UserAuthRepositoryImpTest {
     lateinit var dataManager: DataManager
 
     private lateinit var userAuthRepositoryImp: UserAuthRepository
-    private lateinit var mockUser : User
+    private lateinit var mockUser: User
 
 
     @Before
@@ -98,12 +103,13 @@ class UserAuthRepositoryImpTest {
     }
 
     @Test
-    fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() {
+    fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoginPayload = LoginPayload().apply {
             this.username = "username"
             this.password = "password"
         }
-        val successResponse : Observable<User?> = Observable.just(mockUser)
+        val successResponse: Response<User?> = Response.success(mockUser)
         Mockito.`when`(
             dataManager.login(mockLoginPayload)
         ).thenReturn(successResponse)
@@ -112,15 +118,17 @@ class UserAuthRepositoryImpTest {
 
         Mockito.verify(dataManager).login(mockLoginPayload)
         Assert.assertEquals(result, successResponse)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() {
+    fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoginPayload = LoginPayload().apply {
             this.username = "username"
             this.password = "password"
         }
-        val errorResponse : Observable<User?> = Observable.error(Throwable("Login Failed"))
+        val errorResponse: Response<User?> = Response.error(404, ResponseBody.create(null, "error"))
         Mockito.`when`(
             dataManager.login(mockLoginPayload)
         ).thenReturn(errorResponse)
@@ -129,6 +137,7 @@ class UserAuthRepositoryImpTest {
 
         Mockito.verify(dataManager).login(mockLoginPayload)
         Assert.assertEquals(result, errorResponse)
+        Dispatchers.resetMain()
     }
 
     @Test

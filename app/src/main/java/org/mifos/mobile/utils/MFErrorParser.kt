@@ -17,7 +17,7 @@ object MFErrorParser {
         var errorMessage: String? = ""
         try {
             if (throwableError is HttpException) {
-                errorMessage = throwableError.response().errorBody().string()
+                errorMessage = throwableError.response()?.errorBody()?.string()
                 errorMessage = parseError(errorMessage).errors[0].defaultUserMessage
             }
         } catch (throwable: Throwable) {

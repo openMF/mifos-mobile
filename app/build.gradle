@@ -161,6 +161,7 @@ dependencies {
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTest"
 
     // Unit tests dependencies  
     testImplementation "junit:junit:$rootProject.jUnitVersion"
