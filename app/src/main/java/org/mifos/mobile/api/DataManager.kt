@@ -199,11 +199,11 @@ class DataManager @Inject constructor(
         return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)
     }
 
-    fun registerUser(registerPayload: RegisterPayload?): Observable<ResponseBody?>? {
+    suspend fun registerUser(registerPayload: RegisterPayload?): Response<ResponseBody?>? {
         return baseApiManager.registrationApi?.registerUser(registerPayload)
     }
 
-    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody?>? {
+    suspend fun verifyUser(userVerify: UserVerify?): Response<ResponseBody?>? {
         return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
