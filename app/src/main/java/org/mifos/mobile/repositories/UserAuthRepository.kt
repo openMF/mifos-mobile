@@ -22,8 +22,8 @@ interface UserAuthRepository {
 
     fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>?
 
-    fun updateAccountPassword(
+    suspend fun updateAccountPassword(
         newPassword: String, confirmPassword: String
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
 }
