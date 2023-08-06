@@ -3,12 +3,9 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
@@ -20,7 +17,6 @@ class UpdatePasswordViewModel @Inject constructor(
     private val clientRepositoryImp: ClientRepository
 ) : ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
     private val _updatePasswordUiState = MutableLiveData<RegistrationUiState>()
     val updatePasswordUiState: LiveData<RegistrationUiState> get() = _updatePasswordUiState
     fun isInputFieldEmpty(fieldText: String): Boolean {
@@ -36,27 +32,24 @@ class UpdatePasswordViewModel @Inject constructor(
     }
 
     fun updateAccountPassword(newPassword: String, confirmPassword: String) {
-        _updatePasswordUiState.value = RegistrationUiState.Loading
-        userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
+        viewModelScope.launch {
+            _updatePasswordUiState.value = RegistrationUiState.Loading
+            val response = userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)
+
+            try {
+                if (response?.isSuccessful == true) {
                     _updatePasswordUiState.value = RegistrationUiState.Success
                     clientRepositoryImp.updateAuthenticationToken(newPassword)
+                } else {
+                    _updatePasswordUiState.value =
+                        RegistrationUiState.Error(Throwable(response?.body()?.string()))
                 }
+            } catch (e: Throwable) {
+                _updatePasswordUiState.value =
+                    RegistrationUiState.Error(e)
+            }
 
-                override fun onError(e: Throwable) {
-                    _updatePasswordUiState.value = RegistrationUiState.Error(e)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposable.add(it) }
+        }
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
 }

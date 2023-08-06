@@ -220,7 +220,7 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi?.getUserNotificationId(id)
     }
 
-    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody?>? {
+    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
         return baseApiManager.userDetailsService?.updateAccountPassword(payload)
     }
 
