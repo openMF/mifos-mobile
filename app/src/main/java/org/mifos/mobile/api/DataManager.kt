@@ -145,18 +145,18 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi?.getLoanAccountsDetail(loanId)
     }
 
-    fun getLoanWithAssociations(
+    suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?,
-    ): Observable<LoanWithAssociations?>? {
+    ): Response<LoanWithAssociations?>? {
         return baseApiManager.loanAccountsListApi
             ?.getLoanWithAssociations(loanId, associationType)
     }
 
-    val loanTemplate: Observable<LoanTemplate?>?
-        get() = baseApiManager.loanAccountsListApi?.getLoanTemplate(clientId)
+    suspend fun loanTemplate(): Response<LoanTemplate?>? =
+        baseApiManager.loanAccountsListApi?.getLoanTemplate(clientId)
 
-    fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate?>? {
+    suspend fun getLoanTemplateByProduct(productId: Int?): Response<LoanTemplate?>? {
         return baseApiManager.loanAccountsListApi
             ?.getLoanTemplateByProduct(clientId, productId)
     }
@@ -169,10 +169,10 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi?.updateLoanAccount(loanId, loansPayload)
     }
 
-    fun withdrawLoanAccount(
+    suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.loanAccountsListApi?.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
