@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
 
-    override fun registerUser(
+    override suspend fun registerUser(
         accountNumber: String?,
         authenticationMode: String?,
         email: String?,
@@ -22,7 +22,7 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         mobileNumber: String?,
         password: String?,
         username: String?
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         val registerPayload = RegisterPayload().apply {
             this.accountNumber = accountNumber
             this.authenticationMode = authenticationMode
@@ -45,7 +45,7 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
     }
 
 
-    override fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>? {
+    override suspend fun verifyUser(authenticationToken: String?, requestId: String?): Response<ResponseBody?>? {
         val userVerify = UserVerify().apply {
             this.authenticationToken = authenticationToken
             this.requestId = requestId

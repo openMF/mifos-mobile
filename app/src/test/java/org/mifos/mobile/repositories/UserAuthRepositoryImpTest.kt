@@ -1,6 +1,5 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -40,67 +39,74 @@ class UserAuthRepositoryImpTest {
     }
 
     @Test
-    fun testRegisterUser_SuccessResponseReceivedFromDataManager_ReturnSuccessfulRegistration() {
-        val successResponse: Observable<ResponseBody?> =
-            Observable.just(Mockito.mock(ResponseBody::class.java))
-        val registerPayload = RegisterPayload().apply {
-            this.accountNumber = "accountNumber"
-            this.authenticationMode = "authenticationMode"
-            this.email = "email"
-            this.firstName = "firstName"
-            this.lastName = "lastName"
-            this.mobileNumber = "mobileNumber"
-            this.password = "password"
-            this.username = "username"
+    fun testRegisterUser_SuccessResponseReceivedFromDataManager_ReturnSuccessfulRegistration() =
+        runBlocking {
+            Dispatchers.setMain(Dispatchers.Unconfined)
+            val successResponse: Response<ResponseBody?> =
+                Response.success(Mockito.mock(ResponseBody::class.java))
+            val registerPayload = RegisterPayload().apply {
+                this.accountNumber = "accountNumber"
+                this.authenticationMode = "authenticationMode"
+                this.email = "email"
+                this.firstName = "firstName"
+                this.lastName = "lastName"
+                this.mobileNumber = "mobileNumber"
+                this.password = "password"
+                this.username = "username"
+            }
+
+            Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(successResponse)
+
+            val result = userAuthRepositoryImp.registerUser(
+                registerPayload.accountNumber,
+                registerPayload.authenticationMode,
+                registerPayload.email,
+                registerPayload.firstName,
+                registerPayload.lastName,
+                registerPayload.mobileNumber,
+                registerPayload.password,
+                registerPayload.username
+            )
+
+            Mockito.verify(dataManager).registerUser(registerPayload)
+            Assert.assertEquals(result, successResponse)
+            Dispatchers.resetMain()
         }
-
-        Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(successResponse)
-
-        val result = userAuthRepositoryImp.registerUser(
-            registerPayload.accountNumber,
-            registerPayload.authenticationMode,
-            registerPayload.email,
-            registerPayload.firstName,
-            registerPayload.lastName,
-            registerPayload.mobileNumber,
-            registerPayload.password,
-            registerPayload.username
-        )
-
-        Mockito.verify(dataManager).registerUser(registerPayload)
-        Assert.assertEquals(result, successResponse)
-    }
 
     @Test
-    fun testRegisterUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistration() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable("Registration Failed"))
-        val registerPayload = RegisterPayload().apply {
-            this.accountNumber = "accountNumber"
-            this.authenticationMode = "authenticationMode"
-            this.email = "email"
-            this.firstName = "firstName"
-            this.lastName = "lastName"
-            this.mobileNumber = "mobileNumber"
-            this.password = "password"
-            this.username = "username"
+    fun testRegisterUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistration() =
+        runBlocking {
+            Dispatchers.setMain(Dispatchers.Unconfined)
+            val error: Response<ResponseBody?> =
+                Response.error(404, ResponseBody.create(null, "error"))
+            val registerPayload = RegisterPayload().apply {
+                this.accountNumber = "accountNumber"
+                this.authenticationMode = "authenticationMode"
+                this.email = "email"
+                this.firstName = "firstName"
+                this.lastName = "lastName"
+                this.mobileNumber = "mobileNumber"
+                this.password = "password"
+                this.username = "username"
+            }
+
+            Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(error)
+
+            val result = userAuthRepositoryImp.registerUser(
+                registerPayload.accountNumber,
+                registerPayload.authenticationMode,
+                registerPayload.email,
+                registerPayload.firstName,
+                registerPayload.lastName,
+                registerPayload.mobileNumber,
+                registerPayload.password,
+                registerPayload.username
+            )
+
+            Mockito.verify(dataManager).registerUser(registerPayload)
+            Assert.assertEquals(result, error)
+            Dispatchers.resetMain()
         }
-
-        Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(error)
-
-        val result = userAuthRepositoryImp.registerUser(
-            registerPayload.accountNumber,
-            registerPayload.authenticationMode,
-            registerPayload.email,
-            registerPayload.firstName,
-            registerPayload.lastName,
-            registerPayload.mobileNumber,
-            registerPayload.password,
-            registerPayload.username
-        )
-
-        Mockito.verify(dataManager).registerUser(registerPayload)
-        Assert.assertEquals(result, error)
-    }
 
     @Test
     fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() = runBlocking {
@@ -141,32 +147,43 @@ class UserAuthRepositoryImpTest {
     }
 
     @Test
-    fun testVerifyUser_SuccessResponseReceivedFromDataManager_ReturnsSuccessfulRegistrationVerification() {
-        val successResponse: Observable<ResponseBody?> =
-            Observable.just(Mockito.mock(ResponseBody::class.java))
-        Mockito.`when`(
-            dataManager.verifyUser(userVerify)
-        ).thenReturn(successResponse)
+    fun testVerifyUser_SuccessResponseReceivedFromDataManager_ReturnsSuccessfulRegistrationVerification() =
+        runBlocking {
+            Dispatchers.setMain(Dispatchers.Unconfined)
+            val successResponse: Response<ResponseBody?> =
+                Response.success(Mockito.mock(ResponseBody::class.java))
+            Mockito.`when`(
+                dataManager.verifyUser(userVerify)
+            ).thenReturn(successResponse)
 
-        val result =
-            userAuthRepositoryImp.verifyUser(userVerify.authenticationToken, userVerify.requestId)
+            val result =
+                userAuthRepositoryImp.verifyUser(
+                    userVerify.authenticationToken,
+                    userVerify.requestId
+                )
 
-        Mockito.verify(dataManager).verifyUser(userVerify)
-        Assert.assertEquals(result, successResponse)
-    }
+            Mockito.verify(dataManager).verifyUser(userVerify)
+            Assert.assertEquals(result, successResponse)
+            Dispatchers.resetMain()
+        }
 
     @Test
-    fun testVerifyUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistrationVerification() {
-        val errorResponse: Observable<ResponseBody?> =
-            Observable.error(Throwable("RegistrationVerification failed"))
-        Mockito.`when`(
-            dataManager.verifyUser(userVerify)
-        ).thenReturn(errorResponse)
+    fun testVerifyUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistrationVerification() =
+        runBlocking {
+            Dispatchers.setMain(Dispatchers.Unconfined)
+            val errorResponse: Response<ResponseBody?> =
+                Response.error(404, ResponseBody.create(null, "error"))
+            Mockito.`when`(
+                dataManager.verifyUser(userVerify)
+            ).thenReturn(errorResponse)
 
-        val result =
-            userAuthRepositoryImp.verifyUser(userVerify.authenticationToken, userVerify.requestId)
-        Mockito.verify(dataManager).verifyUser(userVerify)
-        Assert.assertEquals(result, errorResponse)
-
-    }
+            val result =
+                userAuthRepositoryImp.verifyUser(
+                    userVerify.authenticationToken,
+                    userVerify.requestId
+                )
+            Mockito.verify(dataManager).verifyUser(userVerify)
+            Assert.assertEquals(result, errorResponse)
+            Dispatchers.resetMain()
+        }
 }

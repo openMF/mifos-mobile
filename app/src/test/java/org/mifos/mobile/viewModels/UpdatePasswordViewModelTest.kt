@@ -100,6 +100,22 @@ class UpdatePasswordViewModelTest {
         Dispatchers.resetMain()
     }
 
+    @Test
+    fun testUpdateAccountPassword_ErrorReceivedFromRepository_ReturnsError() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        Mockito.`when`(
+            userAuthRepositoryImp.updateAccountPassword(Mockito.anyString(), Mockito.anyString())
+        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+
+        updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
+
+        Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Loading)
+        Mockito.verify(updatePasswordUiStateObserver)
+            .onChanged(Mockito.any(RegistrationUiState.Error::class.java))
+        Mockito.verifyNoMoreInteractions(updatePasswordUiStateObserver)
+        Dispatchers.resetMain()
+    }
+
     @After
     fun tearDown() {
         updatePasswordViewModel.updatePasswordUiState.removeObserver(updatePasswordUiStateObserver)

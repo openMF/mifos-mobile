@@ -5,6 +5,7 @@ import okhttp3.ResponseBody
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.models.register.UserVerify
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -13,8 +14,8 @@ import retrofit2.http.POST
  */
 interface RegistrationService {
     @POST(ApiEndPoints.REGISTRATION)
-    fun registerUser(@Body registerPayload: RegisterPayload?): Observable<ResponseBody?>?
+    suspend fun registerUser(@Body registerPayload: RegisterPayload?): Response<ResponseBody?>?
 
     @POST(ApiEndPoints.REGISTRATION + "/user")
-    fun verifyUser(@Body userVerify: UserVerify?): Observable<ResponseBody?>?
+    suspend fun verifyUser(@Body userVerify: UserVerify?): Response<ResponseBody?>?
 }
