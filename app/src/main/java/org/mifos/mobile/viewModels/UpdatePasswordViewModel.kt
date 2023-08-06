@@ -42,13 +42,12 @@ class UpdatePasswordViewModel @Inject constructor(
                     clientRepositoryImp.updateAuthenticationToken(newPassword)
                 } else {
                     _updatePasswordUiState.value =
-                        RegistrationUiState.Error(Throwable(response?.body()?.string()))
+                        response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
                 }
             } catch (e: Throwable) {
                 _updatePasswordUiState.value =
-                    RegistrationUiState.Error(e)
+                    response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
             }
-
         }
     }
 

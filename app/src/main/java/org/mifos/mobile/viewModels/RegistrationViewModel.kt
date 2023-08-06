@@ -4,12 +4,9 @@ import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
@@ -17,7 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(private val userAuthRepositoryImp: UserAuthRepository) :
     ViewModel() {
-    private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
     private val _registrationUiState = MutableLiveData<RegistrationUiState>()
     val registrationUiState: LiveData<RegistrationUiState> get() = _registrationUiState
@@ -56,49 +52,38 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         password: String,
         username: String
     ) {
-        _registrationUiState.value = RegistrationUiState.Loading
-        userAuthRepositoryImp.registerUser(
-            accountNumber,
-            authenticationMode,
-            email,
-            firstName,
-            lastName,
-            mobileNumber,
-            password,
-            username
-        )?.observeOn(AndroidSchedulers.mainThread())?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _registrationUiState.value = RegistrationUiState.Error(e)
-                }
-
-                override fun onNext(responseBody: ResponseBody) {
-                    _registrationUiState.value = RegistrationUiState.Success
-                }
-            })?.let { compositeDisposables.add(it) }
+        viewModelScope.launch {
+            _registrationUiState.value = RegistrationUiState.Loading
+            val response = userAuthRepositoryImp.registerUser(
+                accountNumber,
+                authenticationMode,
+                email,
+                firstName,
+                lastName,
+                mobileNumber,
+                password,
+                username
+            )
+            if (response?.isSuccessful == true) {
+                _registrationUiState.value = RegistrationUiState.Success
+            } else {
+                _registrationUiState.value =
+                    response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
+            }
+        }
     }
 
     fun verifyUser(authenticationToken: String?, requestId: String?) {
-        _registrationVerificationUiState.value = RegistrationUiState.Loading
-        userAuthRepositoryImp.verifyUser(authenticationToken, requestId)?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _registrationVerificationUiState.value =
-                        RegistrationUiState.Error(e)
-                }
-
-                override fun onNext(responseBody: ResponseBody) {
-                    _registrationVerificationUiState.value =
-                        RegistrationUiState.Success
-                }
-            })?.let { compositeDisposables.add(it) }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposables.clear()
+        viewModelScope.launch {
+            _registrationVerificationUiState.value = RegistrationUiState.Loading
+            val response = userAuthRepositoryImp.verifyUser(authenticationToken, requestId)
+            if (response?.isSuccessful == true) {
+                _registrationVerificationUiState.value =
+                    RegistrationUiState.Success
+            } else {
+                _registrationVerificationUiState.value =
+                    response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
+            }
+        }
     }
 }
