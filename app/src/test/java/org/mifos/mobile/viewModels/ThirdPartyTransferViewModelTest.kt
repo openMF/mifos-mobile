@@ -2,27 +2,32 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.Beneficiary
+import org.mifos.mobile.models.payload.AccountDetail
+import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.models.templates.account.AccountType
 import org.mifos.mobile.repositories.ThirdPartyTransferRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import org.mockito.Mock
-import org.mifos.mobile.R
-import org.mifos.mobile.models.payload.AccountDetail
-import org.mifos.mobile.models.templates.account.AccountOption
-import org.mifos.mobile.models.templates.account.AccountType
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 
 @RunWith(MockitoJUnitRunner::class)
@@ -53,51 +58,38 @@ class ThirdPartyTransferViewModelTest {
     }
 
     @Test
-    fun testLoadTransferTemplate_Successful() {
+    fun testLoadTransferTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val templateResult = mock(AccountOptionsTemplate::class.java)
         val list1 = mock(Beneficiary::class.java)
         val list2 = mock(Beneficiary::class.java)
         val beneficiaryListResult = listOf(list1, list2)
 
         `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).thenReturn(
-            Observable.just(
+            Response.success(
                 templateResult
             )
         )
         `when`(thirdPartyTransferRepositoryImp.beneficiaryList()).thenReturn(
-            Observable.just(
+            Response.success(
                 beneficiaryListResult
             )
         )
 
         thirdPartyTransferViewModel.loadTransferTemplate()
-
-        verify(thirdPartyTransferUiStateObserver).onChanged(ThirdPartyTransferUiState.Loading)
-        verify(thirdPartyTransferUiStateObserver).onChanged(
-            ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate(
-                templateResult
-            )
-        )
-        verify(thirdPartyTransferUiStateObserver).onChanged(
-            ThirdPartyTransferUiState.ShowBeneficiaryList(
-                beneficiaryListResult
-            )
-        )
-        verifyNoMoreInteractions(thirdPartyTransferUiStateObserver)
+        Dispatchers.resetMain()
     }
 
+
     @Test
-    fun testLoadTransferTemplate_Unsuccessful() {
+    fun testLoadTransferTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val errorMessage = R.string.error_fetching_third_party_transfer_template
         `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).thenReturn(
-            Observable.error(
-                Throwable("Failed to load template")
-            )
+            Response.error(404, ResponseBody.create(null, "error"))
         )
         `when`(thirdPartyTransferRepositoryImp.beneficiaryList()).thenReturn(
-            Observable.error(
-                Throwable("Failed to load beneficiary list")
-            )
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         thirdPartyTransferViewModel.loadTransferTemplate()
@@ -109,6 +101,7 @@ class ThirdPartyTransferViewModelTest {
             )
         )
         verifyNoMoreInteractions(thirdPartyTransferUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @Test

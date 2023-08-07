@@ -128,13 +128,15 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(Constants.TEMPLATE, accountOptionsTemplate)
-        outState.putParcelableArrayList(
-            Constants.BENEFICIARY,
-            ArrayList<Parcelable?>(
-                beneficiaries,
-            ),
-        )
+        accountOptionsTemplate?.let {
+            outState.putParcelable(Constants.TEMPLATE, it)
+        }
+        beneficiaries?.let {
+            outState.putParcelableArrayList(
+                Constants.BENEFICIARY,
+                ArrayList<Parcelable?>(it),
+            )
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

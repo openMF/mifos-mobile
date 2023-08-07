@@ -1,7 +1,11 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,6 +17,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class ThirdPartyTransferRepositoryImpTest {
@@ -29,53 +34,58 @@ class ThirdPartyTransferRepositoryImpTest {
     }
 
     @Test
-    fun testThirdPartyTransferTemplate_Successful() {
-        val response: Observable<AccountOptionsTemplate?> =
-            Observable.just(Mockito.mock(AccountOptionsTemplate::class.java))
+    fun testThirdPartyTransferTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val response: Response<AccountOptionsTemplate?> =
+            Response.success(Mockito.mock(AccountOptionsTemplate::class.java))
 
-        `when`(dataManager.thirdPartyTransferTemplate).thenReturn(response)
+        `when`(dataManager.thirdPartyTransferTemplate()).thenReturn(response)
 
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
 
         assertEquals(result, response)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testThirdPartyTransferTemplate_Unsuccessful() {
-        val error: Observable<AccountOptionsTemplate?> =
-            Observable.error(Throwable("Failed to load template"))
-        `when`(dataManager.thirdPartyTransferTemplate).thenReturn(error)
+    fun testThirdPartyTransferTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<AccountOptionsTemplate?> =
+            Response.error(404, ResponseBody.create(null, "error"))
+        `when`(dataManager.thirdPartyTransferTemplate()).thenReturn(error)
 
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
 
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testBeneficiaryList_Successful() {
+    fun testBeneficiaryList_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val list1 = Mockito.mock(Beneficiary::class.java)
         val list2 = Mockito.mock(Beneficiary::class.java)
 
-        val response: Observable<List<Beneficiary?>?> = Observable.just(listOf(list1, list2))
+        val response: Response<List<Beneficiary?>?> = Response.success(listOf(list1, list2))
 
-        `when`(dataManager.beneficiaryList).thenReturn(response)
+        `when`(dataManager.beneficiaryList()).thenReturn(response)
 
         val result = transferRepositoryImp.beneficiaryList()
         assertEquals(result, response)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testBeneficiaryList_Unsuccessful() {
-        val list1 = Mockito.mock(Beneficiary::class.java)
-        val list2 = Mockito.mock(Beneficiary::class.java)
+    fun testBeneficiaryList_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<List<Beneficiary?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
-        val error: Observable<List<Beneficiary?>?> =
-            Observable.error(Throwable("Failed to load beneficiary list"))
-
-        `when`(dataManager.beneficiaryList).thenReturn(error)
+        `when`(dataManager.beneficiaryList()).thenReturn(error)
 
         val result = transferRepositoryImp.beneficiaryList()
 
-        assertEquals(result,error)
+        assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 }
