@@ -9,6 +9,7 @@ import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mifos.mobile.utils.Constants
+import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -20,19 +21,19 @@ interface LoanAccountsListService {
     fun getLoanAccountsDetail(@Path("loanId") loanId: Long): Observable<LoanAccount?>?
 
     @GET(ApiEndPoints.LOANS + "/{loanId}")
-    fun getLoanWithAssociations(
+    suspend fun getLoanWithAssociations(
         @Path("loanId") loanId: Long?,
         @Query("associations") associationType: String?,
-    ): Observable<LoanWithAssociations?>?
+    ): Response<LoanWithAssociations?>?
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
-    fun getLoanTemplate(@Query("clientId") clientId: Long?): Observable<LoanTemplate?>?
+    suspend fun getLoanTemplate(@Query("clientId") clientId: Long?): Response<LoanTemplate?>?
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
-    fun getLoanTemplateByProduct(
+    suspend fun getLoanTemplateByProduct(
         @Query("clientId") clientId: Long?,
         @Query("productId") productId: Int?,
-    ): Observable<LoanTemplate?>?
+    ): Response<LoanTemplate?>?
 
     @POST(ApiEndPoints.LOANS)
     fun createLoansAccount(@Body loansPayload: LoansPayload?): Observable<ResponseBody?>?
@@ -44,8 +45,8 @@ interface LoanAccountsListService {
     ): Observable<ResponseBody?>?
 
     @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
-    fun withdrawLoanAccount(
+    suspend fun withdrawLoanAccount(
         @Path(Constants.LOAN_ID) loanId: Long?,
         @Body loanWithdraw: LoanWithdraw?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 }

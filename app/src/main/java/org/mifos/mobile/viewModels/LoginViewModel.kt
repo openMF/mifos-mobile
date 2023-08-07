@@ -3,15 +3,9 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
-import org.mifos.mobile.models.Page
-import org.mifos.mobile.models.User
-import org.mifos.mobile.models.client.Client
+import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.LoginUiState
@@ -24,7 +18,6 @@ class LoginViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
     private var _loginUiState = MutableLiveData<LoginUiState>()
     val loginUiState: LiveData<LoginUiState> get() = _loginUiState
 
@@ -50,62 +43,39 @@ class LoginViewModel @Inject constructor(
      * authenticate the credentials or notify about any errors.
      */
     fun login(username: String, password: String) {
-        _loginUiState.value = LoginUiState.Loading
-        compositeDisposable.add(
-            userAuthRepositoryImp.login(username, password)
-                ?.observeOn(AndroidSchedulers.mainThread())?.subscribeOn(Schedulers.io())!!
-                .subscribeWith(object : DisposableObserver<User?>() {
-                    override fun onComplete() {}
-                    override fun onError(e: Throwable) {
-                        try {
-                            _loginUiState.value = LoginUiState.Error
-                        } catch (throwable: Throwable) {
-                            RxJavaPlugins.getErrorHandler()
-                        }
-                    }
-
-                    override fun onNext(user: User) {
-                        clientRepositoryImp.saveAuthenticationTokenForSession(user)
-                        _loginUiState.value = LoginUiState.LoginSuccess
-                    }
-                }),
-        )
+        viewModelScope.launch {
+            _loginUiState.value = LoginUiState.Loading
+            val response = userAuthRepositoryImp.login(username, password)
+            if (response?.isSuccessful == true) {
+                response.body()?.let { clientRepositoryImp.saveAuthenticationTokenForSession(it) }
+                _loginUiState.value = LoginUiState.LoginSuccess
+            } else {
+                _loginUiState.value = LoginUiState.Error
+            }
+        }
     }
 
     /**
      * This method fetches the Client, associated with current Access Token.
      */
     fun loadClient() {
-        clientRepositoryImp.loadClient()?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<Page<Client?>?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _loginUiState.value = LoginUiState.Error
-                    clientRepositoryImp.clearPrefHelper()
+        viewModelScope.launch {
+            val response = clientRepositoryImp.loadClient()
+            if (response?.isSuccessful == true) {
+                if (response.body()?.pageItems?.isNotEmpty() == true) {
+                    val clientId = response.body()!!.pageItems[0]?.id?.toLong()
+                    val clientName = response.body()!!.pageItems[0]?.displayName
+                    clientRepositoryImp.setClientId(clientId)
                     clientRepositoryImp.reInitializeService()
+                    _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
+                } else {
+                    _loginUiState.value = LoginUiState.Error
                 }
-
-                override fun onNext(clientPage: Page<Client?>) {
-                    if (clientPage.pageItems.isNotEmpty()) {
-                        val clientId = clientPage.pageItems[0]?.id?.toLong()
-                        val clientName = clientPage.pageItems[0]?.displayName
-                        clientRepositoryImp.setClientId(clientId)
-                        clientRepositoryImp.reInitializeService()
-                        _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
-                    } else {
-                        _loginUiState.value = LoginUiState.Error
-                    }
-                }
-            })?.let {
-                compositeDisposable.add(
-                    it,
-                )
+            } else {
+                _loginUiState.value = LoginUiState.Error
+                clientRepositoryImp.clearPrefHelper()
+                clientRepositoryImp.reInitializeService()
             }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+        }
     }
 }
