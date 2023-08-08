@@ -1,13 +1,13 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
+import retrofit2.Response
 
 interface ClientRepository {
 
-    fun loadClient() : Observable<Page<Client?>?>?
+    suspend fun loadClient() : Response<Page<Client?>?>?
 
     fun saveAuthenticationTokenForSession(user: User)
 
