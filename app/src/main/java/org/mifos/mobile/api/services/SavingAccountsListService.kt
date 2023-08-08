@@ -10,6 +10,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -27,7 +28,7 @@ interface SavingAccountsListService {
     val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
-    fun makeTransfer(@Body transferPayload: TransferPayload?): Observable<ResponseBody?>?
+    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
     fun getSavingsAccountApplicationTemplate(

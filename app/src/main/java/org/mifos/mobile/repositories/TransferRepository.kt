@@ -1,12 +1,12 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.ui.enums.TransferType
+import retrofit2.Response
 
 interface TransferRepository {
 
-    fun makeTransfer(
+    suspend fun makeTransfer(
         fromOfficeId: Int?,
         fromClientId: Long?,
         fromAccountType: Int?,
@@ -23,5 +23,5 @@ interface TransferRepository {
         fromAccountNumber: String?,
         toAccountNumber: String?,
         transferType: TransferType?
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 }
