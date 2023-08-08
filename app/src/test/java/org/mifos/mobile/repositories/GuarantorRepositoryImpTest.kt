@@ -1,7 +1,10 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
@@ -14,6 +17,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class GuarantorRepositoryImpTest {
@@ -30,9 +34,10 @@ class GuarantorRepositoryImpTest {
     }
 
     @Test
-    fun testGetGuarantorTemplate_Successful() {
-        val success: Observable<GuarantorTemplatePayload?> =
-            Observable.just(mock(GuarantorTemplatePayload::class.java))
+    fun testGetGuarantorTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<GuarantorTemplatePayload?> =
+            Response.success(mock(GuarantorTemplatePayload::class.java))
 
         `when`(dataManager.getGuarantorTemplate(123L)).thenReturn(success)
 
@@ -40,12 +45,14 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).getGuarantorTemplate(123L)
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetGuarantorTemplate_Unsuccessful() {
-        val error: Observable<GuarantorTemplatePayload?> =
-            Observable.error(Throwable("Unable to get guarantor template"))
+    fun testGetGuarantorTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<GuarantorTemplatePayload?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.getGuarantorTemplate(123L)).thenReturn(error)
 
@@ -53,11 +60,13 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).getGuarantorTemplate(123L)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testCreateGuarantor_Successful() {
-        val success: Observable<ResponseBody?> = Observable.just(mock(ResponseBody::class.java))
+    fun testCreateGuarantor_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<ResponseBody?> = Response.success(mock(ResponseBody::class.java))
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(dataManager.createGuarantor(123L, payload)).thenReturn(success)
@@ -66,12 +75,14 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).createGuarantor(123L, payload)
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testCreateGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Unable to create guarantor"))
+    fun testCreateGuarantor_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(dataManager.createGuarantor(123L, payload)).thenReturn(error)
@@ -80,11 +91,13 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).createGuarantor(123L, payload)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testUpdateGuarantor_Successful() {
-        val success: Observable<ResponseBody?> = Observable.just(mock(ResponseBody::class.java))
+    fun testUpdateGuarantor_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<ResponseBody?> = Response.success(mock(ResponseBody::class.java))
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(dataManager.updateGuarantor(payload, 11L, 22L)).thenReturn(success)
@@ -93,12 +106,14 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).updateGuarantor(payload, 11L, 22L)
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testUpdateGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Unable to update guarantor"))
+    fun testUpdateGuarantor_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(dataManager.updateGuarantor(payload, 11L, 22L)).thenReturn(error)
@@ -107,11 +122,13 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).updateGuarantor(payload, 11L, 22L)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testDeleteGuarantor_Successful() {
-        val success: Observable<ResponseBody?> = Observable.just(mock(ResponseBody::class.java))
+    fun testDeleteGuarantor_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<ResponseBody?> = Response.success(mock(ResponseBody::class.java))
 
         `when`(dataManager.deleteGuarantor(1L, 2L)).thenReturn(success)
 
@@ -119,12 +136,14 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).deleteGuarantor(1L, 2L)
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testDeleteGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Unable to delete guarantor"))
+    fun testDeleteGuarantor_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.deleteGuarantor(1L, 2L)).thenReturn(error)
 
@@ -132,12 +151,14 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).deleteGuarantor(1L, 2L)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetGuarantorList_Successful() {
-        val success: Observable<List<GuarantorPayload?>?> =
-            Observable.just(mock(GuarantorPayload::class.java)) as Observable<List<GuarantorPayload?>?>
+    fun testGetGuarantorList_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success: Response<List<GuarantorPayload?>?> =
+            Response.success(mock(GuarantorPayload::class.java)) as Response<List<GuarantorPayload?>?>
 
         `when`(dataManager.getGuarantorList(123L)).thenReturn(success)
 
@@ -145,12 +166,14 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).getGuarantorList(123L)
         assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetGuarantorList_Unsuccessful() {
-        val error: Observable<List<GuarantorPayload?>?> =
-            Observable.error(Throwable("Unable to update guarantor"))
+    fun testGetGuarantorList_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<List<GuarantorPayload?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.getGuarantorList(123L)).thenReturn(error)
 
@@ -158,5 +181,6 @@ class GuarantorRepositoryImpTest {
 
         verify(dataManager).getGuarantorList(123L)
         assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 }

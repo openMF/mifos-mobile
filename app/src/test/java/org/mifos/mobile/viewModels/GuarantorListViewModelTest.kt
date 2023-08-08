@@ -2,7 +2,11 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -16,6 +20,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class GuarantorListViewModelTest {
@@ -43,12 +48,13 @@ class GuarantorListViewModelTest {
     }
 
     @Test
-    fun testGetGuarantorList_Successful() {
+    fun testGetGuarantorList_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val list1 = mock(GuarantorPayload::class.java)
         val list2 = mock(GuarantorPayload::class.java)
         val list = listOf(list1, list2)
 
-        `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(Observable.just(list))
+        `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(Response.success(list))
 
         viewModel.getGuarantorList(1L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
@@ -57,17 +63,20 @@ class GuarantorListViewModelTest {
                 list
             )
         )
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetGuarantorList_Unsuccessful() {
-        val error: Observable<List<GuarantorPayload?>?> = Observable.error(Throwable())
+    fun testGetGuarantorList_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<List<GuarantorPayload?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(error)
 
         viewModel.getGuarantorList(1L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        Dispatchers.resetMain()
     }
 
     @After

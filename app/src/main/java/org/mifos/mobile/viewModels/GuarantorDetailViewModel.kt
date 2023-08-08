@@ -3,12 +3,9 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.GuarantorRepository
 import org.mifos.mobile.utils.GuarantorUiState
 import javax.inject.Inject
@@ -17,33 +14,24 @@ import javax.inject.Inject
 class GuarantorDetailViewModel @Inject constructor(private val guarantorRepositoryImp: GuarantorRepository) :
     ViewModel() {
 
-    private var compositeDisposables: CompositeDisposable = CompositeDisposable()
-
     private val _guarantorUiState = MutableLiveData<GuarantorUiState>()
     val guarantorUiState: LiveData<GuarantorUiState> get() = _guarantorUiState
 
     fun deleteGuarantor(loanId: Long?, guarantorId: Long?) {
-        _guarantorUiState.value = GuarantorUiState.Loading
-        guarantorRepositoryImp.deleteGuarantor(loanId, guarantorId)?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
+        viewModelScope.launch {
+            _guarantorUiState.value = GuarantorUiState.Loading
+            val response = guarantorRepositoryImp.deleteGuarantor(loanId, guarantorId)
+            try {
+                if (response?.isSuccessful == true) {
                     _guarantorUiState.value =
-                        GuarantorUiState.GuarantorDeletedSuccessfully(responseBody.string())
+                        GuarantorUiState.GuarantorDeletedSuccessfully(response.body()?.string())
+                } else {
+                    _guarantorUiState.value =
+                        GuarantorUiState.ShowError(response?.errorBody()?.string())
                 }
-
-                override fun onError(e: Throwable) {
-                    _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposables.add(it) }
-
+            } catch (e: Throwable) {
+                _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
+            }
+        }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposables.clear()
-    }
-
 }

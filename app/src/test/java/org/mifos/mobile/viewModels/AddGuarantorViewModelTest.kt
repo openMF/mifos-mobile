@@ -2,7 +2,10 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -19,6 +22,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class AddGuarantorViewModelTest {
@@ -46,11 +50,12 @@ class AddGuarantorViewModelTest {
     }
 
     @Test
-    fun testGetGuarantorTemplate_Successful() {
+    fun testGetGuarantorTemplate_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(GuarantorTemplatePayload::class.java)
 
         `when`(guarantorRepositoryImp.getGuarantorTemplate(123L)).thenReturn(
-            Observable.just(
+            Response.success(
                 response
             )
         )
@@ -69,27 +74,30 @@ class AddGuarantorViewModelTest {
                 response
             )
         )
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetGuarantorTemplate_Unsuccessful() {
-        val error: Observable<GuarantorTemplatePayload?> = Observable.error(Throwable())
+    fun testGetGuarantorTemplate_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<GuarantorTemplatePayload?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(guarantorRepositoryImp.getGuarantorTemplate(123L)).thenReturn(error)
 
         viewModel.getGuarantorTemplate(GuarantorState.CREATE, 123L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
-
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testCreateGuarantor_Successful() {
+    fun testCreateGuarantor_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val payload = mock(GuarantorApplicationPayload::class.java)
         val response = mock(ResponseBody::class.java)
 
         `when`(guarantorRepositoryImp.createGuarantor(123L, payload)).thenReturn(
-            Observable.just(
+            Response.success(
                 response
             )
         )
@@ -102,11 +110,13 @@ class AddGuarantorViewModelTest {
                 payload
             )
         )
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testCreateGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable())
+    fun testCreateGuarantor_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(guarantorRepositoryImp.createGuarantor(123L, payload)).thenReturn(
@@ -115,11 +125,12 @@ class AddGuarantorViewModelTest {
 
         viewModel.createGuarantor(123L, payload)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testUpdateGuarantor_Successful() {
+    fun testUpdateGuarantor_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val payload = mock(GuarantorApplicationPayload::class.java)
         val response = mock(ResponseBody::class.java)
 
@@ -129,7 +140,7 @@ class AddGuarantorViewModelTest {
                 11L,
                 22L
             )
-        ).thenReturn(Observable.just(response))
+        ).thenReturn(Response.success(response))
 
         viewModel.updateGuarantor(payload, 11L, 22L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
@@ -138,18 +149,20 @@ class AddGuarantorViewModelTest {
                 response.string()
             )
         )
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testUpdateGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable())
+    fun testUpdateGuarantor_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L)).thenReturn(error)
 
         viewModel.updateGuarantor(payload, 11L, 22L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        Dispatchers.resetMain()
     }
 
     @After

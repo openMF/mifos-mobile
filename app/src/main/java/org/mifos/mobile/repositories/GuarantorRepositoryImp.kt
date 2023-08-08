@@ -6,35 +6,36 @@ import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
+import retrofit2.Response
 import javax.inject.Inject
 
 class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataManager) :
     GuarantorRepository {
 
-    override fun getGuarantorTemplate(loanId: Long?): Observable<GuarantorTemplatePayload?>? {
+    override suspend fun getGuarantorTemplate(loanId: Long?): Response<GuarantorTemplatePayload?>? {
         return dataManager.getGuarantorTemplate(loanId)
     }
 
-    override fun createGuarantor(
+    override suspend fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return dataManager.createGuarantor(loanId, payload)
     }
 
-    override fun updateGuarantor(
+    override suspend fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return dataManager.updateGuarantor(payload, loanId, guarantorId)
     }
 
-    override fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Observable<ResponseBody?>? {
+    override suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Response<ResponseBody?>? {
         return dataManager.deleteGuarantor(loanId, guarantorId)
     }
 
-    override fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload?>?>? {
+    override suspend fun getGuarantorList(loanId: Long): Response<List<GuarantorPayload?>?>? {
         return dataManager.getGuarantorList(loanId)
     }
 }

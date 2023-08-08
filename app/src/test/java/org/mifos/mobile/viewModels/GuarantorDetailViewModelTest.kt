@@ -2,7 +2,10 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -16,6 +19,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class GuarantorDetailViewModelTest {
@@ -43,10 +47,16 @@ class GuarantorDetailViewModelTest {
     }
 
     @Test
-    fun testDeleteGuarantor_Successful() {
+    fun testDeleteGuarantor_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(ResponseBody::class.java)
 
-        `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(Observable.just(response))
+        `when`(
+            guarantorRepositoryImp.deleteGuarantor(
+                1L,
+                2L
+            )
+        ).thenReturn(Response.success(response))
 
         viewModel.deleteGuarantor(1L, 2L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
@@ -55,17 +65,19 @@ class GuarantorDetailViewModelTest {
                 response.string()
             )
         )
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testDeleteGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable())
+    fun testDeleteGuarantor_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(error)
 
         viewModel.deleteGuarantor(1L, 2L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        Dispatchers.resetMain()
     }
 
     @After

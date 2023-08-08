@@ -1,27 +1,27 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
+import retrofit2.Response
 
 interface GuarantorRepository {
 
-    fun getGuarantorTemplate(loanId: Long?): Observable<GuarantorTemplatePayload?>?
+    suspend fun getGuarantorTemplate(loanId: Long?): Response<GuarantorTemplatePayload?>?
 
-    fun createGuarantor(
+    suspend fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
-    fun updateGuarantor(
+    suspend fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
-    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Observable<ResponseBody?>?
+    suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Response<ResponseBody?>?
 
-    fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload?>?>?
+    suspend fun getGuarantorList(loanId: Long): Response<List<GuarantorPayload?>?>?
 }
