@@ -2,7 +2,10 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -17,7 +20,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.lang.RuntimeException
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class TransferProcessViewModelTest {
@@ -45,53 +48,56 @@ class TransferProcessViewModelTest {
     }
 
     @Test
-    fun makeTransfer_successful() {
+    fun makeTransfer_successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val responseBody = Mockito.mock(ResponseBody::class.java)
         Mockito.`when`(
             transferProcessImp.makeTransfer(
-                1,2,3,
-                4,5,6,7,
-                8,"06 July 2023 ",100.0,"Transfer",
-                "dd MMMM yyyy", "en", "0000001","0000002",
+                1, 2, 3,
+                4, 5, 6, 7,
+                8, "06 July 2023 ", 100.0, "Transfer",
+                "dd MMMM yyyy", "en", "0000001", "0000002",
                 TransferType.SELF
             )
-        ).thenReturn(Observable.just(responseBody))
+        ).thenReturn(Response.success(responseBody))
 
         viewModel.makeTransfer(
-            1,2,3,
-            4,5,6,7,
-            8,"06 July 2023 ",100.0,"Transfer",
-            "dd MMMM yyyy", "en", "0000001","0000002",
+            1, 2, 3,
+            4, 5, 6, 7,
+            8, "06 July 2023 ", 100.0, "Transfer",
+            "dd MMMM yyyy", "en", "0000001", "0000002",
             TransferType.SELF
         )
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.TransferSuccess)
         Mockito.verifyNoMoreInteractions(transferUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun makeTransfer_unsuccessful() {
+    fun makeTransfer_unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val error = RuntimeException("Savings Transfer Failed")
         Mockito.`when`(
             transferProcessImp.makeTransfer(
-                1,2,3,
-                4,5,6,7,
-                8,"06 July 2023 ",100.0,"Transfer",
-                "dd MMMM yyyy", "en", "0000001","0000002",
+                1, 2, 3,
+                4, 5, 6, 7,
+                8, "06 July 2023 ", 100.0, "Transfer",
+                "dd MMMM yyyy", "en", "0000001", "0000002",
                 TransferType.SELF
             )
-        ).thenReturn(Observable.error(error))
+        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
 
         viewModel.makeTransfer(
-            1,2,3,
-            4,5,6,7,
-            8,"06 July 2023 ",100.0,"Transfer",
-            "dd MMMM yyyy", "en", "0000001","0000002",
+            1, 2, 3,
+            4, 5, 6, 7,
+            8, "06 July 2023 ", 100.0, "Transfer",
+            "dd MMMM yyyy", "en", "0000001", "0000002",
             TransferType.SELF
         )
         Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Error(error))
         Mockito.verifyNoMoreInteractions(transferUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @After

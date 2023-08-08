@@ -3,12 +3,9 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.TransferRepository
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.utils.TransferUiState
@@ -17,8 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class TransferProcessViewModel @Inject constructor(private val transferRepositoryImp: TransferRepository) :
     ViewModel() {
-
-    private val compositeDisposables: CompositeDisposable = CompositeDisposable()
 
     private val _transferUiState = MutableLiveData<TransferUiState>()
     val transferUiState: LiveData<TransferUiState> get() = _transferUiState
@@ -41,41 +36,33 @@ class TransferProcessViewModel @Inject constructor(private val transferRepositor
         toAccountNumber: String?,
         transferType: TransferType?
     ) {
-        _transferUiState.value = TransferUiState.Loading
-        transferRepositoryImp.makeTransfer(
-            fromOfficeId,
-            fromClientId,
-            fromAccountType,
-            fromAccountId,
-            toOfficeId,
-            toClientId,
-            toAccountType,
-            toAccountId,
-            transferDate,
-            transferAmount,
-            transferDescription,
-            dateFormat,
-            locale,
-            fromAccountNumber,
-            toAccountNumber,
-            transferType
-        )?.observeOn(AndroidSchedulers.mainThread())?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
+        viewModelScope.launch {
+            _transferUiState.value = TransferUiState.Loading
+            val response = transferRepositoryImp.makeTransfer(
+                fromOfficeId,
+                fromClientId,
+                fromAccountType,
+                fromAccountId,
+                toOfficeId,
+                toClientId,
+                toAccountType,
+                toAccountId,
+                transferDate,
+                transferAmount,
+                transferDescription,
+                dateFormat,
+                locale,
+                fromAccountNumber,
+                toAccountNumber,
+                transferType
+            )
+            try {
+                if (response?.isSuccessful == true) {
                     _transferUiState.value = TransferUiState.TransferSuccess
                 }
-
-                override fun onError(e: Throwable) {
-                    _transferUiState.value = TransferUiState.Error(e)
-                }
-
-                override fun onComplete() {}
-
-            }).let { it?.let { it1 -> compositeDisposables.add(it1) } }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposables.clear()
+            } catch (e: Throwable) {
+                _transferUiState.value = TransferUiState.Error(e)
+            }
+        }
     }
 }

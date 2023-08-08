@@ -1,6 +1,9 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
@@ -13,6 +16,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 
 @RunWith(MockitoJUnitRunner::class)
@@ -30,8 +34,9 @@ class TransferRepositoryImpTest {
     }
 
     @Test
-    fun makeThirdPartyTransfer_successful() {
-        val success = Observable.just(Mockito.mock(ResponseBody::class.java))
+    fun makeThirdPartyTransfer_successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success = Response.success(Mockito.mock(ResponseBody::class.java))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -72,12 +77,14 @@ class TransferRepositoryImpTest {
         )
 
         Mockito.verify(dataManager).makeThirdPartyTransfer(transferPayload)
-        Assert.assertEquals(result,success)
+        Assert.assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun makeSavingsTransfer_successful() {
-        val success = Observable.just(Mockito.mock(ResponseBody::class.java))
+    fun makeSavingsTransfer_successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val success = Response.success(Mockito.mock(ResponseBody::class.java))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -118,12 +125,14 @@ class TransferRepositoryImpTest {
         )
 
         Mockito.verify(dataManager).makeTransfer(transferPayload)
-        Assert.assertEquals(result,success)
+        Assert.assertEquals(result, success)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun makeThirdPartyTransfer_unsuccessful() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable("Transfer Failed"))
+    fun makeThirdPartyTransfer_unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -163,12 +172,14 @@ class TransferRepositoryImpTest {
         )
 
         Mockito.verify(dataManager).makeThirdPartyTransfer(transferPayload)
-        Assert.assertEquals(result,error)
+        Assert.assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun makeSavingsTransfer_unsuccessful() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable("Transfer Failed"))
+    fun makeSavingsTransfer_unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -208,6 +219,7 @@ class TransferRepositoryImpTest {
         )
 
         Mockito.verify(dataManager).makeTransfer(transferPayload)
-        Assert.assertEquals(result,error)
+        Assert.assertEquals(result, error)
+        Dispatchers.resetMain()
     }
 }
