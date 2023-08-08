@@ -161,6 +161,7 @@ dependencies {
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTest"
 
     // Unit tests dependencies  
     testImplementation "junit:junit:$rootProject.jUnitVersion"
@@ -188,7 +189,7 @@ dependencies {
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
 
 }
 apply plugin: 'com.google.gms.google-services'

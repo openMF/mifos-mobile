@@ -290,7 +290,7 @@
                         <ImageView
                             android:layout_width="@dimen/width_56dp"
                             android:layout_height="@dimen/height_56dp"
-                            app:srcCompat="@drawable/ic_account_balance_black_24dp" />
+                            app:srcCompat="@drawable/ic_loan" />
 
                         <TextView
                             android:layout_width="match_parent"

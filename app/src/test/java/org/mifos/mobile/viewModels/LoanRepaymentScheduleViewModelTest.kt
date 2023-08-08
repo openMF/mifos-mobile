@@ -2,22 +2,27 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoanUiState
 import org.mockito.Mock
-import org.mifos.mobile.R
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class LoanRepaymentScheduleViewModelTest {
@@ -45,14 +50,15 @@ class LoanRepaymentScheduleViewModelTest {
     }
 
     @Test
-    fun testLoanLoanWithAssociations_Successful() {
+    fun testLoanLoanWithAssociations_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanWithAssociations::class.java)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(Observable.just(response))
+        ).thenReturn(Response.success(response))
 
         viewModel.loanLoanWithAssociations(1)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
@@ -63,22 +69,24 @@ class LoanRepaymentScheduleViewModelTest {
             verify(loanUiStateObserver).onChanged(LoanUiState.ShowEmpty(response))
             verifyNoMoreInteractions(loanUiStateObserver)
         }
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testLoanLoanWithAssociations_Unsuccessful() {
-        val error = RuntimeException("Error Response")
+    fun testLoanLoanWithAssociations_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
         ).thenReturn(
-            Observable.error(error)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
         viewModel.loanLoanWithAssociations(1)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.repayment_schedule))
+        Dispatchers.resetMain()
     }
 
     @After

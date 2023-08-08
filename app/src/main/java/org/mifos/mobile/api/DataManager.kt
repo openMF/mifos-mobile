@@ -40,6 +40,7 @@ import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,12 +55,11 @@ class DataManager @Inject constructor(
     private val databaseHelper: DatabaseHelper,
 ) {
     var clientId: Long? = preferencesHelper.clientId
-    fun login(loginPayload: LoginPayload?): Observable<User?>? {
+    suspend fun login(loginPayload: LoginPayload?): Response<User?>? {
         return baseApiManager.authenticationApi?.authenticate(loginPayload)
     }
 
-    val clients: Observable<Page<Client?>?>?
-        get() = baseApiManager.clientsApi?.clients
+    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi?.clients()
     val currentClient: Observable<Client?>?
         get() = baseApiManager.clientsApi?.getClientForId(clientId)
     val clientImage: Observable<ResponseBody?>?
@@ -145,18 +145,18 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi?.getLoanAccountsDetail(loanId)
     }
 
-    fun getLoanWithAssociations(
+    suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?,
-    ): Observable<LoanWithAssociations?>? {
+    ): Response<LoanWithAssociations?>? {
         return baseApiManager.loanAccountsListApi
             ?.getLoanWithAssociations(loanId, associationType)
     }
 
-    val loanTemplate: Observable<LoanTemplate?>?
-        get() = baseApiManager.loanAccountsListApi?.getLoanTemplate(clientId)
+    suspend fun loanTemplate(): Response<LoanTemplate?>? =
+        baseApiManager.loanAccountsListApi?.getLoanTemplate(clientId)
 
-    fun getLoanTemplateByProduct(productId: Int?): Observable<LoanTemplate?>? {
+    suspend fun getLoanTemplateByProduct(productId: Int?): Response<LoanTemplate?>? {
         return baseApiManager.loanAccountsListApi
             ?.getLoanTemplateByProduct(clientId, productId)
     }
@@ -169,10 +169,10 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi?.updateLoanAccount(loanId, loansPayload)
     }
 
-    fun withdrawLoanAccount(
+    suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.loanAccountsListApi?.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
