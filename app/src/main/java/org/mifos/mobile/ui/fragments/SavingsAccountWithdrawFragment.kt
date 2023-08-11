@@ -4,31 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.presenters.SavingsAccountWithdrawPresenter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.SavingsAccountWithdrawView
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
-import javax.inject.Inject
+import org.mifos.mobile.viewModels.SavingsAccountWithdrawViewModel
+import java.lang.IllegalStateException
 
 /*
 * Created by saksham on 02/July/2018
 */
 @AndroidEntryPoint
-class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawView {
+class SavingsAccountWithdrawFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null
     private val binding get() = _binding!!
-
-    @JvmField
-    @Inject
-    var presenter: SavingsAccountWithdrawPresenter? = null
+    private lateinit var viewModel : SavingsAccountWithdrawViewModel
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var payload: SavingsAccountWithdrawPayload? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +42,7 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater, container, false)
-        presenter?.attachView(this)
+        viewModel = ViewModelProvider(this)[SavingsAccountWithdrawViewModel::class.java]
         showUserInterface()
         return binding.root
     }
@@ -54,13 +52,31 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
         binding.btnWithdrawSavingsAccount.setOnClickListener {
             onWithdrawSavingsAccount()
         }
+
+        viewModel.savingsAccountWithdrawUiState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                SavingsAccountUiState.Loading -> showProgress()
+
+                is SavingsAccountUiState.ErrorMessage -> {
+                    hideProgress()
+                    showError(state.error.message ?: "")
+                }
+
+                SavingsAccountUiState.SavingsAccountWithdrawSuccess -> {
+                    hideProgress()
+                    showSavingsAccountWithdrawSuccessfully()
+                }
+
+                else -> throw IllegalStateException("Unexpected state : $state")
+            }
+        }
     }
 
-    fun onWithdrawSavingsAccount() {
+    private fun onWithdrawSavingsAccount() {
         submitWithdrawSavingsAccount()
     }
 
-    override fun showUserInterface() {
+    fun showUserInterface() {
         activity?.title = getString(R.string.withdraw_savings_account)
         binding.tvAccountNumber.text = savingsWithAssociations?.accountNo
         binding.tvClientName.text = savingsWithAssociations?.clientName
@@ -80,45 +96,40 @@ class SavingsAccountWithdrawFragment : BaseFragment(), SavingsAccountWithdrawVie
             return rv
         }
 
-    override fun submitWithdrawSavingsAccount() {
+    private fun submitWithdrawSavingsAccount() {
         binding.tilRemark.isErrorEnabled = false
         if (!isFormIncomplete) {
             payload = SavingsAccountWithdrawPayload()
             payload?.note = binding.tilRemark.editText?.text.toString()
             payload?.withdrawnOnDate = getTodayFormatted()
-            presenter?.submitWithdrawSavingsAccount(savingsWithAssociations?.accountNo, payload)
+            viewModel.submitWithdrawSavingsAccount(savingsWithAssociations?.accountNo, payload)
         }
     }
 
-    override fun showSavingsAccountWithdrawSuccessfully() {
+    private fun showSavingsAccountWithdrawSuccessfully() {
         showMessage(getString(R.string.savings_account_withdraw_successful))
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun showMessage(message: String?) {
+    fun showMessage(message: String?) {
         Toaster.show(binding.root, message)
     }
 
-    override fun showError(error: String?) {
+    fun showError(error: String?) {
         Toaster.show(binding.root, error)
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showMifosProgressDialog(getString(R.string.progress_message_loading))
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideMifosProgressDialog()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.detachView()
     }
 
     companion object {

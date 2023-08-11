@@ -18,6 +18,11 @@ class RepositoryModule {
     }
 
     @Provides
+    fun providesSavingsAccountRepository(dataManager: DataManager) : SavingsAccountRepository {
+        return SavingsAccountRepositoryImp(dataManager)
+    }
+
+    @Provides
     fun providesLoanRepository(dataManager: DataManager): LoanRepository {
         return LoanRepositoryImp(dataManager)
     }
