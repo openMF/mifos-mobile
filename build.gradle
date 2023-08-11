@@ -12,7 +12,7 @@ buildscript {
 
     ext {
         gradleVersion = '7.2.0'
-        crashlyticsGradleVersion = '2.9.7'
+        crashlyticsGradleVersion = '2.9.8'
         ossLicensesVersion = '0.10.5'
         googleServicesVersion = '4.3.15'
         kotlinGradlePluginversion = '1.6.21'
@@ -24,7 +24,7 @@ buildscript {
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinGradlePluginversion"
-        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.14"
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.1.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle filesa
     }
@@ -60,7 +60,8 @@ ext {
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
     lifecycleExtensionsVersion = '2.2.0'
-    retrofitVersion = '2.2.0'
+    retrofitVersion = '2.9.0'
+    coroutinesTest = '1.7.3'
     okHttp3Version = '3.14.9'
     butterKnifeVersion = '8.0.1'
     dbflowVersion = '4.2.4'
