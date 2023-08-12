@@ -10,18 +10,18 @@ import javax.inject.Inject
 class UserDetailRepositoryImp @Inject constructor(private val dataManager: DataManager) :
     UserDetailRepository {
 
-    override fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody?>? {
+    override fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody> {
         return dataManager.registerNotification(payload)
     }
 
-    override fun getUserNotificationId(id: Long): Observable<NotificationUserDetail?>? {
+    override fun getUserNotificationId(id: Long): Observable<NotificationUserDetail> {
         return dataManager.getUserNotificationId(id)
     }
 
     override fun updateRegisterNotification(
         id: Long,
         payload: NotificationRegisterPayload?
-    ): Observable<ResponseBody?>? {
+    ): Observable<ResponseBody> {
         return dataManager.updateRegisterNotification(id, payload)
     }
 

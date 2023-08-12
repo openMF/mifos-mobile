@@ -6,11 +6,11 @@ import org.mifos.mobile.models.client.ClientAccounts
 import javax.inject.Inject
 
 class AccountsRepositoryImp @Inject constructor(private val dataManager: DataManager): AccountsRepository {
-    override fun loadClientAccounts(): Observable<ClientAccounts?>? {
+    override fun loadClientAccounts(): Observable<ClientAccounts> {
         return dataManager.clientAccounts
     }
 
-    override fun loadAccounts(accountType: String?): Observable<ClientAccounts?>? {
+    override fun loadAccounts(accountType: String?): Observable<ClientAccounts> {
         return dataManager.getAccounts(accountType)
     }
 }

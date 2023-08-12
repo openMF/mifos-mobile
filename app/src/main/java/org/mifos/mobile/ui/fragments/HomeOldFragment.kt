@@ -17,7 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
@@ -47,7 +47,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentHomeOldBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -67,7 +67,6 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeOldBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         val rootView = binding.root
         clientId = preferencesHelper?.clientId
         setHasOptionsMenu(true)

@@ -7,13 +7,13 @@ import org.mifos.mobile.models.notification.NotificationUserDetail
 
 interface UserDetailRepository {
 
-    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody?>?
+    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody>
 
-    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail?>?
+    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail>
 
     fun updateRegisterNotification(
         id: Long,
         payload: NotificationRegisterPayload?,
-    ): Observable<ResponseBody?>?
+    ): Observable<ResponseBody>
 
 }

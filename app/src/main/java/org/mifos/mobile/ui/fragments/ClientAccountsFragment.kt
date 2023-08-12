@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +45,8 @@ import javax.inject.Inject
 class ClientAccountsFragment : BaseFragment() {
     private var _binding: FragmentClientAccountsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : AccountsViewModel
+
+    private val viewModel : AccountsViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -66,7 +68,6 @@ class ClientAccountsFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentClientAccountsBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[AccountsViewModel::class.java]
         val rootView = binding.root
         setToolbarTitle(getString(R.string.accounts))
         setUpViewPagerAndTabLayout()

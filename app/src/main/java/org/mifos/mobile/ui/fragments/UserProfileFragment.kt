@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,7 @@ class UserProfileFragment : BaseFragment() {
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: UserDetailViewModel
+    private val viewModel: UserDetailViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -45,7 +46,6 @@ class UserProfileFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[UserDetailViewModel::class.java]
         (activity as BaseActivity?)?.setSupportActionBar(binding.toolbar)
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)

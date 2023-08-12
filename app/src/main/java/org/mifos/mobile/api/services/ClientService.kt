@@ -21,19 +21,19 @@ interface ClientService {
     suspend fun clients(): Response<Page<Client?>?>?
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
-    fun getClientForId(@Path(CLIENT_ID) clientId: Long?): Observable<Client?>?
+    fun getClientForId(@Path(CLIENT_ID) clientId: Long?): Observable<Client>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
-    fun getClientImage(@Path(CLIENT_ID) clientId: Long?): Observable<ResponseBody?>?
+    fun getClientImage(@Path(CLIENT_ID) clientId: Long?): Observable<ResponseBody>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
-    fun getClientAccounts(@Path(CLIENT_ID) clientId: Long?): Observable<ClientAccounts?>?
+    fun getClientAccounts(@Path(CLIENT_ID) clientId: Long?): Observable<ClientAccounts>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
     fun getAccounts(
         @Path(CLIENT_ID) clientId: Long?,
         @Query("fields") accountType: String?,
-    ): Observable<ClientAccounts?>?
+    ): Observable<ClientAccounts>
 
     companion object {
         const val CLIENT_ID = "clientId"

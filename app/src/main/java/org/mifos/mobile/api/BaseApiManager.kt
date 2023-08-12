@@ -25,7 +25,7 @@ import javax.inject.Inject
 class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
     val authenticationApi: AuthenticationService?
         get() = Companion.authenticationApi
-    val clientsApi: ClientService?
+    val clientsApi: ClientService
         get() = Companion.clientsApi
     val savingAccountsListApi: SavingAccountsListService?
         get() = Companion.savingAccountsListApi
@@ -41,7 +41,7 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
         get() = Companion.thirdPartyTransferApi
     val registrationApi: RegistrationService?
         get() = Companion.registrationApi
-    val notificationApi: NotificationService?
+    val notificationApi: NotificationService
         get() = Companion.notificationApi
     val userDetailsService: UserDetailsService?
         get() = Companion.userDetailsService
@@ -50,9 +50,9 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
 
     companion object {
         private val field: GuarantorService? = null
-        private var retrofit: Retrofit? = null
+        private lateinit var retrofit: Retrofit
         private var authenticationApi: AuthenticationService? = null
-        private var clientsApi: ClientService? = null
+        private lateinit var clientsApi: ClientService
         private var savingAccountsListApi: SavingAccountsListService? = null
         private var loanAccountsListApi: LoanAccountsListService? = null
         private var recentTransactionsApi: RecentTransactionsService? = null
@@ -60,7 +60,7 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
         private var beneficiaryApi: BeneficiaryService? = null
         private var thirdPartyTransferApi: ThirdPartyTransferService? = null
         private var registrationApi: RegistrationService? = null
-        private var notificationApi: NotificationService? = null
+        private lateinit var notificationApi: NotificationService
         private var userDetailsService: UserDetailsService? = null
         private var guarantorApi: GuarantorService? = null
         private fun init() {
@@ -78,8 +78,8 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
             userDetailsService = createApi(UserDetailsService::class.java)
         }
 
-        private fun <T> createApi(clazz: Class<T>): T? {
-            return retrofit?.create(clazz)
+        private fun <T> createApi(clazz: Class<T>): T {
+            return retrofit.create(clazz)
         }
 
         @JvmStatic

@@ -94,6 +94,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleExtensionsVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"

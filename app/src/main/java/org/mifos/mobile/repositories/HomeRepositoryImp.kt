@@ -9,15 +9,15 @@ import javax.inject.Inject
 
 class HomeRepositoryImp @Inject constructor(private val dataManager: DataManager) : HomeRepository {
 
-    override fun clientAccounts(): Observable<ClientAccounts?>? {
+    override fun clientAccounts(): Observable<ClientAccounts> {
         return dataManager.clientAccounts
     }
 
-    override fun currentClient(): Observable<Client?>? {
+    override fun currentClient(): Observable<Client> {
         return dataManager.currentClient
     }
 
-    override fun clientImage(): Observable<ResponseBody?>? {
+    override fun clientImage(): Observable<ResponseBody> {
         return dataManager.clientImage
     }
 

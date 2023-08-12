@@ -59,16 +59,16 @@ class DataManager @Inject constructor(
         return baseApiManager.authenticationApi?.authenticate(loginPayload)
     }
 
-    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi?.clients()
-    val currentClient: Observable<Client?>?
-        get() = baseApiManager.clientsApi?.getClientForId(clientId)
-    val clientImage: Observable<ResponseBody?>?
-        get() = baseApiManager.clientsApi?.getClientImage(clientId)
-    val clientAccounts: Observable<ClientAccounts?>?
-        get() = baseApiManager.clientsApi?.getClientAccounts(clientId)
+    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
+    val currentClient: Observable<Client>
+        get() = baseApiManager.clientsApi.getClientForId(clientId)
+    val clientImage: Observable<ResponseBody>
+        get() = baseApiManager.clientsApi.getClientImage(clientId)
+    val clientAccounts: Observable<ClientAccounts>
+        get() = baseApiManager.clientsApi.getClientAccounts(clientId)
 
-    fun getAccounts(accountType: String?): Observable<ClientAccounts?>? {
-        return baseApiManager.clientsApi?.getAccounts(clientId, accountType)
+    fun getAccounts(accountType: String?): Observable<ClientAccounts> {
+        return baseApiManager.clientsApi.getAccounts(clientId, accountType)
     }
 
     fun getRecentTransactions(offset: Int, limit: Int): Observable<Page<Transaction?>?>? {
@@ -218,19 +218,19 @@ class DataManager @Inject constructor(
     val unreadNotificationsCount: Observable<Int>
         get() = databaseHelper.unreadNotificationsCount
 
-    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody?>? {
-        return baseApiManager.notificationApi?.registerNotification(payload)
+    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody> {
+        return baseApiManager.notificationApi.registerNotification(payload)
     }
 
     fun updateRegisterNotification(
         id: Long,
         payload: NotificationRegisterPayload?,
-    ): Observable<ResponseBody?>? {
-        return baseApiManager.notificationApi?.updateRegisterNotification(id, payload)
+    ): Observable<ResponseBody> {
+        return baseApiManager.notificationApi.updateRegisterNotification(id, payload)
     }
 
-    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail?>? {
-        return baseApiManager.notificationApi?.getUserNotificationId(id)
+    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail> {
+        return baseApiManager.notificationApi.getUserNotificationId(id)
     }
 
     fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody?>? {
