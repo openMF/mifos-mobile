@@ -5,13 +5,13 @@
     <item
         android:id="@+id/menu_update_savings_account"
         android:title="@string/update_savings_account"
-        android:visible="false"
+        android:visible="true"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_withdraw_savings_account"
         android:title="@string/withdraw_savings_account"
-        android:visible="false"
+        android:visible="true"
         app:showAsAction="never" />
 
 </menu>
