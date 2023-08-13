@@ -1,11 +1,10 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
@@ -33,6 +32,10 @@ class RecentTransactionViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
+
     @Mock
     lateinit var recentTransactionRepositoryImp: RecentTransactionRepository
 
@@ -57,7 +60,6 @@ class RecentTransactionViewModelTest {
 
     @Test
     fun loadRecentTransaction_success_with_no_empty_transactions() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val offset = 0
         val limit = 50
 
@@ -84,12 +86,10 @@ class RecentTransactionViewModelTest {
             transactions.pageItems.let { RecentTransactionUiState.RecentTransactions(it) },
             viewModel.recentTransactionUiState.value
         )
-        Dispatchers.resetMain()
     }
 
     @Test
     fun loadRecentTransaction_success_with_empty_transactions() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val offset = 0
         val limit = 50
 
@@ -116,12 +116,10 @@ class RecentTransactionViewModelTest {
             RecentTransactionUiState.EmptyTransaction,
             viewModel.recentTransactionUiState.value
         )
-        Dispatchers.resetMain()
     }
 
     @Test
     fun loadRecentTransaction_success_with_load_more_transactions() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val offset = 0
         val limit = 50
 
@@ -148,13 +146,10 @@ class RecentTransactionViewModelTest {
             transactions.pageItems.let { RecentTransactionUiState.LoadMoreRecentTransactions(it) },
             viewModel.recentTransactionUiState.value
         )
-        Dispatchers.resetMain()
     }
 
     @Test
     fun loadRecentTransaction_unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val error = Throwable("Recent Transaction error")
         `when`(recentTransactionRepositoryImp.recentTransactions(anyInt(), anyInt())).thenReturn(
             Response.error(404, ResponseBody.create(null, "error"))
         )
@@ -164,7 +159,6 @@ class RecentTransactionViewModelTest {
             RecentTransactionUiState.Error(R.string.recent_transactions),
             viewModel.recentTransactionUiState.value
         )
-        Dispatchers.resetMain()
     }
 
     @After
