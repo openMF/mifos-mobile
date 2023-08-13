@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
@@ -18,21 +19,22 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingAccountDetailsBinding
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Status
-import org.mifos.mobile.presenters.SavingAccountsDetailPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.SavingAccountsDetailView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.QrCodeGenerator
+import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.SymbolsUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
+import org.mifos.mobile.viewModels.SavingAccountsDetailViewModel
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /**
@@ -40,7 +42,7 @@ import javax.inject.Inject
  * @since 18/8/16.
  */
 @AndroidEntryPoint
-class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
+class SavingAccountsDetailFragment : BaseFragment() {
 
     private var _binding: FragmentSavingAccountDetailsBinding? = null
     private val binding get() = _binding!!
@@ -48,10 +50,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-
-    @JvmField
-    @Inject
-    var savingAccountsDetailPresenter: SavingAccountsDetailPresenter? = null
+    private lateinit var viewModel: SavingAccountsDetailViewModel
     private var savingsId: Long? = 0
     private var status: Status? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
@@ -71,10 +70,10 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     ): View {
         _binding = FragmentSavingAccountDetailsBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.saving_account_details))
-        savingAccountsDetailPresenter?.attachView(this)
+        viewModel = ViewModelProvider(this)[SavingAccountsDetailViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         if (savedInstanceState == null && this.savingsWithAssociations == null) {
-            savingAccountsDetailPresenter?.loadSavingsWithAssociations(savingsId)
+            viewModel.loadSavingsWithAssociations(savingsId)
         } else {
             showSavingAccountsDetail(this.savingsWithAssociations)
         }
@@ -110,6 +109,26 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         binding.llSavingsQrCode.setOnClickListener {
             qrCodeClicked()
         }
+
+        viewModel.savingAccountsDetailUiState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                SavingsAccountUiState.Loading -> showProgress()
+
+                SavingsAccountUiState.Error -> {
+                    hideProgress()
+                    showErrorFetchingSavingAccountsDetail(
+                        context?.getString(R.string.error_saving_account_details_loading),
+                    )
+                }
+
+                is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
+                    hideProgress()
+                    showSavingAccountsDetail(state.savingAccount)
+                }
+
+                else -> throw IllegalStateException("Unexpected State: $state")
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -127,7 +146,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     /**
      * Opens up Phone Dialer
      */
-    fun dialHelpLineNumber() {
+    private fun dialHelpLineNumber() {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
         startActivity(intent)
@@ -176,7 +195,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
      *
      * @param savingsWithAssociations object containing details of a saving account
      */
-    override fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
+    private fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
         if (savingsWithAssociations?.status?.submittedAndPendingApproval == true) {
             sweetUIErrorHandler?.showSweetCustomErrorUI(
                 getString(R.string.approval_pending),
@@ -264,7 +283,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showErrorFetchingSavingAccountsDetail(message: String?) {
+    private fun showErrorFetchingSavingAccountsDetail(message: String?) {
         if (!Network.isConnected(context)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(binding.llAccount, binding.layoutError.root)
             Toast.makeText(
@@ -282,7 +301,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         }
     }
 
-    fun onRetry() {
+    private fun onRetry() {
         if (!Network.isConnected(context)) {
             Toast.makeText(
                 context,
@@ -291,7 +310,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
             ).show()
         } else {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.llAccount, binding.layoutError.root)
-            savingAccountsDetailPresenter?.loadSavingsWithAssociations(savingsId)
+            viewModel.loadSavingsWithAssociations(savingsId)
         }
     }
 
@@ -301,7 +320,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
      *
      * @param savingsWithAssociations object containing details of a saving account
      */
-    override fun showAccountStatus(savingsWithAssociations: SavingsWithAssociations?) {
+    private fun showAccountStatus(savingsWithAssociations: SavingsWithAssociations?) {
         status = savingsWithAssociations?.status
         when {
             status?.active == true -> {
@@ -342,12 +361,12 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         activity?.invalidateOptionsMenu()
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         binding.llAccount.visibility = View.GONE
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         binding.llAccount.visibility = View.VISIBLE
         hideProgressBar()
     }
@@ -355,11 +374,10 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgressBar()
-        savingAccountsDetailPresenter?.detachView()
         _binding = null
     }
 
-    fun transactionsClicked() {
+    private fun transactionsClicked() {
         (activity as BaseActivity?)?.replaceFragment(
             SavingAccountsTransactionFragment.newInstance(
                 savingsId,
@@ -369,7 +387,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         )
     }
 
-    fun chargeClicked() {
+    private fun chargeClicked() {
         (activity as BaseActivity?)?.replaceFragment(
             ClientChargeFragment.newInstance(
                 savingsId,
@@ -380,7 +398,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
         )
     }
 
-    fun qrCodeClicked() {
+    private fun qrCodeClicked() {
         val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
             savingsWithAssociations?.accountNo,
             preferencesHelper?.officeName,
@@ -404,8 +422,7 @@ class SavingAccountsDetailFragment : BaseFragment(), SavingAccountsDetailView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
+        when (item.itemId) {
             R.id.menu_withdraw_savings_account -> (activity as BaseActivity?)?.replaceFragment(
                 SavingsAccountWithdrawFragment.newInstance(savingsWithAssociations),
                 true,
