@@ -1,12 +1,12 @@
 package org.mifos.mobile.repositories
 
-import kotlinx.coroutines.Dispatchers
+import CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -22,6 +22,10 @@ import retrofit2.Response
 @RunWith(MockitoJUnitRunner::class)
 class RecentTransactionRepositoryImpTest {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
+
     @Mock
     lateinit var dataManager: DataManager
 
@@ -35,7 +39,6 @@ class RecentTransactionRepositoryImpTest {
 
     @Test
     fun recentTransaction_successful_response_from_dataManger() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val success: Response<Page<Transaction?>?> =
             Response.success(Mockito.mock(Page<Transaction?>()::class.java))
         val offset = 0
@@ -47,12 +50,10 @@ class RecentTransactionRepositoryImpTest {
 
         Mockito.verify(dataManager).getRecentTransactions(offset, limit)
         Assert.assertEquals(result, success)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun recentTransaction_unsuccessful_response_from_dataManger() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<Page<Transaction?>?> =
             Response.error(404, ResponseBody.create(null, "error"))
         val offset = 0
@@ -64,7 +65,6 @@ class RecentTransactionRepositoryImpTest {
 
         Mockito.verify(dataManager).getRecentTransactions(offset, limit)
         Assert.assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 
 }
