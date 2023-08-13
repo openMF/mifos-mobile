@@ -1,8 +1,12 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -12,10 +16,15 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 
 @RunWith(MockitoJUnitRunner::class)
 class RecentTransactionRepositoryImpTest {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -29,9 +38,9 @@ class RecentTransactionRepositoryImpTest {
     }
 
     @Test
-    fun recentTransaction_successful_response_from_dataManger() {
-        val success: Observable<Page<Transaction?>?> =
-            Observable.just(Mockito.mock(Page<Transaction?>()::class.java))
+    fun recentTransaction_successful_response_from_dataManger() = runBlocking {
+        val success: Response<Page<Transaction?>?> =
+            Response.success(Mockito.mock(Page<Transaction?>()::class.java))
         val offset = 0
         val limit = 50
 
@@ -44,9 +53,9 @@ class RecentTransactionRepositoryImpTest {
     }
 
     @Test
-    fun recentTransaction_unsuccessful_response_from_dataManger() {
-        val error: Observable<Page<Transaction?>?> =
-            Observable.error(Throwable("Recent Transaction Failed"))
+    fun recentTransaction_unsuccessful_response_from_dataManger() = runBlocking {
+        val error: Response<Page<Transaction?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         val offset = 0
         val limit = 50
 
