@@ -1,11 +1,10 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
@@ -25,6 +24,10 @@ class UpdatePasswordViewModelTest {
     @JvmField
     @Rule
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -86,7 +89,6 @@ class UpdatePasswordViewModelTest {
 
     @Test
     fun testUpdateAccountPassword_SuccessReceivedFromRepository_ReturnsSuccess() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val responseBody = Mockito.mock(ResponseBody::class.java)
         Mockito.`when`(
             userAuthRepositoryImp.updateAccountPassword(Mockito.anyString(), Mockito.anyString())
@@ -97,12 +99,10 @@ class UpdatePasswordViewModelTest {
         Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Success)
         Mockito.verify(clientRepositoryImp).updateAuthenticationToken("newPassword")
         Mockito.verifyNoMoreInteractions(updatePasswordUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testUpdateAccountPassword_ErrorReceivedFromRepository_ReturnsError() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             userAuthRepositoryImp.updateAccountPassword(Mockito.anyString(), Mockito.anyString())
         ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
@@ -113,7 +113,6 @@ class UpdatePasswordViewModelTest {
         Mockito.verify(updatePasswordUiStateObserver)
             .onChanged(Mockito.any(RegistrationUiState.Error::class.java))
         Mockito.verifyNoMoreInteractions(updatePasswordUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @After
