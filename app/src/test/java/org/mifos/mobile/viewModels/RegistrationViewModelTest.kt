@@ -1,11 +1,10 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
@@ -24,6 +23,10 @@ class RegistrationViewModelTest {
     @JvmField
     @Rule
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -114,7 +117,6 @@ class RegistrationViewModelTest {
     @Test
     fun testRegisterUser_SuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationSuccessful() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             val responseBody = Mockito.mock(ResponseBody::class.java)
             Mockito.`when`(
                 userAuthRepositoryImp.registerUser(
@@ -143,13 +145,11 @@ class RegistrationViewModelTest {
             Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
             Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Success)
             Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testRegisterUser_UnsuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationUnsuccessful() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             Mockito.`when`(
                 userAuthRepositoryImp.registerUser(
                     Mockito.anyString(),
@@ -178,13 +178,11 @@ class RegistrationViewModelTest {
             Mockito.verify(registrationUiStateObserver)
                 .onChanged(Mockito.any(RegistrationUiState.Error::class.java))
             Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testVerifyUser_SuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationSuccessful() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             Mockito.`when`(
                 userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
             ).thenReturn(Response.success(Mockito.mock(ResponseBody::class.java)))
@@ -196,13 +194,11 @@ class RegistrationViewModelTest {
             Mockito.verify(registrationVerificationUiStateObserver)
                 .onChanged(RegistrationUiState.Success)
             Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testVerifyUser_UnsuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationUnsuccessful() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             Mockito.`when`(
                 userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
             ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
@@ -212,7 +208,6 @@ class RegistrationViewModelTest {
             Mockito.verify(registrationVerificationUiStateObserver)
                 .onChanged(RegistrationUiState.Loading)
             Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-            Dispatchers.resetMain()
         }
 
     @After

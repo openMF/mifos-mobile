@@ -1,12 +1,12 @@
 package org.mifos.mobile.repositories
 
-import kotlinx.coroutines.Dispatchers
+import CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
@@ -22,7 +22,11 @@ import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class UserAuthRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -41,7 +45,6 @@ class UserAuthRepositoryImpTest {
     @Test
     fun testRegisterUser_SuccessResponseReceivedFromDataManager_ReturnSuccessfulRegistration() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             val successResponse: Response<ResponseBody?> =
                 Response.success(Mockito.mock(ResponseBody::class.java))
             val registerPayload = RegisterPayload().apply {
@@ -70,13 +73,11 @@ class UserAuthRepositoryImpTest {
 
             Mockito.verify(dataManager).registerUser(registerPayload)
             Assert.assertEquals(result, successResponse)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testRegisterUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistration() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             val error: Response<ResponseBody?> =
                 Response.error(404, ResponseBody.create(null, "error"))
             val registerPayload = RegisterPayload().apply {
@@ -105,12 +106,10 @@ class UserAuthRepositoryImpTest {
 
             Mockito.verify(dataManager).registerUser(registerPayload)
             Assert.assertEquals(result, error)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoginPayload = LoginPayload().apply {
             this.username = "username"
             this.password = "password"
@@ -124,12 +123,10 @@ class UserAuthRepositoryImpTest {
 
         Mockito.verify(dataManager).login(mockLoginPayload)
         Assert.assertEquals(result, successResponse)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoginPayload = LoginPayload().apply {
             this.username = "username"
             this.password = "password"
@@ -143,13 +140,11 @@ class UserAuthRepositoryImpTest {
 
         Mockito.verify(dataManager).login(mockLoginPayload)
         Assert.assertEquals(result, errorResponse)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testVerifyUser_SuccessResponseReceivedFromDataManager_ReturnsSuccessfulRegistrationVerification() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             val successResponse: Response<ResponseBody?> =
                 Response.success(Mockito.mock(ResponseBody::class.java))
             Mockito.`when`(
@@ -164,13 +159,11 @@ class UserAuthRepositoryImpTest {
 
             Mockito.verify(dataManager).verifyUser(userVerify)
             Assert.assertEquals(result, successResponse)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testVerifyUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistrationVerification() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             val errorResponse: Response<ResponseBody?> =
                 Response.error(404, ResponseBody.create(null, "error"))
             Mockito.`when`(
@@ -184,6 +177,5 @@ class UserAuthRepositoryImpTest {
                 )
             Mockito.verify(dataManager).verifyUser(userVerify)
             Assert.assertEquals(result, errorResponse)
-            Dispatchers.resetMain()
         }
 }
