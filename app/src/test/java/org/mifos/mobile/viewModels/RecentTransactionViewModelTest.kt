@@ -1,10 +1,14 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.models.client.Currency
@@ -16,7 +20,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import org.mifos.mobile.R
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class RecentTransactionViewModelTest {
@@ -27,6 +31,10 @@ class RecentTransactionViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var recentTransactionRepositoryImp: RecentTransactionRepository
@@ -51,7 +59,7 @@ class RecentTransactionViewModelTest {
     }
 
     @Test
-    fun loadRecentTransaction_success_with_no_empty_transactions() {
+    fun loadRecentTransaction_success_with_no_empty_transactions() = runBlocking {
         val offset = 0
         val limit = 50
 
@@ -69,7 +77,7 @@ class RecentTransactionViewModelTest {
         val transactions: Page<Transaction?> =
             Page(totalFilteredRecords = 1, pageItems = listOf(transaction))
         `when`(recentTransactionRepositoryImp.recentTransactions(offset, limit))
-            .thenReturn(Observable.just(transactions))
+            .thenReturn(Response.success(transactions))
 
         viewModel.loadRecentTransactions(loadmore = false, offset)
 
@@ -81,7 +89,7 @@ class RecentTransactionViewModelTest {
     }
 
     @Test
-    fun loadRecentTransaction_success_with_empty_transactions() {
+    fun loadRecentTransaction_success_with_empty_transactions() = runBlocking {
         val offset = 0
         val limit = 50
 
@@ -99,7 +107,7 @@ class RecentTransactionViewModelTest {
         val transactions: Page<Transaction?> =
             Page(totalFilteredRecords = 0, pageItems = listOf(transaction))
         `when`(recentTransactionRepositoryImp.recentTransactions(offset, limit))
-            .thenReturn(Observable.just(transactions))
+            .thenReturn(Response.success(transactions))
 
         viewModel.loadRecentTransactions(loadmore = false, offset)
 
@@ -111,7 +119,7 @@ class RecentTransactionViewModelTest {
     }
 
     @Test
-    fun loadRecentTransaction_success_with_load_more_transactions() {
+    fun loadRecentTransaction_success_with_load_more_transactions() = runBlocking {
         val offset = 0
         val limit = 50
 
@@ -129,7 +137,7 @@ class RecentTransactionViewModelTest {
         val transactions: Page<Transaction?> =
             Page(totalFilteredRecords = 1, pageItems = listOf(transaction))
         `when`(recentTransactionRepositoryImp.recentTransactions(offset, limit))
-            .thenReturn(Observable.just(transactions))
+            .thenReturn(Response.success(transactions))
 
         viewModel.loadRecentTransactions(loadmore = true, offset)
 
@@ -138,14 +146,12 @@ class RecentTransactionViewModelTest {
             transactions.pageItems.let { RecentTransactionUiState.LoadMoreRecentTransactions(it) },
             viewModel.recentTransactionUiState.value
         )
-
     }
 
     @Test
-    fun loadRecentTransaction_unsuccessful() {
-        val error = Throwable("Recent Transaction error")
+    fun loadRecentTransaction_unsuccessful() = runBlocking {
         `when`(recentTransactionRepositoryImp.recentTransactions(anyInt(), anyInt())).thenReturn(
-            Observable.error(error)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
         viewModel.loadRecentTransactions(false, 0)
 

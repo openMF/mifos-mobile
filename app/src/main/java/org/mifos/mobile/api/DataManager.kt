@@ -67,7 +67,7 @@ class DataManager @Inject constructor(
         return baseApiManager.clientsApi?.getAccounts(clientId, accountType)
     }
 
-    fun getRecentTransactions(offset: Int, limit: Int): Observable<Page<Transaction?>?>? {
+    suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
         return baseApiManager.recentTransactionsApi
             ?.getRecentTransactionsList(clientId, offset, limit)
     }
