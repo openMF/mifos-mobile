@@ -1,12 +1,11 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Assert.assertNotEquals
@@ -31,6 +30,7 @@ import retrofit2.Response
 
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class ThirdPartyTransferViewModelTest {
 
     @JvmField
@@ -39,6 +39,9 @@ class ThirdPartyTransferViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var thirdPartyTransferRepositoryImp: ThirdPartyTransferRepositoryImp
@@ -59,7 +62,6 @@ class ThirdPartyTransferViewModelTest {
 
     @Test
     fun testLoadTransferTemplate_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val templateResult = mock(AccountOptionsTemplate::class.java)
         val list1 = mock(Beneficiary::class.java)
         val list2 = mock(Beneficiary::class.java)
@@ -77,13 +79,11 @@ class ThirdPartyTransferViewModelTest {
         )
 
         thirdPartyTransferViewModel.loadTransferTemplate()
-        Dispatchers.resetMain()
     }
 
 
     @Test
     fun testLoadTransferTemplate_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val errorMessage = R.string.error_fetching_third_party_transfer_template
         `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).thenReturn(
             Response.error(404, ResponseBody.create(null, "error"))
@@ -101,7 +101,6 @@ class ThirdPartyTransferViewModelTest {
             )
         )
         verifyNoMoreInteractions(thirdPartyTransferUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test

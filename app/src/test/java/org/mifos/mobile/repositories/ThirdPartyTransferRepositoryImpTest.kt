@@ -1,12 +1,12 @@
 package org.mifos.mobile.repositories
 
+import CoroutineTestRule
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -20,7 +20,11 @@ import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class ThirdPartyTransferRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -35,7 +39,6 @@ class ThirdPartyTransferRepositoryImpTest {
 
     @Test
     fun testThirdPartyTransferTemplate_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response: Response<AccountOptionsTemplate?> =
             Response.success(Mockito.mock(AccountOptionsTemplate::class.java))
 
@@ -44,12 +47,10 @@ class ThirdPartyTransferRepositoryImpTest {
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
 
         assertEquals(result, response)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testThirdPartyTransferTemplate_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<AccountOptionsTemplate?> =
             Response.error(404, ResponseBody.create(null, "error"))
         `when`(dataManager.thirdPartyTransferTemplate()).thenReturn(error)
@@ -57,12 +58,10 @@ class ThirdPartyTransferRepositoryImpTest {
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
 
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testBeneficiaryList_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val list1 = Mockito.mock(Beneficiary::class.java)
         val list2 = Mockito.mock(Beneficiary::class.java)
 
@@ -72,12 +71,10 @@ class ThirdPartyTransferRepositoryImpTest {
 
         val result = transferRepositoryImp.beneficiaryList()
         assertEquals(result, response)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testBeneficiaryList_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<List<Beneficiary?>?> =
             Response.error(404, ResponseBody.create(null, "error"))
 
@@ -86,6 +83,5 @@ class ThirdPartyTransferRepositoryImpTest {
         val result = transferRepositoryImp.beneficiaryList()
 
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 }

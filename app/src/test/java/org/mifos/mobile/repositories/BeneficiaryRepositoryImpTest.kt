@@ -1,12 +1,12 @@
 package org.mifos.mobile.repositories
 
+import CoroutineTestRule
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -21,7 +21,11 @@ import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class BeneficiaryRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -36,7 +40,6 @@ class BeneficiaryRepositoryImpTest {
 
     @Test
     fun testBeneficiaryTemplate_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val success: Response<BeneficiaryTemplate?> =
             Response.success(mock(BeneficiaryTemplate::class.java))
 
@@ -46,12 +49,10 @@ class BeneficiaryRepositoryImpTest {
 
         verify(dataManager).beneficiaryTemplate()
         assertEquals(result, success)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testBeneficiaryTemplate_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<BeneficiaryTemplate?> =
             Response.error(404, ResponseBody.create(null, "error"))
         `when`(dataManager.beneficiaryTemplate()).thenReturn(error)
@@ -60,12 +61,10 @@ class BeneficiaryRepositoryImpTest {
 
         verify(dataManager).beneficiaryTemplate()
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testCreateBeneficiary_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val success: Response<ResponseBody?> =
             Response.success(mock(ResponseBody::class.java))
 
@@ -77,12 +76,10 @@ class BeneficiaryRepositoryImpTest {
 
         verify(dataManager).createBeneficiary(beneficiaryPayload)
         assertEquals(result, success)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testCreateBeneficiary_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<ResponseBody?> =
             Response.error(404, ResponseBody.create(null, "error"))
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
@@ -93,12 +90,10 @@ class BeneficiaryRepositoryImpTest {
 
         verify(dataManager).createBeneficiary(beneficiaryPayload)
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testUpdateBeneficiary_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val success: Response<ResponseBody?> =
             Response.success(mock(ResponseBody::class.java))
 
@@ -108,12 +103,10 @@ class BeneficiaryRepositoryImpTest {
 
         val result = beneficiaryRepositoryImp.updateBeneficiary(123L, beneficiaryUpdatePayload)
         assertEquals(result, success)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<ResponseBody?> =
             Response.error(404, ResponseBody.create(null, "error"))
 
@@ -123,13 +116,11 @@ class BeneficiaryRepositoryImpTest {
 
         val result = beneficiaryRepositoryImp.updateBeneficiary(123L, beneficiaryUpdatePayload)
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 
 
     @Test
     fun testDeleteBeneficiary_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val success: Response<ResponseBody?> =
             Response.success(mock(ResponseBody::class.java))
 
@@ -137,12 +128,10 @@ class BeneficiaryRepositoryImpTest {
 
         val result = beneficiaryRepositoryImp.deleteBeneficiary(123L)
         assertEquals(result, success)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testDeleteBeneficiary_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<ResponseBody?> =
             Response.error(404, ResponseBody.create(null, "error"))
 
@@ -150,12 +139,10 @@ class BeneficiaryRepositoryImpTest {
 
         val result = beneficiaryRepositoryImp.deleteBeneficiary(123L)
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testBeneficiaryList_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val success: Response<List<Beneficiary?>?> =
             Response.success(Beneficiary::class.java) as Response<List<Beneficiary?>?>
 
@@ -163,12 +150,10 @@ class BeneficiaryRepositoryImpTest {
 
         val result = beneficiaryRepositoryImp.beneficiaryList()
         assertEquals(result, success)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testBeneficiaryList_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<List<Beneficiary?>?> =
             Response.error(404, ResponseBody.create(null, "error"))
 
@@ -176,6 +161,5 @@ class BeneficiaryRepositoryImpTest {
 
         val result = beneficiaryRepositoryImp.beneficiaryList()
         assertEquals(result, error)
-        Dispatchers.resetMain()
     }
 }

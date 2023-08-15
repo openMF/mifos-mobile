@@ -1,12 +1,11 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -27,6 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class BeneficiaryApplicationViewModelTest {
 
     @JvmField
@@ -35,6 +35,9 @@ class BeneficiaryApplicationViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var beneficiaryRepositoryImp: BeneficiaryRepositoryImp
@@ -53,7 +56,6 @@ class BeneficiaryApplicationViewModelTest {
 
     @Test
     fun testLoadBeneficiaryTemplate_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(BeneficiaryTemplate::class.java)
         `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(Response.success(response))
 
@@ -66,12 +68,10 @@ class BeneficiaryApplicationViewModelTest {
         )
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.SetVisibility(View.VISIBLE))
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testLoadBeneficiaryTemplate_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(
             Response.error(
                 404,
@@ -83,12 +83,10 @@ class BeneficiaryApplicationViewModelTest {
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiary_template))
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testCreateBeneficiary_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(ResponseBody::class.java)
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
         `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
@@ -101,12 +99,10 @@ class BeneficiaryApplicationViewModelTest {
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.CreatedSuccessfully)
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testCreateBeneficiary_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val error = RuntimeException("Error Response")
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
         `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
@@ -117,12 +113,10 @@ class BeneficiaryApplicationViewModelTest {
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_creating_beneficiary))
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testUpdateBeneficiary_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(ResponseBody::class.java)
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
         `when`(
@@ -138,12 +132,10 @@ class BeneficiaryApplicationViewModelTest {
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.UpdatedSuccessfully)
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @Test
     fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
         `when`(
             beneficiaryRepositoryImp.updateBeneficiary(
@@ -158,7 +150,6 @@ class BeneficiaryApplicationViewModelTest {
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_updating_beneficiary))
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
-        Dispatchers.resetMain()
     }
 
     @After
