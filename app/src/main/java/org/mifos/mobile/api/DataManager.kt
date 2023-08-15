@@ -72,16 +72,17 @@ class DataManager @Inject constructor(
             ?.getRecentTransactionsList(clientId, offset, limit)
     }
 
-    fun getClientCharges(clientId: Long): Observable<Page<Charge?>?>? {
-        return baseApiManager.clientChargeApi?.getClientChargeList(clientId)
-            ?.concatMap { chargePage -> databaseHelper.syncCharges(chargePage) }
+    suspend fun getClientCharges(clientId: Long): Response<Page<Charge?>?>? {
+        return baseApiManager.clientChargeApi?.getClientChargeList(clientId).apply {
+            databaseHelper.syncCharges(this?.body())
+        }
     }
 
-    fun getLoanCharges(loanId: Long): Observable<List<Charge?>?>? {
+    suspend fun getLoanCharges(loanId: Long): Response<List<Charge?>?>? {
         return baseApiManager.clientChargeApi?.getLoanAccountChargeList(loanId)
     }
 
-    fun getSavingsCharges(savingsId: Long): Observable<List<Charge?>?>? {
+    suspend fun getSavingsCharges(savingsId: Long): Response<List<Charge?>?>? {
         return baseApiManager.clientChargeApi?.getSavingsAccountChargeList(savingsId)
     }
 
@@ -207,8 +208,8 @@ class DataManager @Inject constructor(
         return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
-    val clientLocalCharges: Observable<Page<Charge?>?>
-        get() = databaseHelper.clientCharges
+    suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
+
     val notifications: Observable<List<MifosNotification?>?>
         get() = databaseHelper.notifications
     val unreadNotificationsCount: Observable<Int>
