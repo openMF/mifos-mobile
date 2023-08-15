@@ -85,56 +85,46 @@ class DataManager @Inject constructor(
         return baseApiManager.clientChargeApi?.getSavingsAccountChargeList(savingsId)
     }
 
-    fun getSavingsWithAssociations(
+    suspend fun getSavingsWithAssociations(
         accountId: Long?,
         associationType: String?,
-    ): Observable<SavingsWithAssociations?>? {
+    ): Response<SavingsWithAssociations?>? {
         return baseApiManager
             .savingAccountsListApi?.getSavingsWithAssociations(accountId, associationType)
     }
 
-    val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
-        get() = baseApiManager.savingAccountsListApi?.accountTransferTemplate
+    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>? =
+        baseApiManager.savingAccountsListApi?.accountTransferTemplate()
 
     fun makeTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi?.makeTransfer(transferPayload)
     }
 
-    fun getSavingAccountApplicationTemplate(client: Long?): Observable<SavingsAccountTemplate?>? {
+    suspend fun getSavingAccountApplicationTemplate(client: Long?): Response<SavingsAccountTemplate?>? {
         return baseApiManager.savingAccountsListApi
             ?.getSavingsAccountApplicationTemplate(client)
     }
 
-    fun submitSavingAccountApplication(
+    suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi?.submitSavingAccountApplication(payload)
     }
 
-    fun updateSavingsAccount(
+    suspend fun updateSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
             ?.updateSavingsAccountUpdate(accountId, payload)
     }
 
-    fun submitWithdrawSavingsAccount(
+    suspend fun submitWithdrawSavingsAccount(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
             ?.submitWithdrawSavingsAccount(accountId, payload)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out ResponseBody>> {
-                    Observable.just(
-                        ResponseBody.create(
-                            MediaType.parse("text/parse"),
-                            "Saving Account Withdrawn Successfully",
-                        ),
-                    )
-                },
-            )
     }
 
     fun getLoanAccountDetails(loanId: Long): Observable<LoanAccount?>? {

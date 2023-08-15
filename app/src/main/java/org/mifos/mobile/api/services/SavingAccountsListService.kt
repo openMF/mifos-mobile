@@ -10,6 +10,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -18,36 +19,36 @@ import retrofit2.http.*
  */
 interface SavingAccountsListService {
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
-    fun getSavingsWithAssociations(
+    suspend fun getSavingsWithAssociations(
         @Path("accountId") accountId: Long?,
         @Query("associations") associationType: String?,
-    ): Observable<SavingsWithAssociations?>?
+    ): Response<SavingsWithAssociations?>?
 
-    @get:GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template")
-    val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
+    @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template")
+    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>?
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
     fun makeTransfer(@Body transferPayload: TransferPayload?): Observable<ResponseBody?>?
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
-    fun getSavingsAccountApplicationTemplate(
+    suspend fun getSavingsAccountApplicationTemplate(
         @Query("clientId") clientId: Long?,
-    ): Observable<SavingsAccountTemplate?>?
+    ): Response<SavingsAccountTemplate?>?
 
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS)
-    fun submitSavingAccountApplication(
+    suspend fun submitSavingAccountApplication(
         @Body payload: SavingsAccountApplicationPayload?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
     @PUT(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountsId}")
-    fun updateSavingsAccountUpdate(
+    suspend fun updateSavingsAccountUpdate(
         @Path("accountsId") accountsId: Long?,
         @Body payload: SavingsAccountUpdatePayload?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}?command=withdrawnByApplicant")
-    fun submitWithdrawSavingsAccount(
+    suspend fun submitWithdrawSavingsAccount(
         @Path("savingsId") savingsId: String?,
         @Body payload: SavingsAccountWithdrawPayload?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 }

@@ -1,50 +1,47 @@
 package org.mifos.mobile.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.utils.SavingsAccountUiState
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingsAccountWithdrawViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) : ViewModel() {
+class SavingsAccountWithdrawViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
+    ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
     private val _savingsAccountWithdrawUiState = MutableLiveData<SavingsAccountUiState>()
-    val savingsAccountWithdrawUiState : LiveData<SavingsAccountUiState> get() = _savingsAccountWithdrawUiState
+    val savingsAccountWithdrawUiState: LiveData<SavingsAccountUiState> get() = _savingsAccountWithdrawUiState
 
     fun submitWithdrawSavingsAccount(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?,
     ) {
-        _savingsAccountWithdrawUiState.value = SavingsAccountUiState.Loading
-        savingsAccountRepositoryImp.submitWithdrawSavingsAccount(accountId, payload)
-            ?.subscribeOn(Schedulers.newThread())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBodyObservable: ResponseBody) {
+        viewModelScope.launch {
+            _savingsAccountWithdrawUiState.value = SavingsAccountUiState.Loading
+            try {
+                val response =
+                    savingsAccountRepositoryImp.submitWithdrawSavingsAccount(accountId, payload)
+                if (response?.isSuccessful == true) {
                     _savingsAccountWithdrawUiState.value =
                         SavingsAccountUiState.SavingsAccountWithdrawSuccess
+                } else {
+                    _savingsAccountWithdrawUiState.value = response?.let { HttpException(it) }?.let {
+                        SavingsAccountUiState.ErrorMessage(
+                            it
+                        )
+                    }
                 }
-
-                override fun onError(e: Throwable) {
-                    _savingsAccountWithdrawUiState.value = SavingsAccountUiState.ErrorMessage(e)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposable.add(it) }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+            } catch (e: Throwable) {
+                _savingsAccountWithdrawUiState.value = SavingsAccountUiState.ErrorMessage(e)
+            }
+        }
     }
 }

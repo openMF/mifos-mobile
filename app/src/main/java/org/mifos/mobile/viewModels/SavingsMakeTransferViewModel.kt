@@ -3,12 +3,10 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
@@ -20,34 +18,26 @@ import javax.inject.Inject
 class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
     ViewModel() {
 
-    private val compositeDisposables = CompositeDisposable()
     private val _savingsMakeTransferUiState = MutableLiveData<SavingsAccountUiState>()
-    val savingsMakeTransferUiState : LiveData<SavingsAccountUiState> get() = _savingsMakeTransferUiState
+    val savingsMakeTransferUiState: LiveData<SavingsAccountUiState> get() = _savingsMakeTransferUiState
 
     /**
      * Fetches [AccountOptionsTemplate] from server and notifies the view to display it. And
      * in case of any error during fetching the required details it notifies the view.
      */
     fun loanAccountTransferTemplate() {
-        _savingsMakeTransferUiState.value = SavingsAccountUiState.Loading
-        savingsAccountRepositoryImp.loanAccountTransferTemplate()
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<AccountOptionsTemplate?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _savingsMakeTransferUiState.value = SavingsAccountUiState.ErrorMessage(e)
+        viewModelScope.launch {
+            _savingsMakeTransferUiState.value = SavingsAccountUiState.Loading
+            try {
+                val response = savingsAccountRepositoryImp.loanAccountTransferTemplate()
+                if (response?.isSuccessful == true) {
+                    _savingsMakeTransferUiState.value = response.body()
+                        ?.let { SavingsAccountUiState.ShowSavingsAccountTemplate(it) }
                 }
-
-                override fun onNext(accountOptionsTemplate: AccountOptionsTemplate) {
-                    _savingsMakeTransferUiState.value = SavingsAccountUiState.ShowSavingsAccountTemplate(accountOptionsTemplate)
-
-                }
-            })?.let {
-                compositeDisposables.add(
-                    it,
-                )
+            } catch (e: Throwable) {
+                _savingsMakeTransferUiState.value = SavingsAccountUiState.ErrorMessage(e)
             }
+        }
     }
 
     /**
@@ -59,7 +49,7 @@ class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccoun
     fun getAccountNumbers(
         accountOptions: List<AccountOption>?,
         isTypePayFrom: Boolean,
-        accountTypeLoanString : String?
+        accountTypeLoanString: String?
     ): List<AccountDetail> {
         val accountNumber: MutableList<AccountDetail> = ArrayList()
         Observable.fromIterable(accountOptions)
