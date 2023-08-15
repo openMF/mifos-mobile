@@ -1,9 +1,9 @@
 package org.mifos.mobile.api.services
 
-import io.reactivex.Observable
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -14,11 +14,11 @@ import retrofit2.http.Path
 interface ClientChargeService {
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/charges")
-    fun getClientChargeList(@Path("clientId") clientId: Long?): Observable<Page<Charge?>?>?
+    suspend fun getClientChargeList(@Path("clientId") clientId: Long?): Response<Page<Charge?>?>?
 
     @GET(ApiEndPoints.LOANS + "/{loanId}/charges")
-    fun getLoanAccountChargeList(@Path("loanId") loanId: Long?): Observable<List<Charge?>?>?
+    suspend fun getLoanAccountChargeList(@Path("loanId") loanId: Long?): Response<List<Charge?>?>?
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}/charges")
-    fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long?): Observable<List<Charge?>?>?
+    suspend fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long?): Response<List<Charge?>?>?
 }
