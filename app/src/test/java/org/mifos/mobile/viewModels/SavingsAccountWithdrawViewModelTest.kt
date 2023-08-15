@@ -1,8 +1,10 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -17,9 +19,10 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.lang.RuntimeException
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class SavingsAccountWithdrawViewModelTest {
     @JvmField
     @Rule
@@ -28,53 +31,82 @@ class SavingsAccountWithdrawViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    @Mock
-    lateinit var savingsAccountRepositoryImp : SavingsAccountRepository
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
-    lateinit var savingsAccountWithdrawUiStateObserver : Observer<SavingsAccountUiState>
+    lateinit var savingsAccountRepositoryImp: SavingsAccountRepository
 
-    private lateinit var savingsAccountWithdrawViewModel : SavingsAccountWithdrawViewModel
+    @Mock
+    lateinit var savingsAccountWithdrawUiStateObserver: Observer<SavingsAccountUiState>
+
+    private lateinit var savingsAccountWithdrawViewModel: SavingsAccountWithdrawViewModel
     private val mockAccountId = "1"
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        savingsAccountWithdrawViewModel = SavingsAccountWithdrawViewModel(savingsAccountRepositoryImp)
-        savingsAccountWithdrawViewModel.savingsAccountWithdrawUiState.observeForever(savingsAccountWithdrawUiStateObserver)
+        savingsAccountWithdrawViewModel =
+            SavingsAccountWithdrawViewModel(savingsAccountRepositoryImp)
+        savingsAccountWithdrawViewModel.savingsAccountWithdrawUiState.observeForever(
+            savingsAccountWithdrawUiStateObserver
+        )
     }
 
     @Test
-    fun testSubmitWithdrawSavingsAccount_SuccessReceivedFromRepository_ReturnsSavingsAccountWithdrawSuccess() {
-        val mockSavingsAccountWithdrawPayload = Mockito.mock(SavingsAccountWithdrawPayload::class.java)
-        val responseBody = Mockito.mock(ResponseBody::class.java)
-        Mockito.`when`(
-            savingsAccountRepositoryImp.submitWithdrawSavingsAccount(mockAccountId, mockSavingsAccountWithdrawPayload)
-        ).thenReturn(Observable.just(responseBody))
+    fun testSubmitWithdrawSavingsAccount_SuccessReceivedFromRepository_ReturnsSavingsAccountWithdrawSuccess() =
+        runBlocking {
+            val mockSavingsAccountWithdrawPayload =
+                Mockito.mock(SavingsAccountWithdrawPayload::class.java)
+            val responseBody = Mockito.mock(ResponseBody::class.java)
+            Mockito.`when`(
+                savingsAccountRepositoryImp.submitWithdrawSavingsAccount(
+                    mockAccountId,
+                    mockSavingsAccountWithdrawPayload
+                )
+            ).thenReturn(Response.success(responseBody))
 
-        savingsAccountWithdrawViewModel.submitWithdrawSavingsAccount(mockAccountId, mockSavingsAccountWithdrawPayload)
+            savingsAccountWithdrawViewModel.submitWithdrawSavingsAccount(
+                mockAccountId,
+                mockSavingsAccountWithdrawPayload
+            )
 
-        Mockito.verify(savingsAccountWithdrawUiStateObserver).onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingsAccountWithdrawUiStateObserver).onChanged(SavingsAccountUiState.SavingsAccountWithdrawSuccess)
-        Mockito.verifyNoMoreInteractions(savingsAccountWithdrawUiStateObserver)
-    }
+            Mockito.verify(savingsAccountWithdrawUiStateObserver)
+                .onChanged(SavingsAccountUiState.Loading)
+            Mockito.verify(savingsAccountWithdrawUiStateObserver)
+                .onChanged(SavingsAccountUiState.SavingsAccountWithdrawSuccess)
+            Mockito.verifyNoMoreInteractions(savingsAccountWithdrawUiStateObserver)
+        }
 
     @Test
-    fun testSubmitWithdrawSavingsAccount_ErrorResponseFromRepository_ReturnsErrorMessage() {
-        val mockSavingsAccountWithdrawPayload = Mockito.mock(SavingsAccountWithdrawPayload::class.java)
-        val errorResponse = RuntimeException("Submit Failed")
-        Mockito.`when`(
-            savingsAccountRepositoryImp.submitWithdrawSavingsAccount(mockAccountId, mockSavingsAccountWithdrawPayload)
-        ).thenReturn(Observable.error(errorResponse))
+    fun testSubmitWithdrawSavingsAccount_ErrorResponseFromRepository_ReturnsErrorMessage() =
+        runBlocking {
+            val mockSavingsAccountWithdrawPayload =
+                Mockito.mock(SavingsAccountWithdrawPayload::class.java)
+            val errorResponse = RuntimeException("Submit Failed")
+            Mockito.`when`(
+                savingsAccountRepositoryImp.submitWithdrawSavingsAccount(
+                    mockAccountId,
+                    mockSavingsAccountWithdrawPayload
+                )
+            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
 
-        savingsAccountWithdrawViewModel.submitWithdrawSavingsAccount(mockAccountId, mockSavingsAccountWithdrawPayload)
+            savingsAccountWithdrawViewModel.submitWithdrawSavingsAccount(
+                mockAccountId,
+                mockSavingsAccountWithdrawPayload
+            )
 
-        Mockito.verify(savingsAccountWithdrawUiStateObserver).onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingsAccountWithdrawUiStateObserver).onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-        Mockito.verifyNoMoreInteractions(savingsAccountWithdrawUiStateObserver)
-    }
+            Mockito.verify(savingsAccountWithdrawUiStateObserver)
+                .onChanged(SavingsAccountUiState.Loading)
+            Mockito.verify(savingsAccountWithdrawUiStateObserver)
+                .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
+            Mockito.verifyNoMoreInteractions(savingsAccountWithdrawUiStateObserver)
+        }
 
     @After
     fun tearDown() {
-        savingsAccountWithdrawViewModel.savingsAccountWithdrawUiState.removeObserver(savingsAccountWithdrawUiStateObserver)
+        savingsAccountWithdrawViewModel.savingsAccountWithdrawUiState.removeObserver(
+            savingsAccountWithdrawUiStateObserver
+        )
     }
 }
