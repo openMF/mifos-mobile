@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -14,28 +15,27 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.savings.ProductOptions
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.presenters.SavingsAccountApplicationPresenter
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.SavingsAccountApplicationView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.viewModels.SavingsAccountApplicationViewModel
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /*
 * Created by saksham on 30/June/2018
 */
 @AndroidEntryPoint
-class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicationView {
+class SavingsAccountApplicationFragment : BaseFragment(){
 
     private var _binding: FragmentSavingsAccountApplicationBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel : SavingsAccountApplicationViewModel
 
-    @JvmField
-    @Inject
-    var presenter: SavingsAccountApplicationPresenter? = null
 
     @JvmField
     @Inject
@@ -60,8 +60,8 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
-        presenter?.attachView(this)
-        presenter?.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
+        viewModel = ViewModelProvider(this)[SavingsAccountApplicationViewModel::class.java]
+        viewModel.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
         return binding.root
     }
 
@@ -70,18 +70,54 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         binding.btnSubmit.setOnClickListener {
             onSubmit()
         }
+
+        viewModel.savingsAccountApplicationUiState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                SavingsAccountUiState.Loading -> showProgress()
+
+                SavingsAccountUiState.HideProgress -> hideProgress()
+
+                is SavingsAccountUiState.ShowUserInterfaceSavingAccountApplication -> {
+                    hideProgress()
+                    showUserInterfaceSavingAccountApplication(state.template)
+                }
+
+                is SavingsAccountUiState.ShowUserInterfaceSavingAccountUpdate -> {
+                    hideProgress()
+                    showUserInterfaceSavingAccountUpdate(state.template)
+                }
+
+                is SavingsAccountUiState.ErrorMessage -> {
+                    hideProgress()
+                    showError(state.error.message ?: "")
+                }
+
+                SavingsAccountUiState.SavingsAccountApplicationSuccess -> {
+                    hideProgress()
+                    showSavingsAccountApplicationSuccessfully()
+                }
+
+                SavingsAccountUiState.SavingsAccountUpdateSuccess -> {
+                    hideProgress()
+                    showSavingsAccountUpdateSuccessfully()
+                }
+
+                else -> throw IllegalStateException("Unexpected state : $state")
+            }
+
+        }
     }
 
-    override fun showUserInterfaceSavingAccountApplication(template: SavingsAccountTemplate?) {
+    private fun showUserInterfaceSavingAccountApplication(template: SavingsAccountTemplate?) {
         showUserInterface(template)
     }
 
-    override fun showSavingsAccountApplicationSuccessfully() {
+    private fun showSavingsAccountApplicationSuccessfully() {
         showMessage(getString(R.string.new_saving_account_created_successfully))
         activity?.finish()
     }
 
-    override fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?) {
+    private fun showUserInterfaceSavingAccountUpdate(template: SavingsAccountTemplate?) {
         showUserInterface(template)
         activity?.title = getString(
             R.string.string_savings_account,
@@ -90,7 +126,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         binding.productIdField.setText(savingsWithAssociations?.savingsProductName!!, false)
     }
 
-    override fun showSavingsAccountUpdateSuccessfully() {
+    private fun showSavingsAccountUpdateSuccessfully() {
         showMessage(getString(R.string.saving_account_updated_successfully))
         activity?.supportFragmentManager?.popBackStack()
     }
@@ -123,7 +159,7 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
             DateHelper.FORMAT_dd_MMMM_yyyy,
             getTodayFormatted(),
         )
-        presenter?.submitSavingsAccountApplication(payload)
+        viewModel.submitSavingsAccountApplication(payload)
     }
 
     private fun updateSavingAccount() {
@@ -131,10 +167,10 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         payload.clientId = template?.clientId?.toLong()
         payload.productId = productIdList.indexOf(binding.productIdField.text.toString())
             .let { productOptions?.get(it)?.id }?.toLong()
-        presenter?.updateSavingsAccount(savingsWithAssociations?.id, payload)
+        viewModel.updateSavingsAccount(savingsWithAssociations?.id, payload)
     }
 
-    fun onSubmit() {
+    private fun onSubmit() {
         if (state == SavingsAccountState.CREATE) {
             submitSavingsAccountApplication()
         } else {
@@ -142,19 +178,19 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
         }
     }
 
-    override fun showError(error: String?) {
+    fun showError(error: String?) {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showMessage(showMessage: String?) {
+    fun showMessage(showMessage: String?) {
         Toast.makeText(context, showMessage, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showMifosProgressDialog(getString(R.string.progress_message_loading))
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideMifosProgressDialog()
     }
 
@@ -166,7 +202,6 @@ class SavingsAccountApplicationFragment : BaseFragment(), SavingsAccountApplicat
     override fun onDestroy() {
         super.onDestroy()
         hideProgress()
-        presenter?.detachView()
     }
 
     companion object {

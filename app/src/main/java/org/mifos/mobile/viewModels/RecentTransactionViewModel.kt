@@ -3,14 +3,10 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.models.Page
-import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.repositories.RecentTransactionRepository
 import org.mifos.mobile.utils.RecentTransactionUiState
 import javax.inject.Inject
@@ -19,7 +15,6 @@ import javax.inject.Inject
 class RecentTransactionViewModel @Inject constructor(private val recentTransactionRepositoryImp: RecentTransactionRepository) :
     ViewModel() {
 
-    private val compositeDisposables: CompositeDisposable = CompositeDisposable()
     private val limit = 50
     private var loadmore = false
 
@@ -32,37 +27,27 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
     }
 
     private fun loadRecentTransactions(offset: Int, limit: Int) {
-        _recentTransactionUiState.value = RecentTransactionUiState.Loading
-        recentTransactionRepositoryImp.recentTransactions(offset, limit)
-            ?.observeOn(  AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<Page<Transaction?>?>() {
-                override fun onNext(transactions: Page<Transaction?>) {
-                    if (transactions.totalFilteredRecords == 0) {
-                        _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
-                    } else if (loadmore && transactions.pageItems.isNotEmpty()) {
-                       _recentTransactionUiState.value = RecentTransactionUiState.LoadMoreRecentTransactions(transactions.pageItems)
-                    } else if (transactions.pageItems.isNotEmpty()) {
-                        _recentTransactionUiState.value = RecentTransactionUiState.RecentTransactions(transactions.pageItems)
-                    }
-                }
-
-                override fun onError(e: Throwable) {
-                     _recentTransactionUiState.value = RecentTransactionUiState.Error(R.string.recent_transactions)
-                }
-
-                override fun onComplete() {}
-            }).let {
-                if (it != null) {
-                    compositeDisposables.add(
-                        it,
+        viewModelScope.launch {
+            _recentTransactionUiState.value = RecentTransactionUiState.Loading
+            val response = recentTransactionRepositoryImp.recentTransactions(offset, limit)
+            if (response?.isSuccessful == true) {
+                if (response.body()?.totalFilteredRecords == 0) {
+                    _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
+                } else if (loadmore && response.body()?.pageItems?.isNotEmpty() == true) {
+                    _recentTransactionUiState.value =
+                        RecentTransactionUiState.LoadMoreRecentTransactions(
+                            response.body()!!.pageItems
+                        )
+                } else if (response.body()?.pageItems?.isNotEmpty() == true) {
+                    _recentTransactionUiState.value = RecentTransactionUiState.RecentTransactions(
+                        response.body()?.pageItems!!
                     )
                 }
+            } else {
+                _recentTransactionUiState.value =
+                    RecentTransactionUiState.Error(R.string.recent_transactions)
             }
+        }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposables.clear()
-    }
 }
