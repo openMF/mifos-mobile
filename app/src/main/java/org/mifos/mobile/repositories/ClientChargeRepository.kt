@@ -1,13 +1,13 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
+import retrofit2.Response
 
 interface ClientChargeRepository {
 
-    fun getClientCharges(clientId: Long): Observable<Page<Charge?>?>?
-    fun getLoanCharges(loanId: Long): Observable<List<Charge?>?>?
-    fun getSavingsCharges(savingsId: Long): Observable<List<Charge?>?>?
-    fun clientLocalCharges(): Observable<Page<Charge?>?>
+    suspend fun getClientCharges(clientId: Long): Response<Page<Charge?>?>?
+    suspend fun getLoanCharges(loanId: Long): Response<List<Charge?>?>?
+    suspend fun getSavingsCharges(savingsId: Long): Response<List<Charge?>?>?
+    suspend fun clientLocalCharges(): Response<Page<Charge?>?>
 }
