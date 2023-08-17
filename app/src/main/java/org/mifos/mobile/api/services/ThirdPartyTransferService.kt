@@ -5,6 +5,7 @@ import okhttp3.ResponseBody
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,5 +18,5 @@ interface ThirdPartyTransferService {
     val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
-    fun makeTransfer(@Body transferPayload: TransferPayload?): Observable<ResponseBody?>?
+    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?
 }

@@ -28,7 +28,7 @@ interface SavingAccountsListService {
     suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>?
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
-    fun makeTransfer(@Body transferPayload: TransferPayload?): Observable<ResponseBody?>?
+    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
     suspend fun getSavingsAccountApplicationTemplate(
