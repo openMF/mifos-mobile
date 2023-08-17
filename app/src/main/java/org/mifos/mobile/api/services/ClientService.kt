@@ -1,6 +1,5 @@
 package org.mifos.mobile.api.services
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.Page
@@ -21,19 +20,19 @@ interface ClientService {
     suspend fun clients(): Response<Page<Client?>?>?
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
-    fun getClientForId(@Path(CLIENT_ID) clientId: Long?): Observable<Client?>?
+    suspend fun getClientForId(@Path(CLIENT_ID) clientId: Long?): Client
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
-    fun getClientImage(@Path(CLIENT_ID) clientId: Long?): Observable<ResponseBody?>?
+    suspend fun getClientImage(@Path(CLIENT_ID) clientId: Long?): ResponseBody
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
-    fun getClientAccounts(@Path(CLIENT_ID) clientId: Long?): Observable<ClientAccounts?>?
+    suspend fun getClientAccounts(@Path(CLIENT_ID) clientId: Long?): ClientAccounts
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
-    fun getAccounts(
+    suspend fun getAccounts(
         @Path(CLIENT_ID) clientId: Long?,
         @Query("fields") accountType: String?,
-    ): Observable<ClientAccounts?>?
+    ): ClientAccounts
 
     companion object {
         const val CLIENT_ID = "clientId"

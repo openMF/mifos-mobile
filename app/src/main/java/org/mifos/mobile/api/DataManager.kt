@@ -3,6 +3,10 @@ package org.mifos.mobile.api
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Function
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
@@ -55,16 +59,22 @@ class DataManager @Inject constructor(
         return baseApiManager.authenticationApi?.authenticate(loginPayload)
     }
 
-    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi?.clients()
-    val currentClient: Observable<Client?>?
-        get() = baseApiManager.clientsApi?.getClientForId(clientId)
-    val clientImage: Observable<ResponseBody?>?
-        get() = baseApiManager.clientsApi?.getClientImage(clientId)
-    val clientAccounts: Observable<ClientAccounts?>?
-        get() = baseApiManager.clientsApi?.getClientAccounts(clientId)
+    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
 
-    fun getAccounts(accountType: String?): Observable<ClientAccounts?>? {
-        return baseApiManager.clientsApi?.getAccounts(clientId, accountType)
+    suspend fun currentClient(): Client {
+        return baseApiManager.clientsApi.getClientForId(clientId)
+    }
+
+    suspend fun clientImage(): ResponseBody {
+        return baseApiManager.clientsApi.getClientImage(clientId)
+    }
+
+    suspend fun clientAccounts(): ClientAccounts {
+        return baseApiManager.clientsApi.getClientAccounts(clientId)
+    }
+
+    suspend fun getAccounts(accountType: String?): ClientAccounts {
+        return baseApiManager.clientsApi.getAccounts(clientId, accountType)
     }
 
     suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
@@ -202,22 +212,24 @@ class DataManager @Inject constructor(
 
     val notifications: Observable<List<MifosNotification?>?>
         get() = databaseHelper.notifications
-    val unreadNotificationsCount: Observable<Int>
-        get() = databaseHelper.unreadNotificationsCount
 
-    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody?>? {
-        return baseApiManager.notificationApi?.registerNotification(payload)
+    fun unreadNotificationsCount(): Int {
+        return databaseHelper.unreadNotificationsCount()
     }
 
-    fun updateRegisterNotification(
+    suspend fun registerNotification(payload: NotificationRegisterPayload?): ResponseBody {
+        return baseApiManager.notificationApi.registerNotification(payload)
+    }
+
+    suspend fun updateRegisterNotification(
         id: Long,
         payload: NotificationRegisterPayload?,
-    ): Observable<ResponseBody?>? {
-        return baseApiManager.notificationApi?.updateRegisterNotification(id, payload)
+    ): ResponseBody {
+        return baseApiManager.notificationApi.updateRegisterNotification(id, payload)
     }
 
-    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail?>? {
-        return baseApiManager.notificationApi?.getUserNotificationId(id)
+    suspend fun getUserNotificationId(id: Long): NotificationUserDetail {
+        return baseApiManager.notificationApi.getUserNotificationId(id)
     }
 
     suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {

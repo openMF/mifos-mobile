@@ -18,7 +18,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesSavingsAccountRepository(dataManager: DataManager) : SavingsAccountRepository {
+    fun providesSavingsAccountRepository(dataManager: DataManager): SavingsAccountRepository {
         return SavingsAccountRepositoryImp(dataManager)
     }
 
@@ -45,7 +45,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideAccountsRepository(dataManager: DataManager) : AccountsRepository {
+    fun provideAccountsRepository(dataManager: DataManager): AccountsRepository {
         return AccountsRepositoryImp(dataManager)
     }
 
@@ -62,5 +62,15 @@ class RepositoryModule {
     @Provides
     fun providesClientChargeRepository(dataManager: DataManager): ClientChargeRepository {
         return ClientChargeRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesHomeRepository(dataManager: DataManager): HomeRepository {
+        return HomeRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesUserDetailRepository(dataManager: DataManager): UserDetailRepository {
+        return UserDetailRepositoryImp(dataManager)
     }
 }

@@ -43,15 +43,13 @@ class DatabaseHelper @Inject constructor() {
             Collections.sort(notifications, NotificationComparator())
             Observable.just(notifications)
         }
-    val unreadNotificationsCount: Observable<Int>
-        get() = Observable.defer {
-            deleteOldNotifications()
-            val count = SQLite.select()
-                .from(MifosNotification::class.java)
-                .where(MifosNotification_Table.read.eq(false))
-                .queryList().size
-            Observable.just(count)
-        }
+    fun unreadNotificationsCount(): Int {
+        deleteOldNotifications()
+        return SQLite.select()
+            .from(MifosNotification::class.java)
+            .where(MifosNotification_Table.read.eq(false))
+            .queryList().size
+    }
 
     private fun deleteOldNotifications() {
         Observable.defer<Void> {
