@@ -98,7 +98,7 @@ class DataManager @Inject constructor(
     suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>? =
         baseApiManager.savingAccountsListApi?.accountTransferTemplate()
 
-    fun makeTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
+    suspend fun makeTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi?.makeTransfer(transferPayload)
     }
 
@@ -187,7 +187,7 @@ class DataManager @Inject constructor(
     val thirdPartyTransferTemplate: Observable<AccountOptionsTemplate?>?
         get() = baseApiManager.thirdPartyTransferApi?.accountTransferTemplate
 
-    fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
+    suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)
     }
 
