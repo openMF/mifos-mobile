@@ -2,6 +2,8 @@ package org.mifos.mobile.api.local
 
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.notification.MifosNotification
@@ -34,15 +36,17 @@ class DatabaseHelper @Inject constructor() {
         return Response.success(chargePage)
     }
 
-    val notifications: Observable<List<MifosNotification?>?>
-        get() = Observable.defer {
+    fun notifications(): Flow<List<MifosNotification?>?> {
+        return flow {
             deleteOldNotifications()
             val notifications = SQLite.select()
                 .from(MifosNotification::class.java)
                 .queryList()
             Collections.sort(notifications, NotificationComparator())
-            Observable.just(notifications)
+            emit(notifications)
         }
+    }
+
     val unreadNotificationsCount: Observable<Int>
         get() = Observable.defer {
             deleteOldNotifications()

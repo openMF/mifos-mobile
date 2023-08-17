@@ -1,20 +1,28 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
-
-import org.junit.Assert
+import CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class NotificationRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -28,33 +36,33 @@ class NotificationRepositoryImpTest {
     }
 
     @Test
-    fun testLoadNotifications_SuccessResponseReceivedFromDataManager_ReturnsSuccess() {
+    fun testLoadNotifications_SuccessResponseReceivedFromDataManager_ReturnsSuccess() = runBlocking {
         val notificationList : List<MifosNotification?> = ArrayList()
-        val successResponse: Observable<List<MifosNotification?>?> =
-            Observable.just(notificationList)
         Mockito.`when`(
-            dataManager.notifications
-        ).thenReturn(successResponse)
+            dataManager.notifications()
+        ).thenReturn(flowOf(notificationList))
 
-        val result = notificationRepositoryImp.loadNotifications()
+        val notifications = notificationRepositoryImp.loadNotifications()
 
-        Mockito.verify(dataManager).notifications
-        Assert.assertEquals(result, successResponse)
-
+        notifications.collect { result ->
+            assert(result == notificationList)
+        }
     }
 
     @Test
-    fun testLoadNotifications_ErrorResponseReceivedFromDataManager_ReturnsError() {
-        val errorResponse: Observable<List<MifosNotification?>?> =
-            Observable.error(Throwable("LoadNotifications Unsuccessful"))
-        Mockito.`when`(
-            dataManager.notifications
-        ).thenReturn(errorResponse)
+    fun testLoadNotifications_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking {
+        val dummyError = Exception("Dummy error")
+        `when`(dataManager.notifications()).thenThrow(dummyError)
 
-        val result = notificationRepositoryImp.loadNotifications()
+        val notifications = notificationRepositoryImp.loadNotifications()
 
-        Mockito.verify(dataManager).notifications
-        Assert.assertEquals(result, errorResponse)
+        try {
+            notifications.catch { exception ->
+                assert(exception == dummyError)
+            }
+        } catch (e: Exception) {
+            assert(e == dummyError)
+        }
     }
 
 }
