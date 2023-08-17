@@ -3,6 +3,7 @@ package org.mifos.mobile.api
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Function
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
@@ -200,8 +201,8 @@ class DataManager @Inject constructor(
 
     suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
 
-    val notifications: Observable<List<MifosNotification?>?>
-        get() = databaseHelper.notifications
+    fun notifications(): Flow<List<MifosNotification?>?> = databaseHelper.notifications()
+
     val unreadNotificationsCount: Observable<Int>
         get() = databaseHelper.unreadNotificationsCount
 
