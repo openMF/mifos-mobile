@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -26,14 +27,9 @@ import org.mifos.mobile.ui.adapters.LoanAccountsListAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter
 import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.AccountsFilterUtil
-import org.mifos.mobile.utils.AccountsUiState
-import org.mifos.mobile.utils.ComparatorBasedOnId
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.DividerItemDecoration
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.*
 import org.mifos.mobile.viewModels.AccountsViewModel
-import java.util.Collections
+import java.util.*
 
 /**
  * Created by Rajan Maurya on 23/10/16.
@@ -42,7 +38,6 @@ import java.util.Collections
 class AccountsFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentAccountsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : AccountsViewModel
     private var loanAccountsListAdapter: LoanAccountsListAdapter? = null
     private var savingAccountsListAdapter: SavingAccountsListAdapter? = null
     private var shareAccountsListAdapter: ShareAccountsListAdapter? = null
@@ -51,6 +46,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
     private var savingAccounts: List<SavingAccount?>? = null
     private var shareAccounts: List<ShareAccount?>? = null
     private var currentFilterList: List<CheckboxStatus?>? = null
+
+    private val viewModel: AccountsViewModel by viewModels()
 
     /**
      * Method to get the current filter list for the fragment
@@ -86,7 +83,6 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
     ): View {
         _binding = FragmentAccountsBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        viewModel = ViewModelProvider(this)[AccountsViewModel::class.java]
         loanAccountsListAdapter = LoanAccountsListAdapter(::onItemClick)
         savingAccountsListAdapter = SavingAccountsListAdapter(::onItemClick)
         shareAccountsListAdapter = ShareAccountsListAdapter(::onItemClick)
@@ -171,32 +167,34 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
             onRetry()
         }
 
-        viewModel.accountsUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                AccountsUiState.Loading -> showProgress()
+        lifecycleScope.launchWhenStarted {
+            viewModel.accountsUiState.collect {
+                when (it) {
+                    AccountsUiState.Loading -> showProgress()
 
-                AccountsUiState.Error -> {
-                    hideProgress()
-                    showError(context?.getString(R.string.error_fetching_accounts))
+                    AccountsUiState.Error -> {
+                        hideProgress()
+                        showError(context?.getString(R.string.error_fetching_accounts))
+                    }
+
+                    is AccountsUiState.ShowSavingsAccounts -> {
+                        hideProgress()
+                        showSavingsAccounts(it.savingAccounts)
+                    }
+
+                    is AccountsUiState.ShowLoanAccounts -> {
+                        hideProgress()
+                        showLoanAccounts(it.loanAccounts)
+
+                    }
+
+                    is AccountsUiState.ShowShareAccounts -> {
+                        hideProgress()
+                        showShareAccounts(it.shareAccounts)
+                    }
                 }
 
-                is AccountsUiState.ShowSavingsAccounts -> {
-                    hideProgress()
-                    showSavingsAccounts(state.savingAccounts)
-                }
-
-                is AccountsUiState.ShowLoanAccounts -> {
-                    hideProgress()
-                    showLoanAccounts(state.loanAccounts)
-
-                }
-
-                is AccountsUiState.ShowShareAccounts -> {
-                    hideProgress()
-                    showShareAccounts(state.shareAccounts)
-                }
             }
-
         }
     }
 
@@ -448,7 +446,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         }
     }
 
-    private fun getFilterStrings() : AccountsFilterUtil{
+    private fun getFilterStrings(): AccountsFilterUtil {
         return AccountsFilterUtil().apply {
             this.activeString = context?.getString(R.string.active)
             this.approvedString = context?.getString(R.string.approved)

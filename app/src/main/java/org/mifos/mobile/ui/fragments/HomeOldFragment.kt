@@ -1,22 +1,16 @@
 package org.mifos.mobile.ui.fragments
 
 import android.animation.LayoutTransition
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
@@ -25,7 +19,6 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentHomeOldBinding
 import org.mifos.mobile.models.client.Client
-import org.mifos.mobile.presenters.HomeOldPresenter
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.NotificationActivity
@@ -35,25 +28,19 @@ import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
-import org.mifos.mobile.ui.views.HomeOldView
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.MaterialDialog
-import org.mifos.mobile.utils.TextDrawable
-import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.*
+import org.mifos.mobile.viewModels.HomeViewModel
 import javax.inject.Inject
 
 /**
  * Created by michaelsosnick on 1/1/17.
  */
 @AndroidEntryPoint
-class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
+class HomeOldFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentHomeOldBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var presenter: HomeOldPresenter? = null
+    private val viewModel: HomeViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -75,7 +62,6 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         _binding = FragmentHomeOldBinding.inflate(inflater, container, false)
         val rootView = binding.root
         clientId = preferencesHelper?.clientId
-        presenter?.attachView(this)
         setHasOptionsMenu(true)
         binding.swipeHomeContainer.setColorSchemeResources(
             R.color.blue_light,
@@ -107,7 +93,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         val menuItem = menu.findItem(R.id.menu_notifications)
         val count = menuItem.actionView
         tvNotificationCount = count?.findViewById(R.id.tv_notification_indicator)
-        presenter?.unreadNotificationsCount
+        viewModel.unreadNotificationsCount
         count?.setOnClickListener {
             startActivity(
                 Intent(
@@ -153,7 +139,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as? Client)
-            presenter?.setUserProfile(preferencesHelper?.userProfileImage)
+            viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN))
             showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS))
         }
@@ -164,12 +150,12 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     }
 
     private fun loadClientData() {
-        presenter?.loadClientAccountDetails()
-        presenter?.userDetails
-        presenter?.userImage
+        viewModel.loadClientAccountDetails()
+        viewModel.userDetails
+        viewModel.userImage
     }
 
-    override fun showUserInterface() {
+    fun showUserInterface() {
         toolbarView = (activity as HomeActivity?)?.toolbar?.rootView
     }
 
@@ -191,7 +177,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      *
      * @param totalLoanAmount Total Loan amount
      */
-    override fun showLoanAccountDetails(totalLoanAmount: Double) {
+    fun showLoanAccountDetails(totalLoanAmount: Double) {
         this.totalLoanAmount = totalLoanAmount
         binding.tvLoanTotalAmount.text = CurrencyUtil.formatCurrency(context, totalLoanAmount)
     }
@@ -209,7 +195,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      *
      * @param totalSavingAmount Total Saving amount
      */
-    override fun showSavingAccountDetails(totalSavingAmount: Double) {
+    fun showSavingAccountDetails(totalSavingAmount: Double) {
         this.totalSavingAmount = totalSavingAmount
         binding.tvSavingTotalAmount.text = CurrencyUtil.formatCurrency(context, totalSavingAmount)
     }
@@ -227,7 +213,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      *
      * @param client Details about client
      */
-    override fun showUserDetails(client: Client?) {
+    fun showUserDetails(client: Client?) {
         this.client = client
         binding.tvUserName.text = getString(R.string.hello_client, client?.displayName)
     }
@@ -237,7 +223,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      *
      * @param bitmap Client Image
      */
-    override fun showUserImage(bitmap: Bitmap?) {
+    fun showUserImage(bitmap: Bitmap?) {
         activity?.runOnUiThread {
             if (bitmap != null) {
                 binding.ivCircularUserImage.visibility = View.VISIBLE
@@ -266,6 +252,36 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.homeUiState.collect {
+                when (it) {
+                    is HomeUiState.Loading -> showProgress()
+                    is HomeUiState.UserImage -> {
+                        hideProgress()
+                        showUserImage(it.image)
+                    }
+                    is HomeUiState.ClientAccountDetails -> {
+                        hideProgress()
+                        showLoanAccountDetails(it.loanAccounts)
+                        showSavingAccountDetails(it.savingsAccounts)
+                    }
+                    is HomeUiState.Error -> {
+                        hideProgress()
+                        showError(getString(it.errorMessage))
+                    }
+                    is HomeUiState.UserDetails -> {
+                        hideProgress()
+                        showUserDetails(it.client)
+                    }
+                    is HomeUiState.UnreadNotificationsCount -> {
+                        hideProgress()
+                        showNotificationCount(it.count)
+                    }
+                }
+            }
+        }
+
         toggleVisibilityButton(
             binding.btnSavingTotalAmountVisibility,
             binding.tvSavingTotalAmount,
@@ -332,7 +348,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
         }
     }
 
-    override fun showNotificationCount(count: Int) {
+    fun showNotificationCount(count: Int) {
         if (count > 0) {
             tvNotificationCount?.visibility = View.VISIBLE
             tvNotificationCount?.text = count.toString()
@@ -424,7 +440,7 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
      *
      * @param errorMessage Error message that tells the user about the problem.
      */
-    override fun showError(errorMessage: String?) {
+    fun showError(errorMessage: String?) {
         val checkedItem = (activity as HomeActivity?)?.checkedItem
         if (checkedItem == R.id.item_about_us || checkedItem == R.id.item_help || checkedItem == R.id.item_settings) {
             return
@@ -435,14 +451,14 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
     /**
      * Shows [SwipeRefreshLayout]
      */
-    override fun showProgress() {
+    fun showProgress() {
         binding.swipeHomeContainer.isRefreshing = true
     }
 
     /**
      * Hides [SwipeRefreshLayout]
      */
-    override fun hideProgress() {
+    fun hideProgress() {
         binding.swipeHomeContainer.isRefreshing = false
     }
 
@@ -452,12 +468,10 @@ class HomeOldFragment : BaseFragment(), HomeOldView, OnRefreshListener {
             binding.swipeHomeContainer.isRefreshing = false
             binding.swipeHomeContainer.removeAllViews()
         }
-        presenter?.detachView()
         _binding = null
     }
 
     companion object {
-        val LOG_TAG: String? = HomeFragment::class.java.simpleName
         fun newInstance(): HomeOldFragment {
             return HomeOldFragment()
         }

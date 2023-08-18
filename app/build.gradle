@@ -106,6 +106,8 @@ dependencies {
     implementation "androidx.vectordrawable:vectordrawable:$rootProject.vectorDrawablesVersion"
     implementation "com.google.android.gms:play-services-oss-licenses:$rootProject.oss_licenses"
     implementation "com.isseiaoki:simplecropview:$rootProject.cropviewVersion"
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     //Country Code picker
     implementation "com.hbb20:ccp:$rootProject.countryCodePicker"
