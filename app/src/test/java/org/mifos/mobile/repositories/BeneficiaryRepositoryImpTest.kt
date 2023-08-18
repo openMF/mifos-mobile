@@ -1,9 +1,12 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import CoroutineTestRule
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -15,9 +18,14 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class BeneficiaryRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -31,33 +39,34 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testBeneficiaryTemplate_Successful() {
-        val success: Observable<BeneficiaryTemplate?> =
-            Observable.just(mock(BeneficiaryTemplate::class.java))
+    fun testBeneficiaryTemplate_Successful() = runBlocking {
+        val success: Response<BeneficiaryTemplate?> =
+            Response.success(mock(BeneficiaryTemplate::class.java))
 
-        `when`(dataManager.beneficiaryTemplate).thenReturn(success)
+        `when`(dataManager.beneficiaryTemplate()).thenReturn(success)
 
         val result = beneficiaryRepositoryImp.beneficiaryTemplate()
 
-        verify(dataManager).beneficiaryTemplate
+        verify(dataManager).beneficiaryTemplate()
         assertEquals(result, success)
     }
 
     @Test
-    fun testBeneficiaryTemplate_Unsuccessful() {
-        val error: Observable<BeneficiaryTemplate?> = Observable.error(Throwable("Error Response"))
-        `when`(dataManager.beneficiaryTemplate).thenReturn(error)
+    fun testBeneficiaryTemplate_Unsuccessful() = runBlocking {
+        val error: Response<BeneficiaryTemplate?> =
+            Response.error(404, ResponseBody.create(null, "error"))
+        `when`(dataManager.beneficiaryTemplate()).thenReturn(error)
 
         val result = beneficiaryRepositoryImp.beneficiaryTemplate()
 
-        verify(dataManager).beneficiaryTemplate
+        verify(dataManager).beneficiaryTemplate()
         assertEquals(result, error)
     }
 
     @Test
-    fun testCreateBeneficiary_Successful() {
-        val success: Observable<ResponseBody?> =
-            Observable.just(mock(ResponseBody::class.java))
+    fun testCreateBeneficiary_Successful() = runBlocking {
+        val success: Response<ResponseBody?> =
+            Response.success(mock(ResponseBody::class.java))
 
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
 
@@ -70,10 +79,9 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testCreateBeneficiary_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Error Response"))
-
+    fun testCreateBeneficiary_Unsuccessful() = runBlocking {
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
 
         `when`(dataManager.createBeneficiary(beneficiaryPayload)).thenReturn(error)
@@ -85,9 +93,9 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testUpdateBeneficiary_Successful() {
-        val success: Observable<ResponseBody?> =
-            Observable.just(mock(ResponseBody::class.java))
+    fun testUpdateBeneficiary_Successful() = runBlocking {
+        val success: Response<ResponseBody?> =
+            Response.success(mock(ResponseBody::class.java))
 
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
 
@@ -98,9 +106,9 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testUpdateBeneficiary_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Error Response"))
+    fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
 
@@ -112,9 +120,9 @@ class BeneficiaryRepositoryImpTest {
 
 
     @Test
-    fun testDeleteBeneficiary_Successful() {
-        val success: Observable<ResponseBody?> =
-            Observable.just(mock(ResponseBody::class.java))
+    fun testDeleteBeneficiary_Successful() = runBlocking {
+        val success: Response<ResponseBody?> =
+            Response.success(mock(ResponseBody::class.java))
 
         `when`(dataManager.deleteBeneficiary(123L)).thenReturn(success)
 
@@ -123,9 +131,9 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testDeleteBeneficiary_Unsuccessful() {
-        val error: Observable<ResponseBody?> =
-            Observable.error(Throwable("Error Response"))
+    fun testDeleteBeneficiary_Unsuccessful() = runBlocking {
+        val error: Response<ResponseBody?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.deleteBeneficiary(123L)).thenReturn(error)
 
@@ -134,22 +142,22 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testBeneficiaryList_Successful() {
-        val success: Observable<List<Beneficiary?>?> =
-            Observable.just(Beneficiary::class.java) as Observable<List<Beneficiary?>?>
+    fun testBeneficiaryList_Successful() = runBlocking {
+        val success: Response<List<Beneficiary?>?> =
+            Response.success(Beneficiary::class.java) as Response<List<Beneficiary?>?>
 
-        `when`(dataManager.beneficiaryList).thenReturn(success)
+        `when`(dataManager.beneficiaryList()).thenReturn(success)
 
         val result = beneficiaryRepositoryImp.beneficiaryList()
         assertEquals(result, success)
     }
 
     @Test
-    fun testBeneficiaryList_Unsuccessful() {
-        val error: Observable<List<Beneficiary?>?> =
-            Observable.error(Throwable("Error Response"))
+    fun testBeneficiaryList_Unsuccessful() = runBlocking {
+        val error: Response<List<Beneficiary?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
-        `when`(dataManager.beneficiaryList).thenReturn(error)
+        `when`(dataManager.beneficiaryList()).thenReturn(error)
 
         val result = beneficiaryRepositoryImp.beneficiaryList()
         assertEquals(result, error)

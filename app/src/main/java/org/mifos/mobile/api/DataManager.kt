@@ -173,28 +173,29 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi?.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    val beneficiaryList: Observable<List<Beneficiary?>?>?
-        get() = baseApiManager.beneficiaryApi?.beneficiaryList
-    val beneficiaryTemplate: Observable<BeneficiaryTemplate?>?
-        get() = baseApiManager.beneficiaryApi?.beneficiaryTemplate
+    suspend fun beneficiaryList(): Response<List<Beneficiary?>?>? =
+        baseApiManager.beneficiaryApi?.beneficiaryList()
 
-    fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Observable<ResponseBody?>? {
+    suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>? =
+        baseApiManager.beneficiaryApi?.beneficiaryTemplate()
+
+    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>? {
         return baseApiManager.beneficiaryApi?.createBeneficiary(beneficiaryPayload)
     }
 
-    fun updateBeneficiary(
+    suspend fun updateBeneficiary(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.beneficiaryApi?.updateBeneficiary(beneficiaryId, payload)
     }
 
-    fun deleteBeneficiary(beneficiaryId: Long?): Observable<ResponseBody?>? {
+    suspend fun deleteBeneficiary(beneficiaryId: Long?): Response<ResponseBody?>? {
         return baseApiManager.beneficiaryApi?.deleteBeneficiary(beneficiaryId)
     }
 
-    val thirdPartyTransferTemplate: Observable<AccountOptionsTemplate?>?
-        get() = baseApiManager.thirdPartyTransferApi?.accountTransferTemplate
+    suspend fun thirdPartyTransferTemplate(): Response<AccountOptionsTemplate?>? =
+        baseApiManager.thirdPartyTransferApi?.accountTransferTemplate()
 
     suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)

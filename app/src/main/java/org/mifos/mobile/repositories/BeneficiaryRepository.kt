@@ -1,25 +1,25 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
+import retrofit2.Response
 
 interface BeneficiaryRepository {
 
-    fun beneficiaryTemplate(): Observable<BeneficiaryTemplate?>?
+    suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>?
 
-    fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Observable<ResponseBody?>?
+    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>?
 
-    fun updateBeneficiary(
+    suspend fun updateBeneficiary(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
-    fun deleteBeneficiary(beneficiaryId: Long?): Observable<ResponseBody?>?
+    suspend fun deleteBeneficiary(beneficiaryId: Long?): Response<ResponseBody?>?
 
-    fun beneficiaryList(): Observable<List<Beneficiary?>?>?
+    suspend fun beneficiaryList(): Response<List<Beneficiary?>?>?
 
 }

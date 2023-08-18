@@ -14,8 +14,8 @@ import retrofit2.http.POST
  * Created by dilpreet on 21/6/17.
  */
 interface ThirdPartyTransferService {
-    @get:GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template?type=tpt")
-    val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
+    @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template?type=tpt")
+    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>?
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
     suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?
