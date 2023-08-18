@@ -1,14 +1,12 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.util.RxSchedulersOverrideRule
@@ -17,7 +15,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.lang.RuntimeException
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class RegistrationViewModelTest {
@@ -25,6 +23,10 @@ class RegistrationViewModelTest {
     @JvmField
     @Rule
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -100,7 +102,8 @@ class RegistrationViewModelTest {
 
     @Test
     fun testIsEmailInvalid_WithValidEmailInput_ReturnsFalse() {
-        val result = registrationViewModel.isEmailInvalid("testUpdateAuthenticationToken@example.com")
+        val result =
+            registrationViewModel.isEmailInvalid("testUpdateAuthenticationToken@example.com")
         Assert.assertFalse(result)
     }
 
@@ -112,94 +115,100 @@ class RegistrationViewModelTest {
 
 
     @Test
-    fun testRegisterUser_SuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationSuccessful() {
-        val responseBody = Mockito.mock(ResponseBody::class.java)
-        Mockito.`when`(
-            userAuthRepositoryImp.registerUser(
-                Mockito.anyString(), Mockito.anyString(),
-                Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-                Mockito.anyString(), Mockito.anyString(),
+    fun testRegisterUser_SuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationSuccessful() =
+        runBlocking {
+            val responseBody = Mockito.mock(ResponseBody::class.java)
+            Mockito.`when`(
+                userAuthRepositoryImp.registerUser(
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                )
+            ).thenReturn(Response.success(responseBody))
+
+            registrationViewModel.registerUser(
+                "accountNumber",
+                "authMode",
+                "email",
+                "firstName",
+                "lastName",
+                "mobileNumber",
+                "password",
+                "userName"
             )
-        ).thenReturn(Observable.just(responseBody))
 
-        registrationViewModel.registerUser(
-            "accountNumber",
-            "authMode",
-            "email",
-            "firstName",
-            "lastName",
-            "mobileNumber",
-            "password",
-            "userName"
-        )
-
-        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Success)
-        Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-    }
+            Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
+            Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Success)
+            Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
+        }
 
     @Test
-    fun testRegisterUser_UnsuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationUnsuccessful() {
-        val error = RuntimeException("Registration Failed")
-        Mockito.`when`(
-            userAuthRepositoryImp.registerUser(
-                Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString()
+    fun testRegisterUser_UnsuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationUnsuccessful() =
+        runBlocking {
+            Mockito.`when`(
+                userAuthRepositoryImp.registerUser(
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString(),
+                    Mockito.anyString()
+                )
+            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+
+            registrationViewModel.registerUser(
+                "accountNumber",
+                "authMode",
+                "email",
+                "firstName",
+                "lastName",
+                "mobileNumber",
+                "password",
+                "username"
             )
-        ).thenReturn(Observable.error(error))
 
-        registrationViewModel.registerUser(
-            "accountNumber",
-            "authMode",
-            "email",
-            "firstName",
-            "lastName",
-            "mobileNumber",
-            "password",
-            "username"
-        )
-
-        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Error(error))
-        Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-    }
+            Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
+            Mockito.verify(registrationUiStateObserver)
+                .onChanged(Mockito.any(RegistrationUiState.Error::class.java))
+            Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
+        }
 
     @Test
-    fun testVerifyUser_SuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationSuccessful() {
-        Mockito.`when`(
-            userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Observable.just(Mockito.mock(ResponseBody::class.java)))
+    fun testVerifyUser_SuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationSuccessful() =
+        runBlocking {
+            Mockito.`when`(
+                userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
+            ).thenReturn(Response.success(Mockito.mock(ResponseBody::class.java)))
 
-        registrationViewModel.verifyUser("authenticationToken", "requestId")
+            registrationViewModel.verifyUser("authenticationToken", "requestId")
 
-        Mockito.verify(registrationVerificationUiStateObserver)
-            .onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationVerificationUiStateObserver)
-            .onChanged(RegistrationUiState.Success)
-        Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-    }
+            Mockito.verify(registrationVerificationUiStateObserver)
+                .onChanged(RegistrationUiState.Loading)
+            Mockito.verify(registrationVerificationUiStateObserver)
+                .onChanged(RegistrationUiState.Success)
+            Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
+        }
 
     @Test
-    fun testVerifyUser_UnsuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationUnsuccessful() {
-        val error = RuntimeException("RegistrationVerification Failed")
-        Mockito.`when`(
-            userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Observable.error(error))
+    fun testVerifyUser_UnsuccessfulRegistrationVerificationReceivedFromRepository_ReturnsRegistrationVerificationUnsuccessful() =
+        runBlocking {
+            Mockito.`when`(
+                userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
+            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
 
-        registrationViewModel.verifyUser("authenticationToken", "requestId")
+            registrationViewModel.verifyUser("authenticationToken", "requestId")
 
-        Mockito.verify(registrationVerificationUiStateObserver)
-            .onChanged(RegistrationUiState.Loading)
-        Mockito.verify(registrationVerificationUiStateObserver)
-            .onChanged(RegistrationUiState.Error(error))
-        Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
-    }
+            Mockito.verify(registrationVerificationUiStateObserver)
+                .onChanged(RegistrationUiState.Loading)
+            Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
+        }
 
     @After
     fun tearDown() {

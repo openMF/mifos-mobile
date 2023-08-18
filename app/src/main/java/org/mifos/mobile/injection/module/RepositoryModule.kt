@@ -5,6 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.repositories.TransferRepository
+import org.mifos.mobile.repositories.TransferRepositoryImp
+import org.mifos.mobile.repositories.LoanRepository
+import org.mifos.mobile.repositories.LoanRepositoryImp
+import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.*
 
@@ -18,7 +23,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesSavingsAccountRepository(dataManager: DataManager) : SavingsAccountRepository {
+    fun providesSavingsAccountRepository(dataManager: DataManager): SavingsAccountRepository {
         return SavingsAccountRepositoryImp(dataManager)
     }
 
@@ -45,7 +50,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideAccountsRepository(dataManager: DataManager) : AccountsRepository {
+    fun provideAccountsRepository(dataManager: DataManager): AccountsRepository {
         return AccountsRepositoryImp(dataManager)
     }
 
@@ -58,6 +63,11 @@ class RepositoryModule {
     fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
         return BeneficiaryRepositoryImp(dataManager)
     }
+    
+    @Provides
+    fun providesTransferRepository(dataManager: DataManager): TransferRepository {
+        return TransferRepositoryImp(dataManager)
+    }
 
     @Provides
     fun providesThirdPartyTransferRepository(dataManager: DataManager): ThirdPartyTransferRepository {
@@ -68,5 +78,14 @@ class RepositoryModule {
     fun providesClientChargeRepository(dataManager: DataManager): ClientChargeRepository {
         return ClientChargeRepositoryImp(dataManager)
     }
-    
+
+    @Provides
+    fun providesHomeRepository(dataManager: DataManager): HomeRepository {
+        return HomeRepositoryImp(dataManager)
+    }
+
+    @Provides
+    fun providesUserDetailRepository(dataManager: DataManager): UserDetailRepository {
+        return UserDetailRepositoryImp(dataManager)
+    }
 }

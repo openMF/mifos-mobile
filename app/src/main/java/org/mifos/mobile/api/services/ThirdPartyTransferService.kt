@@ -18,5 +18,5 @@ interface ThirdPartyTransferService {
     suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>?
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
-    fun makeTransfer(@Body transferPayload: TransferPayload?): Observable<ResponseBody?>?
+    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?
 }

@@ -3,95 +3,92 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
-import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.utils.SavingsAccountUiState
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingsAccountApplicationViewModel @Inject constructor(private val savingsAccountRepositoryImp : SavingsAccountRepository) : ViewModel() {
+class SavingsAccountApplicationViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
+    ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
     private val _savingsAccountApplicationUiState = MutableLiveData<SavingsAccountUiState>()
-    val savingsAccountApplicationUiState : LiveData<SavingsAccountUiState> get() = _savingsAccountApplicationUiState
+    val savingsAccountApplicationUiState: LiveData<SavingsAccountUiState> get() = _savingsAccountApplicationUiState
 
     fun loadSavingsAccountApplicationTemplate(
         clientId: Long?,
         state: SavingsAccountState?,
     ) {
-        _savingsAccountApplicationUiState.value = SavingsAccountUiState.Loading
-        savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(clientId)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<SavingsAccountTemplate?>() {
-                override fun onNext(template: SavingsAccountTemplate) {
+        viewModelScope.launch {
+            _savingsAccountApplicationUiState.value = SavingsAccountUiState.Loading
+            try {
+                val response =
+                    savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(clientId)
+                if (response?.isSuccessful == true) {
                     if (state === SavingsAccountState.CREATE) {
-                        _savingsAccountApplicationUiState.value = SavingsAccountUiState.ShowUserInterfaceSavingAccountApplication(template)
+                        _savingsAccountApplicationUiState.value = response.body()?.let {
+                            SavingsAccountUiState.ShowUserInterfaceSavingAccountApplication(it)
+                        }
                     } else {
-                        _savingsAccountApplicationUiState.value = SavingsAccountUiState.ShowUserInterfaceSavingAccountUpdate(template)
+                        _savingsAccountApplicationUiState.value = response.body()
+                            ?.let { SavingsAccountUiState.ShowUserInterfaceSavingAccountUpdate(it) }
                     }
                 }
-
-                override fun onError(e: Throwable) {
-                    _savingsAccountApplicationUiState.value = SavingsAccountUiState.ErrorMessage(e)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposable.add(it) }
+            } catch (e: Throwable) {
+                _savingsAccountApplicationUiState.value = SavingsAccountUiState.ErrorMessage(e)
+            }
+        }
     }
 
     fun submitSavingsAccountApplication(payload: SavingsAccountApplicationPayload?) {
-        _savingsAccountApplicationUiState.value = SavingsAccountUiState.Loading
-        savingsAccountRepositoryImp.submitSavingAccountApplication(payload)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
+        viewModelScope.launch {
+            _savingsAccountApplicationUiState.value = SavingsAccountUiState.Loading
+            try {
+                val response = savingsAccountRepositoryImp.submitSavingAccountApplication(payload)
+                if (response?.isSuccessful == true) {
                     _savingsAccountApplicationUiState.value = SavingsAccountUiState.HideProgress
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountUiState.SavingsAccountApplicationSuccess
+                } else {
+                    _savingsAccountApplicationUiState.value =
+                        response?.let { HttpException(it) }?.let {
+                            SavingsAccountUiState.ErrorMessage(
+                                it
+                            )
+                        }
                 }
-
-                override fun onError(e: Throwable) {
-                    _savingsAccountApplicationUiState.value = SavingsAccountUiState.ErrorMessage(e)
-                }
-
-                override fun onComplete() {
-                    _savingsAccountApplicationUiState.value = SavingsAccountUiState.SavingsAccountApplicationSuccess
-                }
-            })?.let { compositeDisposable.add(it) }
+            } catch (e: Throwable) {
+                _savingsAccountApplicationUiState.value = SavingsAccountUiState.ErrorMessage(e)
+            }
+        }
     }
 
     fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?) {
-        _savingsAccountApplicationUiState.value = SavingsAccountUiState.Loading
-        savingsAccountRepositoryImp.updateSavingsAccount(accountId, payload)
-            ?.subscribeOn(Schedulers.newThread())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
+        viewModelScope.launch {
+            _savingsAccountApplicationUiState.value = SavingsAccountUiState.Loading
+            try {
+                val response = savingsAccountRepositoryImp.updateSavingsAccount(accountId, payload)
+                if (response?.isSuccessful == true) {
                     _savingsAccountApplicationUiState.value = SavingsAccountUiState.HideProgress
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountUiState.SavingsAccountUpdateSuccess
+                } else {
+                    _savingsAccountApplicationUiState.value =
+                        response?.let { HttpException(it) }?.let {
+                            SavingsAccountUiState.ErrorMessage(
+                                it
+                            )
+                        }
                 }
-
-                override fun onError(e: Throwable) {
-                    _savingsAccountApplicationUiState.value = SavingsAccountUiState.ErrorMessage(e)
-                }
-
-                override fun onComplete() {
-                    _savingsAccountApplicationUiState.value = SavingsAccountUiState.SavingsAccountUpdateSuccess
-                }
-            })?.let { compositeDisposable.add(it) }
+            } catch (e: Throwable) {
+                _savingsAccountApplicationUiState.value = SavingsAccountUiState.ErrorMessage(e)
+            }
+        }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
-
 }

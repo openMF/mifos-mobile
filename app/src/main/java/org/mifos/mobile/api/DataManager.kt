@@ -3,6 +3,10 @@ package org.mifos.mobile.api
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Function
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
@@ -55,16 +59,22 @@ class DataManager @Inject constructor(
         return baseApiManager.authenticationApi?.authenticate(loginPayload)
     }
 
-    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi?.clients()
-    val currentClient: Observable<Client?>?
-        get() = baseApiManager.clientsApi?.getClientForId(clientId)
-    val clientImage: Observable<ResponseBody?>?
-        get() = baseApiManager.clientsApi?.getClientImage(clientId)
-    val clientAccounts: Observable<ClientAccounts?>?
-        get() = baseApiManager.clientsApi?.getClientAccounts(clientId)
+    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
 
-    fun getAccounts(accountType: String?): Observable<ClientAccounts?>? {
-        return baseApiManager.clientsApi?.getAccounts(clientId, accountType)
+    suspend fun currentClient(): Client {
+        return baseApiManager.clientsApi.getClientForId(clientId)
+    }
+
+    suspend fun clientImage(): ResponseBody {
+        return baseApiManager.clientsApi.getClientImage(clientId)
+    }
+
+    suspend fun clientAccounts(): ClientAccounts {
+        return baseApiManager.clientsApi.getClientAccounts(clientId)
+    }
+
+    suspend fun getAccounts(accountType: String?): ClientAccounts {
+        return baseApiManager.clientsApi.getAccounts(clientId, accountType)
     }
 
     suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
@@ -72,69 +82,60 @@ class DataManager @Inject constructor(
             ?.getRecentTransactionsList(clientId, offset, limit)
     }
 
-    fun getClientCharges(clientId: Long): Observable<Page<Charge?>?>? {
-        return baseApiManager.clientChargeApi?.getClientChargeList(clientId)
-            ?.concatMap { chargePage -> databaseHelper.syncCharges(chargePage) }
+    suspend fun getClientCharges(clientId: Long): Response<Page<Charge?>?>? {
+        return baseApiManager.clientChargeApi?.getClientChargeList(clientId).apply {
+            databaseHelper.syncCharges(this?.body())
+        }
     }
 
-    fun getLoanCharges(loanId: Long): Observable<List<Charge?>?>? {
+    suspend fun getLoanCharges(loanId: Long): Response<List<Charge?>?>? {
         return baseApiManager.clientChargeApi?.getLoanAccountChargeList(loanId)
     }
 
-    fun getSavingsCharges(savingsId: Long): Observable<List<Charge?>?>? {
+    suspend fun getSavingsCharges(savingsId: Long): Response<List<Charge?>?>? {
         return baseApiManager.clientChargeApi?.getSavingsAccountChargeList(savingsId)
     }
 
-    fun getSavingsWithAssociations(
+    suspend fun getSavingsWithAssociations(
         accountId: Long?,
         associationType: String?,
-    ): Observable<SavingsWithAssociations?>? {
+    ): Response<SavingsWithAssociations?>? {
         return baseApiManager
             .savingAccountsListApi?.getSavingsWithAssociations(accountId, associationType)
     }
 
-    val accountTransferTemplate: Observable<AccountOptionsTemplate?>?
-        get() = baseApiManager.savingAccountsListApi?.accountTransferTemplate
+    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>? =
+        baseApiManager.savingAccountsListApi?.accountTransferTemplate()
 
-    fun makeTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
+    suspend fun makeTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi?.makeTransfer(transferPayload)
     }
 
-    fun getSavingAccountApplicationTemplate(client: Long?): Observable<SavingsAccountTemplate?>? {
+    suspend fun getSavingAccountApplicationTemplate(client: Long?): Response<SavingsAccountTemplate?>? {
         return baseApiManager.savingAccountsListApi
             ?.getSavingsAccountApplicationTemplate(client)
     }
 
-    fun submitSavingAccountApplication(
+    suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi?.submitSavingAccountApplication(payload)
     }
 
-    fun updateSavingsAccount(
+    suspend fun updateSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
             ?.updateSavingsAccountUpdate(accountId, payload)
     }
 
-    fun submitWithdrawSavingsAccount(
+    suspend fun submitWithdrawSavingsAccount(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?,
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
             ?.submitWithdrawSavingsAccount(accountId, payload)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out ResponseBody>> {
-                    Observable.just(
-                        ResponseBody.create(
-                            MediaType.parse("text/parse"),
-                            "Saving Account Withdrawn Successfully",
-                        ),
-                    )
-                },
-            )
     }
 
     fun getLoanAccountDetails(loanId: Long): Observable<LoanAccount?>? {
@@ -196,41 +197,42 @@ class DataManager @Inject constructor(
     suspend fun thirdPartyTransferTemplate(): Response<AccountOptionsTemplate?>? =
         baseApiManager.thirdPartyTransferApi?.accountTransferTemplate()
 
-    fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Observable<ResponseBody?>? {
+    suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)
     }
 
-    fun registerUser(registerPayload: RegisterPayload?): Observable<ResponseBody?>? {
+    suspend fun registerUser(registerPayload: RegisterPayload?): Response<ResponseBody?>? {
         return baseApiManager.registrationApi?.registerUser(registerPayload)
     }
 
-    fun verifyUser(userVerify: UserVerify?): Observable<ResponseBody?>? {
+    suspend fun verifyUser(userVerify: UserVerify?): Response<ResponseBody?>? {
         return baseApiManager.registrationApi?.verifyUser(userVerify)
     }
 
-    val clientLocalCharges: Observable<Page<Charge?>?>
-        get() = databaseHelper.clientCharges
-    val notifications: Observable<List<MifosNotification?>?>
-        get() = databaseHelper.notifications
-    val unreadNotificationsCount: Observable<Int>
-        get() = databaseHelper.unreadNotificationsCount
+    suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
 
-    fun registerNotification(payload: NotificationRegisterPayload?): Observable<ResponseBody?>? {
-        return baseApiManager.notificationApi?.registerNotification(payload)
+    fun notifications(): Flow<List<MifosNotification?>?> = databaseHelper.notifications()
+
+    fun unreadNotificationsCount(): Int {
+        return databaseHelper.unreadNotificationsCount()
     }
 
-    fun updateRegisterNotification(
+    suspend fun registerNotification(payload: NotificationRegisterPayload?): ResponseBody {
+        return baseApiManager.notificationApi.registerNotification(payload)
+    }
+
+    suspend fun updateRegisterNotification(
         id: Long,
         payload: NotificationRegisterPayload?,
-    ): Observable<ResponseBody?>? {
-        return baseApiManager.notificationApi?.updateRegisterNotification(id, payload)
+    ): ResponseBody {
+        return baseApiManager.notificationApi.updateRegisterNotification(id, payload)
     }
 
-    fun getUserNotificationId(id: Long): Observable<NotificationUserDetail?>? {
-        return baseApiManager.notificationApi?.getUserNotificationId(id)
+    suspend fun getUserNotificationId(id: Long): NotificationUserDetail {
+        return baseApiManager.notificationApi.getUserNotificationId(id)
     }
 
-    fun updateAccountPassword(payload: UpdatePasswordPayload?): Observable<ResponseBody?>? {
+    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
         return baseApiManager.userDetailsService?.updateAccountPassword(payload)
     }
 

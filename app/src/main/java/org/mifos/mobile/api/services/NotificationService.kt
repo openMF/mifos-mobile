@@ -12,14 +12,14 @@ import retrofit2.http.*
  */
 interface NotificationService {
     @GET(ApiEndPoints.DEVICE + "/registration/client/{clientId}")
-    fun getUserNotificationId(@Path("clientId") clientId: Long): Observable<NotificationUserDetail?>?
+    suspend fun getUserNotificationId(@Path("clientId") clientId: Long): NotificationUserDetail
 
     @POST(ApiEndPoints.DEVICE + "/registration")
-    fun registerNotification(@Body payload: NotificationRegisterPayload?): Observable<ResponseBody?>?
+    suspend fun registerNotification(@Body payload: NotificationRegisterPayload?): ResponseBody
 
     @PUT(ApiEndPoints.DEVICE + "/registration/{id}")
-    fun updateRegisterNotification(
+    suspend fun updateRegisterNotification(
         @Path("id") id: Long,
         @Body payload: NotificationRegisterPayload?,
-    ): Observable<ResponseBody?>?
+    ): ResponseBody
 }

@@ -3,15 +3,12 @@ package org.mifos.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Predicate
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.CheckboxStatus
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.utils.CheckBoxStatusUtil
@@ -24,7 +21,6 @@ import javax.inject.Inject
 class SavingAccountsTransactionViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
     ViewModel() {
 
-    private val compositeDisposables = CompositeDisposable()
     private val _savingAccountsTransactionUiState = MutableLiveData<SavingsAccountUiState>()
     val savingAccountsTransactionUiState: LiveData<SavingsAccountUiState> get() = _savingAccountsTransactionUiState
 
@@ -47,28 +43,22 @@ class SavingAccountsTransactionViewModel @Inject constructor(private val savings
      * @param accountId Id of Savings Account
      */
     fun loadSavingsWithAssociations(accountId: Long) {
-        _savingAccountsTransactionUiState.value = SavingsAccountUiState.Loading
-        savingsAccountRepositoryImp.getSavingsWithAssociations(
-            accountId,
-            Constants.TRANSACTIONS,
-        )
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<SavingsWithAssociations?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _savingAccountsTransactionUiState.value = SavingsAccountUiState.Error
-                }
-
-                override fun onNext(savingAccount: SavingsWithAssociations) {
-                    _savingAccountsTransactionUiState.value =
-                        SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(savingAccount)
-                }
-            })?.let {
-                compositeDisposables.add(
-                    it,
+        viewModelScope.launch {
+            _savingAccountsTransactionUiState.value = SavingsAccountUiState.Loading
+            try {
+                val response = savingsAccountRepositoryImp.getSavingsWithAssociations(
+                    accountId,
+                    Constants.TRANSACTIONS,
                 )
+                if (response?.isSuccessful == true) {
+                    _savingAccountsTransactionUiState.value =
+                        response.body()
+                            ?.let { SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(it) }
+                }
+            } catch (e: Throwable) {
+                _savingAccountsTransactionUiState.value = SavingsAccountUiState.Error
             }
+        }
     }
 
     /**
@@ -159,10 +149,5 @@ class SavingAccountsTransactionViewModel @Inject constructor(private val savings
                     }
                 },
             ).toList().blockingGet()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposables.clear()
     }
 }

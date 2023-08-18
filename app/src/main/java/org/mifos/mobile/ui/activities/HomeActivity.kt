@@ -14,8 +14,10 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -28,24 +30,17 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.ActivityHomeBinding
 import org.mifos.mobile.databinding.NavDrawerHeaderBinding
 import org.mifos.mobile.models.client.Client
-import org.mifos.mobile.presenters.UserDetailsPresenter
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
-import org.mifos.mobile.ui.fragments.ClientAccountsFragment
-import org.mifos.mobile.ui.fragments.ClientChargeFragment
-import org.mifos.mobile.ui.fragments.HomeOldFragment
-import org.mifos.mobile.ui.fragments.NotificationFragment
-import org.mifos.mobile.ui.fragments.RecentTransactionsFragment
-import org.mifos.mobile.ui.fragments.ThirdPartyTransferFragment
-import org.mifos.mobile.ui.fragments.TransferProcessFragment
+import org.mifos.mobile.ui.fragments.*
 import org.mifos.mobile.ui.getThemeAttributeColor
-import org.mifos.mobile.ui.views.UserDetailsView
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.UserDetailUiState
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
+import org.mifos.mobile.viewModels.UserDetailViewModel
 import javax.inject.Inject
 
 /**
@@ -55,7 +50,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivity :
     BaseActivity(),
-    UserDetailsView,
     NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityHomeBinding
@@ -65,9 +59,8 @@ class HomeActivity :
     @Inject
     var preferencesHelper: PreferencesHelper? = null
 
-    @JvmField
-    @Inject
-    var detailsPresenter: UserDetailsPresenter? = null
+    private val viewModel: UserDetailViewModel by viewModels()
+
     private var tvUsername: TextView? = null
     private var drawerUserImage: ShapeableImageView? = null
     private var clientId: Long? = 0
@@ -94,19 +87,38 @@ class HomeActivity :
             replaceFragment(NotificationFragment.newInstance(), true, R.id.container)
         }
         if (savedInstanceState == null) {
-            detailsPresenter?.attachView(this)
-            detailsPresenter?.userDetails
-            detailsPresenter?.userImage
+            viewModel.userDetails
+            viewModel.userImage
             showUserImage(null)
         } else {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
-            detailsPresenter?.setUserProfile(preferencesHelper?.userProfileImage)
+            viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }
         if (checkPlayServices() && preferencesHelper?.sentTokenToServerState() == false) {
             // Start IntentService to register this application with GCM.
             val intent = Intent(this, RegistrationIntentService::class.java)
             startService(intent)
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.userDetailUiState.collect {
+                when (it) {
+                    is UserDetailUiState.Loading -> showProgress()
+                    is UserDetailUiState.ShowUserDetails -> {
+                        hideProgress()
+                        showUserDetails(it.client)
+                    }
+                    is UserDetailUiState.ShowUserImage -> {
+                        hideProgress()
+                        showUserImage(it.image)
+                    }
+                    is UserDetailUiState.ShowError -> {
+                        hideProgress()
+                        showError(getString(it.message))
+                    }
+                }
+            }
         }
     }
 
@@ -123,7 +135,6 @@ class HomeActivity :
 
     override fun onResume() {
         super.onResume()
-        detailsPresenter?.attachView(this)
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(
                 registerReceiver,
@@ -295,7 +306,7 @@ class HomeActivity :
      *
      * @param client Contains details about the client
      */
-    override fun showUserDetails(client: Client?) {
+    fun showUserDetails(client: Client?) {
         this.client = client
         preferencesHelper?.clientName = client?.displayName
         tvUsername?.text = client?.displayName
@@ -306,7 +317,7 @@ class HomeActivity :
      *
      * @param bitmap UserProfile Picture
      */
-    override fun showUserImage(bitmap: Bitmap?) {
+    fun showUserImage(bitmap: Bitmap?) {
         if (bitmap != null) {
             runOnUiThread {
                 userProfileBitmap = bitmap
@@ -332,11 +343,11 @@ class HomeActivity :
         }
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         // empty, no need to show/hide progress in headerview
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         // empty
     }
 
@@ -345,13 +356,8 @@ class HomeActivity :
      *
      * @param message contains information about error occurred
      */
-    override fun showError(message: String?) {
+    fun showError(message: String?) {
         showToast(message, Toast.LENGTH_SHORT)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        detailsPresenter?.detachView()
     }
 
     /**
@@ -441,7 +447,7 @@ class HomeActivity :
     private val registerReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val token = intent.getStringExtra(Constants.TOKEN)
-            token?.let { detailsPresenter?.registerNotification(it) }
+            token?.let { viewModel.registerNotification(it) }
         }
     }
 

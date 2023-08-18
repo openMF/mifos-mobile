@@ -1,15 +1,12 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
@@ -19,7 +16,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import kotlin.RuntimeException
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class UpdatePasswordViewModelTest {
@@ -27,6 +24,10 @@ class UpdatePasswordViewModelTest {
     @JvmField
     @Rule
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -87,11 +88,11 @@ class UpdatePasswordViewModelTest {
     }
 
     @Test
-    fun testUpdateAccountPassword_SuccessReceivedFromRepository_ReturnsSuccess() {
+    fun testUpdateAccountPassword_SuccessReceivedFromRepository_ReturnsSuccess() = runBlocking {
         val responseBody = Mockito.mock(ResponseBody::class.java)
         Mockito.`when`(
             userAuthRepositoryImp.updateAccountPassword(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Observable.just(responseBody))
+        ).thenReturn(Response.success(responseBody))
 
         updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
         Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Loading)
@@ -101,19 +102,18 @@ class UpdatePasswordViewModelTest {
     }
 
     @Test
-    fun testUpdateAccountPassword_ErrorReceivedFromRepository_ReturnsError() {
-        val error = RuntimeException("fail")
+    fun testUpdateAccountPassword_ErrorReceivedFromRepository_ReturnsError() = runBlocking {
         Mockito.`when`(
             userAuthRepositoryImp.updateAccountPassword(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Observable.error(error))
+        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
 
         updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
 
         Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Loading)
-        Mockito.verify(updatePasswordUiStateObserver).onChanged(RegistrationUiState.Error(error))
+        Mockito.verify(updatePasswordUiStateObserver)
+            .onChanged(Mockito.any(RegistrationUiState.Error::class.java))
         Mockito.verifyNoMoreInteractions(updatePasswordUiStateObserver)
     }
-
 
     @After
     fun tearDown() {

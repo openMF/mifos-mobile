@@ -1,6 +1,5 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
@@ -8,27 +7,28 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+import retrofit2.Response
 
 interface SavingsAccountRepository {
 
-    fun getSavingsWithAssociations(
+    suspend fun getSavingsWithAssociations(
         accountId: Long?,
         associationType: String?,
-    ): Observable<SavingsWithAssociations?>?
+    ): Response<SavingsWithAssociations?>?
 
-    fun getSavingAccountApplicationTemplate(clientId: Long?): Observable<SavingsAccountTemplate?>?
+    suspend fun getSavingAccountApplicationTemplate(clientId: Long?): Response<SavingsAccountTemplate?>?
 
-    fun submitSavingAccountApplication(payload: SavingsAccountApplicationPayload?): Observable<ResponseBody?>?
+    suspend fun submitSavingAccountApplication(payload: SavingsAccountApplicationPayload?): Response<ResponseBody?>?
 
-    fun updateSavingsAccount(
+    suspend fun updateSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
-    fun submitWithdrawSavingsAccount(
+    suspend fun submitWithdrawSavingsAccount(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?
-    ): Observable<ResponseBody?>?
+    ): Response<ResponseBody?>?
 
-    fun loanAccountTransferTemplate() : Observable<AccountOptionsTemplate?>?
+    suspend fun loanAccountTransferTemplate(): Response<AccountOptionsTemplate?>?
 }

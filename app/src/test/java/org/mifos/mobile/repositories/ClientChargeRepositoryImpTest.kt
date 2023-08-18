@@ -1,8 +1,12 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import CoroutineTestRule
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -13,10 +17,15 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class ClientChargeRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
+
     @Mock
     lateinit var dataManager: DataManager
 
@@ -29,9 +38,9 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testGetClientCharges_Successful() {
-        val success: Observable<Page<Charge?>?> =
-            Mockito.mock(Observable::class.java) as Observable<Page<Charge?>?>
+    fun testGetClientCharges_Successful() = runBlocking {
+        val success: Response<Page<Charge?>?> =
+            Mockito.mock(Response::class.java) as Response<Page<Charge?>?>
 
         `when`(dataManager.getClientCharges(123L)).thenReturn(success)
 
@@ -40,9 +49,9 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testGetClientCharges_Unsuccessful() {
-        val error: Observable<Page<Charge?>?> =
-            Observable.error(Throwable("Failed to get client charge"))
+    fun testGetClientCharges_Unsuccessful() = runBlocking {
+        val error: Response<Page<Charge?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.getClientCharges(123L)).thenReturn(error)
 
@@ -51,9 +60,9 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testGetLoanCharges_Successful() {
-        val success: Observable<List<Charge?>?> =
-            Mockito.mock(Observable::class.java) as Observable<List<Charge?>?>
+    fun testGetLoanCharges_Successful() = runBlocking {
+        val success: Response<List<Charge?>?> =
+            Mockito.mock(Response::class.java) as Response<List<Charge?>?>
 
         `when`(dataManager.getLoanCharges(123L)).thenReturn(success)
 
@@ -62,9 +71,9 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testGetLoanCharges_Unsuccessful() {
-        val error: Observable<List<Charge?>?> =
-            Observable.error(Throwable("Failed to get loan charges"))
+    fun testGetLoanCharges_Unsuccessful() = runBlocking {
+        val error: Response<List<Charge?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.getLoanCharges(123L)).thenReturn(error)
 
@@ -73,9 +82,9 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testGetSavingsCharges_Successful() {
-        val success: Observable<List<Charge?>?> =
-            Mockito.mock(Observable::class.java) as Observable<List<Charge?>?>
+    fun testGetSavingsCharges_Successful() = runBlocking {
+        val success: Response<List<Charge?>?> =
+            Mockito.mock(Response::class.java) as Response<List<Charge?>?>
 
         `when`(dataManager.getSavingsCharges(123L)).thenReturn(success)
 
@@ -84,9 +93,9 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testGetSavingsCharges_Unsuccessful() {
-        val error: Observable<List<Charge?>?> =
-            Observable.error(Throwable("Failed to get loan charges"))
+    fun testGetSavingsCharges_Unsuccessful() = runBlocking {
+        val error: Response<List<Charge?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
         `when`(dataManager.getSavingsCharges(123L)).thenReturn(error)
 
@@ -95,22 +104,22 @@ class ClientChargeRepositoryImpTest {
     }
 
     @Test
-    fun testClientLocalCharges_Successful() {
-        val success: Observable<Page<Charge?>?> =
-            Mockito.mock(Observable::class.java) as Observable<Page<Charge?>?>
+    fun testClientLocalCharges_Successful() = runBlocking {
+        val success: Response<Page<Charge?>?> =
+            Mockito.mock(Response::class.java) as Response<Page<Charge?>?>
 
-        `when`(dataManager.clientLocalCharges).thenReturn(success)
+        `when`(dataManager.clientLocalCharges()).thenReturn(success)
 
         val result = clientChargeRepositoryImp.clientLocalCharges()
         assertEquals(result, success)
     }
 
     @Test
-    fun testClientLocalCharges_Unsuccessful() {
-        val error: Observable<Page<Charge?>?> =
-            Observable.error(Throwable("Failed to get loan charges"))
+    fun testClientLocalCharges_Unsuccessful() = runBlocking {
+        val error: Response<Page<Charge?>?> =
+            Response.error(404, ResponseBody.create(null, "error"))
 
-        `when`(dataManager.clientLocalCharges).thenReturn(error)
+        `when`(dataManager.clientLocalCharges()).thenReturn(error)
 
         val result = clientChargeRepositoryImp.clientLocalCharges()
         assertEquals(result, error)

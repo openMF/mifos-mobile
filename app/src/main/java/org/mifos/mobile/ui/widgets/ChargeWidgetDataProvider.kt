@@ -4,16 +4,14 @@ import android.content.Context
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService.RemoteViewsFactory
 import android.widget.Toast
-import org.mifos.mobile.R
-import org.mifos.mobile.api.BaseApiManager
-import org.mifos.mobile.api.DataManager
-import org.mifos.mobile.api.local.DatabaseHelper
-import org.mifos.mobile.api.local.PreferencesHelper
 import dagger.hilt.android.qualifiers.ApplicationContext
+import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
-import org.mifos.mobile.presenters.ClientChargePresenter
+import org.mifos.mobile.repositories.ClientChargeRepository
 import org.mifos.mobile.ui.views.ClientChargeView
+import org.mifos.mobile.viewModels.ClientChargeViewModel
 import java.util.concurrent.locks.ReentrantLock
+import javax.inject.Inject
 
 /**
  * ChargeWidgetDataProvider acts as the adapter for the collection view widget,
@@ -23,27 +21,22 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     RemoteViewsFactory,
     ClientChargeView {
 
-    private var chargePresenter: ClientChargePresenter? = null
+    @Inject
+    lateinit var clientChargeRepository: ClientChargeRepository
+
+    private lateinit var clientChargeViewModel: ClientChargeViewModel
+
     private var charges: List<Charge?>?
     private val `object`: ReentrantLock = ReentrantLock()
     private val condition = `object`.newCondition()
 
     override fun onCreate() {
-        val preferencesHelper = PreferencesHelper(context)
-        val baseApiManager = BaseApiManager(preferencesHelper)
-        val databaseHelper = DatabaseHelper()
-        val dataManager = DataManager(
-            preferencesHelper,
-            baseApiManager,
-            databaseHelper,
-        )
-        chargePresenter = ClientChargePresenter(dataManager, context)
-        chargePresenter?.attachView(this)
+        clientChargeViewModel = ClientChargeViewModel(clientChargeRepository)
     }
 
     override fun onDataSetChanged() {
         // TODO Make ClientId Dynamic
-        chargePresenter?.loadClientLocalCharges()
+        clientChargeViewModel.loadClientLocalCharges()
         synchronized(`object`) {
             try {
                 // Calling wait() will block this thread until another thread
@@ -109,7 +102,6 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     override fun hideProgress() {}
 
     override fun onDestroy() {
-        chargePresenter?.detachView()
     }
 
     companion object {

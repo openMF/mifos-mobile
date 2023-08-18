@@ -3,9 +3,9 @@ package org.mifos.mobile.repositories
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.payload.LoginPayload
-import org.mifos.mobile.models.UpdatePasswordPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.models.register.UserVerify
 import retrofit2.Response
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
 
-    override fun registerUser(
+    override suspend fun registerUser(
         accountNumber: String?,
         authenticationMode: String?,
         email: String?,
@@ -22,7 +22,7 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         mobileNumber: String?,
         password: String?,
         username: String?
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         val registerPayload = RegisterPayload().apply {
             this.accountNumber = accountNumber
             this.authenticationMode = authenticationMode
@@ -45,7 +45,7 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
     }
 
 
-    override fun verifyUser(authenticationToken: String?, requestId: String?): Observable<ResponseBody?>? {
+    override suspend fun verifyUser(authenticationToken: String?, requestId: String?): Response<ResponseBody?>? {
         val userVerify = UserVerify().apply {
             this.authenticationToken = authenticationToken
             this.requestId = requestId
@@ -53,9 +53,9 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         return dataManager.verifyUser(userVerify)
     }
 
-    override fun updateAccountPassword(
+    override suspend fun updateAccountPassword(
         newPassword: String, confirmPassword: String
-    ): Observable<ResponseBody?>? {
+    ): Response<ResponseBody?>? {
         val payload = UpdatePasswordPayload().apply {
             this.password = newPassword
             this.repeatPassword = confirmPassword

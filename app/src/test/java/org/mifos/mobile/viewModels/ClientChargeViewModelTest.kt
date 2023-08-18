@@ -1,13 +1,17 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import io.reactivex.Observable
 import androidx.lifecycle.Observer
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.repositories.ClientChargeRepositoryImp
@@ -16,10 +20,11 @@ import org.mifos.mobile.utils.ClientChargeUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import org.mifos.mobile.R
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class ClientChargeViewModelTest {
 
     @JvmField
@@ -28,6 +33,9 @@ class ClientChargeViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     private lateinit var clientChargeRepositoryImp: ClientChargeRepositoryImp
@@ -45,13 +53,13 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun testLoadClientCharges_Successful() {
+    fun testLoadClientCharges_Successful() = runBlocking {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val mockChargePage = Page(1, listOf(charge1, charge2))
 
         `when`(clientChargeRepositoryImp.getClientCharges(123L)).thenReturn(
-            Observable.just(mockChargePage)
+            Response.success(mockChargePage)
         )
 
         viewModel.loadClientCharges(123L)
@@ -66,12 +74,12 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun testLoadClientCharges_Unsuccessful() {
+    fun testLoadClientCharges_Unsuccessful() = runBlocking {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.getClientCharges(123L)).thenReturn(
-            Observable.error(throwable)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         viewModel.loadClientCharges(123L)
@@ -85,12 +93,12 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun testLoadLoanAccountCharges_Successful() {
+    fun testLoadLoanAccountCharges_Successful() = runBlocking {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val list = listOf(charge1, charge2)
 
-        `when`(clientChargeRepositoryImp.getLoanCharges(123L)).thenReturn(Observable.just(list))
+        `when`(clientChargeRepositoryImp.getLoanCharges(123L)).thenReturn(Response.success(list))
 
         viewModel.loadLoanAccountCharges(123L)
 
@@ -100,12 +108,12 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun testLoadLoanAccountCharges_Unsuccessful() {
+    fun testLoadLoanAccountCharges_Unsuccessful() = runBlocking {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.getLoanCharges(123L)).thenReturn(
-            Observable.error(throwable)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         viewModel.loadLoanAccountCharges(123L)
@@ -119,12 +127,12 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun testLoadSavingsAccountCharges_Successful() {
+    fun testLoadSavingsAccountCharges_Successful() = runBlocking {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val list = listOf(charge1, charge2)
 
-        `when`(clientChargeRepositoryImp.getSavingsCharges(123L)).thenReturn(Observable.just(list))
+        `when`(clientChargeRepositoryImp.getSavingsCharges(123L)).thenReturn(Response.success(list))
 
         viewModel.loadSavingsAccountCharges(123L)
 
@@ -134,12 +142,12 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun testLoadSavingsAccountCharges_Unsuccessful() {
+    fun testLoadSavingsAccountCharges_Unsuccessful() = runBlocking {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.getSavingsCharges(123L)).thenReturn(
-            Observable.error(throwable)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         viewModel.loadSavingsAccountCharges(123L)
@@ -153,13 +161,13 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun loadClientLocalCharges_Successful() {
+    fun loadClientLocalCharges_Successful() = runBlocking {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val mockChargePage = Page(1, listOf(charge1, charge2))
 
         `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(
-            Observable.just(
+            Response.success(
                 mockChargePage
             )
         )
@@ -176,12 +184,12 @@ class ClientChargeViewModelTest {
     }
 
     @Test
-    fun loadClientLocalCharges_Unsuccessful() {
+    fun loadClientLocalCharges_Unsuccessful() = runBlocking {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(
-            Observable.error(throwable)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         viewModel.loadClientLocalCharges()
