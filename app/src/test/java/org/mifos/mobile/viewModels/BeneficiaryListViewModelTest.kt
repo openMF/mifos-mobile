@@ -1,24 +1,29 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.repositories.BeneficiaryRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mifos.mobile.R
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class BeneficiaryListViewModelTest {
 
     @JvmField
@@ -27,6 +32,9 @@ class BeneficiaryListViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var beneficiaryRepositoryImp: BeneficiaryRepositoryImp
@@ -44,12 +52,12 @@ class BeneficiaryListViewModelTest {
     }
 
     @Test
-    fun testLoadBeneficiaries_Successful() {
+    fun testLoadBeneficiaries_Successful() = runBlocking {
         val list1 = mock(Beneficiary::class.java)
         val list2 = mock(Beneficiary::class.java)
         val list = listOf(list1, list2)
 
-        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(Observable.just(list))
+        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(Response.success(list))
 
         viewModel.loadBeneficiaries()
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
@@ -58,10 +66,15 @@ class BeneficiaryListViewModelTest {
     }
 
     @Test
-    fun testLoadBeneficiaries_Unsuccessful() {
+    fun testLoadBeneficiaries_Unsuccessful() = runBlocking {
         val error = RuntimeException("Error Response")
 
-        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(Observable.error(error))
+        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "error")
+            )
+        )
 
         viewModel.loadBeneficiaries()
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)

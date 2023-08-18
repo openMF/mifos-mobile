@@ -70,6 +70,11 @@ class RepositoryModule {
     }
 
     @Provides
+    fun providesThirdPartyTransferRepository(dataManager: DataManager): ThirdPartyTransferRepository {
+        return ThirdPartyTransferRepositoryImp(dataManager)
+    }
+    
+    @Provides
     fun providesClientChargeRepository(dataManager: DataManager): ClientChargeRepository {
         return ClientChargeRepositoryImp(dataManager)
     }

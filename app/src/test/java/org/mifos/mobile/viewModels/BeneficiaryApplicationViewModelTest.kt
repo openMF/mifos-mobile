@@ -1,15 +1,18 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
@@ -18,11 +21,12 @@ import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mifos.mobile.R
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class BeneficiaryApplicationViewModelTest {
 
     @JvmField
@@ -31,6 +35,9 @@ class BeneficiaryApplicationViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var beneficiaryRepositoryImp: BeneficiaryRepositoryImp
@@ -48,9 +55,9 @@ class BeneficiaryApplicationViewModelTest {
     }
 
     @Test
-    fun testLoadBeneficiaryTemplate_Successful() {
+    fun testLoadBeneficiaryTemplate_Successful() = runBlocking {
         val response = mock(BeneficiaryTemplate::class.java)
-        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(Observable.just(response))
+        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(Response.success(response))
 
         viewModel.loadBeneficiaryTemplate()
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
@@ -64,9 +71,13 @@ class BeneficiaryApplicationViewModelTest {
     }
 
     @Test
-    fun testLoadBeneficiaryTemplate_Unsuccessful() {
-        val error = RuntimeException("Error Response")
-        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(Observable.error(error))
+    fun testLoadBeneficiaryTemplate_Unsuccessful() = runBlocking {
+        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "error")
+            )
+        )
 
         viewModel.loadBeneficiaryTemplate()
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
@@ -75,11 +86,11 @@ class BeneficiaryApplicationViewModelTest {
     }
 
     @Test
-    fun testCreateBeneficiary_Successful() {
+    fun testCreateBeneficiary_Successful() = runBlocking {
         val response = mock(ResponseBody::class.java)
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
         `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
-            Observable.just(
+            Response.success(
                 response
             )
         )
@@ -91,13 +102,11 @@ class BeneficiaryApplicationViewModelTest {
     }
 
     @Test
-    fun testCreateBeneficiary_Unsuccessful() {
+    fun testCreateBeneficiary_Unsuccessful() = runBlocking {
         val error = RuntimeException("Error Response")
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
         `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
-            Observable.error(
-                error
-            )
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         viewModel.createBeneficiary(beneficiaryPayload)
@@ -107,7 +116,7 @@ class BeneficiaryApplicationViewModelTest {
     }
 
     @Test
-    fun testUpdateBeneficiary_Successful() {
+    fun testUpdateBeneficiary_Successful() = runBlocking {
         val response = mock(ResponseBody::class.java)
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
         `when`(
@@ -116,7 +125,7 @@ class BeneficiaryApplicationViewModelTest {
                 beneficiaryUpdatePayload
             )
         ).thenReturn(
-            Observable.just(response)
+            Response.success(response)
         )
 
         viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)
@@ -126,8 +135,7 @@ class BeneficiaryApplicationViewModelTest {
     }
 
     @Test
-    fun testUpdateBeneficiary_Unsuccessful() {
-        val error = RuntimeException("Error Response")
+    fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
         `when`(
             beneficiaryRepositoryImp.updateBeneficiary(
@@ -135,7 +143,7 @@ class BeneficiaryApplicationViewModelTest {
                 beneficiaryUpdatePayload
             )
         ).thenReturn(
-            Observable.error(error)
+            Response.error(404, ResponseBody.create(null, "error"))
         )
 
         viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)

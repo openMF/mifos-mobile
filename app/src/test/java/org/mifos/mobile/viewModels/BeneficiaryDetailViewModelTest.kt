@@ -2,21 +2,25 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.R
 import org.mifos.mobile.repositories.BeneficiaryRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mifos.mobile.R
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class BeneficiaryDetailViewModelTest {
@@ -44,27 +48,39 @@ class BeneficiaryDetailViewModelTest {
     }
 
     @Test
-    fun testDeleteBeneficiary_Successful() {
+    fun testDeleteBeneficiary_Successful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(ResponseBody::class.java)
 
-        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L)).thenReturn(Observable.just(response))
+        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L)).thenReturn(
+            Response.success(
+                response
+            )
+        )
 
         viewModel.deleteBeneficiary(123L)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.DeletedSuccessfully)
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun testDeleteBeneficiary_Unsuccessful() {
-        val error = RuntimeException("Error Response")
+    fun testDeleteBeneficiary_Unsuccessful() = runBlocking {
+        Dispatchers.setMain(Dispatchers.Unconfined)
 
-        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L)).thenReturn(Observable.error(error))
+        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L)).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "error")
+            )
+        )
 
         viewModel.deleteBeneficiary(123L)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
         verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_deleting_beneficiary))
         verifyNoMoreInteractions(beneficiaryUiStateObserver)
+        Dispatchers.resetMain()
     }
 
     @After
