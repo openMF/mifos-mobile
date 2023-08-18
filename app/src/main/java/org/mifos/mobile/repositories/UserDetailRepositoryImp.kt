@@ -13,13 +13,13 @@ class UserDetailRepositoryImp @Inject constructor(private val dataManager: DataM
 
     override fun registerNotification(payload: NotificationRegisterPayload?): Flow<ResponseBody> {
         return flow {
-            dataManager.registerNotification(payload)
+            emit(dataManager.registerNotification(payload))
         }
     }
 
     override fun getUserNotificationId(id: Long): Flow<NotificationUserDetail> {
         return flow {
-            dataManager.getUserNotificationId(id)
+            emit(dataManager.getUserNotificationId(id))
         }
     }
 
@@ -28,7 +28,7 @@ class UserDetailRepositoryImp @Inject constructor(private val dataManager: DataM
         payload: NotificationRegisterPayload?
     ): Flow<ResponseBody> {
         return flow {
-            dataManager.updateRegisterNotification(id, payload)
+            emit(dataManager.updateRegisterNotification(id, payload))
         }
     }
 

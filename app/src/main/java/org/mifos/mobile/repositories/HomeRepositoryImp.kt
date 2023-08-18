@@ -30,7 +30,7 @@ class HomeRepositoryImp @Inject constructor(private val dataManager: DataManager
 
     override fun unreadNotificationsCount(): Flow<Int> {
         return flow {
-            dataManager.unreadNotificationsCount()
+            emit(dataManager.unreadNotificationsCount())
         }
     }
 
