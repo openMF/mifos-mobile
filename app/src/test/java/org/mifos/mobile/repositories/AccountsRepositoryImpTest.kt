@@ -1,26 +1,33 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
-import org.junit.Assert
-
+import CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.client.ClientAccounts
-import org.mifos.mobile.utils.Constants
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class AccountsRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
 
-    private lateinit var accountsRepositoryImp : AccountsRepository
+    private lateinit var accountsRepositoryImp: AccountsRepository
 
     @Before
     fun setUp() {
@@ -29,59 +36,31 @@ class AccountsRepositoryImpTest {
     }
 
     @Test
-    fun testLoadClientAccounts_SuccessResponseReceivedFromDataManager_ReturnsSuccess() {
-        val mockClientAccounts : ClientAccounts? = Mockito.mock(ClientAccounts::class.java)
-        val successResponse = Observable.just(mockClientAccounts)
-        Mockito.`when`(
-            dataManager.clientAccounts
-        ).thenReturn(successResponse)
+    fun loadAccounts_Success() = runBlocking {
+        val mockAccountType = "savings"
+        val mockClientAccounts = mock(ClientAccounts::class.java)
+        `when`(dataManager.getAccounts(mockAccountType)).thenReturn((mockClientAccounts))
 
-        val result = accountsRepositoryImp.loadClientAccounts()
+        val resultFlow = accountsRepositoryImp.loadAccounts(mockAccountType)
+        val resultAccounts = resultFlow.first()
 
-        Mockito.verify(dataManager).clientAccounts
-        Assert.assertEquals(result, successResponse)
+        assert(resultAccounts == mockClientAccounts)
     }
 
     @Test
-    fun testLoadClientAccounts_ErrorResponseReceivedFromDataManager_ReturnsError() {
-        val errorResponse : Observable<ClientAccounts?> = Observable.error(Throwable("loading client error"))
-        Mockito.`when`(
-            dataManager.clientAccounts
-        ).thenReturn(errorResponse)
+    fun loadAccounts_Error() = runBlocking {
+        val mockAccountType = "savings"
+        val mockError = IOException("Network error")
+        `when`(dataManager.getAccounts(mockAccountType)).thenThrow(mockError)
 
-        val result = accountsRepositoryImp.loadClientAccounts()
-
-        Mockito.verify(dataManager).clientAccounts
-        Assert.assertEquals(result, errorResponse)
+        val resultFlow = accountsRepositoryImp.loadAccounts(mockAccountType)
+        var isErrorThrown = false
+        try {
+            resultFlow.first()
+        } catch (e: Exception) {
+            isErrorThrown = true
+            assert(e is IOException)
+        }
+        assert(isErrorThrown)
     }
-
-    @Test
-    fun testLoadAccounts_SuccessResponseReceivedFromDataManager_ReturnsSuccess() {
-        val mockClientAccounts : ClientAccounts? = Mockito.mock(ClientAccounts::class.java)
-        val successResponse = Observable.just(mockClientAccounts)
-        val mockAccountType = Constants.SAVINGS_ACCOUNTS
-        Mockito.`when`(
-            dataManager.getAccounts(mockAccountType)
-        ).thenReturn(successResponse)
-
-        val result = accountsRepositoryImp.loadAccounts(mockAccountType)
-
-        Mockito.verify(dataManager).getAccounts(mockAccountType)
-        Assert.assertEquals(result, successResponse)
-    }
-
-    @Test
-    fun testLoadAccounts_ErrorResponseReceivedFromDataManager_ReturnsError() {
-        val errorResponse : Observable<ClientAccounts?> = Observable.error(Throwable("loading client error"))
-        val mockAccountType = Constants.SAVINGS_ACCOUNTS
-        Mockito.`when`(
-            dataManager.getAccounts(mockAccountType)
-        ).thenReturn(errorResponse)
-
-        val result = accountsRepositoryImp.loadAccounts(mockAccountType)
-
-        Mockito.verify(dataManager).getAccounts(mockAccountType)
-        Assert.assertEquals(result, errorResponse)
-    }
-
 }

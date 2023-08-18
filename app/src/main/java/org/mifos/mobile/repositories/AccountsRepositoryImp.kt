@@ -1,16 +1,17 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.client.ClientAccounts
 import javax.inject.Inject
 
-class AccountsRepositoryImp @Inject constructor(private val dataManager: DataManager): AccountsRepository {
-    override fun loadClientAccounts(): Observable<ClientAccounts?>? {
-        return dataManager.clientAccounts
-    }
+class AccountsRepositoryImp @Inject constructor(private val dataManager: DataManager) :
+    AccountsRepository {
 
-    override fun loadAccounts(accountType: String?): Observable<ClientAccounts?>? {
-        return dataManager.getAccounts(accountType)
+    override fun loadAccounts(accountType: String?): Flow<ClientAccounts> {
+        return flow {
+            emit(dataManager.getAccounts(accountType))
+        }
     }
 }

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
@@ -13,30 +15,24 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentUserProfileBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.Group
-import org.mifos.mobile.presenters.UserDetailsPresenter
 import org.mifos.mobile.ui.activities.EditUserDetailActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
-import org.mifos.mobile.ui.views.UserDetailsView
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.TextDrawable
-import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.*
+import org.mifos.mobile.viewModels.UserDetailViewModel
 import javax.inject.Inject
 
 /**
  * Created by dilpreet on 10/7/17.
  */
 @AndroidEntryPoint
-class UserProfileFragment : BaseFragment(), UserDetailsView {
+class UserProfileFragment : BaseFragment() {
 
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var presenter: UserDetailsPresenter? = null
+    private val viewModel: UserDetailViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -50,19 +46,39 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        presenter?.attachView(this)
         (activity as BaseActivity?)?.setSupportActionBar(binding.toolbar) // check this part before pushing
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         if (savedInstanceState == null) {
-            presenter?.userDetails
-            presenter?.userImage
+            viewModel.userDetails
+            viewModel.userImage
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.userDetailUiState.collect {
+                when (it) {
+                    is UserDetailUiState.Loading -> showProgress()
+                    is UserDetailUiState.ShowUserDetails -> {
+                        hideProgress()
+                        showUserDetails(it.client)
+                    }
+                    is UserDetailUiState.ShowUserImage -> {
+                        hideProgress()
+                        showUserImage(it.image)
+                    }
+                    is UserDetailUiState.ShowError -> {
+                        hideProgress()
+                        showError(getString(it.message))
+                    }
+                }
+            }
+        }
+
         binding.btnChangePassword.setOnClickListener {
             changePassword()
         }
@@ -77,7 +93,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
-            presenter?.setUserProfile(preferencesHelper?.userProfileImage)
+            viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }
     }
@@ -87,7 +103,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      *
      * @param client instance of [Client] which contains information about client
      */
-    override fun showUserDetails(client: Client?) {
+    fun showUserDetails(client: Client?) {
         this.client = client
         binding.tvUserName.text = nullFieldCheck(getString(R.string.username), client?.displayName)
         binding.tvAccountNumber.text = nullFieldCheck(
@@ -156,7 +172,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      *
      * @param bitmap User Image
      */
-    override fun showUserImage(bitmap: Bitmap?) {
+    fun showUserImage(bitmap: Bitmap?) {
         activity?.runOnUiThread {
             userBitmap = bitmap
             if (userBitmap == null) {
@@ -166,14 +182,14 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
                     .endConfig()
                     .buildRound(
                         (
-                            if (preferencesHelper?.clientName.isNullOrEmpty()) {
-                                preferencesHelper
-                                    ?.userName
-                            } else {
-                                preferencesHelper
-                                    ?.clientName
-                            }
-                            )
+                                if (preferencesHelper?.clientName.isNullOrEmpty()) {
+                                    preferencesHelper
+                                        ?.userName
+                                } else {
+                                    preferencesHelper
+                                        ?.clientName
+                                }
+                                )
                             ?.substring(0, 1),
                         requireContext().getThemeAttributeColor(R.attr.colorPrimaryVariant),
                     )
@@ -193,7 +209,7 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showError(message: String?) {
+    fun showError(message: String?) {
         Toaster.show(binding.root, message)
         sweetUIErrorHandler?.showSweetCustomErrorUI(
             getString(R.string.error_fetching_user_profile),
@@ -204,18 +220,17 @@ class UserProfileFragment : BaseFragment(), UserDetailsView {
         binding.fabEdit.visibility = View.GONE
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         hideProgress()
-        presenter?.detachView()
         _binding = null
     }
 

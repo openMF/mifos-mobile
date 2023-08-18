@@ -1,33 +1,34 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Predicate
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.accounts.share.ShareAccount
-import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.AccountsRepository
+import org.mifos.mobile.repositories.HomeRepository
 import org.mifos.mobile.utils.AccountsFilterUtil
 import org.mifos.mobile.utils.AccountsUiState
 import org.mifos.mobile.utils.Constants
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : AccountsRepository) : ViewModel() {
+class AccountsViewModel @Inject constructor(
+    private val accountsRepositoryImp: AccountsRepository,
+    private val homeRepositoryImp: HomeRepository
+) : ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
-    private val _accountsUiState = MutableLiveData<AccountsUiState>()
-    val accountsUiState : LiveData<AccountsUiState> = _accountsUiState
+    private val _accountsUiState = MutableStateFlow<AccountsUiState>(AccountsUiState.Loading)
+    val accountsUiState: StateFlow<AccountsUiState> = _accountsUiState
 
     /**
      * Loads savings, loan and share accounts associated with the Client from the server
@@ -35,26 +36,19 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
      * details it notifies the view.
      */
     fun loadClientAccounts() {
-        _accountsUiState.value = AccountsUiState.Loading
-        accountsRepositoryImp.loadClientAccounts()
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _accountsUiState.value = AccountsUiState.Error
-                }
-
-                override fun onNext(clientAccounts: ClientAccounts) {
-                    _accountsUiState.value = AccountsUiState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
-                    _accountsUiState.value = AccountsUiState.ShowLoanAccounts(clientAccounts.loanAccounts)
-                    _accountsUiState.value = AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
-                }
-            })?.let {
-                compositeDisposable.add(
-                    it,
-                )
+        viewModelScope.launch {
+            _accountsUiState.value = AccountsUiState.Loading
+            homeRepositoryImp.clientAccounts().catch {
+                _accountsUiState.value = AccountsUiState.Error
+            }.collect { clientAccounts ->
+                _accountsUiState.value =
+                    AccountsUiState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
+                _accountsUiState.value =
+                    AccountsUiState.ShowLoanAccounts(clientAccounts.loanAccounts)
+                _accountsUiState.value =
+                    AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
             }
+        }
     }
 
     /**
@@ -64,28 +58,22 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
      * @param accountType Type of account for which we need to fetch details
      */
     fun loadAccounts(accountType: String?) {
-        _accountsUiState.value = AccountsUiState.Loading
-        accountsRepositoryImp.loadAccounts(accountType)
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribeWith(object : DisposableObserver<ClientAccounts?>() {
-                override fun onComplete() {}
-                override fun onError(e: Throwable) {
-                    _accountsUiState.value = AccountsUiState.Error
+        viewModelScope.launch {
+            _accountsUiState.value = AccountsUiState.Loading
+            accountsRepositoryImp.loadAccounts(accountType).catch {
+                _accountsUiState.value = AccountsUiState.Error
+            }.collect { clientAccounts ->
+                when (accountType) {
+                    Constants.SAVINGS_ACCOUNTS -> _accountsUiState.value =
+                        AccountsUiState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
+                    Constants.LOAN_ACCOUNTS -> _accountsUiState.value =
+                        AccountsUiState.ShowLoanAccounts(clientAccounts.loanAccounts)
+                    Constants.SHARE_ACCOUNTS -> _accountsUiState.value =
+                        AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
                 }
-
-                override fun onNext(clientAccounts: ClientAccounts) {
-                    when (accountType) {
-                        Constants.SAVINGS_ACCOUNTS -> _accountsUiState.value = AccountsUiState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
-                        Constants.LOAN_ACCOUNTS -> _accountsUiState.value = AccountsUiState.ShowLoanAccounts(clientAccounts.loanAccounts)
-                        Constants.SHARE_ACCOUNTS -> _accountsUiState.value = AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
-                    }
-                }
-            })?.let {
-                compositeDisposable.add(
-                    it,
-                )
             }
+
+        }
     }
 
     /**
@@ -165,11 +153,6 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
             .filter { (_, _, isChecked) -> isChecked }.toList().blockingGet()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
-
     /**
      * Filters [List] of [SavingAccount] according to [CheckboxStatus]
      * @param accounts [List] of filtered [SavingAccount]
@@ -180,7 +163,7 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
     fun getFilteredSavingsAccount(
         accounts: List<SavingAccount?>?,
         status: CheckboxStatus?,
-        accountsFilterUtil : AccountsFilterUtil
+        accountsFilterUtil: AccountsFilterUtil
     ): Collection<SavingAccount?>? {
         return Observable.fromIterable(accounts)
             .filter(
@@ -221,7 +204,7 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
     fun getFilteredLoanAccount(
         accounts: List<LoanAccount?>?,
         status: CheckboxStatus?,
-        accountsFilterUtil : AccountsFilterUtil
+        accountsFilterUtil: AccountsFilterUtil
     ): Collection<LoanAccount?>? {
         return Observable.fromIterable(accounts)
             .filter(
@@ -270,7 +253,7 @@ class AccountsViewModel @Inject constructor(private val accountsRepositoryImp : 
     fun getFilteredShareAccount(
         accounts: List<ShareAccount?>?,
         status: CheckboxStatus?,
-        accountsFilterUtil : AccountsFilterUtil
+        accountsFilterUtil: AccountsFilterUtil
     ): Collection<ShareAccount?>? {
         return Observable.fromIterable(accounts)
             .filter(
