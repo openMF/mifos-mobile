@@ -5,6 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.repositories.TransferRepository
+import org.mifos.mobile.repositories.TransferRepositoryImp
+import org.mifos.mobile.repositories.LoanRepository
+import org.mifos.mobile.repositories.LoanRepositoryImp
+import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.*
 
@@ -57,6 +62,11 @@ class RepositoryModule {
     @Provides
     fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
         return BeneficiaryRepositoryImp(dataManager)
+    }
+    
+    @Provides
+    fun providesTransferRepository(dataManager: DataManager): TransferRepository {
+        return TransferRepositoryImp(dataManager)
     }
 
     @Provides
