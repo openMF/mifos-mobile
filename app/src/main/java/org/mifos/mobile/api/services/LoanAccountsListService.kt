@@ -24,16 +24,16 @@ interface LoanAccountsListService {
     suspend fun getLoanWithAssociations(
         @Path("loanId") loanId: Long?,
         @Query("associations") associationType: String?,
-    ): Response<LoanWithAssociations?>?
+    ): LoanWithAssociations
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
-    suspend fun getLoanTemplate(@Query("clientId") clientId: Long?): Response<LoanTemplate?>?
+    suspend fun getLoanTemplate(@Query("clientId") clientId: Long?): LoanTemplate
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
     suspend fun getLoanTemplateByProduct(
         @Query("clientId") clientId: Long?,
         @Query("productId") productId: Int?,
-    ): Response<LoanTemplate?>?
+    ): LoanTemplate
 
     @POST(ApiEndPoints.LOANS)
     fun createLoansAccount(@Body loansPayload: LoansPayload?): Observable<ResponseBody?>?
@@ -48,5 +48,5 @@ interface LoanAccountsListService {
     suspend fun withdrawLoanAccount(
         @Path(Constants.LOAN_ID) loanId: Long?,
         @Body loanWithdraw: LoanWithdraw?,
-    ): Response<ResponseBody?>?
+    ): ResponseBody
 }

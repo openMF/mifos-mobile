@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -26,7 +30,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     private var _binding: FragmentLoanWithdrawBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: LoanAccountWithdrawViewModel
+    private val viewModel: LoanAccountWithdrawViewModel by viewModels()
 
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +46,6 @@ class LoanAccountWithdrawFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoanWithdrawBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LoanAccountWithdrawViewModel::class.java]
         setToolbarTitle(getString(R.string.withdraw_loan))
         showUserInterface()
         return binding.root
@@ -51,18 +54,22 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loanUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is LoanUiState.Loading -> showProgress()
-                is LoanUiState.ShowError -> {
-                    hideProgress()
-                    showLoanAccountWithdrawError(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loanUiState.collect {
+                    when (it) {
+                        is LoanUiState.Loading -> showProgress()
+                        is LoanUiState.ShowError -> {
+                            hideProgress()
+                            showLoanAccountWithdrawError(getString(it.message))
+                        }
+                        is LoanUiState.WithdrawSuccess -> {
+                            hideProgress()
+                            showLoanAccountWithdrawSuccess()
+                        }
+                        else -> throw IllegalStateException("Unexpected state: $it")
+                    }
                 }
-                is LoanUiState.WithdrawSuccess -> {
-                    hideProgress()
-                    showLoanAccountWithdrawSuccess()
-                }
-                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

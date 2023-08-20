@@ -1,10 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.repositories.LoanRepository
@@ -16,34 +17,27 @@ import javax.inject.Inject
 class LoanAccountTransactionViewModel @Inject constructor(private val loanRepositoryImp: LoanRepository) :
     ViewModel() {
 
-    private val _loanUiState = MutableLiveData<LoanUiState>()
-    val loanUiState: LiveData<LoanUiState> get() = _loanUiState
+    private val _loanUiState = MutableStateFlow<LoanUiState>(LoanUiState.Loading)
+    val loanUiState: StateFlow<LoanUiState> = _loanUiState
 
     fun loadLoanAccountDetails(loanId: Long?) {
         viewModelScope.launch {
             _loanUiState.value = LoanUiState.Loading
-            try {
-                val response = loanRepositoryImp.getLoanWithAssociations(
-                    Constants.TRANSACTIONS,
-                    loanId,
-                )
-                if (response?.isSuccessful == true) {
-                    if (response.body()?.transactions != null &&
-                        response.body()!!.transactions?.isNotEmpty() == true
-                    ) {
-                        _loanUiState.value = response.body()?.let { LoanUiState.ShowLoan(it) }
-                    } else {
-                        _loanUiState.value = response.body()?.let { LoanUiState.ShowEmpty(it) }
-                    }
-                } else {
-                    _loanUiState.value =
-                        LoanUiState.ShowError(R.string.loan_account_details)
-                }
-            } catch (e: Throwable) {
+            loanRepositoryImp.getLoanWithAssociations(
+                Constants.TRANSACTIONS,
+                loanId,
+            )?.catch {
                 _loanUiState.value =
                     LoanUiState.ShowError(R.string.loan_account_details)
+            }?.collect {
+                if (it?.transactions != null &&
+                    it.transactions?.isNotEmpty() == true
+                ) {
+                    _loanUiState.value = it.let { LoanUiState.ShowLoan(it) }
+                } else {
+                    _loanUiState.value = LoanUiState.ShowEmpty(it!!)
+                }
             }
-
         }
     }
 

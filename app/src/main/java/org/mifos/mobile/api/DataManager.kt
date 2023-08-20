@@ -139,38 +139,38 @@ class DataManager @Inject constructor(
     }
 
     fun getLoanAccountDetails(loanId: Long): Observable<LoanAccount?>? {
-        return baseApiManager.loanAccountsListApi?.getLoanAccountsDetail(loanId)
+        return baseApiManager.loanAccountsListApi.getLoanAccountsDetail(loanId)
     }
 
     suspend fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?,
-    ): Response<LoanWithAssociations?>? {
+    ): LoanWithAssociations {
         return baseApiManager.loanAccountsListApi
-            ?.getLoanWithAssociations(loanId, associationType)
+            .getLoanWithAssociations(loanId, associationType)
     }
 
-    suspend fun loanTemplate(): Response<LoanTemplate?>? =
-        baseApiManager.loanAccountsListApi?.getLoanTemplate(clientId)
+    suspend fun loanTemplate(): LoanTemplate =
+        baseApiManager.loanAccountsListApi.getLoanTemplate(clientId)
 
-    suspend fun getLoanTemplateByProduct(productId: Int?): Response<LoanTemplate?>? {
+    suspend fun getLoanTemplateByProduct(productId: Int?): LoanTemplate {
         return baseApiManager.loanAccountsListApi
-            ?.getLoanTemplateByProduct(clientId, productId)
+            .getLoanTemplateByProduct(clientId, productId)
     }
 
     fun createLoansAccount(loansPayload: LoansPayload?): Observable<ResponseBody?>? {
-        return baseApiManager.loanAccountsListApi?.createLoansAccount(loansPayload)
+        return baseApiManager.loanAccountsListApi.createLoansAccount(loansPayload)
     }
 
     fun updateLoanAccount(loanId: Long, loansPayload: LoansPayload?): Observable<ResponseBody?>? {
-        return baseApiManager.loanAccountsListApi?.updateLoanAccount(loanId, loansPayload)
+        return baseApiManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload)
     }
 
     suspend fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
-    ): Response<ResponseBody?>? {
-        return baseApiManager.loanAccountsListApi?.withdrawLoanAccount(loanId, loanWithdraw)
+    ): ResponseBody {
+        return baseApiManager.loanAccountsListApi.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
     suspend fun beneficiaryList(): Response<List<Beneficiary?>?>? =

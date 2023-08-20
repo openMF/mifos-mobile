@@ -1,10 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.repositories.LoanRepository
@@ -16,23 +17,25 @@ import javax.inject.Inject
 class LoanApplicationViewModel @Inject constructor(private val loanRepositoryImp: LoanRepository) :
     ViewModel() {
 
-    private val _loanUiState = MutableLiveData<LoanUiState>()
-    val loanUiState: LiveData<LoanUiState> get() = _loanUiState
+    private val _loanUiState = MutableStateFlow<LoanUiState>(LoanUiState.Loading)
+    val loanUiState: StateFlow<LoanUiState> = _loanUiState
 
     fun loadLoanApplicationTemplate(loanState: LoanState) {
         viewModelScope.launch {
             _loanUiState.value = LoanUiState.Loading
-            val response = loanRepositoryImp.template()
-            if (response?.isSuccessful == true) {
-                if (loanState === LoanState.CREATE) {
-                    _loanUiState.value = response.body()
-                        ?.let { LoanUiState.ShowLoanTemplateByProduct(it) }
-                } else {
-                    _loanUiState.value = response.body()
-                        ?.let { LoanUiState.ShowUpdateLoanTemplateByProduct(it) }
-                }
-            } else {
+            loanRepositoryImp.template()?.catch {
                 _loanUiState.value = LoanUiState.ShowError(R.string.error_fetching_template)
+            }?.collect {
+                if (loanState === LoanState.CREATE) {
+                    _loanUiState.value =
+                        it?.let { it1 -> LoanUiState.ShowLoanTemplateByProduct(it1) }!!
+                } else {
+                    _loanUiState.value = it?.let { it1 ->
+                        LoanUiState.ShowUpdateLoanTemplateByProduct(
+                            it1
+                        )
+                    }!!
+                }
             }
         }
     }
@@ -40,18 +43,15 @@ class LoanApplicationViewModel @Inject constructor(private val loanRepositoryImp
     fun loadLoanApplicationTemplateByProduct(productId: Int?, loanState: LoanState?) {
         viewModelScope.launch {
             _loanUiState.value = LoanUiState.Loading
-            val response = loanRepositoryImp.getLoanTemplateByProduct(productId)
-            if (response?.isSuccessful == true) {
-                if (loanState === LoanState.CREATE) {
-                    _loanUiState.value = response.body()?.let { LoanUiState.ShowLoanTemplate(it) }
-                } else {
-                    _loanUiState.value = response.body()
-                        ?.let { LoanUiState.ShowUpdateLoanTemplate(it) }
-                }
-            } else {
+            loanRepositoryImp.getLoanTemplateByProduct(productId)?.catch {
                 _loanUiState.value = LoanUiState.ShowError(R.string.error_fetching_template)
+            }?.collect {
+                if (loanState === LoanState.CREATE) {
+                    _loanUiState.value = it?.let { it1 -> LoanUiState.ShowLoanTemplate(it1) }!!
+                } else {
+                    _loanUiState.value = it?.let { it1 -> LoanUiState.ShowUpdateLoanTemplate(it1) }!!
+                }
             }
         }
     }
-
 }

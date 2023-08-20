@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanRepaymentScheduleBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -35,7 +39,7 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
     private var _binding: FragmentLoanRepaymentScheduleBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: LoanRepaymentScheduleViewModel
+    private val viewModel: LoanRepaymentScheduleViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -55,7 +59,6 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoanRepaymentScheduleBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LoanRepaymentScheduleViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
@@ -67,22 +70,26 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loanUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is LoanUiState.Loading -> showProgress()
-                is LoanUiState.ShowError -> {
-                    hideProgress()
-                    showError(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loanUiState.collect {
+                    when (it) {
+                        is LoanUiState.Loading -> showProgress()
+                        is LoanUiState.ShowError -> {
+                            hideProgress()
+                            showError(getString(it.message))
+                        }
+                        is LoanUiState.ShowLoan -> {
+                            hideProgress()
+                            showLoanRepaymentSchedule(it.loanWithAssociations)
+                        }
+                        is LoanUiState.ShowEmpty -> {
+                            hideProgress()
+                            showEmptyRepaymentsSchedule(loanWithAssociations)
+                        }
+                        else -> throw IllegalStateException("Unexpected state: $it")
+                    }
                 }
-                is LoanUiState.ShowLoan -> {
-                    hideProgress()
-                    showLoanRepaymentSchedule(it.loanWithAssociations)
-                }
-                is LoanUiState.ShowEmpty -> {
-                    hideProgress()
-                    showEmptyRepaymentsSchedule(loanWithAssociations)
-                }
-                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

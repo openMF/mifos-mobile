@@ -2,16 +2,15 @@ package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentLoanAccountDetailsBinding
@@ -37,7 +36,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     private var _binding: FragmentLoanAccountDetailsBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: LoanAccountsDetailViewModel
+    private val viewModel: LoanAccountsDetailViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -61,7 +60,6 @@ class LoanAccountsDetailFragment : BaseFragment() {
     ): View {
         _binding = FragmentLoanAccountDetailsBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        viewModel = ViewModelProvider(this)[LoanAccountsDetailViewModel::class.java]
         setToolbarTitle(getString(R.string.loan_account_details))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         if (savedInstanceState == null && this.loanWithAssociations == null) {
@@ -167,18 +165,22 @@ class LoanAccountsDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loanUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is LoanUiState.Loading -> showProgress()
-                is LoanUiState.ShowError -> {
-                    hideProgress()
-                    showErrorFetchingLoanAccountsDetail(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loanUiState.collect {
+                    when (it) {
+                        is LoanUiState.Loading -> showProgress()
+                        is LoanUiState.ShowError -> {
+                            hideProgress()
+                            showErrorFetchingLoanAccountsDetail(getString(it.message))
+                        }
+                        is LoanUiState.ShowLoan -> {
+                            hideProgress()
+                            showLoanAccountsDetail(it.loanWithAssociations)
+                        }
+                        else -> throw IllegalStateException("Unexpected state: $it")
+                    }
                 }
-                is LoanUiState.ShowLoan -> {
-                    hideProgress()
-                    showLoanAccountsDetail(it.loanWithAssociations)
-                }
-                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

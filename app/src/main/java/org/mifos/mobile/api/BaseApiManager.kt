@@ -29,7 +29,7 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
         get() = Companion.clientsApi
     val savingAccountsListApi: SavingAccountsListService?
         get() = Companion.savingAccountsListApi
-    val loanAccountsListApi: LoanAccountsListService?
+    val loanAccountsListApi: LoanAccountsListService
         get() = Companion.loanAccountsListApi
     val recentTransactionsApi: RecentTransactionsService?
         get() = Companion.recentTransactionsApi
@@ -54,7 +54,7 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
         private var authenticationApi: AuthenticationService? = null
         private lateinit var clientsApi: ClientService
         private var savingAccountsListApi: SavingAccountsListService? = null
-        private var loanAccountsListApi: LoanAccountsListService? = null
+        private lateinit var loanAccountsListApi: LoanAccountsListService
         private var recentTransactionsApi: RecentTransactionsService? = null
         private var clientChargeApi: ClientChargeService? = null
         private var beneficiaryApi: BeneficiaryService? = null
