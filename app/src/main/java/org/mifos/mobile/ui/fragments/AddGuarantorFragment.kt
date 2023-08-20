@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
@@ -33,7 +37,7 @@ class AddGuarantorFragment : BaseFragment() {
     private var _binding: FragmentAddGuarantorBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: AddGuarantorViewModel
+    private val viewModel: AddGuarantorViewModel by viewModels()
 
     var guarantorTypeAdapter: ArrayAdapter<String?>? = null
     var template: GuarantorTemplatePayload? = null
@@ -59,7 +63,6 @@ class AddGuarantorFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddGuarantorBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[AddGuarantorViewModel::class.java]
         if (guarantorState == GuarantorState.CREATE) {
             setToolbarTitle(getString(R.string.add_guarantor))
         } else if (guarantorState == GuarantorState.UPDATE) {
@@ -71,30 +74,34 @@ class AddGuarantorFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.guarantorUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is GuarantorUiState.Loading -> showProgress()
-                is GuarantorUiState.ShowError -> {
-                    hideProgress()
-                    showError(it.message)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.guarantorUiState.collect {
+                    when (it) {
+                        is GuarantorUiState.Loading -> showProgress()
+                        is GuarantorUiState.ShowError -> {
+                            hideProgress()
+                            showError(it.message)
+                        }
+                        is GuarantorUiState.ShowGuarantorApplication -> {
+                            hideProgress()
+                            showGuarantorApplication(it.template)
+                        }
+                        is GuarantorUiState.ShowGuarantorUpdation -> {
+                            hideProgress()
+                            showGuarantorUpdation(it.template)
+                        }
+                        is GuarantorUiState.SubmittedSuccessfully -> {
+                            hideProgress()
+                            submittedSuccessfully(it.message, it.payload)
+                        }
+                        is GuarantorUiState.GuarantorUpdatedSuccessfully -> {
+                            hideProgress()
+                            updatedSuccessfully(it.message)
+                        }
+                        else -> throw IllegalStateException("Undesired $it")
+                    }
                 }
-                is GuarantorUiState.ShowGuarantorApplication -> {
-                    hideProgress()
-                    showGuarantorApplication(it.template)
-                }
-                is GuarantorUiState.ShowGuarantorUpdation -> {
-                    hideProgress()
-                    showGuarantorUpdation(it.template)
-                }
-                is GuarantorUiState.SubmittedSuccessfully -> {
-                    hideProgress()
-                    submittedSuccessfully(it.message, it.payload)
-                }
-                is GuarantorUiState.GuarantorUpdatedSuccessfully -> {
-                    hideProgress()
-                    updatedSuccessfully(it.message)
-                }
-                else -> throw IllegalStateException("Undesired $it")
             }
         }
 
