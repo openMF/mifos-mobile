@@ -21,6 +21,8 @@
         android:layout_gravity="center_vertical"
         android:gravity="center"
         android:maxLines="1"
+        android:textColor="@color/black"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:visibility="visible"
         tools:text="Cell Data" />
 

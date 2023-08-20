@@ -21,6 +21,8 @@
         android:layout_gravity="center"
         android:layout_weight="4"
         android:gravity="center"
+        android:textColor="@color/black"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         tools:text="Header Data" />
 
 
