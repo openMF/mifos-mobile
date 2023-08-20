@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.activities
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -11,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.widget.NestedScrollView
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
 import org.mifos.mobile.R
@@ -23,6 +23,10 @@ import org.mifos.mobile.utils.Toaster
 class PassCodeActivity : MifosPassCodeActivity() {
     private var currPassCode: String? = null
     private var isToUpdatePassCode: Boolean = false
+
+    @JvmField
+    @BindView(R.id.btn_forgot_passcode)
+    var forgetPasswordButton: AppCompatButton? = null
 
     @JvmField
     @BindView(R.id.btn_save)
@@ -99,26 +103,31 @@ class PassCodeActivity : MifosPassCodeActivity() {
         startActivity(Intent(this@PassCodeActivity, HomeActivity::class.java))
     }
 
-    override fun startLoginActivity() {
+    override fun startLoginActivity() {}
+
+
+    @OnClick(R.id.btn_forgot_passcode)
+    fun onForgotPasswordLoginManually() {
         MaterialDialog.Builder().init(this@PassCodeActivity)
             .setCancelable(false)
             .setMessage(R.string.login_using_password_confirmation)
             .setPositiveButton(
                 getString(R.string.logout),
-                DialogInterface.OnClickListener { _, _ ->
-                    val i = Intent(
-                        this@PassCodeActivity,
-                        LoginActivity::class.java,
-                    )
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(i)
-                    finish()
-                },
-            )
+            ) { _, _ ->
+                clearTokenPreferences()
+                val i = Intent(
+                    this@PassCodeActivity,
+                    LoginActivity::class.java,
+                )
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+                finish()
+            }
             .setNegativeButton(
                 getString(R.string.cancel),
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() },
-            )
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
             .createMaterialDialog()
             .show()
     }
