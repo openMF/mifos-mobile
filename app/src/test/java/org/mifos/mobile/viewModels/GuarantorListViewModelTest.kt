@@ -1,9 +1,11 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
-import org.junit.After
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,8 +18,10 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class GuarantorListViewModelTest {
 
     @JvmField
@@ -26,6 +30,9 @@ class GuarantorListViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     private lateinit var guarantorRepositoryImp: GuarantorRepositoryImp
@@ -39,16 +46,15 @@ class GuarantorListViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = GuarantorListViewModel(guarantorRepositoryImp)
-        viewModel.guarantorUiState.observeForever(guarantorUiStateObserver)
     }
 
     @Test
-    fun testGetGuarantorList_Successful() {
+    fun testGetGuarantorList_Successful() = runBlocking {
         val list1 = mock(GuarantorPayload::class.java)
         val list2 = mock(GuarantorPayload::class.java)
         val list = listOf(list1, list2)
 
-        `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(Observable.just(list))
+        `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(flowOf(list))
 
         viewModel.getGuarantorList(1L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
@@ -60,19 +66,12 @@ class GuarantorListViewModelTest {
     }
 
     @Test
-    fun testGetGuarantorList_Unsuccessful() {
-        val error: Observable<List<GuarantorPayload?>?> = Observable.error(Throwable())
-
-        `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(error)
+    fun testGetGuarantorList_Unsuccessful() = runBlocking {
+        val error = IOException("Error")
+        `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenThrow(error)
 
         viewModel.getGuarantorList(1L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
     }
-
-    @After
-    fun tearDown() {
-        viewModel.guarantorUiState.removeObserver(guarantorUiStateObserver)
-    }
-
 }

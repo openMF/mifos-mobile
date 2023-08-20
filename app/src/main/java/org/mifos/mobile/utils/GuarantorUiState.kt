@@ -13,7 +13,7 @@ sealed class GuarantorUiState {
 
     data class GuarantorUpdatedSuccessfully(val message: String?) : GuarantorUiState()
 
-    data class ShowGuarantorListSuccessfully(val payload: List<GuarantorPayload?>) :
+    data class ShowGuarantorListSuccessfully(val payload: List<GuarantorPayload?>?) :
         GuarantorUiState()
 
     data class ShowGuarantorApplication(val template: GuarantorTemplatePayload?) :
