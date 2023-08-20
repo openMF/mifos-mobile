@@ -1,6 +1,6 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
@@ -8,20 +8,20 @@ import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 
 interface GuarantorRepository {
 
-    fun getGuarantorTemplate(loanId: Long?): Observable<GuarantorTemplatePayload?>?
+    fun getGuarantorTemplate(loanId: Long?): Flow<GuarantorTemplatePayload?>?
 
     fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
-    ): Observable<ResponseBody?>?
+    ): Flow<ResponseBody?>?
 
     fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?,
-    ): Observable<ResponseBody?>?
+    ): Flow<ResponseBody?>?
 
-    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Observable<ResponseBody?>?
+    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Flow<ResponseBody?>?
 
-    fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload?>?>?
+    fun getGuarantorList(loanId: Long): Flow<List<GuarantorPayload?>?>?
 }

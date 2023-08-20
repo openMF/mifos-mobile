@@ -1,10 +1,12 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,8 +18,10 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class GuarantorDetailViewModelTest {
 
     @JvmField
@@ -26,6 +30,9 @@ class GuarantorDetailViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     private lateinit var guarantorRepositoryImp: GuarantorRepositoryImp
@@ -39,14 +46,13 @@ class GuarantorDetailViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = GuarantorDetailViewModel(guarantorRepositoryImp)
-        viewModel.guarantorUiState.observeForever(guarantorUiStateObserver)
     }
 
     @Test
-    fun testDeleteGuarantor_Successful() {
+    fun testDeleteGuarantor_Successful() = runBlocking {
         val response = mock(ResponseBody::class.java)
 
-        `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(Observable.just(response))
+        `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(flowOf(response))
 
         viewModel.deleteGuarantor(1L, 2L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
@@ -58,19 +64,13 @@ class GuarantorDetailViewModelTest {
     }
 
     @Test
-    fun testDeleteGuarantor_Unsuccessful() {
-        val error: Observable<ResponseBody?> = Observable.error(Throwable())
-
-        `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(error)
+    fun testDeleteGuarantor_Unsuccessful() = runBlocking {
+        val error = IOException("Error")
+        `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenThrow(error)
 
         viewModel.deleteGuarantor(1L, 2L)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
         verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
-    }
-
-    @After
-    fun tearDown() {
-        viewModel.guarantorUiState.removeObserver(guarantorUiStateObserver)
     }
 
 }

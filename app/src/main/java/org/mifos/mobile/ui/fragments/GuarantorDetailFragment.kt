@@ -1,16 +1,15 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentGuarantorDetailBinding
 import org.mifos.mobile.models.guarantor.GuarantorPayload
@@ -33,7 +32,7 @@ class GuarantorDetailFragment : BaseFragment() {
     private var _binding: FragmentGuarantorDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: GuarantorDetailViewModel
+    private val viewModel: GuarantorDetailViewModel by viewModels()
 
     var loanId: Long? = 0
     private var guarantorId: Long? = 0
@@ -57,7 +56,6 @@ class GuarantorDetailFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentGuarantorDetailBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[GuarantorDetailViewModel::class.java]
         setToolbarTitle(getString(R.string.guarantor_details))
         setHasOptionsMenu(true)
         if (isFirstTime) {
@@ -70,18 +68,22 @@ class GuarantorDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.guarantorUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is GuarantorUiState.Loading -> showProgress()
-                is GuarantorUiState.ShowError -> {
-                    hideProgress()
-                    showError(it.message)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.guarantorUiState.collect {
+                    when (it) {
+                        is GuarantorUiState.Loading -> showProgress()
+                        is GuarantorUiState.ShowError -> {
+                            hideProgress()
+                            showError(it.message)
+                        }
+                        is GuarantorUiState.GuarantorDeletedSuccessfully -> {
+                            hideProgress()
+                            guarantorDeletedSuccessfully(it.message)
+                        }
+                        else -> throw IllegalStateException("Undesired $it")
+                    }
                 }
-                is GuarantorUiState.GuarantorDeletedSuccessfully -> {
-                    hideProgress()
-                    guarantorDeletedSuccessfully(it.message)
-                }
-                else -> throw IllegalStateException("Undesired $it")
             }
         }
     }

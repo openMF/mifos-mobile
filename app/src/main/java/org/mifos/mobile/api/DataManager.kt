@@ -1,15 +1,9 @@
 package org.mifos.mobile.api
 
+import android.util.Log
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.functions.Function
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import okhttp3.MediaType
 import okhttp3.ResponseBody
-import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.*
@@ -236,76 +230,30 @@ class DataManager @Inject constructor(
         return baseApiManager.userDetailsService?.updateAccountPassword(payload)
     }
 
-    fun getGuarantorTemplate(loanId: Long?): Observable<GuarantorTemplatePayload?>? {
+    suspend fun getGuarantorTemplate(loanId: Long?): GuarantorTemplatePayload? {
         return baseApiManager.guarantorApi?.getGuarantorTemplate(loanId)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out GuarantorTemplatePayload>> {
-                    Observable.just(
-                        FakeRemoteDataSource.guarantorTemplatePayload,
-                    )
-                },
-            )
     }
 
-    fun getGuarantorList(loanId: Long): Observable<List<GuarantorPayload?>?>? {
+    suspend fun getGuarantorList(loanId: Long): List<GuarantorPayload>? {
         return baseApiManager.guarantorApi?.getGuarantorList(loanId)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out List<GuarantorPayload>>> {
-                    Observable.just(
-                        FakeRemoteDataSource.guarantorsList,
-                    )
-                },
-            )
     }
 
-    fun createGuarantor(
+    suspend fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
-    ): Observable<ResponseBody?>? {
+    ): ResponseBody? {
         return baseApiManager.guarantorApi?.createGuarantor(loanId, payload)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out ResponseBody>> {
-                    val responseBody = ResponseBody.create(
-                        MediaType
-                            .parse("text/plain"),
-                        "Guarantor Added Successfully",
-                    )
-                    Observable.just(responseBody)
-                },
-            )
     }
 
-    fun updateGuarantor(
+    suspend fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?,
-    ): Observable<ResponseBody?>? {
+    ): ResponseBody? {
         return baseApiManager.guarantorApi?.updateGuarantor(payload, loanId, guarantorId)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out ResponseBody>> {
-                    Observable.just(
-                        ResponseBody.create(
-                            MediaType
-                                .parse("plain/text"),
-                            "Guarantor Updated Successfully",
-                        ),
-                    )
-                },
-            )
     }
 
-    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Observable<ResponseBody?>? {
+    suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): ResponseBody? {
         return baseApiManager.guarantorApi?.deleteGuarantor(loanId, guarantorId)
-            ?.onErrorResumeNext(
-                Function<Throwable?, ObservableSource<out ResponseBody>> {
-                    Observable.just(
-                        ResponseBody.create(
-                            MediaType
-                                .parse("plain/text"),
-                            "Guarantor Deleted Successfully",
-                        ),
-                    )
-                },
-            )
     }
 }

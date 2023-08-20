@@ -1,16 +1,13 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
-import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.repositories.GuarantorRepository
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.utils.GuarantorUiState
@@ -20,49 +17,34 @@ import javax.inject.Inject
 class AddGuarantorViewModel @Inject constructor(private val guarantorRepositoryImp: GuarantorRepository) :
     ViewModel() {
 
-    private var compositeDisposables: CompositeDisposable = CompositeDisposable()
-
-    private val _guarantorUiState = MutableLiveData<GuarantorUiState>()
-    val guarantorUiState: LiveData<GuarantorUiState> get() = _guarantorUiState
+    private val _guarantorUiState = MutableStateFlow<GuarantorUiState>(GuarantorUiState.Loading)
+    val guarantorUiState: StateFlow<GuarantorUiState> = _guarantorUiState
 
     fun getGuarantorTemplate(state: GuarantorState?, loanId: Long?) {
-        _guarantorUiState.value = GuarantorUiState.Loading
-        guarantorRepositoryImp.getGuarantorTemplate(loanId)?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<GuarantorTemplatePayload?>() {
-                override fun onNext(payload: GuarantorTemplatePayload) {
-                    if (state === GuarantorState.CREATE) {
-                        _guarantorUiState.value = GuarantorUiState.ShowGuarantorApplication(payload)
-                    } else if (state === GuarantorState.UPDATE) {
-                        _guarantorUiState.value = GuarantorUiState.ShowGuarantorUpdation(payload)
-                    }
+        viewModelScope.launch {
+            _guarantorUiState.value = GuarantorUiState.Loading
+            guarantorRepositoryImp.getGuarantorTemplate(loanId)?.catch { e ->
+                _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
+            }?.collect {
+                if (state === GuarantorState.CREATE) {
+                    _guarantorUiState.value = GuarantorUiState.ShowGuarantorApplication(it)
+                } else if (state === GuarantorState.UPDATE) {
+                    _guarantorUiState.value = GuarantorUiState.ShowGuarantorUpdation(it)
                 }
-
-                override fun onError(e: Throwable) {
-                    _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposables.add(it) }
+            }
+        }
     }
 
     fun createGuarantor(loanId: Long?, payload: GuarantorApplicationPayload?) {
-        _guarantorUiState.value = GuarantorUiState.Loading
-        guarantorRepositoryImp.createGuarantor(loanId, payload)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
-                    _guarantorUiState.value =
-                        GuarantorUiState.SubmittedSuccessfully(responseBody.string(), payload)
-                }
-
-                override fun onError(e: Throwable) {
-                    _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposables.add(it) }
+        viewModelScope.launch {
+            _guarantorUiState.value = GuarantorUiState.Loading
+            guarantorRepositoryImp.createGuarantor(loanId, payload)?.catch { e ->
+                _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
+            }?.collect {
+                _guarantorUiState.value =
+                    GuarantorUiState.SubmittedSuccessfully(it?.string(), payload)
+            }
+        }
     }
 
     fun updateGuarantor(
@@ -70,26 +52,14 @@ class AddGuarantorViewModel @Inject constructor(private val guarantorRepositoryI
         loanId: Long?,
         guarantorId: Long?,
     ) {
-        _guarantorUiState.value = GuarantorUiState.Loading
-        guarantorRepositoryImp.updateGuarantor(payload, loanId, guarantorId)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeWith(object : DisposableObserver<ResponseBody?>() {
-                override fun onNext(responseBody: ResponseBody) {
-                    _guarantorUiState.value =
-                        GuarantorUiState.GuarantorUpdatedSuccessfully(responseBody.string())
-                }
-
-                override fun onError(e: Throwable) {
-                    _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
-                }
-
-                override fun onComplete() {}
-            })?.let { compositeDisposables.add(it) }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposables.clear()
+        viewModelScope.launch {
+            _guarantorUiState.value = GuarantorUiState.Loading
+            guarantorRepositoryImp.updateGuarantor(payload, loanId, guarantorId)?.catch { e ->
+                _guarantorUiState.value = GuarantorUiState.ShowError(e.message)
+            }?.collect {
+                _guarantorUiState.value =
+                    GuarantorUiState.GuarantorUpdatedSuccessfully(it?.string())
+            }
+        }
     }
 }
