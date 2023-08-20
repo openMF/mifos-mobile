@@ -46,10 +46,9 @@ class BaseApiManager @Inject constructor(preferencesHelper: PreferencesHelper) {
     val userDetailsService: UserDetailsService?
         get() = Companion.userDetailsService
     val guarantorApi: GuarantorService?
-        get() = Companion.field
+        get() = Companion.guarantorApi
 
     companion object {
-        private val field: GuarantorService? = null
         private var retrofit: Retrofit? = null
         private var authenticationApi: AuthenticationService? = null
         private lateinit var clientsApi: ClientService
