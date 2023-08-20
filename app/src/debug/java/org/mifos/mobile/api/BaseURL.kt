@@ -11,7 +11,7 @@ class BaseURL {
     val defaultBaseUrl: String
         get() = PROTOCOL_HTTPS + API_ENDPOINT
 
-    fun getUrl(endpoint: String): String {
+    fun getUrl(endpoint: String?): String {
         return endpoint + API_PATH
     }
 

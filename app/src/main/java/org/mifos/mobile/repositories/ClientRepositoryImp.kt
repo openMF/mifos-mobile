@@ -1,8 +1,6 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
 import okhttp3.Credentials
-import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.Page
@@ -32,15 +30,6 @@ class ClientRepositoryImp @Inject constructor(
         preferencesHelper.userName = user.username
         preferencesHelper.userId = user.userId
         preferencesHelper.saveToken(authToken)
-        reInitializeService()
-    }
-
-    override fun reInitializeService() {
-        BaseApiManager.createService(
-            preferencesHelper.baseUrl,
-            preferencesHelper.tenant,
-            preferencesHelper.token,
-        )
     }
 
     override fun setClientId(clientId: Long?) {
@@ -55,10 +44,10 @@ class ClientRepositoryImp @Inject constructor(
     override fun updateAuthenticationToken(password: String) {
         val authenticationToken = Credentials.basic(preferencesHelper.userName!!, password)
         preferencesHelper.saveToken(authenticationToken)
-        BaseApiManager.createService(
-            preferencesHelper.baseUrl,
-            preferencesHelper.tenant,
-            preferencesHelper.token,
-        )
+//        BaseApiManager.createService(
+//            preferencesHelper.baseUrl,
+//            preferencesHelper.tenant,
+//            preferencesHelper.token,
+//        )
     }
 }

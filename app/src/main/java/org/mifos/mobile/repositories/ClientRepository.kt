@@ -7,11 +7,9 @@ import retrofit2.Response
 
 interface ClientRepository {
 
-    suspend fun loadClient() : Response<Page<Client?>?>?
+    suspend fun loadClient(): Response<Page<Client?>?>?
 
     fun saveAuthenticationTokenForSession(user: User)
-
-    fun reInitializeService()
 
     fun setClientId(clientId: Long?)
 

@@ -14,7 +14,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.textfield.TextInputLayout
 import org.mifos.mobile.R
-import org.mifos.mobile.api.BaseApiManager.Companion.createService
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.ui.activities.LoginActivity
 import java.net.MalformedURLException
@@ -63,19 +62,16 @@ class ConfigurationDialogFragmentCompat :
         if (positiveResult && !isFieldEmpty && isUrlValid) {
             val preference = preference as ConfigurationPreference
             if (!(
-                    preference.baseUrl.toString()
-                        .equals(etBaseUrl!!.text.toString()) && preference.tenant.toString()
-                        .equals(etTenant!!.text.toString())
-                    )
+                        preference.baseUrl.toString()
+                            .equals(etBaseUrl!!.text.toString()) && preference.tenant.toString()
+                            .equals(etTenant!!.text.toString())
+                        )
             ) {
                 preference.updateConfigurations(
                     etBaseUrl?.text.toString(),
                     etTenant?.text.toString(),
                 )
                 preferencesHelper?.clear()
-                val baseUrl = preferencesHelper?.baseUrl
-                val tenant = preferencesHelper?.tenant
-                createService(baseUrl, tenant, "")
                 val loginIntent = Intent(activity, LoginActivity::class.java)
                 loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(loginIntent)
