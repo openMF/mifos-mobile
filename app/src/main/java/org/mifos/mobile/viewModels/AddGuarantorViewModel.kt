@@ -13,6 +13,11 @@ import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.utils.GuarantorUiState
 import javax.inject.Inject
 
+/**
+ * Currently we do not get back any response from the guarantorApi, hence we are using FakeRemoteDataSource
+ * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
+ */
+
 @HiltViewModel
 class AddGuarantorViewModel @Inject constructor(private val guarantorRepositoryImp: GuarantorRepository) :
     ViewModel() {
