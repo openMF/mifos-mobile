@@ -25,6 +25,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
+            android:textColor="@color/black"
             tools:text="Row Data" />
     </LinearLayout>
 
