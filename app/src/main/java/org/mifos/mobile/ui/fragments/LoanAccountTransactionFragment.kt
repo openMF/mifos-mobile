@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -38,7 +42,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
     @Inject
     var transactionsListAdapter: RecentTransactionListAdapter? = null
 
-    lateinit var viewModel: LoanAccountTransactionViewModel
+    private val viewModel: LoanAccountTransactionViewModel by viewModels()
 
     private var loanId: Long? = 0
     private var loanWithAssociations: LoanWithAssociations? = null
@@ -56,7 +60,6 @@ class LoanAccountTransactionFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoanAccountTransactionsBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LoanAccountTransactionViewModel::class.java]
         val rootView = binding.root
         setToolbarTitle(getString(R.string.transactions))
         sweetUIErrorHandler = SweetUIErrorHandler(context, rootView)
@@ -143,22 +146,26 @@ class LoanAccountTransactionFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loanUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is LoanUiState.Loading -> showProgress()
-                is LoanUiState.ShowError -> {
-                    hideProgress()
-                    showErrorFetchingLoanAccountsDetail(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loanUiState.collect {
+                    when (it) {
+                        is LoanUiState.Loading -> showProgress()
+                        is LoanUiState.ShowError -> {
+                            hideProgress()
+                            showErrorFetchingLoanAccountsDetail(getString(it.message))
+                        }
+                        is LoanUiState.ShowLoan -> {
+                            hideProgress()
+                            showLoanTransactions(it.loanWithAssociations)
+                        }
+                        is LoanUiState.ShowEmpty -> {
+                            hideProgress()
+                            showEmptyTransactions(it.loanWithAssociations)
+                        }
+                        else -> throw IllegalStateException("Unexpected state: $it")
+                    }
                 }
-                is LoanUiState.ShowLoan -> {
-                    hideProgress()
-                    showLoanTransactions(it.loanWithAssociations)
-                }
-                is LoanUiState.ShowEmpty -> {
-                    hideProgress()
-                    showEmptyTransactions(it.loanWithAssociations)
-                }
-                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentAddLoanApplicationBinding
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -22,7 +26,7 @@ import org.mifos.mobile.utils.*
 import org.mifos.mobile.viewModels.LoanApplicationViewModel
 import java.text.SimpleDateFormat
 import java.time.Instant
-import java.util.Locale
+import java.util.*
 
 /**
  * Created by Rajan Maurya on 06/03/17.
@@ -32,7 +36,7 @@ class LoanApplicationFragment : BaseFragment() {
     private var _binding: FragmentAddLoanApplicationBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: LoanApplicationViewModel
+    private val viewModel: LoanApplicationViewModel by viewModels()
 
     private val listLoanProducts: MutableList<String?> = ArrayList()
     private val listLoanPurpose: MutableList<String?> = ArrayList()
@@ -110,7 +114,6 @@ class LoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddLoanApplicationBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LoanApplicationViewModel::class.java]
         showUserInterface()
         if (savedInstanceState == null) {
             loadLoanTemplate()
@@ -149,30 +152,34 @@ class LoanApplicationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loanUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is LoanUiState.Loading -> showProgress()
-                is LoanUiState.ShowError -> {
-                    hideProgress()
-                    showError(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loanUiState.collect {
+                    when (it) {
+                        is LoanUiState.Loading -> showProgress()
+                        is LoanUiState.ShowError -> {
+                            hideProgress()
+                            showError(getString(it.message))
+                        }
+                        is LoanUiState.ShowLoanTemplate -> {
+                            hideProgress()
+                            showLoanTemplateByProduct(it.template)
+                        }
+                        is LoanUiState.ShowUpdateLoanTemplate -> {
+                            hideProgress()
+                            showUpdateLoanTemplateByProduct(it.template)
+                        }
+                        is LoanUiState.ShowLoanTemplateByProduct -> {
+                            hideProgress()
+                            showLoanTemplate(it.template)
+                        }
+                        is LoanUiState.ShowUpdateLoanTemplateByProduct -> {
+                            hideProgress()
+                            showUpdateLoanTemplate(it.template)
+                        }
+                        else -> throw IllegalStateException("Unexpected state: $it")
+                    }
                 }
-                is LoanUiState.ShowLoanTemplate -> {
-                    hideProgress()
-                    showLoanTemplateByProduct(it.template)
-                }
-                is LoanUiState.ShowUpdateLoanTemplate -> {
-                    hideProgress()
-                    showUpdateLoanTemplateByProduct(it.template)
-                }
-                is LoanUiState.ShowLoanTemplateByProduct -> {
-                    hideProgress()
-                    showLoanTemplate(it.template)
-                }
-                is LoanUiState.ShowUpdateLoanTemplateByProduct -> {
-                    hideProgress()
-                    showUpdateLoanTemplate(it.template)
-                }
-                else -> throw IllegalStateException("Unexpected state: $it")
             }
         }
 

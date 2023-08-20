@@ -1,26 +1,26 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.models.templates.loans.LoanTemplate
-import retrofit2.Response
 
 interface LoanRepository {
 
-    suspend fun getLoanWithAssociations(
+    fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
-    ): Response<LoanWithAssociations?>?
+    ): Flow<LoanWithAssociations?>?
 
-    suspend fun withdrawLoanAccount(
+    fun withdrawLoanAccount(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
-    ): Response<ResponseBody?>?
+    ): Flow<ResponseBody?>?
 
-    suspend fun template(): Response<LoanTemplate?>?
+    fun template(): Flow<LoanTemplate?>?
 
-    suspend fun getLoanTemplateByProduct(
+    fun getLoanTemplateByProduct(
         productId: Int?
-    ): Response<LoanTemplate?>?
+    ): Flow<LoanTemplate?>?
 }
