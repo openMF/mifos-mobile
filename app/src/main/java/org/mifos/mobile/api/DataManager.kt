@@ -1,6 +1,5 @@
 package org.mifos.mobile.api
 
-import android.util.Log
 import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
@@ -50,7 +49,7 @@ class DataManager @Inject constructor(
 ) {
     var clientId: Long? = preferencesHelper.clientId
     suspend fun login(loginPayload: LoginPayload?): Response<User?>? {
-        return baseApiManager.authenticationApi?.authenticate(loginPayload)
+        return baseApiManager.authenticationApi.authenticate(loginPayload)
     }
 
     suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
@@ -73,21 +72,21 @@ class DataManager @Inject constructor(
 
     suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
         return baseApiManager.recentTransactionsApi
-            ?.getRecentTransactionsList(clientId, offset, limit)
+            .getRecentTransactionsList(clientId, offset, limit)
     }
 
     suspend fun getClientCharges(clientId: Long): Response<Page<Charge?>?>? {
-        return baseApiManager.clientChargeApi?.getClientChargeList(clientId).apply {
+        return baseApiManager.clientChargeApi.getClientChargeList(clientId).apply {
             databaseHelper.syncCharges(this?.body())
         }
     }
 
     suspend fun getLoanCharges(loanId: Long): Response<List<Charge?>?>? {
-        return baseApiManager.clientChargeApi?.getLoanAccountChargeList(loanId)
+        return baseApiManager.clientChargeApi.getLoanAccountChargeList(loanId)
     }
 
     suspend fun getSavingsCharges(savingsId: Long): Response<List<Charge?>?>? {
-        return baseApiManager.clientChargeApi?.getSavingsAccountChargeList(savingsId)
+        return baseApiManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
     }
 
     suspend fun getSavingsWithAssociations(
@@ -95,25 +94,25 @@ class DataManager @Inject constructor(
         associationType: String?,
     ): Response<SavingsWithAssociations?>? {
         return baseApiManager
-            .savingAccountsListApi?.getSavingsWithAssociations(accountId, associationType)
+            .savingAccountsListApi.getSavingsWithAssociations(accountId, associationType)
     }
 
     suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>? =
-        baseApiManager.savingAccountsListApi?.accountTransferTemplate()
+        baseApiManager.savingAccountsListApi.accountTransferTemplate()
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
-        return baseApiManager.savingAccountsListApi?.makeTransfer(transferPayload)
+        return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)
     }
 
     suspend fun getSavingAccountApplicationTemplate(client: Long?): Response<SavingsAccountTemplate?>? {
         return baseApiManager.savingAccountsListApi
-            ?.getSavingsAccountApplicationTemplate(client)
+            .getSavingsAccountApplicationTemplate(client)
     }
 
     suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
     ): Response<ResponseBody?>? {
-        return baseApiManager.savingAccountsListApi?.submitSavingAccountApplication(payload)
+        return baseApiManager.savingAccountsListApi.submitSavingAccountApplication(payload)
     }
 
     suspend fun updateSavingsAccount(
@@ -121,7 +120,7 @@ class DataManager @Inject constructor(
         payload: SavingsAccountUpdatePayload?,
     ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
-            ?.updateSavingsAccountUpdate(accountId, payload)
+            .updateSavingsAccountUpdate(accountId, payload)
     }
 
     suspend fun submitWithdrawSavingsAccount(
@@ -129,7 +128,7 @@ class DataManager @Inject constructor(
         payload: SavingsAccountWithdrawPayload?,
     ): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi
-            ?.submitWithdrawSavingsAccount(accountId, payload)
+            .submitWithdrawSavingsAccount(accountId, payload)
     }
 
     fun getLoanAccountDetails(loanId: Long): Observable<LoanAccount?>? {
@@ -168,39 +167,39 @@ class DataManager @Inject constructor(
     }
 
     suspend fun beneficiaryList(): Response<List<Beneficiary?>?>? =
-        baseApiManager.beneficiaryApi?.beneficiaryList()
+        baseApiManager.beneficiaryApi.beneficiaryList()
 
     suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>? =
-        baseApiManager.beneficiaryApi?.beneficiaryTemplate()
+        baseApiManager.beneficiaryApi.beneficiaryTemplate()
 
     suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>? {
-        return baseApiManager.beneficiaryApi?.createBeneficiary(beneficiaryPayload)
+        return baseApiManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
     }
 
     suspend fun updateBeneficiary(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
     ): Response<ResponseBody?>? {
-        return baseApiManager.beneficiaryApi?.updateBeneficiary(beneficiaryId, payload)
+        return baseApiManager.beneficiaryApi.updateBeneficiary(beneficiaryId, payload)
     }
 
     suspend fun deleteBeneficiary(beneficiaryId: Long?): Response<ResponseBody?>? {
-        return baseApiManager.beneficiaryApi?.deleteBeneficiary(beneficiaryId)
+        return baseApiManager.beneficiaryApi.deleteBeneficiary(beneficiaryId)
     }
 
     suspend fun thirdPartyTransferTemplate(): Response<AccountOptionsTemplate?>? =
-        baseApiManager.thirdPartyTransferApi?.accountTransferTemplate()
+        baseApiManager.thirdPartyTransferApi.accountTransferTemplate()
 
     suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
-        return baseApiManager.thirdPartyTransferApi?.makeTransfer(transferPayload)
+        return baseApiManager.thirdPartyTransferApi.makeTransfer(transferPayload)
     }
 
     suspend fun registerUser(registerPayload: RegisterPayload?): Response<ResponseBody?>? {
-        return baseApiManager.registrationApi?.registerUser(registerPayload)
+        return baseApiManager.registrationApi.registerUser(registerPayload)
     }
 
     suspend fun verifyUser(userVerify: UserVerify?): Response<ResponseBody?>? {
-        return baseApiManager.registrationApi?.verifyUser(userVerify)
+        return baseApiManager.registrationApi.verifyUser(userVerify)
     }
 
     suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
@@ -227,33 +226,33 @@ class DataManager @Inject constructor(
     }
 
     suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
-        return baseApiManager.userDetailsService?.updateAccountPassword(payload)
+        return baseApiManager.userDetailsApi.updateAccountPassword(payload)
     }
 
-    suspend fun getGuarantorTemplate(loanId: Long?): GuarantorTemplatePayload? {
-        return baseApiManager.guarantorApi?.getGuarantorTemplate(loanId)
+    suspend fun getGuarantorTemplate(loanId: Long?): GuarantorTemplatePayload {
+        return baseApiManager.guarantorApi.getGuarantorTemplate(loanId)
     }
 
-    suspend fun getGuarantorList(loanId: Long): List<GuarantorPayload>? {
-        return baseApiManager.guarantorApi?.getGuarantorList(loanId)
+    suspend fun getGuarantorList(loanId: Long): List<GuarantorPayload> {
+        return baseApiManager.guarantorApi.getGuarantorList(loanId)
     }
 
     suspend fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
-    ): ResponseBody? {
-        return baseApiManager.guarantorApi?.createGuarantor(loanId, payload)
+    ): ResponseBody {
+        return baseApiManager.guarantorApi.createGuarantor(loanId, payload)
     }
 
     suspend fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?,
-    ): ResponseBody? {
-        return baseApiManager.guarantorApi?.updateGuarantor(payload, loanId, guarantorId)
+    ): ResponseBody {
+        return baseApiManager.guarantorApi.updateGuarantor(payload, loanId, guarantorId)
     }
 
-    suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): ResponseBody? {
-        return baseApiManager.guarantorApi?.deleteGuarantor(loanId, guarantorId)
+    suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): ResponseBody {
+        return baseApiManager.guarantorApi.deleteGuarantor(loanId, guarantorId)
     }
 }
