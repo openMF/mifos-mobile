@@ -6,15 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
-import org.mifos.mobile.screens.AboutView
+import org.mifos.mobile.BuildConfig
+import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentAboutUsBinding
 import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import java.util.Calendar
 
 /*
 ~This project is licensed under the open source MPL V2.
@@ -22,27 +21,70 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 */
 @AndroidEntryPoint
 class AboutUsFragment : BaseFragment() {
+    private var _binding: FragmentAboutUsBinding? = null
+    private val binding get() = _binding!!
 
-    private lateinit var composeView: ComposeView
+    private val licenseLink = "https://github.com/openMF/mifos-mobile/blob/development/LICENSE.md"
+    private val sourceCodeLink = "https://github.com/openMF/mifos-mobile"
+    private val websiteLink = "https://openmf.github.io/mobileapps.github.io/"
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        return ComposeView(requireContext()).also {
-            composeView = it
-        }
+        _binding = FragmentAboutUsBinding.inflate(inflater, container, false)
+        val rootView = binding.root
+        setToolbarTitle(getString(R.string.about_us))
+        binding.appVersion.text = BuildConfig.VERSION_NAME
+        binding.tvCopyRight.text =
+            getString(R.string.copy_right_mifos, Calendar.getInstance()[Calendar.YEAR].toString())
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        composeView.setContent {
-            AboutView()
+        binding.aboutWebsiteContainer.setOnClickListener {
+            showWebsite()
+        }
+
+        binding.aboutLicensesContainer.setOnClickListener {
+            showOpenSourceLicenses()
+        }
+
+        binding.aboutPrivacyPolicyContainer.setOnClickListener {
+            showPrivacyPolicy()
+        }
+
+        binding.aboutSourcesContainer.setOnClickListener {
+            showSourceCode()
+        }
+
+        binding.selfLicenseContainer.setOnClickListener {
+            showSelfLicense()
         }
     }
 
+    private fun showWebsite() {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(websiteLink)))
+    }
+
+    private fun showOpenSourceLicenses() {
+        startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
+    }
+
+    private fun showPrivacyPolicy() {
+        startActivity(Intent(activity, PrivacyPolicyActivity::class.java))
+    }
+
+    private fun showSourceCode() {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sourceCodeLink)))
+    }
+
+    private fun showSelfLicense() {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(licenseLink)))
+    }
 
     companion object {
         @JvmStatic
@@ -52,5 +94,10 @@ class AboutUsFragment : BaseFragment() {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
