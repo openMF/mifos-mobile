@@ -1,12 +1,19 @@
 package org.mifos.mobile.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.screens.AboutView
+import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
 /*
