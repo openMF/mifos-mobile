@@ -646,5 +646,7 @@
     </string-array>
     <string name="app_info">App Info</string>
     <string name="login_failed">Login Failed, Please Try Again Later.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

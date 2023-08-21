@@ -375,34 +375,20 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
 
-                <TextView
+                <Button
                     style="@style/Mifos.DesignSystem.TextStyle.Body"
                     android:layout_width="0dp"
+                    android:id="@+id/btn_contact_us"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:textColor="@color/white"
                     android:text="@string/need_help" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <TextView
-                        style="@style/Mifos.DesignSystem.TextStyle.Link"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autoLink="phone"
-                        android:gravity="end"
-                        android:text="@string/help_line_number" />
-
-                    <TextView
-                        style="@style/Mifos.DesignSystem.TextStyle.Link"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autoLink="email"
-                        android:gravity="end"
-                        android:text="@string/contact_email" />
 
                 </LinearLayout>
 
