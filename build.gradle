@@ -73,7 +73,7 @@ ext {
     archCoreVersion = '2.2.0'
     coroutines = '1.6.4'
     jUnitVersion = '4.13.2'
-    mockitoVersion = '5.4.0'
+    mockitoVersion = '5.5.0'
     runnerVersion = '1.6.0-alpha03'
     rulesVersion = '1.6.0-alpha01'
     espressoVersion = '3.5.1'
