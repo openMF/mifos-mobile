@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.client
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.accounts.share.ShareAccount

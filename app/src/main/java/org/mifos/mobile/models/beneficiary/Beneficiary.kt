@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.beneficiary
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.mifos.mobile.models.templates.account.AccountType
 
 /**

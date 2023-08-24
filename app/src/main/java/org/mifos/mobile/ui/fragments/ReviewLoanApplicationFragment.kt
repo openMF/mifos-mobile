@@ -9,21 +9,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_review_loan_application.btn_loan_submit
-import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_add_loan
-import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_error
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_account_number
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_currency
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_expected_disbursement_date
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_product
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_purpose
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_new_loan_application
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_principal_amount
-import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_submission_date
-import kotlinx.android.synthetic.main.layout_error.iv_status
-import kotlinx.android.synthetic.main.layout_error.tv_status
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.btn_loan_submit
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_add_loan
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_error
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_account_number
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_currency
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_expected_disbursement_date
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_product
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_purpose
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_new_loan_application
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_principal_amount
+//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_submission_date
+//import kotlinx.android.synthetic.main.layout_error.iv_status
+//import kotlinx.android.synthetic.main.layout_error.tv_status
 import okhttp3.ResponseBody
 import org.mifos.mobile.R
+import org.mifos.mobile.databinding.FragmentReviewLoanApplicationBinding
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -34,6 +35,9 @@ import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
 
 @AndroidEntryPoint
 class ReviewLoanApplicationFragment : BaseFragment() {
+
+    private var _binding: FragmentReviewLoanApplicationBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         const val LOANS_PAYLOAD = "loans_payload"
@@ -80,8 +84,6 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     }
 
 
-    lateinit var rootView: View
-
     private lateinit var viewModel: ReviewLoanApplicationViewModel
 
     override fun onCreateView(
@@ -89,9 +91,8 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        rootView = inflater.inflate(R.layout.fragment_review_loan_application, container, false)
-        viewModel = ViewModelProviders.of(this)
-            .get(ReviewLoanApplicationViewModel::class.java)
+        _binding = FragmentReviewLoanApplicationBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProviders.of(this)[ReviewLoanApplicationViewModel::class.java]
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
             viewModel.insertData(
@@ -109,21 +110,21 @@ class ReviewLoanApplicationFragment : BaseFragment() {
                 arguments?.getString(ACCOUNT_NO)!!,
             )
         }
-        return rootView
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_loan_product.text = viewModel.getLoanProduct()
-        tv_loan_purpose.text = viewModel.getLoanPurpose()
-        tv_principal_amount.text = viewModel.getPrincipal().toString()
-        tv_expected_disbursement_date.text = viewModel.getDisbursementDate()
-        tv_submission_date.text = viewModel.getSubmissionDate()
-        tv_currency.text = viewModel.getCurrency()
-        tv_new_loan_application.text = viewModel.getLoanName()
-        tv_account_number.text = viewModel.getAccountNo()
+        binding.tvLoanProduct.text = viewModel.getLoanProduct()
+        binding.tvLoanPurpose.text = viewModel.getLoanPurpose()
+        binding.tvPrincipalAmount.text = viewModel.getPrincipal().toString()
+        binding.tvExpectedDisbursementDate.text = viewModel.getDisbursementDate()
+        binding.tvSubmissionDate.text = viewModel.getSubmissionDate()
+        binding.tvCurrency.text = viewModel.getCurrency()
+        binding.tvNewLoanApplication.text = viewModel.getLoanName()
+        binding.tvAccountNumber.text = viewModel.getAccountNo()
 
-        btn_loan_submit.setOnClickListener {
+        binding.btnLoanSubmit.setOnClickListener {
             showProgress()
             viewModel.submitLoan()
                 ?.observeOn(AndroidSchedulers.mainThread())
@@ -150,31 +151,31 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     }
 
     fun showLoanAccountUpdatedSuccessfully() {
-        Toaster.show(rootView, R.string.loan_application_updated_successfully)
+        Toaster.show(binding.root, R.string.loan_application_updated_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }
 
     fun showError(message: String?) = if (!Network.isConnected(activity)) {
-        iv_status.setImageResource(R.drawable.ic_error_black_24dp)
-        tv_status.text = getString(R.string.internet_not_connected)
-        ll_add_loan.visibility = View.GONE
-        ll_error.visibility = View.VISIBLE
+        binding.llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
+        binding.llError.tvStatus.text = getString(R.string.internet_not_connected)
+        binding.llAddLoan.visibility = View.GONE
+        binding.llError.root.visibility = View.VISIBLE
     } else {
-        Toaster.show(rootView, message)
+        Toaster.show(binding.root, message)
     }
 
     fun showProgress() {
-        ll_add_loan.visibility = View.GONE
+        binding.llAddLoan.visibility = View.GONE
         showProgressBar()
     }
 
     fun hideProgress() {
-        ll_add_loan.visibility = View.VISIBLE
+        binding?.llAddLoan?.visibility = View.VISIBLE
         hideProgressBar()
     }
 
     fun showLoanAccountCreatedSuccessfully() {
-        Toaster.show(rootView, R.string.loan_application_submitted_successfully)
+        Toaster.show(binding.root, R.string.loan_application_submitted_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }
 }
