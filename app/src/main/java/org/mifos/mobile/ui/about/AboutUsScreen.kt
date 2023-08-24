@@ -1,37 +1,37 @@
 package org.mifos.mobile.ui.about
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.component.CopyrightItemContent
+import org.mifos.mobile.core.ui.component.MifosItemCard
+import org.mifos.mobile.core.ui.component.MifosItemContent
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.mifos.mobile.utils.Constants.LICENSE_LINK
 import org.mifos.mobile.utils.Constants.SOURCE_CODE_LINK
 import org.mifos.mobile.utils.Constants.WEBSITE_LINK
+import org.mifos.mobile.utils.StartActivity
 import java.util.*
 
 @SuppressWarnings("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AboutUsScreen(viewModel: AboutUsViewModel = viewModel()){
-    val context = LocalContext.current
+fun AboutUsScreen(viewModel: AboutUsViewModel = viewModel()) {
+    val context = StartActivity(LocalContext.current)
 
     MifosMobileTheme {
         Scaffold {
@@ -67,114 +67,54 @@ fun AboutUsScreen(viewModel: AboutUsViewModel = viewModel()){
                         .padding(bottom = 16.dp)
                 )
 
-                viewModel.aboutUsList.forEach { item ->
-                    AboutUsItemCard(
-                        name = item.name,
-                        iconUrl = item.iconUrl,
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = 8.dp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
-                        onClick = {
+                LazyColumn {
+                    items(viewModel.aboutUsList) { item ->
+                        MifosItemCard(onClick = {
                             when (item.name) {
                                 R.string.official_website -> {
-                                    context.startActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW, Uri.parse(WEBSITE_LINK)
-                                        )
-                                    )
+                                    context.startActivity(WEBSITE_LINK)
                                 }
                                 R.string.licenses -> {
-                                    context.startActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW, Uri.parse(LICENSE_LINK)
-                                        )
-                                    )
+                                    context.startActivity(LICENSE_LINK)
                                 }
                                 R.string.privacy_policy -> {
-                                    context.startActivity(
-                                        Intent(
-                                            context, PrivacyPolicyActivity::class.java
-                                        )
-                                    )
+                                    context.startActivity(PrivacyPolicyActivity::class.java)
                                 }
                                 R.string.sources -> {
-                                    context.startActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW, Uri.parse(SOURCE_CODE_LINK)
-                                        )
-                                    )
+                                    context.startActivity(SOURCE_CODE_LINK)
                                 }
                                 R.string.license_string_with_value -> {
-                                    context.startActivity(
-                                        Intent(
-                                            context, OssLicensesMenuActivity::class.java
-                                        )
-                                    )
+                                    context.startActivity(OssLicensesMenuActivity::class.java)
                                 }
                             }
-                        })
+                        }) {
+                            AboutUsItemCard(
+                                name = item.name,
+                                iconUrl = item.iconUrl
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
 
+
 @Composable
 fun AboutUsItemCard(
     name: Int,
     iconUrl: Int? = null,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(8.dp),
-    elevation: Dp = 1.dp,
 ) {
-    val context = LocalContext.current
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
     val copyrightText =
-        context.getString(R.string.copy_right_mifos).replace("%1\$s", currentYear.toString())
-    Card(
-        shape = shape,
-        modifier = modifier.clickable(onClick = onClick),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = elevation
-        ),
-    ) {
-        if (name != R.string.license_string_with_value) {
-            Row(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                iconUrl?.let { painterResource(id = it) }?.let {
-                    Image(
-                        painter = it,
-                        contentDescription = null,
-                        modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
-                    )
-                }
-                Text(
-                    text = stringResource(id = name),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
-                )
+        LocalContext.current.getString(R.string.copy_right_mifos)
+            .replace("%1\$s", currentYear.toString())
 
-            }
-        } else {
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = copyrightText,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
-                )
-                Text(
-                    text = stringResource(id = name),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
-                )
-            }
-        }
+    if (name != R.string.license_string_with_value) {
+        MifosItemContent(name = name, iconUrl = iconUrl)
+    } else {
+        CopyrightItemContent(name = name, copyrightText = copyrightText)
     }
 }
 
