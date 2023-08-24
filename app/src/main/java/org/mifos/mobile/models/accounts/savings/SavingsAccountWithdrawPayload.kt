@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.accounts.savings
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /*
  * Created by saksham on 02/July/2018
