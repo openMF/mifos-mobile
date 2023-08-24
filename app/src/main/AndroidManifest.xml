@@ -115,7 +115,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="org.mifos.mobile.ui.activities.AboutUsActivity"
+            android:name="org.mifos.mobile.ui.about.AboutUsActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <activity

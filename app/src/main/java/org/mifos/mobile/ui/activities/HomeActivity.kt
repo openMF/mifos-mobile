@@ -30,6 +30,7 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.ActivityHomeBinding
 import org.mifos.mobile.databinding.NavDrawerHeaderBinding
 import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.ui.about.AboutUsActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.about
 
 import android.content.Intent
 import android.net.Uri
