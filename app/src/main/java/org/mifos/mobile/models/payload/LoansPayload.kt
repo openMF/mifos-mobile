@@ -5,7 +5,7 @@
 package org.mifos.mobile.models.payload
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Created by nellyk on 2/20/2016.

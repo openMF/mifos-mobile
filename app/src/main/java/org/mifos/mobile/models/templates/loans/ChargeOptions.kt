@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.templates.loans
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.mifos.mobile.models.ChargeCalculationType
 import org.mifos.mobile.models.ChargeTimeType
 

@@ -2,7 +2,7 @@ package org.mifos.mobile.models.accounts.share
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Status(
