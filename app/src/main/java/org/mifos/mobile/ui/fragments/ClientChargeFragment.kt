@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_client_charge.view.*
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentClientChargeBinding
 import org.mifos.mobile.models.Charge
@@ -121,16 +120,17 @@ class ClientChargeFragment : BaseFragment() {
      * Fetches Charges for `id` according to `chargeType` provided.
      */
     private fun loadCharges() {
-        if (binding.root.layout_error?.visibility == View.VISIBLE) {
+        if (binding.layoutError.root.visibility == View.VISIBLE) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvClientCharge,
-                binding.root.layout_error
+                binding.layoutError.root
             )
         }
         when (chargeType) {
             ChargeType.CLIENT -> id?.let { viewModel.loadClientCharges(it) }
             ChargeType.SAVINGS -> id?.let { viewModel.loadSavingsAccountCharges(it) }
             ChargeType.LOAN -> id?.let { viewModel.loadLoanAccountCharges(it) }
+            else -> {}
         }
     }
 
@@ -145,13 +145,13 @@ class ClientChargeFragment : BaseFragment() {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.rvClientCharge,
-                binding.root.layout_error
+                binding.layoutError.root
             )
         } else {
             sweetUIErrorHandler?.showSweetErrorUI(
                 message,
                 binding.rvClientCharge,
-                binding.root.layout_error
+                binding.layoutError.root
             )
             Toaster.show(binding.root, message)
         }
@@ -164,7 +164,7 @@ class ClientChargeFragment : BaseFragment() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvClientCharge,
-                binding.root.layout_error
+                binding.layoutError.root
             )
             loadCharges()
         } else {
@@ -197,13 +197,13 @@ class ClientChargeFragment : BaseFragment() {
                 getString(R.string.charges),
                 R.drawable.ic_charges,
                 binding.rvClientCharge,
-                binding.root.layout_error,
+                binding.layoutError.root,
             )
         }
     }
 
     fun showProgress() {
-        binding.swipeChargeContainer?.isRefreshing = true
+        binding.swipeChargeContainer.isRefreshing = true
     }
 
     fun hideProgress() {

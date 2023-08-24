@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.dagger.hilt.android'
 
@@ -72,10 +72,6 @@ android {
     lintOptions {
         abortOnError false
         disable 'InvalidPackage'
-    }
-
-    androidExtensions {
-        experimental = true
     }
 
     buildFeatures {

@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.accounts.loan.calendardata
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Created by Rajan Maurya on 04/03/17.

@@ -1,7 +1,7 @@
 package org.mifos.mobile.models
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.mifos.mobile.models.client.Currency
 import org.mifos.mobile.models.client.Type
 

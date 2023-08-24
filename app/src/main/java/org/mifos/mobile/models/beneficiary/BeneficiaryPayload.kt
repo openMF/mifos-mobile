@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.beneficiary
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Created by dilpreet on 16/6/17.
