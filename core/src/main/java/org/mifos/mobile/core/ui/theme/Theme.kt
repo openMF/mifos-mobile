@@ -1,4 +1,4 @@
-package com.example.core.ui.theme
+package org.mifos.mobile.core.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -24,7 +24,7 @@ private val DarkThemeColors = darkColorScheme(
 )
 
 @Composable
-fun MifosAppTheme(
+fun MifosMobileTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

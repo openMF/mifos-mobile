@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.core'
+    namespace 'org.mifos.mobile.core'
     compileSdk 32
 
     defaultConfig {
@@ -34,7 +34,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion "1.4.0"
+        kotlinCompilerExtensionVersion "1.4.4"
     }
 
 }
@@ -55,5 +55,5 @@ dependencies {
     implementation "androidx.activity:activity-compose:$rootProject.composeActivity"
     debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.composeVersion"
     implementation "androidx.compose.material3:material3:$rootProject.materialVersion"
-
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.lifecycleVersion"
 }
