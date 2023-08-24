@@ -9,13 +9,13 @@
 
     <!--Ignore the static App.java instance initialization-->
     <Match>
-        <Class name="org.mifos.mobile.MifosSelfServiceApp"/>
+        <Class name="org.org.mobile.MifosSelfServiceApp"/>
         <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
     </Match>
 
     <!--Ignore MS_MUTABLE_COLLECTION in App.java-->
     <Match>
-        <Class name="org.mifos.mobile.MifosSelfServiceApp"/>
+        <Class name="org.org.mobile.MifosSelfServiceApp"/>
         <Bug pattern="MS_MUTABLE_COLLECTION" />
     </Match>
 
@@ -29,12 +29,12 @@
 
     <!-- Ignore DM_DEFAULT_ENCODING in TestDataFactory-->
     <Match>
-        <Class name="org.mifos.mobile.TestDataFactory" />
+        <Class name="org.org.mobile.TestDataFactory" />
         <Method name="getObjectTypePojo" />
         <Bug pattern="DM_DEFAULT_ENCODING" />
     </Match>
     <Match>
-        <Class name="org.mifos.mobile.TestDataFactory" />
+        <Class name="org.org.mobile.TestDataFactory" />
         <Method name="getListTypePojo" />
         <Bug pattern="DM_DEFAULT_ENCODING" />
     </Match>

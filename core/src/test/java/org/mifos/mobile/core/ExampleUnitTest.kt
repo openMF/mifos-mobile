@@ -1,4 +1,4 @@
-package com.example.core
+package org.mifos.mobile.core
 
 import org.junit.Test
 

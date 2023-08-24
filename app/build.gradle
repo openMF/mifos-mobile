@@ -79,7 +79,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion "1.4.0"
+        kotlinCompilerExtensionVersion "1.4.4"
     }
 
     buildFeatures {
@@ -93,6 +93,7 @@ android {
 
 dependencies {
 
+    implementation project(':core')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -198,5 +199,6 @@ dependencies {
     implementation "androidx.activity:activity-compose:$rootProject.composeActivity"
     debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.composeVersion"
     implementation "androidx.compose.material3:material3:$rootProject.materialVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.lifecycleVersion"
 }
 apply plugin: 'com.google.gms.google-services'

@@ -144,7 +144,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="org.mifos.mobile.fileprovider"
+            android:authorities="org.org.mobile.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
