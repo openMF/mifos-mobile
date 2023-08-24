@@ -1,7 +1,7 @@
 package org.mifos.mobile.models.client
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Currency(

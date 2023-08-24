@@ -100,6 +100,7 @@ class ClientAccountsFragment : BaseFragment() {
             AccountType.SAVINGS -> binding.viewpager.currentItem = 0
             AccountType.LOAN -> binding.viewpager.currentItem = 1
             AccountType.SHARE -> binding.viewpager.currentItem = 2
+            else -> {}
         }
         binding.tabs.setupWithViewPager(binding.viewpager)
         binding.viewpager.addOnPageChangeListener(object : OnPageChangeListener {
