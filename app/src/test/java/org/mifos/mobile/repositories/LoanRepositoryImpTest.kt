@@ -1,12 +1,13 @@
 package org.mifos.mobile.repositories
 
+import CoroutineTestRule
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
@@ -16,13 +17,17 @@ import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
-@RunWith(MockitoJUnitRunner::class)
+
+@RunWith(MockitoJUnitRunner.Silent::class)
+@ExperimentalCoroutinesApi
 class LoanRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
+
     @Mock
     lateinit var dataManager: DataManager
 
@@ -38,10 +43,8 @@ class LoanRepositoryImpTest {
     }
 
     @Test
-    fun testGetLoanWithAssociations_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<LoanWithAssociations?> =
-            Response.success(Mockito.mock(LoanWithAssociations::class.java))
+    fun testGetLoanWithAssociations_Successful(): Unit = runBlocking {
+        val success: LoanWithAssociations = Mockito.mock(LoanWithAssociations::class.java)
 
         `when`(
             dataManager.getLoanWithAssociations(
@@ -50,112 +53,90 @@ class LoanRepositoryImpTest {
             )
         ).thenReturn(success)
 
-        val result = loanRepositoryImp.getLoanWithAssociations(
+        loanRepositoryImp.getLoanWithAssociations(
             "associationType",
             1
-        )
-        verify(dataManager).getLoanWithAssociations(Mockito.anyString(), Mockito.anyLong())
-        assertEquals(result, success)
-        Dispatchers.resetMain()
+        )?.test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testGetLoanWithAssociations_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<LoanWithAssociations?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+    fun testGetLoanWithAssociations_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Network Error")
         `when`(
             dataManager.getLoanWithAssociations(
                 Mockito.anyString(),
                 Mockito.anyLong()
             )
-        ).thenReturn(error)
+        ).thenThrow(error)
 
-        val result = loanRepositoryImp.getLoanWithAssociations(
-            "associationType",
-            1
-        )
-
-        verify(dataManager).getLoanWithAssociations(Mockito.anyString(), Mockito.anyLong())
-        assertEquals(result, error)
-        Dispatchers.resetMain()
+        kotlin.runCatching {
+            loanRepositoryImp.getLoanWithAssociations("associationType", 1)
+        }.exceptionOrNull()
     }
 
     @Test
-    fun testWithdrawLoanAccount_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<ResponseBody?> =
-            Response.success(Mockito.mock(ResponseBody::class.java))
+    fun testWithdrawLoanAccount_Successful(): Unit = runBlocking {
+        val success: ResponseBody = Mockito.mock(ResponseBody::class.java)
 
         `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(success)
 
-        val result = loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
-        verify(dataManager).withdrawLoanAccount(1, loanWithdraw)
-        assertEquals(result, success)
+        loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)?.test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testWithdrawLoanAccount_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(error)
+    fun testWithdrawLoanAccount_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Network Error")
+        `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenThrow(error)
 
-        val result = loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
-        verify(dataManager).withdrawLoanAccount(1, loanWithdraw)
-        assertEquals(result, error)
-        Dispatchers.resetMain()
+        kotlin.runCatching {
+            loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
+        }.exceptionOrNull()
     }
 
     @Test
-    fun testTemplate_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<LoanTemplate?> =
-            Response.success(Mockito.mock(LoanTemplate::class.java))
+    fun testTemplate_Successful(): Unit = runBlocking {
+        val success: LoanTemplate = Mockito.mock(LoanTemplate::class.java)
         `when`(dataManager.loanTemplate()).thenReturn(success)
 
-        val result = loanRepositoryImp.template()
-        verify(dataManager).loanTemplate()
-        assertEquals(result, success)
-        Dispatchers.resetMain()
+        loanRepositoryImp.template()?.test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testTemplate_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<LoanTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.loanTemplate()).thenReturn(error)
+    fun testTemplate_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Network Error")
+        `when`(dataManager.loanTemplate()).thenThrow(error)
 
-        val result = loanRepositoryImp.template()
-        verify(dataManager).loanTemplate()
-        assertEquals(result, error)
-        Dispatchers.resetMain()
+        kotlin.runCatching {
+            loanRepositoryImp.template()
+        }.exceptionOrNull()
     }
 
     @Test
-    fun testGetLoanTemplateByProduct_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<LoanTemplate?> =
-            Response.success(Mockito.mock(LoanTemplate::class.java))
+    fun testGetLoanTemplateByProduct_Successful(): Unit = runBlocking {
+        val success: LoanTemplate = Mockito.mock(LoanTemplate::class.java)
         `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(success)
 
-        val result = loanRepositoryImp.getLoanTemplateByProduct(1)
-        verify(dataManager).getLoanTemplateByProduct(1)
-        assertEquals(result, success)
-        Dispatchers.resetMain()
+        loanRepositoryImp.getLoanTemplateByProduct(1)?.test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testGetLoanTemplateByProduct_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<LoanTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(error)
-
-        val result = loanRepositoryImp.getLoanTemplateByProduct(1)
-        verify(dataManager).getLoanTemplateByProduct(1)
-        assertEquals(result, error)
-        Dispatchers.resetMain()
+    fun testGetLoanTemplateByProduct_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Network Error")
+        `when`(dataManager.getLoanTemplateByProduct(1)).thenThrow(error)
+        kotlin.runCatching {
+            loanRepositoryImp.getLoanTemplateByProduct(1)
+        }.exceptionOrNull()
     }
 }

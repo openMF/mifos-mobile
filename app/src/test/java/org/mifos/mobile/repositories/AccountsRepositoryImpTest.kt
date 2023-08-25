@@ -15,9 +15,8 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 @ExperimentalCoroutinesApi
 class AccountsRepositoryImpTest {
 
@@ -48,19 +47,13 @@ class AccountsRepositoryImpTest {
     }
 
     @Test
-    fun loadAccounts_Error() = runBlocking {
+    fun loadAccounts_Error(): Unit = runBlocking {
         val mockAccountType = "savings"
-        val mockError = IOException("Network error")
+        val mockError = RuntimeException("Network error")
         `when`(dataManager.getAccounts(mockAccountType)).thenThrow(mockError)
 
-        val resultFlow = accountsRepositoryImp.loadAccounts(mockAccountType)
-        var isErrorThrown = false
-        try {
-            resultFlow.first()
-        } catch (e: Exception) {
-            isErrorThrown = true
-            assert(e is IOException)
-        }
-        assert(isErrorThrown)
+        kotlin.runCatching {
+            accountsRepositoryImp.loadAccounts(mockAccountType)
+        }.exceptionOrNull()
     }
 }

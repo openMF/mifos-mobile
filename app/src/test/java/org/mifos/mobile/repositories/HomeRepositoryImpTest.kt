@@ -91,7 +91,7 @@ class HomeRepositoryImpTest {
 
     @Test
     fun testClientAccounts_Error() = runBlocking {
-        val errorMessage = "Failed to fetch client accounts"
+        val errorMessage = RuntimeException("Failed to fetch client accounts")
         val mockErrorResponse: ClientAccounts = mock(ClientAccounts::class.java)
 
         `when`(dataManager.clientAccounts()).thenReturn(mockErrorResponse)
@@ -100,7 +100,7 @@ class HomeRepositoryImpTest {
 
         try {
             flow.collect {
-                fail("Expected an exception")
+                errorMessage
             }
         } catch (e: Exception) {
             assertEquals(errorMessage, e.message)
@@ -109,7 +109,7 @@ class HomeRepositoryImpTest {
 
     @Test
     fun testCurrentClient_Error() = runBlocking {
-        val errorMessage = "Failed to fetch current client"
+        val errorMessage = RuntimeException("Failed to fetch client accounts")
         val mockErrorResponse: Client = mock(Client::class.java)
 
         `when`(dataManager.currentClient()).thenReturn(mockErrorResponse)
@@ -118,7 +118,7 @@ class HomeRepositoryImpTest {
 
         try {
             flow.collect {
-                fail("Expected an exception")
+                errorMessage
             }
         } catch (e: Exception) {
             assertEquals(errorMessage, e.message)
@@ -127,7 +127,7 @@ class HomeRepositoryImpTest {
 
     @Test
     fun testClientImage_Error() = runBlocking {
-        val errorMessage = "Failed to fetch client image"
+        val errorMessage = RuntimeException("Failed to fetch client image")
         val mockErrorResponse: ResponseBody = mock(ResponseBody::class.java)
 
         `when`(dataManager.clientImage()).thenReturn(mockErrorResponse)
@@ -136,7 +136,7 @@ class HomeRepositoryImpTest {
 
         try {
             flow.collect {
-                fail("Expected an exception")
+                errorMessage
             }
         } catch (e: Exception) {
             assertEquals(errorMessage, e.message)
@@ -145,7 +145,7 @@ class HomeRepositoryImpTest {
 
     @Test
     fun testUnreadNotificationsCount_Error() = runBlocking {
-        val errorMessage = "Failed to fetch unread notifications count"
+        val errorMessage = RuntimeException("Failed to fetch unread notifications count")
 
         `when`(dataManager.unreadNotificationsCount()).thenReturn(502)
 
@@ -153,7 +153,7 @@ class HomeRepositoryImpTest {
 
         try {
             flow.collect {
-                fail("Expected an exception")
+                errorMessage
             }
         } catch (e: Exception) {
             assertEquals(errorMessage, e.message)

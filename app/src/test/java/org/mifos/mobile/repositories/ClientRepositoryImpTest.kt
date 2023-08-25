@@ -1,6 +1,8 @@
 package org.mifos.mobile.repositories
 
+import CoroutineTestRule
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -8,6 +10,7 @@ import okhttp3.Credentials
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
@@ -22,8 +25,12 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
+@ExperimentalCoroutinesApi
 class ClientRepositoryImpTest {
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
@@ -44,7 +51,6 @@ class ClientRepositoryImpTest {
     @Test
     fun testLoadClient_SuccessResponseReceivedFromDataManager_ReturnsClientPageSuccessfully() =
         runBlocking {
-            Dispatchers.setMain(Dispatchers.Unconfined)
             val successResponse: Response<Page<Client?>?> = Response.success(mockClientPage)
             Mockito.`when`(
                 dataManager.clients()
@@ -54,12 +60,10 @@ class ClientRepositoryImpTest {
 
             Mockito.verify(dataManager).clients()
             Assert.assertEquals(result, successResponse)
-            Dispatchers.resetMain()
         }
 
     @Test
     fun testLoadClient_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking{
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val errorResponse: Response<Page<Client?>?> =
             Response.error(404, ResponseBody.create(null,"error"))
         Mockito.`when`(
@@ -70,7 +74,6 @@ class ClientRepositoryImpTest {
 
         Mockito.verify(dataManager).clients()
         Assert.assertEquals(result, errorResponse)
-        Dispatchers.resetMain()
     }
 
     @Test

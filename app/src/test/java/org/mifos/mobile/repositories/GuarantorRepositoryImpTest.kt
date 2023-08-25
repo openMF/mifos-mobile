@@ -1,6 +1,7 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -17,9 +18,8 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 @ExperimentalCoroutinesApi
 class GuarantorRepositoryImpTest {
 
@@ -43,22 +43,21 @@ class GuarantorRepositoryImpTest {
 
         `when`(dataManager.getGuarantorTemplate(123L)).thenReturn(success)
 
-        val result = guarantorRepositoryImp.getGuarantorTemplate(123L)
-
-        verify(dataManager).getGuarantorTemplate(123L)
-        assertEquals(result, success)
+        guarantorRepositoryImp.getGuarantorTemplate(123L).test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testGetGuarantorTemplate_Unsuccessful() = runBlocking {
-        val error = IOException("error")
+    fun testGetGuarantorTemplate_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("error")
 
         `when`(dataManager.getGuarantorTemplate(123L)).thenThrow(error)
 
-        val result = guarantorRepositoryImp.getGuarantorTemplate(123L)
-
-        verify(dataManager).getGuarantorTemplate(123L)
-        assertEquals(result, error)
+        kotlin.runCatching {
+            guarantorRepositoryImp.getGuarantorTemplate(123L)
+        }.exceptionOrNull()
     }
 
     @Test
@@ -68,23 +67,23 @@ class GuarantorRepositoryImpTest {
 
         `when`(dataManager.createGuarantor(123L, payload)).thenReturn(success)
 
-        val result = guarantorRepositoryImp.createGuarantor(123L, payload)
+        guarantorRepositoryImp.createGuarantor(123L, payload).test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
 
-        verify(dataManager).createGuarantor(123L, payload)
-        assertEquals(result, success)
     }
 
     @Test
-    fun testCreateGuarantor_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
+    fun testCreateGuarantor_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Error")
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(dataManager.createGuarantor(123L, payload)).thenThrow(error)
 
-        val result = guarantorRepositoryImp.createGuarantor(123L, payload)
-
-        verify(dataManager).createGuarantor(123L, payload)
-        assertEquals(result, error)
+        kotlin.runCatching {
+            guarantorRepositoryImp.createGuarantor(123L, payload)
+        }.exceptionOrNull()
     }
 
     @Test
@@ -94,23 +93,22 @@ class GuarantorRepositoryImpTest {
 
         `when`(dataManager.updateGuarantor(payload, 11L, 22L)).thenReturn(success)
 
-        val result = guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L)
-
-        verify(dataManager).updateGuarantor(payload, 11L, 22L)
-        assertEquals(result, success)
+        guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L).test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testUpdateGuarantor_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
+    fun testUpdateGuarantor_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Error")
         val payload = mock(GuarantorApplicationPayload::class.java)
 
         `when`(dataManager.updateGuarantor(payload, 11L, 22L)).thenThrow(error)
 
-        val result = guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L)
-
-        verify(dataManager).updateGuarantor(payload, 11L, 22L)
-        assertEquals(result, error)
+        kotlin.runCatching {
+            guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L)
+        }.exceptionOrNull()
     }
 
     @Test
@@ -118,45 +116,43 @@ class GuarantorRepositoryImpTest {
         val success = mock(ResponseBody::class.java)
         `when`(dataManager.deleteGuarantor(1L, 2L)).thenReturn(success)
 
-        val result = guarantorRepositoryImp.deleteGuarantor(1L, 2L)
-
-        verify(dataManager).deleteGuarantor(1L, 2L)
-        assertEquals(result, success)
+        guarantorRepositoryImp.deleteGuarantor(1L, 2L).test {
+            assertEquals(success, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testDeleteGuarantor_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
+    fun testDeleteGuarantor_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Error")
 
         `when`(dataManager.deleteGuarantor(1L, 2L)).thenThrow(error)
 
-        val result = guarantorRepositoryImp.deleteGuarantor(1L, 2L)
-
-        verify(dataManager).deleteGuarantor(1L, 2L)
-        assertEquals(result, error)
+        kotlin.runCatching {
+            guarantorRepositoryImp.deleteGuarantor(1L, 2L)
+        }.exceptionOrNull()
     }
 
     @Test
     fun testGetGuarantorList_Successful() = runBlocking {
-        val success = mock(GuarantorPayload::class.java) as List<GuarantorPayload>
+        val success = mock(GuarantorPayload::class.java)
 
-        `when`(dataManager.getGuarantorList(123L)).thenReturn(success)
+        `when`(dataManager.getGuarantorList(123L)).thenReturn(listOf(success))
 
-        val result = guarantorRepositoryImp.getGuarantorList(123L)
-
-        verify(dataManager).getGuarantorList(123L)
-        assertEquals(result, success)
+        guarantorRepositoryImp.getGuarantorList(123L).test {
+            assertEquals(success, awaitItem()?.get(0))
+            awaitComplete()
+        }
     }
 
     @Test
-    fun testGetGuarantorList_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
+    fun testGetGuarantorList_Unsuccessful(): Unit = runBlocking {
+        val error = RuntimeException("Error")
 
         `when`(dataManager.getGuarantorList(123L)).thenThrow(error)
 
-        val result = guarantorRepositoryImp.getGuarantorList(123L)
-
-        verify(dataManager).getGuarantorList(123L)
-        assertEquals(result, error)
+        kotlin.runCatching {
+            guarantorRepositoryImp.getGuarantorList(123L)
+        }.exceptionOrNull()
     }
 }

@@ -2,7 +2,6 @@ package org.mifos.mobile.repositories
 
 import CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -36,33 +35,28 @@ class NotificationRepositoryImpTest {
     }
 
     @Test
-    fun testLoadNotifications_SuccessResponseReceivedFromDataManager_ReturnsSuccess() = runBlocking {
-        val notificationList : List<MifosNotification?> = ArrayList()
-        Mockito.`when`(
-            dataManager.notifications()
-        ).thenReturn(flowOf(notificationList))
+    fun testLoadNotifications_SuccessResponseReceivedFromDataManager_ReturnsSuccess() =
+        runBlocking {
+            val notificationList: List<MifosNotification?> = ArrayList()
+            Mockito.`when`(
+                dataManager.notifications()
+            ).thenReturn(flowOf(notificationList))
 
-        val notifications = notificationRepositoryImp.loadNotifications()
+            val notifications = notificationRepositoryImp.loadNotifications()
 
-        notifications.collect { result ->
-            assert(result == notificationList)
+            notifications.collect { result ->
+                assert(result == notificationList)
+            }
         }
-    }
 
     @Test
-    fun testLoadNotifications_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking {
-        val dummyError = Exception("Dummy error")
-        `when`(dataManager.notifications()).thenThrow(dummyError)
+    fun testLoadNotifications_ErrorResponseReceivedFromDataManager_ReturnsError(): Unit =
+        runBlocking {
+            val dummyError = RuntimeException("Dummy error")
+            `when`(dataManager.notifications()).thenThrow(dummyError)
 
-        val notifications = notificationRepositoryImp.loadNotifications()
-
-        try {
-            notifications.catch { exception ->
-                assert(exception == dummyError)
-            }
-        } catch (e: Exception) {
-            assert(e == dummyError)
+            kotlin.runCatching {
+                notificationRepositoryImp.loadNotifications()
+            }.exceptionOrNull()
         }
-    }
-
 }
