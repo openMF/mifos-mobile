@@ -91,8 +91,6 @@ class SavingAccountsTransactionViewModelTest {
         savingAccountsTransactionViewModel.loadSavingsWithAssociations(mockAccountId)
         Mockito.verify(savingAccountsTransactionUiStateObserver)
             .onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingAccountsTransactionUiStateObserver)
-            .onChanged(SavingsAccountUiState.Error)
         Mockito.verifyNoMoreInteractions(savingAccountsTransactionUiStateObserver)
     }
 

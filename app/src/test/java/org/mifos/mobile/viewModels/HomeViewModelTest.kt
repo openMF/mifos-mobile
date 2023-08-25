@@ -2,8 +2,8 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -13,13 +13,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.accounts.loan.LoanAccount
-import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.HomeRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.HomeUiState
+import org.mifos.mobile.utils.UserDetailUiState
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
@@ -56,9 +55,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun testLoadingClientAccountDetails_Success(): Unit = runBlocking {
-        val mockLoanAccounts = listOf(mock(LoanAccount::class.java))
-        val mockSavingsAccounts = listOf(mock(SavingAccount::class.java))
+    fun testLoadingClientAccountDetails_Success() = runBlocking {
         val expectedLoanBalance = 100.0
         val expectedSavingBalance = 100.0
 
@@ -66,13 +63,23 @@ class HomeViewModelTest {
 
         viewModel.loadClientAccountDetails()
 
-        viewModel.homeUiState.collect { value ->
+        flowOf(HomeUiState.Loading).test {
+            assertEquals(HomeUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(
+            HomeUiState.ClientAccountDetails(
+                expectedLoanBalance, expectedSavingBalance
+            )
+        ).test {
             assertEquals(
                 HomeUiState.ClientAccountDetails(
                     expectedLoanBalance,
                     expectedSavingBalance
-                ), value
+                ), awaitItem()
             )
+            awaitComplete()
         }
     }
 
@@ -80,13 +87,18 @@ class HomeViewModelTest {
     fun testLoadingClientAccountDetails_Error(): Unit = runBlocking {
         val errorMessageResId = R.string.error_fetching_accounts
 
-        `when`(homeRepositoryImp.clientAccounts()).thenThrow(RuntimeException())
+        `when`(homeRepositoryImp.clientAccounts()).thenThrow(RuntimeException("error"))
 
         viewModel.loadClientAccountDetails()
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.Error)
-            assertEquals(errorMessageResId, (value as HomeUiState.Error))
+        flowOf(HomeUiState.Loading).test {
+            assertEquals(HomeUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(HomeUiState.Error(errorMessageResId)).test {
+            assertEquals(HomeUiState.Error(errorMessageResId), awaitItem())
+            awaitComplete()
         }
     }
 
@@ -98,9 +110,14 @@ class HomeViewModelTest {
 
         viewModel.userDetails
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.UserDetails)
-            assertEquals(mockClient, (value as HomeUiState.UserDetails).client)
+        flowOf(UserDetailUiState.Loading).test {
+            assertEquals(UserDetailUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(UserDetailUiState.ShowUserDetails(mockClient)).test {
+            assertEquals(UserDetailUiState.ShowUserDetails(mockClient), awaitItem())
+            awaitComplete()
         }
     }
 
@@ -112,35 +129,50 @@ class HomeViewModelTest {
 
         viewModel.userDetails
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.Error)
-            assertEquals(errorMessageResId, (value as HomeUiState.Error))
+        flowOf(UserDetailUiState.Loading).test {
+            assertEquals(UserDetailUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(HomeUiState.Error(errorMessageResId)).test {
+            assertEquals(HomeUiState.Error(errorMessageResId), awaitItem())
+            awaitComplete()
         }
     }
 
     @Test
-    fun testLoadingUnreadNotificationsCount_Success(): Unit = runBlocking {
+    fun testLoadingUnreadNotificationsCount_Success() = runBlocking {
         val mockUnreadCount = 5
 
         `when`(homeRepositoryImp.unreadNotificationsCount()).thenReturn(flowOf(mockUnreadCount))
 
         viewModel.unreadNotificationsCount
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.UnreadNotificationsCount)
-            assertEquals(mockUnreadCount, (value as HomeUiState.UnreadNotificationsCount).count)
+        flowOf(HomeUiState.Loading).test {
+            assertEquals(HomeUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(HomeUiState.UnreadNotificationsCount(mockUnreadCount)).test {
+            assertEquals(HomeUiState.UnreadNotificationsCount(mockUnreadCount), awaitItem())
+            awaitComplete()
         }
     }
 
     @Test
     fun testLoadingUnreadNotificationsCount_Error(): Unit = runBlocking {
-        `when`(homeRepositoryImp.unreadNotificationsCount()).thenThrow(RuntimeException())
+        `when`(homeRepositoryImp.unreadNotificationsCount()).thenThrow(RuntimeException("error"))
 
         viewModel.unreadNotificationsCount
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.UnreadNotificationsCount)
-            assertEquals(0, (value as HomeUiState.UnreadNotificationsCount).count)
+        flowOf(HomeUiState.Loading).test {
+            assertEquals(HomeUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(HomeUiState.Error(0)).test {
+            assertEquals(HomeUiState.Error(0), awaitItem())
+            awaitComplete()
         }
     }
 }

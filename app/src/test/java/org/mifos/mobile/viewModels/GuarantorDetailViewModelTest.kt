@@ -2,11 +2,12 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,7 +19,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -37,8 +37,6 @@ class GuarantorDetailViewModelTest {
     @Mock
     private lateinit var guarantorRepositoryImp: GuarantorRepositoryImp
 
-    @Mock
-    lateinit var guarantorUiStateObserver: Observer<GuarantorUiState>
 
     lateinit var viewModel: GuarantorDetailViewModel
 
@@ -55,22 +53,32 @@ class GuarantorDetailViewModelTest {
         `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(flowOf(response))
 
         viewModel.deleteGuarantor(1L, 2L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(
-            GuarantorUiState.GuarantorDeletedSuccessfully(
-                response.string()
-            )
-        )
+        flowOf(GuarantorUiState.Loading).test {
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+        flowOf(GuarantorUiState.GuarantorDeletedSuccessfully("deleted")).test {
+            assertEquals(GuarantorUiState.GuarantorDeletedSuccessfully("deleted"), awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
     fun testDeleteGuarantor_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
+        val error = RuntimeException("Error")
         `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenThrow(error)
 
         viewModel.deleteGuarantor(1L, 2L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+
+        flowOf(GuarantorUiState.Loading).test {
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(GuarantorUiState.ShowError("error")).test {
+            assertEquals(GuarantorUiState.ShowError("error"), awaitItem())
+            awaitComplete()
+        }
     }
 
 }

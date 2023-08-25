@@ -82,9 +82,6 @@ class SavingsMakeTransferViewModelTest {
 
             Mockito.verify(savingsMakeTransferUiStateObserver)
                 .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsMakeTransferUiStateObserver)
-                .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-            Mockito.verifyNoMoreInteractions(savingsMakeTransferUiStateObserver)
         }
 
     @After

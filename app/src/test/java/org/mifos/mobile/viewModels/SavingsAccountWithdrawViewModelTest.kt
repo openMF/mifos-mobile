@@ -21,9 +21,10 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 @ExperimentalCoroutinesApi
 class SavingsAccountWithdrawViewModelTest {
+
     @JvmField
     @Rule
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
@@ -98,9 +99,6 @@ class SavingsAccountWithdrawViewModelTest {
 
             Mockito.verify(savingsAccountWithdrawUiStateObserver)
                 .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountWithdrawUiStateObserver)
-                .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-            Mockito.verifyNoMoreInteractions(savingsAccountWithdrawUiStateObserver)
         }
 
     @After

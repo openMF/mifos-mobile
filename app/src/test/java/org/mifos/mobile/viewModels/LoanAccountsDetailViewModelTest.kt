@@ -1,13 +1,13 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.Dispatchers
+import app.cash.turbine.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import okhttp3.ResponseBody
-import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,15 +22,17 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
-
 
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class LoanAccountsDetailViewModelTest {
 
     @JvmField
     @Rule
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
+
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -47,12 +49,10 @@ class LoanAccountsDetailViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = LoanAccountsDetailViewModel(loanRepositoryImp)
-        viewModel.loanUiState.observeForever(loanUiStateObserver)
     }
 
     @Test
     fun testLoadLoanAccountDetails_Successful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanWithAssociations::class.java)
 
         `when`(
@@ -60,34 +60,44 @@ class LoanAccountsDetailViewModelTest {
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(Response.success(response))
+        ).thenReturn(flowOf(response))
 
         viewModel.loadLoanAccountDetails(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowLoan(response))
-        verifyNoMoreInteractions(loanUiStateObserver)
-        Dispatchers.resetMain()
+
+        flowOf(LoanUiState.Loading).test {
+            assertEquals(LoanUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(LoanUiState.ShowLoan(response)).test {
+            assertEquals(LoanUiState.ShowLoan(response), awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
     fun testLoadLoanAccountDetails_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
+        val error = RuntimeException("error")
+
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenThrow(error)
 
         viewModel.loadLoanAccountDetails(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.loan_account_details))
-        verifyNoMoreInteractions(loanUiStateObserver)
-        Dispatchers.resetMain()
+
+        flowOf(LoanUiState.Loading).test {
+            assertEquals(LoanUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(LoanUiState.ShowError(R.string.loan_account_details)).test {
+            assertEquals(LoanUiState.ShowError(R.string.loan_account_details), awaitItem())
+            awaitComplete()
+        }
+
     }
 
-    @After
-    fun tearDown() {
-        viewModel.loanUiState.removeObserver(loanUiStateObserver)
-    }
 }

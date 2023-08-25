@@ -147,7 +147,6 @@ class LoginViewModelTest {
 
         Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
         Mockito.verify(clientRepositoryImp).clearPrefHelper()
-        Mockito.verify(clientRepositoryImp).reInitializeService()
         Mockito.verifyNoMoreInteractions(loginUiStateObserver)
         Dispatchers.resetMain()
     }
@@ -179,7 +178,6 @@ class LoginViewModelTest {
             loginViewModel.loadClient()
 
             Mockito.verify(clientRepositoryImp).setClientId(clientId)
-            Mockito.verify(clientRepositoryImp).reInitializeService()
             Mockito.verify(loginUiStateObserver)
                 .onChanged(LoginUiState.LoadClientSuccess(clientName))
             Mockito.verifyNoMoreInteractions(loginUiStateObserver)

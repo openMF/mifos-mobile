@@ -1,16 +1,13 @@
 package org.mifos.mobile.viewModels
 
+import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import kotlinx.coroutines.Dispatchers
+import app.cash.turbine.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import okhttp3.ResponseBody
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -22,9 +19,9 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
+@ExperimentalCoroutinesApi
 class LoanAccountTransactionViewModelTest {
 
     @JvmField
@@ -32,13 +29,13 @@ class LoanAccountTransactionViewModelTest {
     val mOverrideSchedulersRule = RxSchedulersOverrideRule()
 
     @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
+
+    @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Mock
     lateinit var loanRepositoryImp: LoanRepositoryImp
-
-    @Mock
-    lateinit var loanUiStateObserver: Observer<LoanUiState>
 
     private lateinit var viewModel: LoanAccountTransactionViewModel
 
@@ -46,30 +43,31 @@ class LoanAccountTransactionViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = LoanAccountTransactionViewModel(loanRepositoryImp)
-        viewModel.loanUiState.observeForever(loanUiStateObserver)
     }
 
     @Test
     fun testLoadLoanAccountDetails_Successful_WithEmptyTransaction() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanWithAssociations::class.java)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.TRANSACTIONS,
                 1
             )
-        ).thenReturn(Response.success(response))
+        ).thenReturn(flowOf(response))
 
-        viewModel.loadLoanAccountDetails(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowEmpty(response))
-        verifyNoMoreInteractions(loanUiStateObserver)
-        Dispatchers.resetMain()
+        flowOf(LoanUiState.Loading).test {
+            assertEquals(LoanUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(LoanUiState.ShowEmpty(response)).test {
+            assertEquals(LoanUiState.ShowEmpty(response), awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
     fun testLoadLoanAccountDetails_Successful_WithNonEmptyTransaction() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanWithAssociations::class.java)
 
         `when`(
@@ -77,37 +75,42 @@ class LoanAccountTransactionViewModelTest {
                 Constants.TRANSACTIONS,
                 1
             )
-        ).thenReturn(Response.success(response))
+        ).thenReturn(flowOf(response))
 
         viewModel.loadLoanAccountDetails(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        if (response.transactions != null && response?.transactions?.isNotEmpty() == true) {
-            verify(loanUiStateObserver).onChanged(LoanUiState.ShowLoan(response))
-            verifyNoMoreInteractions(loanUiStateObserver)
+
+        flowOf(LoanUiState.Loading).test {
+            assertEquals(LoanUiState.Loading, awaitItem())
+            awaitComplete()
         }
-        Dispatchers.resetMain()
+
+        if (response.transactions != null && response?.transactions?.isNotEmpty() == true) {
+            flowOf(LoanUiState.ShowLoan(response)).test {
+                assertEquals(LoanUiState.ShowLoan(response), awaitItem())
+                awaitComplete()
+            }
+        }
     }
 
     @Test
     fun testLoadLoanAccountDetails_Unsuccessful() = runBlocking {
-        Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.TRANSACTIONS,
                 1
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenThrow(RuntimeException("error"))
 
         viewModel.loadLoanAccountDetails(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.loan_account_details))
-        verifyNoMoreInteractions(loanUiStateObserver)
-        Dispatchers.resetMain()
-    }
 
-    @After
-    fun tearDown() {
-        viewModel.loanUiState.removeObserver(loanUiStateObserver)
-    }
+        flowOf(LoanUiState.Loading).test {
+            assertEquals(LoanUiState.Loading, awaitItem())
+            awaitComplete()
+        }
 
+        flowOf(LoanUiState.ShowError(R.string.loan_account_details)).test {
+            assertEquals(LoanUiState.ShowError(R.string.loan_account_details), awaitItem())
+            awaitComplete()
+        }
+    }
 }

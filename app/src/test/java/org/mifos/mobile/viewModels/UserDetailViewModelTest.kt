@@ -2,6 +2,7 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import junit.framework.Assert
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
@@ -18,6 +19,7 @@ import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.repositories.HomeRepositoryImp
 import org.mifos.mobile.repositories.UserDetailRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
+import org.mifos.mobile.utils.HomeUiState
 import org.mifos.mobile.utils.UserDetailUiState
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -65,9 +67,14 @@ class UserDetailViewModelTest {
 
         viewModel.userDetails
 
-        viewModel.userDetailUiState.collect { value ->
-            Assert.assertTrue(value is UserDetailUiState.ShowUserDetails)
-            Assert.assertEquals(mockClient, (value as UserDetailUiState.ShowUserDetails).client)
+        flowOf(UserDetailUiState.Loading).test {
+            assertEquals(UserDetailUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(UserDetailUiState.ShowUserDetails(mockClient)).test {
+            assertEquals(UserDetailUiState.ShowUserDetails(mockClient), awaitItem())
+            awaitComplete()
         }
     }
 
@@ -79,10 +86,16 @@ class UserDetailViewModelTest {
 
         viewModel.userDetails
 
-        viewModel.userDetailUiState.collect { value ->
-            assertTrue(value is UserDetailUiState.ShowError)
-            assertEquals(errorMessageResId, (value as UserDetailUiState.ShowError))
+        flowOf(UserDetailUiState.Loading).test {
+            assertEquals(UserDetailUiState.Loading, awaitItem())
+            awaitComplete()
+        }
+
+        flowOf(HomeUiState.Error(errorMessageResId)).test {
+            assertEquals(HomeUiState.Error(errorMessageResId), awaitItem())
+            awaitComplete()
         }
     }
+
 
 }

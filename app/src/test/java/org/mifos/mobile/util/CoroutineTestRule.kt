@@ -1,28 +1,22 @@
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
-import org.junit.rules.TestRule
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.junit.runners.model.Statement
 
 @ExperimentalCoroutinesApi
 class CoroutineTestRule(
-    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
-) : TestRule, TestCoroutineScope by TestCoroutineScope(testDispatcher) {
+    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+) : TestWatcher() {
 
-    override fun apply(base: Statement?, description: Description?): Statement {
-        return object : Statement() {
-            override fun evaluate() {
-                Dispatchers.setMain(testDispatcher)
-                base?.evaluate()
-                cleanupTestCoroutines()
-                Dispatchers.resetMain()
-            }
-        }
+    override fun starting(description: Description) {
+        Dispatchers.setMain(testDispatcher)
     }
 
-    fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) {
-        testDispatcher.runBlockingTest(block)
+    override fun finished(description: Description) {
+        Dispatchers.resetMain()
     }
 }

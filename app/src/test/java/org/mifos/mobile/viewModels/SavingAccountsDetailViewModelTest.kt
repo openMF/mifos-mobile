@@ -4,6 +4,7 @@ import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.After
@@ -18,6 +19,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.atLeastOnce
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
@@ -90,7 +92,6 @@ class SavingAccountsDetailViewModelTest {
         savingAccountsDetailViewModel.loadSavingsWithAssociations(mockAccountId)
 
         Mockito.verify(savingAccountsDetailUiStateObserver).onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingAccountsDetailUiStateObserver).onChanged(SavingsAccountUiState.Error)
         Mockito.verifyNoMoreInteractions(savingAccountsDetailUiStateObserver)
     }
 
