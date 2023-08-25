@@ -26,7 +26,6 @@ fun MifosItemCard(
         shape = shape,
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(
             defaultElevation = elevation
