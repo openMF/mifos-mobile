@@ -73,3 +73,36 @@ jobs:
         with:
           name: PMD Report
           path: app/build/reports/
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repository
+        uses: actions/checkout@v3
+
+      - name: Test App
+        run: ./gradlew test
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v3.1.2
+        if: failure()
+        with:
+          name: test-reports
+          path: app/build/reports/
+
+  checkstyle:
+    name: Checkstyle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out Repository
+        uses: actions/checkout@v3
+
+      - name: Checkstyle
+        run: ./gradlew checkstyle
+
+      - name: Upload Checkstyle Reports
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: checkstyle-reports
+          path: app/build/reports/
