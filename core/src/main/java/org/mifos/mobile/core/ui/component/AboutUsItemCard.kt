@@ -1,6 +1,7 @@
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -12,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MifosItemContent(name: Int, iconUrl: Int?) {
+fun AboutUsItemCard(title: String, subtitle: Int?, iconUrl: Int?) {
     Row(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -23,10 +24,19 @@ fun MifosItemContent(name: Int, iconUrl: Int?) {
                 modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
             )
         }
-        Text(
-            text = stringResource(id = name),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
-        )
+        Column {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
+            )
+            if (subtitle != null) {
+                Text(
+                    text = stringResource(id = subtitle),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
+                )
+            }
+        }
     }
 }
