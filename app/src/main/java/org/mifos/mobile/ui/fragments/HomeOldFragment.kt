@@ -19,6 +19,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentHomeOldBinding
 import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.rocketchat.RocketChatActivity
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.NotificationActivity
@@ -328,6 +329,14 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         binding.llSurveys.setOnClickListener {
             surveys()
         }
+
+        binding.btnContactUs.setOnClickListener {
+            contactUs()
+        }
+    }
+
+    private fun contactUs() {
+        startActivity(Intent(activity, RocketChatActivity::class.java))
     }
 
     private fun toggleVisibilityButton(
