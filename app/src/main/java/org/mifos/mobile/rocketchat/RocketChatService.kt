@@ -43,12 +43,10 @@ class RocketChatService @Inject constructor(
                 """.trimIndent()
         webSocket.send(subscribeRequest)
 
-//        Log.d(TAG, "onOpen:")
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
-        // only call viewModel.addMessage(pair(false, text)) if the string text is of the type response I shared.
 
         if (text.contains("\"msg\":\"changed\"") && text.contains("\"collection\":\"stream-room-messages\"") && !text.contains("\"username\":\"CustomerTestMifosRCWorkspace\"")) {
             val jsonObject = JSONObject(text)
@@ -68,22 +66,18 @@ class RocketChatService @Inject constructor(
                     """.trimIndent()
             webSocket.send(pongMessage)
         }
-//        Log.d(TAG, "onMessage: $text")
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosing(webSocket, code, reason)
-//        Log.d(TAG, "onClosing: $code $reason")
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
         viewModel.setStatus(false)
-//        Log.d(TAG, "onClosed: $code $reason")
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-//        Log.d(TAG, "onFailure: ${t.message} $response")
         super.onFailure(webSocket, t, response)
     }
 }
