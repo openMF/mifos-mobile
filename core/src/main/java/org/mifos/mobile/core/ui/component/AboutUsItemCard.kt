@@ -1,8 +1,10 @@
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,20 +23,20 @@ fun AboutUsItemCard(title: String, subtitle: Int?, iconUrl: Int?) {
             Image(
                 painter = it,
                 contentDescription = null,
-                modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
+                modifier = Modifier.padding(end = 8.dp)
             )
         }
         Column {
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
+                modifier = Modifier.padding(end = 8.dp)
             )
             if (subtitle != null) {
                 Text(
                     text = stringResource(id = subtitle),
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)
+                    modifier = Modifier.padding(end = 8.dp)
                 )
             }
         }
