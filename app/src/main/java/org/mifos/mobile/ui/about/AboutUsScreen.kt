@@ -16,12 +16,13 @@ import java.util.*
 
 @SuppressWarnings("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AboutUsScreen(viewModel: AboutUsViewModel = viewModel()) {
+fun AboutUsScreen(viewModel: AboutUsViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp, 56.dp, 16.dp, 16.dp)
+            .padding(16.dp),
     ) {
+        Spacer(modifier = Modifier.height(48.dp))
         AboutUsHeader()
         LazyColumn {
             items(viewModel.aboutUsItems) { item ->
@@ -64,5 +65,5 @@ fun AboutUsScreen(viewModel: AboutUsViewModel = viewModel()) {
 @Composable
 @Preview
 fun AboutScreenPreview() {
-    AboutUsScreen()
+    AboutUsScreen(AboutUsViewModel())
 }

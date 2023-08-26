@@ -40,7 +40,7 @@ class AboutUsFragment : BaseFragment() {
             setContent {
                 MifosMobileTheme {
                     Scaffold {
-                        AboutUsScreen()
+                        AboutUsScreen(viewModel)
                     }
                 }
             }

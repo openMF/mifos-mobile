@@ -24,40 +24,33 @@ class AboutUsViewModel @Inject constructor() : ViewModel() {
 
     val aboutUsItems: List<AboutUsItem> = listOf(
         AboutUsItem(
-            context?.getString(R.string.app_version_text),
-            null,
-            null,
-            AboutUsListItemId.APP_VERSION_TEXT
+            title = context?.getString(R.string.app_version_text),
+            itemId = AboutUsListItemId.APP_VERSION_TEXT
         ),
         AboutUsItem(
-            context?.getString(R.string.official_website),
-            null,
-            R.drawable.ic_website,
-            AboutUsListItemId.OFFICE_WEBSITE
+            title = context?.getString(R.string.official_website),
+            iconUrl = R.drawable.ic_website,
+            itemId = AboutUsListItemId.OFFICE_WEBSITE
         ),
         AboutUsItem(
-            context?.getString(R.string.licenses),
-            null,
-            R.drawable.ic_law_icon,
-            AboutUsListItemId.LICENSES
+            title = context?.getString(R.string.licenses),
+            iconUrl = R.drawable.ic_law_icon,
+            itemId = AboutUsListItemId.LICENSES
         ),
         AboutUsItem(
-            context?.getString(R.string.privacy_policy),
-            null,
-            R.drawable.ic_privacy_policy,
-            AboutUsListItemId.PRIVACY_POLICY
+            title = context?.getString(R.string.privacy_policy),
+            iconUrl = R.drawable.ic_privacy_policy,
+            itemId = AboutUsListItemId.PRIVACY_POLICY
         ),
         AboutUsItem(
-            context?.getString(R.string.sources),
-            null,
-            R.drawable.ic_source_code,
-            AboutUsListItemId.SOURCE_CODE
+            title = context?.getString(R.string.sources),
+            iconUrl = R.drawable.ic_source_code,
+            itemId = AboutUsListItemId.SOURCE_CODE
         ),
         AboutUsItem(
-            copyrightText,
-            R.string.license_string_with_value,
-            null,
-            AboutUsListItemId.LICENSES_STRING_WITH_VALUE
+            title = copyrightText,
+            subtitle = R.string.license_string_with_value,
+            itemId = AboutUsListItemId.LICENSES_STRING_WITH_VALUE
         )
     )
 
