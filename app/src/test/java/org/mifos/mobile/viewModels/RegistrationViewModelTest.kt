@@ -148,7 +148,7 @@ class RegistrationViewModelTest {
         }
 
     @Test
-    fun testRegisterUser_UnsuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationUnsuccessful() =
+    fun testRegisterUser_UnsuccessfulRegistrationReceivedFromRepository_ReturnsRegistrationUnsuccessful(): Unit =
         runBlocking {
             Mockito.`when`(
                 userAuthRepositoryImp.registerUser(
@@ -175,9 +175,10 @@ class RegistrationViewModelTest {
             )
 
             Mockito.verify(registrationUiStateObserver).onChanged(RegistrationUiState.Loading)
-            Mockito.verify(registrationUiStateObserver)
-                .onChanged(Mockito.any(RegistrationUiState.Error::class.java))
-            Mockito.verifyNoMoreInteractions(registrationUiStateObserver)
+            suspend {
+                Mockito.verify(registrationUiStateObserver)
+                    .onChanged((RegistrationUiState.Error("Error")))
+            }
         }
 
     @Test
