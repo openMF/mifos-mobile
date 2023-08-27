@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRocketChatBinding
+import org.mifos.mobile.rocketchat.adapter.RocketChatAdapter
+import org.mifos.mobile.rocketchat.model.SupportChatMessage
 
 class RocketChatFragment : Fragment() {
-    private var _binding : FragmentRocketChatBinding? = null
+    private var _binding: FragmentRocketChatBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : RocketChatViewModel
+    private lateinit var viewModel: RocketChatViewModel
     private var webSocket: WebSocket? = null
     private lateinit var webSocketListener: WebSocketListener
+    private lateinit var adapter: RocketChatAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,41 +26,40 @@ class RocketChatFragment : Fragment() {
         _binding = FragmentRocketChatBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[RocketChatViewModel::class.java]
         webSocketListener = RocketChatService(viewModel)
+        adapter = RocketChatAdapter()
+        binding.rvSupportChat.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val messageET = binding.messageET
-        val sendMessageButton  = binding.sendButton
-        val connectButton = binding.connectButton
-        val disconnectButton = binding.disconnectButton
-        val statusTV = binding.statusTV
-        val messageTV =  binding.messageTV
+        with(binding) {
+            viewModel.socketStatus.observe(viewLifecycleOwner) {
+                statusTV.text = if (it) "Connected" else "Disconnected"
+            }
 
-        viewModel.socketStatus.observe(viewLifecycleOwner) {
-            statusTV.text = if (it) "Connected" else "Disconnected"
-        }
+            viewModel.messages.observe(viewLifecycleOwner) {
+                adapter.addNewMessage(it)
+            }
 
-        var text = ""
-        viewModel.messages.observe(viewLifecycleOwner) {
-            text += "${if (it.first) "You: " else "Other: "} ${it.second}\n"
+            connectButton.setOnClickListener {
+                webSocket = viewModel.createWebSocketConnection(webSocketListener)
+            }
 
-            messageTV.text = text
-        }
+            disconnectButton.setOnClickListener {
+                webSocket?.close(1000, "Canceled manually.")
+            }
 
-        connectButton.setOnClickListener {
-            webSocket = viewModel.createWebSocketConnection(webSocketListener)
-        }
-
-        disconnectButton.setOnClickListener {
-            webSocket?.close(1000, "Canceled manually.")
-        }
-
-        sendMessageButton.setOnClickListener {
-            viewModel.sendCustomerMessage(webSocket, messageET.text.toString())
-            viewModel.addMessage(Pair(true, messageET.text.toString()))
-            messageET.text = null
+            sendButton.setOnClickListener {
+                viewModel.sendCustomerMessage(webSocket, messageET.text.toString())
+                viewModel.addMessage(
+                    SupportChatMessage(
+                        messageET.text.toString().trim(),
+                        SupportChatMessage.MessageType.USER
+                    )
+                )
+                messageET.text = null
+            }
         }
 
     }

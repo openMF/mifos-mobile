@@ -4,6 +4,7 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import org.json.JSONObject
+import org.mifos.mobile.rocketchat.model.SupportChatMessage
 import javax.inject.Inject
 
 class RocketChatService @Inject constructor(
@@ -48,14 +49,22 @@ class RocketChatService @Inject constructor(
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
 
-        if (text.contains("\"msg\":\"changed\"") && text.contains("\"collection\":\"stream-room-messages\"") && !text.contains("\"username\":\"CustomerTestMifosRCWorkspace\"")) {
+        if (text.contains("\"msg\":\"changed\"") && text.contains("\"collection\":\"stream-room-messages\"") && !text.contains(
+                "\"username\":\"CustomerTestMifosRCWorkspace\""
+            )
+        ) {
             val jsonObject = JSONObject(text)
             val fieldsObject = jsonObject.getJSONObject("fields")
             val argsArray = fieldsObject.getJSONArray("args")
             val messageObject = argsArray.getJSONObject(0)
             val message = messageObject.getString("msg")
 
-            viewModel.addMessage(Pair(false, message))
+            viewModel.addMessage(
+                SupportChatMessage(
+                    message,
+                    SupportChatMessage.MessageType.SUPPORT
+                )
+            )
         }
 
         if (text.contains("\"msg\":\"ping\"")) {

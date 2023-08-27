@@ -11,25 +11,24 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import org.mifos.mobile.rocketchat.model.SupportChatMessage
 import javax.inject.Inject
 
 @HiltViewModel
 class RocketChatViewModel @Inject constructor(
 ) : ViewModel() {
-    // will later fetch it from the local storage using the repository
     private val webSocketURL = "wss://testrcmifosworkspace.rocket.chat/websocket"
     private val okHttpClient = OkHttpClient()
     private val _socketStatus = MutableLiveData(false)
     val socketStatus: LiveData<Boolean> = _socketStatus
-    private val _messages = MutableLiveData<Pair<Boolean, String>>()
-    val messages: LiveData<Pair<Boolean, String>> = _messages
+    private val _messages = MutableLiveData<SupportChatMessage>()
+    val messages: LiveData<SupportChatMessage> = _messages
 
-
-    fun createWebSocketConnection(webSocketListener : WebSocketListener) : WebSocket? {
+    fun createWebSocketConnection(webSocketListener: WebSocketListener): WebSocket? {
         return okHttpClient.newWebSocket(createRequest(), webSocketListener)
     }
 
-    fun sendCustomerMessage(webSocket: WebSocket?, message : String) {
+    fun sendCustomerMessage(webSocket: WebSocket?, message: String) {
         val messageObject = """
         {
             "msg": "method",
@@ -53,8 +52,7 @@ class RocketChatViewModel @Inject constructor(
             .build()
     }
 
-
-    fun addMessage(message: Pair<Boolean, String>) = viewModelScope.launch(Dispatchers.Main) {
+    fun addMessage(message: SupportChatMessage) = viewModelScope.launch(Dispatchers.Main) {
         if (_socketStatus.value == true) {
             _messages.value = message
         }
