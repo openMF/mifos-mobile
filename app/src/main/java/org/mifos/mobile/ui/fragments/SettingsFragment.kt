@@ -111,17 +111,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
-        val preference = findPreference(s)
-        if (preference is ListPreference) {
-            LanguageHelper.setLocale(context, preference.value)
-            val intent = Intent(activity, activity?.javaClass)
-            intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
-            startActivity(intent)
-            activity?.finish()
-        }
-    }
-
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(
@@ -137,6 +126,17 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         @JvmStatic
         fun newInstance(): SettingsFragment {
             return SettingsFragment()
+        }
+    }
+
+    override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
+        val preference = findPreference(p1)
+        if (preference is ListPreference) {
+            LanguageHelper.setLocale(context, preference.value)
+            val intent = Intent(activity, activity?.javaClass)
+            intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
+            startActivity(intent)
+            activity?.finish()
         }
     }
 }

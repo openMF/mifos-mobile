@@ -67,4 +67,7 @@ object Constants {
     const val LOAN_REPAYMENT = "loan_repayment"
     const val CURR_PASSWORD = "currentPassword"
     const val IS_TO_UPDATE_PASS_CODE = "updatePassCode"
+    const val LICENSE_LINK = "https://github.com/openMF/mifos-mobile/blob/development/LICENSE.md"
+    const val SOURCE_CODE_LINK = "https://github.com/openMF/mifos-mobile"
+    const val WEBSITE_LINK = "https://openmf.github.io/mobileapps.github.io/"
 }
