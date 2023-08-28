@@ -15,5 +15,7 @@ interface ClientRepository {
 
     fun clearPrefHelper()
 
+    fun reInitializeService()
+
     fun updateAuthenticationToken(password: String)
 }

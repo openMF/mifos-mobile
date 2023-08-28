@@ -66,6 +66,7 @@ class LoginViewModel @Inject constructor(
                     val clientId = response.body()!!.pageItems[0]?.id?.toLong()
                     val clientName = response.body()!!.pageItems[0]?.displayName
                     clientRepositoryImp.setClientId(clientId)
+                    clientRepositoryImp.reInitializeService()
                     _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
                 } else {
                     _loginUiState.value = LoginUiState.Error
@@ -73,6 +74,7 @@ class LoginViewModel @Inject constructor(
             } else {
                 _loginUiState.value = LoginUiState.Error
                 clientRepositoryImp.clearPrefHelper()
+                clientRepositoryImp.reInitializeService()
             }
         }
     }
