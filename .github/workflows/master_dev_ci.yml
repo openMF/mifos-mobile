@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
         # Set up JDK
       - name: Set Up JDK 1.8
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Static Analysis
         run: ./gradlew lint
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: PMD Check
         run: ./gradlew pmd
