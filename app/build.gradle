@@ -190,7 +190,7 @@ dependencies {
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     // Compose BOM
     implementation platform('androidx.compose:compose-bom:2023.08.00')
