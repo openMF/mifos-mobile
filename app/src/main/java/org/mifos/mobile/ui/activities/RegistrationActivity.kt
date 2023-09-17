@@ -24,11 +24,11 @@ class RegistrationActivity : BaseActivity() {
             .setTitle(getString(R.string.dialog_cancel_registration_title))
             .setMessage(getString(R.string.dialog_cancel_registration_message))
             .setPositiveButton(
-                getString(R.string.cancel),
+                getString(R.string.yes),
                 DialogInterface.OnClickListener { _, _ -> super.onBackPressed() },
             )
             .setNegativeButton(
-                R.string.continue_str,
+                R.string.no,
                 DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() },
             )
             .createMaterialDialog()
