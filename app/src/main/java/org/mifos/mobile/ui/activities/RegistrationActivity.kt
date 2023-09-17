@@ -23,15 +23,8 @@ class RegistrationActivity : BaseActivity() {
         MaterialDialog.Builder().init(this)
             .setTitle(getString(R.string.dialog_cancel_registration_title))
             .setMessage(getString(R.string.dialog_cancel_registration_message))
-            .setPositiveButton(
-                getString(R.string.cancel),
-                DialogInterface.OnClickListener { _, _ -> super.onBackPressed() },
-            )
-            .setNegativeButton(
-                R.string.continue_str,
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() },
-            )
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> super.onBackPressed() }
+            .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
             .createMaterialDialog()
             .show()
-    }
-}
+    }}
