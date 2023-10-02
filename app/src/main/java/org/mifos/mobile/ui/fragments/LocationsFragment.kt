@@ -37,7 +37,7 @@ class LocationsFragment : BaseFragment(), OnMapReadyCallback {
         binding.map.onCreate(savedInstanceState)
         binding.map.onResume()
         try {
-            MapsInitializer.initialize(activity?.applicationContext)
+            activity?.applicationContext?.let { MapsInitializer.initialize(it) }
         } catch (e: Exception) {
             Log.d(LocationsFragment::class.java.simpleName, e.toString())
         }

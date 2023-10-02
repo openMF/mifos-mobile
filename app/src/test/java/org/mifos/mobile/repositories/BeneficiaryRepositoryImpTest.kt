@@ -5,6 +5,7 @@ import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -54,7 +55,7 @@ class BeneficiaryRepositoryImpTest {
     @Test
     fun testBeneficiaryTemplate_Unsuccessful() = runBlocking {
         val error: Response<BeneficiaryTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         `when`(dataManager.beneficiaryTemplate()).thenReturn(error)
 
         val result = beneficiaryRepositoryImp.beneficiaryTemplate()
@@ -81,7 +82,7 @@ class BeneficiaryRepositoryImpTest {
     @Test
     fun testCreateBeneficiary_Unsuccessful() = runBlocking {
         val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
 
         `when`(dataManager.createBeneficiary(beneficiaryPayload)).thenReturn(error)
@@ -108,7 +109,7 @@ class BeneficiaryRepositoryImpTest {
     @Test
     fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
         val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
 
@@ -133,7 +134,7 @@ class BeneficiaryRepositoryImpTest {
     @Test
     fun testDeleteBeneficiary_Unsuccessful() = runBlocking {
         val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.deleteBeneficiary(123L)).thenReturn(error)
 
@@ -155,7 +156,7 @@ class BeneficiaryRepositoryImpTest {
     @Test
     fun testBeneficiaryList_Unsuccessful() = runBlocking {
         val error: Response<List<Beneficiary?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.beneficiaryList()).thenReturn(error)
 

@@ -6,6 +6,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,7 +64,7 @@ class LoanRepositoryImpTest {
     fun testGetLoanWithAssociations_Unsuccessful() = runBlocking {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<LoanWithAssociations?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         `when`(
             dataManager.getLoanWithAssociations(
                 Mockito.anyString(),
@@ -98,7 +99,7 @@ class LoanRepositoryImpTest {
     fun testWithdrawLoanAccount_Unsuccessful() = runBlocking {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(error)
 
         val result = loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
@@ -124,7 +125,7 @@ class LoanRepositoryImpTest {
     fun testTemplate_Unsuccessful() = runBlocking {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<LoanTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         `when`(dataManager.loanTemplate()).thenReturn(error)
 
         val result = loanRepositoryImp.template()
@@ -150,7 +151,7 @@ class LoanRepositoryImpTest {
     fun testGetLoanTemplateByProduct_Unsuccessful() = runBlocking {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<LoanTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(error)
 
         val result = loanRepositoryImp.getLoanTemplateByProduct(1)

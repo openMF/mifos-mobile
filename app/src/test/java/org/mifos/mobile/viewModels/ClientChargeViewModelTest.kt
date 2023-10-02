@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -79,7 +80,7 @@ class ClientChargeViewModelTest {
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.getClientCharges(123L)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         viewModel.loadClientCharges(123L)
@@ -113,7 +114,7 @@ class ClientChargeViewModelTest {
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.getLoanCharges(123L)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         viewModel.loadLoanAccountCharges(123L)
@@ -147,7 +148,7 @@ class ClientChargeViewModelTest {
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.getSavingsCharges(123L)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         viewModel.loadSavingsAccountCharges(123L)
@@ -189,7 +190,7 @@ class ClientChargeViewModelTest {
         val throwable = Throwable("Error occurred")
 
         `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         viewModel.loadClientLocalCharges()

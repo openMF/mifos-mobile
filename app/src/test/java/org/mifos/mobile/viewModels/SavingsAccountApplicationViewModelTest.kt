@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -107,7 +108,7 @@ class SavingsAccountApplicationViewModelTest {
             val mockState = SavingsAccountState.UPDATE
             Mockito.`when`(
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+            ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
             savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate(
                 mockClientId,
@@ -152,7 +153,7 @@ class SavingsAccountApplicationViewModelTest {
                 savingsAccountRepositoryImp.submitSavingAccountApplication(
                     mockSavingsAccountApplicationPayload
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+            ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
             savingsAccountApplicationViewModel.submitSavingsAccountApplication(
                 mockSavingsAccountApplicationPayload
@@ -175,7 +176,7 @@ class SavingsAccountApplicationViewModelTest {
                 savingsAccountRepositoryImp.submitSavingAccountApplication(
                     mockSavingsAccountApplicationPayload
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+            ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
             savingsAccountApplicationViewModel.submitSavingsAccountApplication(
                 mockSavingsAccountApplicationPayload
@@ -220,7 +221,7 @@ class SavingsAccountApplicationViewModelTest {
                     mockAccountId,
                     mockSavingsAccountUpdatePayload
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+            ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
             savingsAccountApplicationViewModel.updateSavingsAccount(
                 mockAccountId,
@@ -243,7 +244,7 @@ class SavingsAccountApplicationViewModelTest {
                 mockAccountId,
                 mockSavingsAccountUpdatePayload
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         savingsAccountApplicationViewModel.updateSavingsAccount(
             mockAccountId,

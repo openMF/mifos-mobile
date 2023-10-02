@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.Credentials
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -61,7 +62,7 @@ class ClientRepositoryImpTest {
     fun testLoadClient_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking{
         Dispatchers.setMain(Dispatchers.Unconfined)
         val errorResponse: Response<Page<Client?>?> =
-            Response.error(404, ResponseBody.create(null,"error"))
+            Response.error(404, "error".toResponseBody(null))
         Mockito.`when`(
             dataManager.clients()
         ).thenReturn(errorResponse)

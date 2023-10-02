@@ -4,6 +4,7 @@ import CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -67,7 +68,7 @@ class SavingsAccountRepositoryImpTest {
     fun testGetSavingsWithAssociations_ErrorResponseReceivedFromDataManager_ReturnsError() =
         runBlocking {
             val errorResponse: Response<SavingsWithAssociations?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+                Response.error(404, "error".toResponseBody(null))
             Mockito.`when`(
                 dataManager.getSavingsWithAssociations(mockAccountId, mockAssociationType)
             ).thenReturn(errorResponse)
@@ -102,7 +103,7 @@ class SavingsAccountRepositoryImpTest {
     fun testGetSavingsAccountApplicationTemplate_ErrorResponseFromDataManager_ReturnsError() =
         runBlocking {
             val errorResponse: Response<SavingsAccountTemplate?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+                Response.error(404, "error".toResponseBody(null))
             Mockito.`when`(
                 dataManager.getSavingAccountApplicationTemplate(mockClientId)
             ).thenReturn(errorResponse)
@@ -140,7 +141,7 @@ class SavingsAccountRepositoryImpTest {
             val mockSavingsAccountApplicationPayload =
                 Mockito.mock(SavingsAccountApplicationPayload::class.java)
             val errorResponse: Response<ResponseBody?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+                Response.error(404, "error".toResponseBody(null))
             Mockito.`when`(
                 dataManager.submitSavingAccountApplication(mockSavingsAccountApplicationPayload)
             ).thenReturn(errorResponse)
@@ -177,7 +178,7 @@ class SavingsAccountRepositoryImpTest {
     fun testUpdateSavingsAccount_ErrorResponseFromDataManager_ReturnsError() = runBlocking {
         val mockSavingsAccountUpdatePayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
         val errorResponse: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         Mockito.`when`(
             dataManager.updateSavingsAccount(mockAccountId, mockSavingsAccountUpdatePayload)
         ).thenReturn(errorResponse)
@@ -223,7 +224,7 @@ class SavingsAccountRepositoryImpTest {
         val mockSavingsAccountWithdrawPayload =
             Mockito.mock(SavingsAccountWithdrawPayload::class.java)
         val errorResponse: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         Mockito.`when`(
             dataManager.submitWithdrawSavingsAccount(
                 mockAccountId,
@@ -259,7 +260,7 @@ class SavingsAccountRepositoryImpTest {
     @Test
     fun testLoanAccountTransferTemplate_ErrorResponseFromDataManager_ReturnsError() = runBlocking {
         val errorResponse: Response<AccountOptionsTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         Mockito.`when`(
             dataManager.accountTransferTemplate()
         ).thenReturn(errorResponse)

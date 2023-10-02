@@ -4,7 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
@@ -30,10 +32,8 @@ class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataMa
         return flow {
             emit(dataManager.createGuarantor(loanId, payload))
         }.catch {
-            val responseBody = ResponseBody.create(
-                MediaType.parse("text/plain"),
-                "Guarantor Added Successfully"
-            )
+            val responseBody = "Guarantor Added Successfully"
+                .toResponseBody("text/plain".toMediaTypeOrNull())
             emit(responseBody)
         }
     }
@@ -46,10 +46,8 @@ class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataMa
         return flow {
             emit(dataManager.updateGuarantor(payload, loanId, guarantorId))
         }.catch {
-            val response = ResponseBody.create(
-                MediaType
-                    .parse("plain/text"),
-                "Guarantor Updated Successfully",
+            val response = "Guarantor Updated Successfully".toResponseBody(
+                "plain/text".toMediaTypeOrNull()
             )
             emit(response)
         }
@@ -59,10 +57,8 @@ class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataMa
         return flow {
             emit(dataManager.deleteGuarantor(loanId, guarantorId))
         }.catch {
-            val response = ResponseBody.create(
-                MediaType
-                    .parse("plain/text"),
-                "Guarantor Deleted Successfully",
+            val response = "Guarantor Deleted Successfully".toResponseBody(
+                "plain/text".toMediaTypeOrNull()
             )
             emit(response)
         }

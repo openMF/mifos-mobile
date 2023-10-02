@@ -4,6 +4,7 @@ import CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -55,7 +56,7 @@ class RecentTransactionRepositoryImpTest {
     @Test
     fun recentTransaction_unsuccessful_response_from_dataManger() = runBlocking {
         val error: Response<Page<Transaction?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         val offset = 0
         val limit = 50
 

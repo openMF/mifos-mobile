@@ -18,14 +18,18 @@ class SelfServiceInterceptor(private val tenant: String?, private val authToken:
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest = chain.request()
-        val builder = chainRequest.newBuilder()
-            .header(HEADER_TENANT, tenant)
-            .header(CONTENT_TYPE, "application/json")
-        if (!TextUtils.isEmpty(authToken)) {
-            builder.header(HEADER_AUTH, authToken)
+        val builder = tenant?.let {
+            chainRequest.newBuilder()
+                .header(HEADER_TENANT, it)
+                .header(CONTENT_TYPE, "application/json")
         }
-        val request = builder.build()
-        return chain.proceed(request)
+        if (!TextUtils.isEmpty(authToken)) {
+            if (authToken != null) {
+                builder?.header(HEADER_AUTH, authToken)
+            }
+        }
+        val request = builder?.build()
+        return chain.proceed(request!!)
     }
 
     companion object {

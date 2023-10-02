@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -85,7 +86,7 @@ class SavingAccountsDetailViewModelTest {
                 mockAccountId,
                 mockAssociationType
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         savingAccountsDetailViewModel.loadSavingsWithAssociations(mockAccountId)
 

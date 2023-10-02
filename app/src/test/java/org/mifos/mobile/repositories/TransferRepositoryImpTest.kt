@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -132,7 +133,7 @@ class TransferRepositoryImpTest {
     @Test
     fun makeThirdPartyTransfer_unsuccessful() = runBlocking {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
+        val error: Response<ResponseBody?> = Response.error(404, "error".toResponseBody(null))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -179,7 +180,7 @@ class TransferRepositoryImpTest {
     @Test
     fun makeSavingsTransfer_unsuccessful() = runBlocking {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
+        val error: Response<ResponseBody?> = Response.error(404, "error".toResponseBody(null))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2

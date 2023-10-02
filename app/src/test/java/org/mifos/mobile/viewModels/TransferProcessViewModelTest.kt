@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -86,7 +87,7 @@ class TransferProcessViewModelTest {
                 "dd MMMM yyyy", "en", "0000001", "0000002",
                 TransferType.SELF
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         viewModel.makeTransfer(
             1, 2, 3,

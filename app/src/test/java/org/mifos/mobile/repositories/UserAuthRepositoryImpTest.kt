@@ -4,6 +4,7 @@ import CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -79,7 +80,7 @@ class UserAuthRepositoryImpTest {
     fun testRegisterUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistration() =
         runBlocking {
             val error: Response<ResponseBody?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+                Response.error(404, "error".toResponseBody(null))
             val registerPayload = RegisterPayload().apply {
                 this.accountNumber = "accountNumber"
                 this.authenticationMode = "authenticationMode"
@@ -131,7 +132,7 @@ class UserAuthRepositoryImpTest {
             this.username = "username"
             this.password = "password"
         }
-        val errorResponse: Response<User?> = Response.error(404, ResponseBody.create(null, "error"))
+        val errorResponse: Response<User?> = Response.error(404, "error".toResponseBody(null))
         Mockito.`when`(
             dataManager.login(mockLoginPayload)
         ).thenReturn(errorResponse)
@@ -165,7 +166,7 @@ class UserAuthRepositoryImpTest {
     fun testVerifyUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistrationVerification() =
         runBlocking {
             val errorResponse: Response<ResponseBody?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+                Response.error(404, "error".toResponseBody(null))
             Mockito.`when`(
                 dataManager.verifyUser(userVerify)
             ).thenReturn(errorResponse)

@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.UserAuthRepository
@@ -161,7 +162,7 @@ class RegistrationViewModelTest {
                     Mockito.anyString(),
                     Mockito.anyString()
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+            ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
             registrationViewModel.registerUser(
                 "accountNumber",
@@ -201,7 +202,7 @@ class RegistrationViewModelTest {
         runBlocking {
             Mockito.`when`(
                 userAuthRepositoryImp.verifyUser(Mockito.anyString(), Mockito.anyString())
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+            ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
             registrationViewModel.verifyUser("authenticationToken", "requestId")
 

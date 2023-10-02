@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -75,7 +76,7 @@ class BeneficiaryApplicationViewModelTest {
         `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(
             Response.error(
                 404,
-                ResponseBody.create(null, "error")
+                "error".toResponseBody(null)
             )
         )
 
@@ -106,7 +107,7 @@ class BeneficiaryApplicationViewModelTest {
         val error = RuntimeException("Error Response")
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
         `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         viewModel.createBeneficiary(beneficiaryPayload)
@@ -143,7 +144,7 @@ class BeneficiaryApplicationViewModelTest {
                 beneficiaryUpdatePayload
             )
         ).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)

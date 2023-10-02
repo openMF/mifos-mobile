@@ -5,6 +5,7 @@ import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -52,7 +53,7 @@ class ThirdPartyTransferRepositoryImpTest {
     @Test
     fun testThirdPartyTransferTemplate_Unsuccessful() = runBlocking {
         val error: Response<AccountOptionsTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         `when`(dataManager.thirdPartyTransferTemplate()).thenReturn(error)
 
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
@@ -76,7 +77,7 @@ class ThirdPartyTransferRepositoryImpTest {
     @Test
     fun testBeneficiaryList_Unsuccessful() = runBlocking {
         val error: Response<List<Beneficiary?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.beneficiaryList()).thenReturn(error)
 

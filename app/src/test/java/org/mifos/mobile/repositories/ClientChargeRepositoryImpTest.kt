@@ -5,6 +5,7 @@ import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -51,7 +52,7 @@ class ClientChargeRepositoryImpTest {
     @Test
     fun testGetClientCharges_Unsuccessful() = runBlocking {
         val error: Response<Page<Charge?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.getClientCharges(123L)).thenReturn(error)
 
@@ -73,7 +74,7 @@ class ClientChargeRepositoryImpTest {
     @Test
     fun testGetLoanCharges_Unsuccessful() = runBlocking {
         val error: Response<List<Charge?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.getLoanCharges(123L)).thenReturn(error)
 
@@ -95,7 +96,7 @@ class ClientChargeRepositoryImpTest {
     @Test
     fun testGetSavingsCharges_Unsuccessful() = runBlocking {
         val error: Response<List<Charge?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.getSavingsCharges(123L)).thenReturn(error)
 
@@ -117,7 +118,7 @@ class ClientChargeRepositoryImpTest {
     @Test
     fun testClientLocalCharges_Unsuccessful() = runBlocking {
         val error: Response<Page<Charge?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
 
         `when`(dataManager.clientLocalCharges()).thenReturn(error)
 

@@ -7,6 +7,7 @@ import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -86,10 +87,10 @@ class ThirdPartyTransferViewModelTest {
     fun testLoadTransferTemplate_Unsuccessful() = runBlocking {
         val errorMessage = R.string.error_fetching_third_party_transfer_template
         `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
         `when`(thirdPartyTransferRepositoryImp.beneficiaryList()).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
 
         thirdPartyTransferViewModel.loadTransferTemplate()

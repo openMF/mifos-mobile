@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
@@ -151,7 +152,7 @@ class RecentTransactionViewModelTest {
     @Test
     fun loadRecentTransaction_unsuccessful() = runBlocking {
         `when`(recentTransactionRepositoryImp.recentTransactions(anyInt(), anyInt())).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
+            Response.error(404, "error".toResponseBody(null))
         )
         viewModel.loadRecentTransactions(false, 0)
 

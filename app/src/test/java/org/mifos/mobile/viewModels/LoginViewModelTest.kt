@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
@@ -126,7 +127,7 @@ class LoginViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             userAuthRepositoryImp.login(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         loginViewModel.login("username", "password")
 
@@ -141,7 +142,7 @@ class LoginViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             clientRepositoryImp.loadClient()
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         loginViewModel.loadClient()
 
@@ -157,7 +158,7 @@ class LoginViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             clientRepositoryImp.loadClient()
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         loginViewModel.loadClient()
 

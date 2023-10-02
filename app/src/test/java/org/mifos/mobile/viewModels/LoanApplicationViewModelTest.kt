@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -79,7 +80,7 @@ class LoanApplicationViewModelTest {
         `when`(loanRepositoryImp.template()).thenReturn(
             Response.error(
                 404,
-                ResponseBody.create(null, "error")
+                "error".toResponseBody(null)
             )
         )
         viewModel.loadLoanApplicationTemplate(loanState)
@@ -120,7 +121,7 @@ class LoanApplicationViewModelTest {
         `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(
             Response.error(
                 404,
-                ResponseBody.create(null, "error")
+                "error".toResponseBody(null)
             )
         )
         viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)

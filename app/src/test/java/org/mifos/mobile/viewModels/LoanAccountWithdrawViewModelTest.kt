@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -75,7 +76,7 @@ class LoanAccountWithdrawViewModelTest {
                 1,
                 mockLoanWithdraw
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
         viewModel.withdrawLoanAccount(1, mockLoanWithdraw)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
         verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_loan_account_withdraw))

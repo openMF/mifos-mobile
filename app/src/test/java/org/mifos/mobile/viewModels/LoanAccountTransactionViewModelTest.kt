@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -96,7 +97,7 @@ class LoanAccountTransactionViewModelTest {
                 Constants.TRANSACTIONS,
                 1
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenReturn(Response.error(404, "error".toResponseBody(null)))
 
         viewModel.loadLoanAccountDetails(1)
         verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
