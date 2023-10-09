@@ -55,7 +55,7 @@ ext {
     // App dependencies
     countryCodePicker = '2.7.2'
     supportLibraryVersion = '1.4.2'
-    designLibraryVersion = '1.9.0'
+    designLibraryVersion = '1.10.0'
     recyclerViewVersion = '1.2.1'
     vectorDrawablesVersion = '1.1.0'
     lifecycleVersion = '2.4.1'
