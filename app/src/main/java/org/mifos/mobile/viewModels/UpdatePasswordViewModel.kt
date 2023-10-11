@@ -35,7 +35,11 @@ class UpdatePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             _updatePasswordUiState.value = RegistrationUiState.Loading
             val response = userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)
-
+            response?.code()?.compareTo(400)?.let {
+                if (it >= 0) {
+                    _updatePasswordUiState.value = RegistrationUiState.Error("")
+                }
+            }
             try {
                 if (response?.isSuccessful == true) {
                     _updatePasswordUiState.value = RegistrationUiState.Success

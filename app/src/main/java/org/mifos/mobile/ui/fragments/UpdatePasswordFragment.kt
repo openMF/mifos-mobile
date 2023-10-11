@@ -2,6 +2,7 @@ package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentUpdatePasswordBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -63,7 +65,13 @@ class UpdatePasswordFragment : BaseFragment(), TextWatcher, OnFocusChangeListene
 
                 is RegistrationUiState.Error -> {
                     hideProgress()
-                    showError(state.exception)
+                    if (TextUtils.isEmpty(state.exception)) {
+                        showError(getString(R.string.not_found_error))
+                        return@observe
+                    }
+                    val errorResponseObject = JSONObject(state.exception)
+                    val error = errorResponseObject.getString("error")
+                    showError(error)
                 }
             }
         }
