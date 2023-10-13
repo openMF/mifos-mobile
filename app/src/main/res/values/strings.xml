@@ -553,7 +553,7 @@
     <string name="privacy_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
     <string name="privacy_policy_host_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
-    <string name="please_wait">Please Wait...</string>
+    <string name="please_wait">Please Wait…</string>
     <string name="message">message</string>
     <string name="no_notification">No Notification</string>
 
