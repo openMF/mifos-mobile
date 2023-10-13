@@ -1,4 +1,4 @@
-package org.mifos.mobile.injection.module
+package org.mifos.mobile.di
 
 import android.content.Context
 import dagger.Module
@@ -19,7 +19,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-class ApplicationModule() {
+object ApplicationModule {
 
     @Provides
     @Singleton
