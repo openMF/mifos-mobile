@@ -11,20 +11,21 @@ import okhttp3.Request.Builder
 import okhttp3.Response
 import java.io.IOException
 import kotlin.jvm.Throws
+import org.mifos.mobile.api.local.PreferencesHelper
 
 /**
  * @author Vishwajeet
  * @since 21/06/16
  */
-class SelfServiceInterceptor(private val tenant: String?, private val authToken: String?) :
+class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest: Request = chain.request()
         val builder: Builder = chainRequest.newBuilder()
-            .header(HEADER_TENANT, tenant)
-        if (!TextUtils.isEmpty(authToken)) {
-            builder.header(HEADER_AUTH, authToken)
+            .header(HEADER_TENANT, preferencesHelper.tenant)
+        if (!TextUtils.isEmpty(preferencesHelper.token)) {
+            builder.header(HEADER_AUTH, preferencesHelper.token)
         }
         val request: Request = builder.build()
         return chain.proceed(request)
