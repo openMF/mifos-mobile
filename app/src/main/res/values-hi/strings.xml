@@ -41,6 +41,7 @@
     <string name="clients_list">एक ग्राहक चुनें</string>
     <string name="working">काम कर रहे</string>
     <string name="submitted">जमा किया गया</string>
+    <string name="disbursement">अदायगी</string>
     <string name="status_image">स्थिति छवि</string>
     <string name="loan_repayment_schedule">पुनः भुगतान कार्यक्रम</string>
     <string name="last_transaction">पिछले लेनदेन</string>
@@ -64,6 +65,7 @@
     <string name="withdraw_loan">ऋण वापस ले लें</string>
     <string name="withdraw_loan_reason">ऋण वापस लेने का कारण</string>
     <string name="loan_account_withdrawn_successfully">ऋण खाता सफलतापूर्वक वापस ले लिया गया</string>
+    <string name="review">समीक्षा करें</string>
     <string name="submit_loan">ऋण जमा करें</string>
     <string name="new_loan_application">नया ऋण आवेदन: </string>
     <string name="update_loan_application">ऋण आवेदन अपडेट करें:</string>
@@ -90,11 +92,14 @@
     <string name="rejected">अस्वीकृत</string>
     <string name="waiting">इंतज़ार</string>
     <string name="register">रजिस्टर</string>
+    <string name="request_id">अनुरोध आईडी</string>
     <string name="overpaid">अधिक भुगतान</string>
+    <string name="in_arrears">बकाया राशि में</string>
     <string name="select_you_want">उन सभी का चयन करें जिन्हें आप आवेदन करना चाहते हैं</string>
     <string name="filter_savings">बचत खाते को फ़िल्टर करें</string>
     <string name="filter_loan">ऋण खातों को फ़िल्टर करें</string>
     <string name="filter_share">शेयर खाते फ़िल्टर करें</string>
+    <string name="search">खोजें</string>
     <string name="choose_transfer_type">ट्रांसफर टाइप चुनें</string>
     <string name="active">सक्रिय</string>
     <string name="closed">बन्द है</string>
@@ -102,6 +107,47 @@
     <string name="pending">अपूर्ण</string>
     <string name="matured">परिपक्व</string>
     <string name="continue_str">आगे बढ़ें</string>
+    <string name="close">बंद करें</string>
+    <string name="transfer_to_savings">बचत खाते में स्थानांतरण</string>
+    <string name="transfer_from_savings">बचत खाते से स्थानांतरण</string>
+    <string name="withdrawn">Withdrawn</string>
+    <string name="blank">&#160;</string>
+    <string name="import_qr">क्यूआर आयात करें</string>
+    <string name="authentication_token">प्रमाणीकरण चिह्न</string>
+    <string name="verify">प्रमाणित करे</string>
+    <string name="verifying">प्रमाणित किया जा रहा है</string>
+    <string name="sign_up">साइन उप हो रहा है</string>
+    <string name="verified">उपयोगकर्ता को सफलतापूर्वक सत्यापित किया गया है</string>
+    <string name="use_touch_id">टच आईडी का प्रयोग करें</string>
+    <string name="view_guarantor">गारंटर देखें</string>
+    <string name="add_guarantor">गारंटर जोड़ें</string>
+    <string name="delete_guarantor">गारंटर हटाएं</string>
+    <string name="update_guarantor">गारंटर को अद्यतन करें</string>
+    <string name="guarantor_type">गारंटर का प्रकार</string>
+    <string name="no_guarantors">कोई गारंटर नहीं</string>
+    <string name="tap_to_add_guarantor">गारंटर जोड़ने के लिए टैप करें</string>
+    <string name="guarantor_details">गारंटर विवरण</string>
+    <string name="joined_date">शामिल होने की तारीख</string>
+    <string name="submit">जमा करे</string>
+    <string name="select_product_id">उत्पाद आईडी चुनें</string>
+    <string name="account_id">खाता आईडी</string>
+    <string name="new_saving_account_application">नया बचत खाता आवेदन</string>
+    <string name="update_savings_account">बचत खाता अद्यतन करें</string>
+    <string name="withdraw_savings_account">बचत खाता निकालें</string>
+    <string name="withdrawal_date">वापसी की तारीख</string>
+    <string name="new_saving_account_created_successfully">नया बचत खाता सफलतापूर्वक बनाया गया।</string>
+    <string name="saving_account_updated_successfully">बचत खाता सफलतापूर्वक अपडेट किया गया</string>
+    <string name="savings_account_withdraw_successful">बचत खाते से निकासी सफल</string>
+    <string name="string_savings_account">%1$s बचत खाता</string>
+    <string name="apply">लागू  करे</string>
+    <string name="apply_savings_account">बचत खाता लागू करें</string>
+    <string name="update">अद्यतन करे</string>
+    <string name="edit">संपादित करें</string>
+    <string name="passcode">पासकोड</string>
+    <string name="other">अन्य</string>
+    <string name="gender">लिंग</string>
+    <string name="no">नहीं</string>
+    <string name="found">मिला</string>x
 
     <string name="empty_savings_accounts">आपके पास कोई बचत खाता नहीं है </string>
     <string name="empty_loan_accounts">आपके पास कोई ऋण खाता नहीं है</string>
@@ -110,6 +156,9 @@
     <string name="empty_repayment_schedule">आपके साथ संबद्ध कोई भी पुनर्भुगतान शेड्यूल नहीं है</string>
     <string name="no_more_transactions_available">कोई और लेनदेन उपलब्ध नहीं है</string>
     <string name="no_transaction">कोई लेनदेन नहीं</string>
+    <string name="no_dob_found">कोई जन्मतिथि नहीं मिली.</string>
+    <string name="not_assigned_with_any_group">किसी भी समूह के साथ नियुक्त नहीं</string>
+
     <string name="transfer_error">स्थानांतरण पूर्ण करने में असमर्थ, कृपया बाद में फिर से प्रयास करेंं</string>
 
     <string name="error_unauthorised">अमान्य उपयोगकर्ता नाम / पासवर्ड</string>
@@ -127,8 +176,10 @@
     <string name="qr_code">क्यूआर कोड</string>
     <string name="error_recent_transactions_loading">हालिया लेनदेन में लोड करने में त्रुटि</string>
     <string name="error_client_charge_loading">क्लाइंट शुल्क में लोड करने में त्रुटि</string>
+    <string name="error_no_charge">कोई शुल्क नहीं मिला</string>
     <string name="error_client_not_found">ग्राहक नहीं मिला</string>
     <string name="error_fetching_client">ग्राहक लाने में विफल</string>
+    <string name="error_fetching_user_profile">उपयोगकर्ता प्रोफ़ाइल लाने में विफल</string>
     <string name="error_fetching_accounts">खाते को लाने में विफल</string>
     <string name="error_fetching_repayment_schedule">चुकौती कार्यक्रम प्राप्त करने में विफल</string>
     <string name="error_same_account_transfer">एक ही खाते में ट्रांसफर नहीं कर सकते</string>
@@ -145,6 +196,11 @@
     <string name="error_updating_beneficiary">लाभार्थी को अपडेट करने में विफल</string>
     <string name="error_deleting_beneficiary">लाभार्थी को हटाने में विफल</string>
     <string name="error_loan_account_withdraw">ऋण खाता वापस लेने में त्रुटि</string>
+    <string name="no_beneficiary_found_please_add">
+वर्तमान में, आपके पास कोई लाभार्थी नहीं है। कृपया लाभार्थी जोड़ें</string>
+
+    <string name="unauthorized_client">आप अधिकृत नहीं है</string>
+
     <string name="invalid_qr">आप अपने खाते में कार्रवाई नहीं कर सकते हैं, कृपया अन्य उपयोगकर्ता के बचत और ऋण
         खाते के क्यूआर को स्कैन करें</string>
     <string name="add">जोड़ें</string>
@@ -156,6 +212,7 @@
     <string name="incorrect_passcode">पासकोड गलत है</string>
     <string name="incorrect_passcode_more_than_three">आपने 3 बार से अधिक गलत पासकोड दर्ज किया है</string>
     <string name="forgot_passcode">पासकोड भूल गए, मैन्युअल रूप से लॉगिन करें</string>
+    <string name="proceed">आगे बढ़ें</string>
     <string name="skip">छोड़ दें</string>
     <string name="save">सहेजें</string>
     <string name="amount_greater_than_zero">राशि शून्य से अधिक होनी चाहिए</string>
@@ -168,11 +225,25 @@
     <string name="view_repayment">पुनर्भुगतान शेड्यूल देखें</string>
     <string name="share_qr_code">क्यूआर कोड साझा करें</string>
     <string name="monitor">निगरानी करें</string>
+    <string name="choose_option">विकल्प चुनें</string>
     <string name="view_qr_code">इस खाते के लिए क्यूआर कोड देखें</string>
     <string name="last_trans">पिछले लेनदेन का विवरण</string>
     <string name="passcode_setup">लॉगिन करने के लिए एक पासकोड सेटअप करें</string>
+    <string name="reenter_passcode">कृपया अपना पासकोड दोबारा दर्ज करें</string>
+    <string name="passcode_does_not_match">पासकोड मेल नहीं खा रहा है</string>
+
     <string name="error_fetching_third_party_transfer_template">थर्ड पार्टी ट्रांसफर टेम्प्लेट को लाने में त्रुटि</string>
     <string name="choose">एप्लिकेशन चुनें</string>
+    <string name="upload_qr_code">क्यूआर अपलोड करें</string>
+    <string name="select_region_qr">क्यूआर कोड वाले क्षेत्र का चयन करें</string>
+
+    <string name="error_username_greater_than_six">उपयोगकर्ता नाम 6 अक्षरों से अधिक होना चाहिए</string>
+    <string name="error_invalid_email">अमान्य ईमेल आईडी</string>
+    <string name="error_server_down">सर्वर डाउन है, कुछ देर बाद प्रयास करें</string>
+    <string name="client_charges">ग्राहक शुल्क</string>
+    <string name="error_reading_qr"> क्यूआर पढ़ते समय त्रुटि हुई, सुनिश्चित करें कि आपने उचित क्षेत्र का चयन किया है</string>
+    <string name="error_fetching_image">तस्वीर लाने में त्रुटि </string>
+    <string name="invalid_phn_number">अमान्य फोन नंबर</string>
 
     <string name="fetching_client">क्लाइंट ला रहा है</string>
 
@@ -239,6 +310,7 @@
     <string name="end_date">अंतिम तिथि</string>
     <string name="filtered">फ़िल्टर दकर िया गया</string>
     <string name="select_date">प्रारंभ तिथि और समाप्ति तिथि का चयन करें</string>
+    <string name="end_date_must_be_greater">समाप्ति तारीख आरंभ तारीख से बड़ी होनी चाहिए</string>
     <string name="saving_account_transactions_details">बचत खाते का लेनदेन</string>
     <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
     <string name="disbursement_date">संवितरण तिथि</string>
@@ -260,6 +332,9 @@
     <string name="office_name">कार्यालय का नाम</string>
     <string name="add_beneficiary_option">अपने खाते में तीसरे पक्ष के लाभार्थी जोड़ें या तो मैन्युअल रूप से दर्ज करें या
         खाता क्यूआर कोड को स्कैन करें</string>
+    <string name="income_generating_loan">आय सृजन ऋण</string>
+    <string name="not_applicable">लागू नहीं</string>
+    <string name="dummy_principal_amount">143.00</string>
     <string name="select_account_type">खाता प्रकार चुनें*</string>
     <string name="submit_beneficiary">लाभार्थी जमा करें</string>
     <string name="enter_office_name">लाभार्थी कार्यालय का नाम दर्ज करें</string>
@@ -280,6 +355,7 @@
     <string name="survey">सर्वेक्षण</string>
     <string name="first_name">पहला नाम</string>
     <string name="delete_beneficiary_confirmation">क्या आप वाकई इस लाभार्थी को हटाना चाहते हैं</string>
+    <string name="login_using_password_confirmation">क्या आप वाकई पासवर्ड का उपयोग करके लॉगिन करना चाहते हैं?</string>
     <string name="delete">हटा दें</string>
     <string name="about_us_under_construction">"हमारे बारे में" निर्माणाधीन</string>
     <string name="beneficiary_deleted_successfully">लाभार्थी सफलतापूर्वक हटा दिया गया</string>
@@ -309,6 +385,10 @@
     <string name="dialog_action_app_settings">एप्लिकेशन सेटिंग</string>
     <string name="dialog_message_camera_permission_denied_prompt">कैमरा अनुमति के बिना आप लाभार्थी को जोड़ने के
         लिए क्यूआर कोड स्कैन नहीं कर पाएंगे। क्या आप वाकई इस अनुमति से इनकार करना चाहते हैं?</string>
+    <string name="dialog_message_storage_permission_denied_prompt">स्टोरेज की अनुमति के बिना आप लाभार्थी को जोड़ने के लिए क्यूआर कोड अपलोड नहीं कर पाएंगे। क्या आप वाकई इस अनुमति को अस्वीकार करना चाहते हैं?</string>
+    <string name="dialog_message_read_storage_permission_never_ask_again">आपने स्टोरेज को पढ़ने की अनुमति से इनकार कर दिया है, इस अनुमति के बिना आप क्यूआर कोड का उपयोग करके लाभार्थियों को नहीं जोड़ पाएंगे। कृपया इसे सेटिंग्स में सक्षम करें</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">आपने स्टोरेज को लिखने की अनुमति से इनकार कर दिया है, इस अनुमति के बिना आप क्यूआर कोड का उपयोग करके लाभार्थियों को नहीं जोड़ पाएंगे। कृपया इसे सेटिंग्स में सक्षम करें</string>
+
     <string name="dialog_message_camera_permission_never_ask_again">इस अनुमति के बिना, आप कैमरे का उपयोग
         करने की अनुमति से वंचित हैं, आप क्यूआर कोड का उपयोग कर लाभार्थियों को नहीं जोड़ पाएंगे।
         कृपया इसे सेटिंग्स में सक्षम करें</string>
@@ -319,6 +399,10 @@
     <string name="msg_setting_activity_not_found">सेटिंग गतिविधि ढूंढने में कुछ गलत हो गया
         सेटिंग पर जाएं और स्वयं को अनुमति दें।
     </string>
+    <string name="permission_denied_storage">स्टोरेज की अनुमति नहीं दी गयी</string>
+    <string name="dialog_are_you_sure_that_you_want_to_string">क्या आप निश्चित हैं कि आप ऐसा करना चाहते हैं %1$s?</string>
+    <string name="err_during_login">लॉगिन के दौरान त्रुटि</string>
+
 
     <!--Format Strings-->
     <string name="hello_client">नमस्ते, %1$s</string>
@@ -351,6 +435,19 @@
 
     <string name="permission_denied_camera">कैमरे का उपयोग करने के लिए अनुमति अस्वीकृत</string>
     <string name="no_withdrawals">No withdrawals</string>
+    <string name="clear_filters">फ़िल्टर हटाएँ</string>
+    <string name="notification">सूचनाएं</string>
+    <string name="base_url">आधार यूआरएल</string>
+    <string name="tenant">किराएदार</string>
+    <string name="no_saving_account">बचत खाता</string>
+    <string name="no_loan_account">ऋण खाते</string>
+    <string name="no_sharing_account">Sharing Accounts</string>
+
+    <string name="select_loan_product_field">ऋण उत्पाद चुनें</string>
+    <string name="sign_in_fingerprint">फ़िंगरप्रिंट का उपयोग करके साइन इन करें</string>
+    <string name="scan_your_fingerprint">अपना फ़िंगरप्रिंट स्कैन करें</string>
+
+
     <string name="manage_accounts">Manage Accounts</string>
     <string name="more">More</string>
     <string name="total_saving_balance">Total Savings Balance</string>
@@ -366,6 +463,19 @@
     <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
     <string name="licenses">Licenses</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="change_passcode">पासकोड बदलें</string>
+    <string name="change_app_passcode">ऐप पासवर्ड बदलें</string>
+    <string name="change_password">पासवर्ड बदलें</string>
+    <string name="change_account_password">अपना खाता पासवर्ड बदलें</string>
+    <string name="current_password">वर्तमान पासवर्ड</string>
+    <string name="new_password">नया पासवर्ड</string>
+    <string name="string_changed_successfully">%1$s सफलतापूर्वक बदला गया</string>
+    <string name="message">संदेश</string>
+    <string name="no_notification">कोई अधिसूचना नहीं</string>
+
+    <string name="account_not_active_to_perform_deposit">जमा करने के लिए खाता सक्रिय होना चाहिए</string>
+    <string name="account_not_active_to_perform_transfer">स्थानांतरण करने के लिए खाता सक्रिय होना चाहिए</string>
 
     <string-array name="faq_qs">
         <item>मैं नए ऋण खाते के लिए आवेदन कैसे करूं?</item>
@@ -393,6 +503,35 @@
     <string name="please_wait">कृपया प्रतीक्षा करें</string>
     <string name="app_info">अनुप्रयोग की जानकारी</string>
     <string name="login_failed">विफल प्रवेश कृपया बाद में पुन: प्रयास करें।</string>
+    <string name="pref_base_url_title">समापन बिंदु अद्यतन करें</string>
+    <string name="pref_base_url_desc">अपने समापन बिंदु कॉन्फ़िगरेशन को बदलने के लिए यहां क्लिक करें</string>
+    <string name="enter_base_url">बेस यूआरएल दर्ज करें</string>
+    <string name="enter_tenant">किरायेदार दर्ज करें</string>
+    <string name="refresh">Refresh</string>
 
+    <!--Password strength strings-->
+    <string name="password_strength_weak">कमज़ोर</string>
+    <string name="password_strength_medium">मध्यम</string>
+    <string name="password_strength_strong">मज़बूत</string>
+    <string name="password_strength_very_strong">बहुत मजबूत</string>
+    <string name="loan_purpose_not_provided">उपलब्ध नहीं कराया</string>
+    <string name="details">विवरण</string>
+    <string name="product">उत्पाद</string>
+
+    <string name="dividend_payout">लाभांश भुगतान</string>
+    <string name="withdrawal">निकासी</string>
+    <string name="interest_posting">रुचि पोस्टिंग</string>
+    <string name="fee_deduction">शुल्क कटौती</string>
+    <string name="withdrawal_transfer">निकासी स्थानांतरण</string>
+    <string name="rejected_transfer">अस्वीकृत स्थानांतरण</string>
+    <string name="overdraft_fee">ओवरड्राफ्ट शुल्क</string>
+    <string name="savings_account_transaction">बचत खाता लेनदेन</string>
+    <string name="transaction_period">लेन-देन की अवधि</string>
+    <string name="transaction_type">सौदे का प्रकार</string>
+    <string name="questions">प्रशन</string>
+    <string name="logged_out_successfully">सफलतापूर्वक लॉग आउट हो गए</string>
+
+    <string name="dialog_cancel_registration_message">क्या आप नये खाते का पंजीकरण रद्द करना चाहते हैं?</string>
+    <string name="dialog_cancel_registration_title">पंजीकरण रद्द करें</string>
 
 </resources>
