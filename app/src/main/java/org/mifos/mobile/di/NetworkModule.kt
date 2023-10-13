@@ -1,4 +1,4 @@
-package org.mifos.mobile.injection.module
+package org.mifos.mobile.di
 
 import dagger.Module
 import dagger.Provides
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
     @Provides
     @Singleton

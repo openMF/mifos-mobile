@@ -1,4 +1,4 @@
-package org.mifos.mobile.injection.module
+package org.mifos.mobile.di
 
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,7 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+object RepositoryModule {
 
     @Provides
     fun providesUserAuthRepository(dataManager: DataManager): UserAuthRepository {
