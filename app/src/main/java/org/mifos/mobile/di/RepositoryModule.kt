@@ -1,4 +1,4 @@
-package org.mifos.mobile.injection.module
+package org.mifos.mobile.di
 
 import dagger.Module
 import dagger.Provides
@@ -12,10 +12,11 @@ import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.repositories.NotificationRepository
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.repositories.*
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+object RepositoryModule {
 
     @Provides
     fun providesUserAuthRepository(dataManager: DataManager): UserAuthRepository {
@@ -39,9 +40,9 @@ class RepositoryModule {
 
     @Provides
     fun providesClientRepository(
-        dataManager: DataManager, preferencesHelper: PreferencesHelper
+        dataManager: DataManager, preferencesHelper: PreferencesHelper, retrofit: Retrofit
     ): ClientRepository {
-        return ClientRepositoryImp(dataManager, preferencesHelper)
+        return ClientRepositoryImp(dataManager, preferencesHelper,retrofit)
     }
 
     @Provides

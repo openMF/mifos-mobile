@@ -2,17 +2,22 @@ package org.mifos.mobile.repositories
 
 import okhttp3.Credentials
 import org.mifos.mobile.api.DataManager
+import org.mifos.mobile.api.SelfServiceOkHttpClient
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.utils.Constants
 import retrofit2.Response
+import retrofit2.Retrofit
 import javax.inject.Inject
 
 class ClientRepositoryImp @Inject constructor(
-    private val dataManager: DataManager, private val preferencesHelper: PreferencesHelper
+    private val dataManager: DataManager,
+    private val preferencesHelper: PreferencesHelper,
+    private var retrofit: Retrofit
 ) : ClientRepository {
+
 
     override suspend fun loadClient(): Response<Page<Client?>?>? {
         return dataManager.clients()
@@ -30,6 +35,7 @@ class ClientRepositoryImp @Inject constructor(
         preferencesHelper.userName = user.username
         preferencesHelper.userId = user.userId
         preferencesHelper.saveToken(authToken)
+        reInitializeService()
     }
 
     override fun setClientId(clientId: Long?) {
@@ -41,13 +47,17 @@ class ClientRepositoryImp @Inject constructor(
         preferencesHelper.clear()
     }
 
+    override fun reInitializeService() {
+        retrofit.newBuilder().client(
+            SelfServiceOkHttpClient(
+                preferencesHelper
+            ).mifosOkHttpClient
+        )
+    }
+
     override fun updateAuthenticationToken(password: String) {
         val authenticationToken = Credentials.basic(preferencesHelper.userName!!, password)
         preferencesHelper.saveToken(authenticationToken)
-//        BaseApiManager.createService(
-//            preferencesHelper.baseUrl,
-//            preferencesHelper.tenant,
-//            preferencesHelper.token,
-//        )
+        reInitializeService()
     }
 }
