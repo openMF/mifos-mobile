@@ -8,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.repositories.ClientChargeRepository
-import org.mifos.mobile.ui.views.ClientChargeView
 import org.mifos.mobile.viewModels.ClientChargeViewModel
 import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
@@ -18,8 +17,7 @@ import javax.inject.Inject
  * providing RemoteViews to the widget in the getViewAt method.
  */
 class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Context) :
-    RemoteViewsFactory,
-    ClientChargeView {
+    RemoteViewsFactory {
 
     @Inject
     lateinit var clientChargeRepository: ClientChargeRepository
@@ -82,7 +80,7 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
         return false
     }
 
-    override fun showErrorFetchingClientCharges(message: String?) {
+    fun showErrorFetchingClientCharges(message: String?) {
         Toast.makeText(
             context,
             context.getString(R.string.error_client_charge_loading),
@@ -90,16 +88,16 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
         ).show()
     }
 
-    override fun showClientCharges(clientChargesList: List<Charge?>?) {
+    fun showClientCharges(clientChargesList: List<Charge?>?) {
         charges = clientChargesList
         synchronized(`object`) {
             condition.signal()
         }
     }
 
-    override fun showProgress() {}
+    fun showProgress() {}
 
-    override fun hideProgress() {}
+    fun hideProgress() {}
 
     override fun onDestroy() {
     }
