@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -37,6 +38,7 @@ import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.UserDetailUiState
@@ -70,7 +72,7 @@ class HomeActivity :
     private var isReceiverRegistered = false
     var checkedItem = 0
         private set
-    var doubleBackToExitPressedOnce = false
+    private var doubleBackToExitPressedOnce = false
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -92,7 +94,7 @@ class HomeActivity :
             viewModel.userImage
             showUserImage(null)
         } else {
-            client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
+            client = savedInstanceState.getCheckedParcelable(Client::class.java, Constants.USER_DETAILS)
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }
@@ -307,7 +309,7 @@ class HomeActivity :
      *
      * @param client Contains details about the client
      */
-    fun showUserDetails(client: Client?) {
+    private fun showUserDetails(client: Client?) {
         this.client = client
         preferencesHelper?.clientName = client?.displayName
         tvUsername?.text = client?.displayName
@@ -318,7 +320,7 @@ class HomeActivity :
      *
      * @param bitmap UserProfile Picture
      */
-    fun showUserImage(bitmap: Bitmap?) {
+    private fun showUserImage(bitmap: Bitmap?) {
         if (bitmap != null) {
             runOnUiThread {
                 userProfileBitmap = bitmap

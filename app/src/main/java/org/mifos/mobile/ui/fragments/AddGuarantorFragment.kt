@@ -22,6 +22,8 @@ import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.GuarantorUiState
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.RxBus.publish
 import org.mifos.mobile.utils.RxEvent.AddGuarantorEvent
 import org.mifos.mobile.utils.RxEvent.UpdateGuarantorEvent
@@ -51,8 +53,12 @@ class AddGuarantorFragment : BaseFragment() {
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
             guarantorState = requireArguments()
-                .getSerializable(Constants.GUARANTOR_STATE) as GuarantorState
-            payload = arguments?.getParcelable(Constants.PAYLOAD)
+                .getCheckedSerializable(
+                    GuarantorState::class.java,
+                    Constants.GUARANTOR_STATE
+                ) as GuarantorState
+            payload =
+                arguments?.getCheckedParcelable(GuarantorPayload::class.java, Constants.PAYLOAD)
             index = arguments?.getInt(Constants.INDEX)
         }
     }
@@ -83,22 +89,27 @@ class AddGuarantorFragment : BaseFragment() {
                             hideProgress()
                             showError(it.message)
                         }
+
                         is GuarantorUiState.ShowGuarantorApplication -> {
                             hideProgress()
                             showGuarantorApplication(it.template)
                         }
+
                         is GuarantorUiState.ShowGuarantorUpdation -> {
                             hideProgress()
                             showGuarantorUpdation(it.template)
                         }
+
                         is GuarantorUiState.SubmittedSuccessfully -> {
                             hideProgress()
                             submittedSuccessfully(it.message, it.payload)
                         }
+
                         is GuarantorUiState.GuarantorUpdatedSuccessfully -> {
                             hideProgress()
                             updatedSuccessfully(it.message)
                         }
+
                         else -> throw IllegalStateException("Undesired $it")
                     }
                 }
@@ -115,7 +126,7 @@ class AddGuarantorFragment : BaseFragment() {
         viewModel.getGuarantorTemplate(guarantorState, loanId)
     }
 
-    fun onSubmit() {
+    private fun onSubmit() {
         with(binding) {
             tilFirstName.isErrorEnabled = false
             tilLastName.isErrorEnabled = false
@@ -199,12 +210,12 @@ class AddGuarantorFragment : BaseFragment() {
         _binding = null
     }
 
-    fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
+    private fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
     }
 
-    fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
+    private fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
         with(binding) {
@@ -231,13 +242,13 @@ class AddGuarantorFragment : BaseFragment() {
         }
     }
 
-    fun updatedSuccessfully(message: String?) {
+    private fun updatedSuccessfully(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         publish(UpdateGuarantorEvent(guarantorApplicationPayload, index))
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
+    private fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         publish(AddGuarantorEvent(payload, index))
         activity?.supportFragmentManager?.popBackStack()

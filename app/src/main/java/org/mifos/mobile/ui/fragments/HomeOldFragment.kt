@@ -3,9 +3,7 @@ package org.mifos.mobile.ui.fragments
 import android.animation.LayoutTransition
 import android.content.*
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
@@ -29,6 +27,7 @@ import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.HomeViewModel
 import javax.inject.Inject
 
@@ -70,10 +69,8 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
             R.color.red_light,
         )
         binding.swipeHomeContainer.setOnRefreshListener(this)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            binding.llContainer.layoutTransition
-                ?.enableTransitionType(LayoutTransition.CHANGING)
-        }
+        binding.llContainer.layoutTransition
+            ?.enableTransitionType(LayoutTransition.CHANGING)
         if (savedInstanceState == null) {
             loadClientData()
         }
@@ -138,7 +135,12 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showUserDetails(savedInstanceState.getParcelable<Parcelable>(Constants.USER_DETAILS) as? Client)
+            showUserDetails(
+                savedInstanceState.getCheckedParcelable(
+                    Client::class.java,
+                    Constants.USER_DETAILS
+                )
+            )
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showLoanAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_LOAN))
             showSavingAccountDetails(savedInstanceState.getDouble(Constants.TOTAL_SAVINGS))
@@ -177,7 +179,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      *
      * @param totalLoanAmount Total Loan amount
      */
-    fun showLoanAccountDetails(totalLoanAmount: Double) {
+    private fun showLoanAccountDetails(totalLoanAmount: Double) {
         this.totalLoanAmount = totalLoanAmount
         binding.tvLoanTotalAmount.text = CurrencyUtil.formatCurrency(context, totalLoanAmount)
     }
@@ -195,7 +197,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      *
      * @param totalSavingAmount Total Saving amount
      */
-    fun showSavingAccountDetails(totalSavingAmount: Double) {
+    private fun showSavingAccountDetails(totalSavingAmount: Double) {
         this.totalSavingAmount = totalSavingAmount
         binding.tvSavingTotalAmount.text = CurrencyUtil.formatCurrency(context, totalSavingAmount)
     }
@@ -213,7 +215,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      *
      * @param client Details about client
      */
-    fun showUserDetails(client: Client?) {
+    private fun showUserDetails(client: Client?) {
         this.client = client
         binding.tvUserName.text = getString(R.string.hello_client, client?.displayName)
     }
@@ -223,7 +225,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      *
      * @param bitmap Client Image
      */
-    fun showUserImage(bitmap: Bitmap?) {
+    private fun showUserImage(bitmap: Bitmap?) {
         activity?.runOnUiThread {
             if (bitmap != null) {
                 binding.ivCircularUserImage.visibility = View.VISIBLE
@@ -261,19 +263,23 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
                         hideProgress()
                         showUserImage(it.image)
                     }
+
                     is HomeUiState.ClientAccountDetails -> {
                         hideProgress()
                         showLoanAccountDetails(it.loanAccounts)
                         showSavingAccountDetails(it.savingsAccounts)
                     }
+
                     is HomeUiState.Error -> {
                         hideProgress()
                         showError(getString(it.errorMessage))
                     }
+
                     is HomeUiState.UserDetails -> {
                         hideProgress()
                         showUserDetails(it.client)
                     }
+
                     is HomeUiState.UnreadNotificationsCount -> {
                         hideProgress()
                         showNotificationCount(it.count)
@@ -348,7 +354,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         }
     }
 
-    fun showNotificationCount(count: Int) {
+    private fun showNotificationCount(count: Int) {
         if (count > 0) {
             tvNotificationCount?.visibility = View.VISIBLE
             tvNotificationCount?.text = count.toString()

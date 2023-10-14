@@ -11,6 +11,7 @@ import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 
 /*
 ~This project is licensed under the open source MPL V2.
@@ -26,7 +27,7 @@ class LoanAccountSummaryFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
+            loanWithAssociations = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT)
         }
     }
 

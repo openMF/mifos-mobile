@@ -23,6 +23,8 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ReviewLoanApplicationFragment.Companion.newInstance
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.viewModels.LoanApplicationViewModel
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -98,12 +100,18 @@ class LoanApplicationFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanState = arguments?.getSerializable(Constants.LOAN_STATE) as LoanState
+            loanState = arguments?.getCheckedSerializable(
+                LoanState::class.java,
+                Constants.LOAN_STATE
+            ) as LoanState
             if (loanState == LoanState.CREATE) {
                 setToolbarTitle(getString(R.string.apply_for_loan))
             } else {
                 setToolbarTitle(getString(R.string.update_loan))
-                loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
+                loanWithAssociations = arguments?.getCheckedParcelable(
+                    LoanWithAssociations::class.java,
+                    Constants.LOAN_ACCOUNT
+                )
             }
         }
     }
@@ -129,7 +137,10 @@ class LoanApplicationFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val template: LoanTemplate? = savedInstanceState.getParcelable(Constants.TEMPLATE)
+            val template: LoanTemplate? = savedInstanceState.getCheckedParcelable(
+                LoanTemplate::class.java,
+                Constants.TEMPLATE
+            )
             if (loanState == LoanState.CREATE) {
                 showLoanTemplate(template)
             } else {
@@ -161,22 +172,27 @@ class LoanApplicationFragment : BaseFragment() {
                             hideProgress()
                             showError(getString(it.message))
                         }
+
                         is LoanUiState.ShowLoanTemplate -> {
                             hideProgress()
                             showLoanTemplateByProduct(it.template)
                         }
+
                         is LoanUiState.ShowUpdateLoanTemplate -> {
                             hideProgress()
                             showUpdateLoanTemplateByProduct(it.template)
                         }
+
                         is LoanUiState.ShowLoanTemplateByProduct -> {
                             hideProgress()
                             showLoanTemplate(it.template)
                         }
+
                         is LoanUiState.ShowUpdateLoanTemplateByProduct -> {
                             hideProgress()
                             showUpdateLoanTemplate(it.template)
                         }
+
                         else -> throw IllegalStateException("Unexpected state: $it")
                     }
                 }
@@ -316,7 +332,7 @@ class LoanApplicationFragment : BaseFragment() {
     /**
      * Retries to fetch [LoanTemplate] by calling `loadLoanTemplate()`
      */
-    fun onRetry() {
+    private fun onRetry() {
         binding.llError.root.visibility = View.GONE
         binding.llAddLoan.visibility = View.VISIBLE
         loadLoanTemplate()
@@ -390,7 +406,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showLoanTemplate(loanTemplate: LoanTemplate?) {
+    private fun showLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
@@ -407,7 +423,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
+    private fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
@@ -456,7 +472,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
+    private fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         with(binding) {
             tvAccountNumber.text = getString(
@@ -489,7 +505,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
+    private fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))

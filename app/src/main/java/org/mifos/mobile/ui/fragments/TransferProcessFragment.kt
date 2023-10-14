@@ -15,6 +15,8 @@ import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.viewModels.TransferProcessViewModel
 
 /**
@@ -35,8 +37,15 @@ class TransferProcessFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (activity != null) {
-            payload = arguments?.getParcelable(Constants.PAYLOAD)
-            transferType = arguments?.getSerializable(Constants.TRANSFER_TYPE) as TransferType
+            payload =
+                arguments?.getCheckedParcelable(
+                    TransferPayload::class.java,
+                    Constants.PAYLOAD
+                )
+            transferType = arguments?.getCheckedSerializable(
+                TransferType::class.java,
+                Constants.TRANSFER_TYPE
+            ) as TransferType
         }
     }
 
@@ -69,6 +78,7 @@ class TransferProcessFragment : BaseFragment() {
                     hideProgress()
                     showTransferredSuccessfully()
                 }
+
                 is TransferUiState.Error -> {
                     hideProgress()
                     showError(MFErrorParser.errorMessage(it.errorMessage))
@@ -147,7 +157,7 @@ class TransferProcessFragment : BaseFragment() {
     /**
      * Shows a {@link Snackbar} on succesfull transfer of money
      */
-    fun showTransferredSuccessfully() {
+    private fun showTransferredSuccessfully() {
         Toaster.show(binding.root, getString(R.string.transferred_successfully))
         binding.ivSuccess.visibility = View.VISIBLE
         (binding.ivSuccess.drawable as Animatable).start()

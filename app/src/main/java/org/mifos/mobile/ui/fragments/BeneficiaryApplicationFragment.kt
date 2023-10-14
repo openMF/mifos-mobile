@@ -20,6 +20,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.BeneficiaryApplicationViewModel
 
@@ -45,15 +47,24 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         setToolbarTitle(getString(R.string.add_beneficiary))
         if (arguments != null) {
             beneficiaryState = requireArguments()
-                .getSerializable(Constants.BENEFICIARY_STATE) as BeneficiaryState
+                .getCheckedSerializable(
+                    BeneficiaryState::class.java,
+                    Constants.BENEFICIARY_STATE
+                ) as BeneficiaryState
             when (beneficiaryState) {
                 BeneficiaryState.UPDATE -> {
-                    beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
+                    beneficiary = arguments?.getCheckedParcelable(
+                        Beneficiary::class.java,
+                        Constants.BENEFICIARY
+                    )
                     setToolbarTitle(getString(R.string.update_beneficiary))
                 }
 
                 BeneficiaryState.CREATE_QR -> {
-                    beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
+                    beneficiary = arguments?.getCheckedParcelable(
+                        Beneficiary::class.java,
+                        Constants.BENEFICIARY
+                    )
                     setToolbarTitle(getString(R.string.add_beneficiary))
                 }
 
@@ -89,22 +100,27 @@ class BeneficiaryApplicationFragment : BaseFragment() {
                     hideProgress()
                     showError(getString(it.message))
                 }
+
                 is BeneficiaryUiState.SetVisibility -> {
                     hideProgress()
                     setVisibility(it.visibility)
                 }
+
                 is BeneficiaryUiState.ShowBeneficiaryTemplate -> {
                     hideProgress()
                     showBeneficiaryTemplate(it.beneficiaryTemplate)
                 }
+
                 is BeneficiaryUiState.CreatedSuccessfully -> {
                     hideProgress()
                     showBeneficiaryCreatedSuccessfully()
                 }
+
                 is BeneficiaryUiState.UpdatedSuccessfully -> {
                     hideProgress()
                     showBeneficiaryUpdatedSuccessfully()
                 }
+
                 else -> throw IllegalStateException("Undesired $it")
             }
         }
@@ -127,7 +143,12 @@ class BeneficiaryApplicationFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showBeneficiaryTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as BeneficiaryTemplate)
+            showBeneficiaryTemplate(
+                savedInstanceState.getCheckedParcelable(
+                    BeneficiaryTemplate::class.java,
+                    Constants.TEMPLATE
+                )
+            )
         }
     }
 
@@ -151,7 +172,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
      *
      * @param beneficiaryTemplate [BeneficiaryTemplate] fetched from server
      */
-    fun showBeneficiaryTemplate(beneficiaryTemplate: BeneficiaryTemplate?) {
+    private fun showBeneficiaryTemplate(beneficiaryTemplate: BeneficiaryTemplate?) {
         this.beneficiaryTemplate = beneficiaryTemplate
         for ((_, _, value) in beneficiaryTemplate?.accountTypeOptions!!) {
             listAccountType.add(value)
@@ -280,7 +301,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
      * Displays a {@link Snackbar} on successfully creation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
-    fun showBeneficiaryCreatedSuccessfully() {
+    private fun showBeneficiaryCreatedSuccessfully() {
         Toaster.show(binding.tilTransferLimit, getString(R.string.beneficiary_created_successfully))
         activity?.finish()
     }
@@ -289,7 +310,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
      * Displays a {@link Snackbar} on successfully updation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
-    fun showBeneficiaryUpdatedSuccessfully() {
+    private fun showBeneficiaryUpdatedSuccessfully() {
         Toaster.show(binding.root, getString(R.string.beneficiary_updated_successfully))
         activity?.supportFragmentManager?.popBackStack()
         activity?.supportFragmentManager?.popBackStack()
@@ -316,7 +337,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         }
     }
 
-    fun setVisibility(state: Int) {
+    private fun setVisibility(state: Int) {
         binding.llApplicationBeneficiary.visibility = state
     }
 

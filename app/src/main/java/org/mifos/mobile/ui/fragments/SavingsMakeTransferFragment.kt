@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -25,6 +24,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
@@ -40,7 +40,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsMakeTransferBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingsMakeTransferViewModel
+    private lateinit var viewModel: SavingsMakeTransferViewModel
     private var transferPayload: TransferPayload? = null
     private var transferDate: String? = null
     private var toAccountOption: AccountOption? = null
@@ -110,7 +110,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
         }
 
         viewModel.savingsMakeTransferUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 SavingsAccountUiState.Loading -> showProgress()
 
                 is SavingsAccountUiState.ErrorMessage -> {
@@ -136,7 +136,12 @@ class SavingsMakeTransferFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showSavingsAccountTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as AccountOptionsTemplate)
+            showSavingsAccountTemplate(
+                savedInstanceState.getCheckedParcelable(
+                    AccountOptionsTemplate::class.java,
+                    Constants.TEMPLATE
+                )
+            )
         }
     }
 
@@ -223,14 +228,16 @@ class SavingsMakeTransferFragment : BaseFragment() {
         when (transferType) {
             Constants.TRANSFER_PAY_TO -> {
                 setToolbarTitle(getString(R.string.deposit))
-                toAccountOption = viewModel.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
+                toAccountOption =
+                    viewModel.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
                 binding.payToFieldWrapper.isEnabled = false
                 binding.processOne.setCurrentCompleted()
             }
 
             Constants.TRANSFER_PAY_FROM -> {
                 setToolbarTitle(getString(R.string.transfer))
-                fromAccountOption = viewModel.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
+                fromAccountOption =
+                    viewModel.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
                 binding.payFromFieldWrapper.isEnabled = false
                 binding.payFromFieldWrapper.visibility = View.VISIBLE
                 binding.processTwo.setCurrentCompleted()

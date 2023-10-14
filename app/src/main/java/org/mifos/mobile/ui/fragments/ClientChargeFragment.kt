@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -19,6 +20,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.ClientChargeUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ClientChargeViewModel
 import java.util.*
@@ -45,7 +48,10 @@ class ClientChargeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             id = arguments?.getLong(Constants.CLIENT_ID)
-            chargeType = arguments?.getSerializable(Constants.CHARGE_TYPE) as ChargeType
+            chargeType = arguments?.getCheckedSerializable(
+                ChargeType::class.java,
+                Constants.CHARGE_TYPE
+            ) as ChargeType
         }
     }
 
@@ -85,6 +91,7 @@ class ClientChargeFragment : BaseFragment() {
                     hideProgress()
                     showErrorFetchingClientCharges(getString(it.message))
                 }
+
                 is ClientChargeUiState.ShowClientCharges -> {
                     hideProgress()
                     showClientCharges(it.charges)
@@ -111,7 +118,10 @@ class ClientChargeFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             val charges: List<Charge?> =
-                savedInstanceState.getParcelableArrayList(Constants.CHARGES) ?: listOf()
+                savedInstanceState.getCheckedArrayListFromParcelable(
+                    Charge::class.java,
+                    Constants.CHARGES
+                ) ?: listOf()
             showClientCharges(charges)
         }
     }
@@ -141,7 +151,7 @@ class ClientChargeFragment : BaseFragment() {
      *
      * @param message Error message that tells the user about the problem.
      */
-    fun showErrorFetchingClientCharges(message: String?) {
+    private fun showErrorFetchingClientCharges(message: String?) {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.rvClientCharge,
@@ -160,7 +170,7 @@ class ClientChargeFragment : BaseFragment() {
     /**
      * Tries to fetch charges again.
      */
-    fun retryClicked() {
+    private fun retryClicked() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvClientCharge,
@@ -176,7 +186,7 @@ class ClientChargeFragment : BaseFragment() {
         }
     }
 
-    fun showClientCharges(clientChargeList: List<Charge?>?) {
+    private fun showClientCharges(clientChargeList: List<Charge?>?) {
         this.clientChargeList = clientChargeList
         inflateClientChargeList()
         if (binding.swipeChargeContainer.isRefreshing) {
@@ -210,7 +220,7 @@ class ClientChargeFragment : BaseFragment() {
         binding.swipeChargeContainer.isRefreshing = false
     }
 
-    fun onItemClick(position: Int) {}
+    private fun onItemClick(position: Int) {}
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

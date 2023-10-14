@@ -17,6 +17,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.RxBus.listen
 import org.mifos.mobile.utils.RxBus.publish
 import org.mifos.mobile.utils.RxEvent.DeleteGuarantorEvent
@@ -36,15 +37,15 @@ class GuarantorDetailFragment : BaseFragment() {
 
     var loanId: Long? = 0
     private var guarantorId: Long? = 0
-    var index: Int? = 0
+    private var index: Int? = 0
     var payload: GuarantorPayload? = null
-    var disposableUpdateGuarantor: Disposable? = null
-    var isFirstTime = true
+    private var disposableUpdateGuarantor: Disposable? = null
+    private var isFirstTime = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
-            payload = arguments?.getParcelable(Constants.GUARANTOR_DETAILS)
+            payload = arguments?.getCheckedParcelable(GuarantorPayload::class.java, Constants.GUARANTOR_DETAILS)
             index = arguments?.getInt(Constants.INDEX)
             guarantorId = payload?.id
         }
@@ -145,7 +146,7 @@ class GuarantorDetailFragment : BaseFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun guarantorDeletedSuccessfully(message: String?) {
+    private fun guarantorDeletedSuccessfully(message: String?) {
         activity?.supportFragmentManager?.popBackStack()
         publish(DeleteGuarantorEvent(index))
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

@@ -20,6 +20,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.UserDetailViewModel
 import javax.inject.Inject
 
@@ -67,10 +68,12 @@ class UserProfileFragment : BaseFragment() {
                         hideProgress()
                         showUserDetails(it.client)
                     }
+
                     is UserDetailUiState.ShowUserImage -> {
                         hideProgress()
                         showUserImage(it.image)
                     }
+
                     is UserDetailUiState.ShowError -> {
                         hideProgress()
                         showError(getString(it.message))
@@ -92,7 +95,11 @@ class UserProfileFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
+            client =
+                savedInstanceState.getCheckedParcelable(
+                    Client::class.java,
+                    Constants.USER_DETAILS
+                )
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }
@@ -103,7 +110,7 @@ class UserProfileFragment : BaseFragment() {
      *
      * @param client instance of [Client] which contains information about client
      */
-    fun showUserDetails(client: Client?) {
+    private fun showUserDetails(client: Client?) {
         this.client = client
         binding.tvUserName.text = nullFieldCheck(getString(R.string.username), client?.displayName)
         binding.tvAccountNumber.text = nullFieldCheck(
@@ -141,8 +148,8 @@ class UserProfileFragment : BaseFragment() {
 
     private fun nullFieldCheck(field: String, value: String?): String {
         return value
-            ?: getString(R.string.no) + getString(R.string.blank) + field +
-            getString(R.string.blank) + getString(R.string.found)
+            ?: (getString(R.string.no) + getString(R.string.blank) + field +
+                    getString(R.string.blank) + getString(R.string.found))
     }
 
     /**
@@ -172,7 +179,7 @@ class UserProfileFragment : BaseFragment() {
      *
      * @param bitmap User Image
      */
-    fun showUserImage(bitmap: Bitmap?) {
+    private fun showUserImage(bitmap: Bitmap?) {
         activity?.runOnUiThread {
             userBitmap = bitmap
             if (userBitmap == null) {
@@ -200,7 +207,7 @@ class UserProfileFragment : BaseFragment() {
         }
     }
 
-    fun changePassword() {
+    private fun changePassword() {
         startActivity(Intent(context, EditUserDetailActivity::class.java))
     }
 

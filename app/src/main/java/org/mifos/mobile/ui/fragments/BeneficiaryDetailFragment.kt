@@ -17,6 +17,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.BeneficiaryDetailViewModel
 
 /**
@@ -34,7 +35,8 @@ class BeneficiaryDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
+            beneficiary =
+                arguments?.getCheckedParcelable(Beneficiary::class.java, Constants.BENEFICIARY)
         }
         setHasOptionsMenu(true)
     }
@@ -61,10 +63,12 @@ class BeneficiaryDetailFragment : BaseFragment() {
                     hideProgress()
                     showError(getString(it.message))
                 }
+
                 is BeneficiaryUiState.DeletedSuccessfully -> {
                     hideProgress()
                     showBeneficiaryDeletedSuccessfully()
                 }
+
                 else -> throw IllegalStateException("Undesired $it")
             }
         }
@@ -122,7 +126,7 @@ class BeneficiaryDetailFragment : BaseFragment() {
      * Shows a {@link Snackbar} on successfull deletion of a
      * Beneficiary and then pops current fragment
      */
-    fun showBeneficiaryDeletedSuccessfully() {
+    private fun showBeneficiaryDeletedSuccessfully() {
         Toaster.show(binding.root, getString(R.string.beneficiary_deleted_successfully))
         activity?.supportFragmentManager?.popBackStack()
     }

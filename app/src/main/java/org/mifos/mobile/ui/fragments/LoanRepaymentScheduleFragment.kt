@@ -2,7 +2,6 @@ package org.mifos.mobile.ui.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +26,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.LoanRepaymentScheduleViewModel
 import javax.inject.Inject
 
@@ -79,14 +79,17 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
                             hideProgress()
                             showError(getString(it.message))
                         }
+
                         is LoanUiState.ShowLoan -> {
                             hideProgress()
                             showLoanRepaymentSchedule(it.loanWithAssociations)
                         }
+
                         is LoanUiState.ShowEmpty -> {
                             hideProgress()
                             showEmptyRepaymentsSchedule(loanWithAssociations)
                         }
+
                         else -> throw IllegalStateException("Unexpected state: $it")
                     }
                 }
@@ -106,7 +109,12 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showLoanRepaymentSchedule(savedInstanceState.getParcelable<Parcelable>(Constants.LOAN_ACCOUNT) as LoanWithAssociations)
+            showLoanRepaymentSchedule(
+                savedInstanceState.getCheckedParcelable(
+                    LoanWithAssociations::class.java,
+                    Constants.LOAN_ACCOUNT
+                )
+            )
         }
     }
 
@@ -119,10 +127,10 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
         val orientation = resources.configuration.orientation
         binding.tvRepaymentSchedule.layoutParams?.width = resources.displayMetrics.widthPixels
         binding.tvRepaymentSchedule.setAdapter(loanRepaymentScheduleAdapter)
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            columnWidth = 2 * (resources.displayMetrics.widthPixels / 7.2)
+        columnWidth = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            2 * (resources.displayMetrics.widthPixels / 7.2)
         } else {
-            columnWidth = 2 * (resources.displayMetrics.widthPixels / 6.6)
+            2 * (resources.displayMetrics.widthPixels / 6.6)
         }
         loanRepaymentScheduleAdapter?.setColumnWidth(columnWidth)
     }
@@ -140,9 +148,9 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
      *
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
-    fun showLoanRepaymentSchedule(loanWithAssociations: LoanWithAssociations?) {
+    private fun showLoanRepaymentSchedule(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
-        var currencyRepresentation = loanWithAssociations?.currency?.displaySymbol
+        val currencyRepresentation = loanWithAssociations?.currency?.displaySymbol
         loanRepaymentScheduleAdapter
             ?.setCurrency(currencyRepresentation)
         setTableViewList(loanWithAssociations?.repaymentSchedule?.periods)
@@ -177,7 +185,7 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
      *
      * @param loanWithAssociations Contains details about Repayment Schedule
      */
-    fun showEmptyRepaymentsSchedule(loanWithAssociations: LoanWithAssociations?) {
+    private fun showEmptyRepaymentsSchedule(loanWithAssociations: LoanWithAssociations?) {
         binding.tvAccountNumber.text = loanWithAssociations?.accountNo
         binding.tvDisbursementDate.text =
             DateHelper.getDateAsString(loanWithAssociations?.timeline?.expectedDisbursementDate)
@@ -211,7 +219,7 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.tvRepaymentSchedule,

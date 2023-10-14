@@ -22,6 +22,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.QrCodeUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.QrCodeImportViewModel
@@ -109,8 +110,8 @@ class QrCodeImportFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             // restore data
-            mFrameRect = savedInstanceState.getParcelable(Constants.FRAME_RECT)
-            qrUri = savedInstanceState.getParcelable(Constants.SOURCE_URI)!!
+            mFrameRect = savedInstanceState.getCheckedParcelable(RectF::class.java, Constants.FRAME_RECT)
+            qrUri = savedInstanceState.getCheckedParcelable(Uri::class.java, Constants.SOURCE_URI)!!
         }
     }
 
@@ -123,7 +124,7 @@ class QrCodeImportFragment : BaseFragment() {
      *
      * @param message Error message that tells the user about the problem.
      */
-    fun showErrorReadingQr(message: String?) {
+    private fun showErrorReadingQr(message: String?) {
         Toaster.show(binding.root, message)
     }
 
@@ -134,7 +135,7 @@ class QrCodeImportFragment : BaseFragment() {
      *
      * @param result contains the results from decoded QR bitmap
      */
-    fun handleDecodedResult(result: Result?) {
+    private fun handleDecodedResult(result: Result?) {
         val gson = Gson()
         try {
             val beneficiary = gson.fromJson(result?.text, Beneficiary::class.java)

@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.fragments
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter
 import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.viewModels.AccountsViewModel
 import java.util.*
 
@@ -137,24 +139,32 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
             when (accountType) {
                 Constants.SAVINGS_ACCOUNTS -> {
                     val savingAccountList: List<SavingAccount?> =
-                        savedInstanceState.getParcelableArrayList(Constants.SAVINGS_ACCOUNTS)
+                        savedInstanceState.getCheckedArrayListFromParcelable(
+                            SavingAccount::class.java,
+                            Constants.SAVINGS_ACCOUNTS
+                        )
                             ?: listOf()
                     showSavingsAccounts(savingAccountList)
                 }
 
                 Constants.LOAN_ACCOUNTS -> {
                     val loanAccountList: List<LoanAccount?> =
-                        savedInstanceState.getParcelableArrayList(
+                        savedInstanceState.getCheckedArrayListFromParcelable(
+                            LoanAccount::class.java,
                             Constants.LOAN_ACCOUNTS,
-                        ) ?: listOf()
+                        )
+                            ?: listOf()
+
                     showLoanAccounts(loanAccountList)
                 }
 
                 Constants.SHARE_ACCOUNTS -> {
                     val shareAccountList: List<ShareAccount?> =
-                        savedInstanceState.getParcelableArrayList(
+                        savedInstanceState.getCheckedArrayListFromParcelable(
+                            ShareAccount::class.java,
                             Constants.SHARE_ACCOUNTS,
-                        ) ?: listOf()
+                        )
+                            ?: listOf()
                     showShareAccounts(shareAccountList)
                 }
             }

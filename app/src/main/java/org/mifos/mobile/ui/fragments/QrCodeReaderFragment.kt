@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.fragments
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,33 +53,24 @@ class QrCodeReaderFragment : BaseFragment(), ResultHandler {
         binding.viewScanner.startCamera()
     }
 
-    @Suppress("DEPRECATION")
-    fun turnOnFlash() {
+    private fun turnOnFlash() {
         if (flashOn) {
             flashOn = false
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.btnFlash.setImageDrawable(
-                    resources.getDrawable(
-                        R.drawable.ic_flash_on,
-                        null,
-                    ),
-                )
-            } else {
-                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on))
-            }
+            binding.btnFlash.setImageDrawable(
+                resources.getDrawable(
+                    R.drawable.ic_flash_on,
+                    null,
+                ),
+            )
             binding.viewScanner.flash = false
         } else {
             flashOn = true
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.btnFlash.setImageDrawable(
-                    resources.getDrawable(
-                        R.drawable.ic_flash_off,
-                        null,
-                    ),
-                )
-            } else {
-                binding.btnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off))
-            }
+            binding.btnFlash.setImageDrawable(
+                resources.getDrawable(
+                    R.drawable.ic_flash_off,
+                    null,
+                ),
+            )
             binding.viewScanner.flash = true
         }
     }

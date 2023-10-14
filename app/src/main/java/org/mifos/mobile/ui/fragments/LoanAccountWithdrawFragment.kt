@@ -18,6 +18,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.LoanUiState
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.LoanAccountWithdrawViewModel
 
@@ -36,7 +37,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
+            loanWithAssociations = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT)
         }
     }
 
@@ -89,7 +90,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     /**
      * Sends a request to server to withdraw that Loan Account
      */
-    fun onLoanWithdraw() {
+    private fun onLoanWithdraw() {
         val loanWithdraw = LoanWithdraw()
         loanWithdraw.note = binding.etWithdrawReason.text.toString()
         loanWithdraw.withdrawnOnDate = DateHelper
@@ -103,7 +104,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     /**
      * Receives A confirmation after successfull withdrawing of Loan Application.
      */
-    fun showLoanAccountWithdrawSuccess() {
+    private fun showLoanAccountWithdrawSuccess() {
         Toaster.show(binding.root, R.string.loan_application_withdrawn_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }
@@ -114,7 +115,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
      *
      * @param message Error Message displayed
      */
-    fun showLoanAccountWithdrawError(message: String?) {
+    private fun showLoanAccountWithdrawError(message: String?) {
         Toaster.show(binding.root, message)
     }
 

@@ -20,6 +20,7 @@ import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.Network.isConnected
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.viewModels.RecentTransactionViewModel
 import javax.inject.Inject
 
@@ -106,7 +107,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             val transactions: List<Transaction?> =
-                savedInstanceState.getParcelableArrayList(Constants.RECENT_TRANSACTIONS) ?: listOf()
+                savedInstanceState.getCheckedArrayListFromParcelable(Transaction::class.java, Constants.RECENT_TRANSACTIONS) ?: listOf()
             showRecentTransactions(transactions)
         }
     }
@@ -163,7 +164,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     /**
      * Shows a Toast
      */
-    fun showMessage(message: String?) {
+    private fun showMessage(message: String?) {
         (activity as BaseActivity?)?.showToast(message!!)
     }
 
@@ -173,7 +174,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
      *
      * @param recentTransactionList List of [Transaction]
      */
-    fun showRecentTransactions(recentTransactionList: List<Transaction?>?) {
+    private fun showRecentTransactions(recentTransactionList: List<Transaction?>?) {
         this.recentTransactionList = recentTransactionList as MutableList<Transaction?>?
         recentTransactionsListAdapter?.setTransactions(recentTransactionList)
     }
@@ -183,12 +184,12 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
      *
      * @param transactions List of [Transaction]
      */
-    fun showLoadMoreRecentTransactions(transactions: List<Transaction?>?) {
+    private fun showLoadMoreRecentTransactions(transactions: List<Transaction?>?) {
         this.recentTransactionList?.addAll(recentTransactionList!!)
         recentTransactionsListAdapter?.notifyDataSetChanged()
     }
 
-    fun resetUI() {
+    private fun resetUI() {
         sweetUIErrorHandler?.hideSweetErrorLayoutUI(
             binding.rvRecentTransactions,
             binding.layoutError.root,
@@ -198,7 +199,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     /**
      * Hides `rvRecentTransactions` and shows a textview prompting no transactions
      */
-    fun showEmptyTransaction() {
+    private fun showEmptyTransaction() {
         sweetUIErrorHandler?.showSweetEmptyUI(
             getString(R.string.recent_transactions),
             R.drawable.ic_error_black_24dp,
@@ -227,7 +228,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (isConnected(requireContext())) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvRecentTransactions,
@@ -251,7 +252,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         showSwipeRefreshLayout(false)
     }
 
-    fun showSwipeRefreshLayout(show: Boolean) {
+    private fun showSwipeRefreshLayout(show: Boolean) {
         binding.swipeTransactionContainer.post {
             binding.swipeTransactionContainer.isRefreshing = show
         }

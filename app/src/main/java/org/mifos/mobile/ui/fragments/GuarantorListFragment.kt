@@ -146,7 +146,7 @@ class GuarantorListFragment : BaseFragment() {
             }
     }
 
-    fun addGuarantor() {
+    private fun addGuarantor() {
         (activity as BaseActivity?)?.replaceFragment(
             AddGuarantorFragment.newInstance(
                 0,
@@ -167,7 +167,7 @@ class GuarantorListFragment : BaseFragment() {
         hideProgressBar()
     }
 
-    fun showGuarantorListSuccessfully(list: List<GuarantorPayload?>?) {
+    private fun showGuarantorListSuccessfully(list: List<GuarantorPayload?>?) {
         this.list = list as MutableList<GuarantorPayload?>?
         if (list?.size == 0) {
             sweetUIErrorHandler?.showSweetCustomErrorUI(

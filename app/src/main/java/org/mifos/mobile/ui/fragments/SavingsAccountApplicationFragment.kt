@@ -19,6 +19,8 @@ import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
@@ -30,11 +32,11 @@ import javax.inject.Inject
 * Created by saksham on 30/June/2018
 */
 @AndroidEntryPoint
-class SavingsAccountApplicationFragment : BaseFragment(){
+class SavingsAccountApplicationFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsAccountApplicationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingsAccountApplicationViewModel
+    private lateinit var viewModel: SavingsAccountApplicationViewModel
 
 
     @JvmField
@@ -49,8 +51,14 @@ class SavingsAccountApplicationFragment : BaseFragment(){
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             state = requireArguments()
-                .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
-            savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
+                .getCheckedSerializable(
+                    SavingsAccountState::class.java,
+                    Constants.SAVINGS_ACCOUNT_STATE
+                ) as SavingsAccountState
+            savingsWithAssociations = arguments?.getCheckedParcelable(
+                SavingsWithAssociations::class.java,
+                Constants.SAVINGS_ACCOUNTS
+            )
         }
     }
 
@@ -72,7 +80,7 @@ class SavingsAccountApplicationFragment : BaseFragment(){
         }
 
         viewModel.savingsAccountApplicationUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 SavingsAccountUiState.Loading -> showProgress()
 
                 SavingsAccountUiState.HideProgress -> hideProgress()
@@ -182,7 +190,7 @@ class SavingsAccountApplicationFragment : BaseFragment(){
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
 
-    fun showMessage(showMessage: String?) {
+    private fun showMessage(showMessage: String?) {
         Toast.makeText(context, showMessage, Toast.LENGTH_SHORT).show()
     }
 

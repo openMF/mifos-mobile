@@ -29,6 +29,8 @@ import org.mifos.mobile.ui.adapters.BeneficiarySpinnerAdapter
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.ThirdPartyTransferViewModel
 
 /**
@@ -84,10 +86,12 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
                     hideProgress()
                     getString(it.message)
                 }
+
                 is ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate -> {
                     hideProgress()
                     showThirdPartyTransferTemplate(it.accountOptionsTemplate)
                 }
+
                 is ThirdPartyTransferUiState.ShowBeneficiaryList -> {
                     hideProgress()
                     showBeneficiaryList(it.beneficiaries)
@@ -142,10 +146,17 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showThirdPartyTransferTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as AccountOptionsTemplate)
-            val tempBeneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(
-                Constants.BENEFICIARY,
-            ) ?: listOf()
+            showThirdPartyTransferTemplate(
+                savedInstanceState.getCheckedParcelable(
+                    AccountOptionsTemplate::class.java,
+                    Constants.TEMPLATE
+                )
+            )
+            val tempBeneficiaries: List<Beneficiary?> =
+                savedInstanceState.getCheckedArrayListFromParcelable(
+                    Beneficiary::class.java,
+                    Constants.BENEFICIARY,
+                ) ?: listOf()
             showBeneficiaryList(tempBeneficiaries)
         }
     }
@@ -181,7 +192,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      * Checks validation of `etRemark` and then opens [TransferProcessFragment] for
      * initiating the transfer
      */
-    fun reviewTransfer() {
+    private fun reviewTransfer() {
         if (binding.etAmount.text.toString() == "") {
             Toaster.show(binding.root, getString(R.string.enter_amount))
             return
@@ -229,7 +240,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      *
      * @param msg String to be shown
      */
-    fun showToaster(msg: String?) {
+    private fun showToaster(msg: String?) {
         Toaster.show(binding.root, msg)
     }
 
@@ -239,7 +250,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      *
      * @param accountOptionsTemplate Template for account transfer
      */
-    fun showThirdPartyTransferTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
+    private fun showThirdPartyTransferTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
         listPayFrom.clear()
         viewModel.getAccountNumbersFromAccountOptions(
@@ -256,7 +267,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      *
      * @param beneficiaries List of [Beneficiary] linked with user's account
      */
-    fun showBeneficiaryList(beneficiaries: List<Beneficiary?>?) {
+    private fun showBeneficiaryList(beneficiaries: List<Beneficiary?>?) {
         this.beneficiaries = beneficiaries
         listBeneficiary.clear()
         viewModel.getAccountNumbersFromBeneficiaries(beneficiaries)

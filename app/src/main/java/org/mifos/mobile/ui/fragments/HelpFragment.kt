@@ -26,6 +26,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.HelpUiState
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.viewModels.HelpViewModel
 import javax.inject.Inject
 
@@ -88,7 +89,9 @@ class HelpFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             val faqs: ArrayList<FAQ?> =
-                savedInstanceState.getParcelableArrayList(Constants.HELP) ?: arrayListOf()
+                savedInstanceState.getCheckedArrayListFromParcelable(FAQ::class.java, Constants.HELP)
+                    ?.let { ArrayList(it) }
+                    ?: arrayListOf()
             showFaq(faqs)
         }
     }

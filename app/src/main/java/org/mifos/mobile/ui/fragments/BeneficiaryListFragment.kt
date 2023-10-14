@@ -24,6 +24,7 @@ import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.viewModels.BeneficiaryListViewModel
 
 /**
@@ -68,10 +69,12 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
                     hideProgress()
                     showError(getString(it.message))
                 }
+
                 is BeneficiaryUiState.ShowBeneficiaryList -> {
                     hideProgress()
                     showBeneficiaryList(it.beneficiaries)
                 }
+
                 else -> throw IllegalStateException("Undesired $it")
             }
         }
@@ -102,7 +105,10 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             val beneficiaries: List<Beneficiary?> =
-                savedInstanceState.getParcelableArrayList(Constants.BENEFICIARY) ?: listOf()
+                savedInstanceState.getCheckedArrayListFromParcelable(
+                    Beneficiary::class.java,
+                    Constants.BENEFICIARY
+                ) ?: listOf()
             showBeneficiaryList(beneficiaries)
         }
     }

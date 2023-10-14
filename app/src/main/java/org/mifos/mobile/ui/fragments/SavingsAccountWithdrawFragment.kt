@@ -12,6 +12,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
@@ -26,13 +27,16 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingsAccountWithdrawViewModel
+    private lateinit var viewModel: SavingsAccountWithdrawViewModel
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var payload: SavingsAccountWithdrawPayload? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
+            savingsWithAssociations = arguments?.getCheckedParcelable(
+                SavingsWithAssociations::class.java,
+                Constants.SAVINGS_ACCOUNTS
+            )
         }
     }
 
@@ -54,7 +58,7 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
         }
 
         viewModel.savingsAccountWithdrawUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 SavingsAccountUiState.Loading -> showProgress()
 
                 is SavingsAccountUiState.ErrorMessage -> {
@@ -111,7 +115,7 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun showMessage(message: String?) {
+    private fun showMessage(message: String?) {
         Toaster.show(binding.root, message)
     }
 

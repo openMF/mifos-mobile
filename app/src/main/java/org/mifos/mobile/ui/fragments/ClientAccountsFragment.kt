@@ -32,6 +32,7 @@ import org.mifos.mobile.ui.adapters.ViewPagerAdapter
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.viewModels.AccountsViewModel
 import javax.inject.Inject
@@ -44,7 +45,7 @@ import javax.inject.Inject
 class ClientAccountsFragment : BaseFragment() {
     private var _binding: FragmentClientAccountsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : AccountsViewModel
+    private lateinit var viewModel: AccountsViewModel
 
     @JvmField
     @Inject
@@ -56,7 +57,10 @@ class ClientAccountsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         if (arguments != null) {
-            accountType = arguments?.getSerializable(Constants.ACCOUNT_TYPE) as AccountType
+            accountType = arguments?.getCheckedSerializable(
+                AccountType::class.java,
+                Constants.ACCOUNT_TYPE
+            ) as AccountType
         }
     }
 
@@ -166,6 +170,7 @@ class ClientAccountsFragment : BaseFragment() {
                 menu.findItem(R.id.menu_search_share).isVisible = false
                 initSearch(menu, AccountType.SAVINGS)
             }
+
             1 -> {
                 menu.findItem(R.id.menu_filter_savings).isVisible = false
                 menu.findItem(R.id.menu_filter_loan).isVisible = true
@@ -175,6 +180,7 @@ class ClientAccountsFragment : BaseFragment() {
                 menu.findItem(R.id.menu_search_share).isVisible = false
                 initSearch(menu, AccountType.LOAN)
             }
+
             2 -> {
                 menu.findItem(R.id.menu_filter_savings).isVisible = false
                 menu.findItem(R.id.menu_filter_loan).isVisible = false
@@ -234,26 +240,26 @@ class ClientAccountsFragment : BaseFragment() {
                 when (account) {
                     AccountType.SAVINGS -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0),
-                            ) as AccountsFragment?
-                            )?.searchSavingsAccount(newText)
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(0),
+                                ) as AccountsFragment?
+                                )?.searchSavingsAccount(newText)
                     }
 
                     AccountType.LOAN -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1),
-                            ) as AccountsFragment?
-                            )?.searchLoanAccount(newText)
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(1),
+                                ) as AccountsFragment?
+                                )?.searchLoanAccount(newText)
                     }
 
                     AccountType.SHARE -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2),
-                            ) as AccountsFragment?
-                            )?.searchSharesAccount(newText)
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(2),
+                                ) as AccountsFragment?
+                                )?.searchSharesAccount(newText)
                     }
                 }
                 return false
@@ -294,51 +300,51 @@ class ClientAccountsFragment : BaseFragment() {
         when (account) {
             AccountType.SAVINGS -> {
                 if ((
-                        childFragmentManager.findFragmentByTag(
-                            getFragmentTag(0),
-                        ) as AccountsFragment?
-                        )?.getCurrentFilterList() == null
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(0),
+                            ) as AccountsFragment?
+                            )?.getCurrentFilterList() == null
                 ) {
                     checkBoxAdapter?.statusList = StatusUtils.getSavingsAccountStatusList(activity)
                 } else {
                     checkBoxAdapter?.statusList = (
-                        childFragmentManager
-                            .findFragmentByTag(getFragmentTag(0)) as AccountsFragment?
-                        )?.getCurrentFilterList()
+                            childFragmentManager
+                                .findFragmentByTag(getFragmentTag(0)) as AccountsFragment?
+                            )?.getCurrentFilterList()
                 }
                 title = getString(R.string.filter_savings)
             }
 
             AccountType.LOAN -> {
                 if ((
-                        childFragmentManager.findFragmentByTag(
-                            getFragmentTag(1),
-                        ) as AccountsFragment?
-                        )?.getCurrentFilterList() == null
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(1),
+                            ) as AccountsFragment?
+                            )?.getCurrentFilterList() == null
                 ) {
                     checkBoxAdapter?.statusList = StatusUtils.getLoanAccountStatusList(activity)
                 } else {
                     checkBoxAdapter?.statusList = (
-                        childFragmentManager
-                            .findFragmentByTag(getFragmentTag(1)) as AccountsFragment?
-                        )?.getCurrentFilterList()
+                            childFragmentManager
+                                .findFragmentByTag(getFragmentTag(1)) as AccountsFragment?
+                            )?.getCurrentFilterList()
                 }
                 title = getString(R.string.filter_loan)
             }
 
             AccountType.SHARE -> {
                 if ((
-                        childFragmentManager.findFragmentByTag(
-                            getFragmentTag(2),
-                        ) as AccountsFragment?
-                        )?.getCurrentFilterList() == null
+                            childFragmentManager.findFragmentByTag(
+                                getFragmentTag(2),
+                            ) as AccountsFragment?
+                            )?.getCurrentFilterList() == null
                 ) {
                     checkBoxAdapter?.statusList = StatusUtils.getShareAccountStatusList(activity)
                 } else {
                     checkBoxAdapter?.statusList = (
-                        childFragmentManager
-                            .findFragmentByTag(getFragmentTag(2)) as AccountsFragment?
-                        )?.getCurrentFilterList()
+                            childFragmentManager
+                                .findFragmentByTag(getFragmentTag(2)) as AccountsFragment?
+                            )?.getCurrentFilterList()
                 }
                 title = getString(R.string.filter_share)
             }
@@ -353,46 +359,46 @@ class ClientAccountsFragment : BaseFragment() {
                 when (account) {
                     AccountType.SAVINGS -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0),
-                            ) as AccountsFragment?
-                            )
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(0),
+                                ) as AccountsFragment?
+                                )
                             ?.setCurrentFilterList(checkBoxAdapter?.statusList)
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0),
-                            ) as AccountsFragment?
-                            )
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(0),
+                                ) as AccountsFragment?
+                                )
                             ?.filterSavingsAccount(checkBoxAdapter?.statusList)
                     }
 
                     AccountType.LOAN -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1),
-                            ) as AccountsFragment?
-                            )
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(1),
+                                ) as AccountsFragment?
+                                )
                             ?.setCurrentFilterList(checkBoxAdapter?.statusList)
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1),
-                            ) as AccountsFragment?
-                            )
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(1),
+                                ) as AccountsFragment?
+                                )
                             ?.filterLoanAccount(checkBoxAdapter?.statusList)
                     }
 
                     AccountType.SHARE -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2),
-                            ) as AccountsFragment?
-                            )
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(2),
+                                ) as AccountsFragment?
+                                )
                             ?.setCurrentFilterList(checkBoxAdapter?.statusList)
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2),
-                            ) as AccountsFragment?
-                            )
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(2),
+                                ) as AccountsFragment?
+                                )
                             ?.filterShareAccount(checkBoxAdapter?.statusList)
                     }
                 }
@@ -402,10 +408,10 @@ class ClientAccountsFragment : BaseFragment() {
                 when (account) {
                     AccountType.SAVINGS -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(0),
-                            ) as AccountsFragment?
-                            )?.clearFilter()
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(0),
+                                ) as AccountsFragment?
+                                )?.clearFilter()
                         checkBoxAdapter?.statusList =
                             StatusUtils.getSavingsAccountStatusList(activity)
                         viewModel.loadAccounts(Constants.SAVINGS_ACCOUNTS)
@@ -413,20 +419,20 @@ class ClientAccountsFragment : BaseFragment() {
 
                     AccountType.LOAN -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(1),
-                            ) as AccountsFragment?
-                            )?.clearFilter()
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(1),
+                                ) as AccountsFragment?
+                                )?.clearFilter()
                         checkBoxAdapter?.statusList = StatusUtils.getLoanAccountStatusList(activity)
                         viewModel.loadAccounts(Constants.LOAN_ACCOUNTS)
                     }
 
                     AccountType.SHARE -> {
                         (
-                            childFragmentManager.findFragmentByTag(
-                                getFragmentTag(2),
-                            ) as AccountsFragment?
-                            )?.clearFilter()
+                                childFragmentManager.findFragmentByTag(
+                                    getFragmentTag(2),
+                                ) as AccountsFragment?
+                                )?.clearFilter()
                         checkBoxAdapter?.statusList =
                             StatusUtils.getShareAccountStatusList(activity)
                         viewModel.loadAccounts(Constants.SHARE_ACCOUNTS)

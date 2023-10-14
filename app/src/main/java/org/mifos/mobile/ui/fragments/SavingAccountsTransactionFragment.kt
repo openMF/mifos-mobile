@@ -36,6 +36,7 @@ import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.DatePick
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
@@ -53,7 +54,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
 
     private var _binding: FragmentSavingAccountTransactionsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingAccountsTransactionViewModel
+    private lateinit var viewModel: SavingAccountsTransactionViewModel
 
     @JvmField
     @Inject
@@ -108,7 +109,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         }
 
         viewModel.savingAccountsTransactionUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 SavingsAccountUiState.Loading -> showProgress()
 
                 SavingsAccountUiState.Error -> {
@@ -145,7 +146,12 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showSavingAccountsDetail(savedInstanceState.getParcelable<Parcelable>(Constants.SAVINGS_ACCOUNTS) as SavingsWithAssociations)
+            showSavingAccountsDetail(
+                savedInstanceState.getCheckedParcelable(
+                    SavingsWithAssociations::class.java,
+                    Constants.SAVINGS_ACCOUNTS
+                )
+            )
         }
     }
 
@@ -431,16 +437,16 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      */
     private fun filterSavingsAccountTransactionsByType(statusModelList: List<CheckboxStatus?>?): List<Transactions?> {
         val filteredSavingsTransactions: MutableList<Transactions?> = ArrayList()
-            for (status in viewModel
-                .getCheckedStatus(statusModelList)!!) {
-                viewModel
-                    .filterTransactionListByType(transactionsList, status, getCheckBoxStatusStrings())
-                    ?.let { filteredSavingsTransactions.addAll(it) }
-            }
+        for (status in viewModel
+            .getCheckedStatus(statusModelList)!!) {
+            viewModel
+                .filterTransactionListByType(transactionsList, status, getCheckBoxStatusStrings())
+                ?.let { filteredSavingsTransactions.addAll(it) }
+        }
         return filteredSavingsTransactions
     }
 
-    private fun getCheckBoxStatusStrings() : CheckBoxStatusUtil{
+    private fun getCheckBoxStatusStrings(): CheckBoxStatusUtil {
         return CheckBoxStatusUtil().apply {
             this.depositString = context?.getString(R.string.deposit)
             this.dividendPayoutString = context?.getString(R.string.dividend_payout)
@@ -452,6 +458,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
             this.overdraftFeeString = context?.getString(R.string.overdraft_fee)
         }
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_filter_savings_transactions -> showFilterDialog()

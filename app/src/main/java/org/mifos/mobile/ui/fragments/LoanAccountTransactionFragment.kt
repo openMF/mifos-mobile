@@ -24,6 +24,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.LoanAccountTransactionViewModel
 import javax.inject.Inject
 
@@ -78,7 +79,12 @@ class LoanAccountTransactionFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showLoanTransactions(savedInstanceState.getParcelable<Parcelable>(Constants.LOAN_ACCOUNT) as LoanWithAssociations)
+            showLoanTransactions(
+                savedInstanceState.getCheckedParcelable(
+                    LoanWithAssociations::class.java,
+                    Constants.LOAN_ACCOUNT
+                )
+            )
         }
     }
 
@@ -101,7 +107,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
      *
      * @param loanWithAssociations object containing details about a Loan Account with Associations
      */
-    fun showLoanTransactions(loanWithAssociations: LoanWithAssociations?) {
+    private fun showLoanTransactions(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
         binding.llLoanAccountTrans.visibility = View.VISIBLE
         binding.tvLoanProductName.text = loanWithAssociations?.loanProductName
@@ -111,7 +117,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
     /**
      * Sets a [TextView] with a msg if Transactions list is empty
      */
-    fun showEmptyTransactions(loanWithAssociations: LoanWithAssociations?) {
+    private fun showEmptyTransactions(loanWithAssociations: LoanWithAssociations?) {
         sweetUIErrorHandler?.showSweetEmptyUI(
             getString(R.string.transactions),
             R.drawable.ic_compare_arrows_black_24dp,
@@ -125,7 +131,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
      *
      * @param message Error message that tells the user about the problem.
      */
-    fun showErrorFetchingLoanAccountsDetail(message: String?) {
+    private fun showErrorFetchingLoanAccountsDetail(message: String?) {
         with(binding) {
             if (!Network.isConnected(activity)) {
                 sweetUIErrorHandler?.showSweetNoInternetUI(
@@ -155,14 +161,17 @@ class LoanAccountTransactionFragment : BaseFragment() {
                             hideProgress()
                             showErrorFetchingLoanAccountsDetail(getString(it.message))
                         }
+
                         is LoanUiState.ShowLoan -> {
                             hideProgress()
                             showLoanTransactions(it.loanWithAssociations)
                         }
+
                         is LoanUiState.ShowEmpty -> {
                             hideProgress()
                             showEmptyTransactions(it.loanWithAssociations)
                         }
+
                         else -> throw IllegalStateException("Unexpected state: $it")
                     }
                 }
@@ -174,7 +183,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (Network.isConnected(context)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvLoanTransactions,

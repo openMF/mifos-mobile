@@ -9,19 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.btn_loan_submit
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_add_loan
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_error
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_account_number
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_currency
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_expected_disbursement_date
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_product
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_purpose
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_new_loan_application
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_principal_amount
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_submission_date
-//import kotlinx.android.synthetic.main.layout_error.iv_status
-//import kotlinx.android.synthetic.main.layout_error.tv_status
 import okhttp3.ResponseBody
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentReviewLoanApplicationBinding
@@ -30,6 +17,8 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
 
@@ -93,11 +82,11 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     ): View {
         _binding = FragmentReviewLoanApplicationBinding.inflate(inflater, container, false)
         viewModel = ViewModelProviders.of(this)[ReviewLoanApplicationViewModel::class.java]
-        val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
+        val loanState = arguments?.getCheckedSerializable(LoanState::class.java, LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
             viewModel.insertData(
                 loanState,
-                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getCheckedParcelable(LoansPayload::class.java, LOANS_PAYLOAD)!!,
                 arguments?.getString(LOAN_NAME)!!,
                 arguments?.getString(ACCOUNT_NO)!!,
             )
@@ -105,7 +94,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             viewModel.insertData(
                 loanState,
                 arguments?.getLong(LOAN_ID)!!,
-                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getCheckedParcelable(LoansPayload::class.java, LOANS_PAYLOAD)!!,
                 arguments?.getString(LOAN_NAME)!!,
                 arguments?.getString(ACCOUNT_NO)!!,
             )
@@ -170,7 +159,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     }
 
     fun hideProgress() {
-        binding?.llAddLoan?.visibility = View.VISIBLE
+        binding.llAddLoan.visibility = View.VISIBLE
         hideProgressBar()
     }
 
