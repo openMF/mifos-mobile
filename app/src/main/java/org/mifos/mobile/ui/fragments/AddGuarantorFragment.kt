@@ -53,16 +53,13 @@ class AddGuarantorFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
-            guarantorState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getSerializable(Constants.GUARANTOR_STATE, GuarantorState::class.java)
-            } else {
-                arguments?.getSerializable(Constants.GUARANTOR_STATE) as GuarantorState?
-            }
-            payload = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getParcelable(Constants.PAYLOAD, GuarantorPayload::class.java)
-            } else {
-                arguments?.getParcelable(Constants.PAYLOAD) as GuarantorPayload?
-            }
+            guarantorState = requireArguments()
+                .getCheckedSerializable(
+                    GuarantorState::class.java,
+                    Constants.GUARANTOR_STATE
+                ) as GuarantorState
+            payload =
+                arguments?.getCheckedParcelable(GuarantorPayload::class.java, Constants.PAYLOAD)
             index = arguments?.getInt(Constants.INDEX)
         }
     }
