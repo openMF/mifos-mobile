@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.mifos.mobile.R
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
@@ -67,8 +68,7 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
             if (response?.isSuccessful == true) {
                 _registrationUiState.value = RegistrationUiState.Success
             } else {
-                _registrationUiState.value =
-                    response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
+                _registrationUiState.value = RegistrationUiState.Error(R.string.could_not_register_user_error)
             }
         }
     }
@@ -81,8 +81,7 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
                 _registrationVerificationUiState.value =
                     RegistrationUiState.Success
             } else {
-                _registrationVerificationUiState.value =
-                    response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
+                _registrationVerificationUiState.value = RegistrationUiState.Error(R.string.could_not_register_user_error)
             }
         }
     }

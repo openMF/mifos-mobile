@@ -63,7 +63,7 @@ class UpdatePasswordFragment : BaseFragment(), TextWatcher, OnFocusChangeListene
 
                 is RegistrationUiState.Error -> {
                     hideProgress()
-                    showError(state.exception)
+                    showError(getString(state.exception))
                 }
             }
         }
