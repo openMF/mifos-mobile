@@ -50,7 +50,7 @@ class RegistrationVerificationFragment : BaseFragment() {
 
                 is RegistrationUiState.Error -> {
                     hideProgress()
-                    showError(state.exception)
+                    showError(getString(state.exception))
                 }
             }
         }

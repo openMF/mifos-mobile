@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.mifos.mobile.R
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
@@ -35,20 +36,16 @@ class UpdatePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             _updatePasswordUiState.value = RegistrationUiState.Loading
             val response = userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)
-
             try {
                 if (response?.isSuccessful == true) {
                     _updatePasswordUiState.value = RegistrationUiState.Success
                     clientRepositoryImp.updateAuthenticationToken(newPassword)
                 } else {
-                    _updatePasswordUiState.value =
-                        response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
+                    _updatePasswordUiState.value = RegistrationUiState.Error(R.string.could_not_update_password_error)
                 }
             } catch (e: Throwable) {
-                _updatePasswordUiState.value =
-                    response?.errorBody()?.string()?.let { RegistrationUiState.Error(it) }
+                _updatePasswordUiState.value = RegistrationUiState.Error(R.string.could_not_update_password_error)
             }
         }
     }
-
 }
