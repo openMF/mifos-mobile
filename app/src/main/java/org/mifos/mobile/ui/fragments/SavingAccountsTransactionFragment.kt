@@ -29,7 +29,6 @@ import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.views.SavingAccountsTransactionView
 import org.mifos.mobile.utils.CheckBoxStatusUtil
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
@@ -42,7 +41,6 @@ import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getDatePickerDialog
 import org.mifos.mobile.viewModels.SavingAccountsTransactionViewModel
-import java.lang.IllegalStateException
 import java.time.Instant
 import javax.inject.Inject
 
@@ -50,7 +48,7 @@ import javax.inject.Inject
  * Created by dilpreet on 6/3/17.
  */
 @AndroidEntryPoint
-class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransactionView {
+class SavingAccountsTransactionFragment : BaseFragment() {
 
     private var _binding: FragmentSavingAccountTransactionsBinding? = null
     private val binding get() = _binding!!
@@ -158,7 +156,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     /**
      * Setting up basic components
      */
-    override fun showUserInterface() {
+    fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvSavingAccountsTransaction.setHasFixedSize(true)
@@ -178,7 +176,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      *
      * @param savingsWithAssociations Contains [Transactions] for given Savings account.
      */
-    override fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
+    fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
         binding.llAccount.visibility = View.VISIBLE
         this.savingsWithAssociations = savingsWithAssociations
         transactionsList = savingsWithAssociations?.transactions
@@ -195,7 +193,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
      *
      * @param message Error message that tells the user about the problem.
      */
-    override fun showErrorFetchingSavingAccountsDetail(message: String?) {
+    fun showErrorFetchingSavingAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.rvSavingAccountsTransaction,
@@ -229,7 +227,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
     /**
      * Provides with a filtered list according to the constraints used in `filter()` function
      */
-    override fun showFilteredList(list: List<Transactions?>?) {
+    fun showFilteredList(list: List<Transactions?>?) {
         if (!list.isNullOrEmpty()) {
             Toaster.show(binding.root, getString(R.string.filtered))
             transactionListAdapter?.setSavingAccountsTransactionList(list)
@@ -238,7 +236,7 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         }
     }
 
-    override fun showEmptyTransactions() {
+    fun showEmptyTransactions() {
         sweetUIErrorHandler?.showSweetEmptyUI(
             getString(R.string.transactions),
             R.drawable.ic_compare_arrows_black_24dp,
@@ -283,11 +281,11 @@ class SavingAccountsTransactionFragment : BaseFragment(), SavingAccountsTransact
         return startDate <= endDate
     }
 
-    override fun showProgress() {
+    fun showProgress() {
         showProgressBar()
     }
 
-    override fun hideProgress() {
+    fun hideProgress() {
         hideProgressBar()
     }
 
