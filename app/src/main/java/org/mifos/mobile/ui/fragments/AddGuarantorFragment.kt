@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,20 +40,27 @@ class AddGuarantorFragment : BaseFragment() {
 
     private val viewModel: AddGuarantorViewModel by viewModels()
 
-    var guarantorTypeAdapter: ArrayAdapter<String?>? = null
+    private var guarantorTypeAdapter: ArrayAdapter<String?>? = null
     var template: GuarantorTemplatePayload? = null
     var payload: GuarantorPayload? = null
     private var guarantorState: GuarantorState? = null
     private var guarantorApplicationPayload: GuarantorApplicationPayload? = null
     var loanId: Long? = 0
-    var index: Int? = 0
+    private var index: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
-            guarantorState = requireArguments()
-                .getSerializable(Constants.GUARANTOR_STATE) as GuarantorState
-            payload = arguments?.getParcelable(Constants.PAYLOAD)
+            guarantorState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                arguments?.getSerializable(Constants.GUARANTOR_STATE, GuarantorState::class.java)
+            } else {
+                arguments?.getSerializable(Constants.GUARANTOR_STATE) as GuarantorState?
+            }
+            payload = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                arguments?.getParcelable(Constants.PAYLOAD, GuarantorPayload::class.java)
+            } else {
+                arguments?.getParcelable(Constants.PAYLOAD) as GuarantorPayload?
+            }
             index = arguments?.getInt(Constants.INDEX)
         }
     }
@@ -83,22 +91,27 @@ class AddGuarantorFragment : BaseFragment() {
                             hideProgress()
                             showError(it.message)
                         }
+
                         is GuarantorUiState.ShowGuarantorApplication -> {
                             hideProgress()
                             showGuarantorApplication(it.template)
                         }
+
                         is GuarantorUiState.ShowGuarantorUpdation -> {
                             hideProgress()
                             showGuarantorUpdation(it.template)
                         }
+
                         is GuarantorUiState.SubmittedSuccessfully -> {
                             hideProgress()
                             submittedSuccessfully(it.message, it.payload)
                         }
+
                         is GuarantorUiState.GuarantorUpdatedSuccessfully -> {
                             hideProgress()
                             updatedSuccessfully(it.message)
                         }
+
                         else -> throw IllegalStateException("Undesired $it")
                     }
                 }
@@ -115,7 +128,7 @@ class AddGuarantorFragment : BaseFragment() {
         viewModel.getGuarantorTemplate(guarantorState, loanId)
     }
 
-    fun onSubmit() {
+    private fun onSubmit() {
         with(binding) {
             tilFirstName.isErrorEnabled = false
             tilLastName.isErrorEnabled = false
@@ -199,12 +212,12 @@ class AddGuarantorFragment : BaseFragment() {
         _binding = null
     }
 
-    fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
+    private fun showGuarantorApplication(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
     }
 
-    fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
+    private fun showGuarantorUpdation(template: GuarantorTemplatePayload?) {
         this.template = template
         setUpSpinner()
         with(binding) {
@@ -217,7 +230,6 @@ class AddGuarantorFragment : BaseFragment() {
 
     private fun setUpSpinner() {
         val options: MutableList<String?> = ArrayList()
-        options.addAll(listOf("choicea", "choiceB"))
         for (option in template?.guarantorTypeOptions!!) {
             options.add(option.value)
         }
@@ -231,13 +243,13 @@ class AddGuarantorFragment : BaseFragment() {
         }
     }
 
-    fun updatedSuccessfully(message: String?) {
+    private fun updatedSuccessfully(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         publish(UpdateGuarantorEvent(guarantorApplicationPayload, index))
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
+    private fun submittedSuccessfully(message: String?, payload: GuarantorApplicationPayload?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         publish(AddGuarantorEvent(payload, index))
         activity?.supportFragmentManager?.popBackStack()
