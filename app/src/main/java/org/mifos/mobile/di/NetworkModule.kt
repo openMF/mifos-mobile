@@ -1,4 +1,4 @@
-package org.mifos.mobile.injection.module
+package org.mifos.mobile.di
 
 import dagger.Module
 import dagger.Provides
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -29,12 +29,7 @@ class NetworkModule {
             .baseUrl(BaseURL().getUrl(preferencesHelper.baseUrl!!))
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(
-                SelfServiceOkHttpClient(
-                    preferencesHelper.tenant,
-                    preferencesHelper.token
-                ).mifosOkHttpClient
-            )
+            .client(SelfServiceOkHttpClient(preferencesHelper).mifosOkHttpClient)
             .build()
     }
 

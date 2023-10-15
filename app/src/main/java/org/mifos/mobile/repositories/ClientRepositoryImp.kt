@@ -50,8 +50,7 @@ class ClientRepositoryImp @Inject constructor(
     override fun reInitializeService() {
         retrofit.newBuilder().client(
             SelfServiceOkHttpClient(
-                preferencesHelper.tenant,
-                preferencesHelper.token
+                preferencesHelper
             ).mifosOkHttpClient
         )
     }
