@@ -13,8 +13,17 @@ import java.util.*
 object LanguageHelper {
     // https://gunhansancar.com/change-language-programmatically-in-android/
     fun onAttach(context: Context): Context? {
-        val lang = getPersistedData(context, Locale.getDefault().language)
-        return lang?.let { setLocale(context, it) }
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return if (preferences.getBoolean(context.getString(R.string.default_system_language), true)) {
+            if(!context.resources.getStringArray(R.array.languages_value).contains(Locale.getDefault().language)){
+                setLocale(context, "en")
+            }else{
+                setLocale(context, Locale.getDefault().language)
+            }
+        } else {
+            val lang = getPersistedData(context, Locale.getDefault().language)
+            lang?.let { setLocale(context, it) }
+        }
     }
 
     @JvmStatic
@@ -52,9 +61,7 @@ object LanguageHelper {
         val resources = context?.resources
         val configuration = resources?.configuration
         configuration?.locale = locale
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration?.setLayoutDirection(locale)
-        }
+        configuration?.setLayoutDirection(locale)
         resources?.updateConfiguration(configuration, resources.displayMetrics)
         return context
     }
