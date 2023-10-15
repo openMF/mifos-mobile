@@ -1,6 +1,7 @@
 package org.mifos.mobile
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
@@ -11,6 +12,7 @@ import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.hilt.android.HiltAndroidApp
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.ui.fragments.applySavedTheme
+import org.mifos.mobile.utils.LanguageHelper
 import org.mifos.mobile.utils.LanguageHelper.onAttach
 import java.util.Locale
 
@@ -45,7 +47,9 @@ class MifosSelfServiceApp : MultiDexApplication() {
         PreferencesHelper(this).applySavedTheme()
     }
 
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(onAttach(base, Locale.getDefault().language))
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        context?.let { onAttach(it) }
     }
+
 }
