@@ -1,35 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?><!--TODO: replace this with a simple icon and use BadgeDrawable for badge-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@android:style/Widget.ActionButton"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center">
 
-    <ImageView
-        android:id="@+id/iv_notification_icon"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        app:srcCompat="@drawable/ic_notifications" />
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_notification_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/iv_notification_icon"
-        android:layout_alignEnd="@+id/iv_notification_icon"
-        android:layout_alignRight="@id/iv_notification_icon"
-        android:background="@drawable/notification_circle"
-        android:gravity="top|end"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_extra_small"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/iv_notification_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:srcCompat="@drawable/ic_notifications" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_notification_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_notification_icon"
+            android:layout_alignEnd="@+id/iv_notification_icon"
+            android:background="@drawable/notification_circle"
+            android:gravity="top|end"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>
