@@ -89,4 +89,10 @@ object RepositoryModule {
     fun providesUserDetailRepository(dataManager: DataManager): UserDetailRepository {
         return UserDetailRepositoryImp(dataManager)
     }
+
+    @Provides
+    fun providesReviewLoanApplicationRepository(dataManager: DataManager): ReviewLoanApplicationRepository {
+        return ReviewLoanApplicationRepositoryImpl(dataManager)
+    }
+
 }

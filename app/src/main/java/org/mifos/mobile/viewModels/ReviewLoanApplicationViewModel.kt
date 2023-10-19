@@ -1,16 +1,23 @@
 package org.mifos.mobile.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Observable
-import okhttp3.ResponseBody
-import org.mifos.mobile.api.DataManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.payload.LoansPayload
+import org.mifos.mobile.repositories.ReviewLoanApplicationRepository
 import org.mifos.mobile.ui.enums.LoanState
+import org.mifos.mobile.utils.ReviewLoanApplicationUiState
 import javax.inject.Inject
 
 @HiltViewModel
-class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataManager?) :
+class ReviewLoanApplicationViewModel @Inject constructor(
+    private val reviewLoanApplicationRepositoryImpl: ReviewLoanApplicationRepository
+) :
     ViewModel() {
 
     private lateinit var loansPayload: LoansPayload
@@ -23,7 +30,7 @@ class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataMa
         loanState: LoanState,
         loansPayload: LoansPayload,
         loanName: String,
-        accountNo: String,
+        accountNo: String
     ) {
         this.loanState = loanState
         this.loansPayload = loansPayload
@@ -36,7 +43,7 @@ class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataMa
         loanId: Long,
         loansPayload: LoansPayload,
         loanName: String,
-        accountNo: String,
+        accountNo: String
     ) {
         this.loanState = loanState
         this.loanId = loanId
@@ -63,14 +70,22 @@ class ReviewLoanApplicationViewModel @Inject constructor(var dataManager: DataMa
 
     fun getLoanState() = loanState
 
-    fun submitLoan(): Observable<ResponseBody?>? {
+    private val _reviewLoanApplicationUiState =
+        MutableStateFlow<ReviewLoanApplicationUiState>(ReviewLoanApplicationUiState.Initial)
+    val reviewLoanApplicationUiState: StateFlow<ReviewLoanApplicationUiState> =
+        _reviewLoanApplicationUiState
+
+    fun submitLoan() = viewModelScope.launch(Dispatchers.IO) {
         loansPayload.productName = null
         loansPayload.loanPurpose = null
         loansPayload.currency = null
-        return if (loanState == LoanState.CREATE) {
-            dataManager?.createLoansAccount(loansPayload)
-        } else {
-            dataManager?.updateLoanAccount(loanId, loansPayload)
+
+        _reviewLoanApplicationUiState.value = ReviewLoanApplicationUiState.Loading
+        reviewLoanApplicationRepositoryImpl.submitLoan(loanState, loansPayload, loanId).catch {
+            _reviewLoanApplicationUiState.value = ReviewLoanApplicationUiState.Error(it)
+        }.collect {
+            _reviewLoanApplicationUiState.value = ReviewLoanApplicationUiState.ReviewSuccess(it)
         }
     }
+
 }

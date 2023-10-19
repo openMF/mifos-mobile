@@ -4,25 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.btn_loan_submit
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_add_loan
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.ll_error
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_account_number
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_currency
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_expected_disbursement_date
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_product
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_loan_purpose
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_new_loan_application
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_principal_amount
-//import kotlinx.android.synthetic.main.fragment_review_loan_application.tv_submission_date
-//import kotlinx.android.synthetic.main.layout_error.iv_status
-//import kotlinx.android.synthetic.main.layout_error.tv_status
-import okhttp3.ResponseBody
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentReviewLoanApplicationBinding
 import org.mifos.mobile.models.payload.LoansPayload
@@ -30,8 +17,10 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ReviewLoanApplicationUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
+import java.util.Locale
 
 @AndroidEntryPoint
 class ReviewLoanApplicationFragment : BaseFragment() {
@@ -83,8 +72,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         }
     }
 
-
-    private lateinit var viewModel: ReviewLoanApplicationViewModel
+    private val viewModel by viewModels<ReviewLoanApplicationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,7 +80,6 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentReviewLoanApplicationBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(this)[ReviewLoanApplicationViewModel::class.java]
         val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
             viewModel.insertData(
@@ -115,53 +102,69 @@ class ReviewLoanApplicationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvLoanProduct.text = viewModel.getLoanProduct()
-        binding.tvLoanPurpose.text = viewModel.getLoanPurpose()
-        binding.tvPrincipalAmount.text = viewModel.getPrincipal().toString()
-        binding.tvExpectedDisbursementDate.text = viewModel.getDisbursementDate()
-        binding.tvSubmissionDate.text = viewModel.getSubmissionDate()
-        binding.tvCurrency.text = viewModel.getCurrency()
-        binding.tvNewLoanApplication.text = viewModel.getLoanName()
-        binding.tvAccountNumber.text = viewModel.getAccountNo()
+        binding.apply {
+            tvLoanProduct.text = viewModel.getLoanProduct()
+            tvLoanPurpose.text = viewModel.getLoanPurpose()
+            tvPrincipalAmount.text = String.format(
+                Locale.getDefault(),
+                "%.2f", viewModel.getPrincipal(),
+            )
+            tvExpectedDisbursementDate.text = viewModel.getDisbursementDate()
+            tvSubmissionDate.text = viewModel.getSubmissionDate()
+            tvCurrency.text = viewModel.getCurrency()
+            tvNewLoanApplication.text = viewModel.getLoanName()
+            tvAccountNumber.text = viewModel.getAccountNo()
 
-        binding.btnLoanSubmit.setOnClickListener {
-            showProgress()
-            viewModel.submitLoan()
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribeWith(object : DisposableObserver<ResponseBody>() {
-                    override fun onComplete() {
-                    }
+            btnLoanSubmit.setOnClickListener {
+                viewModel.submitLoan()
+            }
 
-                    override fun onNext(t: ResponseBody) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.reviewLoanApplicationUiState.collect {
                         hideProgress()
-                        if (viewModel.getLoanState() == LoanState.CREATE) {
-                            showLoanAccountCreatedSuccessfully()
-                        } else {
-                            showLoanAccountUpdatedSuccessfully()
+                        when (it) {
+                            is ReviewLoanApplicationUiState.Initial -> {}
+
+                            is ReviewLoanApplicationUiState.Loading -> {
+                                showProgress()
+                            }
+
+                            is ReviewLoanApplicationUiState.ReviewSuccess -> {
+                                if (viewModel.getLoanState() == LoanState.CREATE) {
+                                    showLoanAccountCreatedSuccessfully()
+                                } else {
+                                    showLoanAccountUpdatedSuccessfully()
+                                }
+                            }
+
+                            is ReviewLoanApplicationUiState.Error -> {
+                                showError(MFErrorParser.errorMessage(it.throwable))
+                            }
                         }
                     }
-
-                    override fun onError(e: Throwable) {
-                        hideProgress()
-                        showError(MFErrorParser.errorMessage(e))
-                    }
-                })
+                }
+            }
         }
+
     }
 
-    fun showLoanAccountUpdatedSuccessfully() {
+    private fun showLoanAccountUpdatedSuccessfully() {
         Toaster.show(binding.root, R.string.loan_application_updated_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun showError(message: String?) = if (!Network.isConnected(activity)) {
-        binding.llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
-        binding.llError.tvStatus.text = getString(R.string.internet_not_connected)
-        binding.llAddLoan.visibility = View.GONE
-        binding.llError.root.visibility = View.VISIBLE
-    } else {
-        Toaster.show(binding.root, message)
+    fun showError(message: String?) {
+        if (!Network.isConnected(activity)) {
+            binding.apply {
+                llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
+                llError.tvStatus.text = getString(R.string.internet_not_connected)
+                llAddLoan.visibility = View.GONE
+                llError.root.visibility = View.VISIBLE
+            }
+        } else {
+            Toaster.show(binding.root, message)
+        }
     }
 
     fun showProgress() {
@@ -170,11 +173,11 @@ class ReviewLoanApplicationFragment : BaseFragment() {
     }
 
     fun hideProgress() {
-        binding?.llAddLoan?.visibility = View.VISIBLE
+        binding.llAddLoan.visibility = View.VISIBLE
         hideProgressBar()
     }
 
-    fun showLoanAccountCreatedSuccessfully() {
+    private fun showLoanAccountCreatedSuccessfully() {
         Toaster.show(binding.root, R.string.loan_application_submitted_successfully)
         activity?.supportFragmentManager?.popBackStack()
     }

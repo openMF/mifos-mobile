@@ -9,7 +9,6 @@ import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mifos.mobile.utils.Constants
-import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -36,13 +35,13 @@ interface LoanAccountsListService {
     ): LoanTemplate
 
     @POST(ApiEndPoints.LOANS)
-    fun createLoansAccount(@Body loansPayload: LoansPayload?): Observable<ResponseBody?>?
+    suspend fun createLoansAccount(@Body loansPayload: LoansPayload?): ResponseBody
 
     @PUT(ApiEndPoints.LOANS + "/{loanId}/")
-    fun updateLoanAccount(
+    suspend fun updateLoanAccount(
         @Path("loanId") loanId: Long,
         @Body loansPayload: LoansPayload?,
-    ): Observable<ResponseBody?>?
+    ): ResponseBody
 
     @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
     suspend fun withdrawLoanAccount(
