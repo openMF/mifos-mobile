@@ -161,22 +161,27 @@ class LoanApplicationFragment : BaseFragment() {
                             hideProgress()
                             showError(getString(it.message))
                         }
+
                         is LoanUiState.ShowLoanTemplate -> {
                             hideProgress()
                             showLoanTemplateByProduct(it.template)
                         }
+
                         is LoanUiState.ShowUpdateLoanTemplate -> {
                             hideProgress()
                             showUpdateLoanTemplateByProduct(it.template)
                         }
+
                         is LoanUiState.ShowLoanTemplateByProduct -> {
                             hideProgress()
                             showLoanTemplate(it.template)
                         }
+
                         is LoanUiState.ShowUpdateLoanTemplateByProduct -> {
                             hideProgress()
                             showUpdateLoanTemplate(it.template)
                         }
+
                         else -> throw IllegalStateException("Unexpected state: $it")
                     }
                 }
@@ -316,9 +321,11 @@ class LoanApplicationFragment : BaseFragment() {
     /**
      * Retries to fetch [LoanTemplate] by calling `loadLoanTemplate()`
      */
-    fun onRetry() {
-        binding.llError.root.visibility = View.GONE
-        binding.llAddLoan.visibility = View.VISIBLE
+    private fun onRetry() {
+        binding.apply {
+            llError.root.visibility = View.GONE
+            llAddLoan.visibility = View.VISIBLE
+        }
         loadLoanTemplate()
     }
 
@@ -390,7 +397,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showLoanTemplate(loanTemplate: LoanTemplate?) {
+    private fun showLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
@@ -407,7 +414,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
+    private fun showUpdateLoanTemplate(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         if (loanTemplate?.productOptions != null) {
             for ((_, name) in loanTemplate.productOptions) {
@@ -456,7 +463,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
+    private fun showLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         with(binding) {
             tvAccountNumber.text = getString(
@@ -469,7 +476,12 @@ class LoanApplicationFragment : BaseFragment() {
                 getString(R.string.new_loan_application) + " ",
                 loanTemplate?.clientName,
             )
-            tilPrincipalAmount.editText?.setText(loanTemplate?.principal.toString())
+            tilPrincipalAmount.editText?.setText(
+                String.format(
+                    Locale.getDefault(),
+                    "%.2f", loanTemplate?.principal
+                ),
+            )
             tvCurrency.text = loanTemplate?.currency?.displayLabel
             listLoanPurpose.clear()
             listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
@@ -489,7 +501,7 @@ class LoanApplicationFragment : BaseFragment() {
      *
      * @param loanTemplate Template for Loan Application
      */
-    fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
+    private fun showUpdateLoanTemplateByProduct(loanTemplate: LoanTemplate?) {
         this.loanTemplate = loanTemplate
         listLoanPurpose.clear()
         listLoanPurpose.add(activity?.getString(R.string.loan_purpose_not_provided))
@@ -517,7 +529,12 @@ class LoanApplicationFragment : BaseFragment() {
                     getString(R.string.new_loan_application) + " ",
                     loanTemplate?.clientName,
                 )
-                tilPrincipalAmount.editText?.setText(loanTemplate?.principal.toString())
+                tilPrincipalAmount.editText?.setText(
+                    String.format(
+                        Locale.getDefault(),
+                        "%.2f", loanTemplate?.principal
+                    ),
+                )
                 tvCurrency.text = loanTemplate?.currency?.displayLabel
             }
         }
