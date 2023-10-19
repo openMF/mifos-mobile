@@ -151,11 +151,11 @@ class DataManager @Inject constructor(
             .getLoanTemplateByProduct(clientId, productId)
     }
 
-    fun createLoansAccount(loansPayload: LoansPayload?): Observable<ResponseBody?>? {
+    suspend fun createLoansAccount(loansPayload: LoansPayload?): ResponseBody {
         return baseApiManager.loanAccountsListApi.createLoansAccount(loansPayload)
     }
 
-    fun updateLoanAccount(loanId: Long, loansPayload: LoansPayload?): Observable<ResponseBody?>? {
+    suspend fun updateLoanAccount(loanId: Long, loansPayload: LoansPayload?): ResponseBody {
         return baseApiManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload)
     }
 
