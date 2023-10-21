@@ -5,7 +5,11 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.*
+import org.mifos.mobile.models.Charge
+import org.mifos.mobile.models.Page
+import org.mifos.mobile.models.Transaction
+import org.mifos.mobile.models.UpdatePasswordPayload
+import org.mifos.mobile.models.User
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
@@ -48,11 +52,11 @@ class DataManager @Inject constructor(
     private val databaseHelper: DatabaseHelper,
 ) {
     var clientId: Long? = preferencesHelper.clientId
-    suspend fun login(loginPayload: LoginPayload?): Response<User?>? {
+    suspend fun login(loginPayload: LoginPayload?): User {
         return baseApiManager.authenticationApi.authenticate(loginPayload)
     }
 
-    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
+    suspend fun clients(): Page<Client> = baseApiManager.clientsApi.clients()
 
     suspend fun currentClient(): Client {
         return baseApiManager.clientsApi.getClientForId(clientId)
@@ -194,11 +198,11 @@ class DataManager @Inject constructor(
         return baseApiManager.thirdPartyTransferApi.makeTransfer(transferPayload)
     }
 
-    suspend fun registerUser(registerPayload: RegisterPayload?): Response<ResponseBody?>? {
+    suspend fun registerUser(registerPayload: RegisterPayload?): ResponseBody {
         return baseApiManager.registrationApi.registerUser(registerPayload)
     }
 
-    suspend fun verifyUser(userVerify: UserVerify?): Response<ResponseBody?>? {
+    suspend fun verifyUser(userVerify: UserVerify?): ResponseBody {
         return baseApiManager.registrationApi.verifyUser(userVerify)
     }
 
@@ -225,7 +229,7 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi.getUserNotificationId(id)
     }
 
-    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
+    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): ResponseBody {
         return baseApiManager.userDetailsApi.updateAccountPassword(payload)
     }
 

@@ -17,7 +17,7 @@ import retrofit2.http.Query
 interface ClientService {
     // This is a default call and Loads client from 0 to 200
     @GET(ApiEndPoints.CLIENTS)
-    suspend fun clients(): Response<Page<Client?>?>?
+    suspend fun clients(): Page<Client>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
     suspend fun getClientForId(@Path(CLIENT_ID) clientId: Long?): Client

@@ -1,10 +1,8 @@
 package org.mifos.mobile.api.services
 
-import io.reactivex.Observable
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.payload.LoginPayload
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -16,5 +14,5 @@ import retrofit2.http.POST
 interface AuthenticationService {
 
     @POST(ApiEndPoints.AUTHENTICATION)
-    suspend fun authenticate(@Body loginPayload: LoginPayload?): Response<User?>?
+    suspend fun authenticate(@Body loginPayload: LoginPayload?): User
 }
