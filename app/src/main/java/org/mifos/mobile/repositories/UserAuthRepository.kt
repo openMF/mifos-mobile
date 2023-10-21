@@ -1,8 +1,8 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.User
-import retrofit2.Response
 
 interface UserAuthRepository {
 
@@ -15,14 +15,14 @@ interface UserAuthRepository {
         mobileNumber: String?,
         password: String?,
         username: String?
-    ): Response<ResponseBody?>?
+    ): Flow<ResponseBody>
 
-    suspend fun login(username: String, password: String): Response<User?>?
+    suspend fun login(username: String, password: String): Flow<User>
 
-    suspend fun verifyUser(authenticationToken: String?, requestId: String?): Response<ResponseBody?>?
+    suspend fun verifyUser(authenticationToken: String?, requestId: String?): Flow<ResponseBody>
 
     suspend fun updateAccountPassword(
         newPassword: String, confirmPassword: String
-    ): Response<ResponseBody?>?
+    ): Flow<ResponseBody>
 
 }

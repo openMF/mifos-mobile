@@ -1,5 +1,7 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.Credentials
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.SelfServiceOkHttpClient
@@ -8,7 +10,6 @@ import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.utils.Constants
-import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -19,8 +20,10 @@ class ClientRepositoryImp @Inject constructor(
 ) : ClientRepository {
 
 
-    override suspend fun loadClient(): Response<Page<Client?>?>? {
-        return dataManager.clients()
+    override suspend fun loadClient(): Flow<Page<Client>> {
+        return flow {
+            emit(dataManager.clients())
+        }
     }
 
     /**

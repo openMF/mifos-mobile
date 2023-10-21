@@ -1,10 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.repositories.ClientRepository
@@ -18,8 +19,9 @@ class UpdatePasswordViewModel @Inject constructor(
     private val clientRepositoryImp: ClientRepository
 ) : ViewModel() {
 
-    private val _updatePasswordUiState = MutableLiveData<RegistrationUiState>()
-    val updatePasswordUiState: LiveData<RegistrationUiState> get() = _updatePasswordUiState
+    private val _updatePasswordUiState =
+        MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
+    val updatePasswordUiState: StateFlow<RegistrationUiState> get() = _updatePasswordUiState
     fun isInputFieldEmpty(fieldText: String): Boolean {
         return fieldText.isEmpty()
     }
@@ -35,16 +37,12 @@ class UpdatePasswordViewModel @Inject constructor(
     fun updateAccountPassword(newPassword: String, confirmPassword: String) {
         viewModelScope.launch {
             _updatePasswordUiState.value = RegistrationUiState.Loading
-            val response = userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)
-            try {
-                if (response?.isSuccessful == true) {
-                    _updatePasswordUiState.value = RegistrationUiState.Success
-                    clientRepositoryImp.updateAuthenticationToken(newPassword)
-                } else {
-                    _updatePasswordUiState.value = RegistrationUiState.Error(R.string.could_not_update_password_error)
-                }
-            } catch (e: Throwable) {
-                _updatePasswordUiState.value = RegistrationUiState.Error(R.string.could_not_update_password_error)
+            userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword).catch {
+                _updatePasswordUiState.value =
+                    RegistrationUiState.Error(R.string.could_not_update_password_error)
+            }.collect {
+                _updatePasswordUiState.value = RegistrationUiState.Success
+                clientRepositoryImp.updateAuthenticationToken(newPassword)
             }
         }
     }

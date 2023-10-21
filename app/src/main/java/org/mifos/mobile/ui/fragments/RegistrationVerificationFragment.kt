@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
 import org.mifos.mobile.ui.activities.LoginActivity
@@ -23,7 +27,8 @@ import org.mifos.mobile.viewModels.RegistrationViewModel
 class RegistrationVerificationFragment : BaseFragment() {
     private var _binding: FragmentRegistrationVerificationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: RegistrationViewModel
+
+    private val viewModel: RegistrationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,25 +37,30 @@ class RegistrationVerificationFragment : BaseFragment() {
     ): View {
         _binding = FragmentRegistrationVerificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        viewModel = ViewModelProvider(this)[RegistrationViewModel::class.java]
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.registrationVerificationUiState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                RegistrationUiState.Loading -> showProgress()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.registrationVerificationUiState.collect { state ->
+                    when (state) {
+                        RegistrationUiState.Loading -> showProgress()
 
-                RegistrationUiState.Success -> {
-                    hideProgress()
-                    showVerifiedSuccessfully()
-                }
+                        RegistrationUiState.Success -> {
+                            hideProgress()
+                            showVerifiedSuccessfully()
+                        }
 
-                is RegistrationUiState.Error -> {
-                    hideProgress()
-                    showError(getString(state.exception))
+                        is RegistrationUiState.Error -> {
+                            hideProgress()
+                            showError(getString(state.exception))
+                        }
+
+                        RegistrationUiState.Initial -> {}
+                    }
                 }
             }
         }
