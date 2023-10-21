@@ -14,12 +14,16 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.templates.account.AccountOption
+import org.mifos.mobile.repositories.BeneficiaryRepository
 import org.mifos.mobile.repositories.ThirdPartyTransferRepository
 import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import javax.inject.Inject
 
 @HiltViewModel
-class ThirdPartyTransferViewModel @Inject constructor(private val thirdPartyTransferRepositoryImp: ThirdPartyTransferRepository) :
+class ThirdPartyTransferViewModel @Inject constructor(
+    private val thirdPartyTransferRepositoryImp: ThirdPartyTransferRepository,
+    private val beneficiaryRepositoryImp: BeneficiaryRepository
+) :
     ViewModel() {
 
     private lateinit var accountOptionAndBeneficiary: AccountOptionAndBeneficiary
@@ -33,7 +37,7 @@ class ThirdPartyTransferViewModel @Inject constructor(private val thirdPartyTran
             try {
                 val thirdPartyTransferTemplate =
                     flowOf(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate())
-                val beneficiaryList = flowOf(thirdPartyTransferRepositoryImp.beneficiaryList())
+                val beneficiaryList = flowOf(beneficiaryRepositoryImp.beneficiaryList())
                 thirdPartyTransferTemplate.zip(beneficiaryList) { templateResult, beneficiaryListResult ->
                     templateResult?.body()?.let {
                         beneficiaryListResult?.body()?.let { it1 ->
