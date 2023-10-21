@@ -1,6 +1,7 @@
 package org.mifos.mobile.repositories
 
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.UpdatePasswordPayload
@@ -8,10 +9,10 @@ import org.mifos.mobile.models.User
 import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mifos.mobile.models.register.UserVerify
-import retrofit2.Response
 import javax.inject.Inject
 
-class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) : UserAuthRepository {
+class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataManager) :
+    UserAuthRepository {
 
     override suspend fun registerUser(
         accountNumber: String?,
@@ -22,7 +23,7 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
         mobileNumber: String?,
         password: String?,
         username: String?
-    ): Response<ResponseBody?>? {
+    ): Flow<ResponseBody> {
         val registerPayload = RegisterPayload().apply {
             this.accountNumber = accountNumber
             this.authenticationMode = authenticationMode
@@ -33,35 +34,46 @@ class UserAuthRepositoryImp @Inject constructor(private val dataManager: DataMan
             this.password = password
             this.username = username
         }
-        return dataManager.registerUser(registerPayload)
+        return flow {
+            emit(dataManager.registerUser(registerPayload))
+        }
     }
 
-    override suspend fun login(username: String, password: String): Response<User?>? {
+    override suspend fun login(username: String, password: String): Flow<User> {
         val loginPayload = LoginPayload().apply {
             this.username = username
             this.password = password
         }
-        return dataManager.login(loginPayload)
+        return flow {
+            emit(dataManager.login(loginPayload))
+        }
     }
 
 
-    override suspend fun verifyUser(authenticationToken: String?, requestId: String?): Response<ResponseBody?>? {
+    override suspend fun verifyUser(
+        authenticationToken: String?,
+        requestId: String?
+    ): Flow<ResponseBody> {
         val userVerify = UserVerify().apply {
             this.authenticationToken = authenticationToken
             this.requestId = requestId
         }
-        return dataManager.verifyUser(userVerify)
+        return flow {
+            emit(dataManager.verifyUser(userVerify))
+        }
     }
 
     override suspend fun updateAccountPassword(
         newPassword: String, confirmPassword: String
-    ): Response<ResponseBody?>? {
+    ): Flow<ResponseBody> {
         val payload = UpdatePasswordPayload().apply {
             this.password = newPassword
             this.repeatPassword = confirmPassword
         }
 
-        return dataManager.updateAccountPassword(payload)
+        return flow {
+            emit(dataManager.updateAccountPassword(payload))
+        }
     }
 
 }

@@ -9,14 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.hbb20.CountryCodePicker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.PasswordStrength
 import org.mifos.mobile.utils.RegistrationUiState
@@ -89,18 +92,24 @@ class RegistrationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.registrationUiState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                RegistrationUiState.Loading -> showProgress()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.registrationUiState.collect { state ->
+                    when (state) {
+                        RegistrationUiState.Loading -> showProgress()
 
-                RegistrationUiState.Success -> {
-                    hideProgress()
-                    showRegisteredSuccessfully()
-                }
+                        RegistrationUiState.Success -> {
+                            hideProgress()
+                            showRegisteredSuccessfully()
+                        }
 
-                is RegistrationUiState.Error -> {
-                    hideProgress()
-                    showError(getString(state.exception))
+                        is RegistrationUiState.Error -> {
+                            hideProgress()
+                            showError(getString(state.exception))
+                        }
+
+                        RegistrationUiState.Initial -> {}
+                    }
                 }
             }
         }

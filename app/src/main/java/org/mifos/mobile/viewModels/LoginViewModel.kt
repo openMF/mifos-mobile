@@ -1,10 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
@@ -18,8 +19,8 @@ class LoginViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var _loginUiState = MutableLiveData<LoginUiState>()
-    val loginUiState: LiveData<LoginUiState> get() = _loginUiState
+    private var _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Initial)
+    val loginUiState: StateFlow<LoginUiState> get() = _loginUiState
 
     fun isFieldEmpty(fieldText: String): Boolean {
         return fieldText.isEmpty()
@@ -45,12 +46,11 @@ class LoginViewModel @Inject constructor(
     fun login(username: String, password: String) {
         viewModelScope.launch {
             _loginUiState.value = LoginUiState.Loading
-            val response = userAuthRepositoryImp.login(username, password)
-            if (response?.isSuccessful == true) {
-                response.body()?.let { clientRepositoryImp.saveAuthenticationTokenForSession(it) }
-                _loginUiState.value = LoginUiState.LoginSuccess
-            } else {
+            userAuthRepositoryImp.login(username, password).catch {
                 _loginUiState.value = LoginUiState.Error
+            }.collect {
+                clientRepositoryImp.saveAuthenticationTokenForSession(it)
+                _loginUiState.value = LoginUiState.LoginSuccess
             }
         }
     }
@@ -60,21 +60,18 @@ class LoginViewModel @Inject constructor(
      */
     fun loadClient() {
         viewModelScope.launch {
-            val response = clientRepositoryImp.loadClient()
-            if (response?.isSuccessful == true) {
-                if (response.body()?.pageItems?.isNotEmpty() == true) {
-                    val clientId = response.body()!!.pageItems[0]?.id?.toLong()
-                    val clientName = response.body()!!.pageItems[0]?.displayName
-                    clientRepositoryImp.setClientId(clientId)
-                    clientRepositoryImp.reInitializeService()
-                    _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
-                } else {
-                    _loginUiState.value = LoginUiState.Error
-                }
-            } else {
+            clientRepositoryImp.loadClient().catch {
                 _loginUiState.value = LoginUiState.Error
                 clientRepositoryImp.clearPrefHelper()
                 clientRepositoryImp.reInitializeService()
+            }.collect {
+                if (it.pageItems.isNotEmpty()) {
+                    val clientId = it.pageItems[0].id.toLong()
+                    val clientName = it.pageItems[0].displayName
+                    clientRepositoryImp.setClientId(clientId)
+                    clientRepositoryImp.reInitializeService()
+                    _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
+                }
             }
         }
     }

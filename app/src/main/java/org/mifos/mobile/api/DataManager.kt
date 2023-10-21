@@ -52,11 +52,11 @@ class DataManager @Inject constructor(
     private val databaseHelper: DatabaseHelper,
 ) {
     var clientId: Long? = preferencesHelper.clientId
-    suspend fun login(loginPayload: LoginPayload?): Response<User?>? {
+    suspend fun login(loginPayload: LoginPayload?): User {
         return baseApiManager.authenticationApi.authenticate(loginPayload)
     }
 
-    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
+    suspend fun clients(): Page<Client> = baseApiManager.clientsApi.clients()
 
     suspend fun currentClient(): Client {
         return baseApiManager.clientsApi.getClientForId(clientId)
@@ -198,11 +198,11 @@ class DataManager @Inject constructor(
         return baseApiManager.thirdPartyTransferApi.makeTransfer(transferPayload)
     }
 
-    suspend fun registerUser(registerPayload: RegisterPayload?): Response<ResponseBody?>? {
+    suspend fun registerUser(registerPayload: RegisterPayload?): ResponseBody {
         return baseApiManager.registrationApi.registerUser(registerPayload)
     }
 
-    suspend fun verifyUser(userVerify: UserVerify?): Response<ResponseBody?>? {
+    suspend fun verifyUser(userVerify: UserVerify?): ResponseBody {
         return baseApiManager.registrationApi.verifyUser(userVerify)
     }
 
@@ -229,7 +229,7 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi.getUserNotificationId(id)
     }
 
-    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
+    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): ResponseBody {
         return baseApiManager.userDetailsApi.updateAccountPassword(payload)
     }
 

@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.MifosSelfServiceApp.Companion.context
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityLoginBinding
@@ -26,13 +30,12 @@ import org.mifos.mobile.viewModels.LoginViewModel
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         dismissSoftKeyboardOnBkgTap(binding.nsvBackground)
         binding.btnLogin.setOnClickListener {
             onLoginClicked()
@@ -48,22 +51,28 @@ class LoginActivity : BaseActivity() {
             onTouch(view)
         }
 
-        viewModel.loginUiState.observe(this) { state ->
-            when (state) {
-                LoginUiState.Loading -> showProgress()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginUiState.collect { state ->
+                    when (state) {
+                        LoginUiState.Loading -> showProgress()
 
-                LoginUiState.Error -> {
-                    hideProgress()
-                    showMessage(context?.getString(R.string.login_failed))
-                }
+                        LoginUiState.Error -> {
+                            hideProgress()
+                            showMessage(context?.getString(R.string.login_failed))
+                        }
 
-                LoginUiState.LoginSuccess -> {
-                    onLoginSuccess()
-                }
+                        LoginUiState.LoginSuccess -> {
+                            onLoginSuccess()
+                        }
 
-                is LoginUiState.LoadClientSuccess -> {
-                    hideProgress()
-                    showPassCodeActivity(state.clientName)
+                        is LoginUiState.LoadClientSuccess -> {
+                            hideProgress()
+                            showPassCodeActivity(state.clientName)
+                        }
+
+                        LoginUiState.Initial -> {}
+                    }
                 }
             }
         }
