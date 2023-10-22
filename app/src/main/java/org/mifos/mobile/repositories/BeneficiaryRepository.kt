@@ -1,25 +1,25 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import retrofit2.Response
 
 interface BeneficiaryRepository {
 
-    suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>?
+    suspend fun beneficiaryTemplate(): Flow<BeneficiaryTemplate>
 
-    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>?
+    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Flow<ResponseBody>
 
     suspend fun updateBeneficiary(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
-    ): Response<ResponseBody?>?
+    ): Flow<ResponseBody>
 
-    suspend fun deleteBeneficiary(beneficiaryId: Long?): Response<ResponseBody?>?
+    suspend fun deleteBeneficiary(beneficiaryId: Long?): Flow<ResponseBody>
 
-    suspend fun beneficiaryList(): Response<List<Beneficiary?>?>?
+    suspend fun beneficiaryList(): Flow<List<Beneficiary>>
 
 }
