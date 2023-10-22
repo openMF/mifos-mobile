@@ -15,12 +15,16 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
@@ -52,7 +56,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
 
     private var _binding: FragmentSavingAccountTransactionsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: SavingAccountsTransactionViewModel
+    private val viewModel: SavingAccountsTransactionViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -87,7 +91,6 @@ class SavingAccountsTransactionFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingAccountTransactionsBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[SavingAccountsTransactionViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
@@ -99,32 +102,41 @@ class SavingAccountsTransactionFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvHelpLineNumber.setOnClickListener {
-            dialHelpLineNumber()
+
+        with(binding) {
+            tvHelpLineNumber.setOnClickListener {
+                dialHelpLineNumber()
+            }
+            layoutError.btnTryAgain.setOnClickListener {
+                retryClicked()
+            }
         }
-        binding.layoutError.btnTryAgain.setOnClickListener {
-            retryClicked()
-        }
 
-        viewModel.savingAccountsTransactionUiState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                SavingsAccountUiState.Loading -> showProgress()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.savingAccountsTransactionUiState.collect { state ->
+                    when (state) {
+                        SavingsAccountUiState.Loading -> showProgress()
 
-                SavingsAccountUiState.Error -> {
-                    hideProgress()
-                    showErrorFetchingSavingAccountsDetail(context?.getString(R.string.saving_account_details))
+                        SavingsAccountUiState.Error -> {
+                            hideProgress()
+                            showErrorFetchingSavingAccountsDetail(context?.getString(R.string.saving_account_details))
+                        }
+
+                        is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
+                            hideProgress()
+                            showSavingAccountsDetail(state.savingAccount)
+                        }
+
+                        is SavingsAccountUiState.ShowFilteredTransactionsList -> {
+                            showFilteredList(state.savingAccountsTransactionList)
+                        }
+
+                        is SavingsAccountUiState.Initial -> {}
+
+                        else -> throw IllegalStateException("Unexpected State : $state")
+                    }
                 }
-
-                is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
-                    hideProgress()
-                    showSavingAccountsDetail(state.savingAccount)
-                }
-
-                is SavingsAccountUiState.ShowFilteredTransactionsList -> {
-                    showFilteredList(state.savingAccountsTransactionList)
-                }
-
-                else -> throw IllegalStateException("Unexpected State : $state")
             }
         }
     }
@@ -176,7 +188,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
      *
      * @param savingsWithAssociations Contains [Transactions] for given Savings account.
      */
-    fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
+    private fun showSavingAccountsDetail(savingsWithAssociations: SavingsWithAssociations?) {
         binding.llAccount.visibility = View.VISIBLE
         this.savingsWithAssociations = savingsWithAssociations
         transactionsList = savingsWithAssociations?.transactions
@@ -193,7 +205,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
      *
      * @param message Error message that tells the user about the problem.
      */
-    fun showErrorFetchingSavingAccountsDetail(message: String?) {
+    private fun showErrorFetchingSavingAccountsDetail(message: String?) {
         if (!Network.isConnected(activity)) {
             sweetUIErrorHandler?.showSweetNoInternetUI(
                 binding.rvSavingAccountsTransaction,
@@ -227,7 +239,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
     /**
      * Provides with a filtered list according to the constraints used in `filter()` function
      */
-    fun showFilteredList(list: List<Transactions?>?) {
+    private fun showFilteredList(list: List<Transactions?>?) {
         if (!list.isNullOrEmpty()) {
             Toaster.show(binding.root, getString(R.string.filtered))
             transactionListAdapter?.setSavingAccountsTransactionList(list)
@@ -236,7 +248,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
         }
     }
 
-    fun showEmptyTransactions() {
+    private fun showEmptyTransactions() {
         sweetUIErrorHandler?.showSweetEmptyUI(
             getString(R.string.transactions),
             R.drawable.ic_compare_arrows_black_24dp,
