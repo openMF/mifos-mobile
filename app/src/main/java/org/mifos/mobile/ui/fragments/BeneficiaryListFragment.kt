@@ -7,12 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryListBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -35,7 +39,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentBeneficiaryListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: BeneficiaryListViewModel
+    private val viewModel: BeneficiaryListViewModel by viewModels()
 
     private var beneficiaryListAdapter: BeneficiaryListAdapter? = null
 
@@ -47,7 +51,6 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryListBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[BeneficiaryListViewModel::class.java]
         beneficiaryListAdapter = BeneficiaryListAdapter(::onItemClick)
         setToolbarTitle(getString(R.string.beneficiaries))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
@@ -61,18 +64,27 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.beneficiaryUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is BeneficiaryUiState.Loading -> showProgress()
-                is BeneficiaryUiState.ShowError -> {
-                    hideProgress()
-                    showError(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.beneficiaryUiState.collect {
+                    when (it) {
+                        is BeneficiaryUiState.Loading -> showProgress()
+
+                        is BeneficiaryUiState.ShowError -> {
+                            hideProgress()
+                            showError(getString(it.message))
+                        }
+
+                        is BeneficiaryUiState.ShowBeneficiaryList -> {
+                            hideProgress()
+                            showBeneficiaryList(it.beneficiaries)
+                        }
+
+                        is BeneficiaryUiState.Initial -> {}
+
+                        else -> throw IllegalStateException("Undesired $it")
+                    }
                 }
-                is BeneficiaryUiState.ShowBeneficiaryList -> {
-                    hideProgress()
-                    showBeneficiaryList(it.beneficiaries)
-                }
-                else -> throw IllegalStateException("Undesired $it")
             }
         }
 
@@ -139,7 +151,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (Network.isConnected((context?.applicationContext)!!)) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvBeneficiaries,
@@ -205,7 +217,7 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
     /**
      * Set the `beneficiaryList` fetched from server to `beneficiaryListAdapter`
      */
-    fun showBeneficiaryList(beneficiaryList: List<Beneficiary?>?) {
+    private fun showBeneficiaryList(beneficiaryList: List<Beneficiary?>?) {
         this.beneficiaryList = beneficiaryList
         if (beneficiaryList?.isNotEmpty() == true) {
             beneficiaryListAdapter?.setBeneficiaryList(beneficiaryList)

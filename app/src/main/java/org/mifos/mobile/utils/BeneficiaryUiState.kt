@@ -4,7 +4,7 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
 
 sealed class BeneficiaryUiState {
-
+    object Initial : BeneficiaryUiState()
     object Loading : BeneficiaryUiState()
     object CreatedSuccessfully : BeneficiaryUiState()
     object UpdatedSuccessfully : BeneficiaryUiState()
