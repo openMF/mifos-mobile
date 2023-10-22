@@ -6,7 +6,6 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -14,20 +13,20 @@ import retrofit2.http.*
  */
 interface BeneficiaryService {
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt")
-    suspend fun beneficiaryList(): Response<List<Beneficiary?>?>?
+    suspend fun beneficiaryList(): List<Beneficiary>
 
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt/template")
-    suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>?
+    suspend fun beneficiaryTemplate(): BeneficiaryTemplate
 
     @POST(ApiEndPoints.BENEFICIARIES + "/tpt")
-    suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>?
+    suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload?): ResponseBody
 
     @PUT(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
     suspend fun updateBeneficiary(
         @Path("beneficiaryId") beneficiaryId: Long?,
         @Body payload: BeneficiaryUpdatePayload?,
-    ): Response<ResponseBody?>?
+    ): ResponseBody
 
     @DELETE(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
-    suspend fun deleteBeneficiary(@Path("beneficiaryId") beneficiaryId: Long?): Response<ResponseBody?>?
+    suspend fun deleteBeneficiary(@Path("beneficiaryId") beneficiaryId: Long?): ResponseBody
 }

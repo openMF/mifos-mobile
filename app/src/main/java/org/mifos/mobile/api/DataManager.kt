@@ -5,7 +5,11 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.*
+import org.mifos.mobile.models.Charge
+import org.mifos.mobile.models.Page
+import org.mifos.mobile.models.Transaction
+import org.mifos.mobile.models.UpdatePasswordPayload
+import org.mifos.mobile.models.User
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
@@ -166,28 +170,28 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    suspend fun beneficiaryList(): Response<List<Beneficiary?>?>? =
+    suspend fun beneficiaryList(): List<Beneficiary> =
         baseApiManager.beneficiaryApi.beneficiaryList()
 
-    suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>? =
+    suspend fun beneficiaryTemplate(): BeneficiaryTemplate =
         baseApiManager.beneficiaryApi.beneficiaryTemplate()
 
-    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>? {
+    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): ResponseBody {
         return baseApiManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
     }
 
     suspend fun updateBeneficiary(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.beneficiaryApi.updateBeneficiary(beneficiaryId, payload)
     }
 
-    suspend fun deleteBeneficiary(beneficiaryId: Long?): Response<ResponseBody?>? {
+    suspend fun deleteBeneficiary(beneficiaryId: Long?): ResponseBody {
         return baseApiManager.beneficiaryApi.deleteBeneficiary(beneficiaryId)
     }
 
-    suspend fun thirdPartyTransferTemplate(): Response<AccountOptionsTemplate?>? =
+    suspend fun thirdPartyTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.thirdPartyTransferApi.accountTransferTemplate()
 
     suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
