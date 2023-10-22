@@ -5,8 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingsAccountApplicationBinding
@@ -23,18 +27,17 @@ import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
 import org.mifos.mobile.viewModels.SavingsAccountApplicationViewModel
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /*
 * Created by saksham on 30/June/2018
 */
 @AndroidEntryPoint
-class SavingsAccountApplicationFragment : BaseFragment(){
+class SavingsAccountApplicationFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsAccountApplicationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingsAccountApplicationViewModel
+    private val viewModel: SavingsAccountApplicationViewModel by viewModels()
 
 
     @JvmField
@@ -60,7 +63,6 @@ class SavingsAccountApplicationFragment : BaseFragment(){
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountApplicationBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this)[SavingsAccountApplicationViewModel::class.java]
         viewModel.loadSavingsAccountApplicationTemplate(preferencesHelper?.clientId, state)
         return binding.root
     }
@@ -71,40 +73,46 @@ class SavingsAccountApplicationFragment : BaseFragment(){
             onSubmit()
         }
 
-        viewModel.savingsAccountApplicationUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                SavingsAccountUiState.Loading -> showProgress()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.savingsAccountApplicationUiState.collect { state ->
+                    when (state) {
+                        SavingsAccountUiState.Loading -> showProgress()
 
-                SavingsAccountUiState.HideProgress -> hideProgress()
+                        SavingsAccountUiState.HideProgress -> hideProgress()
 
-                is SavingsAccountUiState.ShowUserInterfaceSavingAccountApplication -> {
-                    hideProgress()
-                    showUserInterfaceSavingAccountApplication(state.template)
+                        is SavingsAccountUiState.ShowUserInterfaceSavingAccountApplication -> {
+                            hideProgress()
+                            showUserInterfaceSavingAccountApplication(state.template)
+                        }
+
+                        is SavingsAccountUiState.ShowUserInterfaceSavingAccountUpdate -> {
+                            hideProgress()
+                            showUserInterfaceSavingAccountUpdate(state.template)
+                        }
+
+                        is SavingsAccountUiState.ErrorMessage -> {
+                            hideProgress()
+                            showError(state.error.message ?: "")
+                        }
+
+                        SavingsAccountUiState.SavingsAccountApplicationSuccess -> {
+                            hideProgress()
+                            showSavingsAccountApplicationSuccessfully()
+                        }
+
+                        SavingsAccountUiState.SavingsAccountUpdateSuccess -> {
+                            hideProgress()
+                            showSavingsAccountUpdateSuccessfully()
+                        }
+
+                        is SavingsAccountUiState.Initial -> {}
+
+                        else -> throw IllegalStateException("Unexpected state : $state")
+                    }
+
                 }
-
-                is SavingsAccountUiState.ShowUserInterfaceSavingAccountUpdate -> {
-                    hideProgress()
-                    showUserInterfaceSavingAccountUpdate(state.template)
-                }
-
-                is SavingsAccountUiState.ErrorMessage -> {
-                    hideProgress()
-                    showError(state.error.message ?: "")
-                }
-
-                SavingsAccountUiState.SavingsAccountApplicationSuccess -> {
-                    hideProgress()
-                    showSavingsAccountApplicationSuccessfully()
-                }
-
-                SavingsAccountUiState.SavingsAccountUpdateSuccess -> {
-                    hideProgress()
-                    showSavingsAccountUpdateSuccessfully()
-                }
-
-                else -> throw IllegalStateException("Unexpected state : $state")
             }
-
         }
     }
 
@@ -182,7 +190,7 @@ class SavingsAccountApplicationFragment : BaseFragment(){
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
 
-    fun showMessage(showMessage: String?) {
+    private fun showMessage(showMessage: String?) {
         Toast.makeText(context, showMessage, Toast.LENGTH_SHORT).show()
     }
 

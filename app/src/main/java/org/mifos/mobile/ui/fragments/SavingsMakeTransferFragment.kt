@@ -10,9 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Spinner
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsMakeTransferBinding
 import org.mifos.mobile.models.payload.TransferPayload
@@ -30,7 +34,6 @@ import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
 import org.mifos.mobile.utils.getTodayFormatted
 import org.mifos.mobile.viewModels.SavingsMakeTransferViewModel
-import java.lang.IllegalStateException
 
 /**
  * Created by Rajan Maurya on 10/03/17.
@@ -40,7 +43,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsMakeTransferBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingsMakeTransferViewModel
+    private val viewModel: SavingsMakeTransferViewModel by viewModels()
     private var transferPayload: TransferPayload? = null
     private var transferDate: String? = null
     private var toAccountOption: AccountOption? = null
@@ -73,7 +76,6 @@ class SavingsMakeTransferFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsMakeTransferBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[SavingsMakeTransferViewModel::class.java]
         setToolbarTitle(getString(R.string.transfer))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
@@ -85,45 +87,54 @@ class SavingsMakeTransferFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnCancelTransfer.setOnClickListener {
-            cancelTransfer()
+
+        with(binding) {
+            btnCancelTransfer.setOnClickListener {
+                cancelTransfer()
+            }
+
+            btnReviewTransfer.setOnClickListener {
+                reviewTransfer()
+            }
+
+            btnPayFrom.setOnClickListener {
+                payFromSelected()
+            }
+
+            btnPayTo.setOnClickListener {
+                payToSelected()
+            }
+
+            btnAmount.setOnClickListener {
+                amountSet()
+            }
+
+            layoutError.btnTryAgain.setOnClickListener {
+                onRetry()
+            }
         }
 
-        binding.btnReviewTransfer.setOnClickListener {
-            reviewTransfer()
-        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.savingsMakeTransferUiState.collect { state ->
+                    when (state) {
+                        SavingsAccountUiState.Loading -> showProgress()
 
-        binding.btnPayFrom.setOnClickListener {
-            payFromSelected()
-        }
+                        is SavingsAccountUiState.ErrorMessage -> {
+                            hideProgress()
+                            showError(context?.getString(R.string.error_fetching_account_transfer_template))
+                        }
 
-        binding.btnPayTo.setOnClickListener {
-            payToSelected()
-        }
+                        is SavingsAccountUiState.ShowSavingsAccountTemplate -> {
+                            hideProgress()
+                            showSavingsAccountTemplate(state.accountOptionsTemplate)
+                        }
 
-        binding.btnAmount.setOnClickListener {
-            amountSet()
-        }
+                        is SavingsAccountUiState.Initial -> {}
 
-        binding.layoutError.btnTryAgain.setOnClickListener {
-            onRetry()
-        }
-
-        viewModel.savingsMakeTransferUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                SavingsAccountUiState.Loading -> showProgress()
-
-                is SavingsAccountUiState.ErrorMessage -> {
-                    hideProgress()
-                    showError(context?.getString(R.string.error_fetching_account_transfer_template))
+                        else -> throw IllegalStateException("Unexpected state : $state")
+                    }
                 }
-
-                is SavingsAccountUiState.ShowSavingsAccountTemplate -> {
-                    hideProgress()
-                    showSavingsAccountTemplate(state.accountOptionsTemplate)
-                }
-
-                else -> throw IllegalStateException("Unexpected state : $state")
             }
         }
     }
@@ -223,14 +234,16 @@ class SavingsMakeTransferFragment : BaseFragment() {
         when (transferType) {
             Constants.TRANSFER_PAY_TO -> {
                 setToolbarTitle(getString(R.string.deposit))
-                toAccountOption = viewModel.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
+                toAccountOption =
+                    viewModel.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
                 binding.payToFieldWrapper.isEnabled = false
                 binding.processOne.setCurrentCompleted()
             }
 
             Constants.TRANSFER_PAY_FROM -> {
                 setToolbarTitle(getString(R.string.transfer))
-                fromAccountOption = viewModel.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
+                fromAccountOption =
+                    viewModel.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
                 binding.payFromFieldWrapper.isEnabled = false
                 binding.payFromFieldWrapper.visibility = View.VISIBLE
                 binding.processTwo.setCurrentCompleted()
@@ -317,12 +330,14 @@ class SavingsMakeTransferFragment : BaseFragment() {
      * `pvTwo` active
      */
     private fun payToSelected() {
-        binding.processOne.setCurrentCompleted()
-        binding.processTwo.setCurrentActive()
-        binding.btnPayTo.visibility = View.GONE
-        binding.btnPayFrom.visibility = View.VISIBLE
-        binding.payFromFieldWrapper.visibility = View.VISIBLE
-        binding.payToFieldWrapper.isEnabled = false
+        with(binding) {
+            processOne.setCurrentCompleted()
+            processTwo.setCurrentActive()
+            btnPayTo.visibility = View.GONE
+            btnPayFrom.visibility = View.VISIBLE
+            payFromFieldWrapper.visibility = View.VISIBLE
+            payToFieldWrapper.isEnabled = false
+        }
     }
 
     /**
@@ -335,12 +350,14 @@ class SavingsMakeTransferFragment : BaseFragment() {
             showToaster(getString(R.string.error_same_account_transfer))
             return
         }
-        binding.processTwo.setCurrentCompleted()
-        binding.processThree.setCurrentActive()
-        binding.btnPayFrom.visibility = View.GONE
-        binding.amountFieldWrapper.visibility = View.VISIBLE
-        binding.btnAmount.visibility = View.VISIBLE
-        binding.payFromFieldWrapper.isEnabled = false
+        with(binding) {
+            processTwo.setCurrentCompleted()
+            processThree.setCurrentActive()
+            btnPayFrom.visibility = View.GONE
+            amountFieldWrapper.visibility = View.VISIBLE
+            btnAmount.visibility = View.VISIBLE
+            payFromFieldWrapper.isEnabled = false
+        }
     }
 
     /**
@@ -361,13 +378,15 @@ class SavingsMakeTransferFragment : BaseFragment() {
             showToaster(getString(R.string.amount_greater_than_zero))
             return
         }
-        binding.processThree.setCurrentCompleted()
-        binding.processFour.setCurrentActive()
-        binding.btnAmount.visibility = View.GONE
-        binding.tvEnterRemark.visibility = View.GONE
-        binding.etRemark.visibility = View.VISIBLE
-        binding.llReview.visibility = View.VISIBLE
-        binding.amountFieldWrapper.isEnabled = false
+        with(binding) {
+            processThree.setCurrentCompleted()
+            processFour.setCurrentActive()
+            btnAmount.visibility = View.GONE
+            tvEnterRemark.visibility = View.GONE
+            etRemark.visibility = View.VISIBLE
+            llReview.visibility = View.VISIBLE
+            amountFieldWrapper.isEnabled = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
@@ -16,7 +20,6 @@ import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
 import org.mifos.mobile.viewModels.SavingsAccountWithdrawViewModel
-import java.lang.IllegalStateException
 
 /*
 * Created by saksham on 02/July/2018
@@ -26,7 +29,7 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
 
     private var _binding: FragmentSavingsAccountWithdrawFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : SavingsAccountWithdrawViewModel
+    private val viewModel: SavingsAccountWithdrawViewModel by viewModels()
     private var savingsWithAssociations: SavingsWithAssociations? = null
     private var payload: SavingsAccountWithdrawPayload? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +45,6 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSavingsAccountWithdrawFragmentBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[SavingsAccountWithdrawViewModel::class.java]
         showUserInterface()
         return binding.root
     }
@@ -53,21 +55,27 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
             onWithdrawSavingsAccount()
         }
 
-        viewModel.savingsAccountWithdrawUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                SavingsAccountUiState.Loading -> showProgress()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.savingsAccountWithdrawUiState.collect { state ->
+                    when (state) {
+                        SavingsAccountUiState.Loading -> showProgress()
 
-                is SavingsAccountUiState.ErrorMessage -> {
-                    hideProgress()
-                    showError(state.error.message ?: "")
+                        is SavingsAccountUiState.ErrorMessage -> {
+                            hideProgress()
+                            showError(state.error.message ?: "")
+                        }
+
+                        SavingsAccountUiState.SavingsAccountWithdrawSuccess -> {
+                            hideProgress()
+                            showSavingsAccountWithdrawSuccessfully()
+                        }
+
+                        is SavingsAccountUiState.Initial -> {}
+
+                        else -> throw IllegalStateException("Unexpected state : $state")
+                    }
                 }
-
-                SavingsAccountUiState.SavingsAccountWithdrawSuccess -> {
-                    hideProgress()
-                    showSavingsAccountWithdrawSuccessfully()
-                }
-
-                else -> throw IllegalStateException("Unexpected state : $state")
             }
         }
     }
@@ -111,7 +119,7 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    fun showMessage(message: String?) {
+    private fun showMessage(message: String?) {
         Toaster.show(binding.root, message)
     }
 

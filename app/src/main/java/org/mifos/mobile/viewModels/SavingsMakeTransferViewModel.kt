@@ -1,11 +1,12 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.templates.account.AccountOption
@@ -18,8 +19,9 @@ import javax.inject.Inject
 class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
     ViewModel() {
 
-    private val _savingsMakeTransferUiState = MutableLiveData<SavingsAccountUiState>()
-    val savingsMakeTransferUiState: LiveData<SavingsAccountUiState> get() = _savingsMakeTransferUiState
+    private val _savingsMakeTransferUiState =
+        MutableStateFlow<SavingsAccountUiState>(SavingsAccountUiState.Initial)
+    val savingsMakeTransferUiState: StateFlow<SavingsAccountUiState> get() = _savingsMakeTransferUiState
 
     /**
      * Fetches [AccountOptionsTemplate] from server and notifies the view to display it. And
@@ -28,14 +30,11 @@ class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccoun
     fun loanAccountTransferTemplate() {
         viewModelScope.launch {
             _savingsMakeTransferUiState.value = SavingsAccountUiState.Loading
-            try {
-                val response = savingsAccountRepositoryImp.loanAccountTransferTemplate()
-                if (response?.isSuccessful == true) {
-                    _savingsMakeTransferUiState.value = response.body()
-                        ?.let { SavingsAccountUiState.ShowSavingsAccountTemplate(it) }
-                }
-            } catch (e: Throwable) {
+            savingsAccountRepositoryImp.loanAccountTransferTemplate().catch { e ->
                 _savingsMakeTransferUiState.value = SavingsAccountUiState.ErrorMessage(e)
+            }.collect {
+                _savingsMakeTransferUiState.value =
+                    SavingsAccountUiState.ShowSavingsAccountTemplate(it)
             }
         }
     }
