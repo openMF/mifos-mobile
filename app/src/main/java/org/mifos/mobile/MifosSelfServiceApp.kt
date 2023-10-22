@@ -1,6 +1,7 @@
 package org.mifos.mobile
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
@@ -45,7 +46,8 @@ class MifosSelfServiceApp : MultiDexApplication() {
         PreferencesHelper(this).applySavedTheme()
     }
 
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(onAttach(base, Locale.getDefault().language))
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        context?.let { onAttach(it, Locale.getDefault().language) }
     }
 }
