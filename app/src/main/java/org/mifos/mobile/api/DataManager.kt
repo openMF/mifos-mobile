@@ -92,33 +92,33 @@ class DataManager @Inject constructor(
     suspend fun getSavingsWithAssociations(
         accountId: Long?,
         associationType: String?,
-    ): Response<SavingsWithAssociations?>? {
+    ): SavingsWithAssociations {
         return baseApiManager
             .savingAccountsListApi.getSavingsWithAssociations(accountId, associationType)
     }
 
-    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>? =
+    suspend fun accountTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.savingAccountsListApi.accountTransferTemplate()
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)
     }
 
-    suspend fun getSavingAccountApplicationTemplate(client: Long?): Response<SavingsAccountTemplate?>? {
+    suspend fun getSavingAccountApplicationTemplate(client: Long?): SavingsAccountTemplate {
         return baseApiManager.savingAccountsListApi
             .getSavingsAccountApplicationTemplate(client)
     }
 
     suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi.submitSavingAccountApplication(payload)
     }
 
     suspend fun updateSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi
             .updateSavingsAccountUpdate(accountId, payload)
     }
@@ -126,7 +126,7 @@ class DataManager @Inject constructor(
     suspend fun submitWithdrawSavingsAccount(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi
             .submitWithdrawSavingsAccount(accountId, payload)
     }
