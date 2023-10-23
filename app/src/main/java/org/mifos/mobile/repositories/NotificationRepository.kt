@@ -5,5 +5,6 @@ import org.mifos.mobile.models.notification.MifosNotification
 
 interface NotificationRepository {
 
-    suspend fun loadNotifications(): Flow<List<MifosNotification?>?>
+    suspend fun loadNotifications(): Flow<List<MifosNotification>>
+
 }
