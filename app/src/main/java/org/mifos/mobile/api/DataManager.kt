@@ -103,7 +103,7 @@ class DataManager @Inject constructor(
     suspend fun accountTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.savingAccountsListApi.accountTransferTemplate()
 
-    suspend fun makeTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
+    suspend fun makeTransfer(transferPayload: TransferPayload?): ResponseBody {
         return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)
     }
 
@@ -193,7 +193,7 @@ class DataManager @Inject constructor(
     suspend fun thirdPartyTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.thirdPartyTransferApi.accountTransferTemplate()
 
-    suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
+    suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): ResponseBody {
         return baseApiManager.thirdPartyTransferApi.makeTransfer(transferPayload)
     }
 

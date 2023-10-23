@@ -1,10 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.TransferRepository
 import org.mifos.mobile.ui.enums.TransferType
@@ -15,8 +16,8 @@ import javax.inject.Inject
 class TransferProcessViewModel @Inject constructor(private val transferRepositoryImp: TransferRepository) :
     ViewModel() {
 
-    private val _transferUiState = MutableLiveData<TransferUiState>()
-    val transferUiState: LiveData<TransferUiState> get() = _transferUiState
+    private val _transferUiState = MutableStateFlow<TransferUiState>(TransferUiState.Initial)
+    val transferUiState: StateFlow<TransferUiState> get() = _transferUiState
 
     fun makeTransfer(
         fromOfficeId: Int?,
@@ -38,7 +39,7 @@ class TransferProcessViewModel @Inject constructor(private val transferRepositor
     ) {
         viewModelScope.launch {
             _transferUiState.value = TransferUiState.Loading
-            val response = transferRepositoryImp.makeTransfer(
+            transferRepositoryImp.makeTransfer(
                 fromOfficeId,
                 fromClientId,
                 fromAccountType,
@@ -55,13 +56,10 @@ class TransferProcessViewModel @Inject constructor(private val transferRepositor
                 fromAccountNumber,
                 toAccountNumber,
                 transferType
-            )
-            try {
-                if (response?.isSuccessful == true) {
-                    _transferUiState.value = TransferUiState.TransferSuccess
-                }
-            } catch (e: Throwable) {
+            ).catch { e ->
                 _transferUiState.value = TransferUiState.Error(e)
+            }.collect {
+                _transferUiState.value = TransferUiState.TransferSuccess
             }
         }
     }

@@ -1,5 +1,6 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.ui.enums.TransferType
 import retrofit2.Response
@@ -23,5 +24,5 @@ interface TransferRepository {
         fromAccountNumber: String?,
         toAccountNumber: String?,
         transferType: TransferType?
-    ): Response<ResponseBody?>?
+    ): Flow<ResponseBody>
 }

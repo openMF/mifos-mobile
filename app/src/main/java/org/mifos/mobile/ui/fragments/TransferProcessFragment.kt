@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentTransferProcessBinding
 import org.mifos.mobile.models.payload.TransferPayload
@@ -14,7 +18,14 @@ import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.CurrencyUtil
+import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.MFErrorParser
+import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.TransferUiState
+import org.mifos.mobile.utils.getTodayFormatted
 import org.mifos.mobile.viewModels.TransferProcessViewModel
 
 /**
@@ -25,7 +36,8 @@ class TransferProcessFragment : BaseFragment() {
 
     private var _binding: FragmentTransferProcessBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: TransferProcessViewModel
+
+    private val viewModel: TransferProcessViewModel by viewModels()
 
     private var toAccountOption: AccountOption? = null
     private var fromAccountOption: AccountOption? = null
@@ -47,7 +59,6 @@ class TransferProcessFragment : BaseFragment() {
     ): View {
         _binding = FragmentTransferProcessBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.transfer))
-        viewModel = ViewModelProvider(this)[TransferProcessViewModel::class.java]
         with(binding) {
             tvAmount.text = CurrencyUtil.formatCurrency(activity, payload?.transferAmount)
             tvPayFrom.text = payload?.fromAccountNumber.toString()
@@ -62,16 +73,24 @@ class TransferProcessFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.transferUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is TransferUiState.Loading -> showProgress()
-                is TransferUiState.TransferSuccess -> {
-                    hideProgress()
-                    showTransferredSuccessfully()
-                }
-                is TransferUiState.Error -> {
-                    hideProgress()
-                    showError(MFErrorParser.errorMessage(it.errorMessage))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.transferUiState.collect {
+                    when (it) {
+                        is TransferUiState.Loading -> showProgress()
+
+                        is TransferUiState.TransferSuccess -> {
+                            hideProgress()
+                            showTransferredSuccessfully()
+                        }
+
+                        is TransferUiState.Error -> {
+                            hideProgress()
+                            showError(MFErrorParser.errorMessage(it.errorMessage))
+                        }
+
+                        TransferUiState.Initial -> {}
+                    }
                 }
             }
         }
@@ -147,7 +166,7 @@ class TransferProcessFragment : BaseFragment() {
     /**
      * Shows a {@link Snackbar} on succesfull transfer of money
      */
-    fun showTransferredSuccessfully() {
+    private fun showTransferredSuccessfully() {
         Toaster.show(binding.root, getString(R.string.transferred_successfully))
         binding.ivSuccess.visibility = View.VISIBLE
         (binding.ivSuccess.drawable as Animatable).start()
