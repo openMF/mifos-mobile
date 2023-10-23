@@ -1,20 +1,19 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.utils.HelpUiState
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @HiltViewModel
 class HelpViewModel @Inject constructor() : ViewModel() {
 
-    private val _helpUiState = MutableLiveData<HelpUiState>()
-    val helpUiState: LiveData<HelpUiState> get() = _helpUiState
+    private val _helpUiState = MutableStateFlow<HelpUiState>(HelpUiState.Initial)
+    val helpUiState: StateFlow<HelpUiState> get() = _helpUiState
 
     fun loadFaq(qs: Array<String>?, ans: Array<String>?) {
         val faqArrayList = ArrayList<FAQ?>()

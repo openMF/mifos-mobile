@@ -13,10 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentHelpBinding
 import org.mifos.mobile.models.FAQ
@@ -42,7 +46,7 @@ class HelpFragment : BaseFragment() {
     @Inject
     var faqAdapter: FAQAdapter? = null
 
-    private lateinit var viewModel: HelpViewModel
+    private val viewModel: HelpViewModel by viewModels()
 
     private var faqArrayList: ArrayList<FAQ?>? = null
     private lateinit var sweetUIErrorHandler: SweetUIErrorHandler
@@ -53,7 +57,6 @@ class HelpFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHelpBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[HelpViewModel::class.java]
         val rootView = binding.root
         setHasOptionsMenu(true)
         setToolbarTitle(getString(R.string.help))
@@ -70,10 +73,18 @@ class HelpFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.helpUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is HelpUiState.ShowFaq -> {
-                    showFaq(it.faqArrayList)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.helpUiState.collect() {
+                    when (it) {
+
+                        is HelpUiState.ShowFaq -> {
+                            showFaq(it.faqArrayList)
+                        }
+
+                        HelpUiState.Initial -> {}
+                    }
                 }
             }
         }
@@ -133,7 +144,7 @@ class HelpFragment : BaseFragment() {
         }
     }
 
-    fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
+    private fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
         faqAdapter?.setFaqArrayList(faqArrayList)
         binding.rvFaq.adapter = faqAdapter
         this.faqArrayList = faqArrayList
