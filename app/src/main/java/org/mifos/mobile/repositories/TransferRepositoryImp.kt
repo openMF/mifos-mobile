@@ -1,5 +1,7 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.TransferPayload
@@ -26,7 +28,7 @@ class TransferRepositoryImp @Inject constructor(private val dataManager: DataMan
         fromAccountNumber: String?,
         toAccountNumber: String?,
         transferType: TransferType?
-    ): Response<ResponseBody?>? {
+    ): Flow<ResponseBody> {
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = fromOfficeId
             this.fromClientId = fromClientId
@@ -44,9 +46,13 @@ class TransferRepositoryImp @Inject constructor(private val dataManager: DataMan
             this.fromAccountNumber = fromAccountNumber
             this.toAccountNumber = toAccountNumber
         }
-        return when (transferType) {
-            TransferType.SELF -> dataManager.makeTransfer(transferPayload)
-            else -> dataManager.makeThirdPartyTransfer(transferPayload)
+        return flow {
+            emit(
+                when (transferType) {
+                    TransferType.SELF -> dataManager.makeTransfer(transferPayload)
+                    else -> dataManager.makeThirdPartyTransfer(transferPayload)
+                }
+            )
         }
 
     }
