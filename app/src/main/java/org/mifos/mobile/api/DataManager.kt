@@ -208,7 +208,7 @@ class DataManager @Inject constructor(
 
     suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
 
-    fun notifications(): Flow<List<MifosNotification?>?> = databaseHelper.notifications()
+    fun notifications(): List<MifosNotification> = databaseHelper.notifications()
 
     fun unreadNotificationsCount(): Int {
         return databaseHelper.unreadNotificationsCount()
