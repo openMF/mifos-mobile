@@ -1,9 +1,10 @@
 package org.mifos.mobile.repositories
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.Transaction
-import retrofit2.Response
 import javax.inject.Inject
 
 class RecentTransactionRepositoryImp @Inject constructor(private val dataManager: DataManager) :
@@ -12,7 +13,10 @@ class RecentTransactionRepositoryImp @Inject constructor(private val dataManager
     override suspend fun recentTransactions(
         offset: Int?,
         limit: Int?
-    ): Response<Page<Transaction?>?>? {
-        return limit?.let { offset?.let { it1 -> dataManager.getRecentTransactions(it1, it) } }
+    ): Flow<Page<Transaction>> {
+        return flow {
+            offset?.let { limit?.let { it1 -> dataManager.getRecentTransactions(it, it1) } }
+                ?.let { emit(it) }
+        }
     }
 }

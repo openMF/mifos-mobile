@@ -1,7 +1,6 @@
 package org.mifos.mobile.api
 
 import io.reactivex.Observable
-import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -74,7 +73,7 @@ class DataManager @Inject constructor(
         return baseApiManager.clientsApi.getAccounts(clientId, accountType)
     }
 
-    suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
+    suspend fun getRecentTransactions(offset: Int, limit: Int): Page<Transaction> {
         return baseApiManager.recentTransactionsApi
             .getRecentTransactionsList(clientId, offset, limit)
     }
