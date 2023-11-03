@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRecentTransactionsBinding
 import org.mifos.mobile.models.Transaction
@@ -38,7 +43,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     @Inject
     var recentTransactionsListAdapter: RecentTransactionListAdapter? = null
 
-    private lateinit var recentTransactionViewModel: RecentTransactionViewModel
+    private val recentTransactionViewModel: RecentTransactionViewModel by viewModels()
 
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     private var recentTransactionList: MutableList<Transaction?>? = null
@@ -53,7 +58,6 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentRecentTransactionsBinding.inflate(inflater, container, false)
-        recentTransactionViewModel = ViewModelProvider(this)[RecentTransactionViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         setToolbarTitle(getString(R.string.recent_transactions))
@@ -66,24 +70,30 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recentTransactionViewModel.recentTransactionUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is RecentTransactionUiState.Loading -> showProgress()
-                is RecentTransactionUiState.RecentTransactions -> {
-                    hideProgress()
-                    showRecentTransactions(it.transactions)
-                }
-                is RecentTransactionUiState.Error -> {
-                    hideProgress()
-                    showMessage(getString(it.message))
-                }
-                is RecentTransactionUiState.EmptyTransaction -> {
-                    hideProgress()
-                    showEmptyTransaction()
-                }
-                is RecentTransactionUiState.LoadMoreRecentTransactions -> {
-                    hideProgress()
-                    showLoadMoreRecentTransactions(it.transactions)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                recentTransactionViewModel.recentTransactionUiState.collect{
+                    when (it) {
+                        is RecentTransactionUiState.Loading -> showProgress()
+                        is RecentTransactionUiState.RecentTransactions -> {
+                            hideProgress()
+                            showRecentTransactions(it.transactions)
+                        }
+                        is RecentTransactionUiState.Error -> {
+                            hideProgress()
+                            showMessage(getString(it.message))
+                        }
+                        is RecentTransactionUiState.EmptyTransaction -> {
+                            hideProgress()
+                            showEmptyTransaction()
+                        }
+                        is RecentTransactionUiState.LoadMoreRecentTransactions -> {
+                            hideProgress()
+                            showLoadMoreRecentTransactions(it.transactions)
+                        }
+
+                        RecentTransactionUiState.Initial -> {}
+                    }
                 }
             }
         }
