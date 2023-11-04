@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentClientChargeBinding
 import org.mifos.mobile.models.Charge
@@ -21,7 +25,6 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ClientChargeViewModel
-import java.util.*
 
 /**
  * @author Vishwajeet
@@ -33,7 +36,7 @@ class ClientChargeFragment : BaseFragment() {
     private var _binding: FragmentClientChargeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: ClientChargeViewModel
+    private val viewModel: ClientChargeViewModel by viewModels()
 
     private var clientChargeAdapter: ClientChargeAdapter? = null
     private var id: Long? = 0
@@ -55,7 +58,6 @@ class ClientChargeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentClientChargeBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[ClientChargeViewModel::class.java]
         clientChargeAdapter = ClientChargeAdapter(::onItemClick)
         setToolbarTitle(getString(R.string.charges))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
@@ -78,16 +80,23 @@ class ClientChargeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.clientChargeUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is ClientChargeUiState.Loading -> showProgress()
-                is ClientChargeUiState.ShowError -> {
-                    hideProgress()
-                    showErrorFetchingClientCharges(getString(it.message))
-                }
-                is ClientChargeUiState.ShowClientCharges -> {
-                    hideProgress()
-                    showClientCharges(it.charges)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.clientChargeUiState.collect {
+                    when (it) {
+                        is ClientChargeUiState.Loading -> showProgress()
+                        is ClientChargeUiState.ShowError -> {
+                            hideProgress()
+                            showErrorFetchingClientCharges(getString(it.message))
+                        }
+
+                        is ClientChargeUiState.ShowClientCharges -> {
+                            hideProgress()
+                            showClientCharges(it.charges)
+                        }
+
+                        is ClientChargeUiState.Initial -> {}
+                    }
                 }
             }
         }
@@ -101,9 +110,11 @@ class ClientChargeFragment : BaseFragment() {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(
             Constants.CHARGES,
-            ArrayList<Parcelable>(
-                clientChargeList,
-            ),
+            clientChargeList?.let {
+                ArrayList(
+                    it,
+                )
+            },
         )
     }
 
