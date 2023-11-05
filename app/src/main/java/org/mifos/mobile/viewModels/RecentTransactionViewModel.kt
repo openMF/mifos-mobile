@@ -12,42 +12,47 @@ import org.mifos.mobile.utils.RecentTransactionUiState
 import javax.inject.Inject
 
 @HiltViewModel
-class RecentTransactionViewModel @Inject constructor(private val recentTransactionRepositoryImp: RecentTransactionRepository) :
+class RecentTransactionViewModel @Inject constructor(private val recentTransactionRepository: RecentTransactionRepository) :
     ViewModel() {
 
     private val limit = 50
-    private var loadmore = false
+    private var loadMore = false
 
     private val _recentTransactionUiState = MutableLiveData<RecentTransactionUiState>()
     val recentTransactionUiState: LiveData<RecentTransactionUiState> = _recentTransactionUiState
 
-    fun loadRecentTransactions(loadmore: Boolean, offset: Int) {
-        this.loadmore = loadmore
+    fun loadRecentTransactions(loadMore: Boolean, offset: Int) {
+        this.loadMore = loadMore
         loadRecentTransactions(offset, limit)
     }
 
     private fun loadRecentTransactions(offset: Int, limit: Int) {
         viewModelScope.launch {
             _recentTransactionUiState.value = RecentTransactionUiState.Loading
-            val response = recentTransactionRepositoryImp.recentTransactions(offset, limit)
+
+            val response = recentTransactionRepository.recentTransactions(offset, limit)
+
             if (response?.isSuccessful == true) {
-                if (response.body()?.totalFilteredRecords == 0) {
-                    _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
-                } else if (loadmore && response.body()?.pageItems?.isNotEmpty() == true) {
-                    _recentTransactionUiState.value =
-                        RecentTransactionUiState.LoadMoreRecentTransactions(
-                            response.body()!!.pageItems
-                        )
-                } else if (response.body()?.pageItems?.isNotEmpty() == true) {
-                    _recentTransactionUiState.value = RecentTransactionUiState.RecentTransactions(
-                        response.body()?.pageItems!!
-                    )
+                when {
+                    response.body()?.totalFilteredRecords == 0 -> {
+                        _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
+                    }
+                    loadMore && response.body()?.pageItems?.isNotEmpty() == true -> {
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.LoadMoreRecentTransactions(response.body()!!.pageItems)
+                    }
+                    response.body()?.pageItems?.isNotEmpty() == true -> {
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.RecentTransactions(response.body()!!.pageItems)
+                    }
+                    else -> {
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.Error(R.string.recent_transactions)
+                    }
                 }
             } else {
-                _recentTransactionUiState.value =
-                    RecentTransactionUiState.Error(R.string.recent_transactions)
+                _recentTransactionUiState.value = RecentTransactionUiState.Error(R.string.recent_transactions)
             }
         }
     }
-
 }
