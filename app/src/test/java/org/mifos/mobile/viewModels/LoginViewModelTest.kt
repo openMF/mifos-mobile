@@ -15,6 +15,7 @@ import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
+import org.mifos.mobile.ui.login.LoginViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.LoginUiState
 import org.mockito.Mock
