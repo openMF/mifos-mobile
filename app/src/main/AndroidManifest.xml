@@ -27,7 +27,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="org.mifos.mobile.ui.activities.LoginActivity"
+            android:name="org.mifos.mobile.ui.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" />

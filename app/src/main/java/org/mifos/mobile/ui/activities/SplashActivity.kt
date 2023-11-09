@@ -3,8 +3,8 @@ package org.mifos.mobile.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
-import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.utils.Constants
 
 /*
