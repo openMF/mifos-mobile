@@ -15,7 +15,7 @@ import butterknife.ButterKnife
 import com.google.android.material.textfield.TextInputLayout
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.ui.activities.LoginActivity
+import org.mifos.mobile.ui.login.LoginActivity
 import java.net.MalformedURLException
 import java.net.URL
 

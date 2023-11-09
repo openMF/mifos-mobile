@@ -203,5 +203,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.composeVersion"
     implementation "androidx.compose.material3:material3:$rootProject.materialVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.lifecycleVersion"
+    implementation "androidx.compose.material:material-icons-extended:$rootProject.composeVersion"
+
 }
 apply plugin: 'com.google.gms.google-services'

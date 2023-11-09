@@ -1,4 +1,4 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

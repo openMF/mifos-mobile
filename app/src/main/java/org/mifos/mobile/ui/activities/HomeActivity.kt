@@ -36,6 +36,7 @@ import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
 import org.mifos.mobile.ui.getThemeAttributeColor
+import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster

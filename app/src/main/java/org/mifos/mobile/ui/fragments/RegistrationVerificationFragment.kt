@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRegistrationVerificationBinding
-import org.mifos.mobile.ui.activities.LoginActivity
+import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.Toaster
