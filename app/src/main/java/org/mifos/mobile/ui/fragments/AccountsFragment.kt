@@ -394,6 +394,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         if (filteredSavings.size == 0) {
             showEmptyAccounts(getString(R.string.no_saving_account))
         } else {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             savingAccountsListAdapter?.setSavingAccountsList(filteredSavings)
         }
     }
@@ -418,6 +422,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         if (filteredSavings.size == 0) {
             showEmptyAccounts(getString(R.string.no_loan_account))
         } else {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             loanAccountsListAdapter?.setLoanAccountsList(filteredSavings)
         }
     }
@@ -442,6 +450,10 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         if (filteredSavings.size == 0) {
             showEmptyAccounts(getString(R.string.no_saving_account))
         } else {
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                binding.rvAccounts,
+                binding.layoutError.root,
+            )
             shareAccountsListAdapter?.setShareAccountsList(filteredSavings)
         }
     }
