@@ -48,17 +48,17 @@ fun MifosOutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp),
-        leadingIcon = {
-            icon?.let { painterResource(id = it) }?.let {
+        leadingIcon = if (icon != null) {
+            {
                 Image(
-                    painter = it,
+                    painter = painterResource(id = icon),
                     contentDescription = null,
                     colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(Color.White) else ColorFilter.tint(
                         Color.Black
                     )
                 )
             }
-        },
+        } else null,
         trailingIcon = trailingIcon,
         maxLines = maxLines,
         singleLine = singleLine,
