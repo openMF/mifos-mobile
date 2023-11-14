@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.about
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -30,6 +31,7 @@ class AboutUsFragment : BaseFragment() {
 
     private val viewModel: AboutUsViewModel by viewModels()
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

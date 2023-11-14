@@ -17,49 +17,57 @@ import java.util.*
 @SuppressWarnings("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AboutUsScreen(viewModel: AboutUsViewModel) {
-    Column(
+
+
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        Spacer(modifier = Modifier.height(48.dp))
-        AboutUsHeader()
-        LazyColumn {
-            items(viewModel.aboutUsItems) { item ->
-                MifosItemCard(
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    onClick = {
-                        when (item.itemId) {
-                            AboutUsListItemId.OFFICE_WEBSITE -> {
-                                viewModel.navigateToItem(AboutUsListItemId.OFFICE_WEBSITE)
-                            }
-                            AboutUsListItemId.LICENSES -> {
-                                viewModel.navigateToItem(AboutUsListItemId.LICENSES)
-                            }
-                            AboutUsListItemId.PRIVACY_POLICY -> {
-                                viewModel.navigateToItem(AboutUsListItemId.PRIVACY_POLICY)
-                            }
-                            AboutUsListItemId.SOURCE_CODE -> {
-                                viewModel.navigateToItem(AboutUsListItemId.SOURCE_CODE)
-                            }
-                            AboutUsListItemId.LICENSES_STRING_WITH_VALUE -> {
-                                viewModel.navigateToItem(AboutUsListItemId.LICENSES_STRING_WITH_VALUE)
-                            }
-                            else -> {}
+        item {
+            Spacer(modifier = Modifier.height(48.dp))
+            AboutUsHeader()
+        }
+        items(viewModel.aboutUsItems) { item ->
+            MifosItemCard(
+                modifier = Modifier.padding(bottom = 8.dp),
+                onClick = {
+                    when (item.itemId) {
+                        AboutUsListItemId.OFFICE_WEBSITE -> {
+                            viewModel.navigateToItem(AboutUsListItemId.OFFICE_WEBSITE)
                         }
+
+                        AboutUsListItemId.LICENSES -> {
+                            viewModel.navigateToItem(AboutUsListItemId.LICENSES)
+                        }
+
+                        AboutUsListItemId.PRIVACY_POLICY -> {
+                            viewModel.navigateToItem(AboutUsListItemId.PRIVACY_POLICY)
+                        }
+
+                        AboutUsListItemId.SOURCE_CODE -> {
+                            viewModel.navigateToItem(AboutUsListItemId.SOURCE_CODE)
+                        }
+
+                        AboutUsListItemId.LICENSES_STRING_WITH_VALUE -> {
+                            viewModel.navigateToItem(AboutUsListItemId.LICENSES_STRING_WITH_VALUE)
+                        }
+
+                        else -> {}
                     }
-                ) {
-                    item.title?.let {
-                        AboutUsItemCard(
-                            title = it,
-                            subtitle = item.subtitle,
-                            iconUrl = item.iconUrl
-                        )
-                    }
+                }
+            ) {
+                item.title?.let {
+                    AboutUsItemCard(
+                        title = it,
+                        subtitle = item.subtitle,
+                        iconUrl = item.iconUrl
+                    )
                 }
             }
         }
     }
+
 }
 
 @Composable
