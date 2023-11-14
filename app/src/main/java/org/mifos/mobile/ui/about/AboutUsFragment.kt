@@ -41,9 +41,7 @@ class AboutUsFragment : BaseFragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MifosMobileTheme {
-                    Scaffold {
-                        AboutUsScreen(viewModel)
-                    }
+                    AboutUsScreen(viewModel)
                 }
             }
         }
@@ -56,18 +54,23 @@ class AboutUsFragment : BaseFragment() {
                 AboutUsListItemId.OFFICE_WEBSITE -> {
                     startActivity(WEBSITE_LINK)
                 }
+
                 AboutUsListItemId.LICENSES -> {
                     startActivity(LICENSE_LINK)
                 }
+
                 AboutUsListItemId.PRIVACY_POLICY -> {
                     startActivity(PrivacyPolicyActivity::class.java)
                 }
+
                 AboutUsListItemId.SOURCE_CODE -> {
                     startActivity(SOURCE_CODE_LINK)
                 }
+
                 AboutUsListItemId.LICENSES_STRING_WITH_VALUE -> {
                     startActivity(OssLicensesMenuActivity::class.java)
                 }
+
                 else -> {}
             }
         }
