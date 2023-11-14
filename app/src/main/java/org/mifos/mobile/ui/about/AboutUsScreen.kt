@@ -14,11 +14,8 @@ import org.mifos.mobile.core.ui.component.MifosItemCard
 import org.mifos.mobile.ui.enums.AboutUsListItemId
 import java.util.*
 
-@SuppressWarnings("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AboutUsScreen(viewModel: AboutUsViewModel) {
-
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
