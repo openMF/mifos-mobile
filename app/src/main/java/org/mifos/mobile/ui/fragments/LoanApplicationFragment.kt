@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
@@ -62,7 +61,6 @@ class LoanApplicationFragment : BaseFragment() {
     private var submittedDate: String? = null
     private var isDisbursementDate = false
     private var isLoanUpdatePurposesInitialization = true
-    private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     /**
      * Used when we want to apply for a Loan
      *
@@ -115,7 +113,6 @@ class LoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddLoanApplicationBinding.inflate(inflater, container, false)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
             loadLoanTemplate()
@@ -199,7 +196,7 @@ class LoanApplicationFragment : BaseFragment() {
                 setTvDisbursementOnDate()
             }
 
-            binding.layoutError.btnTryAgain.setOnClickListener {
+            llError.ivStatus.setOnClickListener{
                 onRetry()
             }
         }
@@ -324,16 +321,12 @@ class LoanApplicationFragment : BaseFragment() {
      * Retries to fetch [LoanTemplate] by calling `loadLoanTemplate()`
      */
     private fun onRetry() {
-        if (Network.isConnected(context)) {
-            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
-                binding.viewFlipper,
-                binding.layoutError.root,
-            )
+        binding.apply {
+            llError.root.visibility = View.GONE
+            llAddLoan.visibility = View.VISIBLE
             loadLoanTemplate()
-        } else {
-            Toaster.show(binding.viewFlipper, getString(R.string.internet_not_connected))
-        }
 
+        }
     }
 
     /**
@@ -553,15 +546,15 @@ class LoanApplicationFragment : BaseFragment() {
      * @param message Error message that tells the user about the problem.
      */
     fun showError(message: String?) {
-        if (!Network.isConnected(context)) {
-            sweetUIErrorHandler?.showSweetNoInternetUI(binding.viewFlipper, binding.layoutError.root)
-        } else {
-            sweetUIErrorHandler?.showSweetErrorUI(
-                message,
-                binding.viewFlipper,
-                binding.layoutError.root,
-            )
-            Toaster.show(binding.viewFlipper, message)
+        with(binding) {
+            if (!Network.isConnected(activity)) {
+                llError.ivStatus.setImageResource(R.drawable.ic_error_black_24dp)
+                llError.tvStatus.text = getString(R.string.internet_not_connected)
+                llAddLoan.visibility = View.GONE
+                llError.root.visibility = View.VISIBLE
+            } else {
+                Toaster.show(root, message)
+            }
         }
         hideProgress()
     }

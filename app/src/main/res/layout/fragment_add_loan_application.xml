@@ -181,8 +181,8 @@
     </androidx.core.widget.NestedScrollView>
 
     <include
-        android:id="@+id/layout_error"
-        layout="@layout/error_layout"
+        android:id="@+id/ll_error"
+        layout="@layout/layout_error"
         android:visibility="gone" />
 
 </RelativeLayout>
