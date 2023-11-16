@@ -391,9 +391,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
                 )?.let { filteredSavings.addAll(it) }
             }
         }
-        if (filteredSavings.size == 0) {
-            showEmptyAccounts(getString(R.string.no_saving_account))
-        } else {
+        if (filteredSavings.size != 0) {
             savingAccountsListAdapter?.setSavingAccountsList(filteredSavings)
         }
     }
@@ -415,9 +413,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
                 )?.let { filteredSavings.addAll(it) }
             }
         }
-        if (filteredSavings.size == 0) {
-            showEmptyAccounts(getString(R.string.no_loan_account))
-        } else {
+        if (filteredSavings.size != 0) {
             loanAccountsListAdapter?.setLoanAccountsList(filteredSavings)
         }
     }
@@ -439,9 +435,7 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
                 )?.let { filteredSavings.addAll(it) }
             }
         }
-        if (filteredSavings.size == 0) {
-            showEmptyAccounts(getString(R.string.no_saving_account))
-        } else {
+        if (filteredSavings.size != 0) {
             shareAccountsListAdapter?.setShareAccountsList(filteredSavings)
         }
     }
