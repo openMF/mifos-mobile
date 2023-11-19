@@ -5,4 +5,8 @@
     <style name="SplashTheme" parent="Mifos.DesignSystem.Theme.Base">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
+
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

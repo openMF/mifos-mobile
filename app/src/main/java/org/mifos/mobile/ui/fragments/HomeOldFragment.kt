@@ -256,9 +256,11 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         lifecycleScope.launchWhenStarted {
             viewModel.homeUiState.collect {
                 when (it) {
-                    is HomeUiState.Loading -> showProgress()
+                    is HomeUiState.Loading ->{
+                        binding.detailsOfCustomer.visibility = View.INVISIBLE
+                    }
                     is HomeUiState.UserImage -> {
-                        hideProgress()
+                        stopShimmerEffect()
                         showUserImage(it.image)
                     }
                     is HomeUiState.ClientAccountDetails -> {
@@ -271,7 +273,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
                         showError(getString(it.errorMessage))
                     }
                     is HomeUiState.UserDetails -> {
-                        hideProgress()
+                       stopShimmerEffect()
                         showUserDetails(it.client)
                     }
                     is HomeUiState.UnreadNotificationsCount -> {
@@ -359,6 +361,12 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
 
     private fun userImageClicked() {
         startActivity(Intent(activity, UserProfileActivity::class.java))
+    }
+    
+    private fun stopShimmerEffect(){
+        binding.shimmerViewContainer.stopShimmer()
+        binding.detailsOfCustomer.visibility = View.VISIBLE
+        binding.shimmerViewContainer.visibility = View.INVISIBLE
     }
 
     /**

@@ -17,7 +17,17 @@
             android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
             android:animateLayoutChanges="true"
             android:orientation="vertical">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,6 +36,38 @@
                 android:focusable="true"
                 android:orientation="horizontal"
                 android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsLarge"
+                    app:border="true"
+                    app:border_width="1dp"
+                    tools:src="@drawable/ic_person_black_24dp"
+                    app:shapeAppearanceOverlay="@style/Circular"
+                    android:background="@color/gray_dark"
+                    />
+
+
+                <TextView
+                    style="@style/Mifos.DesignSystem.TextStyle.Heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/gray_dark" />
+
+            </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsSmall"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarger"
+                android:layout_gravity="center"
+                android:id="@+id/details_of_customer">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_circular_user_image"
@@ -46,7 +88,7 @@
                     tools:text="Hello, you guys" />
 
             </LinearLayout>
-
+        </RelativeLayout>
             <com.google.android.material.card.MaterialCardView
                 style="@style/Mifos.DesignSystem.Components.Cards.Filled"
                 android:layout_width="match_parent"
