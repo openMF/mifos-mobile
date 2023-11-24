@@ -3,8 +3,10 @@ package org.mifos.mobile.ui.login
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +20,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -25,7 +28,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,6 +41,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
@@ -52,13 +55,21 @@ fun LoginScreen(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    var username by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue(""))}
-    var password by rememberSaveable(stateSaver = TextFieldValue.Saver) {mutableStateOf( TextFieldValue(""))}
+    var username by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(
+            TextFieldValue("")
+        )
+    }
+    var password by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(
+            TextFieldValue("")
+        )
+    }
 
-    var passwordVisibility: Boolean by remember { mutableStateOf(false) }
+    var passwordVisibility: Boolean by rememberSaveable { mutableStateOf(false) }
 
     var usernameError by rememberSaveable { mutableStateOf(false) }
-    var passwordError by rememberSaveable { mutableStateOf(false)}
+    var passwordError by rememberSaveable { mutableStateOf(false) }
 
     val usernameErrorContent = getUsernameError.invoke(username.text)
     val passwordErrorContent = getPasswordError.invoke(password.text)
@@ -128,12 +139,15 @@ fun LoginScreen(
                     usernameErrorContent.isEmpty() && passwordErrorContent.isEmpty() -> {
                         login.invoke(username.text, password.text)
                     }
+
                     usernameErrorContent.isEmpty() && passwordErrorContent.isNotEmpty() -> {
                         passwordError = true
                     }
+
                     usernameErrorContent.isNotEmpty() && passwordErrorContent.isEmpty() -> {
                         usernameError = true
                     }
+
                     else -> {
                         passwordError = true
                         usernameError = true
@@ -155,6 +169,31 @@ fun LoginScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp)
+                    .weight(1f), color = Color.Gray, thickness = 1.dp
+            )
+            Text(
+                modifier = Modifier.padding(8.dp),
+                text = "or",
+                fontSize = 18.sp,
+                color = if (isSystemInDarkTheme()) Color.White else Color.Black
+            )
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp)
+                    .weight(1f), color = Color.Gray, thickness = 1.dp
+            )
+        }
 
         TextButton(
             onClick = {
