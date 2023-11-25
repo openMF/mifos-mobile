@@ -74,7 +74,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
                 }
                 is RecentTransactionUiState.Error -> {
                     hideProgress()
-                    showMessage(getString(it.message))
+                    showErrorFetchingRecentTransactions(getString(it.message))
                 }
                 is RecentTransactionUiState.EmptyTransaction -> {
                     hideProgress()

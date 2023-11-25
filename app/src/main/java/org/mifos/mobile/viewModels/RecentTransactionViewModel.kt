@@ -28,22 +28,25 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
 
     private fun loadRecentTransactions(offset: Int, limit: Int) {
         viewModelScope.launch {
-            _recentTransactionUiState.value = RecentTransactionUiState.Loading
-            val response = recentTransactionRepositoryImp.recentTransactions(offset, limit)
-            if (response?.isSuccessful == true) {
-                if (response.body()?.totalFilteredRecords == 0) {
-                    _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
-                } else if (loadmore && response.body()?.pageItems?.isNotEmpty() == true) {
-                    _recentTransactionUiState.value =
-                        RecentTransactionUiState.LoadMoreRecentTransactions(
-                            response.body()!!.pageItems
-                        )
-                } else if (response.body()?.pageItems?.isNotEmpty() == true) {
-                    _recentTransactionUiState.value = RecentTransactionUiState.RecentTransactions(
-                        response.body()?.pageItems!!
-                    )
+            try {
+                _recentTransactionUiState.value = RecentTransactionUiState.Loading
+                val response = recentTransactionRepositoryImp.recentTransactions(offset, limit)
+                if (response?.isSuccessful == true) {
+                    if (response.body()?.totalFilteredRecords == 0) {
+                        _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
+                    } else if (loadmore && response.body()?.pageItems?.isNotEmpty() == true) {
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.LoadMoreRecentTransactions(
+                                response.body()!!.pageItems
+                            )
+                    } else if (response.body()?.pageItems?.isNotEmpty() == true) {
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.RecentTransactions(
+                                response.body()?.pageItems!!
+                            )
+                    }
                 }
-            } else {
+            } catch(e: Exception){
                 _recentTransactionUiState.value =
                     RecentTransactionUiState.Error(R.string.recent_transactions)
             }
