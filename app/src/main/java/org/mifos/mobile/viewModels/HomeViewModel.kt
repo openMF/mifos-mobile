@@ -31,15 +31,17 @@ class HomeViewModel @Inject constructor(private val homeRepositoryImp: HomeRepos
         viewModelScope.launch {
             _homeUiState.value = HomeUiState.Loading
             homeRepositoryImp.clientAccounts().catch {
-                _homeUiState.value = HomeUiState.Error(R.string.error_fetching_accounts)
+                _homeUiState.value = HomeUiState.Error(R.string.no_internet_connection)
             }.collect { clientAccounts ->
                 _homeUiState.value = HomeUiState.ClientAccountDetails(
                     getLoanAccountDetails(clientAccounts.loanAccounts),
                     getSavingAccountDetails(clientAccounts.savingsAccounts)
                 )
+
             }
         }
     }
+
 
     val userDetails: Unit
         get() {
