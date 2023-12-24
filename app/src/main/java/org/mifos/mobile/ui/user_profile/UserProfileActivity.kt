@@ -1,10 +1,10 @@
-package org.mifos.mobile.ui.activities
+package org.mifos.mobile.ui.user_profile
 
 import android.os.Bundle
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityUserProfileBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.UserProfileFragment
+import org.mifos.mobile.ui.user_profile.UserProfileFragment
 
 class UserProfileActivity : BaseActivity() {
 
