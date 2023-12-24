@@ -41,7 +41,8 @@ import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.UserDetailUiState
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
-import org.mifos.mobile.viewModels.UserDetailViewModel
+import org.mifos.mobile.ui.user_profile.UserDetailViewModel
+import org.mifos.mobile.ui.user_profile.UserProfileActivity
 import javax.inject.Inject
 
 /**
