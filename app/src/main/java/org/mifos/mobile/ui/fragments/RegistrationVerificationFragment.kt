@@ -18,7 +18,7 @@ import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.viewModels.RegistrationViewModel
+import org.mifos.mobile.ui.registration.RegistrationViewModel
 
 /**
  * Created by dilpreet on 31/7/17.

@@ -9,6 +9,7 @@ import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.UserAuthRepository
+import org.mifos.mobile.ui.registration.RegistrationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mockito.Mock

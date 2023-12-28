@@ -14,7 +14,7 @@ import org.mifos.mobile.MifosSelfServiceApp.Companion.context
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.PassCodeActivity
-import org.mifos.mobile.ui.activities.RegistrationActivity
+import org.mifos.mobile.ui.registration.RegistrationActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoginUiState

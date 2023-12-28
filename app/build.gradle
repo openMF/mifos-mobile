@@ -116,6 +116,7 @@ dependencies {
 
     //Country Code picker
     implementation "com.hbb20:ccp:$rootProject.countryCodePicker"
+    implementation 'com.github.ParveshSandila:CountryCodeChooser:1.0'
 
     //Square dependencies
     implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion") {
