@@ -72,7 +72,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="org.mifos.mobile.ui.activities.RegistrationActivity"
+            android:name="org.mifos.mobile.ui.registration.RegistrationActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
 
