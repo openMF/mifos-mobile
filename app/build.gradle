@@ -104,7 +104,7 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "com.google.android.material:material:$rootProject.designLibraryVersion"
-    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.preference:preference:1.2.1"
     implementation "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
@@ -172,7 +172,7 @@ dependencies {
     androidTestImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
-    androidTestImplementation "androidx.annotation:annotation:1.0.0"
+    androidTestImplementation "androidx.annotation:annotation:1.7.1"
     implementation "androidx.arch.core:core-testing:$rootProject.archCoreVersion"
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
         exclude group: 'com.android.support', module: 'appcompat'
@@ -186,7 +186,7 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
 
     implementation 'com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
