@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.about
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -30,6 +31,7 @@ class AboutUsFragment : BaseFragment() {
 
     private val viewModel: AboutUsViewModel by viewModels()
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,9 +41,7 @@ class AboutUsFragment : BaseFragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MifosMobileTheme {
-                    Scaffold {
-                        AboutUsScreen(viewModel)
-                    }
+                    AboutUsScreen(viewModel)
                 }
             }
         }
@@ -54,18 +54,23 @@ class AboutUsFragment : BaseFragment() {
                 AboutUsListItemId.OFFICE_WEBSITE -> {
                     startActivity(WEBSITE_LINK)
                 }
+
                 AboutUsListItemId.LICENSES -> {
                     startActivity(LICENSE_LINK)
                 }
+
                 AboutUsListItemId.PRIVACY_POLICY -> {
                     startActivity(PrivacyPolicyActivity::class.java)
                 }
+
                 AboutUsListItemId.SOURCE_CODE -> {
                     startActivity(SOURCE_CODE_LINK)
                 }
+
                 AboutUsListItemId.LICENSES_STRING_WITH_VALUE -> {
                     startActivity(OssLicensesMenuActivity::class.java)
                 }
+
                 else -> {}
             }
         }

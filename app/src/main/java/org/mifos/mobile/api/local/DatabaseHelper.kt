@@ -2,6 +2,8 @@ package org.mifos.mobile.api.local
 
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.notification.MifosNotification
@@ -17,21 +19,21 @@ import javax.inject.Singleton
  */
 @Singleton
 class DatabaseHelper @Inject constructor() {
-    fun syncCharges(charges: Page<Charge?>?): Response<Page<Charge?>?> {
+    fun syncCharges(charges: Page<Charge>?): Page<Charge>? {
         if (charges != null) {
             for (charge in charges.pageItems)
-                charge?.save()
+                charge.save()
         }
-        return Response.success(charges)
+        return charges
     }
 
-    fun clientCharges(): Response<Page<Charge?>?> {
+    fun clientCharges(): Page<Charge?> {
         val charges = SQLite.select()
             .from(Charge::class.java)
             .queryList()
         val chargePage = Page<Charge?>()
         chargePage.pageItems = charges
-        return Response.success(chargePage)
+        return chargePage
     }
 
     fun notifications(): List<MifosNotification> {
