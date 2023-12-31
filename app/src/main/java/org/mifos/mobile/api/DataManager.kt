@@ -1,7 +1,6 @@
 package org.mifos.mobile.api
 
 import io.reactivex.Observable
-import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
@@ -74,22 +73,22 @@ class DataManager @Inject constructor(
         return baseApiManager.clientsApi.getAccounts(clientId, accountType)
     }
 
-    suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
+    suspend fun getRecentTransactions(offset: Int, limit: Int): Page<Transaction> {
         return baseApiManager.recentTransactionsApi
             .getRecentTransactionsList(clientId, offset, limit)
     }
 
-    suspend fun getClientCharges(clientId: Long): Response<Page<Charge?>?>? {
+    suspend fun getClientCharges(clientId: Long): Page<Charge> {
         return baseApiManager.clientChargeApi.getClientChargeList(clientId).apply {
-            databaseHelper.syncCharges(this?.body())
+            databaseHelper.syncCharges(this)
         }
     }
 
-    suspend fun getLoanCharges(loanId: Long): Response<List<Charge?>?>? {
+    suspend fun getLoanCharges(loanId: Long): List<Charge> {
         return baseApiManager.clientChargeApi.getLoanAccountChargeList(loanId)
     }
 
-    suspend fun getSavingsCharges(savingsId: Long): Response<List<Charge?>?>? {
+    suspend fun getSavingsCharges(savingsId: Long): List<Charge> {
         return baseApiManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
     }
 
@@ -206,7 +205,7 @@ class DataManager @Inject constructor(
         return baseApiManager.registrationApi.verifyUser(userVerify)
     }
 
-    suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
+    suspend fun clientLocalCharges(): Page<Charge?> = databaseHelper.clientCharges()
 
     fun notifications(): List<MifosNotification> = databaseHelper.notifications()
 

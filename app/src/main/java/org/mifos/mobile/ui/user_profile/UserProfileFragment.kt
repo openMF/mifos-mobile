@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.user_profile
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -6,21 +6,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.databinding.FragmentUserProfileBinding
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.Group
 import org.mifos.mobile.ui.activities.EditUserDetailActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
-import org.mifos.mobile.utils.*
-import org.mifos.mobile.viewModels.UserDetailViewModel
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.TextDrawable
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.UserDetailUiState
 import javax.inject.Inject
 
 /**
@@ -29,31 +38,48 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class UserProfileFragment : BaseFragment() {
 
-    private var _binding: FragmentUserProfileBinding? = null
-    private val binding get() = _binding!!
-
     private val viewModel: UserDetailViewModel by viewModels()
+    private var userBitmap: Bitmap? = null
 
     @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    private var userBitmap: Bitmap? = null
     private var client: Client? = null
-    private var sweetUIErrorHandler: SweetUIErrorHandler? = null
+
+    private var userDetails by mutableStateOf(UserDetails())
+    private var isOnline by mutableStateOf(false)
+
+    private var bitmap by mutableStateOf<Bitmap?>(null)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        (activity as BaseActivity?)?.setSupportActionBar(binding.toolbar) // check this part before pushing
         (activity as BaseActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         if (savedInstanceState == null) {
             viewModel.userDetails
             viewModel.userImage
         }
-        return binding.root
+
+        isOnline = Network.isConnected(context)
+
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                MifosMobileTheme {
+                    bitmap?.let {
+                        UserProfileScreen(
+                            userDetails = userDetails,
+                            isOnline = isOnline,
+                            bitmap = it,
+                            changePassword = { changePassword() },
+                            home = { backToHome() }
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,20 +93,18 @@ class UserProfileFragment : BaseFragment() {
                         hideProgress()
                         showUserDetails(it.client)
                     }
+
                     is UserDetailUiState.ShowUserImage -> {
                         hideProgress()
                         showUserImage(it.image)
                     }
+
                     is UserDetailUiState.ShowError -> {
                         hideProgress()
                         showError(getString(it.message))
                     }
                 }
             }
-        }
-
-        binding.btnChangePassword.setOnClickListener {
-            changePassword()
         }
     }
 
@@ -103,40 +127,38 @@ class UserProfileFragment : BaseFragment() {
      *
      * @param client instance of [Client] which contains information about client
      */
-    fun showUserDetails(client: Client?) {
+    private fun showUserDetails(client: Client?): UserDetails {
         this.client = client
-        binding.tvUserName.text = nullFieldCheck(getString(R.string.username), client?.displayName)
-        binding.tvAccountNumber.text = nullFieldCheck(
-            getString(R.string.account_number),
-            client?.accountNo,
-        )
-        binding.tvActivationDate.text = nullFieldCheck(
+        val userName = nullFieldCheck(getString(R.string.username), client?.displayName)
+        val accountNumber = nullFieldCheck(getString(R.string.account_number), client?.accountNo)
+        val activationDate = nullFieldCheck(
             getString(R.string.activation_date),
-            DateHelper.getDateAsString(client?.activationDate),
+            DateHelper.getDateAsString(client?.activationDate)
         )
-        binding.tvOfficeName.text = nullFieldCheck(
-            getString(R.string.office_name),
-            client?.officeName,
-        )
-        binding.tvClientType.text = nullFieldCheck(
-            getString(R.string.client_type),
-            client?.clientType?.name,
-        )
-        binding.tvGroups.text = nullFieldCheck(
-            getString(R.string.groups),
-            getGroups(client?.groups),
-        )
-        binding.tvClientClassification.text = client?.clientClassification?.name ?: "-"
-        binding.tvPhoneNumber.text = nullFieldCheck(
-            getString(R.string.phone_number),
-            client?.mobileNo,
-        )
-        if (client?.dobDate?.size != 3) { // no data entry in database for the client
-            binding.tvDob.text = getString(R.string.no_dob_found)
+        val officeName = nullFieldCheck(getString(R.string.office_name), client?.officeName)
+        val clientType = nullFieldCheck(getString(R.string.client_type), client?.clientType?.name)
+        val groups = nullFieldCheck(getString(R.string.groups), getGroups(client?.groups))
+        val clientClassification = client?.clientClassification?.name ?: "-"
+        val phoneNumber = nullFieldCheck(getString(R.string.phone_number), client?.mobileNo)
+        val dob = if (client?.dobDate?.size != 3) {
+            getString(R.string.no_dob_found)
         } else {
-            binding.tvDob.text = DateHelper.getDateAsString(client.dobDate)
+            DateHelper.getDateAsString(client.dobDate)
         }
-        binding.tvGender.text = nullFieldCheck(getString(R.string.gender), client?.gender?.name)
+        val gender = nullFieldCheck(getString(R.string.gender), client?.gender?.name)
+        userDetails = UserDetails(
+            userName,
+            accountNumber,
+            activationDate,
+            officeName,
+            clientType,
+            groups,
+            clientClassification,
+            phoneNumber,
+            dob,
+            gender
+        )
+        return userDetails
     }
 
     private fun nullFieldCheck(field: String, value: String?): String {
@@ -172,12 +194,14 @@ class UserProfileFragment : BaseFragment() {
      *
      * @param bitmap User Image
      */
-    fun showUserImage(bitmap: Bitmap?) {
+    private fun showUserImage(bitmap: Bitmap?): Bitmap? {
         activity?.runOnUiThread {
             userBitmap = bitmap
             if (userBitmap == null) {
                 val textDrawable = TextDrawable.builder()
                     .beginConfig()
+                    .width(100)
+                    .height(100)
                     .toUpperCase()
                     .endConfig()
                     .buildRound(
@@ -193,15 +217,20 @@ class UserProfileFragment : BaseFragment() {
                             ?.substring(0, 1),
                         requireContext().getThemeAttributeColor(R.attr.colorPrimaryVariant),
                     )
-                binding.ivProfile.setImageDrawable(textDrawable)
+                this.bitmap = textDrawable.toBitmap()
             } else {
-                binding.ivProfile.setImageBitmap(bitmap)
+                this.bitmap = bitmap
             }
         }
+        return this.bitmap
     }
 
-    fun changePassword() {
+    private fun changePassword() {
         startActivity(Intent(context, EditUserDetailActivity::class.java))
+    }
+
+    private fun backToHome() {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     /**
@@ -210,14 +239,7 @@ class UserProfileFragment : BaseFragment() {
      * @param message Error message that tells the user about the problem.
      */
     fun showError(message: String?) {
-        Toaster.show(binding.root, message)
-        sweetUIErrorHandler?.showSweetCustomErrorUI(
-            getString(R.string.error_fetching_user_profile),
-            R.drawable.ic_error_black_24dp,
-            binding.appBarLayout,
-            binding.layoutError.root,
-        )
-        binding.fabEdit.visibility = View.GONE
+        Toaster.show(view, message)
     }
 
     fun showProgress() {
@@ -226,12 +248,6 @@ class UserProfileFragment : BaseFragment() {
 
     fun hideProgress() {
         hideProgressBar()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        hideProgress()
-        _binding = null
     }
 
     companion object {
