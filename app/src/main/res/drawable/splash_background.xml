@@ -4,7 +4,8 @@
     <item android:drawable="@color/white" />
 
     <item>
-        <bitmap android:src="@drawable/mifos_splash_screen_logo" />
+        <bitmap android:src="@drawable/mifos_splash_screen_logo"
+            android:gravity="center"/>
     </item>
 
 </layer-list>
