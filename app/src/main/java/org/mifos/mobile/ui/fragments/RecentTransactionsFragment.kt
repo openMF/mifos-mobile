@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentRecentTransactionsBinding
 import org.mifos.mobile.models.Transaction
@@ -37,7 +42,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     @Inject
     var recentTransactionsListAdapter: RecentTransactionListAdapter? = null
 
-    private lateinit var recentTransactionViewModel: RecentTransactionViewModel
+    private val recentTransactionViewModel: RecentTransactionViewModel by viewModels()
 
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     private var recentTransactionList: MutableList<Transaction?>? = null
@@ -52,7 +57,6 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentRecentTransactionsBinding.inflate(inflater, container, false)
-        recentTransactionViewModel = ViewModelProvider(this)[RecentTransactionViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         setToolbarTitle(getString(R.string.recent_transactions))
@@ -65,6 +69,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+<<<<<<< HEAD
         recentTransactionViewModel.recentTransactionUiState.observe(viewLifecycleOwner) {
             when (it) {
                 is RecentTransactionUiState.Loading -> showProgress()
@@ -83,6 +88,32 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
                 is RecentTransactionUiState.LoadMoreRecentTransactions -> {
                     hideProgress()
                     showLoadMoreRecentTransactions(it.transactions)
+=======
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                recentTransactionViewModel.recentTransactionUiState.collect{
+                    when (it) {
+                        is RecentTransactionUiState.Loading -> showProgress()
+                        is RecentTransactionUiState.RecentTransactions -> {
+                            hideProgress()
+                            showRecentTransactions(it.transactions)
+                        }
+                        is RecentTransactionUiState.Error -> {
+                            hideProgress()
+                            showMessage(getString(it.message))
+                        }
+                        is RecentTransactionUiState.EmptyTransaction -> {
+                            hideProgress()
+                            showEmptyTransaction()
+                        }
+                        is RecentTransactionUiState.LoadMoreRecentTransactions -> {
+                            hideProgress()
+                            showLoadMoreRecentTransactions(it.transactions)
+                        }
+
+                        RecentTransactionUiState.Initial -> {}
+                    }
+>>>>>>> e6a6d7b05ee77dc5164d7f8d4abd6225b433b09c
                 }
             }
         }
@@ -163,7 +194,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     /**
      * Shows a Toast
      */
-    fun showMessage(message: String?) {
+    private fun showMessage(message: String?) {
         (activity as BaseActivity?)?.showToast(message!!)
     }
 
@@ -173,7 +204,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
      *
      * @param recentTransactionList List of [Transaction]
      */
-    fun showRecentTransactions(recentTransactionList: List<Transaction?>?) {
+    private fun showRecentTransactions(recentTransactionList: List<Transaction?>?) {
         this.recentTransactionList = recentTransactionList as MutableList<Transaction?>?
         recentTransactionsListAdapter?.setTransactions(recentTransactionList)
     }
@@ -188,7 +219,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         recentTransactionsListAdapter?.notifyDataSetChanged()
     }
 
-    fun resetUI() {
+    private fun resetUI() {
         sweetUIErrorHandler?.hideSweetErrorLayoutUI(
             binding.rvRecentTransactions,
             binding.layoutError.root,
@@ -198,7 +229,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
     /**
      * Hides `rvRecentTransactions` and shows a textview prompting no transactions
      */
-    fun showEmptyTransaction() {
+    private fun showEmptyTransaction() {
         sweetUIErrorHandler?.showSweetEmptyUI(
             getString(R.string.recent_transactions),
             R.drawable.ic_error_black_24dp,
@@ -227,7 +258,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         }
     }
 
-    fun retryClicked() {
+    private fun retryClicked() {
         if (isConnected(requireContext())) {
             sweetUIErrorHandler?.hideSweetErrorLayoutUI(
                 binding.rvRecentTransactions,
@@ -251,7 +282,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         showSwipeRefreshLayout(false)
     }
 
-    fun showSwipeRefreshLayout(show: Boolean) {
+    private fun showSwipeRefreshLayout(show: Boolean) {
         binding.swipeTransactionContainer.post {
             binding.swipeTransactionContainer.isRefreshing = show
         }
