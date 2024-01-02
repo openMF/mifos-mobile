@@ -11,9 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.FragmentSavingAccountDetailsBinding
@@ -34,7 +38,6 @@ import org.mifos.mobile.utils.SymbolsUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
 import org.mifos.mobile.viewModels.SavingAccountsDetailViewModel
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /**
@@ -50,7 +53,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
     @JvmField
     @Inject
     var preferencesHelper: PreferencesHelper? = null
-    private lateinit var viewModel: SavingAccountsDetailViewModel
+    private val viewModel: SavingAccountsDetailViewModel by viewModels()
     private var savingsId: Long? = 0
     private var status: Status? = null
     private var savingsWithAssociations: SavingsWithAssociations? = null
@@ -70,7 +73,6 @@ class SavingAccountsDetailFragment : BaseFragment() {
     ): View {
         _binding = FragmentSavingAccountDetailsBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.saving_account_details))
-        viewModel = ViewModelProvider(this)[SavingAccountsDetailViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(context, binding.root)
         if (savedInstanceState == null && this.savingsWithAssociations == null) {
             viewModel.loadSavingsWithAssociations(savingsId)
@@ -83,52 +85,63 @@ class SavingAccountsDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvHelpLineNumber.setOnClickListener {
-            dialHelpLineNumber()
-        }
 
-        binding.tvDeposit.setOnClickListener {
-            deposit()
-        }
+        with(binding) {
+            tvHelpLineNumber.setOnClickListener {
+                dialHelpLineNumber()
+            }
 
-        binding.tvMakeATransfer.setOnClickListener {
-            transfer()
-        }
-        binding.layoutError.btnTryAgain.setOnClickListener {
-            onRetry()
-        }
+            tvDeposit.setOnClickListener {
+                deposit()
+            }
 
-        binding.llSavingsTransactions.setOnClickListener {
-            transactionsClicked()
-        }
+            tvMakeATransfer.setOnClickListener {
+                transfer()
+            }
 
-        binding.llSavingsCharges.setOnClickListener {
-            chargeClicked()
-        }
+            layoutError.btnTryAgain.setOnClickListener {
+                onRetry()
+            }
 
-        binding.llSavingsQrCode.setOnClickListener {
-            qrCodeClicked()
-        }
+            llSavingsTransactions.setOnClickListener {
+                transactionsClicked()
+            }
 
-        viewModel.savingAccountsDetailUiState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                SavingsAccountUiState.Loading -> showProgress()
+            llSavingsCharges.setOnClickListener {
+                chargeClicked()
+            }
 
-                SavingsAccountUiState.Error -> {
-                    hideProgress()
-                    showErrorFetchingSavingAccountsDetail(
-                        context?.getString(R.string.error_saving_account_details_loading),
-                    )
-                }
-
-                is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
-                    hideProgress()
-                    showSavingAccountsDetail(state.savingAccount)
-                }
-
-                else -> throw IllegalStateException("Unexpected State: $state")
+            llSavingsQrCode.setOnClickListener {
+                qrCodeClicked()
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.savingAccountsDetailUiState.collect { state ->
+                    when (state) {
+                        SavingsAccountUiState.Loading -> showProgress()
+
+                        SavingsAccountUiState.Error -> {
+                            hideProgress()
+                            showErrorFetchingSavingAccountsDetail(
+                                context?.getString(R.string.error_saving_account_details_loading),
+                            )
+                        }
+
+                        is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
+                            hideProgress()
+                            showSavingAccountsDetail(state.savingAccount)
+                        }
+
+                        is SavingsAccountUiState.Initial -> {}
+
+                        else -> throw IllegalStateException("Unexpected State: $state")
+                    }
+                }
+            }
+        }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -1,10 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.utils.Constants
@@ -15,8 +16,9 @@ import javax.inject.Inject
 class SavingAccountsDetailViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
     ViewModel() {
 
-    private val _savingAccountsDetailUiState = MutableLiveData<SavingsAccountUiState>()
-    val savingAccountsDetailUiState: LiveData<SavingsAccountUiState> get() = _savingAccountsDetailUiState
+    private val _savingAccountsDetailUiState =
+        MutableStateFlow<SavingsAccountUiState>(SavingsAccountUiState.Initial)
+    val savingAccountsDetailUiState: StateFlow<SavingsAccountUiState> get() = _savingAccountsDetailUiState
 
     /**
      * Load details of a particular saving account from the server and notify the view
@@ -28,17 +30,14 @@ class SavingAccountsDetailViewModel @Inject constructor(private val savingsAccou
     fun loadSavingsWithAssociations(accountId: Long?) {
         viewModelScope.launch {
             _savingAccountsDetailUiState.value = SavingsAccountUiState.Loading
-            try {
-                val response = savingsAccountRepositoryImp.getSavingsWithAssociations(
-                    accountId,
-                    Constants.TRANSACTIONS,
-                )
-                if (response?.isSuccessful == true) {
-                    _savingAccountsDetailUiState.value = response.body()
-                        ?.let { SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(it) }
-                }
-            } catch (e: Throwable) {
+            savingsAccountRepositoryImp.getSavingsWithAssociations(
+                accountId,
+                Constants.TRANSACTIONS,
+            ).catch {
                 _savingAccountsDetailUiState.value = SavingsAccountUiState.Error
+            }.collect {
+                _savingAccountsDetailUiState.value =
+                    SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(it)
             }
         }
     }

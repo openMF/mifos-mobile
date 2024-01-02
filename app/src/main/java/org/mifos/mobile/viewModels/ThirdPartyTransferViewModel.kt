@@ -1,11 +1,10 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
@@ -14,35 +13,33 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.templates.account.AccountOption
+import org.mifos.mobile.repositories.BeneficiaryRepository
 import org.mifos.mobile.repositories.ThirdPartyTransferRepository
 import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import javax.inject.Inject
 
 @HiltViewModel
-class ThirdPartyTransferViewModel @Inject constructor(private val thirdPartyTransferRepositoryImp: ThirdPartyTransferRepository) :
+class ThirdPartyTransferViewModel @Inject constructor(
+    private val thirdPartyTransferRepositoryImp: ThirdPartyTransferRepository,
+    private val beneficiaryRepositoryImp: BeneficiaryRepository
+) :
     ViewModel() {
 
     private lateinit var accountOptionAndBeneficiary: AccountOptionAndBeneficiary
 
-    private val _thirdPartyTransferUiState = MutableLiveData<ThirdPartyTransferUiState>()
-    val thirdPartyTransferUiState: LiveData<ThirdPartyTransferUiState> get() = _thirdPartyTransferUiState
+    private val _thirdPartyTransferUiState = MutableStateFlow<ThirdPartyTransferUiState>(ThirdPartyTransferUiState.Initial)
+    val thirdPartyTransferUiState: StateFlow<ThirdPartyTransferUiState> get() = _thirdPartyTransferUiState
 
     fun loadTransferTemplate() {
         viewModelScope.launch {
             _thirdPartyTransferUiState.value = ThirdPartyTransferUiState.Loading
             try {
                 val thirdPartyTransferTemplate =
-                    flowOf(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate())
-                val beneficiaryList = flowOf(thirdPartyTransferRepositoryImp.beneficiaryList())
+                    thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()
+                val beneficiaryList = beneficiaryRepositoryImp.beneficiaryList()
                 thirdPartyTransferTemplate.zip(beneficiaryList) { templateResult, beneficiaryListResult ->
-                    templateResult?.body()?.let {
-                        beneficiaryListResult?.body()?.let { it1 ->
-                            accountOptionAndBeneficiary = AccountOptionAndBeneficiary(
-                                it,
-                                it1,
-                            )
-                        }
-                    }
+                    accountOptionAndBeneficiary =
+                        AccountOptionAndBeneficiary(templateResult, beneficiaryListResult)
                 }
                 _thirdPartyTransferUiState.value =
                     ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate(

@@ -15,6 +15,7 @@ import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
 import org.mifos.mobile.R
 import org.mifos.mobile.ui.enums.BiometricCapability
+import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.MaterialDialog

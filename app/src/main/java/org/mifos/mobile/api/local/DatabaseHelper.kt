@@ -10,7 +10,7 @@ import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.models.notification.MifosNotification_Table
 import org.mifos.mobile.utils.NotificationComparator
 import retrofit2.Response
-import java.util.*
+import java.util.Collections
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,32 +19,30 @@ import javax.inject.Singleton
  */
 @Singleton
 class DatabaseHelper @Inject constructor() {
-    fun syncCharges(charges: Page<Charge?>?): Response<Page<Charge?>?> {
+    fun syncCharges(charges: Page<Charge>?): Page<Charge>? {
         if (charges != null) {
             for (charge in charges.pageItems)
-                charge?.save()
+                charge.save()
         }
-        return Response.success(charges)
+        return charges
     }
 
-    fun clientCharges(): Response<Page<Charge?>?> {
+    fun clientCharges(): Page<Charge?> {
         val charges = SQLite.select()
             .from(Charge::class.java)
             .queryList()
         val chargePage = Page<Charge?>()
         chargePage.pageItems = charges
-        return Response.success(chargePage)
+        return chargePage
     }
 
-    fun notifications(): Flow<List<MifosNotification?>?> {
-        return flow {
-            deleteOldNotifications()
-            val notifications = SQLite.select()
-                .from(MifosNotification::class.java)
-                .queryList()
-            Collections.sort(notifications, NotificationComparator())
-            emit(notifications)
-        }
+    fun notifications(): List<MifosNotification> {
+        deleteOldNotifications()
+        val notifications = SQLite.select()
+            .from(MifosNotification::class.java)
+            .queryList()
+        Collections.sort(notifications, NotificationComparator())
+        return notifications
     }
 
     fun unreadNotificationsCount(): Int {

@@ -12,9 +12,13 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.EditText
 import android.widget.Spinner
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentThirdPartyTransferBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -28,7 +32,13 @@ import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.adapters.BeneficiarySpinnerAdapter
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ThirdPartyTransferUiState
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.Utils
+import org.mifos.mobile.utils.getTodayFormatted
 import org.mifos.mobile.viewModels.ThirdPartyTransferViewModel
 
 /**
@@ -40,7 +50,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
     private var _binding: FragmentThirdPartyTransferBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: ThirdPartyTransferViewModel
+    private val viewModel: ThirdPartyTransferViewModel by viewModels()
 
     private val listBeneficiary: MutableList<BeneficiaryDetail?> = ArrayList()
     private val listPayFrom: MutableList<AccountDetail> = ArrayList()
@@ -63,7 +73,6 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentThirdPartyTransferBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[ThirdPartyTransferViewModel::class.java]
         setToolbarTitle(getString(R.string.third_party_transfer))
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
@@ -77,20 +86,28 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.thirdPartyTransferUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is ThirdPartyTransferUiState.Loading -> showProgress()
-                is ThirdPartyTransferUiState.Error -> {
-                    hideProgress()
-                    getString(it.message)
-                }
-                is ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate -> {
-                    hideProgress()
-                    showThirdPartyTransferTemplate(it.accountOptionsTemplate)
-                }
-                is ThirdPartyTransferUiState.ShowBeneficiaryList -> {
-                    hideProgress()
-                    showBeneficiaryList(it.beneficiaries)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.thirdPartyTransferUiState.collect {
+                    when (it) {
+                        is ThirdPartyTransferUiState.Loading -> showProgress()
+                        is ThirdPartyTransferUiState.Error -> {
+                            hideProgress()
+                            getString(it.message)
+                        }
+
+                        is ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate -> {
+                            hideProgress()
+                            showThirdPartyTransferTemplate(it.accountOptionsTemplate)
+                        }
+
+                        is ThirdPartyTransferUiState.ShowBeneficiaryList -> {
+                            hideProgress()
+                            showBeneficiaryList(it.beneficiaries)
+                        }
+
+                        ThirdPartyTransferUiState.Initial -> {}
+                    }
                 }
             }
         }
@@ -181,7 +198,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      * Checks validation of `etRemark` and then opens [TransferProcessFragment] for
      * initiating the transfer
      */
-    fun reviewTransfer() {
+    private fun reviewTransfer() {
         if (binding.etAmount.text.toString() == "") {
             Toaster.show(binding.root, getString(R.string.enter_amount))
             return
@@ -229,7 +246,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      *
      * @param msg String to be shown
      */
-    fun showToaster(msg: String?) {
+    private fun showToaster(msg: String?) {
         Toaster.show(binding.root, msg)
     }
 
@@ -239,7 +256,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      *
      * @param accountOptionsTemplate Template for account transfer
      */
-    fun showThirdPartyTransferTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
+    private fun showThirdPartyTransferTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
         listPayFrom.clear()
         viewModel.getAccountNumbersFromAccountOptions(
@@ -256,7 +273,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
      *
      * @param beneficiaries List of [Beneficiary] linked with user's account
      */
-    fun showBeneficiaryList(beneficiaries: List<Beneficiary?>?) {
+    private fun showBeneficiaryList(beneficiaries: List<Beneficiary?>?) {
         this.beneficiaries = beneficiaries
         listBeneficiary.clear()
         viewModel.getAccountNumbersFromBeneficiaries(beneficiaries)

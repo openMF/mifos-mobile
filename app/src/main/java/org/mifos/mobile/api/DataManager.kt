@@ -1,11 +1,14 @@
 package org.mifos.mobile.api
 
 import io.reactivex.Observable
-import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.*
+import org.mifos.mobile.models.Charge
+import org.mifos.mobile.models.Page
+import org.mifos.mobile.models.Transaction
+import org.mifos.mobile.models.UpdatePasswordPayload
+import org.mifos.mobile.models.User
 import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
@@ -48,11 +51,11 @@ class DataManager @Inject constructor(
     private val databaseHelper: DatabaseHelper,
 ) {
     var clientId: Long? = preferencesHelper.clientId
-    suspend fun login(loginPayload: LoginPayload?): Response<User?>? {
+    suspend fun login(loginPayload: LoginPayload?): User {
         return baseApiManager.authenticationApi.authenticate(loginPayload)
     }
 
-    suspend fun clients(): Response<Page<Client?>?>? = baseApiManager.clientsApi.clients()
+    suspend fun clients(): Page<Client> = baseApiManager.clientsApi.clients()
 
     suspend fun currentClient(): Client {
         return baseApiManager.clientsApi.getClientForId(clientId)
@@ -70,55 +73,55 @@ class DataManager @Inject constructor(
         return baseApiManager.clientsApi.getAccounts(clientId, accountType)
     }
 
-    suspend fun getRecentTransactions(offset: Int, limit: Int): Response<Page<Transaction?>?>? {
+    suspend fun getRecentTransactions(offset: Int, limit: Int): Page<Transaction> {
         return baseApiManager.recentTransactionsApi
             .getRecentTransactionsList(clientId, offset, limit)
     }
 
-    suspend fun getClientCharges(clientId: Long): Response<Page<Charge?>?>? {
+    suspend fun getClientCharges(clientId: Long): Page<Charge> {
         return baseApiManager.clientChargeApi.getClientChargeList(clientId).apply {
-            databaseHelper.syncCharges(this?.body())
+            databaseHelper.syncCharges(this)
         }
     }
 
-    suspend fun getLoanCharges(loanId: Long): Response<List<Charge?>?>? {
+    suspend fun getLoanCharges(loanId: Long): List<Charge> {
         return baseApiManager.clientChargeApi.getLoanAccountChargeList(loanId)
     }
 
-    suspend fun getSavingsCharges(savingsId: Long): Response<List<Charge?>?>? {
+    suspend fun getSavingsCharges(savingsId: Long): List<Charge> {
         return baseApiManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
     }
 
     suspend fun getSavingsWithAssociations(
         accountId: Long?,
         associationType: String?,
-    ): Response<SavingsWithAssociations?>? {
+    ): SavingsWithAssociations {
         return baseApiManager
             .savingAccountsListApi.getSavingsWithAssociations(accountId, associationType)
     }
 
-    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>? =
+    suspend fun accountTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.savingAccountsListApi.accountTransferTemplate()
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)
     }
 
-    suspend fun getSavingAccountApplicationTemplate(client: Long?): Response<SavingsAccountTemplate?>? {
+    suspend fun getSavingAccountApplicationTemplate(client: Long?): SavingsAccountTemplate {
         return baseApiManager.savingAccountsListApi
             .getSavingsAccountApplicationTemplate(client)
     }
 
     suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi.submitSavingAccountApplication(payload)
     }
 
     suspend fun updateSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi
             .updateSavingsAccountUpdate(accountId, payload)
     }
@@ -126,7 +129,7 @@ class DataManager @Inject constructor(
     suspend fun submitWithdrawSavingsAccount(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi
             .submitWithdrawSavingsAccount(accountId, payload)
     }
@@ -166,45 +169,45 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    suspend fun beneficiaryList(): Response<List<Beneficiary?>?>? =
+    suspend fun beneficiaryList(): List<Beneficiary> =
         baseApiManager.beneficiaryApi.beneficiaryList()
 
-    suspend fun beneficiaryTemplate(): Response<BeneficiaryTemplate?>? =
+    suspend fun beneficiaryTemplate(): BeneficiaryTemplate =
         baseApiManager.beneficiaryApi.beneficiaryTemplate()
 
-    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): Response<ResponseBody?>? {
+    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): ResponseBody {
         return baseApiManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
     }
 
     suspend fun updateBeneficiary(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
-    ): Response<ResponseBody?>? {
+    ): ResponseBody {
         return baseApiManager.beneficiaryApi.updateBeneficiary(beneficiaryId, payload)
     }
 
-    suspend fun deleteBeneficiary(beneficiaryId: Long?): Response<ResponseBody?>? {
+    suspend fun deleteBeneficiary(beneficiaryId: Long?): ResponseBody {
         return baseApiManager.beneficiaryApi.deleteBeneficiary(beneficiaryId)
     }
 
-    suspend fun thirdPartyTransferTemplate(): Response<AccountOptionsTemplate?>? =
+    suspend fun thirdPartyTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.thirdPartyTransferApi.accountTransferTemplate()
 
     suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): Response<ResponseBody?>? {
         return baseApiManager.thirdPartyTransferApi.makeTransfer(transferPayload)
     }
 
-    suspend fun registerUser(registerPayload: RegisterPayload?): Response<ResponseBody?>? {
+    suspend fun registerUser(registerPayload: RegisterPayload?): ResponseBody {
         return baseApiManager.registrationApi.registerUser(registerPayload)
     }
 
-    suspend fun verifyUser(userVerify: UserVerify?): Response<ResponseBody?>? {
+    suspend fun verifyUser(userVerify: UserVerify?): ResponseBody {
         return baseApiManager.registrationApi.verifyUser(userVerify)
     }
 
-    suspend fun clientLocalCharges(): Response<Page<Charge?>?> = databaseHelper.clientCharges()
+    suspend fun clientLocalCharges(): Page<Charge?> = databaseHelper.clientCharges()
 
-    fun notifications(): Flow<List<MifosNotification?>?> = databaseHelper.notifications()
+    fun notifications(): List<MifosNotification> = databaseHelper.notifications()
 
     fun unreadNotificationsCount(): Int {
         return databaseHelper.unreadNotificationsCount()
@@ -225,7 +228,7 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi.getUserNotificationId(id)
     }
 
-    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): Response<ResponseBody?>? {
+    suspend fun updateAccountPassword(payload: UpdatePasswordPayload?): ResponseBody {
         return baseApiManager.userDetailsApi.updateAccountPassword(payload)
     }
 

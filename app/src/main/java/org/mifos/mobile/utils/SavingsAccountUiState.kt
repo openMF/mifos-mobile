@@ -6,6 +6,7 @@ import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 
 sealed class SavingsAccountUiState {
+    object Initial : SavingsAccountUiState()
     object Loading : SavingsAccountUiState()
     object Error : SavingsAccountUiState()
     data class SuccessLoadingSavingsWithAssociations(val savingAccount: SavingsWithAssociations) :

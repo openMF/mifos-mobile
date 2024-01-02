@@ -9,12 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
 import com.isseiaoki.simplecropview.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -37,7 +41,7 @@ class QrCodeImportFragment : BaseFragment() {
     private var _binding: FragmentQrCodeImportBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: QrCodeImportViewModel
+    private val viewModel: QrCodeImportViewModel by viewModels()
 
     private lateinit var qrUri: Uri
     private var uriValue: String? = null
@@ -59,7 +63,6 @@ class QrCodeImportFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentQrCodeImportBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[QrCodeImportViewModel::class.java]
         setToolbarTitle(getString(R.string.import_qr))
         // load the uri
         setBitmapImage(qrUri)
@@ -79,16 +82,24 @@ class QrCodeImportFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.qrCodeUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is QrCodeUiState.Loading -> showProgress()
-                is QrCodeUiState.ShowError -> {
-                    hideProgress()
-                    showErrorReadingQr(getString(it.message))
-                }
-                is QrCodeUiState.HandleDecodedResult -> {
-                    hideProgress()
-                    handleDecodedResult(it.result)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.qrCodeUiState.collect {
+                    when (it) {
+                        is QrCodeUiState.Loading -> showProgress()
+
+                        is QrCodeUiState.ShowError -> {
+                            hideProgress()
+                            showErrorReadingQr(getString(it.message))
+                        }
+
+                        is QrCodeUiState.HandleDecodedResult -> {
+                            hideProgress()
+                            handleDecodedResult(it.result)
+                        }
+
+                        QrCodeUiState.Initial -> {}
+                    }
                 }
             }
         }
@@ -123,7 +134,7 @@ class QrCodeImportFragment : BaseFragment() {
      *
      * @param message Error message that tells the user about the problem.
      */
-    fun showErrorReadingQr(message: String?) {
+    private fun showErrorReadingQr(message: String?) {
         Toaster.show(binding.root, message)
     }
 
@@ -134,7 +145,7 @@ class QrCodeImportFragment : BaseFragment() {
      *
      * @param result contains the results from decoded QR bitmap
      */
-    fun handleDecodedResult(result: Result?) {
+    private fun handleDecodedResult(result: Result?) {
         val gson = Gson()
         try {
             val beneficiary = gson.fromJson(result?.text, Beneficiary::class.java)

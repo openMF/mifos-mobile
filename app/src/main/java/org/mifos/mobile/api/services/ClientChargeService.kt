@@ -14,11 +14,11 @@ import retrofit2.http.Path
 interface ClientChargeService {
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/charges")
-    suspend fun getClientChargeList(@Path("clientId") clientId: Long?): Response<Page<Charge?>?>?
+    suspend fun getClientChargeList(@Path("clientId") clientId: Long?): Page<Charge>
 
     @GET(ApiEndPoints.LOANS + "/{loanId}/charges")
-    suspend fun getLoanAccountChargeList(@Path("loanId") loanId: Long?): Response<List<Charge?>?>?
+    suspend fun getLoanAccountChargeList(@Path("loanId") loanId: Long?): List<Charge>
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}/charges")
-    suspend fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long?): Response<List<Charge?>?>?
+    suspend fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long?): List<Charge>
 }

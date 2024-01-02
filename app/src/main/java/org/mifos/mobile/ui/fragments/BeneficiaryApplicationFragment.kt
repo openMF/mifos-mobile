@@ -5,10 +5,13 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentBeneficiaryApplicationBinding
 import org.mifos.mobile.models.beneficiary.Beneficiary
@@ -32,7 +35,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
     private var _binding: FragmentBeneficiaryApplicationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: BeneficiaryApplicationViewModel
+    private val viewModel: BeneficiaryApplicationViewModel by viewModels()
 
     private val listAccountType: MutableList<String?> = ArrayList()
     private var beneficiaryState: BeneficiaryState? = null
@@ -70,7 +73,6 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBeneficiaryApplicationBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[BeneficiaryApplicationViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
@@ -82,30 +84,41 @@ class BeneficiaryApplicationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.beneficiaryUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is BeneficiaryUiState.Loading -> showProgress()
-                is BeneficiaryUiState.ShowError -> {
-                    hideProgress()
-                    showError(getString(it.message))
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.beneficiaryUiState.collect {
+                    when (it) {
+                        is BeneficiaryUiState.Loading -> showProgress()
+                        is BeneficiaryUiState.ShowError -> {
+                            hideProgress()
+                            showError(getString(it.message))
+                        }
+
+                        is BeneficiaryUiState.SetVisibility -> {
+                            hideProgress()
+                            setVisibility(it.visibility)
+                        }
+
+                        is BeneficiaryUiState.ShowBeneficiaryTemplate -> {
+                            hideProgress()
+                            showBeneficiaryTemplate(it.beneficiaryTemplate)
+                        }
+
+                        is BeneficiaryUiState.CreatedSuccessfully -> {
+                            hideProgress()
+                            showBeneficiaryCreatedSuccessfully()
+                        }
+
+                        is BeneficiaryUiState.UpdatedSuccessfully -> {
+                            hideProgress()
+                            showBeneficiaryUpdatedSuccessfully()
+                        }
+
+                        is BeneficiaryUiState.Initial -> {}
+
+                        else -> throw IllegalStateException("Undesired $it")
+                    }
                 }
-                is BeneficiaryUiState.SetVisibility -> {
-                    hideProgress()
-                    setVisibility(it.visibility)
-                }
-                is BeneficiaryUiState.ShowBeneficiaryTemplate -> {
-                    hideProgress()
-                    showBeneficiaryTemplate(it.beneficiaryTemplate)
-                }
-                is BeneficiaryUiState.CreatedSuccessfully -> {
-                    hideProgress()
-                    showBeneficiaryCreatedSuccessfully()
-                }
-                is BeneficiaryUiState.UpdatedSuccessfully -> {
-                    hideProgress()
-                    showBeneficiaryUpdatedSuccessfully()
-                }
-                else -> throw IllegalStateException("Undesired $it")
             }
         }
 
@@ -151,7 +164,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
      *
      * @param beneficiaryTemplate [BeneficiaryTemplate] fetched from server
      */
-    fun showBeneficiaryTemplate(beneficiaryTemplate: BeneficiaryTemplate?) {
+    private fun showBeneficiaryTemplate(beneficiaryTemplate: BeneficiaryTemplate?) {
         this.beneficiaryTemplate = beneficiaryTemplate
         for ((_, _, value) in beneficiaryTemplate?.accountTypeOptions!!) {
             listAccountType.add(value)
@@ -280,7 +293,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
      * Displays a {@link Snackbar} on successfully creation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
-    fun showBeneficiaryCreatedSuccessfully() {
+    private fun showBeneficiaryCreatedSuccessfully() {
         Toaster.show(binding.tilTransferLimit, getString(R.string.beneficiary_created_successfully))
         activity?.finish()
     }
@@ -289,7 +302,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
      * Displays a {@link Snackbar} on successfully updation of
      * Beneficiary and pops fragments in order to go back to [BeneficiaryListFragment]
      */
-    fun showBeneficiaryUpdatedSuccessfully() {
+    private fun showBeneficiaryUpdatedSuccessfully() {
         Toaster.show(binding.root, getString(R.string.beneficiary_updated_successfully))
         activity?.supportFragmentManager?.popBackStack()
         activity?.supportFragmentManager?.popBackStack()
@@ -316,7 +329,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         }
     }
 
-    fun setVisibility(state: Int) {
+    private fun setVisibility(state: Int) {
         binding.llApplicationBeneficiary.visibility = state
     }
 
