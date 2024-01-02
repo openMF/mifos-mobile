@@ -15,7 +15,7 @@ import retrofit2.http.POST
  */
 interface ThirdPartyTransferService {
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template?type=tpt")
-    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>?
+    suspend fun accountTransferTemplate(): AccountOptionsTemplate
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
     suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?

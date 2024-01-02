@@ -17,6 +17,7 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.repositories.HomeRepositoryImp
 import org.mifos.mobile.repositories.UserDetailRepositoryImp
+import org.mifos.mobile.ui.user_profile.UserDetailViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.UserDetailUiState
 import org.mockito.Mock

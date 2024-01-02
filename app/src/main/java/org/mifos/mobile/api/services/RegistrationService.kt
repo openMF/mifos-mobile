@@ -14,8 +14,8 @@ import retrofit2.http.POST
  */
 interface RegistrationService {
     @POST(ApiEndPoints.REGISTRATION)
-    suspend fun registerUser(@Body registerPayload: RegisterPayload?): Response<ResponseBody?>?
+    suspend fun registerUser(@Body registerPayload: RegisterPayload?): ResponseBody
 
     @POST(ApiEndPoints.REGISTRATION + "/user")
-    suspend fun verifyUser(@Body userVerify: UserVerify?): Response<ResponseBody?>?
+    suspend fun verifyUser(@Body userVerify: UserVerify?): ResponseBody
 }

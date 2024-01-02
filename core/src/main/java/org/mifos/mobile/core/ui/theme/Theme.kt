@@ -10,7 +10,6 @@ private val LightThemeColors = lightColorScheme(
     primary = Blue600,
     onPrimary = Black2,
     error = RedErrorDark,
-    onError = RedErrorLight,
     background = BackgroundLight,
     onSurface = Black2,
 )
@@ -18,7 +17,7 @@ private val LightThemeColors = lightColorScheme(
 private val DarkThemeColors = darkColorScheme(
     primary = Blue700,
     secondary = Black1,
-    error = RedErrorLight,
+    error = RedErrorDark,
     background = BackgroundDark,
     surface = Black1,
 )

@@ -1,9 +1,11 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.repositories.ClientChargeRepository
@@ -14,24 +16,19 @@ import javax.inject.Inject
 class ClientChargeViewModel @Inject constructor(private val clientChargeRepositoryImp: ClientChargeRepository) :
     ViewModel() {
 
-    private val _clientChargeUiState = MutableLiveData<ClientChargeUiState>()
-    val clientChargeUiState get() = _clientChargeUiState
+    private val _clientChargeUiState =
+        MutableStateFlow<ClientChargeUiState>(ClientChargeUiState.Initial)
+
+    val clientChargeUiState: StateFlow<ClientChargeUiState> get() = _clientChargeUiState
 
     fun loadClientCharges(clientId: Long) {
         viewModelScope.launch {
             _clientChargeUiState.value = ClientChargeUiState.Loading
-            try {
-                val response = clientChargeRepositoryImp.getClientCharges(clientId)
-                if (response?.isSuccessful == true) {
-                    _clientChargeUiState.value =
-                        response.body()?.pageItems?.let { ClientChargeUiState.ShowClientCharges(it) }
-                } else {
-                    _clientChargeUiState.value =
-                        ClientChargeUiState.ShowError(R.string.client_charges)
-                }
-            } catch (e: Throwable) {
+            clientChargeRepositoryImp.getClientCharges(clientId).catch {
                 _clientChargeUiState.value =
                     ClientChargeUiState.ShowError(R.string.client_charges)
+            }.collect {
+                _clientChargeUiState.value = ClientChargeUiState.ShowClientCharges(it.pageItems)
             }
         }
     }
@@ -39,18 +36,11 @@ class ClientChargeViewModel @Inject constructor(private val clientChargeReposito
     fun loadLoanAccountCharges(loanId: Long) {
         viewModelScope.launch {
             _clientChargeUiState.value = ClientChargeUiState.Loading
-            try {
-                val response = clientChargeRepositoryImp.getLoanCharges(loanId)
-                if (response?.isSuccessful == true) {
-                    _clientChargeUiState.value = response.body()
-                        ?.let { ClientChargeUiState.ShowClientCharges(it) }
-                } else {
-                    _clientChargeUiState.value =
-                        ClientChargeUiState.ShowError(R.string.client_charges)
-                }
-            } catch (e: Throwable) {
+            clientChargeRepositoryImp.getLoanCharges(loanId).catch {
                 _clientChargeUiState.value =
                     ClientChargeUiState.ShowError(R.string.client_charges)
+            }.collect {
+                _clientChargeUiState.value = ClientChargeUiState.ShowClientCharges(it)
             }
         }
     }
@@ -58,18 +48,11 @@ class ClientChargeViewModel @Inject constructor(private val clientChargeReposito
     fun loadSavingsAccountCharges(savingsId: Long) {
         viewModelScope.launch {
             _clientChargeUiState.value = ClientChargeUiState.Loading
-            try {
-                val response = clientChargeRepositoryImp.getSavingsCharges(savingsId)
-                if (response?.isSuccessful == true) {
-                    _clientChargeUiState.value = response.body()
-                        ?.let { ClientChargeUiState.ShowClientCharges(it) }
-                } else {
-                    _clientChargeUiState.value =
-                        ClientChargeUiState.ShowError(R.string.client_charges)
-                }
-            } catch (e: Throwable) {
+            clientChargeRepositoryImp.getSavingsCharges(savingsId).catch {
                 _clientChargeUiState.value =
                     ClientChargeUiState.ShowError(R.string.client_charges)
+            }.collect {
+                _clientChargeUiState.value = ClientChargeUiState.ShowClientCharges(it)
             }
         }
     }
@@ -77,18 +60,11 @@ class ClientChargeViewModel @Inject constructor(private val clientChargeReposito
     fun loadClientLocalCharges() {
         viewModelScope.launch {
             _clientChargeUiState.value = ClientChargeUiState.Loading
-            try {
-                val response = clientChargeRepositoryImp.clientLocalCharges()
-                if (response.isSuccessful) {
-                    _clientChargeUiState.value =
-                        response.body()?.pageItems?.let { ClientChargeUiState.ShowClientCharges(it) }
-                } else {
-                    _clientChargeUiState.value =
-                        ClientChargeUiState.ShowError(R.string.client_charges)
-                }
-            } catch (e: Throwable) {
+            clientChargeRepositoryImp.clientLocalCharges().catch {
                 _clientChargeUiState.value =
                     ClientChargeUiState.ShowError(R.string.client_charges)
+            }.collect {
+                _clientChargeUiState.value = ClientChargeUiState.ShowClientCharges(it.pageItems)
             }
         }
     }

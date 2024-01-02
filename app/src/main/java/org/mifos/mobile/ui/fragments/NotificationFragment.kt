@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.BuildConfig
-import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentNotificationBinding
 import org.mifos.mobile.models.notification.MifosNotification
@@ -19,6 +22,7 @@ import org.mifos.mobile.ui.adapters.NotificationAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.NotificationUiState
 import org.mifos.mobile.viewModels.NotificationViewModel
 import javax.inject.Inject
 
@@ -29,7 +33,8 @@ import javax.inject.Inject
 class NotificationFragment : BaseFragment(), OnRefreshListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : NotificationViewModel
+
+    private val viewModel: NotificationViewModel by viewModels()
 
     @JvmField
     @Inject
@@ -47,7 +52,6 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        viewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
         sweetUIErrorHandler = SweetUIErrorHandler(activity, rootView)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -105,16 +109,24 @@ class NotificationFragment : BaseFragment(), OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.notificationUiState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                NotificationUiState.Loading -> showProgress()
-                NotificationUiState.Error -> {
-                    hideProgress()
-                    showError(context?.getString(R.string.notification))
-                }
-                is NotificationUiState.LoadNotificationsSuccessful -> {
-                    hideProgress()
-                    showNotifications(state.notifications)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.notificationUiState.collect { state ->
+                    when (state) {
+                        NotificationUiState.Loading -> showProgress()
+
+                        NotificationUiState.Error -> {
+                            hideProgress()
+                            showError(context?.getString(R.string.notification))
+                        }
+
+                        is NotificationUiState.LoadNotificationsSuccessful -> {
+                            hideProgress()
+                            showNotifications(state.notifications)
+                        }
+
+                        NotificationUiState.Initial -> {}
+                    }
                 }
             }
         }

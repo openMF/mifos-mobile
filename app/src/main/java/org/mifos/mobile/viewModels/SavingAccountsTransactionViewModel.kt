@@ -1,12 +1,13 @@
 package org.mifos.mobile.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.functions.Predicate
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.Transactions
@@ -21,8 +22,9 @@ import javax.inject.Inject
 class SavingAccountsTransactionViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
     ViewModel() {
 
-    private val _savingAccountsTransactionUiState = MutableLiveData<SavingsAccountUiState>()
-    val savingAccountsTransactionUiState: LiveData<SavingsAccountUiState> get() = _savingAccountsTransactionUiState
+    private val _savingAccountsTransactionUiState =
+        MutableStateFlow<SavingsAccountUiState>(SavingsAccountUiState.Initial)
+    val savingAccountsTransactionUiState: StateFlow<SavingsAccountUiState> get() = _savingAccountsTransactionUiState
 
     /**
      * Filters [List] of [CheckboxStatus]
@@ -45,18 +47,14 @@ class SavingAccountsTransactionViewModel @Inject constructor(private val savings
     fun loadSavingsWithAssociations(accountId: Long) {
         viewModelScope.launch {
             _savingAccountsTransactionUiState.value = SavingsAccountUiState.Loading
-            try {
-                val response = savingsAccountRepositoryImp.getSavingsWithAssociations(
-                    accountId,
-                    Constants.TRANSACTIONS,
-                )
-                if (response?.isSuccessful == true) {
-                    _savingAccountsTransactionUiState.value =
-                        response.body()
-                            ?.let { SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(it) }
-                }
-            } catch (e: Throwable) {
+            savingsAccountRepositoryImp.getSavingsWithAssociations(
+                accountId,
+                Constants.TRANSACTIONS,
+            ).catch {
                 _savingAccountsTransactionUiState.value = SavingsAccountUiState.Error
+            }.collect {
+                _savingAccountsTransactionUiState.value =
+                    SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(it)
             }
         }
     }
@@ -82,6 +80,7 @@ class SavingAccountsTransactionViewModel @Inject constructor(private val savings
                     }
                     .toList().blockingGet()
             }
+
             else -> null
         }
         _savingAccountsTransactionUiState.value =

@@ -8,16 +8,19 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentUpdatePasswordBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.UpdatePasswordViewModel
 
 /*
@@ -28,7 +31,7 @@ class UpdatePasswordFragment : BaseFragment(), TextWatcher, OnFocusChangeListene
 
     private var _binding: FragmentUpdatePasswordBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: UpdatePasswordViewModel
+    private val viewModel: UpdatePasswordViewModel by viewModels()
     private var isFocusLostNewPassword = false
     private var isFocusLostConfirmPassword = false
 
@@ -39,7 +42,6 @@ class UpdatePasswordFragment : BaseFragment(), TextWatcher, OnFocusChangeListene
     ): View {
         _binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false)
         setToolbarTitle(getString(R.string.change_password))
-        viewModel = ViewModelProvider(this)[UpdatePasswordViewModel::class.java]
         binding.tilNewPassword.editText?.addTextChangedListener(this)
         binding.tilConfirmNewPassword.editText?.addTextChangedListener(this)
         binding.tilNewPassword.editText?.onFocusChangeListener = this
@@ -53,17 +55,23 @@ class UpdatePasswordFragment : BaseFragment(), TextWatcher, OnFocusChangeListene
             updatePassword()
         }
 
-        viewModel.updatePasswordUiState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                RegistrationUiState.Loading -> showProgress()
-                RegistrationUiState.Success -> {
-                    hideProgress()
-                    showPasswordUpdatedSuccessfully()
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.updatePasswordUiState.collect { state ->
+                    when (state) {
+                        RegistrationUiState.Loading -> showProgress()
+                        RegistrationUiState.Success -> {
+                            hideProgress()
+                            showPasswordUpdatedSuccessfully()
+                        }
 
-                is RegistrationUiState.Error -> {
-                    hideProgress()
-                    showError(getString(state.exception))
+                        is RegistrationUiState.Error -> {
+                            hideProgress()
+                            showError(getString(state.exception))
+                        }
+
+                        RegistrationUiState.Initial -> {}
+                    }
                 }
             }
         }

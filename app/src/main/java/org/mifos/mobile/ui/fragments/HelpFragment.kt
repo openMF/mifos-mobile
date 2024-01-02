@@ -14,9 +14,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentHelpBinding
 import org.mifos.mobile.models.FAQ
@@ -39,7 +43,7 @@ class HelpFragment : BaseFragment() {
 
     private lateinit var faqAdapter: FAQAdapter
 
-    private val viewModel by viewModels<HelpViewModel>()
+    private val viewModel: HelpViewModel by viewModels()
 
     private var faqArrayList: ArrayList<FAQ?>? = null
     private lateinit var sweetUIErrorHandler: SweetUIErrorHandler
@@ -69,10 +73,18 @@ class HelpFragment : BaseFragment() {
         faqAdapter = FAQAdapter {
             viewModel.alreadySelectedPosition = it
         }
-        viewModel.helpUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is HelpUiState.ShowFaq -> {
-                    showFaq(it.faqArrayList)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.helpUiState.collect() {
+                    when (it) {
+
+                        is HelpUiState.ShowFaq -> {
+                            showFaq(it.faqArrayList)
+                        }
+
+                        HelpUiState.Initial -> {}
+                    }
                 }
             }
         }
@@ -143,7 +155,7 @@ class HelpFragment : BaseFragment() {
     }
 
     private fun showFaq(faqArrayList: ArrayList<FAQ?>?) {
-        faqAdapter.setFaqArrayList(faqArrayList)
+        faqAdapter?.setFaqArrayList(faqArrayList)
         binding.rvFaq.adapter = faqAdapter
         this.faqArrayList = faqArrayList
     }

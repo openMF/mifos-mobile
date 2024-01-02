@@ -1,4 +1,4 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.user_profile
 
 import android.util.Base64
 import android.util.Log

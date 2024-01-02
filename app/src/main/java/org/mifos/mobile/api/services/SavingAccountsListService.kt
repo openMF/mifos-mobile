@@ -1,6 +1,5 @@
 package org.mifos.mobile.api.services
 
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.ApiEndPoints
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
@@ -22,10 +21,10 @@ interface SavingAccountsListService {
     suspend fun getSavingsWithAssociations(
         @Path("accountId") accountId: Long?,
         @Query("associations") associationType: String?,
-    ): Response<SavingsWithAssociations?>?
+    ): SavingsWithAssociations
 
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template")
-    suspend fun accountTransferTemplate(): Response<AccountOptionsTemplate?>?
+    suspend fun accountTransferTemplate(): AccountOptionsTemplate
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
     suspend fun makeTransfer(@Body transferPayload: TransferPayload?): Response<ResponseBody?>?
@@ -33,22 +32,22 @@ interface SavingAccountsListService {
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
     suspend fun getSavingsAccountApplicationTemplate(
         @Query("clientId") clientId: Long?,
-    ): Response<SavingsAccountTemplate?>?
+    ): SavingsAccountTemplate
 
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS)
     suspend fun submitSavingAccountApplication(
         @Body payload: SavingsAccountApplicationPayload?,
-    ): Response<ResponseBody?>?
+    ): ResponseBody
 
     @PUT(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountsId}")
     suspend fun updateSavingsAccountUpdate(
         @Path("accountsId") accountsId: Long?,
         @Body payload: SavingsAccountUpdatePayload?,
-    ): Response<ResponseBody?>?
+    ): ResponseBody
 
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}?command=withdrawnByApplicant")
     suspend fun submitWithdrawSavingsAccount(
         @Path("savingsId") savingsId: String?,
         @Body payload: SavingsAccountWithdrawPayload?,
-    ): Response<ResponseBody?>?
+    ): ResponseBody
 }

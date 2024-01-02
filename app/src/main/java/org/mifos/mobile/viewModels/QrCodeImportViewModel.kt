@@ -12,6 +12,8 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.mifos.mobile.R
 import org.mifos.mobile.utils.QrCodeUiState
 import java.util.*
@@ -25,8 +27,8 @@ class QrCodeImportViewModel @Inject constructor() : ViewModel() {
     private var result: Result? = null
     private var hasErrorOccurred = false
 
-    private val _qrCodeUiState = MutableLiveData<QrCodeUiState>()
-    val qrCodeUiState: LiveData<QrCodeUiState> = _qrCodeUiState
+    private val _qrCodeUiState = MutableStateFlow<QrCodeUiState>(QrCodeUiState.Initial)
+    val qrCodeUiState: StateFlow<QrCodeUiState> = _qrCodeUiState
 
     fun getDecodedResult(sourceUri: Uri?, cropImageView: CropImageView?) {
         _qrCodeUiState.value = QrCodeUiState.Loading
