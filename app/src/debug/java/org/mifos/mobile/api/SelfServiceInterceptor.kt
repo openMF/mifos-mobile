@@ -20,10 +20,10 @@ class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest = chain.request()
         val builder = chainRequest.newBuilder()
-            .header(HEADER_TENANT, preferencesHelper.tenant)
+            .header(HEADER_TENANT, preferencesHelper.tenant.toString())
             .header(CONTENT_TYPE, "application/json")
         if (!TextUtils.isEmpty(preferencesHelper.token)) {
-            builder.header(HEADER_AUTH, preferencesHelper.token)
+            builder.header(HEADER_AUTH, preferencesHelper.token.toString())
         }
         val request = builder.build()
         return chain.proceed(request)

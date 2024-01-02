@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.DataManager
@@ -31,7 +32,7 @@ class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataMa
             emit(dataManager.createGuarantor(loanId, payload))
         }.catch {
             val responseBody = ResponseBody.create(
-                MediaType.parse("text/plain"),
+                "text/plain".toMediaTypeOrNull(),
                 "Guarantor Added Successfully"
             )
             emit(responseBody)
@@ -47,8 +48,7 @@ class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataMa
             emit(dataManager.updateGuarantor(payload, loanId, guarantorId))
         }.catch {
             val response = ResponseBody.create(
-                MediaType
-                    .parse("plain/text"),
+                "plain/text".toMediaTypeOrNull(),
                 "Guarantor Updated Successfully",
             )
             emit(response)
@@ -60,8 +60,7 @@ class GuarantorRepositoryImp @Inject constructor(private val dataManager: DataMa
             emit(dataManager.deleteGuarantor(loanId, guarantorId))
         }.catch {
             val response = ResponseBody.create(
-                MediaType
-                    .parse("plain/text"),
+                "plain/text".toMediaTypeOrNull(),
                 "Guarantor Deleted Successfully",
             )
             emit(response)
