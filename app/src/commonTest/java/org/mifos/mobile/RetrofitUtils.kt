@@ -1,6 +1,7 @@
 package org.mifos.mobile
 
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.ResponseBody
 import retrofit2.HttpException
@@ -13,7 +14,7 @@ object RetrofitUtils {
     fun getResponseForError(errorCode: Int): Exception {
         val message = if (errorCode == 401) "UnAuthorized" else "Not Found"
         val responseBody =
-            ResponseBody.create(MediaType.parse("application/json"), "{\"message\":\"$message\"}")
+            ResponseBody.create("application/json".toMediaTypeOrNull(), "{\"message\":\"$message\"}")
         val response = okhttp3.Response.Builder().code(errorCode)
             .message(message)
             .protocol(Protocol.HTTP_1_1)
