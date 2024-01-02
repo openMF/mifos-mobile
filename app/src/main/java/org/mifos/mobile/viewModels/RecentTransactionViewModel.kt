@@ -29,31 +29,9 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
     }
 
     private fun loadRecentTransactions(offset: Int, limit: Int) {
-        viewModelScope.launch { <<<<<<< HEAD
-            try {
-                _recentTransactionUiState.value = RecentTransactionUiState.Loading
-                val response = recentTransactionRepositoryImp.recentTransactions(offset, limit)
-                if (response?.isSuccessful == true) {
-                    if (response.body()?.totalFilteredRecords == 0) {
-                        _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
-                    } else if (loadmore && response.body()?.pageItems?.isNotEmpty() == true) {
-                        _recentTransactionUiState.value =
-                            RecentTransactionUiState.LoadMoreRecentTransactions(
-                                response.body()!!.pageItems
-                            )
-                    } else if (response.body()?.pageItems?.isNotEmpty() == true) {
-                        _recentTransactionUiState.value =
-                            RecentTransactionUiState.RecentTransactions(
-                                response.body()?.pageItems!!
-                            )
-                    }
-                }
-            } catch(e: Exception){
-=======
-
+        viewModelScope.launch {
             _recentTransactionUiState.value = RecentTransactionUiState.Loading
             recentTransactionRepositoryImp.recentTransactions(offset, limit).catch {
->>>>>>> e6a6d7b05ee77dc5164d7f8d4abd6225b433b09c
                 _recentTransactionUiState.value =
                     RecentTransactionUiState.Error(R.string.recent_transactions)
             }.collect {

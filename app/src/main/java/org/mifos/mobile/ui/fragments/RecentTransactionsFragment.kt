@@ -68,27 +68,6 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-<<<<<<< HEAD
-        recentTransactionViewModel.recentTransactionUiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is RecentTransactionUiState.Loading -> showProgress()
-                is RecentTransactionUiState.RecentTransactions -> {
-                    hideProgress()
-                    showRecentTransactions(it.transactions)
-                }
-                is RecentTransactionUiState.Error -> {
-                    hideProgress()
-                    showErrorFetchingRecentTransactions(getString(it.message))
-                }
-                is RecentTransactionUiState.EmptyTransaction -> {
-                    hideProgress()
-                    showEmptyTransaction()
-                }
-                is RecentTransactionUiState.LoadMoreRecentTransactions -> {
-                    hideProgress()
-                    showLoadMoreRecentTransactions(it.transactions)
-=======
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 recentTransactionViewModel.recentTransactionUiState.collect{
@@ -113,7 +92,6 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
 
                         RecentTransactionUiState.Initial -> {}
                     }
->>>>>>> e6a6d7b05ee77dc5164d7f8d4abd6225b433b09c
                 }
             }
         }
