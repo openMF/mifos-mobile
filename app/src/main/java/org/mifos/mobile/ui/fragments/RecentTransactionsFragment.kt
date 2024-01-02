@@ -68,6 +68,7 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 recentTransactionViewModel.recentTransactionUiState.collect{
