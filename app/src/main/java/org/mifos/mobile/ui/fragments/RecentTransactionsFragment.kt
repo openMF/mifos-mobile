@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,8 +22,12 @@ import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.DividerItemDecoration
+import org.mifos.mobile.utils.EndlessRecyclerViewScrollListener
 import org.mifos.mobile.utils.Network.isConnected
+import org.mifos.mobile.utils.RecentTransactionUiState
+import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.RecentTransactionViewModel
 import javax.inject.Inject
 
@@ -71,31 +74,42 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                recentTransactionViewModel.recentTransactionUiState.collect{
+                recentTransactionViewModel.recentTransactionUiState.collect {
                     when (it) {
+
                         is RecentTransactionUiState.Loading -> showProgress()
                         is RecentTransactionUiState.RecentTransactions -> {
                             hideProgress()
                             showRecentTransactions(it.transactions)
                         }
+
                         is RecentTransactionUiState.Error -> {
                             hideProgress()
                             showMessage(getString(it.message))
                         }
+
                         is RecentTransactionUiState.EmptyTransaction -> {
                             hideProgress()
                             showEmptyTransaction()
                         }
+
                         is RecentTransactionUiState.LoadMoreRecentTransactions -> {
                             hideProgress()
                             showLoadMoreRecentTransactions(it.transactions)
                         }
 
-                        RecentTransactionUiState.Initial -> {}
+
+                        else -> {
+                            hideProgress()
+
+                        }
                     }
                 }
             }
         }
+
+
+
 
         binding.layoutError.btnTryAgain.setOnClickListener {
             retryClicked()
