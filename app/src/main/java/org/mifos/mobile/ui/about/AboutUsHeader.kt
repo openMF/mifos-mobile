@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.about
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,11 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
+import org.mifos.mobile.ui.fragments.AppTheme
 
 @Composable
 fun AboutUsHeader() {
@@ -31,6 +34,11 @@ fun AboutUsHeader() {
         Text(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.headlineMedium,
+            color = if (AppTheme.equals(AppTheme.DARK) || isSystemInDarkTheme()) {
+                Color.White
+            } else {
+                Color.Black
+            },
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
@@ -40,6 +48,11 @@ fun AboutUsHeader() {
         Text(
             text = stringResource(id = R.string.about_app_description),
             style = MaterialTheme.typography.titleSmall.copy(),
+            color = if (AppTheme.equals(AppTheme.DARK) || isSystemInDarkTheme()) {
+                Color.White
+            } else {
+                Color.Black
+            },
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
