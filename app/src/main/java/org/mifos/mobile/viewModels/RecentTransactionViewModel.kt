@@ -24,6 +24,7 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
     val recentTransactionUiState: StateFlow<RecentTransactionUiState> = _recentTransactionUiState
 
     fun loadRecentTransactions(loadmore: Boolean, offset: Int) {
+        if (loadmore && offset < limit) return //all data shown,no need to load
         this.loadmore = loadmore
         loadRecentTransactions(offset, limit)
     }
