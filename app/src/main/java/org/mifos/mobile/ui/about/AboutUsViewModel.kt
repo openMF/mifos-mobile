@@ -3,56 +3,36 @@ package org.mifos.mobile.ui.about
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.mifos.mobile.MifosSelfServiceApp.Companion.context
-import org.mifos.mobile.R
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import org.mifos.mobile.models.AboutUsItem
+import org.mifos.mobile.repositories.AboutUsRepository
 import org.mifos.mobile.ui.enums.AboutUsListItemId
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class AboutUsViewModel @Inject constructor() : ViewModel() {
+class AboutUsViewModel @Inject constructor(
+    private val aboutUsRepositoryImp: AboutUsRepository
+) : ViewModel() {
 
     private val _aboutUsItemEvent = MutableLiveData<AboutUsListItemId>()
     val aboutUsItemEvent: LiveData<AboutUsListItemId> get() = _aboutUsItemEvent
 
-    private val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-    private val copyrightText =
-        context?.getString(R.string.copy_right_mifos)
-            ?.replace("%1\$s", currentYear.toString())
+    private val _aboutUsItems = MutableStateFlow<List<AboutUsItem>>(emptyList())
 
-    val aboutUsItems: List<AboutUsItem> = listOf(
-        AboutUsItem(
-            title = context?.getString(R.string.app_version_text),
-            itemId = AboutUsListItemId.APP_VERSION_TEXT
-        ),
-        AboutUsItem(
-            title = context?.getString(R.string.official_website),
-            iconUrl = R.drawable.ic_website,
-            itemId = AboutUsListItemId.OFFICE_WEBSITE
-        ),
-        AboutUsItem(
-            title = context?.getString(R.string.licenses),
-            iconUrl = R.drawable.ic_law_icon,
-            itemId = AboutUsListItemId.LICENSES
-        ),
-        AboutUsItem(
-            title = context?.getString(R.string.privacy_policy),
-            iconUrl = R.drawable.ic_privacy_policy,
-            itemId = AboutUsListItemId.PRIVACY_POLICY
-        ),
-        AboutUsItem(
-            title = context?.getString(R.string.sources),
-            iconUrl = R.drawable.ic_source_code,
-            itemId = AboutUsListItemId.SOURCE_CODE
-        ),
-        AboutUsItem(
-            title = copyrightText,
-            subtitle = R.string.license_string_with_value,
-            itemId = AboutUsListItemId.LICENSES_STRING_WITH_VALUE
-        )
-    )
+    val aboutUsItems = _aboutUsItems
+
+    init {
+        // Launch a coroutine in the viewModelScope to collect the Flow from the repository
+        viewModelScope.launch {
+            aboutUsRepositoryImp.getAboutUsItems().collect { items ->
+                // Update the MutableStateFlow with the latest value from the Flow
+                _aboutUsItems.value = items
+            }
+        }
+    }
 
     fun navigateToItem(itemId: AboutUsListItemId) {
         _aboutUsItemEvent.value = itemId

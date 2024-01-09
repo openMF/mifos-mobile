@@ -1,8 +1,10 @@
 package org.mifos.mobile.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.repositories.TransferRepository
@@ -94,5 +96,8 @@ object RepositoryModule {
     fun providesReviewLoanApplicationRepository(dataManager: DataManager): ReviewLoanApplicationRepository {
         return ReviewLoanApplicationRepositoryImpl(dataManager)
     }
-
+    @Provides
+    fun providesAboutUsRepository(@ApplicationContext context: Context): AboutUsRepository {
+        return AboutUsRepositoryImpl(context)
+    }
 }
