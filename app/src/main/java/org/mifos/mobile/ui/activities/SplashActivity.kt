@@ -15,16 +15,24 @@ class SplashActivity : BaseActivity() {
     private var passcodePreferencesHelper: PasscodePreferencesHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val intent: Intent?
         super.onCreate(savedInstanceState)
+
+
         passcodePreferencesHelper = PasscodePreferencesHelper(this)
-        if (passcodePreferencesHelper?.passCode?.isNotEmpty() == true) {
-            intent = Intent(this, PassCodeActivity::class.java)
-            intent.putExtra(Constants.INTIAL_LOGIN, true)
+        val intent: Intent = if (passcodePreferencesHelper?.passCode?.isNotEmpty() == true) {
+            Intent(this, PassCodeActivity::class.java).apply {
+                putExtra(Constants.INTIAL_LOGIN, true)
+            }
         } else {
-            intent = Intent(this, LoginActivity::class.java)
+            Intent(this, LoginActivity::class.java)
         }
+
         startActivity(intent)
         finish()
     }
-}
+
+
+
+
+    }
+

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/white" />
+    <!--  Background -->
+    <item android:drawable="@color/splash_bg_color" />
 
+    <!-- Centered Logo -->
     <item>
-        <bitmap android:src="@drawable/mifos_splash_screen_logo"
-            android:gravity="center"/>
+        <bitmap android:src="@drawable/mifos_splash_screen_logo" android:gravity="center"/>
     </item>
 
 </layer-list>

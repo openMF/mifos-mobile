@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffffff</color>
-    <color name="splash_bg_color">#ffffff</color>
+    <color name="splash_bg_color">#000000</color>
     <color name="black">#000000</color>
     <color name="background">#eaeaea</color>
     <color name="deposit_green">#ff14c416</color>
