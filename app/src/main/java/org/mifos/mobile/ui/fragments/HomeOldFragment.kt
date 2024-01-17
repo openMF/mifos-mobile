@@ -79,6 +79,11 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         }
         setToolbarTitle(getString(R.string.home))
         showUserInterface()
+        if(!Network.isConnected(activity)){
+            showUserDetails(client)
+            showLoanAccountDetails(totalLoanAmount)
+            showSavingAccountDetails(totalSavingAmount)
+        }
         return rootView
     }
 
