@@ -28,24 +28,34 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
         loadRecentTransactions(offset, limit)
     }
 
-    private fun loadRecentTransactions(offset: Int, limit: Int) {
+    private fun loadRecentTransactions(offset: Int, limit: Int, refresh: Boolean = false) {
         viewModelScope.launch {
-            _recentTransactionUiState.value = RecentTransactionUiState.Loading
-            recentTransactionRepositoryImp.recentTransactions(offset, limit).catch {
-                _recentTransactionUiState.value =
-                    RecentTransactionUiState.Error(R.string.recent_transactions)
-            }.collect {
-                if (it.totalFilteredRecords == 0) {
-                    _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
-                } else if (loadmore && it.pageItems.isNotEmpty()) {
+            try {
+                _recentTransactionUiState.value = RecentTransactionUiState.Loading
+
+                recentTransactionRepositoryImp.recentTransactions(offset, limit).catch {
+
                     _recentTransactionUiState.value =
-                        RecentTransactionUiState.LoadMoreRecentTransactions(it.pageItems)
-                } else if (it.pageItems.isNotEmpty()) {
-                    _recentTransactionUiState.value =
-                        RecentTransactionUiState.RecentTransactions(it.pageItems)
+                        RecentTransactionUiState.Error(R.string.recent_transactions)
+                }.collect {
+                    if (it.totalFilteredRecords == 0) {
+
+                        _recentTransactionUiState.value = RecentTransactionUiState.EmptyTransaction
+                    } else if (loadmore && it.pageItems.isNotEmpty()) {
+
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.LoadMoreRecentTransactions(it.pageItems)
+                    } else if (it.pageItems.isNotEmpty()) {
+
+                        _recentTransactionUiState.value =
+                            RecentTransactionUiState.RecentTransactions(it.pageItems)
+                    }
                 }
+            } finally {
+                _recentTransactionUiState.value = RecentTransactionUiState.Initial
             }
+
         }
     }
-
 }
+
