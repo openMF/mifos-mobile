@@ -54,6 +54,13 @@ We have the following branches :
 * **master**
   The master branch contains all the stable and bug-free working code. The development branch once complete will be merged with this branch.
 
+### Demo credentials
+Fineract Instance: gsoc.mifos.community
+
+Username: `mifos`
+
+Password: `password`
+
 ### Instruction to get the latest APK
 
 To get the latest apk of master/development branch from Github Artifacts, follow these steps:
