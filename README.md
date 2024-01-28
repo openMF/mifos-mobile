@@ -10,6 +10,11 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 |------------|-----------------|-----------------|
 | ![Mifos-Mobile CI[Master]](https://github.com/openMF/mifos-mobile/workflows/Workflow%20for%20master/development%20branches/badge.svg?branch=master) | ![Mifos-Mobile CI[Development]](https://github.com/openMF/mifos-mobile/workflows/Workflow%20for%20master/development%20branches/badge.svg?branch=development) |[![Join the chat at https://mifos.slack.com/](https://img.shields.io/badge/Join%20Our%20Community-Slack-blue)](https://mifos.slack.com/)|
 
+
+## Join Us on Slack
+
+Mifos boasts an active and vibrant contributor community, Please join us on [slack](https://mifos.slack.com/). Once you've joined the mifos slack community, please join the `#mifos-mobile` channel to engage with mifos-mobile development. If you encounter any difficulties joining our Slack channel, please don't hesitate to open an issue. This will allow us to assist you promptly or send you an invitation.
+
 ## Screenshots
 
 <p>
@@ -90,10 +95,6 @@ For Payment Hub usecases, check this [documentation](https://mifos.gitbook.io/do
 ## Note
 
 The UI design is currently being revamped. New design can be found [here](https://docs.google.com/presentation/d/1yFR19vGlKW-amxzGms8TgPzd1jWkrALPFcaC85EyYpw/edit#slide=id.g6c6ccd991d_0_42)
-
-## Join Us on Slack
-
-Mifos boasts an active and vibrant contributor community, Please join us on [slack](https://mifos.slack.com/) . Once you've joined the mifos slack community, please join the `#mifos-mobile` channel to engage with mifos-mobile development.
 
 ## Contributors
 
