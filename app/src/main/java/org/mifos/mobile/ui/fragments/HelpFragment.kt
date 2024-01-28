@@ -31,7 +31,6 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.HelpUiState
 import org.mifos.mobile.viewModels.HelpViewModel
-import javax.inject.Inject
 
 /*
 ~This project is licensed under the open source MPL V2.
@@ -42,9 +41,7 @@ class HelpFragment : BaseFragment() {
     private var _binding: FragmentHelpBinding? = null
     private val binding get() = _binding!!
 
-    @JvmField
-    @Inject
-    var faqAdapter: FAQAdapter? = null
+    private lateinit var faqAdapter: FAQAdapter
 
     private val viewModel: HelpViewModel by viewModels()
 
@@ -73,6 +70,9 @@ class HelpFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        faqAdapter = FAQAdapter {
+            viewModel.alreadySelectedPosition = it
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -92,7 +92,10 @@ class HelpFragment : BaseFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(Constants.HELP, ArrayList<Parcelable?>(faqArrayList))
+        outState.putParcelableArrayList(
+            Constants.HELP,
+            faqArrayList?.let { ArrayList<Parcelable?>(it) },
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -104,43 +107,50 @@ class HelpFragment : BaseFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        faqAdapter.updateAlreadySelectedPosition(viewModel.alreadySelectedPosition)
+    }
+
     private fun showUserInterface() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.rvFaq.layoutManager = layoutManager
-        binding.rvFaq.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                layoutManager.orientation,
-            ),
-        )
-        binding.callButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
-            startActivity(intent)
-        }
-        binding.mailButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.contact_email)))
-                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
-            }
-            try {
-                startActivity(intent)
-            } catch (e: Exception) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.no_app_to_support_action),
-                    Toast.LENGTH_SHORT,
-                ).show()
-            }
-        }
-        binding.locationsButton.setOnClickListener {
-            (activity as BaseActivity?)?.replaceFragment(
-                LocationsFragment.newInstance(),
-                true,
-                R.id.container,
+        binding.apply {
+            rvFaq.layoutManager = layoutManager
+            rvFaq.addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    layoutManager.orientation,
+                ),
             )
+            callButton.setOnClickListener {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse("tel:" + getString(R.string.help_line_number))
+                startActivity(intent)
+            }
+            mailButton.setOnClickListener {
+                val intent = Intent(Intent.ACTION_SENDTO).apply {
+                    data = Uri.parse("mailto:")
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.contact_email)))
+                    putExtra(Intent.EXTRA_SUBJECT, getString(R.string.user_query))
+                }
+                try {
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.no_app_to_support_action),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
+            locationsButton.setOnClickListener {
+                (activity as BaseActivity?)?.replaceFragment(
+                    LocationsFragment.newInstance(),
+                    true,
+                    R.id.container,
+                )
+            }
         }
     }
 
@@ -168,7 +178,8 @@ class HelpFragment : BaseFragment() {
                             binding.rvFaq,
                             binding.layoutError.clErrorLayout,
                         )
-                        faqAdapter?.updateList(it)
+                        faqAdapter.updateList(it)
+                        viewModel.alreadySelectedPosition = -1
                     } else {
                         showEmptyFAQUI()
                     }
