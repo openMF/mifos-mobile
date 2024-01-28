@@ -1,34 +1,31 @@
 package org.mifos.mobile.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowFaqBinding
-import dagger.hilt.android.qualifiers.ActivityContext
-
-
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.utils.FaqDiffUtil
-import javax.inject.Inject
 
 /**
  * Created by dilpreet on 12/8/17.
  */
-class FAQAdapter @Inject constructor(@ActivityContext context: Context) :
+class FAQAdapter(val onFAQClicked: (Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var faqArrayList: ArrayList<FAQ?>?
     private var alreadySelectedPosition = 0
-    private val context: Context
     private lateinit var binding: RowFaqBinding
 
     init {
         faqArrayList = ArrayList()
-        this.context = context
+    }
+
+    fun updateAlreadySelectedPosition(selectedPosition: Int) {
+        alreadySelectedPosition = selectedPosition
     }
 
     fun setFaqArrayList(faqArrayList: ArrayList<FAQ?>?) {
@@ -76,21 +73,19 @@ class FAQAdapter @Inject constructor(@ActivityContext context: Context) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(question: String?, answer: String?, isSelected: Boolean) {
-            binding.tvQs.text = question
-            binding.tvAns.text = answer
+            binding.apply {
+                tvQs.text = question
+                tvAns.text = answer
 
-            if (isSelected) {
-                binding.tvAns.visibility = View.VISIBLE
-                binding.ivArrow.setImageResource(R.drawable.ic_arrow_up)
-            } else {
-                binding.tvAns.visibility = View.GONE
-                binding.ivArrow.setImageResource(R.drawable.ic_arrow_drop_down)
+                tvAns.isVisible = isSelected
+                ivArrow.setImageResource(if (isSelected) R.drawable.ic_arrow_up else R.drawable.ic_arrow_drop_down)
             }
         }
 
         init {
             binding.llFaq.setOnClickListener {
-                updateView(adapterPosition)
+                updateView(bindingAdapterPosition)
+                onFAQClicked(bindingAdapterPosition)
             }
         }
     }

@@ -38,4 +38,7 @@ class HelpViewModel @Inject constructor() : ViewModel() {
         }
         return filteredList
     }
+
+    var alreadySelectedPosition = -1
+
 }
