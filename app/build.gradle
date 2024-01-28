@@ -206,5 +206,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.lifecycleVersion"
     implementation "androidx.compose.material:material-icons-extended:$rootProject.composeVersion"
 
+    // Shimmer effect
+    implementation "com.facebook.shimmer:shimmer:$rootProject.shimmerVersion"
 }
 apply plugin: 'com.google.gms.google-services'
