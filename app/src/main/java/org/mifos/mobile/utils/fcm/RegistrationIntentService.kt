@@ -20,12 +20,12 @@ import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import org.mifos.mobile.utils.Constants
 
 class RegistrationIntentService : IntentService(TAG) {
     override fun onHandleIntent(intent: Intent?) {
-        FirebaseInstanceId.getInstance().instanceId
+        FirebaseMessaging.getInstance().token
             .addOnCompleteListener(
                 OnCompleteListener { task ->
                     if (!task.isSuccessful) {
@@ -34,7 +34,7 @@ class RegistrationIntentService : IntentService(TAG) {
                     }
 
                     // Get new Instance ID token
-                    val token = task.result?.token
+                    val token = task.result
                     sendRegistrationToServer(token)
                 },
             )
