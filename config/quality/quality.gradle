@@ -32,7 +32,7 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     include '**/*.java'
 
     reports {
-        xml.enabled = true
+        //xml.enabled = true
         xml {
             destination file("$reportsDir/checkstyle/checkstyle.xml")
         }
@@ -41,37 +41,36 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     classpath = files( )
 }
 
-
-
-tasks.matching {task -> task.name.startsWith('spotbugs')}.forEach {
-    check.dependsOn it
-    it.dependsOn(['compileDebugSources','compileReleaseSources'])
-    it.group('Verification')
-    it.description('Inspect java bytecode for bugs')
-
-    it.ignoreFailures = false
-    it.effort = "max"
-    it.reportLevel = "high"
-    it.excludeFilter = new File("$qualityConfigDir/findbugs/android-exclude-filter.xml")
-    it.classes = files("$project.rootDir/app/build/intermediates/javac")
-
-    it.source 'src'
-    it.include '**/*.java'
-    it.exclude '**/gen/**'
-
-    it.reports {
-        xml.enabled = false
-        html.enabled = true
-        xml {
-            destination file("$reportsDir/findbugs/findbugs.xml")
-        }
-        html {
-            destination file("$reportsDir/findbugs/findbugs.html")
-        }
-    }
-
-    it.classpath = files()
-}
+// TODO un comment after fixing the plugin
+//tasks.matching {task -> task.name.startsWith('spotbugs')}.forEach {
+//    check.dependsOn it
+//    it.dependsOn(['compileDebugSources','compileReleaseSources'])
+//    it.group('Verification')
+//    it.description('Inspect java bytecode for bugs')
+//
+//    it.ignoreFailures = false
+//    it.effort = "max"
+//    it.reportLevel = "high"
+//    it.excludeFilter = new File("$qualityConfigDir/findbugs/android-exclude-filter.xml")
+//    it.classes = files("$project.rootDir/app/build/intermediates/javac")
+//
+//    it.source 'src'
+//    it.include '**/*.java'
+//    it.exclude '**/gen/**'
+//
+//    it.reports {
+//       // xml.enabled = false
+//       // html.enabled = true
+//        xml {
+//            destination file("$reportsDir/findbugs/findbugs.xml")
+//        }
+//        html {
+//            destination file("$reportsDir/findbugs/findbugs.html")
+//        }
+//    }
+//
+//    it.classpath = files()
+//}
 
 
 task pmd(type: Pmd, group: 'Verification', description: 'Inspect sourcecode for bugs') {
@@ -84,8 +83,8 @@ task pmd(type: Pmd, group: 'Verification', description: 'Inspect sourcecode for 
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+       // xml.enabled = true
+       // html.enabled = true
         xml {
             destination file("$reportsDir/pmd/pmd.xml")
         }

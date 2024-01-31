@@ -2,7 +2,7 @@ package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,7 +28,7 @@ fun MifosTopBar(
                 onClick = { navigateBack.invoke() }
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Back Arrow",
                     tint = if (isSystemInDarkTheme()) Color.White else Color.Black,
                 )
