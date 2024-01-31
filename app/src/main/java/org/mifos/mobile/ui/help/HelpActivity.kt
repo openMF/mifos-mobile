@@ -1,10 +1,11 @@
-package org.mifos.mobile.ui.activities
+package org.mifos.mobile.ui.help
 
 import android.os.Bundle
+import android.view.View
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.HelpFragment
+import org.mifos.mobile.ui.help.HelpFragment
 
 /**
  * @author Rajan Maurya
@@ -17,8 +18,7 @@ class HelpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbarTitle(getString(R.string.help))
-        showBackButton()
+        toolbar?.visibility = View.GONE
         replaceFragment(HelpFragment.newInstance(), false, R.id.container)
     }
 }

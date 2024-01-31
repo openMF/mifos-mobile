@@ -4,5 +4,8 @@ import org.mifos.mobile.models.FAQ
 
 sealed class HelpUiState {
     object Initial : HelpUiState()
-    data class ShowFaq(val faqArrayList: ArrayList<FAQ?>) : HelpUiState()
+    data class ShowFaq(
+        val faqArrayList: ArrayList<FAQ?>,
+        val selectedFaqPosition: Int = -1
+    ) : HelpUiState()
 }

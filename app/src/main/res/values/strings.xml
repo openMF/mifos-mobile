@@ -648,4 +648,5 @@
     <string name="login_failed">Login Failed, Please Try Again Later.</string>
     <string name="could_not_update_password_error">We were unable to update password.</string>
     <string name="could_not_register_user_error">We were unable to register the user.</string>
+    <string name="no_questions_found">No Questions Found</string>
 </resources>
