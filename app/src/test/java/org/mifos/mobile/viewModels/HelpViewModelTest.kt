@@ -8,6 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.models.FAQ
+import org.mifos.mobile.ui.help.HelpViewModel
 import org.mifos.mobile.utils.HelpUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
