@@ -1,2 +1,2 @@
 include ':app'
-include ':core'
+include ':ui'
