@@ -27,7 +27,7 @@ This is an OpenSource project and we would be happy to see new contributors. The
 For Issue tracker guidelines please click <a href="https://github.com/openMF/mifos-mobile/blob/development/.github/ISSUE_TEMPLATE.md">here</a>. All fixes should be proposed via pull requests.
 For pull request guidelines please click <a href="https://github.com/openMF/mifos-mobile/blob/development/CONTRIBUTING.md#pull-requests">here</a>. For commit style guidelines please click <a href="https://github.com/openMF/mifos-mobile/wiki/Commit-Style-Guide">here</a>.
 
-### Branch Policy
+### Branch Policy :
 
 We have the following branches :
 
@@ -79,7 +79,7 @@ Before you begin, you should have already downloaded the Android Studio SDK and 
 
 2. Open Android Studio.
 
-3. Click on 'Open an existing Android Studio project'
+3. Click on 'Open an existing Android Studio project'.
 
 4. Browse to the directory where you cloned the mifos-mobile repo and click OK.
 
