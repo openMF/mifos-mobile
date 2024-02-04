@@ -18,6 +18,7 @@ import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.HomeRepositoryImp
+import org.mifos.mobile.ui.home.HomeViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.HomeUiState
 import org.mockito.Mock

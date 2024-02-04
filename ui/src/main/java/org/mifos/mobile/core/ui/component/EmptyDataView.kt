@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,13 +35,13 @@ fun EmptyDataView(
                 .padding(bottom = 12.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = if (isSystemInDarkTheme()) Color.White else Color.Gray
+            tint = MaterialTheme.colorScheme.onSecondary
         )
 
         Text(
             text = stringResource(id = error),
             style = TextStyle(fontSize = 20.sp),
-            color = if (isSystemInDarkTheme()) Color.White else Color.Gray
+            color = MaterialTheme.colorScheme.onSecondary
         )
     }
 }

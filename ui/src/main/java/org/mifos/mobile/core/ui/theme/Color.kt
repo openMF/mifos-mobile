@@ -11,3 +11,6 @@ val BackgroundLight = Color(0xFFFEFBFF)
 val BackgroundDark = Color(0xFF1B1B1F)
 
 val RedErrorDark = Color(0xFFB00020)
+
+val LightPrimary = Color(0xFF325ca8)
+val DarkPrimary = Color(0xFF9bb1e3)
