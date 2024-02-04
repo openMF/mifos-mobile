@@ -6,7 +6,46 @@
 .DS_Store
 /build
 /captures
-.idea/
-app/src/main/res/raw/third_party_licenses
-app/src/main/res/raw/third_party_license_metadata
-app/release/
+.externalNativeBuild
+.idea
+/*.iml
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+out/
+build/
+
+# Eclipse project files
+.classpath
+.project
+
+# Windows thumbnail db
+.DS_Store
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle.kts
+*.iml
+.idea/*
+!.idea/copyright
+# Keep the code styles.
+!/.idea/codeStyles
+/.idea/codeStyles/*
+!/.idea/codeStyles/Project.xml
+!/.idea/codeStyles/codeStyleConfig.xml
+
+# Gradle cache
+.gradle
+
+# Android Studio captures folder
+captures/
+
+/app/app-release.apk
+app/app.iml
+app/manifest-merger-release-report.txt
