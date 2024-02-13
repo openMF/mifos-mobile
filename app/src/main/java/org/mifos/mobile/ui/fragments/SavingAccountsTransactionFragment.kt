@@ -30,6 +30,7 @@ import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -39,6 +40,7 @@ import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.DatePick
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
@@ -79,6 +81,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
     private var selectedRadioButtonId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? SavingsAccountContainerActivity)?.showToolbar()
         setHasOptionsMenu(true)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
@@ -155,8 +158,12 @@ class SavingAccountsTransactionFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showSavingAccountsDetail(savedInstanceState.getParcelable<Parcelable>(Constants.SAVINGS_ACCOUNTS) as SavingsWithAssociations)
-        }
+            showSavingAccountsDetail(
+                savedInstanceState.getCheckedParcelable(
+                    SavingsWithAssociations::class.java,
+                    Constants.SAVINGS_ACCOUNTS
+                )
+            )        }
     }
 
     /**

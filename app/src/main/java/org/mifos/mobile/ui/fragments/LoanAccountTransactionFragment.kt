@@ -24,6 +24,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.LoanAccountTransactionViewModel
 import javax.inject.Inject
 
@@ -78,8 +79,12 @@ class LoanAccountTransactionFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showLoanTransactions(savedInstanceState.getParcelable<Parcelable>(Constants.LOAN_ACCOUNT) as LoanWithAssociations)
-        }
+            showLoanTransactions(
+                savedInstanceState.getCheckedParcelable(
+                    LoanWithAssociations::class.java,
+                    Constants.LOAN_ACCOUNT
+                )
+            )        }
     }
 
     /**

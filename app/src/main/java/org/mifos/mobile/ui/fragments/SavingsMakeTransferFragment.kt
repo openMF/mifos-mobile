@@ -22,6 +22,7 @@ import org.mifos.mobile.databinding.FragmentSavingsMakeTransferBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.enums.TransferType
@@ -29,6 +30,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
@@ -59,6 +61,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? SavingsAccountContainerActivity)?.showToolbar()
         if (arguments != null) {
             accountId = arguments?.getLong(Constants.ACCOUNT_ID)
             transferType = arguments?.getString(Constants.TRANSFER_TYPE)
@@ -147,8 +150,12 @@ class SavingsMakeTransferFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showSavingsAccountTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as AccountOptionsTemplate)
-        }
+            showSavingsAccountTemplate(
+                savedInstanceState.getCheckedParcelable(
+                    AccountOptionsTemplate::class.java,
+                    Constants.TEMPLATE
+                )
+            )        }
     }
 
     /**

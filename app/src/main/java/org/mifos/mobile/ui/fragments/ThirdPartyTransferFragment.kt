@@ -35,6 +35,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
@@ -159,10 +161,17 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showThirdPartyTransferTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as AccountOptionsTemplate)
-            val tempBeneficiaries: List<Beneficiary?> = savedInstanceState.getParcelableArrayList(
-                Constants.BENEFICIARY,
-            ) ?: listOf()
+            showThirdPartyTransferTemplate(
+                savedInstanceState.getCheckedParcelable(
+                    AccountOptionsTemplate::class.java,
+                    Constants.TEMPLATE
+                )
+            )
+            val tempBeneficiaries: List<Beneficiary?> =
+                savedInstanceState.getCheckedArrayListFromParcelable(
+                    Beneficiary::class.java,
+                    Constants.BENEFICIARY,
+                ) ?: listOf()
             showBeneficiaryList(tempBeneficiaries)
         }
     }

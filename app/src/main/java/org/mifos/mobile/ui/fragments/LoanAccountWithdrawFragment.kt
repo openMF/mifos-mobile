@@ -18,6 +18,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.LoanUiState
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.LoanAccountWithdrawViewModel
 
@@ -36,7 +37,7 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
+            loanWithAssociations = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT)
         }
     }
 
