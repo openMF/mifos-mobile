@@ -25,6 +25,7 @@ import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.Network.isConnected
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.viewModels.RecentTransactionViewModel
 import javax.inject.Inject
 
@@ -116,7 +117,10 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             val transactions: List<Transaction?> =
-                savedInstanceState.getParcelableArrayList(Constants.RECENT_TRANSACTIONS) ?: listOf()
+                savedInstanceState.getCheckedArrayListFromParcelable(
+                    Transaction::class.java,
+                    Constants.RECENT_TRANSACTIONS,
+                ) ?: listOf()
             showRecentTransactions(transactions)
         }
     }

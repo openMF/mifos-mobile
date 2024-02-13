@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.repositories.SavingsAccountRepository
+import org.mifos.mobile.ui.savings_account.SavingAccountsDetailViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.SavingsAccountUiState

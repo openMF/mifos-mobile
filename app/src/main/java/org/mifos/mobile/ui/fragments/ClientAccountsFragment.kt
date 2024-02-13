@@ -32,6 +32,7 @@ import org.mifos.mobile.ui.adapters.ViewPagerAdapter
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.viewModels.AccountsViewModel
 import javax.inject.Inject
@@ -56,7 +57,10 @@ class ClientAccountsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         if (arguments != null) {
-            accountType = arguments?.getSerializable(Constants.ACCOUNT_TYPE) as AccountType
+            accountType = arguments?.getCheckedSerializable(
+                AccountType::class.java,
+                Constants.ACCOUNT_TYPE
+            ) as AccountType
         }
     }
 

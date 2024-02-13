@@ -27,6 +27,7 @@ import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.UserDetailUiState
@@ -116,7 +117,10 @@ class UserProfileFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
+            client = savedInstanceState.getCheckedParcelable(
+                Client::class.java,
+                Constants.USER_DETAILS
+            )
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }

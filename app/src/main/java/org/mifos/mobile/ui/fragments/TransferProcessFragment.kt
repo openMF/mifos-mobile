@@ -23,6 +23,8 @@ import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.TransferUiState
 import org.mifos.mobile.utils.getTodayFormatted
@@ -48,8 +50,15 @@ class TransferProcessFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         if (activity != null) {
             payload = arguments?.getParcelable(Constants.PAYLOAD)
-            transferType = arguments?.getSerializable(Constants.TRANSFER_TYPE) as TransferType
-        }
+            payload =
+                arguments?.getCheckedParcelable(
+                    TransferPayload::class.java,
+                    Constants.PAYLOAD
+                )
+            transferType = arguments?.getCheckedSerializable(
+                TransferType::class.java,
+                Constants.TRANSFER_TYPE
+            ) as TransferType        }
     }
 
     override fun onCreateView(

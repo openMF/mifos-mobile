@@ -23,6 +23,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.BeneficiaryApplicationViewModel
 
@@ -47,16 +49,24 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setToolbarTitle(getString(R.string.add_beneficiary))
         if (arguments != null) {
-            beneficiaryState = requireArguments()
-                .getSerializable(Constants.BENEFICIARY_STATE) as BeneficiaryState
+            beneficiaryState = requireArguments().getCheckedSerializable(
+                    BeneficiaryState::class.java,
+                    Constants.BENEFICIARY_STATE
+                ) as BeneficiaryState
             when (beneficiaryState) {
                 BeneficiaryState.UPDATE -> {
-                    beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
+                    beneficiary = arguments?.getCheckedParcelable(
+                        Beneficiary::class.java,
+                        Constants.BENEFICIARY
+                    )
                     setToolbarTitle(getString(R.string.update_beneficiary))
                 }
 
                 BeneficiaryState.CREATE_QR -> {
-                    beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
+                    beneficiary = arguments?.getCheckedParcelable(
+                        Beneficiary::class.java,
+                        Constants.BENEFICIARY
+                    )
                     setToolbarTitle(getString(R.string.add_beneficiary))
                 }
 
@@ -140,7 +150,12 @@ class BeneficiaryApplicationFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showBeneficiaryTemplate(savedInstanceState.getParcelable<Parcelable>(Constants.TEMPLATE) as BeneficiaryTemplate)
+            showBeneficiaryTemplate(
+                savedInstanceState.getCheckedParcelable(
+                    BeneficiaryTemplate::class.java,
+                    Constants.TEMPLATE
+                )
+            )
         }
     }
 
