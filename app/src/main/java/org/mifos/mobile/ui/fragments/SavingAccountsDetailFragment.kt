@@ -32,6 +32,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.QrCodeGenerator
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.SymbolsUtils
@@ -152,8 +153,12 @@ class SavingAccountsDetailFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showSavingAccountsDetail(savedInstanceState.getParcelable<Parcelable>(Constants.SAVINGS_ACCOUNTS) as SavingsWithAssociations)
-        }
+            showSavingAccountsDetail(
+                savedInstanceState.getCheckedParcelable(
+                    SavingsWithAssociations::class.java,
+                    Constants.SAVINGS_ACCOUNTS
+                )
+            )        }
     }
 
     /**

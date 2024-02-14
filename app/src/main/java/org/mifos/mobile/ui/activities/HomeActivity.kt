@@ -46,6 +46,7 @@ import org.mifos.mobile.utils.UserDetailUiState
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
 import org.mifos.mobile.ui.user_profile.UserDetailViewModel
 import org.mifos.mobile.ui.user_profile.UserProfileActivity
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import javax.inject.Inject
 
 /**
@@ -96,7 +97,7 @@ class HomeActivity :
             viewModel.userImage
             showUserImage(null)
         } else {
-            client = savedInstanceState.getParcelable(Constants.USER_DETAILS)
+            client = savedInstanceState.getCheckedParcelable(Client::class.java, Constants.USER_DETAILS)
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
         }

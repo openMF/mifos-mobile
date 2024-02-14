@@ -23,6 +23,8 @@ import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
@@ -51,9 +53,14 @@ class SavingsAccountApplicationFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            state = requireArguments()
-                .getSerializable(Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState
-            savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
+            state = requireArguments().getCheckedSerializable(
+                SavingsAccountState::class.java,
+                Constants.SAVINGS_ACCOUNT_STATE
+            ) as SavingsAccountState
+            savingsWithAssociations = arguments?.getCheckedParcelable(
+                SavingsWithAssociations::class.java,
+                Constants.SAVINGS_ACCOUNTS
+            )
         }
     }
 

@@ -23,6 +23,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.ClientChargeUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ClientChargeViewModel
 
@@ -48,7 +50,10 @@ class ClientChargeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             id = arguments?.getLong(Constants.CLIENT_ID)
-            chargeType = arguments?.getSerializable(Constants.CHARGE_TYPE) as ChargeType
+            chargeType = arguments?.getCheckedSerializable(
+                ChargeType::class.java,
+                Constants.CHARGE_TYPE
+            ) as ChargeType
         }
     }
 
@@ -121,8 +126,10 @@ class ClientChargeFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val charges: List<Charge?> =
-                savedInstanceState.getParcelableArrayList(Constants.CHARGES) ?: listOf()
+            val charges: List<Charge?> = savedInstanceState.getCheckedArrayListFromParcelable(
+                    Charge::class.java,
+                    Constants.CHARGES
+                ) ?: listOf()
             showClientCharges(charges)
         }
     }

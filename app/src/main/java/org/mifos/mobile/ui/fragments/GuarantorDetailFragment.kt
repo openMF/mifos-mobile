@@ -17,6 +17,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.RxBus.listen
 import org.mifos.mobile.utils.RxBus.publish
 import org.mifos.mobile.utils.RxEvent.DeleteGuarantorEvent
@@ -44,7 +45,7 @@ class GuarantorDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
-            payload = arguments?.getParcelable(Constants.GUARANTOR_DETAILS)
+            payload = arguments?.getCheckedParcelable(GuarantorPayload::class.java, Constants.GUARANTOR_DETAILS)
             index = arguments?.getInt(Constants.INDEX)
             guarantorId = payload?.id
         }

@@ -27,6 +27,7 @@ import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.LoanUiState
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.LoanRepaymentScheduleViewModel
 import javax.inject.Inject
 
@@ -106,7 +107,12 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showLoanRepaymentSchedule(savedInstanceState.getParcelable<Parcelable>(Constants.LOAN_ACCOUNT) as LoanWithAssociations)
+            showLoanRepaymentSchedule(
+                savedInstanceState.getCheckedParcelable(
+                    LoanWithAssociations::class.java,
+                    Constants.LOAN_ACCOUNT
+                )
+            )
         }
     }
 
