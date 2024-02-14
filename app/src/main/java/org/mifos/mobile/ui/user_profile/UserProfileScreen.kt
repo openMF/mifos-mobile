@@ -9,9 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,7 +59,10 @@ fun UserProfileScreen(
                 .padding(top = 100.dp, bottom = 20.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            MifosUserImage(isDarkTheme = isSystemInDarkTheme(), bitmap = bitmap)
+            MifosUserImage(
+                bitmap = bitmap,
+                modifier = Modifier.size(100.dp)
+            )
         }
         Divider(color = Color(0xFF8E9099))
         userDetails.userName?.let { UserProfileField(label = R.string.username, value = it) }

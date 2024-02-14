@@ -21,6 +21,7 @@ import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat
 import org.mifos.mobile.utils.ConfigurationPreference
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LanguageHelper
+import java.util.Locale
 
 /**
  * Created by dilpreet on 02/10/17.
@@ -132,7 +133,23 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
         val preference = findPreference(p1)
         if (preference is ListPreference) {
-            LanguageHelper.setLocale(context, preference.value)
+            val isSystemLanguage =
+                (preference.value == resources.getStringArray(R.array.languages_value)[0])
+            prefsHelper.putBoolean(
+                context?.getString(R.string.default_system_language),
+                isSystemLanguage
+            )
+            if (!isSystemLanguage) {
+                LanguageHelper.setLocale(context, preference.value)
+            } else {
+                if (!resources.getStringArray(R.array.languages_value)
+                        .contains(Locale.getDefault().language)
+                ) {
+                    LanguageHelper.setLocale(context, "en")
+                } else {
+                    LanguageHelper.setLocale(context, Locale.getDefault().language)
+                }
+            }
             val intent = Intent(activity, activity?.javaClass)
             intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
             startActivity(intent)

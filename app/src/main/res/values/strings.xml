@@ -535,6 +535,7 @@
     </string-array>
 
     <string name="language_type" translatable="false">language_type</string>
+    <string name="default_system_language" translatable="false">default_system_language</string>
     <string name="theme_type" translatable="false">theme_type</string>
     <string name="total_saving_balance">Total Savings Balance</string>
     <string name="total_loan_balance">Total Loan Balance</string>
@@ -600,6 +601,7 @@
     <string name="change_app_theme">Change the application theme</string>
 
     <string-array name="languages" translatable="false">
+        <item>System Language</item>
         <item>English</item>
         <item>हिंदी</item>
         <item>عربى</item>
@@ -620,6 +622,7 @@
     </string-array>
 
     <string-array name="languages_value" translatable="false">
+        <item>System_Language</item>
         <item>en</item>
         <item>hi</item>
         <item>ar</item>
@@ -648,4 +651,5 @@
     <string name="login_failed">Login Failed, Please Try Again Later.</string>
     <string name="could_not_update_password_error">We were unable to update password.</string>
     <string name="could_not_register_user_error">We were unable to register the user.</string>
+    <string name="no_questions_found">No Questions Found</string>
 </resources>
