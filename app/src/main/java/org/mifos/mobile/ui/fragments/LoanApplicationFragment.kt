@@ -24,6 +24,8 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ReviewLoanApplicationFragment.Companion.newInstance
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.viewModels.LoanApplicationViewModel
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -99,12 +101,18 @@ class LoanApplicationFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            loanState = arguments?.getSerializable(Constants.LOAN_STATE) as LoanState
+            loanState = arguments?.getCheckedSerializable(
+                LoanState::class.java,
+                Constants.LOAN_STATE
+            ) as LoanState
             if (loanState == LoanState.CREATE) {
                 setToolbarTitle(getString(R.string.apply_for_loan))
             } else {
                 setToolbarTitle(getString(R.string.update_loan))
-                loanWithAssociations = arguments?.getParcelable(Constants.LOAN_ACCOUNT)
+                loanWithAssociations = arguments?.getCheckedParcelable(
+                    LoanWithAssociations::class.java,
+                    Constants.LOAN_ACCOUNT
+                )
             }
         }
     }
@@ -131,7 +139,10 @@ class LoanApplicationFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            val template: LoanTemplate? = savedInstanceState.getParcelable(Constants.TEMPLATE)
+            val template: LoanTemplate? = savedInstanceState.getCheckedParcelable(
+                LoanTemplate::class.java,
+                Constants.TEMPLATE
+            )
             if (loanState == LoanState.CREATE) {
                 showLoanTemplate(template)
             } else {
