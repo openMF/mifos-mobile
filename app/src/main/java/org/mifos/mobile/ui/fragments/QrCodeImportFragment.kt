@@ -26,6 +26,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.QrCodeUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.QrCodeImportViewModel
@@ -120,8 +121,8 @@ class QrCodeImportFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             // restore data
-            mFrameRect = savedInstanceState.getParcelable(Constants.FRAME_RECT)
-            qrUri = savedInstanceState.getParcelable(Constants.SOURCE_URI)!!
+            mFrameRect = savedInstanceState.getCheckedParcelable(RectF::class.java, Constants.FRAME_RECT)
+            qrUri = savedInstanceState.getCheckedParcelable(Uri::class.java, Constants.SOURCE_URI)!!
         }
     }
 
