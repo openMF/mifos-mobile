@@ -30,6 +30,7 @@ import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -80,6 +81,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
     private var selectedRadioButtonId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? SavingsAccountContainerActivity)?.showToolbar()
         setHasOptionsMenu(true)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
         if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!

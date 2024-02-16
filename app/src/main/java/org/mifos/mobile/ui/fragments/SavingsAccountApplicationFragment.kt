@@ -19,6 +19,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.savings.ProductOptions
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
@@ -52,6 +53,7 @@ class SavingsAccountApplicationFragment : BaseFragment() {
     private val productIdList: MutableList<String?> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? SavingsAccountContainerActivity)?.showToolbar()
         if (arguments != null) {
             state = requireArguments().getCheckedSerializable(
                 SavingsAccountState::class.java,
