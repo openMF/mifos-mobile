@@ -17,6 +17,8 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.MFErrorParser
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.ReviewLoanApplicationUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.ReviewLoanApplicationViewModel
@@ -80,11 +82,11 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentReviewLoanApplicationBinding.inflate(inflater, container, false)
-        val loanState = arguments?.getSerializable(LOAN_STATE) as LoanState
+        val loanState = arguments?.getCheckedSerializable(LoanState::class.java, LOAN_STATE) as LoanState
         if (loanState == LoanState.CREATE) {
             viewModel.insertData(
                 loanState,
-                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getCheckedParcelable(LoansPayload::class.java, LOANS_PAYLOAD)!!,
                 arguments?.getString(LOAN_NAME)!!,
                 arguments?.getString(ACCOUNT_NO)!!,
             )
@@ -92,7 +94,7 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             viewModel.insertData(
                 loanState,
                 arguments?.getLong(LOAN_ID)!!,
-                arguments?.getParcelable(LOANS_PAYLOAD)!!,
+                arguments?.getCheckedParcelable(LoansPayload::class.java, LOANS_PAYLOAD)!!,
                 arguments?.getString(LOAN_NAME)!!,
                 arguments?.getString(ACCOUNT_NO)!!,
             )

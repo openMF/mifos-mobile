@@ -24,6 +24,7 @@ import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.MaterialDialog
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.viewModels.BeneficiaryDetailViewModel
 
@@ -42,7 +43,8 @@ class BeneficiaryDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            beneficiary = arguments?.getParcelable(Constants.BENEFICIARY)
+            beneficiary =
+                arguments?.getCheckedParcelable(Beneficiary::class.java, Constants.BENEFICIARY)
         }
         setHasOptionsMenu(true)
     }

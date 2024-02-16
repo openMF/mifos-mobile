@@ -14,8 +14,10 @@ import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingsAccountWithdrawFragmentBinding
 import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getTodayFormatted
@@ -34,9 +36,12 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
     private var payload: SavingsAccountWithdrawPayload? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? SavingsAccountContainerActivity)?.showToolbar()
         if (arguments != null) {
-            savingsWithAssociations = arguments?.getParcelable(Constants.SAVINGS_ACCOUNTS)
-        }
+            savingsWithAssociations = arguments?.getCheckedParcelable(
+                SavingsWithAssociations::class.java,
+                Constants.SAVINGS_ACCOUNTS
+            )        }
     }
 
     override fun onCreateView(

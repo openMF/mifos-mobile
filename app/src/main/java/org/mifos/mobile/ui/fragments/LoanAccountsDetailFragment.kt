@@ -21,6 +21,7 @@ import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.viewModels.LoanAccountsDetailViewModel
 import javax.inject.Inject
 
@@ -78,7 +79,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            showLoanAccountsDetail(savedInstanceState.getParcelable<Parcelable>(Constants.LOAN_ACCOUNT) as LoanWithAssociations)
+            showLoanAccountsDetail(savedInstanceState.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT))
         }
     }
 

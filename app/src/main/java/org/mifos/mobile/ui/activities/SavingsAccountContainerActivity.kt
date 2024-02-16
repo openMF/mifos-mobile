@@ -1,10 +1,11 @@
 package org.mifos.mobile.ui.activities
 
 import android.os.Bundle
+import android.view.View
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.SavingAccountsDetailFragment
+import org.mifos.mobile.ui.savings_account.SavingAccountsDetailFragment
 import org.mifos.mobile.utils.Constants
 
 /**
@@ -32,6 +33,18 @@ class SavingsAccountContainerActivity : BaseActivity() {
             transferSuccess = false
         } else {
             super.onBackPressed()
+        }
+    }
+
+    fun hideToolbar() {
+        binding.apply {
+            toolbar?.visibility = View.GONE
+        }
+    }
+
+    fun showToolbar() {
+        binding.apply {
+            toolbar?.visibility = View.VISIBLE
         }
     }
 
