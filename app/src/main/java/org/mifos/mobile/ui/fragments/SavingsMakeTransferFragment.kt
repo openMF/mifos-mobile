@@ -22,6 +22,7 @@ import org.mifos.mobile.databinding.FragmentSavingsMakeTransferBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.enums.TransferType
@@ -60,6 +61,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? SavingsAccountContainerActivity)?.showToolbar()
         if (arguments != null) {
             accountId = arguments?.getLong(Constants.ACCOUNT_ID)
             transferType = arguments?.getString(Constants.TRANSFER_TYPE)

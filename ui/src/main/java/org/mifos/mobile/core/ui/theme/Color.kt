@@ -14,3 +14,8 @@ val RedErrorDark = Color(0xFFB00020)
 
 val LightPrimary = Color(0xFF325ca8)
 val DarkPrimary = Color(0xFF9bb1e3)
+
+val DepositGreen = Color(0xff14c416)
+val Blue = Color(0xFF003FFF)
+val RedLight = Color(0xFFFF4444)
+val LightYellow = Color(0xFFF9AC06)
