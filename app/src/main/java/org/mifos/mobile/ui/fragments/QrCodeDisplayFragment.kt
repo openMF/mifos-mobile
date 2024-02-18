@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeDisplayBinding
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.QrCodeGenerator
@@ -30,7 +31,7 @@ class QrCodeDisplayFragment : BaseFragment() {
     private var json: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? SavingsAccountContainerActivity)?.showToolbar()
+        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) {
             json = arguments?.getString(Constants.QR_DATA)
         }

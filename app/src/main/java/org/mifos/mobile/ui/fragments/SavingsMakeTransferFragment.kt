@@ -61,7 +61,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? SavingsAccountContainerActivity)?.showToolbar()
+        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) {
             accountId = arguments?.getLong(Constants.ACCOUNT_ID)
             transferType = arguments?.getString(Constants.TRANSFER_TYPE)

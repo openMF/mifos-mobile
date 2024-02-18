@@ -51,6 +51,16 @@ open class BaseActivity : BasePassCodeActivity(), BaseActivityCallback {
         }
     }
 
+    fun showToolbar() {
+        toolbar = findViewById(R.id.toolbar)
+        toolbar?.visibility = View.VISIBLE
+    }
+
+    fun hideToolbar() {
+        toolbar = findViewById(R.id.toolbar)
+        toolbar?.visibility = View.GONE
+    }
+
     /**
      * Used for removing elevation from toolbar
      */
