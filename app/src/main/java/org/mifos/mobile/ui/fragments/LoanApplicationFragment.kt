@@ -100,6 +100,7 @@ class LoanApplicationFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) {
             loanState = arguments?.getCheckedSerializable(
                 LoanState::class.java,

@@ -21,6 +21,7 @@ import org.mifos.mobile.models.accounts.loan.Periods
 import org.mifos.mobile.models.accounts.loan.tableview.Cell
 import org.mifos.mobile.models.accounts.loan.tableview.ColumnHeader
 import org.mifos.mobile.models.accounts.loan.tableview.RowHeader
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.LoanRepaymentScheduleAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
@@ -50,6 +51,7 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
     private var loanWithAssociations: LoanWithAssociations? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? BaseActivity)?.showToolbar()
         setToolbarTitle(getString(R.string.loan_repayment_schedule))
         if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }

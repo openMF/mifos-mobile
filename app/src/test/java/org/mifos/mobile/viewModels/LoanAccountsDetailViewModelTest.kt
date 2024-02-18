@@ -15,6 +15,7 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.repositories.LoanRepositoryImp
+import org.mifos.mobile.ui.loan_account.LoanAccountsDetailViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoanUiState

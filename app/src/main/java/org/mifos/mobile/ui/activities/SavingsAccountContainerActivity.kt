@@ -36,18 +36,6 @@ class SavingsAccountContainerActivity : BaseActivity() {
         }
     }
 
-    fun hideToolbar() {
-        binding.apply {
-            toolbar?.visibility = View.GONE
-        }
-    }
-
-    fun showToolbar() {
-        binding.apply {
-            toolbar?.visibility = View.VISIBLE
-        }
-    }
-
     companion object {
         var transferSuccess = false
     }

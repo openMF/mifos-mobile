@@ -18,6 +18,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentClientChargeBinding
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.ClientChargeAdapter
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -49,7 +50,7 @@ class ClientChargeFragment : BaseFragment() {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? SavingsAccountContainerActivity)?.showToolbar()
+        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) {
             id = arguments?.getLong(Constants.CLIENT_ID)
             chargeType = arguments?.getCheckedSerializable(

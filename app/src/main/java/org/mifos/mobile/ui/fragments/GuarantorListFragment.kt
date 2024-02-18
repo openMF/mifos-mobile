@@ -47,6 +47,7 @@ class GuarantorListFragment : BaseFragment() {
     private var disposableDeleteGuarantor: Disposable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) loanId = requireArguments().getLong(Constants.LOAN_ID)
     }
 
