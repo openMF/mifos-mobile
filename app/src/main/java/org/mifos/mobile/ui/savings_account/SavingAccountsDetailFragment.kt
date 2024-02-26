@@ -23,7 +23,7 @@ import org.mifos.mobile.ui.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
 import org.mifos.mobile.ui.fragments.SavingAccountsTransactionFragment
-import org.mifos.mobile.ui.fragments.SavingsAccountApplicationFragment
+import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment
 import org.mifos.mobile.ui.fragments.SavingsAccountWithdrawFragment
 import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
