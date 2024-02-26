@@ -16,6 +16,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.ui.enums.SavingsAccountState
+import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mockito.Mock
