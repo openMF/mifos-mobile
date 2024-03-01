@@ -23,7 +23,7 @@ Mifos boasts an active and vibrant contributor community, Please join us on [sla
 ## Screenshots
 
 <p>
-  <img src="https://user-images.githubusercontent.com/24931732/48102172-b0ccc800-e1de-11e8-9fb9-17c41234636e.png" />
+  <img src="https://github.com/Akshay2004-701/images/blob/main/mifos-screenshots.png?raw=true" />
 </p>
 
 ## How to Contribute
