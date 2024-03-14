@@ -1,3 +1,7 @@
+<p>
+  <img src="https://github.com/Vikashgathala/mifos-mobile/assets/12993867/0fd88221-24b4-4f6c-b589-45322a544a28" />
+</p>
+
 <img height='175' src="https://user-images.githubusercontent.com/37406965/51083189-d5dc3a80-173b-11e9-8ca0-28015e0893ac.png" align="left" hspace="1" vspace="1">
 
 # Mifos-Mobile Android Application for MifosX
@@ -20,11 +24,7 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 
 Mifos boasts an active and vibrant contributor community, Please join us on [slack](https://mifos.slack.com/). Once you've joined the mifos slack community, please join the `#mifos-mobile` channel to engage with mifos-mobile development. If you encounter any difficulties joining our Slack channel, please don't hesitate to open an issue. This will allow us to assist you promptly or send you an invitation.
 
-## Screenshots
 
-<p>
-  <img src="https://user-images.githubusercontent.com/24931732/48102172-b0ccc800-e1de-11e8-9fb9-17c41234636e.png" />
-</p>
 
 ## How to Contribute
 
