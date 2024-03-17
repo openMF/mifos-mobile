@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 
@@ -27,13 +28,19 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 
 @Composable
-fun beneficiaryscreen(
+fun BeneficiaryScreen(
     topAppbarNavigateback:()->Unit,
     addiconClicked: ()->Unit,
     scaniconClicked: ()->Unit,
     uploadiconClicked :()->Unit
 ){
-    BeneficiaryTopappbar(topAppbarNavigateback,)
+    MifosTopBar(
+        navigateBack = topAppbarNavigateback,
+        title = {
+            Text(text = stringResource(id = R.string.add_beneficiary))
+        }
+    )
+
     Column(
         modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_10dp))
     ){
@@ -62,11 +69,6 @@ fun beneficiaryscreen(
 
 }
 
-
-
-
-
-
 @Preview(
     name = "Night Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
@@ -83,7 +85,7 @@ fun beneficiaryscreenpreview() {
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
-            beneficiaryscreen({},{},{},{})
+            BeneficiaryScreen({},{},{},{})
         }
     }
 }
