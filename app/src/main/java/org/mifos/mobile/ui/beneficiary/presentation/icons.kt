@@ -16,18 +16,6 @@ import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
-
-/***
- *this is a composable that is made up of multiple icons from the res folder,
- * the composable takes in parameters such as
- * @param[addIconclicked] for taking actions when the add icon is clicked
- * @param[scanIconClicked]  for taking icons when the scan icon is clicked
- * @param[uploadIconClicked] for taking actions when the upload icon is clicked
- * @param[modifier] for modifying the composable.
- * Reference the preview function to see a preview of the screen
- *
- * */
-
 @Composable
 fun multipleIcons(
     modifier: Modifier = Modifier,
