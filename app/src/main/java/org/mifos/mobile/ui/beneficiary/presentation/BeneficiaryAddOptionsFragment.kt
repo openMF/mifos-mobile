@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.beneficiary.presentation
 
 import android.Manifest
 import android.content.Intent
@@ -8,12 +8,18 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.databinding.FragmentBeneficiaryAddOptionsBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.enums.RequestAccessType
+import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
+import org.mifos.mobile.ui.fragments.QrCodeImportFragment
+import org.mifos.mobile.ui.fragments.QrCodeReaderFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission
@@ -27,6 +33,8 @@ import org.mifos.mobile.utils.Toaster
 @AndroidEntryPoint
 class BeneficiaryAddOptionsFragment : BaseFragment() {
 
+    private lateinit var composeView: ComposeView
+
     private var _binding: FragmentBeneficiaryAddOptionsBinding? = null
     private val binding get() = _binding!!
 
@@ -37,25 +45,27 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentBeneficiaryAddOptionsBinding.inflate(inflater, container, false)
-        setToolbarTitle(getString(R.string.add_beneficiary))
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            composeView = this
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        composeView.setContent {
 
-        with(binding) {
-            llAddBeneficiaryManually.setOnClickListener {
-                addManually()
+            MifosMobileTheme {
+                BeneficiaryScreen(
+                    topAppbarNavigateback ={},
+                    addiconClicked ={ addManually()},
+                    scaniconClicked ={ addUsingQrCode()},
+                    uploadiconClicked ={ addByImportingQrCode()}
+                )
             }
-            llAddBeneficiaryQrcode.setOnClickListener {
-                addUsingQrCode()
-            }
-            binding.llUploadBeneficiaryQrcode.setOnClickListener {
-                addByImportingQrCode()
-            }
+
         }
+
     }
 
     /**
@@ -247,6 +257,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
+
 
     companion object {
         @JvmStatic
