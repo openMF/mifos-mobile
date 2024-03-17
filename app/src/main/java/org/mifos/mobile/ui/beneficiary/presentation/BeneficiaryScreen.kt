@@ -57,7 +57,7 @@ fun BeneficiaryScreen(
             color =  MaterialTheme.colorScheme.onSurface
         )
 
-        multipleIcons(
+        Icons(
             modifier = Modifier.padding(top = 20.dp),
             addIconclicked = addiconClicked,
             scanIconClicked = scaniconClicked,
@@ -78,14 +78,14 @@ fun BeneficiaryScreen(
     uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun beneficiaryscreenpreview() {
-    MifosMobileTheme{
+fun BeneficiaryScreenPreview() {
+    MifosMobileTheme {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
-            BeneficiaryScreen({},{},{},{})
+            BeneficiaryScreen({}, {}, {}, {})
         }
     }
 }

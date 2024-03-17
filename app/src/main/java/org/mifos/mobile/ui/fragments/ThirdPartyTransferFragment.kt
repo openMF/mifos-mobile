@@ -30,6 +30,7 @@ import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.adapters.BeneficiarySpinnerAdapter
+import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
