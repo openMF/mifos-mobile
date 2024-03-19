@@ -16,7 +16,7 @@
             android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
             android:orientation="vertical"
             android:paddingVertical="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
-            android:visibility="gone">
+            >
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

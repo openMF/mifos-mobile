@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.sp
 fun EmptyDataView(
     modifier: Modifier = Modifier,
     icon: Int,
-    error: Int
+    error: Int,
+    errorString: String? = null,
 ) {
     Column(
         modifier = modifier,
@@ -38,7 +39,8 @@ fun EmptyDataView(
         )
 
         Text(
-            text = stringResource(id = error),
+            modifier= Modifier.padding(horizontal = 20.dp),
+            text = errorString ?: stringResource(id = error),
             style = TextStyle(fontSize = 20.sp),
             color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center

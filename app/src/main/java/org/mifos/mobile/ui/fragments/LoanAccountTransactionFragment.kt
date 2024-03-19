@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentLoanAccountTransactionsBinding
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
@@ -50,6 +51,7 @@ class LoanAccountTransactionFragment : BaseFragment() {
     private var sweetUIErrorHandler: SweetUIErrorHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) {
             loanId = arguments?.getLong(Constants.LOAN_ID)
         }
