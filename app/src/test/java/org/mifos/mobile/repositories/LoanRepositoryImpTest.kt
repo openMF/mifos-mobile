@@ -1,9 +1,10 @@
 package org.mifos.mobile.repositories
 
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Before
@@ -15,6 +16,7 @@ import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
@@ -38,10 +40,9 @@ class LoanRepositoryImpTest {
     }
 
     @Test
-    fun testGetLoanWithAssociations_Successful() = runBlocking {
+    fun testGetLoanWithAssociations_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<LoanWithAssociations?> =
-            Response.success(Mockito.mock(LoanWithAssociations::class.java))
+        val success= mock(LoanWithAssociations::class.java)
 
         `when`(
             dataManager.getLoanWithAssociations(
@@ -54,108 +55,120 @@ class LoanRepositoryImpTest {
             "associationType",
             1
         )
+        result?.test {
+            assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         verify(dataManager).getLoanWithAssociations(Mockito.anyString(), Mockito.anyLong())
-        assertEquals(result, success)
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testGetLoanWithAssociations_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testGetLoanWithAssociations_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<LoanWithAssociations?> =
-            Response.error(404, ResponseBody.create(null, "error"))
         `when`(
             dataManager.getLoanWithAssociations(
                 Mockito.anyString(),
                 Mockito.anyLong()
             )
-        ).thenReturn(error)
-
+        ).thenThrow(Exception("Error occurred"))
         val result = loanRepositoryImp.getLoanWithAssociations(
             "associationType",
             1
         )
-
+        result!!.test {
+            assert(Throwable("Error occurred") == awaitError())
+        }
         verify(dataManager).getLoanWithAssociations(Mockito.anyString(), Mockito.anyLong())
-        assertEquals(result, error)
         Dispatchers.resetMain()
     }
 
     @Test
-    fun testWithdrawLoanAccount_Successful() = runBlocking {
+    fun testWithdrawLoanAccount_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<ResponseBody?> =
-            Response.success(Mockito.mock(ResponseBody::class.java))
+        val success = mock(ResponseBody::class.java)
 
         `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(success)
 
         val result = loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
+        result?.test {
+            assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         verify(dataManager).withdrawLoanAccount(1, loanWithdraw)
-        assertEquals(result, success)
-    }
+        }
 
-    @Test
-    fun testWithdrawLoanAccount_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testWithdrawLoanAccount_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.withdrawLoanAccount(1, loanWithdraw)).thenReturn(error)
-
+        `when`(dataManager.withdrawLoanAccount(1, loanWithdraw))
+            .thenThrow(Exception("Error occurred"))
         val result = loanRepositoryImp.withdrawLoanAccount(1, loanWithdraw)
+        result!!.test {
+            assert(Throwable("Error occurred") == awaitError())
+        }
         verify(dataManager).withdrawLoanAccount(1, loanWithdraw)
-        assertEquals(result, error)
         Dispatchers.resetMain()
     }
 
     @Test
-    fun testTemplate_Successful() = runBlocking {
+    fun testTemplate_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<LoanTemplate?> =
-            Response.success(Mockito.mock(LoanTemplate::class.java))
+        val success= mock(LoanTemplate::class.java)
         `when`(dataManager.loanTemplate()).thenReturn(success)
 
         val result = loanRepositoryImp.template()
+
+        result?.test {
+            assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         verify(dataManager).loanTemplate()
-        assertEquals(result, success)
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testTemplate_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testTemplate_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<LoanTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.loanTemplate()).thenReturn(error)
+        `when`(dataManager.loanTemplate())
+            .thenThrow(Exception("Error occurred"))
 
         val result = loanRepositoryImp.template()
+        result!!.test {
+            assert(Throwable("Error occurred") == awaitError())
+        }
         verify(dataManager).loanTemplate()
-        assertEquals(result, error)
         Dispatchers.resetMain()
     }
 
     @Test
-    fun testGetLoanTemplateByProduct_Successful() = runBlocking {
+    fun testGetLoanTemplateByProduct_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val success: Response<LoanTemplate?> =
-            Response.success(Mockito.mock(LoanTemplate::class.java))
+        val success = mock(LoanTemplate::class.java)
         `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(success)
 
         val result = loanRepositoryImp.getLoanTemplateByProduct(1)
+        result?.test {
+            assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         verify(dataManager).getLoanTemplateByProduct(1)
-        assertEquals(result, success)
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testGetLoanTemplateByProduct_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testGetLoanTemplateByProduct_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val error: Response<LoanTemplate?> =
             Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.getLoanTemplateByProduct(1)).thenReturn(error)
+        `when`(dataManager.getLoanTemplateByProduct(1)).
+        thenThrow(Exception("Error occurred"))
 
         val result = loanRepositoryImp.getLoanTemplateByProduct(1)
+        result!!.test {
+            assert(Throwable("Error occurred") == awaitError())
+        }
         verify(dataManager).getLoanTemplateByProduct(1)
-        assertEquals(result, error)
         Dispatchers.resetMain()
     }
 }

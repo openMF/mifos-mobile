@@ -3,24 +3,34 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
+import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.repositories.SavingsAccountRepository
 import org.mifos.mobile.ui.enums.SavingsAccountState
+import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationUiState
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
@@ -40,9 +50,10 @@ class SavingsAccountApplicationViewModelTest {
 
     @Mock
     lateinit var savingsAccountRepositoryImp: SavingsAccountRepository
-
+    
     @Mock
-    lateinit var savingsAccountApplicationUiStateObserver: Observer<SavingsAccountUiState>
+    lateinit var preferenseHelper : PreferencesHelper
+
 
     private lateinit var savingsAccountApplicationViewModel: SavingsAccountApplicationViewModel
     private val mockClientId = 1L
@@ -52,79 +63,75 @@ class SavingsAccountApplicationViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         savingsAccountApplicationViewModel =
-            SavingsAccountApplicationViewModel(savingsAccountRepositoryImp)
-        savingsAccountApplicationViewModel.savingsAccountApplicationUiState.observeForever(
-            savingsAccountApplicationUiStateObserver
-        )
+            SavingsAccountApplicationViewModel(savingsAccountRepositoryImp,
+                preferenseHelper)
+       
     }
 
     @Test
     fun testLoadSavingsAccountApplicationTemplate_InputCreateStateSuccessResponseFromRepository_ReturnsShowUserInterfaceSavingAccountApplication() =
-        runBlocking {
+       runTest {
             val mockState = SavingsAccountState.CREATE
+            val clientId = 1L
             val mockTemplate = Mockito.mock(SavingsAccountTemplate::class.java)
             Mockito.`when`(
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
-            ).thenReturn(Response.success(mockTemplate))
+            ).thenReturn(flowOf(mockTemplate))
+           `when`(preferenseHelper.clientId).thenReturn(clientId)
 
-            savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate(
-                mockClientId,
-                mockState
+           savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate()
+            advanceUntilIdle()
+           assertEquals(
+               SavingsAccountApplicationUiState.ShowUserInterface(mockTemplate, mockState),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
             )
-
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver).onChanged(
-                SavingsAccountUiState.ShowUserInterfaceSavingAccountApplication(mockTemplate)
-            )
-            Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
-        }
+       }
 
     @Test
     fun testLoadSavingsAccountApplicationTemplate_InputUpdateStateSuccessResponseFromRepository_ReturnsShowUserInterfaceSavingAccountUpdate() =
-        runBlocking {
+       runTest {
             val mockState = SavingsAccountState.UPDATE
             val mockTemplate = Mockito.mock(SavingsAccountTemplate::class.java)
+            val mockPayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
+            val mockResponse = Mockito.mock(ResponseBody::class.java)
+            val mockSavingsWithAssociations = Mockito.mock(SavingsWithAssociations::class.java)
             Mockito.`when`(
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
-            ).thenReturn(Response.success(mockTemplate))
+            ).thenReturn(flowOf(mockTemplate))
+              `when`(preferenseHelper.clientId).thenReturn(mockClientId)
+           `when`(savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId))
+               .thenReturn(flow { emit(mockTemplate) })
+          // Set state to UPDATE
+           savingsAccountApplicationViewModel.setSavingsAccountState(SavingsAccountState.UPDATE)
+           savingsAccountApplicationViewModel.setSavingsWithAssociations(mockSavingsWithAssociations)
+            savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate()
+            advanceUntilIdle()
 
-            savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate(
-                mockClientId,
-                mockState
+           assertEquals(
+                SavingsAccountApplicationUiState.ShowUserInterface(mockTemplate,mockState),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
             )
+       }
 
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.ShowUserInterfaceSavingAccountUpdate(mockTemplate))
-            Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
-        }
-
-    @Test
+    @Test(expected =  Exception::class)
     fun testLoadSavingsAccountApplicationTemplate_ErrorResponseFromRepository_ReturnsErrorMessage() =
-        runBlocking {
-            val errorResponse = RuntimeException("Loading Failed")
+       runTest {
+            val errorResponse =  Exception("Loading Failed")
             val mockState = SavingsAccountState.UPDATE
             Mockito.`when`(
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
-            savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate(
-                mockClientId,
-                mockState
+            ).thenThrow(errorResponse)
+           savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate()
+            advanceUntilIdle()
+            assertEquals(
+                SavingsAccountUiState.ErrorMessage(errorResponse),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
             )
-
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-            Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
-        }
+       }
 
     @Test
     fun testSubmitSavingsAccountApplication_SuccessResponseFromRepository_ReturnsHideProgress() =
-        runBlocking {
+       runTest {
             val responseBody = Mockito.mock(ResponseBody::class.java)
             val mockSavingsAccountApplicationPayload =
                 Mockito.mock(SavingsAccountApplicationPayload::class.java)
@@ -132,65 +139,64 @@ class SavingsAccountApplicationViewModelTest {
                 savingsAccountRepositoryImp.submitSavingAccountApplication(
                     mockSavingsAccountApplicationPayload
                 )
-            ).thenReturn(Response.success(responseBody))
+            ).thenReturn(flowOf(responseBody))
+
 
             savingsAccountApplicationViewModel.submitSavingsAccountApplication(
                 mockSavingsAccountApplicationPayload
             )
+            advanceUntilIdle()
+            assertEquals(
+                SavingsAccountApplicationUiState.Success(SavingsAccountState.CREATE),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
+            )
 
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.HideProgress)
-        }
+       }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testSubmitSavingsAccountApplication_SuccessResponseFromRepository_ReturnsSavingsAccountUpdateSuccess() =
-        runBlocking {
+       runTest {
+            val errorResponse =  Exception("Submitting Failed")
             val mockSavingsAccountApplicationPayload =
                 Mockito.mock(SavingsAccountApplicationPayload::class.java)
             Mockito.`when`(
                 savingsAccountRepositoryImp.submitSavingAccountApplication(
                     mockSavingsAccountApplicationPayload
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
+            ).thenThrow(errorResponse)
             savingsAccountApplicationViewModel.submitSavingsAccountApplication(
                 mockSavingsAccountApplicationPayload
             )
+            advanceUntilIdle()
+            assertEquals(
+                SavingsAccountUiState.ErrorMessage(errorResponse),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
+            )
+       }
 
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.SavingsAccountApplicationSuccess)
-            Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
-        }
-
-    @Test
+    @Test(expected = Exception::class)
     fun testSubmitSavingsAccountApplication_ErrorResponseFromRepository_ReturnsErrorMessage() =
-        runBlocking {
-            val errorResponse = RuntimeException("Submitting Failed")
+       runTest {
+            val errorResponse =  Exception("Submitting Failed")
             val mockSavingsAccountApplicationPayload =
                 Mockito.mock(SavingsAccountApplicationPayload::class.java)
             Mockito.`when`(
                 savingsAccountRepositoryImp.submitSavingAccountApplication(
                     mockSavingsAccountApplicationPayload
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
+            ).thenThrow(errorResponse)
             savingsAccountApplicationViewModel.submitSavingsAccountApplication(
                 mockSavingsAccountApplicationPayload
             )
-
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-            Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
+           advanceUntilIdle()
+            assertEquals(
+                SavingsAccountUiState.ErrorMessage(errorResponse),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
+            )
         }
 
     @Test
-    fun testUpdateSavingsAccount_SuccessResponseFromRepository_ReturnsHideProgress() = runBlocking {
+    fun testUpdateSavingsAccount_SuccessResponseFromRepository_ReturnsHideProgress() =runTest {
         val mockSavingsAccountUpdatePayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
         val responseBody = Mockito.mock(ResponseBody::class.java)
         Mockito.`when`(
@@ -198,22 +204,23 @@ class SavingsAccountApplicationViewModelTest {
                 mockAccountId,
                 mockSavingsAccountUpdatePayload
             )
-        ).thenReturn(Response.success(responseBody))
-
+        ).thenReturn(flowOf(responseBody))
+        savingsAccountApplicationViewModel.setSavingsAccountState(SavingsAccountState.UPDATE)
         savingsAccountApplicationViewModel.updateSavingsAccount(
             mockAccountId,
             mockSavingsAccountUpdatePayload
         )
-
-        Mockito.verify(savingsAccountApplicationUiStateObserver)
-            .onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingsAccountApplicationUiStateObserver)
-            .onChanged(SavingsAccountUiState.HideProgress)
+        advanceUntilIdle()
+        assertEquals(
+            SavingsAccountApplicationUiState.Success(SavingsAccountState.UPDATE),
+            savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
+        )
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testUpdateSavingsAccount_SuccessResponseFromRepository_ReturnsSavingsAccountUpdateSuccess() =
-        runBlocking {
+       runTest {
+            val errorResponse =  Exception("Update Failed")
             val mockSavingsAccountUpdatePayload =
                 Mockito.mock(SavingsAccountUpdatePayload::class.java)
             Mockito.`when`(
@@ -221,47 +228,41 @@ class SavingsAccountApplicationViewModelTest {
                     mockAccountId,
                     mockSavingsAccountUpdatePayload
                 )
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
+            ).thenThrow(errorResponse)
             savingsAccountApplicationViewModel.updateSavingsAccount(
                 mockAccountId,
                 mockSavingsAccountUpdatePayload
             )
+            advanceUntilIdle()
+            assertEquals(
+                SavingsAccountUiState.ErrorMessage(errorResponse),
+                savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
+            )
+       }
 
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsAccountApplicationUiStateObserver)
-                .onChanged(SavingsAccountUiState.SavingsAccountUpdateSuccess)
-            Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
-        }
-
-    @Test
-    fun testUpdateSavingsAccount_SuccessResponseFromRepository_ReturnsErrorMessage() = runBlocking {
-        val errorResponse = RuntimeException("Update Failed")
+    @Test(expected = Exception::class)
+    fun testUpdateSavingsAccount_SuccessResponseFromRepository_ReturnsErrorMessage() =runTest {
+        val errorResponse =  Exception("Update Failed")
         val mockSavingsAccountUpdatePayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
         Mockito.`when`(
             savingsAccountRepositoryImp.updateSavingsAccount(
                 mockAccountId,
                 mockSavingsAccountUpdatePayload
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
+        ).thenThrow(errorResponse)
         savingsAccountApplicationViewModel.updateSavingsAccount(
             mockAccountId,
             mockSavingsAccountUpdatePayload
         )
-
-        Mockito.verify(savingsAccountApplicationUiStateObserver)
-            .onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingsAccountApplicationUiStateObserver)
-            .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-        Mockito.verifyNoMoreInteractions(savingsAccountApplicationUiStateObserver)
+        advanceUntilIdle()
+        assertEquals(
+            SavingsAccountUiState.ErrorMessage(errorResponse),
+            savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
+        )
     }
 
     @After
     fun tearDown() {
-        savingsAccountApplicationViewModel.savingsAccountApplicationUiState.removeObserver(
-            savingsAccountApplicationUiStateObserver
-        )
+        
     }
 }

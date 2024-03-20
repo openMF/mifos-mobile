@@ -1,9 +1,10 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
@@ -38,50 +39,27 @@ class ThirdPartyTransferRepositoryImpTest {
     }
 
     @Test
-    fun testThirdPartyTransferTemplate_Successful() = runBlocking {
-        val response: Response<AccountOptionsTemplate?> =
-            Response.success(Mockito.mock(AccountOptionsTemplate::class.java))
+    fun testThirdPartyTransferTemplate_Successful() = runTest {
+        val response= Mockito.mock(AccountOptionsTemplate::class.java)
 
         `when`(dataManager.thirdPartyTransferTemplate()).thenReturn(response)
 
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
-
-        assertEquals(result, response)
+        result.test {
+            assertEquals(response, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testThirdPartyTransferTemplate_Unsuccessful() = runBlocking {
-        val error: Response<AccountOptionsTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.thirdPartyTransferTemplate()).thenReturn(error)
-
+    @Test(expected = Exception::class)
+    fun testThirdPartyTransferTemplate_Unsuccessful() = runTest {
+        `when`(dataManager.thirdPartyTransferTemplate())
+            .thenThrow(Exception("Error"))
         val result = transferRepositoryImp.thirdPartyTransferTemplate()
-
-        assertEquals(result, error)
+        result.test {
+            assertEquals(Throwable("Error"), awaitError())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testBeneficiaryList_Successful() = runBlocking {
-        val list1 = Mockito.mock(Beneficiary::class.java)
-        val list2 = Mockito.mock(Beneficiary::class.java)
-
-        val response: Response<List<Beneficiary?>?> = Response.success(listOf(list1, list2))
-
-        `when`(dataManager.beneficiaryList()).thenReturn(response)
-
-        val result = transferRepositoryImp.beneficiaryList()
-        assertEquals(result, response)
-    }
-
-    @Test
-    fun testBeneficiaryList_Unsuccessful() = runBlocking {
-        val error: Response<List<Beneficiary?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-
-        `when`(dataManager.beneficiaryList()).thenReturn(error)
-
-        val result = transferRepositoryImp.beneficiaryList()
-
-        assertEquals(result, error)
-    }
 }

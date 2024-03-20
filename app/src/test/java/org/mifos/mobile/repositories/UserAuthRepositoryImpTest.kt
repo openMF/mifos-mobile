@@ -1,8 +1,11 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
@@ -17,6 +20,7 @@ import org.mifos.mobile.models.payload.LoginPayload
 import org.mifos.mobile.models.register.RegisterPayload
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
@@ -44,9 +48,8 @@ class UserAuthRepositoryImpTest {
 
     @Test
     fun testRegisterUser_SuccessResponseReceivedFromDataManager_ReturnSuccessfulRegistration() =
-        runBlocking {
-            val successResponse: Response<ResponseBody?> =
-                Response.success(Mockito.mock(ResponseBody::class.java))
+        runTest{
+            val successResponse= mock(ResponseBody::class.java)
             val registerPayload = RegisterPayload().apply {
                 this.accountNumber = "accountNumber"
                 this.authenticationMode = "authenticationMode"
@@ -70,17 +73,18 @@ class UserAuthRepositoryImpTest {
                 registerPayload.password,
                 registerPayload.username
             )
-
+            result.test {
+                assertEquals(successResponse, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).registerUser(registerPayload)
-            Assert.assertEquals(result, successResponse)
+
         }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testRegisterUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistration() =
-        runBlocking {
-            val error: Response<ResponseBody?> =
-                Response.error(404, ResponseBody.create(null, "error"))
-            val registerPayload = RegisterPayload().apply {
+        runTest{
+           val registerPayload = RegisterPayload().apply {
                 this.accountNumber = "accountNumber"
                 this.authenticationMode = "authenticationMode"
                 this.email = "email"
@@ -91,7 +95,8 @@ class UserAuthRepositoryImpTest {
                 this.username = "username"
             }
 
-            Mockito.`when`(dataManager.registerUser(registerPayload)).thenReturn(error)
+            Mockito.`when`(dataManager.registerUser(registerPayload))
+                .thenThrow(Exception("Error occurred"))
 
             val result = userAuthRepositoryImp.registerUser(
                 registerPayload.accountNumber,
@@ -103,50 +108,56 @@ class UserAuthRepositoryImpTest {
                 registerPayload.password,
                 registerPayload.username
             )
-
+            result.test {
+                assertEquals(Throwable("Error occurred"), awaitError())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).registerUser(registerPayload)
-            Assert.assertEquals(result, error)
         }
 
     @Test
-    fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() = runBlocking {
+    fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() = runTest{
         val mockLoginPayload = LoginPayload().apply {
             this.username = "username"
             this.password = "password"
         }
-        val successResponse: Response<User?> = Response.success(mockUser)
+    
         Mockito.`when`(
             dataManager.login(mockLoginPayload)
-        ).thenReturn(successResponse)
+        ).thenReturn(mockUser)
 
         val result = userAuthRepositoryImp.login("username", "password")
-
+        
+        result.test {
+            assertEquals(mockUser, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).login(mockLoginPayload)
-        Assert.assertEquals(result, successResponse)
+        
     }
 
-    @Test
-    fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() = runTest{
         val mockLoginPayload = LoginPayload().apply {
             this.username = "username"
             this.password = "password"
         }
-        val errorResponse: Response<User?> = Response.error(404, ResponseBody.create(null, "error"))
-        Mockito.`when`(
+       Mockito.`when`(
             dataManager.login(mockLoginPayload)
-        ).thenReturn(errorResponse)
+        ).thenThrow(Exception("Error occurred"))
 
         val result = userAuthRepositoryImp.login("username", "password")
-
+        result.test { 
+            assertEquals(Throwable("Error occurred"), awaitError())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).login(mockLoginPayload)
-        Assert.assertEquals(result, errorResponse)
     }
 
     @Test
     fun testVerifyUser_SuccessResponseReceivedFromDataManager_ReturnsSuccessfulRegistrationVerification() =
-        runBlocking {
-            val successResponse: Response<ResponseBody?> =
-                Response.success(Mockito.mock(ResponseBody::class.java))
+        runTest{
+            val successResponse= mock(ResponseBody::class.java)
             Mockito.`when`(
                 dataManager.verifyUser(userVerify)
             ).thenReturn(successResponse)
@@ -156,26 +167,30 @@ class UserAuthRepositoryImpTest {
                     userVerify.authenticationToken,
                     userVerify.requestId
                 )
-
+            result.test {
+                assertEquals(successResponse, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).verifyUser(userVerify)
-            Assert.assertEquals(result, successResponse)
         }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testVerifyUser_ErrorResponseReceivedFromDataManager_ReturnsUnsuccessfulRegistrationVerification() =
-        runBlocking {
-            val errorResponse: Response<ResponseBody?> =
-                Response.error(404, ResponseBody.create(null, "error"))
-            Mockito.`when`(
+        runTest{
+           Mockito.`when`(
                 dataManager.verifyUser(userVerify)
-            ).thenReturn(errorResponse)
+            ).thenThrow(Exception("Error occurred"))
 
             val result =
                 userAuthRepositoryImp.verifyUser(
                     userVerify.authenticationToken,
                     userVerify.requestId
                 )
+            result.test {
+                assert(Throwable("Error occurred") == awaitError())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).verifyUser(userVerify)
-            Assert.assertEquals(result, errorResponse)
+            
         }
 }

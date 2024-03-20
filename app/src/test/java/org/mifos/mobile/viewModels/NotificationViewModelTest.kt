@@ -3,9 +3,10 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -38,54 +39,45 @@ class NotificationViewModelTest {
     @Mock
     lateinit var notificationRepositoryImp: NotificationRepository
 
-    @Mock
-    lateinit var notificationUiStateObserver: Observer<NotificationUiState>
-
     private lateinit var notificationViewModel: NotificationViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         notificationViewModel = NotificationViewModel(notificationRepositoryImp)
-        notificationViewModel.notificationUiState.observeForever(notificationUiStateObserver)
     }
 
     @Test
     fun testLoadNotifications_NotificationsSuccessfullyReceivedFromRepository_ReturnsNotificationsSuccessfully() =
-        runBlocking {
+        runTest {
             val dummyNotifications = listOf(MifosNotification(), MifosNotification())
             `when`(notificationRepositoryImp.loadNotifications()).thenReturn(
                 flowOf(
                     dummyNotifications
                 )
             )
-            val observer = mock<Observer<NotificationUiState>>()
-            notificationViewModel.notificationUiState.observeForever(observer)
+            notificationViewModel.notificationUiState.test {
+                notificationViewModel.loadNotifications()
+                assertEquals(NotificationUiState.Initial, awaitItem())
+                assertEquals(NotificationUiState.Loading, awaitItem())
+                assertEquals(NotificationUiState.LoadNotificationsSuccessful(dummyNotifications), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+}
 
-            notificationViewModel.loadNotifications()
-
-            verify(observer).onChanged(
-                NotificationUiState.LoadNotificationsSuccessful(
-                    dummyNotifications
-                )
-            )
-            verifyNoMoreInteractions(notificationUiStateObserver)
-        }
-
-    @Test
-    fun testLoadNotifications_NotificationsNotReceivedFromRepository_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadNotifications_NotificationsNotReceivedFromRepository_ReturnsError() = runTest {
         `when`(notificationRepositoryImp.loadNotifications()).thenThrow(Exception("Dummy error"))
-        val observer = mock<Observer<NotificationUiState>>()
-        notificationViewModel.notificationUiState.observeForever(observer)
-
-        notificationViewModel.loadNotifications()
-
-        verify(observer).onChanged(NotificationUiState.Error)
-        verifyNoMoreInteractions(notificationUiStateObserver)
+        notificationViewModel.notificationUiState.test {
+            notificationViewModel.loadNotifications()
+            assertEquals(NotificationUiState.Initial, awaitItem())
+            assertEquals(NotificationUiState.Loading, awaitItem())
+            assertEquals(NotificationUiState.Error, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @After
     fun tearDown() {
-        notificationViewModel.notificationUiState.removeObserver(notificationUiStateObserver)
     }
 }

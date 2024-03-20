@@ -1,8 +1,10 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
@@ -19,6 +21,7 @@ import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.utils.Constants
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
@@ -46,9 +49,8 @@ class SavingsAccountRepositoryImpTest {
 
     @Test
     fun testGetSavingsWithAssociations_SuccessResponseReceivedFromDataManager_ReturnsSuccess() =
-        runBlocking {
-            val mockSavingsWithAssociations: Response<SavingsWithAssociations?> =
-                Response.success(Mockito.mock(SavingsWithAssociations::class.java))
+        runTest {
+            val mockSavingsWithAssociations = mock(SavingsWithAssociations::class.java)
             Mockito.`when`(
                 dataManager.getSavingsWithAssociations(mockAccountId, mockAssociationType)
             ).thenReturn(mockSavingsWithAssociations)
@@ -57,70 +59,73 @@ class SavingsAccountRepositoryImpTest {
                 mockAccountId,
                 mockAssociationType
             )
-
+            result.test {
+                Assert.assertEquals(mockSavingsWithAssociations, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager)
                 .getSavingsWithAssociations(mockAccountId, mockAssociationType)
-            Assert.assertEquals(result, mockSavingsWithAssociations)
         }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testGetSavingsWithAssociations_ErrorResponseReceivedFromDataManager_ReturnsError() =
-        runBlocking {
-            val errorResponse: Response<SavingsWithAssociations?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+        runTest {
             Mockito.`when`(
                 dataManager.getSavingsWithAssociations(mockAccountId, mockAssociationType)
-            ).thenReturn(errorResponse)
+            ).thenThrow(Exception("Error occurred"))
 
             val result = savingsAccountRepositoryImp.getSavingsWithAssociations(
                 mockAccountId,
                 mockAssociationType
             )
-
+            result.test {
+                assertEquals(Throwable("Error occurred"), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager)
                 .getSavingsWithAssociations(mockAccountId, mockAssociationType)
-            Assert.assertEquals(result, errorResponse)
+
         }
 
     @Test
     fun testGetSavingsAccountApplicationTemplate_SuccessResponseFromDataManager_ReturnsSuccess() =
-        runBlocking {
-            val mockSavingsAccountTemplate: Response<SavingsAccountTemplate?> =
-                Response.success(Mockito.mock(SavingsAccountTemplate::class.java))
+        runTest {
+            val mockSavingsAccountTemplate = mock(SavingsAccountTemplate::class.java)
             Mockito.`when`(
                 dataManager.getSavingAccountApplicationTemplate(mockClientId)
             ).thenReturn(mockSavingsAccountTemplate)
 
             val result =
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
-
+            result.test {
+                assertEquals(mockSavingsAccountTemplate, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).getSavingAccountApplicationTemplate(mockClientId)
-            Assert.assertEquals(result, mockSavingsAccountTemplate)
         }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testGetSavingsAccountApplicationTemplate_ErrorResponseFromDataManager_ReturnsError() =
-        runBlocking {
-            val errorResponse: Response<SavingsAccountTemplate?> =
-                Response.error(404, ResponseBody.create(null, "error"))
+        runTest {
             Mockito.`when`(
                 dataManager.getSavingAccountApplicationTemplate(mockClientId)
-            ).thenReturn(errorResponse)
+            ).thenThrow(Exception("Error occurred"))
 
             val result =
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
-
+            result.test {
+                assertEquals(Throwable("Error occurred"), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).getSavingAccountApplicationTemplate(mockClientId)
-            Assert.assertEquals(result, errorResponse)
         }
 
     @Test
     fun testSubmitSavingAccountApplication_SuccessResponseFromDataManager_ReturnsSuccess() =
-        runBlocking {
+        runTest {
             val mockSavingsAccountApplicationPayload =
                 Mockito.mock(SavingsAccountApplicationPayload::class.java)
-            val responseBody: Response<ResponseBody?> =
-                Response.success(Mockito.mock(ResponseBody::class.java))
+            val responseBody = mock(ResponseBody::class.java)
             Mockito.`when`(
                 dataManager.submitSavingAccountApplication(mockSavingsAccountApplicationPayload)
             ).thenReturn(responseBody)
@@ -128,37 +133,40 @@ class SavingsAccountRepositoryImpTest {
             val result = savingsAccountRepositoryImp.submitSavingAccountApplication(
                 mockSavingsAccountApplicationPayload
             )
-
+            result.test {
+                assertEquals(responseBody, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager)
                 .submitSavingAccountApplication(mockSavingsAccountApplicationPayload)
-            Assert.assertEquals(result, responseBody)
         }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testSubmitSavingAccountApplication_ErrorResponseFromDataManager_ReturnsError() =
-        runBlocking {
+        runTest {
             val mockSavingsAccountApplicationPayload =
                 Mockito.mock(SavingsAccountApplicationPayload::class.java)
-            val errorResponse: Response<ResponseBody?> =
-                Response.error(404, ResponseBody.create(null, "error"))
             Mockito.`when`(
                 dataManager.submitSavingAccountApplication(mockSavingsAccountApplicationPayload)
-            ).thenReturn(errorResponse)
+            ).thenThrow(Exception("Error occurred"))
 
             val result = savingsAccountRepositoryImp.submitSavingAccountApplication(
                 mockSavingsAccountApplicationPayload
             )
+            result.test {
+                assertEquals(Throwable("Error occurred"), awaitItem())
+                cancelAndIgnoreRemainingEvents()
 
+            }
             Mockito.verify(dataManager)
                 .submitSavingAccountApplication(mockSavingsAccountApplicationPayload)
-            Assert.assertEquals(result, errorResponse)
+
         }
 
     @Test
-    fun testUpdateSavingsAccount_SuccessResponseFromDataManager_ReturnsSuccess() = runBlocking {
+    fun testUpdateSavingsAccount_SuccessResponseFromDataManager_ReturnsSuccess() = runTest {
         val mockSavingsAccountUpdatePayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
-        val responseBody: Response<ResponseBody?> =
-            Response.success(Mockito.mock(ResponseBody::class.java))
+        val responseBody = mock(ResponseBody::class.java)
         Mockito.`when`(
             dataManager.updateSavingsAccount(mockAccountId, mockSavingsAccountUpdatePayload)
         ).thenReturn(responseBody)
@@ -167,39 +175,41 @@ class SavingsAccountRepositoryImpTest {
             mockAccountId,
             mockSavingsAccountUpdatePayload
         )
-
+        result.test {
+            assertEquals(responseBody, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager)
             .updateSavingsAccount(mockAccountId, mockSavingsAccountUpdatePayload)
-        Assert.assertEquals(result, responseBody)
     }
 
-    @Test
-    fun testUpdateSavingsAccount_ErrorResponseFromDataManager_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testUpdateSavingsAccount_ErrorResponseFromDataManager_ReturnsError() = runTest {
         val mockSavingsAccountUpdatePayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
-        val errorResponse: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
         Mockito.`when`(
             dataManager.updateSavingsAccount(mockAccountId, mockSavingsAccountUpdatePayload)
-        ).thenReturn(errorResponse)
+        ).thenThrow(Exception("Error occurred"))
 
         val result = savingsAccountRepositoryImp.updateSavingsAccount(
             mockAccountId,
             mockSavingsAccountUpdatePayload
         )
-
+        result.test {
+            assertEquals(Throwable("Error occurred"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager)
             .updateSavingsAccount(mockAccountId, mockSavingsAccountUpdatePayload)
-        Assert.assertEquals(result, errorResponse)
+
     }
 
     @Test
     fun testSubmitWithdrawSavingsAccount_SuccessResponseFromDataManager_ReturnsSuccess() =
-        runBlocking {
+        runTest {
             val mockAccountId = "1"
             val mockSavingsAccountWithdrawPayload =
                 Mockito.mock(SavingsAccountWithdrawPayload::class.java)
-            val responseBody: Response<ResponseBody?> =
-                Response.success(Mockito.mock(ResponseBody::class.java))
+            val responseBody = mock(ResponseBody::class.java)
             Mockito.`when`(
                 dataManager.submitWithdrawSavingsAccount(
                     mockAccountId,
@@ -211,62 +221,68 @@ class SavingsAccountRepositoryImpTest {
                 mockAccountId,
                 mockSavingsAccountWithdrawPayload
             )
+            result.test {
+                assertEquals(responseBody, awaitItem())
+                cancelAndIgnoreRemainingEvents()
 
+            }
             Mockito.verify(dataManager)
                 .submitWithdrawSavingsAccount(mockAccountId, mockSavingsAccountWithdrawPayload)
-            Assert.assertEquals(result, responseBody)
         }
 
-    @Test
-    fun testSubmitWithdrawSavingsAccount_ErrorResponseFromDataManager_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testSubmitWithdrawSavingsAccount_ErrorResponseFromDataManager_ReturnsError() = runTest {
         val mockAccountId = "1"
         val mockSavingsAccountWithdrawPayload =
             Mockito.mock(SavingsAccountWithdrawPayload::class.java)
-        val errorResponse: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        Mockito.`when`(
+       Mockito.`when`(
             dataManager.submitWithdrawSavingsAccount(
                 mockAccountId,
                 mockSavingsAccountWithdrawPayload
             )
-        ).thenReturn(errorResponse)
+        ).thenThrow(Exception("Error occurred"))
 
         val result = savingsAccountRepositoryImp.submitWithdrawSavingsAccount(
             mockAccountId,
             mockSavingsAccountWithdrawPayload
         )
-
+        result.test {
+            assertEquals(Throwable("Error occurred"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager)
             .submitWithdrawSavingsAccount(mockAccountId, mockSavingsAccountWithdrawPayload)
-        Assert.assertEquals(result, errorResponse)
+
     }
 
     @Test
     fun testLoanAccountTransferTemplate_SuccessResponseFromDataManager_ReturnsSuccess() =
-        runBlocking {
-            val responseBody: Response<AccountOptionsTemplate?> =
-                Response.success(Mockito.mock(AccountOptionsTemplate::class.java))
+        runTest {
+            val responseBody=mock(AccountOptionsTemplate::class.java)
             Mockito.`when`(
                 dataManager.accountTransferTemplate()
             ).thenReturn(responseBody)
 
             val result = savingsAccountRepositoryImp.loanAccountTransferTemplate()
-
+            result.test {
+                assertEquals(responseBody, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Mockito.verify(dataManager).accountTransferTemplate()
-            Assert.assertEquals(result, responseBody)
         }
 
-    @Test
-    fun testLoanAccountTransferTemplate_ErrorResponseFromDataManager_ReturnsError() = runBlocking {
-        val errorResponse: Response<AccountOptionsTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        Mockito.`when`(
+    @Test(expected = Exception::class)
+    fun testLoanAccountTransferTemplate_ErrorResponseFromDataManager_ReturnsError() = runTest {
+       Mockito.`when`(
             dataManager.accountTransferTemplate()
-        ).thenReturn(errorResponse)
+        ).thenThrow(Exception("Error occurred"))
 
         val result = savingsAccountRepositoryImp.loanAccountTransferTemplate()
-
+        result.test {
+            assertEquals(Throwable("Error occurred"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).accountTransferTemplate()
-        Assert.assertEquals(result, errorResponse)
+
     }
 }

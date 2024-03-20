@@ -1,9 +1,14 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
@@ -14,6 +19,7 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
+import org.mifos.mobile.util.checkForUnsuccessfulOperation
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
@@ -39,127 +45,139 @@ class BeneficiaryRepositoryImpTest {
     }
 
     @Test
-    fun testBeneficiaryTemplate_Successful() = runBlocking {
-        val success: Response<BeneficiaryTemplate?> =
-            Response.success(mock(BeneficiaryTemplate::class.java))
+    fun testBeneficiaryTemplate_Successful() = runTest {
+        val success =  mock(BeneficiaryTemplate::class.java)
 
-        `when`(dataManager.beneficiaryTemplate()).thenReturn(success)
+        `when`(dataManager.beneficiaryTemplate())
+            .thenReturn(success)
 
-        val result = beneficiaryRepositoryImp.beneficiaryTemplate()
-
+        val resultFlow = beneficiaryRepositoryImp.beneficiaryTemplate()
+        resultFlow.test {
+            assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         verify(dataManager).beneficiaryTemplate()
-        assertEquals(result, success)
-    }
+        }
+
+    @Test(expected = Exception::class)
+    fun testBeneficiaryTemplate_Unsuccessful() = runTest {
+         `when`(dataManager.beneficiaryTemplate())
+             .thenThrow( Exception("Error occurred"))
+        val resultFlow= beneficiaryRepositoryImp.beneficiaryTemplate()
+        resultFlow.test {
+            assert(Throwable("Error occurred") == awaitError())
+        }
+        verify(dataManager).beneficiaryTemplate()
+        }
 
     @Test
-    fun testBeneficiaryTemplate_Unsuccessful() = runBlocking {
-        val error: Response<BeneficiaryTemplate?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-        `when`(dataManager.beneficiaryTemplate()).thenReturn(error)
-
-        val result = beneficiaryRepositoryImp.beneficiaryTemplate()
-
-        verify(dataManager).beneficiaryTemplate()
-        assertEquals(result, error)
-    }
-
-    @Test
-    fun testCreateBeneficiary_Successful() = runBlocking {
-        val success: Response<ResponseBody?> =
-            Response.success(mock(ResponseBody::class.java))
+    fun testCreateBeneficiary_Successful() = runTest {
+        val success = mock(ResponseBody::class.java)
 
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
 
-        `when`(dataManager.createBeneficiary(beneficiaryPayload)).thenReturn(success)
+        `when`(dataManager.createBeneficiary(beneficiaryPayload))
+            .thenReturn(success)
 
-        val result = beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)
-
+        val resultFlow = beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)
+        resultFlow.test {
+            assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         verify(dataManager).createBeneficiary(beneficiaryPayload)
-        assertEquals(result, success)
     }
 
-    @Test
-    fun testCreateBeneficiary_Unsuccessful() = runBlocking {
-        val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+    @Test(expected = Exception::class)
+    fun testCreateBeneficiary_Unsuccessful() = runTest {
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
 
-        `when`(dataManager.createBeneficiary(beneficiaryPayload)).thenReturn(error)
+        `when`(dataManager.createBeneficiary(beneficiaryPayload)).thenThrow(Exception("Error occurred"))
 
-        val result = beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)
+        val resultFlow = beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)
+        resultFlow.test {
+            assert(Throwable("Error occurred") == awaitError())
+            verify(dataManager).createBeneficiary(beneficiaryPayload)
+        }
 
-        verify(dataManager).createBeneficiary(beneficiaryPayload)
-        assertEquals(result, error)
-    }
+        @Test
+        fun testUpdateBeneficiary_Successful() = runTest {
+            val success = mock(ResponseBody::class.java)
 
-    @Test
-    fun testUpdateBeneficiary_Successful() = runBlocking {
-        val success: Response<ResponseBody?> =
-            Response.success(mock(ResponseBody::class.java))
+            val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
 
-        val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
+            `when`(dataManager.updateBeneficiary(123L, beneficiaryUpdatePayload))
+                .thenReturn(success)
 
-        `when`(dataManager.updateBeneficiary(123L, beneficiaryUpdatePayload)).thenReturn(success)
+            val resultFlow =
+                beneficiaryRepositoryImp.updateBeneficiary(123L, beneficiaryUpdatePayload)
+            resultFlow.test {
+                assertEquals(success, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+            verify(dataManager).updateBeneficiary(123L, beneficiaryUpdatePayload)
 
-        val result = beneficiaryRepositoryImp.updateBeneficiary(123L, beneficiaryUpdatePayload)
-        assertEquals(result, success)
-    }
+        }
 
-    @Test
-    fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
-        val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+        @Test
+        fun testUpdateBeneficiary_Unsuccessful() = runTest {
 
-        val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
+            val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
 
-        `when`(dataManager.updateBeneficiary(123L, beneficiaryUpdatePayload)).thenReturn(error)
+            `when`(dataManager.updateBeneficiary(123L, beneficiaryUpdatePayload)).thenThrow(
+                Exception("Error occurred")
+            )
 
-        val result = beneficiaryRepositoryImp.updateBeneficiary(123L, beneficiaryUpdatePayload)
-        assertEquals(result, error)
-    }
+            val result = beneficiaryRepositoryImp.updateBeneficiary(123L, beneficiaryUpdatePayload)
+            result.test {
+                assert(Throwable("Error occurred") == awaitError())
+            }
+        }
 
 
-    @Test
-    fun testDeleteBeneficiary_Successful() = runBlocking {
-        val success: Response<ResponseBody?> =
-            Response.success(mock(ResponseBody::class.java))
+        @Test
+        fun testDeleteBeneficiary_Successful() = runTest {
+            val success = mock(ResponseBody::class.java)
 
-        `when`(dataManager.deleteBeneficiary(123L)).thenReturn(success)
+            `when`(dataManager.deleteBeneficiary(123L)).thenReturn(success)
 
-        val result = beneficiaryRepositoryImp.deleteBeneficiary(123L)
-        assertEquals(result, success)
-    }
+            val resultFlow = beneficiaryRepositoryImp.deleteBeneficiary(123L)
+            resultFlow.test {
+                assertEquals(success, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+            verify(dataManager).deleteBeneficiary(123L)
+        }
 
-    @Test
-    fun testDeleteBeneficiary_Unsuccessful() = runBlocking {
-        val error: Response<ResponseBody?> =
-            Response.error(404, ResponseBody.create(null, "error"))
+        @Test
+        fun testDeleteBeneficiary_Unsuccessful() = runTest {
+            `when`(dataManager.deleteBeneficiary(123L))
+                .thenThrow(Exception("Error occurred"))
+            val result = beneficiaryRepositoryImp.deleteBeneficiary(123L)
+            result.test {
+                assert(Throwable("Error occurred") == awaitError())
+            }
+        }
 
-        `when`(dataManager.deleteBeneficiary(123L)).thenReturn(error)
+        @Test
+        fun testBeneficiaryList_Successful() = runTest {
+            val success = List(5) { mock(Beneficiary::class.java) }
+            `when`(dataManager.beneficiaryList()).thenReturn(success)
+            val resultFlow = beneficiaryRepositoryImp.beneficiaryList()
+            resultFlow.test {
+                assertEquals(success, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+            verify(dataManager).beneficiaryList()
+        }
 
-        val result = beneficiaryRepositoryImp.deleteBeneficiary(123L)
-        assertEquals(result, error)
-    }
-
-    @Test
-    fun testBeneficiaryList_Successful() = runBlocking {
-        val success: Response<List<Beneficiary?>?> =
-            Response.success(Beneficiary::class.java) as Response<List<Beneficiary?>?>
-
-        `when`(dataManager.beneficiaryList()).thenReturn(success)
-
-        val result = beneficiaryRepositoryImp.beneficiaryList()
-        assertEquals(result, success)
-    }
-
-    @Test
-    fun testBeneficiaryList_Unsuccessful() = runBlocking {
-        val error: Response<List<Beneficiary?>?> =
-            Response.error(404, ResponseBody.create(null, "error"))
-
-        `when`(dataManager.beneficiaryList()).thenReturn(error)
-
-        val result = beneficiaryRepositoryImp.beneficiaryList()
-        assertEquals(result, error)
+        @Test
+        fun testBeneficiaryList_Unsuccessful() = runTest {
+            `when`(dataManager.beneficiaryList())
+                .thenThrow(Exception("Error occurred"))
+            val result = beneficiaryRepositoryImp.beneficiaryList()
+            result.test {
+                assert(Throwable("Error occurred") == awaitError())
+            }
+        }
     }
 }

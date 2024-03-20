@@ -3,9 +3,17 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
@@ -16,6 +24,7 @@ import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.repositories.GuarantorRepositoryImp
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.util.RxSchedulersOverrideRule
+import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.GuarantorUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -50,81 +59,96 @@ class AddGuarantorViewModelTest {
         MockitoAnnotations.openMocks(this)
         viewModel = AddGuarantorViewModel(guarantorRepositoryImp)
     }
-
+    fun TestScope.obserrveUiState(): MutableList<GuarantorUiState> {
+        val uiStates = mutableListOf<GuarantorUiState>()
+        viewModel.guarantorUiState.onEach {
+            println(it)
+            uiStates.add(it)
+        }.launchIn(CoroutineScope(UnconfinedTestDispatcher(testScheduler)))
+        return uiStates
+    }
     @Test
-    fun testGetGuarantorTemplate_Successful() = runBlocking {
+    fun testGetGuarantorTemplate_Successful() = runTest {
         val response = mock(GuarantorTemplatePayload::class.java)
 
         `when`(guarantorRepositoryImp.getGuarantorTemplate(123L)).thenReturn(
             flowOf(response)
         )
-
-        viewModel.getGuarantorTemplate(GuarantorState.UPDATE, 123L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(
-            GuarantorUiState.ShowGuarantorUpdation(
-                response
+        viewModel.guarantorUiState.test {
+            viewModel.getGuarantorTemplate(GuarantorState.UPDATE, 123L)
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            assertEquals(
+                GuarantorUiState.ShowGuarantorUpdation(
+                    response
+                ),
+                awaitItem()
             )
-        )
+            viewModel.getGuarantorTemplate(GuarantorState.CREATE, 123L)
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            assertEquals(
+                    GuarantorUiState.ShowGuarantorApplication(
+                        response
+                    ),
+                    awaitItem()
+                )
+       }
+    }
 
-        viewModel.getGuarantorTemplate(GuarantorState.CREATE, 123L)
-        verify(guarantorUiStateObserver).onChanged(
-            GuarantorUiState.ShowGuarantorApplication(
-                response
-            )
-        )
+    @Test(expected =  Exception::class)
+    fun testGetGuarantorTemplate_Unsuccessful() = runTest {
+        `when`(guarantorRepositoryImp.getGuarantorTemplate(123L))
+            .thenThrow( Exception("Error occurred"))
+         viewModel.guarantorUiState.test {
+            try {
+                viewModel.getGuarantorTemplate(GuarantorState.UPDATE, 123L)
+                assertEquals(GuarantorUiState.Loading, awaitItem())
+            } catch (e: Exception) {
+                assertEquals(
+                    GuarantorUiState.ShowError(Throwable().message),
+                    awaitItem()
+                )
+            }
+        }
     }
 
     @Test
-    fun testGetGuarantorTemplate_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
-
-        `when`(guarantorRepositoryImp.getGuarantorTemplate(123L)).thenThrow(error)
-
-        viewModel.getGuarantorTemplate(GuarantorState.CREATE, 123L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
-
-    }
-
-    @Test
-    fun testCreateGuarantor_Successful() = runBlocking {
+    fun testCreateGuarantor_Successful() = runTest {
         val payload = mock(GuarantorApplicationPayload::class.java)
         val response = mock(ResponseBody::class.java)
-
         `when`(guarantorRepositoryImp.createGuarantor(123L, payload)).thenReturn(
             flowOf(response)
         )
-
-        viewModel.createGuarantor(123L, payload)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(
-            GuarantorUiState.SubmittedSuccessfully(
-                response.string(),
-                payload
+         viewModel.guarantorUiState.test {
+            viewModel.createGuarantor(123L, payload)
+            assertEquals(GuarantorUiState.Loading,awaitItem())
+            assertEquals(
+                GuarantorUiState.SubmittedSuccessfully(
+                    response.string(),
+                    payload
+                ),
+                awaitItem()
             )
-        )
+             cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testCreateGuarantor_Unsuccessful() {
-        val error = IOException("Error")
+    @Test(expected =  Exception::class)
+    fun testCreateGuarantor_Unsuccessful() = runTest {
         val payload = mock(GuarantorApplicationPayload::class.java)
-
-        `when`(guarantorRepositoryImp.createGuarantor(123L, payload)).thenThrow(
-            error
-        )
-
-        viewModel.createGuarantor(123L, payload)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        `when`(guarantorRepositoryImp.createGuarantor(123L, payload))
+            .thenThrow( Exception("Error occurred"))
+         viewModel.guarantorUiState.test {
+                viewModel.createGuarantor(123L, payload)
+                assertEquals(GuarantorUiState.Loading, awaitItem())
+                assertEquals(GuarantorUiState.ShowError(Throwable().message), awaitItem())
+             cancelAndIgnoreRemainingEvents()
+         }
     }
 
     @Test
-    fun testUpdateGuarantor_Successful() {
+    fun testUpdateGuarantor_Successful() = runTest{
         val payload = mock(GuarantorApplicationPayload::class.java)
         val response = mock(ResponseBody::class.java)
-
         `when`(
             guarantorRepositoryImp.updateGuarantor(
                 payload,
@@ -132,26 +156,30 @@ class AddGuarantorViewModelTest {
                 22L
             )
         ).thenReturn(flowOf(response))
-
-        viewModel.updateGuarantor(payload, 11L, 22L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(
-            GuarantorUiState.GuarantorUpdatedSuccessfully(
-                response.string()
+         viewModel.guarantorUiState.test {
+            viewModel.updateGuarantor(payload, 11L, 22L)
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            assertEquals(
+                GuarantorUiState.GuarantorUpdatedSuccessfully(
+                    response.string()
+                ),
+                awaitItem()
             )
-        )
+             cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testUpdateGuarantor_Unsuccessful() {
-        val error = IOException("Error")
+    @Test(expected =  Exception::class)
+    fun testUpdateGuarantor_Unsuccessful() = runTest {
         val payload = mock(GuarantorApplicationPayload::class.java)
-
-        `when`(guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L)).thenThrow(error)
-
-        viewModel.updateGuarantor(payload, 11L, 22L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        `when`(guarantorRepositoryImp.updateGuarantor(payload, 11L, 22L))
+            .thenThrow( Exception("Error occurred"))
+         viewModel.guarantorUiState.test {
+                viewModel.updateGuarantor(payload, 11L, 22L)
+                assertEquals(GuarantorUiState.Loading, awaitItem())
+                assertEquals(GuarantorUiState.ShowError(Throwable().message), awaitItem())
+             cancelAndIgnoreRemainingEvents()
+         }
     }
 
 }

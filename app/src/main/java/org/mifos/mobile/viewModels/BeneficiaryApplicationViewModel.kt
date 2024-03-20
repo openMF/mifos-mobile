@@ -1,5 +1,6 @@
 package org.mifos.mobile.viewModels
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,9 +27,9 @@ class BeneficiaryApplicationViewModel @Inject constructor(private val beneficiar
 
     fun loadBeneficiaryTemplate() {
         viewModelScope.launch {
-            _beneficiaryUiState.value = BeneficiaryUiState.Loading
+                _beneficiaryUiState.value = BeneficiaryUiState.Loading
             beneficiaryRepositoryImp.beneficiaryTemplate().catch {
-                _beneficiaryUiState.value =
+               _beneficiaryUiState.value =
                     BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiary_template)
             }.onCompletion {
                 _beneficiaryUiState.value = BeneficiaryUiState.SetVisibility(View.VISIBLE)

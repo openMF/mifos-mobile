@@ -2,12 +2,14 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import junit.framework.Assert
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -59,31 +61,33 @@ class UserDetailViewModelTest {
     }
 
     @Test
-    fun testLoadingUserDetails_Success(): Unit = runBlocking {
+    fun testLoadingUserDetails_Success(): Unit = runTest{
         val mockClient = Mockito.mock(Client::class.java)
 
         Mockito.`when`(homeRepositoryImp.currentClient()).thenReturn(flowOf(mockClient))
 
-        viewModel.userDetails
-
-        viewModel.userDetailUiState.collect { value ->
-            Assert.assertTrue(value is UserDetailUiState.ShowUserDetails)
-            Assert.assertEquals(mockClient, (value as UserDetailUiState.ShowUserDetails).client)
+        viewModel.userDetailUiState.test {
+            viewModel.userDetails
+            assertEquals(UserDetailUiState.Loading ,awaitItem())
+            assertEquals(UserDetailUiState.ShowUserDetails(mockClient), awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testLoadingUserDetails_Error(): Unit = runBlocking {
+    @Test(expected =  Exception::class)
+    fun testLoadingUserDetails_Error(): Unit = runTest{
         val errorMessageResId = R.string.error_fetching_client
 
-        Mockito.`when`(homeRepositoryImp.currentClient()).thenThrow(RuntimeException())
+        Mockito.`when`(homeRepositoryImp.currentClient())
+            .thenThrow( Exception("Error fetching client details"))
 
-        viewModel.userDetails
 
-        viewModel.userDetailUiState.collect { value ->
-            assertTrue(value is UserDetailUiState.ShowError)
-            assertEquals(errorMessageResId, (value as UserDetailUiState.ShowError))
-        }
+        viewModel.userDetailUiState.test {
+            viewModel.userDetails
+            assertEquals(UserDetailUiState.Loading ,awaitItem())
+            assertEquals(UserDetailUiState.ShowError(errorMessageResId), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+           }
     }
 
 }

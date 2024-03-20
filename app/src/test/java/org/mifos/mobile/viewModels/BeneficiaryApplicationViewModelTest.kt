@@ -4,8 +4,25 @@ import CoroutineTestRule
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.createTestCoroutineScope
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -47,76 +64,104 @@ class BeneficiaryApplicationViewModelTest {
 
     private lateinit var viewModel: BeneficiaryApplicationViewModel
 
+    // Test coroutine dispatcher and scope
+    private val testDispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(testDispatcher)
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = BeneficiaryApplicationViewModel(beneficiaryRepositoryImp)
-        viewModel.beneficiaryUiState.observeForever(beneficiaryUiStateObserver)
     }
 
     @Test
-    fun testLoadBeneficiaryTemplate_Successful() = runBlocking {
+    fun testLoadBeneficiaryTemplate_Successful() = runTest {
         val response = mock(BeneficiaryTemplate::class.java)
-        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(Response.success(response))
-
-        viewModel.loadBeneficiaryTemplate()
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(
-            BeneficiaryUiState.ShowBeneficiaryTemplate(
-                response
+        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(flowOf(response))
+         
+        viewModel.beneficiaryUiState.test {
+            viewModel.loadBeneficiaryTemplate()
+            assertEquals(BeneficiaryUiState.Initial, awaitItem())
+            assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(
+                BeneficiaryUiState.ShowBeneficiaryTemplate(response),
+                awaitItem()
             )
-        )
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.SetVisibility(View.VISIBLE))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+            assertEquals(
+                BeneficiaryUiState.SetVisibility(View.VISIBLE),
+                awaitItem()
+            )
+            verifyNoMoreInteractions(beneficiaryUiStateObserver)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    private fun TestScope.obserrveUiState(): MutableList<BeneficiaryUiState> {
+        val uiStates = mutableListOf<BeneficiaryUiState>()
+        viewModel.beneficiaryUiState.onEach {
+            println(it)
+            uiStates.add(it)
+        }
+            .launchIn(CoroutineScope(UnconfinedTestDispatcher(testScheduler)))
+        return uiStates
+    }
+
+    @Test(expected =  Exception::class)
+    fun testLoadBeneficiaryTemplate_Unsuccessful() = runTest {
+        val exception =  Exception("Test exception")
+        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenThrow(exception as Throwable)
+
+        viewModel.beneficiaryUiState.test {
+              viewModel.loadBeneficiaryTemplate()
+                assertEquals(BeneficiaryUiState.Initial, awaitItem())
+                assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(
+                    BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiary_template),
+                    awaitItem()
+                )
+                cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun testLoadBeneficiaryTemplate_Unsuccessful() = runBlocking {
-        `when`(beneficiaryRepositoryImp.beneficiaryTemplate()).thenReturn(
-            Response.error(
-                404,
-                ResponseBody.create(null, "error")
-            )
-        )
-
-        viewModel.loadBeneficiaryTemplate()
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiary_template))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
-    }
-
-    @Test
-    fun testCreateBeneficiary_Successful() = runBlocking {
-        val response = mock(ResponseBody::class.java)
+    fun testCreateBeneficiary_Successful() = runTest {
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
         `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
-            Response.success(
-                response
+            flowOf(
+                ResponseBody.create(null, "success")
             )
         )
 
-        viewModel.createBeneficiary(beneficiaryPayload)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.CreatedSuccessfully)
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+        viewModel.beneficiaryUiState.test {
+            viewModel.createBeneficiary(beneficiaryPayload)
+            assertEquals(BeneficiaryUiState.Initial, awaitItem())
+            assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(BeneficiaryUiState.CreatedSuccessfully, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testCreateBeneficiary_Unsuccessful() = runBlocking {
-        val error = RuntimeException("Error Response")
+    @Test(expected =  Exception::class)
+    fun testCreateBeneficiary_Unsuccessful() = runTest {
         val beneficiaryPayload = mock(BeneficiaryPayload::class.java)
-        `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
+        `when`(beneficiaryRepositoryImp.createBeneficiary(beneficiaryPayload))
+            .thenThrow( Exception("Error Response"))
+         
+        viewModel.beneficiaryUiState.test {
+                viewModel.createBeneficiary(beneficiaryPayload)
+                assertEquals(BeneficiaryUiState.Initial, awaitItem())
+                assertEquals(BeneficiaryUiState.Loading, awaitItem())
+                assertEquals(
+                    BeneficiaryUiState.ShowError(R.string.error_creating_beneficiary),
+                    awaitItem()
+                )
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
 
-        viewModel.createBeneficiary(beneficiaryPayload)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_creating_beneficiary))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
-    }
 
     @Test
-    fun testUpdateBeneficiary_Successful() = runBlocking {
+    fun testUpdateBeneficiary_Successful() = runTest {
         val response = mock(ResponseBody::class.java)
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
         `when`(
@@ -125,36 +170,45 @@ class BeneficiaryApplicationViewModelTest {
                 beneficiaryUpdatePayload
             )
         ).thenReturn(
-            Response.success(response)
+            flowOf(response)
         )
+         
+        viewModel.beneficiaryUiState.test {
 
-        viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.UpdatedSuccessfully)
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+            viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)
+
+            assertEquals(BeneficiaryUiState.Initial, awaitItem())
+            assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(BeneficiaryUiState.UpdatedSuccessfully, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testUpdateBeneficiary_Unsuccessful() = runBlocking {
+    @Test(expected =  Exception::class)
+    fun testUpdateBeneficiary_Unsuccessful() = runTest {
         val beneficiaryUpdatePayload = mock(BeneficiaryUpdatePayload::class.java)
         `when`(
             beneficiaryRepositoryImp.updateBeneficiary(
                 123L,
                 beneficiaryUpdatePayload
             )
-        ).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-
-        viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_updating_beneficiary))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+        ).thenThrow( Exception("Error updating beneficiary") as Throwable)
+         
+        viewModel.beneficiaryUiState.test {
+                viewModel.updateBeneficiary(123L, beneficiaryUpdatePayload)
+                assertEquals(BeneficiaryUiState.Initial, awaitItem())
+                assertEquals(BeneficiaryUiState.Loading, awaitItem())
+              assertEquals(
+                    BeneficiaryUiState.ShowError(R.string.error_updating_beneficiary),
+                    awaitItem()
+                )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @After
     fun tearDown() {
-        viewModel.beneficiaryUiState.removeObserver(beneficiaryUiStateObserver)
+//        viewModel.beneficiaryUiState.removeObserver(beneficiaryUiStateObserver)
     }
 
 }

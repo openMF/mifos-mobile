@@ -3,8 +3,11 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -38,59 +41,52 @@ class SavingsMakeTransferViewModelTest {
     @Mock
     lateinit var savingsAccountRepositoryImp: SavingsAccountRepository
 
-    @Mock
-    lateinit var savingsMakeTransferUiStateObserver: Observer<SavingsAccountUiState>
-
     private lateinit var savingsMakeTransferViewModel: SavingsMakeTransferViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         savingsMakeTransferViewModel = SavingsMakeTransferViewModel(savingsAccountRepositoryImp)
-        savingsMakeTransferViewModel.savingsMakeTransferUiState.observeForever(
-            savingsMakeTransferUiStateObserver
-        )
+        
     }
 
     @Test
     fun testLoanAccountTransferTemplate_SuccessResponseFromRepository_ReturnsShowSavingsAccountTemplate() =
-        runBlocking {
+        runTest {
             val mockAccountOptionsTemplate = Mockito.mock(AccountOptionsTemplate::class.java)
             Mockito.`when`(
                 savingsAccountRepositoryImp.loanAccountTransferTemplate()
-            ).thenReturn(Response.success(mockAccountOptionsTemplate))
+            ).thenReturn(flowOf( mockAccountOptionsTemplate))
 
-            savingsMakeTransferViewModel.loanAccountTransferTemplate()
+            savingsMakeTransferViewModel.savingsMakeTransferUiState.test {
 
-            Mockito.verify(savingsMakeTransferUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsMakeTransferUiStateObserver).onChanged(
-                SavingsAccountUiState.ShowSavingsAccountTemplate(mockAccountOptionsTemplate)
-            )
-            Mockito.verifyNoMoreInteractions(savingsMakeTransferUiStateObserver)
+                savingsMakeTransferViewModel.loanAccountTransferTemplate()
+                assertEquals(SavingsAccountUiState.Initial, awaitItem())
+                assertEquals(SavingsAccountUiState.Loading, awaitItem())
+                assertEquals(SavingsAccountUiState.ShowSavingsAccountTemplate(mockAccountOptionsTemplate), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+
+            }
         }
 
-    @Test
+    @Test(expected = Exception::class)
     fun testLoanAccountTransferTemplate_ErrorResponseFromRepository_ReturnsErrorMessage() =
-        runBlocking {
-            val errorResponse = RuntimeException("Loading Failed")
+        runTest {
+            val errorResponse = Exception("Loading Failed")
             Mockito.`when`(
                 savingsAccountRepositoryImp.loanAccountTransferTemplate()
-            ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
-            savingsMakeTransferViewModel.loanAccountTransferTemplate()
-
-            Mockito.verify(savingsMakeTransferUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingsMakeTransferUiStateObserver)
-                .onChanged(SavingsAccountUiState.ErrorMessage(errorResponse))
-            Mockito.verifyNoMoreInteractions(savingsMakeTransferUiStateObserver)
+            ).thenThrow(errorResponse)
+            savingsMakeTransferViewModel.savingsMakeTransferUiState.test {
+                savingsMakeTransferViewModel.loanAccountTransferTemplate()
+                assertEquals(SavingsAccountUiState.Initial, awaitItem())
+                assertEquals(SavingsAccountUiState.Loading, awaitItem())
+                assertEquals(SavingsAccountUiState.ErrorMessage(errorResponse), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
         }
 
     @After
     fun tearDown() {
-        savingsMakeTransferViewModel.savingsMakeTransferUiState.removeObserver(
-            savingsMakeTransferUiStateObserver
-        )
+        
     }
 }

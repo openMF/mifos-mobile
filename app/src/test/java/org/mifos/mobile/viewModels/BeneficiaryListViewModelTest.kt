@@ -3,8 +3,18 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -21,7 +31,9 @@ import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class BeneficiaryListViewModelTest {
@@ -39,8 +51,6 @@ class BeneficiaryListViewModelTest {
     @Mock
     lateinit var beneficiaryRepositoryImp: BeneficiaryRepositoryImp
 
-    @Mock
-    lateinit var beneficiaryUiStateObserver: Observer<BeneficiaryUiState>
 
     private lateinit var viewModel: BeneficiaryListViewModel
 
@@ -48,42 +58,39 @@ class BeneficiaryListViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = BeneficiaryListViewModel(beneficiaryRepositoryImp)
-        viewModel.beneficiaryUiState.observeForever(beneficiaryUiStateObserver)
     }
 
+
+
     @Test
-    fun testLoadBeneficiaries_Successful() = runBlocking {
+    fun testLoadBeneficiaries_Successful() = runTest {
         val list1 = mock(Beneficiary::class.java)
         val list2 = mock(Beneficiary::class.java)
         val list = listOf(list1, list2)
 
-        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(Response.success(list))
-
-        viewModel.loadBeneficiaries()
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowBeneficiaryList(list))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(flowOf(list))
+        viewModel.beneficiaryUiState.test {
+            viewModel.loadBeneficiaries()
+            assertEquals(BeneficiaryUiState.Initial, awaitItem())
+            assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(BeneficiaryUiState.ShowBeneficiaryList(list), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testLoadBeneficiaries_Unsuccessful() = runBlocking {
-        val error = RuntimeException("Error Response")
-
-        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenReturn(
-            Response.error(
-                404,
-                ResponseBody.create(null, "error")
-            )
-        )
-
-        viewModel.loadBeneficiaries()
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.beneficiaries))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+    @Test(expected = Exception::class)
+    fun testLoadBeneficiaries_Unsuccessful() = runTest {
+        `when`(beneficiaryRepositoryImp.beneficiaryList()).thenThrow(Exception("Error occurred"))
+        viewModel.beneficiaryUiState.test {
+            viewModel.loadBeneficiaries()
+            assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(BeneficiaryUiState.ShowError(R.string.beneficiaries), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @After
     fun tearDown() {
-        viewModel.beneficiaryUiState.removeObserver(beneficiaryUiStateObserver)
+
     }
 }

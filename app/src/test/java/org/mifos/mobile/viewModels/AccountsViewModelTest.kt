@@ -2,9 +2,16 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -54,50 +61,57 @@ class AccountsViewModelTest {
     }
 
     @Test
-    fun loadClientAccounts_Success() =
-        runBlocking {
-            val mockClientAccounts = mock(ClientAccounts::class.java)
-            `when`(homeRepositoryImp.clientAccounts()).thenReturn(flowOf(mockClientAccounts))
-
-            accountsViewModel.loadClientAccounts()
-
-            assertEquals(
-                AccountsUiState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts),
-                accountsViewModel.accountsUiState.value
-            )
-            assertEquals(
-                AccountsUiState.ShowLoanAccounts(mockClientAccounts.loanAccounts),
-                accountsViewModel.accountsUiState.value
-            )
-            assertEquals(
-                AccountsUiState.ShowShareAccounts(mockClientAccounts.shareAccounts),
-                accountsViewModel.accountsUiState.value
-            )
-        }
-
-    @Test
-    fun loadAccountsUiState_Success() = runBlocking {
-        val mockAccountType = "savings"
+    fun loadClientAccounts_Success() = runTest {
         val mockClientAccounts = mock(ClientAccounts::class.java)
-        `when`(accountsRepositoryImp.loadAccounts(anyString())).thenReturn(flowOf(mockClientAccounts))
-
-        accountsViewModel.loadAccounts(mockAccountType)
-
-        assertEquals(
-            AccountsUiState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts),
-            accountsViewModel.accountsUiState.value
-        )
-
+        `when`(homeRepositoryImp.clientAccounts()).thenReturn(flowOf(mockClientAccounts))
+        accountsViewModel.accountsUiState.test {
+            accountsViewModel.loadClientAccounts()
+            assertEquals(AccountsUiState.Loading, awaitItem())
+            assertEquals(
+                AccountsUiState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts), awaitItem()
+            )
+            assertEquals(
+                AccountsUiState.ShowLoanAccounts(mockClientAccounts.loanAccounts), awaitItem()
+            )
+            assertEquals(
+                AccountsUiState.ShowShareAccounts(mockClientAccounts.shareAccounts), awaitItem()
+            )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun loadAccounts_Error() = runBlocking {
+    fun loadAccountsUiState_Success() = runTest {
+        val mockAccountType = "savingsAccounts"
+        val mockClientAccounts = mock(ClientAccounts::class.java)
+        `when`(accountsRepositoryImp.loadAccounts(mockAccountType)).thenReturn(
+            flowOf(
+                mockClientAccounts
+            )
+        )
+        accountsViewModel.accountsUiState.test {
+            accountsViewModel.loadAccounts(mockAccountType)
+            assertEquals(AccountsUiState.Loading, awaitItem())
+            assertEquals(
+                AccountsUiState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts), awaitItem()
+            )
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test(expected = RuntimeException::class)
+    fun loadAccounts_Error() = runTest {
         val mockAccountType = "savings"
         `when`(accountsRepositoryImp.loadAccounts(anyString())).thenThrow(RuntimeException())
-
-        accountsViewModel.loadAccounts(mockAccountType)
-
-        assertEquals(AccountsUiState.Error, accountsViewModel.accountsUiState.value)
+        accountsViewModel.accountsUiState.test {
+            try {
+                accountsViewModel.loadAccounts(mockAccountType)
+                assertEquals(AccountsUiState.Loading, awaitItem())
+            } catch (e: RuntimeException) {
+                assertEquals(AccountsUiState.Error, awaitItem())
+            }
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
 }

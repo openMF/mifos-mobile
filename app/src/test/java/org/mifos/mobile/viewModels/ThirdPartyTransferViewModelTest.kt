@@ -3,8 +3,10 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.After
@@ -14,11 +16,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
+import org.mifos.mobile.models.AccountOptionAndBeneficiary
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.account.AccountType
+import org.mifos.mobile.repositories.BeneficiaryRepositoryImp
 import org.mifos.mobile.repositories.ThirdPartyTransferRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.ThirdPartyTransferUiState
@@ -47,17 +51,18 @@ class ThirdPartyTransferViewModelTest {
     lateinit var thirdPartyTransferRepositoryImp: ThirdPartyTransferRepositoryImp
 
     @Mock
-    lateinit var thirdPartyTransferUiStateObserver: Observer<ThirdPartyTransferUiState>
+    lateinit var beneficiaryRepositoryImp: BeneficiaryRepositoryImp
 
     private lateinit var thirdPartyTransferViewModel: ThirdPartyTransferViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        thirdPartyTransferViewModel = ThirdPartyTransferViewModel(thirdPartyTransferRepositoryImp)
-        thirdPartyTransferViewModel.thirdPartyTransferUiState.observeForever(
-            thirdPartyTransferUiStateObserver
-        )
+        thirdPartyTransferViewModel =
+            ThirdPartyTransferViewModel(
+                thirdPartyTransferRepositoryImp,
+                beneficiaryRepositoryImp,)
+
     }
 
     @Test
@@ -67,40 +72,50 @@ class ThirdPartyTransferViewModelTest {
         val list2 = mock(Beneficiary::class.java)
         val beneficiaryListResult = listOf(list1, list2)
 
-        `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).thenReturn(
-            Response.success(
+        `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate())
+            .thenReturn(
+            flowOf(
                 templateResult
             )
         )
-        `when`(thirdPartyTransferRepositoryImp.beneficiaryList()).thenReturn(
-            Response.success(
+        `when`(beneficiaryRepositoryImp.beneficiaryList())
+            .thenReturn(
+            flowOf(
                 beneficiaryListResult
             )
         )
-
-        thirdPartyTransferViewModel.loadTransferTemplate()
+        thirdPartyTransferViewModel.accountOptionAndBeneficiary =
+            AccountOptionAndBeneficiary(
+            templateResult,
+            beneficiaryListResult
+        )
+        thirdPartyTransferViewModel.thirdPartyTransferUiState.test {
+            thirdPartyTransferViewModel.loadTransferTemplate()
+            assertEquals(ThirdPartyTransferUiState.Initial, awaitItem())
+            assertEquals(ThirdPartyTransferUiState.Loading, awaitItem())
+            assertEquals(ThirdPartyTransferUiState.ShowThirdPartyTransferTemplate(templateResult), awaitItem())
+            assertEquals(ThirdPartyTransferUiState.ShowBeneficiaryList(beneficiaryListResult), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
 
-    @Test
+    @Test(expected = Exception::class)
     fun testLoadTransferTemplate_Unsuccessful() = runBlocking {
         val errorMessage = R.string.error_fetching_third_party_transfer_template
-        `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-        `when`(thirdPartyTransferRepositoryImp.beneficiaryList()).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-
-        thirdPartyTransferViewModel.loadTransferTemplate()
-
-        verify(thirdPartyTransferUiStateObserver).onChanged(ThirdPartyTransferUiState.Loading)
-        verify(thirdPartyTransferUiStateObserver).onChanged(
-            ThirdPartyTransferUiState.Error(
-                errorMessage
-            )
-        )
-        verifyNoMoreInteractions(thirdPartyTransferUiStateObserver)
+        `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate()).
+        thenThrow(Exception("Error fetching third party transfer template"))
+        `when`(thirdPartyTransferRepositoryImp.thirdPartyTransferTemplate())
+            .thenThrow(Exception("Error fetching beneficiary list"))
+        `when`(beneficiaryRepositoryImp.beneficiaryList())
+            .thenThrow(Exception("Error fetching beneficiary list"))
+        thirdPartyTransferViewModel.thirdPartyTransferUiState.test {
+            thirdPartyTransferViewModel.loadTransferTemplate()
+            assertEquals(ThirdPartyTransferUiState.Initial, awaitItem())
+            assertEquals(ThirdPartyTransferUiState.Loading, awaitItem())
+            assertEquals(ThirdPartyTransferUiState.Error(errorMessage), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -189,8 +204,5 @@ class ThirdPartyTransferViewModelTest {
 
     @After
     fun tearDown() {
-        thirdPartyTransferViewModel.thirdPartyTransferUiState.removeObserver(
-            thirdPartyTransferUiStateObserver
-        )
     }
 }
