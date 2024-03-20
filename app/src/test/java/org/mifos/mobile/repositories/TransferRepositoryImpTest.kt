@@ -1,8 +1,9 @@
 package org.mifos.mobile.repositories
 
+import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.Assert
@@ -34,9 +35,9 @@ class TransferRepositoryImpTest {
     }
 
     @Test
-    fun makeThirdPartyTransfer_successful() = runBlocking {
+    fun makeThirdPartyTransfer_successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val success = Response.success(Mockito.mock(ResponseBody::class.java))
+        val success = Mockito.mock(ResponseBody::class.java)
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -55,7 +56,8 @@ class TransferRepositoryImpTest {
             this.toAccountNumber = "0000002"
         }
 
-        Mockito.`when`(dataManager.makeThirdPartyTransfer(transferPayload)).thenReturn(success)
+        Mockito.`when`(dataManager.makeThirdPartyTransfer(transferPayload))
+            .thenReturn(success)
 
         val result = transferProcessImp.makeTransfer(
             transferPayload.fromOfficeId,
@@ -75,16 +77,18 @@ class TransferRepositoryImpTest {
             transferPayload.toAccountNumber,
             TransferType.TPT
         )
-
+        result.test {
+            Assert.assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).makeThirdPartyTransfer(transferPayload)
-        Assert.assertEquals(result, success)
         Dispatchers.resetMain()
     }
 
     @Test
-    fun makeSavingsTransfer_successful() = runBlocking {
+    fun makeSavingsTransfer_successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val success = Response.success(Mockito.mock(ResponseBody::class.java))
+        val success = Mockito.mock(ResponseBody::class.java)
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -123,16 +127,17 @@ class TransferRepositoryImpTest {
             transferPayload.toAccountNumber,
             TransferType.SELF
         )
-
+        result.test {
+            Assert.assertEquals(success, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).makeTransfer(transferPayload)
-        Assert.assertEquals(result, success)
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun makeThirdPartyTransfer_unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun makeThirdPartyTransfer_unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -150,7 +155,8 @@ class TransferRepositoryImpTest {
             this.fromAccountNumber = "0000001"
             this.toAccountNumber = "0000002"
         }
-        Mockito.`when`(dataManager.makeThirdPartyTransfer(transferPayload)).thenReturn(error)
+        Mockito.`when`(dataManager.makeThirdPartyTransfer(transferPayload))
+            .thenThrow(Exception("Error occurred"))
 
         val result = transferProcessImp.makeTransfer(
             transferPayload.fromOfficeId,
@@ -170,16 +176,17 @@ class TransferRepositoryImpTest {
             transferPayload.toAccountNumber,
             TransferType.TPT
         )
-
+        result.test {
+            Assert.assertEquals(Throwable("Error occurred"), awaitError())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).makeThirdPartyTransfer(transferPayload)
-        Assert.assertEquals(result, error)
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun makeSavingsTransfer_unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun makeSavingsTransfer_unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error: Response<ResponseBody?> = Response.error(404, ResponseBody.create(null, "error"))
         val transferPayload = TransferPayload().apply {
             this.fromOfficeId = 1
             this.fromClientId = 2
@@ -197,7 +204,8 @@ class TransferRepositoryImpTest {
             this.fromAccountNumber = "0000001"
             this.toAccountNumber = "0000002"
         }
-        Mockito.`when`(dataManager.makeTransfer(transferPayload)).thenReturn(error)
+        Mockito.`when`(dataManager.makeTransfer(transferPayload)).
+        thenThrow(Exception("Error occurred"))
 
         val result = transferProcessImp.makeTransfer(
             transferPayload.fromOfficeId,
@@ -217,9 +225,11 @@ class TransferRepositoryImpTest {
             transferPayload.toAccountNumber,
             TransferType.SELF
         )
-
+        result.test {
+            Assert.assertEquals(Throwable("Error occurred"), awaitError())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(dataManager).makeTransfer(transferPayload)
-        Assert.assertEquals(result, error)
         Dispatchers.resetMain()
     }
 }

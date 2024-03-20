@@ -3,8 +3,12 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -39,9 +43,6 @@ class SavingAccountsTransactionViewModelTest {
     @Mock
     lateinit var savingsAccountRepositoryImp: SavingsAccountRepository
 
-    @Mock
-    lateinit var savingAccountsTransactionUiStateObserver: Observer<SavingsAccountUiState>
-
     private lateinit var savingAccountsTransactionViewModel: SavingAccountsTransactionViewModel
     private val mockAccountId = 1L
     private val mockAssociationType = Constants.TRANSACTIONS
@@ -52,54 +53,46 @@ class SavingAccountsTransactionViewModelTest {
         MockitoAnnotations.openMocks(this)
         savingAccountsTransactionViewModel =
             SavingAccountsTransactionViewModel(savingsAccountRepositoryImp)
-        savingAccountsTransactionViewModel.savingAccountsTransactionUiState.observeForever(
-            savingAccountsTransactionUiStateObserver
-        )
+
     }
 
     @Test
     fun testLoadSavingsWithAssociations_SuccessReceivedFromRepository_ReturnSuccessLoadingSavingsWithAssociations() =
-        runBlocking {
+        runTest{
             Mockito.`when`(
                 savingsAccountRepositoryImp.getSavingsWithAssociations(
                     mockAccountId,
                     mockAssociationType
                 )
-            ).thenReturn(Response.success(mockSavingsWithAssociations))
-
-            savingAccountsTransactionViewModel.loadSavingsWithAssociations(mockAccountId)
-
-            Mockito.verify(savingAccountsTransactionUiStateObserver)
-                .onChanged(SavingsAccountUiState.Loading)
-            Mockito.verify(savingAccountsTransactionUiStateObserver).onChanged(
-                SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(
-                    mockSavingsWithAssociations
-                )
-            )
-            Mockito.verifyNoMoreInteractions(savingAccountsTransactionUiStateObserver)
+            ).thenReturn(flowOf(mockSavingsWithAssociations))
+            savingAccountsTransactionViewModel.savingAccountsTransactionUiState.test {
+                savingAccountsTransactionViewModel.loadSavingsWithAssociations(mockAccountId)
+                assertEquals(SavingsAccountUiState.Initial,awaitItem())
+                assertEquals(SavingsAccountUiState.Loading,awaitItem())
+                assertEquals(SavingsAccountUiState.SuccessLoadingSavingsWithAssociations(mockSavingsWithAssociations),awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
         }
 
-    @Test
-    fun testLoadSavingsWithAssociations_ErrorResponseFromRepository_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadSavingsWithAssociations_ErrorResponseFromRepository_ReturnsError() = runTest{
         Mockito.`when`(
             savingsAccountRepositoryImp.getSavingsWithAssociations(
                 mockAccountId,
                 mockAssociationType
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
-        savingAccountsTransactionViewModel.loadSavingsWithAssociations(mockAccountId)
-        Mockito.verify(savingAccountsTransactionUiStateObserver)
-            .onChanged(SavingsAccountUiState.Loading)
-        Mockito.verify(savingAccountsTransactionUiStateObserver)
-            .onChanged(SavingsAccountUiState.Error)
-        Mockito.verifyNoMoreInteractions(savingAccountsTransactionUiStateObserver)
+        ).thenThrow(Exception("Error occurred while fetching data from server"))
+        savingAccountsTransactionViewModel.savingAccountsTransactionUiState.test {
+            savingAccountsTransactionViewModel.loadSavingsWithAssociations(mockAccountId)
+            assertEquals(SavingsAccountUiState.Initial,awaitItem())
+            assertEquals(SavingsAccountUiState.Loading,awaitItem())
+            assertEquals(SavingsAccountUiState.Error,awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @After
     fun tearDown() {
-        savingAccountsTransactionViewModel.savingAccountsTransactionUiState.removeObserver(
-            savingAccountsTransactionUiStateObserver
-        )
+
     }
 }

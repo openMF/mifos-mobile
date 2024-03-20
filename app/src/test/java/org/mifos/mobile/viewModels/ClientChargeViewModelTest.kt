@@ -3,8 +3,17 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -16,6 +25,7 @@ import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.repositories.ClientChargeRepositoryImp
 import org.mifos.mobile.util.RxSchedulersOverrideRule
+import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.ClientChargeUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -48,163 +58,177 @@ class ClientChargeViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = ClientChargeViewModel(clientChargeRepositoryImp)
-        viewModel.clientChargeUiState.observeForever(clientChargeUiStateObserver)
+        viewModel = ClientChargeViewModel(clientChargeRepositoryImp) 
     }
 
     @Test
-    fun testLoadClientCharges_Successful() = runBlocking {
+    fun testLoadClientCharges_Successful() = runTest {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val mockChargePage = Page(1, listOf(charge1, charge2))
 
         `when`(clientChargeRepositoryImp.getClientCharges(123L)).thenReturn(
-            Response.success(mockChargePage)
+            flowOf(mockChargePage)
         )
-
-        viewModel.loadClientCharges(123L)
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(
-            ClientChargeUiState.ShowClientCharges(
-                mockChargePage.pageItems
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadClientCharges(123L)
+            assertEquals(ClientChargeUiState.Initial, awaitItem())
+            assertEquals(ClientChargeUiState.Loading,awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowClientCharges(
+                    mockChargePage.pageItems
+                ), awaitItem()
             )
-        )
-        verifyNoMoreInteractions(clientChargeUiStateObserver)
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testLoadClientCharges_Unsuccessful() = runBlocking {
+    @Test(expected = Throwable::class)
+    fun testLoadClientCharges_Unsuccessful() = runTest {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
 
-        `when`(clientChargeRepositoryImp.getClientCharges(123L)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-
-        viewModel.loadClientCharges(123L)
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(
-            ClientChargeUiState.ShowError(
-                errorMessageResId
+        `when`(clientChargeRepositoryImp.getClientCharges(123L))
+            .thenThrow(throwable)
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadClientCharges(123L)
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowError(
+                    errorMessageResId
+                ), awaitItem()
             )
-        )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun testLoadLoanAccountCharges_Successful() = runBlocking {
+    fun testLoadLoanAccountCharges_Successful() = runTest {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val list = listOf(charge1, charge2)
 
-        `when`(clientChargeRepositoryImp.getLoanCharges(123L)).thenReturn(Response.success(list))
-
-        viewModel.loadLoanAccountCharges(123L)
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.ShowClientCharges(list))
-        verifyNoMoreInteractions(clientChargeUiStateObserver)
+        `when`(clientChargeRepositoryImp.getLoanCharges(123L))
+            .thenReturn(flowOf(list))
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadLoanAccountCharges(123L)
+            assertEquals(ClientChargeUiState.Initial, awaitItem())
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowClientCharges(
+                    list
+                ), awaitItem()
+            )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
-
-    @Test
-    fun testLoadLoanAccountCharges_Unsuccessful() = runBlocking {
+    @Test(expected = Throwable::class)
+    fun testLoadLoanAccountCharges_Unsuccessful() = runTest {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
+        
+        `when`(clientChargeRepositoryImp.getLoanCharges(123L))
+            .thenThrow(throwable)
+        viewModel.clientChargeUiState.test {
+            viewModel.loadLoanAccountCharges(123L)
 
-        `when`(clientChargeRepositoryImp.getLoanCharges(123L)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-
-        viewModel.loadLoanAccountCharges(123L)
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(
-            ClientChargeUiState.ShowError(
-                errorMessageResId
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowError(
+                    errorMessageResId
+                ), awaitItem()
             )
-        )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun testLoadSavingsAccountCharges_Successful() = runBlocking {
+    fun testLoadSavingsAccountCharges_Successful() = runTest {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val list = listOf(charge1, charge2)
 
-        `when`(clientChargeRepositoryImp.getSavingsCharges(123L)).thenReturn(Response.success(list))
-
-        viewModel.loadSavingsAccountCharges(123L)
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.ShowClientCharges(list))
-        verifyNoMoreInteractions(clientChargeUiStateObserver)
+        `when`(clientChargeRepositoryImp.getSavingsCharges(123L))
+            .thenReturn(flowOf(list))
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadSavingsAccountCharges(123L)
+            assertEquals(ClientChargeUiState.Initial, awaitItem())
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowClientCharges(
+                    list
+                ), awaitItem()
+            )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun testLoadSavingsAccountCharges_Unsuccessful() = runBlocking {
+    @Test(expected = Throwable::class)
+    fun testLoadSavingsAccountCharges_Unsuccessful() = runTest {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
 
-        `when`(clientChargeRepositoryImp.getSavingsCharges(123L)).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-
-        viewModel.loadSavingsAccountCharges(123L)
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(
-            ClientChargeUiState.ShowError(
-                errorMessageResId
+        `when`(clientChargeRepositoryImp.getSavingsCharges(123L))
+            .thenThrow(throwable)
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadSavingsAccountCharges(123L)
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowError(
+                    errorMessageResId
+                ), awaitItem()
             )
-        )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun loadClientLocalCharges_Successful() = runBlocking {
+    fun loadClientLocalCharges_Successful() = runTest {
         val charge1 = mock(Charge::class.java)
         val charge2 = mock(Charge::class.java)
         val mockChargePage = Page(1, listOf(charge1, charge2))
 
         `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(
-            Response.success(
-                mockChargePage
-            )
+            flowOf(mockChargePage)
         )
-
-        viewModel.loadClientLocalCharges()
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(
-            ClientChargeUiState.ShowClientCharges(
-                mockChargePage.pageItems
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadClientLocalCharges()
+            assertEquals(ClientChargeUiState.Initial, awaitItem())
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowClientCharges(
+                    mockChargePage.pageItems
+                ), awaitItem()
             )
-        )
-        verifyNoMoreInteractions(clientChargeUiStateObserver)
+            cancelAndIgnoreRemainingEvents()
+        }
     }
-
-    @Test
-    fun loadClientLocalCharges_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun loadClientLocalCharges_Unsuccessful() = runTest {
         val errorMessageResId = R.string.client_charges
         val throwable = Throwable("Error occurred")
-
-        `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-
-        viewModel.loadClientLocalCharges()
-
-        verify(clientChargeUiStateObserver).onChanged(ClientChargeUiState.Loading)
-        verify(clientChargeUiStateObserver).onChanged(
-            ClientChargeUiState.ShowError(
-                errorMessageResId
+        `when`(clientChargeRepositoryImp.clientLocalCharges()).thenThrow(throwable)
+        
+        viewModel.clientChargeUiState.test {
+            viewModel.loadClientLocalCharges()
+            assertEquals(ClientChargeUiState.Loading, awaitItem())
+            assertEquals(
+                ClientChargeUiState.ShowError(
+                    errorMessageResId
+                ), awaitItem()
             )
-        )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @After
     fun tearDown() {
-        viewModel.clientChargeUiState.removeObserver(clientChargeUiStateObserver)
     }
 
 }

@@ -1,8 +1,10 @@
 package org.mifos.mobile.repositories
 
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.fail
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
@@ -28,41 +30,39 @@ class UserDetailRepositoryImpTest {
     }
 
     @Test
-    fun testRegisterNotification_Success() = runBlocking {
+    fun testRegisterNotification_Success() = runTest {
         val mockResponseBody: ResponseBody = mock(ResponseBody::class.java)
         val mockPayload: NotificationRegisterPayload = mock(NotificationRegisterPayload::class.java)
         `when`(mockDataManager.registerNotification(mockPayload)).thenReturn(mockResponseBody)
 
         val flow = userDetailRepository.registerNotification(mockPayload)
 
-        flow.collect { result ->
-            assertEquals(mockResponseBody, result)
+        flow.test {
+            assertEquals(mockResponseBody, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testRegisterNotification_Error() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testRegisterNotification_Error() = runTest {
         val errorMessage = "Failed to register notification"
         val mockPayload: NotificationRegisterPayload = mock(NotificationRegisterPayload::class.java)
         `when`(mockDataManager.registerNotification(mockPayload)).thenThrow(
-            RuntimeException(
+             Exception(
                 errorMessage
             )
         )
 
         val flow = userDetailRepository.registerNotification(mockPayload)
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun testGetUserNotificationId_Success() = runBlocking {
+    fun testGetUserNotificationId_Success() = runTest {
         val mockNotificationUserDetail: NotificationUserDetail =
             mock(NotificationUserDetail::class.java)
         val mockId = 123L
@@ -70,34 +70,32 @@ class UserDetailRepositoryImpTest {
 
         val flow = userDetailRepository.getUserNotificationId(mockId)
 
-        flow.collect { result ->
-            assertEquals(mockNotificationUserDetail, result)
+        flow.test {
+            assertEquals(mockNotificationUserDetail, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testGetUserNotificationId_Error() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testGetUserNotificationId_Error() = runTest {
         val errorMessage = "Failed to get user notification"
         val mockId = 123L
         `when`(mockDataManager.getUserNotificationId(mockId)).thenThrow(
-            RuntimeException(
+             Exception(
                 errorMessage
             )
         )
 
         val flow = userDetailRepository.getUserNotificationId(mockId)
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun testUpdateRegisterNotification_Success() = runBlocking {
+    fun testUpdateRegisterNotification_Success() = runTest {
         val mockResponseBody: ResponseBody = mock(ResponseBody::class.java)
         val mockPayload: NotificationRegisterPayload = mock(NotificationRegisterPayload::class.java)
         val mockId = 123L
@@ -107,29 +105,27 @@ class UserDetailRepositoryImpTest {
 
         val flow = userDetailRepository.updateRegisterNotification(mockId, mockPayload)
 
-        flow.collect { result ->
-            assertEquals(mockResponseBody, result)
+        flow.test {
+            assertEquals(mockResponseBody, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testUpdateRegisterNotificationError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testUpdateRegisterNotificationError() = runTest {
         val errorMessage = "Failed to update register notification"
         val mockPayload: NotificationRegisterPayload = mock(NotificationRegisterPayload::class.java)
         val mockId = 123L
         `when`(mockDataManager.updateRegisterNotification(mockId, mockPayload)).thenThrow(
-            RuntimeException(errorMessage)
+             Exception(errorMessage)
         )
 
         val flow = userDetailRepository.updateRegisterNotification(mockId, mockPayload)
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
-    }
 
+    }
 }

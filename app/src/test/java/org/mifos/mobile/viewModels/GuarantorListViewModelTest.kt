@@ -3,9 +3,12 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,9 +40,6 @@ class GuarantorListViewModelTest {
     @Mock
     private lateinit var guarantorRepositoryImp: GuarantorRepositoryImp
 
-    @Mock
-    lateinit var guarantorUiStateObserver: Observer<GuarantorUiState>
-
     private lateinit var viewModel: GuarantorListViewModel
 
     @Before
@@ -49,29 +49,29 @@ class GuarantorListViewModelTest {
     }
 
     @Test
-    fun testGetGuarantorList_Successful() = runBlocking {
+    fun testGetGuarantorList_Successful() = runTest {
         val list1 = mock(GuarantorPayload::class.java)
         val list2 = mock(GuarantorPayload::class.java)
         val list = listOf(list1, list2)
 
         `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenReturn(flowOf(list))
-
-        viewModel.getGuarantorList(1L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(
-            GuarantorUiState.ShowGuarantorListSuccessfully(
-                list
-            )
-        )
+         viewModel.guarantorUiState.test {
+            viewModel.getGuarantorList(1L)
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            assertEquals(GuarantorUiState.ShowGuarantorListSuccessfully(list), awaitItem())
+             cancelAndIgnoreRemainingEvents()
+         }
     }
 
-    @Test
-    fun testGetGuarantorList_Unsuccessful() = runBlocking {
-        val error = IOException("Error")
+    @Test(expected = Exception::class)
+    fun testGetGuarantorList_Unsuccessful() = runTest {
+        val error = Exception("Error")
         `when`(guarantorRepositoryImp.getGuarantorList(1L)).thenThrow(error)
-
-        viewModel.getGuarantorList(1L)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.Loading)
-        verify(guarantorUiStateObserver).onChanged(GuarantorUiState.ShowError(Throwable().message))
+        viewModel.guarantorUiState.test {
+            viewModel.getGuarantorList(1L)
+            assertEquals(GuarantorUiState.Loading, awaitItem())
+            assertEquals(GuarantorUiState.ShowError(error.message), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }
