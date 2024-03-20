@@ -1,10 +1,11 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.fail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
@@ -38,125 +39,113 @@ class HomeRepositoryImpTest {
     }
 
     @Test
-    fun testClientAccounts_Successful() = runBlocking {
+    fun testClientAccounts_Successful() = runTest {
         val mockClientAccounts: ClientAccounts = mock(ClientAccounts::class.java)
 
         `when`(dataManager.clientAccounts()).thenReturn(mockClientAccounts)
 
         val flow = homeRepositoryImp.clientAccounts()
 
-        flow.collect { result ->
-            assertEquals(mockClientAccounts, result)
+        flow.test {
+            assertEquals(mockClientAccounts, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun testCurrentClient_Successful() = runBlocking {
+    fun testCurrentClient_Successful() = runTest {
         val mockClient: Client = mock(Client::class.java)
 
         `when`(dataManager.currentClient()).thenReturn(mockClient)
 
         val flow = homeRepositoryImp.currentClient()
 
-        flow.collect { result ->
-            assertEquals(mockClient, result)
+        flow.test {
+            assertEquals(mockClient, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun testClientImage_Successful() = runBlocking {
+    fun testClientImage_Successful() = runTest {
         val mockResponseBody: ResponseBody = mock(ResponseBody::class.java)
 
         `when`(dataManager.clientImage()).thenReturn(mockResponseBody)
 
         val flow = homeRepositoryImp.clientImage()
 
-        flow.collect { result ->
-            assertEquals(mockResponseBody, result)
+        flow.test {
+            assertEquals(mockResponseBody, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun testUnreadNotificationsCount_Successful() = runBlocking {
+    fun testUnreadNotificationsCount_Successful() = runTest {
         val mockUnreadCount = 5
 
         `when`(dataManager.unreadNotificationsCount()).thenReturn(mockUnreadCount)
 
         val flow = homeRepositoryImp.unreadNotificationsCount()
 
-        flow.collect { result ->
-            assertEquals(mockUnreadCount, result)
+        flow.test {
+            assertEquals(mockUnreadCount, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testClientAccounts_Error() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testClientAccounts_Error() = runTest {
         val errorMessage = "Failed to fetch client accounts"
-        val mockErrorResponse: ClientAccounts = mock(ClientAccounts::class.java)
-
-        `when`(dataManager.clientAccounts()).thenReturn(mockErrorResponse)
-
+        `when`(dataManager.clientAccounts()).
+        thenThrow(Exception(errorMessage))
         val flow = homeRepositoryImp.clientAccounts()
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testCurrentClient_Error() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testCurrentClient_Error() = runTest {
         val errorMessage = "Failed to fetch current client"
-        val mockErrorResponse: Client = mock(Client::class.java)
-
-        `when`(dataManager.currentClient()).thenReturn(mockErrorResponse)
+        `when`(dataManager.currentClient())
+            .thenThrow(Exception(errorMessage))
 
         val flow = homeRepositoryImp.currentClient()
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testClientImage_Error() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testClientImage_Error() = runTest {
         val errorMessage = "Failed to fetch client image"
-        val mockErrorResponse: ResponseBody = mock(ResponseBody::class.java)
-
-        `when`(dataManager.clientImage()).thenReturn(mockErrorResponse)
-
+        `when`(dataManager.clientImage())
+            .thenThrow(Exception(errorMessage))
         val flow = homeRepositoryImp.clientImage()
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
-    @Test
-    fun testUnreadNotificationsCount_Error() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testUnreadNotificationsCount_Error() = runTest {
         val errorMessage = "Failed to fetch unread notifications count"
 
-        `when`(dataManager.unreadNotificationsCount()).thenReturn(502)
+        `when`(dataManager.unreadNotificationsCount())
+            .thenThrow(Exception(errorMessage))
 
         val flow = homeRepositoryImp.unreadNotificationsCount()
 
-        try {
-            flow.collect {
-                fail("Expected an exception")
-            }
-        } catch (e: Exception) {
-            assertEquals(errorMessage, e.message)
+        flow.test {
+            assertEquals(Throwable(errorMessage), awaitError())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }

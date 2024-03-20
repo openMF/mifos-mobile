@@ -2,9 +2,14 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
@@ -35,20 +40,16 @@ class TransferProcessViewModelTest {
     @Mock
     lateinit var transferProcessImp: TransferRepositoryImp
 
-    @Mock
-    lateinit var transferUiStateObserver: Observer<TransferUiState>
-
     private lateinit var viewModel: TransferProcessViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = TransferProcessViewModel(transferProcessImp)
-        viewModel.transferUiState.observeForever(transferUiStateObserver)
     }
 
     @Test
-    fun makeTransfer_successful() = runBlocking {
+    fun makeTransfer_successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val responseBody = Mockito.mock(ResponseBody::class.java)
         Mockito.`when`(
@@ -59,25 +60,26 @@ class TransferProcessViewModelTest {
                 "dd MMMM yyyy", "en", "0000001", "0000002",
                 TransferType.SELF
             )
-        ).thenReturn(Response.success(responseBody))
-
-        viewModel.makeTransfer(
-            1, 2, 3,
-            4, 5, 6, 7,
-            8, "06 July 2023 ", 100.0, "Transfer",
-            "dd MMMM yyyy", "en", "0000001", "0000002",
-            TransferType.SELF
-        )
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.TransferSuccess)
-        Mockito.verifyNoMoreInteractions(transferUiStateObserver)
+        ).thenReturn(flowOf(responseBody))
+        viewModel.transferUiState.test {
+            viewModel.makeTransfer(
+                1, 2, 3,
+                4, 5, 6, 7,
+                8, "06 July 2023 ", 100.0, "Transfer",
+                "dd MMMM yyyy", "en", "0000001", "0000002",
+                TransferType.SELF
+            )
+            assertEquals(TransferUiState.Initial, awaitItem())
+            assertEquals(TransferUiState.TransferSuccess, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun makeTransfer_unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun makeTransfer_unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val error = RuntimeException("Savings Transfer Failed")
+        val error = Exception("Savings Transfer Failed")
         Mockito.`when`(
             transferProcessImp.makeTransfer(
                 1, 2, 3,
@@ -86,23 +88,25 @@ class TransferProcessViewModelTest {
                 "dd MMMM yyyy", "en", "0000001", "0000002",
                 TransferType.SELF
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
+        ).thenThrow(error)
+        viewModel.transferUiState.test {
 
-        viewModel.makeTransfer(
-            1, 2, 3,
-            4, 5, 6, 7,
-            8, "06 July 2023 ", 100.0, "Transfer",
-            "dd MMMM yyyy", "en", "0000001", "0000002",
-            TransferType.SELF
-        )
-        Mockito.verify(transferUiStateObserver).onChanged(TransferUiState.Loading)
-        Mockito.verifyNoMoreInteractions(transferUiStateObserver)
-        Dispatchers.resetMain()
+            viewModel.makeTransfer(
+                1, 2, 3,
+                4, 5, 6, 7,
+                8, "06 July 2023 ", 100.0, "Transfer",
+                "dd MMMM yyyy", "en", "0000001", "0000002",
+                TransferType.SELF
+            )
+            assertEquals(TransferUiState.Initial, awaitItem())
+            assertEquals(TransferUiState.Error(error), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+            Dispatchers.resetMain()
+        }
     }
 
     @After
     fun tearDown() {
-        viewModel.transferUiState.removeObserver(transferUiStateObserver)
     }
 
 }

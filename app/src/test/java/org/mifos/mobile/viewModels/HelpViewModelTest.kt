@@ -2,7 +2,10 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,54 +26,38 @@ class HelpViewModelTest {
     @Mock
     private lateinit var mockFAQArrayList: ArrayList<FAQ?>
 
-    @Mock
-    private lateinit var helpUiStateObserver: Observer<HelpUiState>
-
     private lateinit var viewModel: HelpViewModel
 
     @Before
     fun setUp() {
         viewModel = HelpViewModel()
-        viewModel.helpUiState.observeForever(helpUiStateObserver)
     }
 
     @Test
-    fun testLoadFaq() {
+    fun testLoadFaq() = runTest {
         val qs = arrayOf("Question1", "Question2")
         val ans = arrayOf("Answer1", "Answer2")
 
         viewModel.loadFaq(qs, ans)
 
-        verify(helpUiStateObserver).onChanged(
-            HelpUiState.ShowFaq(
-                arrayListOf(
-                    FAQ(
-                        "Question1",
-                        "Answer1",
-                        false
-                    ),
-                    FAQ(
-                        "Question2",
-                        "Answer2",
-                        false
-                    )
-                )
-            )
-        )
-        verifyNoMoreInteractions(helpUiStateObserver)
+        viewModel.helpUiState.test{
+            assertEquals(HelpUiState.ShowFaq(arrayListOf(FAQ("Question1", "Answer1", false), FAQ("Question2", "Answer2", false)))
+                , awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun testFilterList() {
+    fun testFilterList() = runTest {
         val query = "app"
-        val mockFAQ1 = mock(FAQ::class.java)
-        val mockFAQ2 = mock(FAQ::class.java)
-
-        `when`(mockFAQ1.question).thenReturn("How to use the app?")
-        `when`(mockFAQ2.question).thenReturn("Is there a user guide available?")
-
-        val filteredList = viewModel.filterList(arrayListOf(mockFAQ1,mockFAQ2), query)
-
-        assertEquals(mockFAQ1, filteredList[0])
+        val mockFAQ1 =FAQ("How to use the app?", "Answer1", false)
+        val mockFAQ2 = FAQ("Is there a user guide available?", "Answer2", false)
+        viewModel.loadFaq(arrayOf("How to use the app?", "Is there a user guide available?"), arrayOf("Answer1", "Answer2"))
+        advanceUntilIdle()
+        val filteredList = viewModel.filterList(query)
+        viewModel.helpUiState.test{
+            assertEquals(HelpUiState.ShowFaq(arrayListOf(mockFAQ1)), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }

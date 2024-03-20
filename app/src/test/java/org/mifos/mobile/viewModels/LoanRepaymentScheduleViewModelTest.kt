@@ -2,9 +2,13 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
@@ -37,20 +41,17 @@ class LoanRepaymentScheduleViewModelTest {
     @Mock
     lateinit var loanRepositoryImp: LoanRepositoryImp
 
-    @Mock
-    lateinit var loanUiStateObserver: Observer<LoanUiState>
-
     private lateinit var viewModel: LoanRepaymentScheduleViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = LoanRepaymentScheduleViewModel(loanRepositoryImp)
-        viewModel.loanUiState.observeForever(loanUiStateObserver)
+
     }
 
     @Test
-    fun testLoanLoanWithAssociations_Successful() = runBlocking {
+    fun testLoanLoanWithAssociations_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanWithAssociations::class.java)
         `when`(
@@ -58,40 +59,40 @@ class LoanRepaymentScheduleViewModelTest {
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(Response.success(response))
-
-        viewModel.loanLoanWithAssociations(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        if (response.repaymentSchedule?.periods?.isNotEmpty() == true) {
-            verify(loanUiStateObserver).onChanged(LoanUiState.ShowLoan(response))
-            verifyNoMoreInteractions(loanUiStateObserver)
-        } else {
-            verify(loanUiStateObserver).onChanged(LoanUiState.ShowEmpty(response))
-            verifyNoMoreInteractions(loanUiStateObserver)
+        ).thenReturn(flowOf(response))
+        viewModel.loanUiState.test {
+            viewModel.loanLoanWithAssociations(1)
+            assertEquals(LoanUiState.Loading, awaitItem())
+            if (response.repaymentSchedule?.periods?.isNotEmpty() == true) {
+                assertEquals(LoanUiState.ShowLoan(response), awaitItem())
+            } else {
+                assertEquals(LoanUiState.ShowEmpty(response), awaitItem())
+            }
         }
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testLoanLoanWithAssociations_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoanLoanWithAssociations_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.REPAYMENT_SCHEDULE,
                 1
             )
-        ).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
-        viewModel.loanLoanWithAssociations(1)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.repayment_schedule))
+        ).thenThrow(Exception("Error occurred"))
+        viewModel.loanUiState.test {
+            viewModel.loanLoanWithAssociations(1)
+            assertEquals(LoanUiState.Loading, awaitItem())
+            assertEquals(LoanUiState.ShowError(R.string.repayment_schedule), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
     @After
     fun tearDown() {
-        viewModel.loanUiState.removeObserver(loanUiStateObserver)
+
     }
 
 

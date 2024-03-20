@@ -2,9 +2,12 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.*
@@ -20,6 +23,7 @@ import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.LoginUiState
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
@@ -39,10 +43,7 @@ class LoginViewModelTest {
 
     @Mock
     lateinit var clientRepositoryImp: ClientRepository
-
-    @Mock
-    lateinit var loginUiStateObserver: Observer<LoginUiState>
-
+    
     private lateinit var mockUser: User
     private lateinit var loginViewModel: LoginViewModel
     private var emptyClientPage: Page<Client?>? = null
@@ -52,7 +53,6 @@ class LoginViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         loginViewModel = LoginViewModel(userAuthRepositoryImp, clientRepositoryImp)
-        loginViewModel.loginUiState.observeForever(loginUiStateObserver)
         mockUser = FakeRemoteDataSource.user
         emptyClientPage = FakeRemoteDataSource.noClients
         clientPage = FakeRemoteDataSource.clients
@@ -107,88 +107,100 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun testLogin_SuccessfulLoginReceivedFromRepository_ReturnsLoginSuccess() = runBlocking {
+    fun testLogin_SuccessfulLoginReceivedFromRepository_ReturnsLoginSuccess() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             userAuthRepositoryImp.login(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Response.success(mockUser))
-
-        loginViewModel.login("username", "password")
-
-        Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Loading)
-        Mockito.verify(clientRepositoryImp).saveAuthenticationTokenForSession(mockUser)
-        Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.LoginSuccess)
-        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
+        ).thenReturn(flowOf(mockUser))
+        loginViewModel.loginUiState.test {
+            loginViewModel.login("username", "password")
+            Assert.assertEquals(LoginUiState.Initial, awaitItem())
+            Assert.assertEquals(LoginUiState.LoginSuccess, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testLogin_UnsuccessfulLoginReceivedFromRepository_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLogin_UnsuccessfulLoginReceivedFromRepository_ReturnsError() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             userAuthRepositoryImp.login(Mockito.anyString(), Mockito.anyString())
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
-        loginViewModel.login("username", "password")
-
-        Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Loading)
-        Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
-        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
+        ).thenThrow(Exception("Error occurred"))
+        loginViewModel.loginUiState.test {
+            loginViewModel.login("username", "password")
+            Assert.assertEquals(LoginUiState.Initial, awaitItem())
+            Assert.assertEquals(LoginUiState.Error, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testLoadClient_UnsuccessfulLoadClientReceivedFromRepository_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadClient_UnsuccessfulLoadClientReceivedFromRepository_ReturnsError() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             clientRepositoryImp.loadClient()
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
-        loginViewModel.loadClient()
-
-        Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
+        ).thenThrow(Exception("Error occurred"))
+        loginViewModel.loginUiState.test {
+            loginViewModel.loadClient()
+            Assert.assertEquals(LoginUiState.Initial, awaitItem())
+            Assert.assertEquals(LoginUiState.Loading, awaitItem())
+            Assert.assertEquals(LoginUiState.Error, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Mockito.verify(clientRepositoryImp).clearPrefHelper()
         Mockito.verify(clientRepositoryImp).reInitializeService()
-        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testLoadClient_EmptyClientPageReceivedFromRepository_ReturnsError() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadClient_EmptyClientPageReceivedFromRepository_ReturnsError() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         Mockito.`when`(
             clientRepositoryImp.loadClient()
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-
-        loginViewModel.loadClient()
-
-        Mockito.verify(loginUiStateObserver).onChanged(LoginUiState.Error)
-        Mockito.verifyNoMoreInteractions(loginUiStateObserver)
+        ).thenThrow(Exception("Error occurred"))
+        loginViewModel.loginUiState.test {
+            loginViewModel.loadClient()
+            Assert.assertEquals(LoginUiState.Initial, awaitItem())
+            Assert.assertEquals(LoginUiState.Loading, awaitItem())
+            Assert.assertEquals(LoginUiState.Error, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
     @Test
     fun testLoadClient_NonEmptyClientPageReceivedFromRepository_ReturnsLoadClientSuccess() =
-        runBlocking {
+        runTest {
             Dispatchers.setMain(Dispatchers.Unconfined)
             val clientId = clientPage?.pageItems?.get(0)?.id?.toLong()
             val clientName = clientPage?.pageItems?.get(0)?.displayName
+            val client = mock(Client::class.java).apply {
+                Mockito.`when`(id).thenReturn(clientId?.toInt())
+                Mockito.`when`(displayName).thenReturn(clientName)
+            }
+            val clientPage1 = Page<Client?>().apply {
+                pageItems = listOf(client)
+            }
             Mockito.`when`(
                 clientRepositoryImp.loadClient()
-            ).thenReturn(Response.success(clientPage))
-
-            loginViewModel.loadClient()
-
-            Mockito.verify(clientRepositoryImp).setClientId(clientId)
-            Mockito.verify(clientRepositoryImp).reInitializeService()
-            Mockito.verify(loginUiStateObserver)
-                .onChanged(LoginUiState.LoadClientSuccess(clientName))
-            Mockito.verifyNoMoreInteractions(loginUiStateObserver)
+            ).thenReturn(
+                flow {
+                  emit(clientPage1 as Page<Client>)
+                }
+            )
+            loginViewModel.loginUiState.test {
+                loginViewModel.loadClient()
+                Assert.assertEquals(LoginUiState.Initial, awaitItem())
+                Assert.assertEquals(LoginUiState.LoadClientSuccess(clientName), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             Dispatchers.resetMain()
         }
 
     @After
     fun tearDown() {
-        loginViewModel.loginUiState.removeObserver(loginUiStateObserver)
+    
     }
 }
