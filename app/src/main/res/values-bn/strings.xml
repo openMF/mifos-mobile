@@ -139,7 +139,7 @@
     <string name="empty_transactions">আপনার সাথে কোন লেনদেন আছে</string>
     <string name="empty_repayment_schedule">আপনার সাথে যুক্ত কোন পরিশোধের সময়সূচী নেই</string>
     <string name="no_more_transactions_available">কোন লেনদেন উপলব্ধ নেই</string>
-    <string name="no_transaction">কোন লেনদেন</string>
+    <string name="no_transaction">কোন লেনদেন </string>
     <string name="no_dob_found">DOB পাওয়া যায় নি।</string>
     <string name="not_assigned_with_any_group">কোন গ্রুপ থেকে unassigned</string>
 
@@ -265,7 +265,7 @@
     <string name="internet_not_connected">আপনি একটি ইন্টারনেট সংযোগ আছে তা নিশ্চিত করুন</string>
     <string name="beneficiary">উত্তরাধিকারী</string>
     <string name="manage_beneficiaries">উত্তরাধিকার পরিচালনা করুন</string>
-    <string name="beneficiaries">ইসরাঈলের</string>
+    <string name="beneficiaries">সুবিধাভোগী</string>
     <string name="beneficiary_detail">উত্তরাধিকার বিবরণ</string>
     <string name="beneficiary_name">উত্তরাধিকারীর নাম</string>
     <string name="account_type">অ্যাকাউন্ট টাইপ</string>
