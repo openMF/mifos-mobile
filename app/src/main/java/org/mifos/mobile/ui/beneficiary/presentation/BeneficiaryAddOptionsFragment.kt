@@ -47,25 +47,20 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            composeView = this
-        }
-    }
+            setContent {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        composeView.setContent {
+                MifosMobileTheme {
+                    BeneficiaryScreen(
+                        topAppbarNavigateback = {},
+                        addiconClicked = { addManually() },
+                        scaniconClicked = { addUsingQrCode() },
+                        uploadiconClicked = { addByImportingQrCode() }
+                    )
+                }
 
-            MifosMobileTheme {
-                BeneficiaryScreen(
-                    topAppbarNavigateback ={},
-                    addiconClicked ={ addManually()},
-                    scaniconClicked ={ addUsingQrCode()},
-                    uploadiconClicked ={ addByImportingQrCode()}
-                )
             }
 
         }
-
     }
 
     /**
@@ -264,6 +259,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
         fun newInstance(): BeneficiaryAddOptionsFragment {
             val fragment = BeneficiaryAddOptionsFragment()
             val args = Bundle()
+
             fragment.arguments = args
             return fragment
         }
