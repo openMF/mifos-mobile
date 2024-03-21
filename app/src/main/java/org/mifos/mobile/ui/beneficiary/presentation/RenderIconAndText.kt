@@ -32,7 +32,7 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
  *
  * */
 @Composable
-fun IconAndText(
+fun RenderIconAndText(
     @DrawableRes icon:Int,
     icondescription:String,
     text:String,
@@ -77,7 +77,7 @@ fun IconsAndTextPreview() {
                 .fillMaxHeight(),
         ) {
 
-            IconAndText(
+            RenderIconAndText(
                 icon = R.drawable.ic_qrcode_scan_gray_dark,
                 text = stringResource(id = R.string.scan),
                 icondescription = stringResource(id = R.string.scan),
