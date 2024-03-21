@@ -20,7 +20,7 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 
 /**
- * This is a composable function that represent the beneficiary screen and the peremeters include
+ * This is a composable function that represent the beneficiary screen and the parameters include
  * @param[addiconClicked] to navigate to the add screen
  * @param[scaniconClicked] to navigate to the scanicon screen
  * @param[uploadiconClicked] to navigate to the upload icin screen
@@ -29,11 +29,11 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 @Composable
 fun BeneficiaryScreen(
-    topAppbarNavigateback:()->Unit,
-    addiconClicked: ()->Unit,
-    scaniconClicked: ()->Unit,
-    uploadiconClicked :()->Unit
-){
+    topAppbarNavigateback: () -> Unit,
+    addiconClicked: () -> Unit,
+    scaniconClicked: () -> Unit,
+    uploadiconClicked: () -> Unit
+) {
     MifosTopBar(
         navigateBack = topAppbarNavigateback,
         title = {
@@ -43,27 +43,26 @@ fun BeneficiaryScreen(
 
     Column(
         modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_10dp))
-    ){
+    ) {
         Text(
             stringResource(id = R.string.select_mode),
             fontSize = 24.sp,
-            color =  MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Text(
-            modifier = Modifier.padding(top =16.dp),
+            modifier = Modifier.padding(top = 16.dp),
             text = stringResource(R.string.add_beneficiary_option),
-            fontSize = 17.sp,
-            color =  MaterialTheme.colorScheme.onSurface
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
-        Icons(
+        BeneficiaryScreenIcons(
             modifier = Modifier.padding(top = 20.dp),
             addIconclicked = addiconClicked,
             scanIconClicked = scaniconClicked,
             uploadIconClicked = uploadiconClicked
         )
-
 
     }
 

@@ -17,7 +17,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 @Composable
-fun Icons(
+fun BeneficiaryScreenIcons(
     modifier: Modifier = Modifier,
     addIconclicked:()->Unit,
     scanIconClicked:()->Unit,
@@ -30,14 +30,14 @@ fun Icons(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
         ) {
-            IconAndText(
+            RenderIconAndText(
                 icon = R.drawable.ic_beneficiary_add_48px,
                 text = stringResource(id = R.string.add),
                 icondescription = stringResource(id = R.string.add),
                 iconClick = addIconclicked
             )
 
-            IconAndText(
+            RenderIconAndText(
                 icon = R.drawable.ic_qrcode_scan_gray_dark,
                 text = stringResource(id = R.string.scan),
                 icondescription = stringResource(id = R.string.scan),
@@ -50,7 +50,7 @@ fun Icons(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            IconAndText(
+            RenderIconAndText(
                 icon = R.drawable.ic_file_upload_black_24dp,
                 text = stringResource(id = R.string.upload_qr_code),
                 icondescription = stringResource(id = R.string.upload_qr_code),
@@ -77,7 +77,7 @@ fun IconsScreenPreview() {
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
-            Icons(
+            BeneficiaryScreenIcons(
                 modifier = Modifier.padding(top = 20.dp),
                 addIconclicked = {},
                 scanIconClicked = {},
