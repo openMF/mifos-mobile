@@ -19,12 +19,12 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 @Composable
 fun BeneficiaryScreenIcons(
     modifier: Modifier = Modifier,
-    addIconclicked:()->Unit,
-    scanIconClicked:()->Unit,
-    uploadIconClicked:()->Unit
+    addIconclicked: () -> Unit,
+    scanIconClicked: () -> Unit,
+    uploadIconClicked: () -> Unit
 ) {
 
-    Column(modifier=modifier) {
+    Column(modifier = modifier) {
 
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
@@ -71,7 +71,7 @@ fun BeneficiaryScreenIcons(
 )
 @Composable
 fun IconsScreenPreview() {
-    MifosMobileTheme{
+    MifosMobileTheme {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
