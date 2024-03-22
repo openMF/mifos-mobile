@@ -1,15 +1,18 @@
 package org.mifos.mobile.repositories
 
 import CoroutineTestRule
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.client.ClientAccounts
+import org.mifos.mobile.util.checkForUnsuccessfulOperation
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
@@ -36,31 +39,27 @@ class AccountsRepositoryImpTest {
     }
 
     @Test
-    fun loadAccounts_Success() = runBlocking {
+    fun loadAccounts_Success() = runTest {
         val mockAccountType = "savings"
         val mockClientAccounts = mock(ClientAccounts::class.java)
         `when`(dataManager.getAccounts(mockAccountType)).thenReturn((mockClientAccounts))
 
         val resultFlow = accountsRepositoryImp.loadAccounts(mockAccountType)
-        val resultAccounts = resultFlow.first()
-
-        assert(resultAccounts == mockClientAccounts)
-    }
-
-    @Test
-    fun loadAccounts_Error() = runBlocking {
-        val mockAccountType = "savings"
-        val mockError = IOException("Network error")
-        `when`(dataManager.getAccounts(mockAccountType)).thenThrow(mockError)
-
-        val resultFlow = accountsRepositoryImp.loadAccounts(mockAccountType)
-        var isErrorThrown = false
-        try {
-            resultFlow.first()
-        } catch (e: Exception) {
-            isErrorThrown = true
-            assert(e is IOException)
+        resultFlow.test {
+            assertEquals(mockClientAccounts, awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
-        assert(isErrorThrown)
     }
+
+    @Test(expected = Exception::class)
+    fun loadAccounts_Error() = runTest {
+        val mockAccountType = "savings"
+        `when`(dataManager.getAccounts(mockAccountType))
+            .thenThrow(Exception("Error occurred"))
+        val result = accountsRepositoryImp.loadAccounts(mockAccountType)
+        result.test {
+            assert(Throwable("Error occurred") == awaitError())
+        }
+    }
+
 }

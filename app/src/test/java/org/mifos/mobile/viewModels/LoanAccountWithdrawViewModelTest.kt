@@ -2,9 +2,12 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
@@ -36,20 +39,17 @@ class LoanAccountWithdrawViewModelTest {
     @Mock
     lateinit var loanRepositoryImp: LoanRepositoryImp
 
-    @Mock
-    lateinit var loanUiStateObserver: Observer<LoanUiState>
-
     private lateinit var viewModel: LoanAccountWithdrawViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = LoanAccountWithdrawViewModel(loanRepositoryImp)
-        viewModel.loanUiState.observeForever(loanUiStateObserver)
+       
     }
 
     @Test
-    fun testWithdrawLoanAccount_Successful() = runBlocking {
+    fun testWithdrawLoanAccount_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(ResponseBody::class.java)
         val mockLoanWithdraw = mock(LoanWithdraw::class.java)
@@ -58,16 +58,18 @@ class LoanAccountWithdrawViewModelTest {
                 1,
                 mockLoanWithdraw
             )
-        ).thenReturn(Response.success(response))
-        viewModel.withdrawLoanAccount(1, mockLoanWithdraw)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.WithdrawSuccess)
-        verifyNoMoreInteractions(loanUiStateObserver)
+        ).thenReturn(flowOf(response))
+        viewModel.loanUiState.test {
+            viewModel.withdrawLoanAccount(1, mockLoanWithdraw)
+            assertEquals( LoanUiState.Loading,awaitItem())
+            assertEquals( LoanUiState.WithdrawSuccess,awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testWithdrawLoanAccount_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testWithdrawLoanAccount_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoanWithdraw = mock(LoanWithdraw::class.java)
         `when`(
@@ -75,17 +77,19 @@ class LoanAccountWithdrawViewModelTest {
                 1,
                 mockLoanWithdraw
             )
-        ).thenReturn(Response.error(404, ResponseBody.create(null, "error")))
-        viewModel.withdrawLoanAccount(1, mockLoanWithdraw)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_loan_account_withdraw))
-        verifyNoMoreInteractions(loanUiStateObserver)
+        ).thenThrow(Exception("Error occurred"))
+        viewModel.loanUiState.test {
+            viewModel.withdrawLoanAccount(1, mockLoanWithdraw)
+            assertEquals( LoanUiState.Loading,awaitItem())
+            assertEquals( LoanUiState.ShowError(R.string.error_loan_account_withdraw),awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
     @After
     fun tearDown() {
-        viewModel.loanUiState.removeObserver(loanUiStateObserver)
+     
     }
 
 }

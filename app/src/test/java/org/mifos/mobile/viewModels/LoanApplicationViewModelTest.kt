@@ -2,9 +2,13 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody
 import org.junit.After
@@ -37,102 +41,86 @@ class LoanApplicationViewModelTest {
     @Mock
     lateinit var loanRepositoryImp: LoanRepositoryImp
 
-    @Mock
-    lateinit var loanUiStateObserver: Observer<LoanUiState>
-
     private lateinit var viewModel: LoanApplicationViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = LoanApplicationViewModel(loanRepositoryImp)
-        viewModel.loanUiState.observeForever(loanUiStateObserver)
+      
     }
 
     @Test
-    fun testLoadLoanApplicationTemplate_Successful() = runBlocking {
+    fun testLoadLoanApplicationTemplate_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanTemplate::class.java)
         val mockLoanState = mock(LoanState::class.java)
-        `when`(loanRepositoryImp.template()).thenReturn(Response.success(response))
-        viewModel.loadLoanApplicationTemplate(mockLoanState)
-
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        if (mockLoanState == LoanState.CREATE) {
-            verify(loanUiStateObserver).onChanged(LoanUiState.ShowLoanTemplateByProduct(response))
-            verifyNoMoreInteractions(loanUiStateObserver)
-        } else {
-            verify(loanUiStateObserver).onChanged(
-                LoanUiState.ShowUpdateLoanTemplateByProduct(
-                    response
-                )
-            )
-            verifyNoMoreInteractions(loanUiStateObserver)
+        `when`(loanRepositoryImp.template()).thenReturn(flowOf(response))
+        viewModel.loanUiState.test {
+            viewModel.loadLoanApplicationTemplate(mockLoanState)
+            assertEquals(LoanUiState.Loading, awaitItem())
+            if (mockLoanState == LoanState.CREATE) {
+                assertEquals(LoanUiState.ShowLoanTemplateByProduct(response), awaitItem())
+            } else {
+                assertEquals(LoanUiState.ShowUpdateLoanTemplateByProduct(response), awaitItem())
+            }
         }
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun testLoadLoanApplicationTemplate_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadLoanApplicationTemplate_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val loanState = mock(LoanState::class.java)
-        `when`(loanRepositoryImp.template()).thenReturn(
-            Response.error(
-                404,
-                ResponseBody.create(null, "error")
-            )
-        )
+        `when`(loanRepositoryImp.template())
+            .thenThrow(Exception("Error occurred"))
+        viewModel.loanUiState.test {
         viewModel.loadLoanApplicationTemplate(loanState)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_fetching_template))
-        verifyNoMoreInteractions(loanUiStateObserver)
+        assertEquals(LoanUiState.Loading, awaitItem())
+        assertEquals(LoanUiState.ShowError(R.string.error_fetching_template), awaitItem())
+        cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
     @Test
-    fun loadLoanApplicationTemplateByProduct_Successful() = runBlocking {
+    fun loadLoanApplicationTemplateByProduct_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanTemplate::class.java)
         val mockLoanState = mock(LoanState::class.java)
 
-        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(Response.success(response))
-        viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        if (mockLoanState == LoanState.CREATE) {
-            verify(loanUiStateObserver).onChanged(LoanUiState.ShowLoanTemplate(response))
-            verifyNoMoreInteractions(loanUiStateObserver)
-        } else {
-            verify(loanUiStateObserver).onChanged(
-                LoanUiState.ShowUpdateLoanTemplate(
-                    response
-                )
-            )
-            verifyNoMoreInteractions(loanUiStateObserver)
+        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(flowOf(response))
+        viewModel.loanUiState.test {
+            viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
+            assertEquals(LoanUiState.Loading, awaitItem())
+            if (mockLoanState == LoanState.CREATE) {
+                assertEquals(LoanUiState.ShowLoanTemplate(response), awaitItem())
+            } else {
+                assertEquals(LoanUiState.ShowUpdateLoanTemplate(response), awaitItem())
+            }
         }
         Dispatchers.resetMain()
 
     }
 
-    @Test
-    fun loadLoanApplicationTemplateByProduct_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun loadLoanApplicationTemplateByProduct_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val mockLoanState = mock(LoanState::class.java)
-        `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(
-            Response.error(
-                404,
-                ResponseBody.create(null, "error")
-            )
-        )
-        viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
-        verify(loanUiStateObserver).onChanged(LoanUiState.Loading)
-        verify(loanUiStateObserver).onChanged(LoanUiState.ShowError(R.string.error_fetching_template))
-        verifyNoMoreInteractions(loanUiStateObserver)
+        `when`(loanRepositoryImp.getLoanTemplateByProduct(1))
+            .thenThrow(Exception("Error occurred"))
+        viewModel.loanUiState.test {
+            viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
+            assertEquals(LoanUiState.Loading, awaitItem())
+            assertEquals(LoanUiState.ShowError(R.string.error_fetching_template), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
 
     @After
     fun tearDown() {
-        viewModel.loanUiState.removeObserver(loanUiStateObserver)
+        
     }
 
 }

@@ -143,6 +143,8 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.4.0")
     implementation("org.mockito:mockito-core:5.4.0")
+    //turbine
+    testImplementation("app.cash.turbine:turbine:1.1.0")
     implementation("org.mockito:mockito-android:5.4.0")
     androidTestImplementation((libs.junit))
     androidTestImplementation("org.mockito:mockito-core:5.4.0")
