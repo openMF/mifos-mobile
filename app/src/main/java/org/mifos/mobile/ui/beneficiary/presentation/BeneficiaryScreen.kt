@@ -79,12 +79,7 @@ fun BeneficiaryScreen(
 @Composable
 fun BeneficiaryScreenPreview() {
     MifosMobileTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-        ) {
-            BeneficiaryScreen({}, {}, {}, {})
-        }
+        BeneficiaryScreen({}, {}, {}, {})
+
     }
 }
