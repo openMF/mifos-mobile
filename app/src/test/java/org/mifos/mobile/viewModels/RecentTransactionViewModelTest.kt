@@ -3,8 +3,11 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
@@ -39,8 +42,6 @@ class RecentTransactionViewModelTest {
     @Mock
     lateinit var recentTransactionRepositoryImp: RecentTransactionRepository
 
-    @Mock
-    lateinit var recentTransactionUiStateObserver: Observer<RecentTransactionUiState>
 
     @Mock
     lateinit var type: Type
@@ -55,11 +56,10 @@ class RecentTransactionViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = RecentTransactionViewModel(recentTransactionRepositoryImp)
-        viewModel.recentTransactionUiState.observeForever(recentTransactionUiStateObserver)
     }
 
     @Test
-    fun loadRecentTransaction_success_with_no_empty_transactions() = runBlocking {
+    fun loadRecentTransaction_success_with_no_empty_transactions() = runTest {
         val offset = 0
         val limit = 50
 
@@ -74,22 +74,20 @@ class RecentTransactionViewModelTest {
             submittedOnDate = listOf(2023, 7, 9),
             reversed = false
         )
-        val transactions: Page<Transaction?> =
+        val transactions: Page<Transaction> =
             Page(totalFilteredRecords = 1, pageItems = listOf(transaction))
         `when`(recentTransactionRepositoryImp.recentTransactions(offset, limit))
-            .thenReturn(Response.success(transactions))
-
-        viewModel.loadRecentTransactions(loadmore = false, offset)
-
-        verify(recentTransactionUiStateObserver).onChanged(RecentTransactionUiState.Loading)
-        Assert.assertEquals(
-            transactions.pageItems.let { RecentTransactionUiState.RecentTransactions(it) },
-            viewModel.recentTransactionUiState.value
-        )
+            .thenReturn(flowOf(transactions))
+        viewModel.recentTransactionUiState.test {
+            viewModel.loadRecentTransactions(loadmore = false, offset)
+            assertEquals(RecentTransactionUiState.Initial, awaitItem())
+            assertEquals(RecentTransactionUiState.Loading, awaitItem())
+            assertEquals(transactions.pageItems.let { RecentTransactionUiState.RecentTransactions(it) }, awaitItem())
+        }
     }
 
     @Test
-    fun loadRecentTransaction_success_with_empty_transactions() = runBlocking {
+    fun loadRecentTransaction_success_with_empty_transactions() = runTest {
         val offset = 0
         val limit = 50
 
@@ -104,22 +102,21 @@ class RecentTransactionViewModelTest {
             submittedOnDate = listOf(2023, 7, 9),
             reversed = false
         )
-        val transactions: Page<Transaction?> =
+        val transactions: Page<Transaction> =
             Page(totalFilteredRecords = 0, pageItems = listOf(transaction))
         `when`(recentTransactionRepositoryImp.recentTransactions(offset, limit))
-            .thenReturn(Response.success(transactions))
-
-        viewModel.loadRecentTransactions(loadmore = false, offset)
-
-        verify(recentTransactionUiStateObserver).onChanged(RecentTransactionUiState.Loading)
-        Assert.assertEquals(
-            RecentTransactionUiState.EmptyTransaction,
-            viewModel.recentTransactionUiState.value
-        )
+            .thenReturn(flowOf(transactions))
+        viewModel.recentTransactionUiState.test {
+            viewModel.loadRecentTransactions(loadmore = false, offset)
+            assertEquals(RecentTransactionUiState.Initial, awaitItem())
+            assertEquals(RecentTransactionUiState.Loading, awaitItem())
+            assertEquals(RecentTransactionUiState.EmptyTransaction, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun loadRecentTransaction_success_with_load_more_transactions() = runBlocking {
+    fun loadRecentTransaction_success_with_load_more_transactions() = runTest {
         val offset = 0
         val limit = 50
 
@@ -134,36 +131,35 @@ class RecentTransactionViewModelTest {
             submittedOnDate = listOf(2023, 7, 9),
             reversed = false
         )
-        val transactions: Page<Transaction?> =
+        val transactions: Page<Transaction> =
             Page(totalFilteredRecords = 1, pageItems = listOf(transaction))
         `when`(recentTransactionRepositoryImp.recentTransactions(offset, limit))
-            .thenReturn(Response.success(transactions))
+            .thenReturn(flowOf(transactions))
 
-        viewModel.loadRecentTransactions(loadmore = true, offset)
-
-        verify(recentTransactionUiStateObserver).onChanged(RecentTransactionUiState.Loading)
-        Assert.assertEquals(
-            transactions.pageItems.let { RecentTransactionUiState.LoadMoreRecentTransactions(it) },
-            viewModel.recentTransactionUiState.value
-        )
+        viewModel.recentTransactionUiState.test {
+            viewModel.loadRecentTransactions(loadmore = false, offset)
+            assertEquals(RecentTransactionUiState.Initial, awaitItem())
+            assertEquals(RecentTransactionUiState.Loading, awaitItem())
+            assertEquals(transactions.pageItems.let { RecentTransactionUiState.RecentTransactions(it) }, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
-    @Test
-    fun loadRecentTransaction_unsuccessful() = runBlocking {
-        `when`(recentTransactionRepositoryImp.recentTransactions(anyInt(), anyInt())).thenReturn(
-            Response.error(404, ResponseBody.create(null, "error"))
-        )
+    @Test(expected = Exception::class)
+    fun loadRecentTransaction_unsuccessful() = runTest {
+        `when`(recentTransactionRepositoryImp.recentTransactions(anyInt(), anyInt()))
+            .thenThrow(Exception("Error occurred"))
+        viewModel.recentTransactionUiState.test {
         viewModel.loadRecentTransactions(false, 0)
-
-        Assert.assertEquals(
-            RecentTransactionUiState.Error(R.string.recent_transactions),
-            viewModel.recentTransactionUiState.value
-        )
+        assertEquals(RecentTransactionUiState.Initial, awaitItem())
+        assertEquals(RecentTransactionUiState.Loading, awaitItem())
+        assertEquals(RecentTransactionUiState.Error(R.string.recent_transactions), awaitItem())
+        cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @After
     fun tearDown() {
-        viewModel.recentTransactionUiState.removeObserver(recentTransactionUiStateObserver)
-    }
+     }
 
 }

@@ -1,8 +1,11 @@
 package org.mifos.mobile.repositories
 
+import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.Credentials
 import okhttp3.ResponseBody
@@ -14,13 +17,19 @@ import org.mifos.mobile.FakeRemoteDataSource
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.util.checkForUnsuccessfulOperation
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
+import retrofit2.Retrofit 
 
 @RunWith(MockitoJUnitRunner::class)
 class ClientRepositoryImpTest {
@@ -31,45 +40,59 @@ class ClientRepositoryImpTest {
     @Mock
     lateinit var preferencesHelper: PreferencesHelper
 
+    @Mock
+    lateinit var retrofit: Retrofit
+
+    @Mock
+    lateinit var retrofitBuilder: Retrofit.Builder
+
     private var mockClientPage: Page<Client?>? = null
     private lateinit var clientRepositoryImp: ClientRepositoryImp
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        clientRepositoryImp = ClientRepositoryImp(dataManager, preferencesHelper)
+        clientRepositoryImp = ClientRepositoryImp(
+            dataManager,
+            preferencesHelper,
+            retrofit
+        )
         mockClientPage = FakeRemoteDataSource.clients
     }
 
     @Test
     fun testLoadClient_SuccessResponseReceivedFromDataManager_ReturnsClientPageSuccessfully() =
-        runBlocking {
+       runTest {
             Dispatchers.setMain(Dispatchers.Unconfined)
-            val successResponse: Response<Page<Client?>?> = Response.success(mockClientPage)
+            val successResponse:Page<Client>
+            = Page<Client>(5, List(5) {
+                (mock(Client::class.java) as Client)
+            })
             Mockito.`when`(
                 dataManager.clients()
             ).thenReturn(successResponse)
 
-            val result = clientRepositoryImp.loadClient()
-
-            Mockito.verify(dataManager).clients()
-            Assert.assertEquals(result, successResponse)
+            val resultFlow = clientRepositoryImp.loadClient()
+            resultFlow.test {
+                Assert.assertEquals(successResponse, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+             Mockito.verify(dataManager).clients()
             Dispatchers.resetMain()
         }
 
-    @Test
-    fun testLoadClient_ErrorResponseReceivedFromDataManager_ReturnsError() = runBlocking{
+    @Test(expected = Exception::class)
+    fun testLoadClient_ErrorResponseReceivedFromDataManager_ReturnsError() =runTest{
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val errorResponse: Response<Page<Client?>?> =
-            Response.error(404, ResponseBody.create(null,"error"))
-        Mockito.`when`(
+          Mockito.`when`(
             dataManager.clients()
-        ).thenReturn(errorResponse)
+        ).thenThrow(Exception("Error occurred"))
 
         val result = clientRepositoryImp.loadClient()
-
+        result.test{
+            assert(Throwable("Error occurred") == awaitError())
+        }
         Mockito.verify(dataManager).clients()
-        Assert.assertEquals(result, errorResponse)
         Dispatchers.resetMain()
     }
 
@@ -77,11 +100,9 @@ class ClientRepositoryImpTest {
     fun testUpdateAuthenticationToken() {
         val mockPassword = "testPassword"
         val mockUsername = "testUsername"
-        Mockito.`when`(preferencesHelper.userName).thenReturn(mockUsername)
-
-        Mockito.`when`(preferencesHelper.baseUrl)
-            .thenReturn(BaseURL.PROTOCOL_HTTPS + BaseURL.API_ENDPOINT)
-
+        `when`(preferencesHelper.userName).thenReturn(mockUsername)
+        `when`(retrofit.newBuilder()).thenReturn(retrofitBuilder)
+        `when`(retrofitBuilder.client(any())).thenReturn(retrofitBuilder)
         clientRepositoryImp.updateAuthenticationToken(mockPassword)
         val authenticationToken = Credentials.basic(preferencesHelper.userName!!, mockPassword)
 

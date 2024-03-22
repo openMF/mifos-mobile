@@ -29,10 +29,10 @@
     <string name="small_text">ছোট টেক্সট</string>
     <string name="client_accounts">গ্রাহক অ্যাকাউন্ট</string>
     <string name="splash">স্বাগতম পর্দা</string>
-    <string name="savings">রক্ষা</string>
+    <string name="savings">সঞ্চয়</string>
     <string name="loan">ঋণ</string>
     <string name="loan_account">ক্রেডিট অ্যাকাউন্ট</string>
-    <string name="share">ভাগ</string>
+    <string name="share">শেয়ার</string>
     <string name="share_account">আপনার অ্যাকাউন্ট শেয়ার করুন</string>
     <string name="clients_list">একটি গ্রাহক চয়ন করুন</string>
     <string name="working">কাজ</string>
@@ -57,7 +57,7 @@
     <string name="withdraw_loan_reason">ঋণ পরিশোধ করার কারণ</string>
     <string name="loan_account_withdrawn_successfully">ঋণ অ্যাকাউন্ট সফলভাবে প্রত্যাহার করা হয়েছে</string>
     <string name="submit_loan">একটি ঋণ জমা দিন</string>
-    <string name="new_loan_application">জন্য নতুন ক্রেডিট আবেদন</string>
+    <string name="new_loan_application">নতুন ঋণ ক্রেডিট আবেদন</string>
     <string name="update_loan_application">আপনার ক্রেডিট আবেদন আপডেট করুন</string>
     <string name="loan_interest_type">আগ্রহের ধরন</string>
     <string name="amortization">ঘাত-শোষণ</string>
@@ -95,7 +95,7 @@
     <string name="choose_transfer_type">স্থানান্তর ধরনের নির্বাচন করুন</string>
     <string name="transfer_to_savings">সঞ্চয় স্থানান্তর</string>
     <string name="transfer_from_savings">সঞ্চয় থেকে স্থানান্তর</string>
-    <string name="loan_charges">ঋণ জন্য ফি</string>
+    <string name="loan_charges">ঋণের জন্য ফি</string>
     <string name="savings_charges">জমা</string>
     <string name="active">সক্রিয়</string>
     <string name="closed">বন্ধ</string>
@@ -118,7 +118,7 @@
     <string name="rb_email">ই-মেল ঠিকানা</string>
     <string name="verification_mode">যাচাই মোড</string>
     <string name="blank">খালি</string>
-    <string name="import_qr">আমদানি QR</string>
+    <string name="import_qr">ইমপোর্ট QR</string>
     <string name="view_guarantor">গ্যারান্টি দেখুন</string>
     <string name="add_guarantor">একটি গ্যারান্টি যোগ করুন</string>
     <string name="delete_guarantor">গ্যারান্টি সরান</string>
@@ -139,7 +139,7 @@
     <string name="empty_transactions">আপনার সাথে কোন লেনদেন আছে</string>
     <string name="empty_repayment_schedule">আপনার সাথে যুক্ত কোন পরিশোধের সময়সূচী নেই</string>
     <string name="no_more_transactions_available">কোন লেনদেন উপলব্ধ নেই</string>
-    <string name="no_transaction">কোন লেনদেন</string>
+    <string name="no_transaction">কোন লেনদেন </string>
     <string name="no_dob_found">DOB পাওয়া যায় নি।</string>
     <string name="not_assigned_with_any_group">কোন গ্রুপ থেকে unassigned</string>
 
@@ -197,7 +197,7 @@
     <string name="account_status">অ্যাকাউন্টের অবস্থা</string>
     <string name="saving_product_name">পণ্যের নাম</string>
     <string name="total_withdrawal">মোট পেমেন্ট</string>
-    <string name="min_required_balance">মি। প্রয়োজনীয় বল।</string>
+    <string name="min_required_balance">ন্যূনতম প্রয়োজনীয় ব্যালেন্স</string>
     <string name="loan_product_name">পণ্যের নাম</string>
     <string name="loan_purpose">ঋণ উদ্দেশ্য</string>
     <string name="principal">পরিচালক</string>
@@ -244,9 +244,9 @@
     <string name="loan_application_withdrawn_successfully">ঋণ আবেদন সফলভাবে প্রত্যাহার</string>
     <string name="none">কিছু না</string>
     <string name="all">সব</string>
-    <string name="four_weeks">4 সপ্তাহ</string>
-    <string name="three_months">তিন মাস</string>
-    <string name="six_months">6 মাস</string>
+    <string name="four_weeks">৪ সপ্তাহ</string>
+    <string name="three_months">৩ মাস</string>
+    <string name="six_months">৬ মাস</string>
     <string name="filter">ফিল্টার</string>
     <string name="start_date">শুরু তারিখ</string>
     <string name="end_date">সমাপ্তির তারিখ</string>
@@ -265,7 +265,7 @@
     <string name="internet_not_connected">আপনি একটি ইন্টারনেট সংযোগ আছে তা নিশ্চিত করুন</string>
     <string name="beneficiary">উত্তরাধিকারী</string>
     <string name="manage_beneficiaries">উত্তরাধিকার পরিচালনা করুন</string>
-    <string name="beneficiaries">ইসরাঈলের</string>
+    <string name="beneficiaries">সুবিধাভোগী</string>
     <string name="beneficiary_detail">উত্তরাধিকার বিবরণ</string>
     <string name="beneficiary_name">উত্তরাধিকারীর নাম</string>
     <string name="account_type">অ্যাকাউন্ট টাইপ</string>
@@ -292,7 +292,7 @@
     <string name="accounts_overview">অ্যাকাউন্ট ওভারভিউ</string>
     <string name="show_hide_total_loan_amount">মোট ঋণের পরিমাণ দেখান বা লুকান</string>
     <string name="hidden_amount">*****</string>
-    <string name="survey">সার্ভের</string>
+    <string name="survey">সার্ভে</string>
     <string name="activation_date">অ্যাক্টিভেশন তারিখ</string>
     <string name="groups">গ্রুপ</string>
     <string name="user_details">ব্যবহারকারীর তথ্য</string>
@@ -303,11 +303,11 @@
     <string name="invalid_qr">আপনি আপনার অ্যাকাউন্টে কর্ম সঞ্চালন করতে পারবেন না, সঞ্চয় অ্যাকাউন্ট থেকে QR কোড স্ক্যান করুন অথবা অন্য ব্যবহারকারীর ঋণ অ্যাকাউন্ট স্ক্যান করুন</string>
     <string name="add">যোগ</string>
     <string name="scan">স্ক্যান</string>
-    <string name="enter_passcode">4-সংখ্যার অ্যাক্সেস কোডটি প্রবেশ করান</string>
-    <string name="error_passcode">অ্যাক্সেস কোড 4 ডিজিট গঠিত হওয়া উচিত</string>
+    <string name="enter_passcode">৪ সংখ্যার অ্যাক্সেস কোডটি প্রবেশ করান</string>
+    <string name="error_passcode">অ্যাক্সেস কোড ৪ ডিজিট হওয়া উচিত</string>
     <string name="incorrect_passcode">ভুল অ্যাক্সেস কোড</string>
     <string name="incorrect_passcode_more_than_three">আপনি 3 বার বেশি ভুল অ্যাক্সেস কোড প্রবেশ করেছেন</string>
-    <string name="skip">লাফালাফি করা</string>
+    <string name="skip">এড়িয়ে যান</string>
     <string name="save">সংরক্ষণ করুন</string>
     <string name="passcode_setup">লগ ইন পিন সেট করুন</string>
     <string name="reenter_passcode">পিন পুনরায় লিখুন</string>
@@ -320,7 +320,7 @@
     <string name="logout">লগ আউট করুন</string>
     <string name="share_msg">এখানে স্ব পরিষেবা অ্যাপ্লিকেশনটি ডাউনলোড করুন: https://play.google.com/store/apps/details?id=</string>
     <string name="choose">আবেদন নির্বাচন করুন</string>
-    <string name="not_available">দ্য</string>
+    <string name="not_available">পাওয়া যায় না</string>
     <string name="upload_qr_code">QR জমা দিন</string>
     <string name="select_region_qr">QR কোড সঙ্গে অঞ্চল নির্বাচন করুন</string>
 

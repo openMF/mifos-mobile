@@ -2,10 +2,20 @@ package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
@@ -35,56 +45,44 @@ class BeneficiaryDetailViewModelTest {
     @Mock
     lateinit var beneficiaryRepositoryImp: BeneficiaryRepositoryImp
 
-    @Mock
-    lateinit var beneficiaryUiStateObserver: Observer<BeneficiaryUiState>
-
     private lateinit var viewModel: BeneficiaryDetailViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel = BeneficiaryDetailViewModel(beneficiaryRepositoryImp)
-        viewModel.beneficiaryUiState.observeForever(beneficiaryUiStateObserver)
     }
-
     @Test
-    fun testDeleteBeneficiary_Successful() = runBlocking {
+    fun testDeleteBeneficiary_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(ResponseBody::class.java)
-
-        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L)).thenReturn(
-            Response.success(
-                response
-            )
-        )
-
-        viewModel.deleteBeneficiary(123L)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.DeletedSuccessfully)
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L))
+            .thenReturn(flowOf(response))
+        viewModel.beneficiaryUiState.test {
+            viewModel.deleteBeneficiary(123L)
+            assertEquals(BeneficiaryUiState.Initial, awaitItem())
+            assertEquals(BeneficiaryUiState.DeletedSuccessfully, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
-
-    @Test
-    fun testDeleteBeneficiary_Unsuccessful() = runBlocking {
+    @Test(expected = Exception::class)
+    fun testDeleteBeneficiary_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-
-        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L)).thenReturn(
-            Response.error(
-                404,
-                ResponseBody.create(null, "error")
+        `when`(beneficiaryRepositoryImp.deleteBeneficiary(123L))
+            .thenThrow(Exception("Error deleting beneficiary"))
+        viewModel.beneficiaryUiState.test {
+            viewModel.deleteBeneficiary(123L)
+            assertEquals(BeneficiaryUiState.Loading, awaitItem())
+            assertEquals(
+                BeneficiaryUiState.ShowError(R.string.error_deleting_beneficiary),
+                awaitItem()
             )
-        )
-
-        viewModel.deleteBeneficiary(123L)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.Loading)
-        verify(beneficiaryUiStateObserver).onChanged(BeneficiaryUiState.ShowError(R.string.error_deleting_beneficiary))
-        verifyNoMoreInteractions(beneficiaryUiStateObserver)
+            cancelAndIgnoreRemainingEvents()
+        }
         Dispatchers.resetMain()
     }
-
     @After
     fun tearDown() {
-        viewModel.beneficiaryUiState.removeObserver(beneficiaryUiStateObserver)
     }
 }

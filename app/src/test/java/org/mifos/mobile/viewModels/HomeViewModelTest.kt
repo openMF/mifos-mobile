@@ -2,11 +2,13 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import io.reactivex.Observer
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,9 +20,10 @@ import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.HomeRepositoryImp
+import org.mifos.mobile.ui.home.HomeState
+import org.mifos.mobile.ui.home.HomeUiState
 import org.mifos.mobile.ui.home.HomeViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.HomeUiState
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
@@ -46,6 +49,7 @@ class HomeViewModelTest {
 
     @Mock
     private lateinit var mockPreferencesHelper: PreferencesHelper
+    
 
     private lateinit var viewModel: HomeViewModel
 
@@ -57,91 +61,88 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun testLoadingClientAccountDetails_Success(): Unit = runBlocking {
-        val mockLoanAccounts = listOf(mock(LoanAccount::class.java))
-        val mockSavingsAccounts = listOf(mock(SavingAccount::class.java))
+    fun testLoadingClientAccountDetails_Success(): Unit = runTest{
+        val mockLoanAccounts = listOf(
+            mock(LoanAccount::class.java).apply {
+                `when`(loanBalance).thenReturn(100.0)
+            }
+        )
+        val mockSavingsAccounts = listOf(
+            mock(SavingAccount::class.java).apply {
+                `when`(accountBalance).thenReturn(100.0)
+            }
+        )
         val expectedLoanBalance = 100.0
         val expectedSavingBalance = 100.0
+        val mockClient = ClientAccounts(mockLoanAccounts, mockSavingsAccounts)
 
-        `when`(homeRepositoryImp.clientAccounts()).thenReturn(flowOf(mock(ClientAccounts::class.java)))
+        `when`(homeRepositoryImp.clientAccounts()).thenReturn(flowOf(mockClient))
 
         viewModel.loadClientAccountDetails()
 
-        viewModel.homeUiState.collect { value ->
-            assertEquals(
-                HomeUiState.ClientAccountDetails(
-                    expectedLoanBalance,
-                    expectedSavingBalance
-                ), value
+        assertEquals(viewModel.homeUiState.value,
+            HomeUiState.Success(
+                HomeState( loanAmount = expectedLoanBalance,
+                    savingsAmount = expectedSavingBalance))
             )
-        }
+
     }
 
-    @Test
-    fun testLoadingClientAccountDetails_Error(): Unit = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadingClientAccountDetails_Error(): Unit = runTest{
         val errorMessageResId = R.string.error_fetching_accounts
 
-        `when`(homeRepositoryImp.clientAccounts()).thenThrow(RuntimeException())
+        `when`(homeRepositoryImp.clientAccounts()).thenThrow( Exception())
 
         viewModel.loadClientAccountDetails()
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.Error)
-            assertEquals(errorMessageResId, (value as HomeUiState.Error))
-        }
+        assertTrue(viewModel.homeUiState.value is HomeUiState.Error)
+        assertEquals(errorMessageResId, (viewModel.homeUiState.value as HomeUiState.Error).errorMessage)
     }
 
     @Test
-    fun testLoadingUserDetails_Success(): Unit = runBlocking {
+    fun testLoadingUserDetails_Success(): Unit = runTest{
         val mockClient = mock(Client::class.java)
 
         `when`(homeRepositoryImp.currentClient()).thenReturn(flowOf(mockClient))
 
-        viewModel.userDetails
-
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.UserDetails)
-            assertEquals(mockClient, (value as HomeUiState.UserDetails).client)
-        }
+        viewModel.getUserDetails()
+        assertTrue(viewModel.homeUiState.value is HomeUiState.Success)
+        assertEquals(mockClient.officeName,
+            (viewModel.homeUiState.value as HomeUiState.Success).homeState.username)
     }
 
-    @Test
-    fun testLoadingUserDetails_Error(): Unit = runBlocking {
+    @Test(expected = Exception::class)
+    fun testLoadingUserDetails_Error(): Unit = runTest{
         val errorMessageResId = R.string.error_fetching_client
 
-        `when`(homeRepositoryImp.currentClient()).thenThrow(RuntimeException())
+        `when`(homeRepositoryImp.currentClient()).thenThrow( Exception())
 
-        viewModel.userDetails
+        viewModel.getUserDetails()
+            assertTrue(viewModel.homeUiState.value is HomeUiState.Error)
+            assertEquals(errorMessageResId,HomeUiState.Error(R.string.error_fetching_client))
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.Error)
-            assertEquals(errorMessageResId, (value as HomeUiState.Error))
-        }
     }
 
     @Test
-    fun testLoadingUnreadNotificationsCount_Success(): Unit = runBlocking {
+    fun testLoadingUnreadNotificationsCount_Success(): Unit = runTest{
         val mockUnreadCount = 5
 
         `when`(homeRepositoryImp.unreadNotificationsCount()).thenReturn(flowOf(mockUnreadCount))
 
         viewModel.unreadNotificationsCount
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.UnreadNotificationsCount)
-            assertEquals(mockUnreadCount, (value as HomeUiState.UnreadNotificationsCount).count)
-        }
+        assertEquals(mockUnreadCount,viewModel.notificationsCount.value)
+
     }
 
-    @Test
-    fun testLoadingUnreadNotificationsCount_Error(): Unit = runBlocking {
-        `when`(homeRepositoryImp.unreadNotificationsCount()).thenThrow(RuntimeException())
+    @Test(expected = Exception::class)
+    fun testLoadingUnreadNotificationsCount_Error(): Unit = runTest{
+        `when`(homeRepositoryImp.unreadNotificationsCount()).
+        thenThrow( Exception("Error message "))
 
         viewModel.unreadNotificationsCount
 
-        viewModel.homeUiState.collect { value ->
-            assertTrue(value is HomeUiState.UnreadNotificationsCount)
-            assertEquals(0, (value as HomeUiState.UnreadNotificationsCount).count)
-        }
+       assertEquals(0, viewModel.notificationsCount.value)
     }
 }

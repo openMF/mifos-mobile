@@ -25,7 +25,7 @@ class ThirdPartyTransferViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private lateinit var accountOptionAndBeneficiary: AccountOptionAndBeneficiary
+     lateinit var accountOptionAndBeneficiary: AccountOptionAndBeneficiary
 
     private val _thirdPartyTransferUiState = MutableStateFlow<ThirdPartyTransferUiState>(ThirdPartyTransferUiState.Initial)
     val thirdPartyTransferUiState: StateFlow<ThirdPartyTransferUiState> get() = _thirdPartyTransferUiState
@@ -51,6 +51,7 @@ class ThirdPartyTransferViewModel @Inject constructor(
                     )
 
             } catch (e: Throwable) {
+                println(e)
                 _thirdPartyTransferUiState.value =
                     ThirdPartyTransferUiState.Error(R.string.error_fetching_third_party_transfer_template)
             }
