@@ -37,6 +37,10 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         return fieldText.trim().contains(" ")
     }
 
+    fun isPhoneNumberNotValid(fieldText: String): Boolean{
+        return fieldText.toIntOrNull() == null
+    }
+
     fun hasLeadingTrailingSpaces(fieldText: String): Boolean {
         return fieldText.trim().length < fieldText.length
     }

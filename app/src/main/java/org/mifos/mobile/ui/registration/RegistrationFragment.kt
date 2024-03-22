@@ -180,6 +180,14 @@ class RegistrationFragment : BaseFragment() {
                 false
             }
 
+            viewModel.isPhoneNumberNotValid(phoneNumberContent) ->{
+                Toaster.show(
+                    view,
+                    getString(R.string.invalid_phn_number),
+                )
+                false
+            }
+
             viewModel.isInputFieldBlank(emailContent) -> {
                 Toaster.show(
                     view,
