@@ -29,6 +29,10 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         return fieldText.trim().isEmpty()
     }
 
+    fun isPhoneNumberNotValid(fieldText: String): Boolean{
+        return fieldText.trim().toIntOrNull() == null
+    }
+
     fun isInputLengthInadequate(fieldText: String): Boolean {
         return fieldText.trim().length < 6
     }
