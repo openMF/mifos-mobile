@@ -46,7 +46,7 @@ fun BeneficiaryScreen(
     ) {
         Text(
             stringResource(id = R.string.select_mode),
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             color = MaterialTheme.colorScheme.onSurface
         )
 

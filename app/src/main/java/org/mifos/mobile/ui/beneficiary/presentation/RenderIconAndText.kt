@@ -33,10 +33,10 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
  * */
 @Composable
 fun RenderIconAndText(
-    @DrawableRes icon:Int,
-    icondescription:String,
-    text:String,
-    iconClick:()->Unit
+    @DrawableRes icon: Int,
+    icondescription: String,
+    text: String,
+    iconClick: () -> Unit
 ) {
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -70,7 +70,7 @@ fun RenderIconAndText(
 )
 @Composable
 fun IconsAndTextPreview() {
-    MifosMobileTheme{
+    MifosMobileTheme {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
