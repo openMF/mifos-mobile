@@ -72,18 +72,13 @@ fun BeneficiaryScreenIcons(
 @Composable
 fun IconsScreenPreview() {
     MifosMobileTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-        ) {
-            BeneficiaryScreenIcons(
-                modifier = Modifier.padding(top = 20.dp),
-                addIconclicked = {},
-                scanIconClicked = {},
-                uploadIconClicked = {}
-            )
 
-        }
+        BeneficiaryScreenIcons(
+            modifier = Modifier.padding(top = 20.dp),
+            addIconclicked = {},
+            scanIconClicked = {},
+            uploadIconClicked = {}
+        )
+
     }
 }
