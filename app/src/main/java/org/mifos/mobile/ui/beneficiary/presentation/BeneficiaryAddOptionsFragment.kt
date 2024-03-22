@@ -33,8 +33,6 @@ import org.mifos.mobile.utils.Toaster
 @AndroidEntryPoint
 class BeneficiaryAddOptionsFragment : BaseFragment() {
 
-    private lateinit var composeView: ComposeView
-
     private var _binding: FragmentBeneficiaryAddOptionsBinding? = null
     private val binding get() = _binding!!
 

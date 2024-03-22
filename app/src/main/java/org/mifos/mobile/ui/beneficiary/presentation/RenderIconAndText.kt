@@ -71,20 +71,13 @@ fun RenderIconAndText(
 @Composable
 fun IconsAndTextPreview() {
     MifosMobileTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-        ) {
 
-            RenderIconAndText(
-                icon = R.drawable.ic_qrcode_scan_gray_dark,
-                text = stringResource(id = R.string.scan),
-                icondescription = stringResource(id = R.string.scan),
-                iconClick = {}
-            )
+        RenderIconAndText(
+            icon = R.drawable.ic_qrcode_scan_gray_dark,
+            text = stringResource(id = R.string.scan),
+            icondescription = stringResource(id = R.string.scan),
+            iconClick = {}
+        )
 
-
-        }
     }
 }
