@@ -169,6 +169,10 @@ dependencies {
     api(libs.androidx.compose.runtime)
     api(libs.androidx.compose.ui.tooling.preview)
     api(libs.androidx.compose.ui.util)
+    api(libs.androidx.lifecycle.viewModelCompose)
+    api(libs.androidx.hilt.navigation.compose)
+    api(libs.androidx.lifecycle.runtimeCompose)
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.27.0")
 
     debugApi(libs.androidx.compose.ui.tooling)
 }

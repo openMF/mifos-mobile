@@ -17,6 +17,7 @@ import org.mifos.mobile.models.Transaction
 import org.mifos.mobile.models.client.Currency
 import org.mifos.mobile.models.client.Type
 import org.mifos.mobile.repositories.RecentTransactionRepository
+import org.mifos.mobile.ui.recent_transaction.RecentTransactionViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.RecentTransactionUiState
 import org.mockito.Mock
