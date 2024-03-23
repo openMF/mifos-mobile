@@ -387,7 +387,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
             .setTitle(R.string.select_you_want)
             .setView(dialogView)
             .setPositiveButton(getString(R.string.filter)) { _, _ ->
-                if (checkBoxPeriod?.isChecked == true) {
+                if (checkBoxPeriod?.isChecked == true || isCheckBoxPeriod) {
                     if (!isReady) {
                         Toaster.show(binding.root, getString(R.string.select_date))
                         return@setPositiveButton
@@ -425,9 +425,11 @@ class SavingAccountsTransactionFragment : BaseFragment() {
      * @param endDate   Ending date
      */
     private fun filter(startDate: Long?, endDate: Long?, statusModelList: List<CheckboxStatus?>?) {
-        val dummyTransactionList = filterSavingsAccountTransactionsByType(statusModelList)
+        val hasOtherFilters = statusModelList?.any { it!!.isChecked }
+        val transactionListToFilter = if (hasOtherFilters == true) filterSavingsAccountTransactionsByType(statusModelList) else transactionsList
+
         viewModel.filterTransactionList(
-            dummyTransactionList,
+            transactionListToFilter,
             startDate,
             endDate,
         )
