@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -38,7 +39,8 @@ fun MifosOutlinedTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable (() -> Unit)? = null,
     error: Boolean = false,
-    supportingText: String
+    supportingText: String,
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
 
     OutlinedTextField(
@@ -70,7 +72,10 @@ fun MifosOutlinedTextField(
         textStyle = LocalDensity.current.run {
             TextStyle(fontSize = 18.sp)
         },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = keyboardType
+            ),
         visualTransformation = visualTransformation,
         isError = error,
         supportingText = {

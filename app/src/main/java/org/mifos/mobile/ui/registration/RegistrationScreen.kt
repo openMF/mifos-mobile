@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -178,7 +179,8 @@ fun RegistrationScreen(
                 IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                     Icon(imageVector = image, null)
                 }
-            }
+            },
+            keyboardType = KeyboardType.Password
         )
 
         if (onValueChangePassword) {
@@ -210,7 +212,8 @@ fun RegistrationScreen(
                 IconButton(onClick = { confirmPasswordVisibility = !confirmPasswordVisibility }) {
                     Icon(imageVector = image, null)
                 }
-            }
+            },
+            keyboardType = KeyboardType.Password
         )
 
         Row(
