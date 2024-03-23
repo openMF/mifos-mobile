@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -130,7 +131,8 @@ fun LoginScreen(
                 }
             },
             error = passwordError,
-            supportingText = passwordErrorContent
+            supportingText = passwordErrorContent,
+            keyboardType = KeyboardType.Password
         )
 
         Spacer(modifier = Modifier.height(8.dp))
