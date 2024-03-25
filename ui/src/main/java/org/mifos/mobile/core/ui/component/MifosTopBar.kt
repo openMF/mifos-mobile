@@ -21,7 +21,7 @@ fun MifosTopBar(
     title: @Composable () -> Unit
 ) {
     TopAppBar(
-        modifier = Modifier,
+        modifier = modifier,
         title = title,
         navigationIcon = {
             IconButton(
