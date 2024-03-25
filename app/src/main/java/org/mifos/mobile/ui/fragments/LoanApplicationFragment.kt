@@ -21,7 +21,7 @@ import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.LoanState
-import org.mifos.mobile.ui.fragments.ReviewLoanApplicationFragment.Companion.newInstance
+import org.mifos.mobile.ui.loan_review.ReviewLoanApplicationFragment.Companion.newInstance
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
@@ -100,7 +100,6 @@ class LoanApplicationFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? BaseActivity)?.showToolbar()
         if (arguments != null) {
             loanState = arguments?.getCheckedSerializable(
                 LoanState::class.java,
@@ -217,6 +216,11 @@ class LoanApplicationFragment : BaseFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as? BaseActivity)?.showToolbar()
+    }
+
     /**
      * Calls function which applies for a new Loan Application or updates a Loan Application
      * according to `loanState`
@@ -326,7 +330,7 @@ class LoanApplicationFragment : BaseFragment() {
                     tvNewLoanApplication.text.toString(),
                     tvAccountNumber.text.toString(),
                 ),
-                false,
+                true,
                 R.id.container,
             )
         }

@@ -100,7 +100,8 @@ fun ErrorComponent(
     } else {
         EmptyDataView(
             icon = R.drawable.ic_error_black_24dp,
-            error = R.string.loan_account_details
+            error = R.string.loan_account_details,
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
