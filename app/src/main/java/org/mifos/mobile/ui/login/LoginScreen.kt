@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
@@ -37,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -95,15 +97,16 @@ fun LoginScreen(
                 username = it
                 usernameError = false
             },
-            label = R.string.username,
             icon = R.drawable.ic_person_black_24dp,
-            error = usernameError,
-            supportingText = usernameErrorContent,
+            label = R.string.username,
             trailingIcon = {
                 if (usernameError) {
                     Icon(imageVector = Icons.Filled.Error, contentDescription = null)
                 }
-            }
+            },
+            error = usernameError,
+            supportingText = usernameErrorContent,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -114,8 +117,8 @@ fun LoginScreen(
                 password = it
                 passwordError = false
             },
-            label = R.string.password,
             icon = R.drawable.ic_lock_black_24dp,
+            label = R.string.password,
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 if (!passwordError) {
@@ -130,7 +133,8 @@ fun LoginScreen(
                 }
             },
             error = passwordError,
-            supportingText = passwordErrorContent
+            supportingText = passwordErrorContent,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         Spacer(modifier = Modifier.height(8.dp))

@@ -115,8 +115,8 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-application = { id = "com.android.application", version = "8.0.0" }
+android-library = { id = "com.android.library", version = "8.0.0" }
 gms = { id = "com.google.gms.google-services", version.ref = "gmsPlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
@@ -125,7 +125,7 @@ dependencyGuard = { id = "com.dropbox.dependency-guard", version.ref = "dependen
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+android-test = { id = "com.android.test", version = "8.0.0" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }

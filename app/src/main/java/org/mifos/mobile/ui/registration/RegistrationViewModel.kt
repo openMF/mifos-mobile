@@ -45,6 +45,10 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         return !PatternsCompat.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
     }
 
+    fun isPhoneNumberInvalid(fieldText: String): Boolean{
+        return fieldText.trim().toIntOrNull() == null
+    }
+
     fun registerUser(
         accountNumber: String,
         authenticationMode: String,

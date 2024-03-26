@@ -212,6 +212,14 @@ class RegistrationFragment : BaseFragment() {
                 false
             }
 
+            viewModel.isPhoneNumberInvalid(phoneNumberContent) ->{
+                Toaster.show(
+                    view,
+                    getString(R.string.invalid_phn_number),
+                )
+                false
+            }
+
             viewModel.isInputLengthInadequate(passwordContent) -> {
                 Toaster.show(
                     view,

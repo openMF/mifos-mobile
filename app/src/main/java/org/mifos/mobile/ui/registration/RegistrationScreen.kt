@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -110,25 +112,29 @@ fun RegistrationScreen(
             value = accountNumber,
             onValueChange = { accountNumber = it },
             label = R.string.account_number,
-            supportingText = ""
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         MifosOutlinedTextField(
             value = username,
             onValueChange = { username = it },
             label = R.string.username,
-            supportingText = ""
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         MifosOutlinedTextField(
             value = firstName,
             onValueChange = { firstName = it },
             label = R.string.first_name,
-            supportingText = ""
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         MifosOutlinedTextField(
             value = lastName,
             onValueChange = { lastName = it },
             label = R.string.last_name,
-            supportingText = ""
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -160,7 +166,8 @@ fun RegistrationScreen(
             value = email,
             onValueChange = { email = it },
             label = R.string.email,
-            supportingText = ""
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         MifosOutlinedTextField(
             value = password,
@@ -169,7 +176,6 @@ fun RegistrationScreen(
                 onValueChangePassword = true
             },
             label = R.string.password,
-            supportingText = "",
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 val image = if (passwordVisibility)
@@ -178,7 +184,9 @@ fun RegistrationScreen(
                 IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                     Icon(imageVector = image, null)
                 }
-            }
+            },
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         if (onValueChangePassword) {
@@ -201,7 +209,6 @@ fun RegistrationScreen(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = R.string.confirm_password,
-            supportingText = "",
             visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 val image = if (confirmPasswordVisibility)
@@ -210,7 +217,9 @@ fun RegistrationScreen(
                 IconButton(onClick = { confirmPasswordVisibility = !confirmPasswordVisibility }) {
                     Icon(imageVector = image, null)
                 }
-            }
+            },
+            supportingText = "",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         Row(
@@ -264,6 +273,10 @@ fun RegistrationScreen(
             Text(text = stringResource(id = R.string.register))
         }
     }
+}
+
+fun MifosOutlinedTextField(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit, label: Int, supportingText: String) {
+
 }
 
 @Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
