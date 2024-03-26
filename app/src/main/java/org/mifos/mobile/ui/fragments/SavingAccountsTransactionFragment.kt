@@ -163,7 +163,8 @@ class SavingAccountsTransactionFragment : BaseFragment() {
                     SavingsWithAssociations::class.java,
                     Constants.SAVINGS_ACCOUNTS
                 )
-            )        }
+            )
+        }
     }
 
     /**
@@ -406,6 +407,10 @@ class SavingAccountsTransactionFragment : BaseFragment() {
             }
             .setNeutralButton(getString(R.string.clear_filters)) { _, _ ->
                 transactionListAdapter?.setSavingAccountsTransactionList(transactionsList)
+                sweetUIErrorHandler?.hideSweetErrorLayoutUI(
+                    binding.rvSavingAccountsTransaction,
+                    binding.layoutError.root,
+                )
                 initializeFilterVariables()
             }
             .setNegativeButton(R.string.cancel) { _, _ -> }
@@ -426,7 +431,8 @@ class SavingAccountsTransactionFragment : BaseFragment() {
      */
     private fun filter(startDate: Long?, endDate: Long?, statusModelList: List<CheckboxStatus?>?) {
         val hasOtherFilters = statusModelList?.any { it!!.isChecked }
-        val transactionListToFilter = if (hasOtherFilters == true) filterSavingsAccountTransactionsByType(statusModelList) else transactionsList
+        val transactionListToFilter =
+            if (hasOtherFilters == true) filterSavingsAccountTransactionsByType(statusModelList) else transactionsList
 
         viewModel.filterTransactionList(
             transactionListToFilter,
