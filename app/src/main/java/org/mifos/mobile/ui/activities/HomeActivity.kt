@@ -17,7 +17,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -25,6 +27,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.databinding.ActivityHomeBinding
@@ -107,21 +110,23 @@ class HomeActivity :
             startService(intent)
         }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.userDetailUiState.collect {
-                when (it) {
-                    is UserDetailUiState.Loading -> showProgress()
-                    is UserDetailUiState.ShowUserDetails -> {
-                        hideProgress()
-                        showUserDetails(it.client)
-                    }
-                    is UserDetailUiState.ShowUserImage -> {
-                        hideProgress()
-                        showUserImage(it.image)
-                    }
-                    is UserDetailUiState.ShowError -> {
-                        hideProgress()
-                        showError(getString(it.message))
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userDetailUiState.collect {
+                    when (it) {
+                        is UserDetailUiState.Loading -> showProgress()
+                        is UserDetailUiState.ShowUserDetails -> {
+                            hideProgress()
+                            showUserDetails(it.client)
+                        }
+                        is UserDetailUiState.ShowUserImage -> {
+                            hideProgress()
+                            showUserImage(it.image)
+                        }
+                        is UserDetailUiState.ShowError -> {
+                            hideProgress()
+                            showError(getString(it.message))
+                        }
                     }
                 }
             }
