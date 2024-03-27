@@ -141,6 +141,7 @@ class HomeActivity :
 
     override fun onResume() {
         super.onResume()
+        viewModel.userImage
         if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(
                 registerReceiver,
