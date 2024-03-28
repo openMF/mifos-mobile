@@ -12,7 +12,7 @@ object CurrencyUtil {
 
     private val defaultLocale = Locale.US
     fun formatCurrency(context: Context, amt: String?): String {
-        return getDecimalFormatter(context).format(amt)
+        return getDecimalFormatter(context).format(amt ?: "0.0")
     }
 
     fun formatCurrency(context: Context, amt: Long): String {
@@ -21,7 +21,7 @@ object CurrencyUtil {
 
     @JvmStatic
     fun formatCurrency(context: Context?, amt: Double?): String {
-        return getDecimalFormatter(context).format(amt)
+        return getDecimalFormatter(context).format(amt ?: 0.0)
     }
 
     private fun getDecimalFormatter(context: Context?): DecimalFormat {
