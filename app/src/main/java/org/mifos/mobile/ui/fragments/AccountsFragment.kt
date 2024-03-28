@@ -229,7 +229,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
      */
     override fun onRefresh() {
         if (Network.isConnected(context)) {
-            clearFilter()
+            sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
+            currentFilterList = null
             viewModel.loadAccounts(accountType)
         } else {
             hideProgress()
@@ -249,6 +250,12 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
     fun clearFilter() {
         sweetUIErrorHandler?.hideSweetErrorLayoutUI(binding.rvAccounts, binding.layoutError.root)
         currentFilterList = null
+
+        when (accountType) {
+            Constants.SAVINGS_ACCOUNTS -> showSavingsAccounts(this.savingAccounts)
+            Constants.LOAN_ACCOUNTS -> showLoanAccounts(this.loanAccounts)
+            Constants.SHARE_ACCOUNTS -> showShareAccounts(this.shareAccounts)
+        }
     }
 
     override fun onResume() {
@@ -399,6 +406,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         }
         if (filteredSavings.size != 0) {
             savingAccountsListAdapter?.setSavingAccountsList(filteredSavings)
+        } else {
+            showEmptyAccounts(getString(R.string.no_saving_account))
         }
     }
 
@@ -421,6 +430,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         }
         if (filteredSavings.size != 0) {
             loanAccountsListAdapter?.setLoanAccountsList(filteredSavings)
+        } else {
+            showEmptyAccounts(getString(R.string.no_loan_account))
         }
     }
 
@@ -443,6 +454,8 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         }
         if (filteredSavings.size != 0) {
             shareAccountsListAdapter?.setShareAccountsList(filteredSavings)
+        } else {
+            showEmptyAccounts(getString(R.string.no_sharing_account))
         }
     }
 
