@@ -124,7 +124,7 @@ class SavingAccountsListAdapter(
                 tvAccountBalance.setTextColor(ContextCompat.getColor(itemView.context, colorId))
                 tvAccountBalance.text = itemView.context.getString(
                     R.string.string_and_string,
-                    savingAccount.currency?.displaySymbol,
+                    savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code,
                     formatCurrency(itemView.context, savingAccount.accountBalance),
                 )
             }

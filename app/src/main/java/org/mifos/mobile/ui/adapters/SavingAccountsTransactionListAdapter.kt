@@ -106,15 +106,15 @@ class SavingAccountsTransactionListAdapter @Inject constructor() :
         fun bind(transaction: Transactions?) {
             with(binding) {
                 val (_, transactionType, _, _, date, currency, paymentDetailData, amount, runningBalance) = transaction!!
-
+                val displayedSymbol = currency?.displaySymbol ?: currency?.code
                 tvSavingAccountAmount.text = context?.getString(
                     R.string.string_and_string,
-                    currency?.displaySymbol,
+                    displayedSymbol,
                     formatCurrency(context, amount!!),
                 )
                 tvSavingAccountRunningBalance.text = context?.getString(
                     R.string.string_and_string,
-                    currency?.displaySymbol,
+                    displayedSymbol,
                     formatCurrency(context, runningBalance!!),
                 )
                 tvTransactionType.text = transactionType?.value

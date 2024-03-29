@@ -40,7 +40,7 @@ class ClientChargeAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val charge = getItem(position)
-        var currencyRepresentation = charge?.currency?.displaySymbol
+        var currencyRepresentation = charge?.currency?.displaySymbol ?: charge?.currency?.code
         if (currencyRepresentation == null) {
             currencyRepresentation = charge?.currency?.code
         }

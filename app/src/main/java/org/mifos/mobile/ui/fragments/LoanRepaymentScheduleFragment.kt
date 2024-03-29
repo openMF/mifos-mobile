@@ -82,14 +82,17 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
                             hideProgress()
                             showError(getString(it.message))
                         }
+
                         is LoanUiState.ShowLoan -> {
                             hideProgress()
                             showLoanRepaymentSchedule(it.loanWithAssociations)
                         }
+
                         is LoanUiState.ShowEmpty -> {
                             hideProgress()
                             showEmptyRepaymentsSchedule(loanWithAssociations)
                         }
+
                         else -> throw IllegalStateException("Unexpected state: $it")
                     }
                 }
@@ -150,7 +153,8 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
      */
     fun showLoanRepaymentSchedule(loanWithAssociations: LoanWithAssociations?) {
         this.loanWithAssociations = loanWithAssociations
-        var currencyRepresentation = loanWithAssociations?.currency?.displaySymbol
+        var currencyRepresentation =
+            loanWithAssociations?.currency?.displaySymbol ?: loanWithAssociations?.currency?.code
         loanRepaymentScheduleAdapter
             ?.setCurrency(currencyRepresentation)
         setTableViewList(loanWithAssociations?.repaymentSchedule?.periods)
