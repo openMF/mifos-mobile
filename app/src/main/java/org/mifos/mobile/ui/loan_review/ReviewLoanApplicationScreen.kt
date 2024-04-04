@@ -68,10 +68,6 @@ fun ReviewLoanApplicationScreen(
             ReviewLoanApplicationContent(modifier = Modifier.padding(16.dp), data = data, submit = submit)
 
             when (uiState) {
-                is ReviewLoanApplicationUiState.Initial -> {
-                    // Data shown in UI
-                }
-
                 is ReviewLoanApplicationUiState.Loading -> {
                     MifosProgressIndicator(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background.copy(0.8f)))
                 }
@@ -90,6 +86,8 @@ fun ReviewLoanApplicationScreen(
                     }
                     navigateBack(true)
                 }
+
+                is ReviewLoanApplicationUiState.ReviewLoanUiReady -> Unit
             }
         }
     }
@@ -119,7 +117,7 @@ fun ErrorComponent(
 class UiStatesParameterProvider : PreviewParameterProvider<ReviewLoanApplicationUiState> {
     override val values: Sequence<ReviewLoanApplicationUiState>
         get() = sequenceOf(
-            ReviewLoanApplicationUiState.Initial,
+            ReviewLoanApplicationUiState.ReviewLoanUiReady,
             ReviewLoanApplicationUiState.Error(throwable = Throwable()),
             ReviewLoanApplicationUiState.Loading,
             ReviewLoanApplicationUiState.Success(loanState = LoanState.CREATE)

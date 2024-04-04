@@ -49,7 +49,7 @@ class ReviewLoanApplicationViewModel @Inject constructor(
             disbursementDate = loansPayload.expectedDisbursementDate,
             loanId = loanId ?: 0
         )
-        _reviewLoanApplicationUiState.value = ReviewLoanApplicationUiState.Initial
+        _reviewLoanApplicationUiState.value = ReviewLoanApplicationUiState.ReviewLoanUiReady
     }
 
 
@@ -69,7 +69,7 @@ class ReviewLoanApplicationViewModel @Inject constructor(
 }
 
 sealed class ReviewLoanApplicationUiState {
-    data object Initial : ReviewLoanApplicationUiState()
+    data object ReviewLoanUiReady : ReviewLoanApplicationUiState()
     data object Loading : ReviewLoanApplicationUiState()
     data class Error(val throwable: Throwable) : ReviewLoanApplicationUiState()
     data class Success(val loanState: LoanState) : ReviewLoanApplicationUiState()
