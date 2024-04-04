@@ -1,7 +1,8 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.update_password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.Observer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +13,7 @@ import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
+import retrofit2.Response
 
 @HiltViewModel
 class UpdatePasswordViewModel @Inject constructor(

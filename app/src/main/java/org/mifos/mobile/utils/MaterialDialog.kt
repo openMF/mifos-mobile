@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.mifos.mobile.R
+import org.mifos.mobile.ui.registration.RegistrationActivity
+import org.mifos.mobile.ui.update_password.UpdatePasswordActivity
 
 /**
  * This Class is the Material Dialog Builder Class

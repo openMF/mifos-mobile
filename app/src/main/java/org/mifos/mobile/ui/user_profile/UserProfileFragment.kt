@@ -20,10 +20,10 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.Group
-import org.mifos.mobile.ui.activities.EditUserDetailActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
+import org.mifos.mobile.ui.update_password.UpdatePasswordActivity
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
@@ -230,7 +230,7 @@ class UserProfileFragment : BaseFragment() {
     }
 
     private fun changePassword() {
-        startActivity(Intent(context, EditUserDetailActivity::class.java))
+        startActivity(Intent(activity, UpdatePasswordActivity::class.java))
     }
 
     private fun backToHome() {

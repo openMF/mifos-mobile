@@ -4,7 +4,7 @@ import android.os.Bundle
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityEditUserDetailBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.UpdatePasswordFragment
+import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
 
 /*
 * Created by saksham on 14/July/2018
