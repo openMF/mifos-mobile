@@ -66,32 +66,6 @@ class UpdatePasswordFragment : BaseFragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.updatePasswordUiState.collect { state ->
-                    when (state) {
-                        RegistrationUiState.Loading -> showProgress()
-
-                        RegistrationUiState.Success -> {
-                            hideProgress()
-                            showPasswordUpdatedSuccessfully()
-                        }
-
-                        is RegistrationUiState.Error -> {
-                            hideProgress()
-                            showError(getString(state.exception))
-                        }
-
-                        RegistrationUiState.Initial -> {}
-                    }
-                }
-            }
-        }
-    }
-
     private fun updatePassword() {
         val newPassword = newPasswordContent
         val confirmPassword = confirmPasswordContent
@@ -158,42 +132,17 @@ class UpdatePasswordFragment : BaseFragment() {
         Toaster.show(view, errorMessage)
     }
 
-    private fun showPasswordUpdatedSuccessfully() {
-        Toast.makeText(
-            context,
-            getString(
-                R.string.string_changed_successfully,
-                getString(R.string.password),
-            ),
-            Toast.LENGTH_SHORT,
-        ).show()
-        (activity as BaseActivity).clearFragmentBackStack()
-        (activity as BaseActivity).replaceFragment(
-            SettingsFragment.newInstance(),
-            true,
-            R.id.container,
-        )
-    }
-
     private fun navigateBack() {
         /*
         If we navigate to update password from user profile there is nothing in backStackEntry
         But when we migrate from settings to update password there is one backStackEntry
-        Since, we need a code to work for both we used this condition here.
+        so we need a code that will work for both, that's why we used this condition here.
          */
         if (fragmentManager?.backStackEntryCount!! > 0) {
             fragmentManager?.popBackStack()
         } else {
             activity?.finish()
         }
-    }
-
-    fun showProgress() {
-        showMifosProgressDialog(getString(R.string.progress_message_loading))
-    }
-
-    fun hideProgress() {
-        hideMifosProgressDialog()
     }
 
     override fun onResume() {

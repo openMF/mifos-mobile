@@ -21,3 +21,4 @@ fun MifosProgressIndicator(
         CircularProgressIndicator()
     }
 }
+
