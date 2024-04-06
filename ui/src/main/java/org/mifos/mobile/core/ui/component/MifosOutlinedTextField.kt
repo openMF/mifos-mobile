@@ -40,15 +40,16 @@ fun MifosOutlinedTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     error: Boolean = false,
     supportingText: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    modifier: Modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
 
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(stringResource(id = label)) },
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp),
         leadingIcon = if (icon != null) {
             {
                 Image(
@@ -85,6 +86,6 @@ fun MifosOutlinedTextField(
                     color = MaterialTheme.colorScheme.error
                 )
             }
-        },
+        }
     )
 }
