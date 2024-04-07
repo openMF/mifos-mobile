@@ -1,8 +1,11 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.update_password
 
+import android.content.Context
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -16,23 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdatePasswordViewModel @Inject constructor(
     private val userAuthRepositoryImp: UserAuthRepository,
-    private val clientRepositoryImp: ClientRepository
+    private val clientRepositoryImp: ClientRepository,
 ) : ViewModel() {
 
-    private val _updatePasswordUiState =
-        MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
+    private val _updatePasswordUiState = MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
     val updatePasswordUiState: StateFlow<RegistrationUiState> get() = _updatePasswordUiState
-    fun isInputFieldEmpty(fieldText: String): Boolean {
-        return fieldText.isEmpty()
-    }
-
-    fun isInputLengthInadequate(fieldText: String): Boolean {
-        return fieldText.length < 6
-    }
-
-    fun validatePasswordMatch(newPassword: String, confirmPassword: String): Boolean {
-        return newPassword == confirmPassword
-    }
 
     fun updateAccountPassword(newPassword: String, confirmPassword: String) {
         viewModelScope.launch {

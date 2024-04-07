@@ -10,7 +10,18 @@ import org.mifos.mobile.api.BaseApiManager
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.DatabaseHelper
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.api.services.*
+import org.mifos.mobile.api.services.AuthenticationService
+import org.mifos.mobile.api.services.BeneficiaryService
+import org.mifos.mobile.api.services.ClientChargeService
+import org.mifos.mobile.api.services.ClientService
+import org.mifos.mobile.api.services.GuarantorService
+import org.mifos.mobile.api.services.LoanAccountsListService
+import org.mifos.mobile.api.services.NotificationService
+import org.mifos.mobile.api.services.RecentTransactionsService
+import org.mifos.mobile.api.services.RegistrationService
+import org.mifos.mobile.api.services.SavingAccountsListService
+import org.mifos.mobile.api.services.ThirdPartyTransferService
+import org.mifos.mobile.api.services.UserDetailsService
 import javax.inject.Singleton
 
 /**
