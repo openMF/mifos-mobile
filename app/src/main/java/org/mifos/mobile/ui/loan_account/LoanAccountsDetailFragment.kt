@@ -6,24 +6,17 @@ import android.widget.Toast
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.ui.activities.LoanAccountContainerActivity
-import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.fragments.GuarantorListFragment
-import org.mifos.mobile.ui.fragments.LoanAccountSummaryFragment
+import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
 import org.mifos.mobile.ui.fragments.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.fragments.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.fragments.LoanApplicationFragment
@@ -31,9 +24,7 @@ import org.mifos.mobile.ui.fragments.LoanRepaymentScheduleFragment
 import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
 import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.savings_account.SavingsAccountDetailScreen
 import org.mifos.mobile.utils.*
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import javax.inject.Inject
 
 /*
