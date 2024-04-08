@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
+import org.mifos.mobile.databinding.LayoutFilterDialogBinding
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Transactions
@@ -305,65 +306,56 @@ class SavingAccountsTransactionFragment : BaseFragment() {
     /**
      * Shows a filter dialog
      */
+     private lateinit var filterBinding: LayoutFilterDialogBinding
     private fun showFilterDialog() {
-        val inflater = activity?.layoutInflater
-        val dialogView = inflater?.inflate(R.layout.layout_filter_dialog, null, false)
-        val checkBoxPeriod: AppCompatCheckBox? = dialogView?.findViewById(R.id.cb_select)
-        val radioGroupFilter = dialogView?.findViewById<RadioGroup>(R.id.rg_date_filter)
-        tvStartDate = dialogView?.findViewById(R.id.tv_start_date)
-        tvEndDate = dialogView?.findViewById(R.id.tv_end_date)
+        filterBinding = LayoutFilterDialogBinding.inflate(layoutInflater)
+        val dialogView = filterBinding.root
+
+        val checkBoxPeriod: AppCompatCheckBox? = filterBinding.cbSelect
+        val radioGroupFilter = filterBinding.rgDateFilter
+        tvStartDate = filterBinding.tvStartDate
+        tvEndDate = filterBinding.tvEndDate
         tvStartDate?.isEnabled = false
         tvEndDate?.isEnabled = false
 
         tvStartDate?.text = DateHelper.getDateAsStringFromLong(startDate)
         tvEndDate?.text = DateHelper.getDateAsStringFromLong(endDate)
-        // setup listeners
+
         tvStartDate?.setOnClickListener { startDatePick() }
         tvEndDate?.setOnClickListener { endDatePick() }
-        checkBoxPeriod?.setOnClickListener {
-            checkBoxPeriod.isChecked = (!checkBoxPeriod.isChecked)
-        }
+
         checkBoxPeriod?.setOnCheckedChangeListener { _, isChecked ->
             isCheckBoxPeriod = isChecked
+            tvStartDate?.isEnabled = isChecked
+            tvEndDate?.isEnabled = false
+
             if (!isChecked) {
                 isReady = false
-                radioGroupFilter?.clearCheck()
+                filterBinding.rgDateFilter.clearCheck()
                 selectedRadioButtonId = -1
             } else {
                 if (selectedRadioButtonId == -1) {
-                    val btn = dialogView.findViewById<RadioButton>(R.id.rb_date)
+                    val btn = filterBinding.rbDate
                     btn.isChecked = true
                 }
             }
         }
-        radioGroupFilter?.setOnCheckedChangeListener { radioGroup, _ ->
+        radioGroupFilter?.setOnCheckedChangeListener { _, checkedId ->
             isCheckBoxPeriod = true
-            selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            when (radioGroup.checkedRadioButtonId) {
-                R.id.rb_four_weeks -> {
+            selectedRadioButtonId = checkedId
+            when (checkedId) {
+                R.id.rb_four_weeks, R.id.rb_three_months, R.id.rb_six_months -> {
                     tvStartDate?.isEnabled = false
                     tvEndDate?.isEnabled = false
-                    startDate = DateHelper.subtractWeeks(4)
+                    startDate = when (checkedId) {
+                        R.id.rb_four_weeks -> DateHelper.subtractWeeks(4)
+                        R.id.rb_three_months -> DateHelper.subtractMonths(3)
+                        R.id.rb_six_months -> DateHelper.subtractMonths(6)
+                        else -> startDate
+                    }
                     endDate = System.currentTimeMillis()
                     isReady = true
                 }
-
-                R.id.rb_three_months -> {
-                    tvStartDate?.isEnabled = false
-                    tvEndDate?.isEnabled = false
-                    startDate = DateHelper.subtractMonths(3)
-                    endDate = System.currentTimeMillis()
-                    isReady = true
-                }
-
-                R.id.rb_six_months -> {
-                    tvStartDate?.isEnabled = false
-                    tvEndDate?.isEnabled = false
-                    startDate = DateHelper.subtractMonths(6)
-                    endDate = System.currentTimeMillis()
-                    isReady = true
-                }
-
                 R.id.rb_date -> {
                     tvStartDate?.isEnabled = true
                     tvEndDate?.isEnabled = false
@@ -371,18 +363,13 @@ class SavingAccountsTransactionFragment : BaseFragment() {
             }
         }
 
-        // restore prev state
-        checkBoxPeriod?.isChecked = isCheckBoxPeriod
-        if (selectedRadioButtonId != -1) {
-            val btn = dialogView?.findViewById<RadioButton>(selectedRadioButtonId)
-            btn?.isChecked = true
-        }
-        val checkBoxRecyclerView: RecyclerView? = dialogView?.findViewById(R.id.recycler_view)
-        val layoutManager = LinearLayoutManager(activity)
+        val checkBoxRecyclerView: RecyclerView? = filterBinding.recyclerView
+        val layoutManager = LinearLayoutManager(requireContext())
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         checkBoxRecyclerView?.layoutManager = layoutManager
         checkBoxRecyclerView?.adapter = checkBoxAdapter
         checkBoxAdapter?.statusList = statusList
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.select_you_want)
             .setView(dialogView)

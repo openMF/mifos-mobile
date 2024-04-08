@@ -8,37 +8,46 @@
         android:id="@+id/ll_account"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_saving_accounts_transaction"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_0dp"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvEmptyView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
+            android:gravity="center"
+            android:text="@string/no_transaction"
+            android:visibility="gone" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/need_help" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_help_line_number"
-                style="@style/Mifos.DesignSystem.TextStyle.Link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/help_line_number" />
+    <LinearLayout
+        android:id="@+id/ll_contact_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/need_help" />
+
+        <TextView
+            android:id="@+id/tv_help_line_number"
+            style="@style/Mifos.DesignSystem.TextStyle.Link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/Mifos.DesignSystem.Spacing.marginWords"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/help_line_number" />
 
     </LinearLayout>
 
