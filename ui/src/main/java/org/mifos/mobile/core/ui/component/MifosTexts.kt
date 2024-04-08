@@ -101,3 +101,32 @@ fun MifosTitleStatusSingleLine(
         )
     }
 }
+
+@Composable
+fun MifosTitleDescSingleLineEqual(
+    modifier: Modifier = Modifier,
+    title: String,
+    description: String
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Text(
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            text = title,
+            modifier = Modifier
+                .alpha(0.7f)
+                .weight(1f)
+        )
+
+        Text(
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            text = description,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}

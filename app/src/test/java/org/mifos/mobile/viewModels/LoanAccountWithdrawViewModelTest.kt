@@ -1,7 +1,6 @@
 package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -18,13 +17,13 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.repositories.LoanRepositoryImp
+import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.LoanUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class LoanAccountWithdrawViewModelTest {

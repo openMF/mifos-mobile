@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
@@ -179,36 +180,6 @@ fun SavingsAccountWithdrawContent(
         }
     }
 }
-
-@Composable
-fun MifosTitleDescSingleLineEqual(
-    modifier: Modifier = Modifier,
-    title: String,
-    description: String
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Text(
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            text = title,
-            modifier = Modifier
-                .alpha(0.7f)
-                .weight(1f)
-        )
-
-        Text(
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            text = description,
-            modifier = Modifier.weight(1f)
-        )
-    }
-}
-
 
 class UiStatesParameterProvider : PreviewParameterProvider<SavingsAccountWithdrawUiState> {
     override val values: Sequence<SavingsAccountWithdrawUiState>
