@@ -16,7 +16,7 @@ import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.fragments.GuarantorListFragment
-import org.mifos.mobile.ui.fragments.LoanAccountTransactionFragment
+import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.fragments.LoanApplicationFragment
 import org.mifos.mobile.ui.fragments.LoanRepaymentScheduleFragment

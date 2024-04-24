@@ -14,7 +14,7 @@ class LoanRepositoryImp @Inject constructor(private val dataManager: DataManager
     override fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
-    ): Flow<LoanWithAssociations?>? {
+    ): Flow<LoanWithAssociations?> {
         return flow {
             emit(dataManager.getLoanWithAssociations(associationType, loanId))
         }

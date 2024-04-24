@@ -653,4 +653,5 @@
     <string name="could_not_register_user_error">We were unable to register the user.</string>
     <string name="no_questions_found">No Questions Found</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="atm_icon">ATM Icon</string>
 </resources>

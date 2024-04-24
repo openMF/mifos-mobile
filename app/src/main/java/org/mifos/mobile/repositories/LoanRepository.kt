@@ -11,7 +11,7 @@ interface LoanRepository {
     fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?
-    ): Flow<LoanWithAssociations?>?
+    ): Flow<LoanWithAssociations?>
 
     fun withdrawLoanAccount(
         loanId: Long?,

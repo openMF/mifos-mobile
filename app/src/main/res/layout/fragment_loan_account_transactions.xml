@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"
         android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.screenVerticalMargin"
         android:orientation="vertical"
-        android:visibility="gone">
+        >
 
         <TextView
             android:id="@+id/tv_loan_product_name"
