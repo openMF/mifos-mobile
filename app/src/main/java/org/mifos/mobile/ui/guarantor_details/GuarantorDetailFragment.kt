@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.guarantor_details
 
 import android.os.Bundle
 import android.view.*
@@ -22,7 +22,6 @@ import org.mifos.mobile.utils.RxBus.listen
 import org.mifos.mobile.utils.RxBus.publish
 import org.mifos.mobile.utils.RxEvent.DeleteGuarantorEvent
 import org.mifos.mobile.utils.RxEvent.UpdateGuarantorEvent
-import org.mifos.mobile.viewModels.GuarantorDetailViewModel
 
 /*
 * Created by saksham on 24/July/2018
@@ -30,6 +29,7 @@ import org.mifos.mobile.viewModels.GuarantorDetailViewModel
 @AndroidEntryPoint
 class GuarantorDetailFragment : BaseFragment() {
 
+    /*
     private var _binding: FragmentGuarantorDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -192,4 +192,6 @@ class GuarantorDetailFragment : BaseFragment() {
             return fragment
         }
     }
+
+     */
 }

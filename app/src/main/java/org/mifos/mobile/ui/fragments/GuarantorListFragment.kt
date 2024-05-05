@@ -20,6 +20,8 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.GuarantorListAdapter
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.guarantor_details.GuarantorDetailComposeFragment
+import org.mifos.mobile.ui.guarantor_details.GuarantorDetailFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.GuarantorUiState
@@ -65,7 +67,7 @@ class GuarantorListFragment : BaseFragment() {
                 object : GuarantorListAdapter.OnClickListener {
                     override fun setOnClickListener(position: Int) {
                         (activity as BaseActivity?)?.replaceFragment(
-                            GuarantorDetailFragment
+                            GuarantorDetailComposeFragment
                                 .newInstance(position, loanId, list!![position]),
                             true,
                             R.id.container,
@@ -198,6 +200,11 @@ class GuarantorListFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? BaseActivity)?.showToolbar()
     }
 
     companion object {

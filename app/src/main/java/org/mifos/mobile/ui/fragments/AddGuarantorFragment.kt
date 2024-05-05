@@ -19,6 +19,7 @@ import org.mifos.mobile.databinding.FragmentAddGuarantorBinding
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.GuarantorState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
@@ -255,6 +256,11 @@ class AddGuarantorFragment : BaseFragment() {
 
     fun showError(message: String?) {
         Toaster.show(binding.root, message)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? BaseActivity)?.showToolbar()
     }
 
     companion object {
