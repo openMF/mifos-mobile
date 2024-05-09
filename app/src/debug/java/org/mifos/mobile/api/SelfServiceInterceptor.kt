@@ -32,7 +32,7 @@ class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     companion object {
         const val HEADER_TENANT = "Fineract-Platform-TenantId"
         const val HEADER_AUTH = "Authorization"
-        const val DEFAULT_TENANT = "default"
+        const val DEFAULT_TENANT = "gsoc"
         const val CONTENT_TYPE = "Content-Type"
     }
 }
