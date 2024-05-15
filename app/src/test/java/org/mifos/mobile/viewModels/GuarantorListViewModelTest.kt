@@ -2,12 +2,10 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -15,13 +13,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.models.guarantor.GuarantorPayload
 import org.mifos.mobile.repositories.GuarantorRepositoryImp
+import org.mifos.mobile.ui.guarantor.guarantor_list.GuarantorListViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.GuarantorUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi

@@ -70,4 +70,8 @@ object Constants {
     const val LICENSE_LINK = "https://github.com/openMF/mifos-mobile/blob/development/LICENSE.md"
     const val SOURCE_CODE_LINK = "https://github.com/openMF/mifos-mobile"
     const val WEBSITE_LINK = "https://openmf.github.io/mobileapps.github.io/"
+
+    const val GUARANTOR_LIST_SCREEN_ROUTE_BASE = "guarantor_list_screen"
+    const val GUARANTOR_DETAIL_SCREEN_ROUTE_BASE = "guarantor_detail_screen"
+    const val GUARANTOR_ADD_SCREEN_ROUTE_BASE = "guarantor_add_screen"
 }

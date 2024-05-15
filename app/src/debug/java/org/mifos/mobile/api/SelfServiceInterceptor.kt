@@ -5,6 +5,7 @@
 package org.mifos.mobile.api
 
 import android.text.TextUtils
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.mifos.mobile.api.local.PreferencesHelper

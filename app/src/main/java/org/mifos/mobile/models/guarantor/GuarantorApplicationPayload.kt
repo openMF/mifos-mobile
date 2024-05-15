@@ -1,16 +1,22 @@
 package org.mifos.mobile.models.guarantor
 
+import com.google.gson.annotations.SerializedName
+
 /*
  * Created by saksham on 23/July/2018
  */
 
 data class GuarantorApplicationPayload(
 
-    var guarantorType: GuarantorType?,
+    @SerializedName("guarantorTypeId")
+    var guarantorTypeId: Long?,
 
+    @SerializedName("firstname")
     var firstName: String?,
 
+    @SerializedName("lastname")
     var lastName: String?,
 
-    var officeName: String?,
+    @SerializedName("city")
+    var city: String? = ""
 )

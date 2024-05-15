@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.guarantor_details
+package org.mifos.mobile.ui.guarantor.guarantor_details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,9 +18,7 @@ import org.mifos.mobile.utils.DateHelper
 fun GuarantorDetailContent(
     data: GuarantorPayload
 ) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         MifosTitleDescDoubleLine(
             title = stringResource(id = R.string.first_name),
@@ -39,8 +37,8 @@ fun GuarantorDetailContent(
         Divider(modifier = Modifier.padding(vertical = 8.dp))
 
         MifosTitleDescDoubleLine(
-            title = stringResource(id = R.string.office_name),
-            description = data.officeName ?: "",
+            title = stringResource(id = R.string.city),
+            description = data.city ?: "",
             descriptionStyle =  MaterialTheme.typography.bodyLarge
         )
 
@@ -53,14 +51,5 @@ fun GuarantorDetailContent(
         )
 
         Divider(modifier = Modifier.padding(vertical = 8.dp))
-
-        MifosTitleDescDoubleLine(
-            title = stringResource(id = R.string.joined_date),
-            description = DateHelper.getDateAsString(data.joinedDate),
-            descriptionStyle =  MaterialTheme.typography.bodyLarge
-        )
-
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
-
     }
 }

@@ -654,4 +654,12 @@
     <string name="no_questions_found">No Questions Found</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="atm_icon">ATM Icon</string>
+    <string name="title_activity_guarantor">GuarantorActivity</string>
+    <string name="screen_guarantor_list">Screen Guarantor List</string>
+    <string name="screen_guarantor_details">Screen Guarantor Details</string>
+    <string name="screen_guarantor_add">Screen Guarantor Add</string>
+    <string name="city">City</string>
+    <string name="guarantor_deleted_successfully">Guarantor deleted successfully</string>
+    <string name="guarantor_created_successfully">Guarantor created successfully</string>
+    <string name="guarantor_updated_successfully">Guarantor updated successfully</string>
 </resources>

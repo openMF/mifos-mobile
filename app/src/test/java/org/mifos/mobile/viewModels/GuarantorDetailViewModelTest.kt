@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.repositories.GuarantorRepositoryImp
-import org.mifos.mobile.ui.guarantor_details.GuarantorDetailViewModel
+import org.mifos.mobile.ui.guarantor.guarantor_details.GuarantorDetailViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.GuarantorUiState
 import org.mockito.Mock
@@ -52,7 +52,7 @@ class GuarantorDetailViewModelTest {
         val response = mock(ResponseBody::class.java)
 
         `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L)).thenReturn(flowOf(response))
-        viewModel.guarantorUiState.test {
+        viewModel.guarantorDeleteState.test {
             viewModel.deleteGuarantor(1L, 2L)
             assertEquals(GuarantorUiState.Loading, awaitItem())
             assertEquals(GuarantorUiState.GuarantorDeletedSuccessfully(response.string()), awaitItem())
@@ -65,7 +65,7 @@ class GuarantorDetailViewModelTest {
         val error = Exception("Error")
         `when`(guarantorRepositoryImp.deleteGuarantor(1L, 2L))
             .thenThrow(error)
-        viewModel.guarantorUiState.test {
+        viewModel.guarantorDeleteState.test {
             viewModel.deleteGuarantor(1L, 2L)
             assertEquals(GuarantorUiState.Loading, awaitItem())
             assertEquals(GuarantorUiState.ShowError(error.message), awaitItem())

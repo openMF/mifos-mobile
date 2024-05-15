@@ -8,20 +8,20 @@ import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 
 interface GuarantorRepository {
 
-    fun getGuarantorTemplate(loanId: Long?): Flow<GuarantorTemplatePayload?>?
+    fun getGuarantorTemplate(loanId: Long?): Flow<GuarantorTemplatePayload?>
 
     fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
-    ): Flow<ResponseBody?>?
+    ): Flow<ResponseBody?>
 
     fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?,
-    ): Flow<ResponseBody?>?
+    ): Flow<ResponseBody?>
 
-    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Flow<ResponseBody?>?
+    fun deleteGuarantor(loanId: Long?, guarantorId: Long?): Flow<ResponseBody?>
 
-    fun getGuarantorList(loanId: Long): Flow<List<GuarantorPayload?>?>?
+    fun getGuarantorList(loanId: Long): Flow<List<GuarantorPayload?>?>
 }

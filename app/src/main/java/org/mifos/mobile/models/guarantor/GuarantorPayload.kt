@@ -13,7 +13,7 @@ data class GuarantorPayload(
 
     var id: Long? = 0,
 
-    var officeName: String? = null,
+    var city: String? = null,
 
     var lastname: String? = null,
 
@@ -24,4 +24,6 @@ data class GuarantorPayload(
     var joinedDate: List<Int>? = null,
 
     var loanId: Long? = null,
+
+    var status: Boolean? = true
 ) : Parcelable

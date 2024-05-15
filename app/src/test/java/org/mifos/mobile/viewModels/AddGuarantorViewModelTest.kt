@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
@@ -23,14 +22,13 @@ import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.repositories.GuarantorRepositoryImp
 import org.mifos.mobile.ui.enums.GuarantorState
+import org.mifos.mobile.ui.guarantor.guarantor_add.AddGuarantorViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.GuarantorUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi

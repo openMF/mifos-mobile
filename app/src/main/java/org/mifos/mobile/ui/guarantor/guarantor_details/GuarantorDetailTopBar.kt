@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.guarantor_details
+package org.mifos.mobile.ui.guarantor.guarantor_details
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack

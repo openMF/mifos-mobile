@@ -21,7 +21,8 @@
     <include
         android:id="@+id/layout_error"
         layout="@layout/error_layout"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_loan_guarantor"

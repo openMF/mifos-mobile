@@ -84,7 +84,7 @@ fun MifosOutlinedTextField(
                     text = supportingText,
                     color = MaterialTheme.colorScheme.error
                 )
-            }
+            } else null
         },
     )
 }

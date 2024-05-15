@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.loan_account
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -15,7 +16,6 @@ import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ClientChargeFragment
-import org.mifos.mobile.ui.fragments.GuarantorListFragment
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.fragments.LoanApplicationFragment
@@ -23,6 +23,7 @@ import org.mifos.mobile.ui.fragments.LoanRepaymentScheduleFragment
 import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
 import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.guarantor.GuarantorActivity
 import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
 import org.mifos.mobile.utils.*
 import javax.inject.Inject
@@ -196,13 +197,9 @@ class LoanAccountsDetailFragment : BaseFragment() {
     }
 
     private fun viewGuarantor() {
-        (activity as BaseActivity?)?.replaceFragment(
-            GuarantorListFragment.newInstance(
-                viewModel.loanId,
-            ),
-            true,
-            R.id.container,
-        )
+        val intent = Intent(requireContext(), GuarantorActivity::class.java)
+        intent.putExtra(Constants.LOAN_ID, viewModel.loanId)
+        startActivity(intent)
     }
 
     companion object {
