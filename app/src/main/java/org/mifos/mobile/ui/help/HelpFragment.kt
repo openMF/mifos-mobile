@@ -21,8 +21,8 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.LocationsFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.location.LocationsFragment
 import org.mifos.mobile.utils.HelpUiState
 
 /*
