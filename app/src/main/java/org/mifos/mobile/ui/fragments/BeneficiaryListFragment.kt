@@ -23,6 +23,7 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.AddBeneficiaryActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.BeneficiaryListAdapter
+import org.mifos.mobile.ui.beneficiary_detail.BeneficiaryDetailFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
