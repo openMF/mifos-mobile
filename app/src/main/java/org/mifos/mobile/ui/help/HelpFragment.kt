@@ -21,6 +21,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.FAQ
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary_list.BeneficiaryListsFragment
 import org.mifos.mobile.ui.fragments.LocationsFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.HelpUiState
@@ -95,7 +96,7 @@ class HelpFragment : BaseFragment() {
 
     private fun findLocations() {
         (activity as BaseActivity?)?.replaceFragment(
-            LocationsFragment.newInstance(),
+            BeneficiaryListsFragment.newInstance(),
             true,
             R.id.container,
         )
