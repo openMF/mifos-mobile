@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.beneficiary_list
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +15,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosTopBar
@@ -29,20 +33,19 @@ import org.mifos.mobile.utils.BeneficiaryUiState
 @Composable
 fun BeneficiaryListScreen(
     beneficiaryList: List<Beneficiary?>?,
-    sweetUIErrorHandler: SweetUIErrorHandler,
+    viewModel: BeneficiaryListViewModel = hiltViewModel(),
+    sweetUIErrorHandler: SweetUIErrorHandler?,
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit
 ) {
-    var viewModel by remember {
-        BeneficiaryListViewModel
-    }
+    val uiState by viewModel.beneficiaryUiState.collectAsStateWithLifecycle()
+
     BeneficiaryListScreen(
+        uiState = uiState,
         beneficiaryList = beneficiaryList,
         navigateBack = navigateBack,
         addBeneficiaryClicked = addBeneficiaryClicked
-    ) {
-
-    }
+    )
 }
 
 
@@ -66,21 +69,36 @@ fun BeneficiaryListScreen(
             }
         }
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
             BeneficiaryItem()
-            BeneficiaryItem()
-            BeneficiaryItem()
-            BeneficiaryItem()
-            BeneficiaryItem()
-            BeneficiaryItem()
+            when(uiState){
+                BeneficiaryUiState.Loading -> {
+
+                }
+                is BeneficiaryUiState.ShowError -> {
+
+                }
+                is BeneficiaryUiState.ShowBeneficiaryList -> {
+
+
+                }
+
+                BeneficiaryUiState.Initial ->  Unit
+
+
+                else -> throw IllegalStateException("Undesired $uiState")
+
+            }
 
         }
     }
+
 }
+
 
 @Composable
 fun BeneficiaryItem() {

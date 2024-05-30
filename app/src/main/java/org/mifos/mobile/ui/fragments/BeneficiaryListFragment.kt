@@ -83,7 +83,6 @@ class BeneficiaryListFragment : BaseFragment(), OnRefreshListener {
 
                         is BeneficiaryUiState.Initial -> {}
 
-                        else -> throw IllegalStateException("Undesired $it")
                     }
                 }
             }

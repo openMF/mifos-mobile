@@ -16,10 +16,12 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.fragments.BeneficiaryDetailFragment
 import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
+import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.viewModels.BeneficiaryListViewModel
 
 @AndroidEntryPoint
@@ -39,8 +41,10 @@ class BeneficiaryListsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshLis
                 MifosMobileTheme {
                     BeneficiaryListScreen(
                         beneficiaryList = beneficiaryList,
-                        navigateBack = { activity?.supportFragmentManager?.popBackStack() }) {
-                    }
+                        sweetUIErrorHandler = sweetUIErrorHandler,
+                        navigateBack = { activity?.supportFragmentManager?.popBackStack() },
+                        addBeneficiaryClicked = {}
+                        )
                 }
             }
         }
@@ -62,6 +66,28 @@ class BeneficiaryListsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshLis
                     beneficiaryList,
                 ),
             )
+        }
+    }
+
+    private fun onItemClick(position: Int) {
+        (activity as BaseActivity?)?.replaceFragment(
+            BeneficiaryDetailFragment.newInstance(
+                beneficiaryList!![position],
+            ),
+            true,
+            R.id.container,
+        )
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            val beneficiaries: List<Beneficiary?> =
+                savedInstanceState.getCheckedArrayListFromParcelable(
+                    Beneficiary::class.java,
+                    Constants.BENEFICIARY
+                ) ?: listOf()
+//            showBeneficiaryList(beneficiaries)
         }
     }
 
