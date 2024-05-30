@@ -14,20 +14,46 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.models.beneficiary.Beneficiary
+import org.mifos.mobile.utils.BeneficiaryUiState
 
 @Composable
 fun BeneficiaryListScreen(
+    beneficiaryList: List<Beneficiary?>?,
+    sweetUIErrorHandler: SweetUIErrorHandler,
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit
 ) {
+    var viewModel by remember {
+        BeneficiaryListViewModel
+    }
+    BeneficiaryListScreen(
+        beneficiaryList = beneficiaryList,
+        navigateBack = navigateBack,
+        addBeneficiaryClicked = addBeneficiaryClicked
+    ) {
+
+    }
+}
+
+
+@Composable
+fun BeneficiaryListScreen(
+    uiState: BeneficiaryUiState,
+    beneficiaryList: List<Beneficiary?>?,
+    navigateBack: () -> Unit,
+    addBeneficiaryClicked: () -> Unit
+) {
+
     Scaffold(
         topBar = {
             MifosTopBar(navigateBack = { navigateBack.invoke() }) {
@@ -76,11 +102,11 @@ fun BeneficiaryItem() {
 }
 
 
-@Composable
-@Preview(showSystemUi = true)
-fun Preview(modifier: Modifier = Modifier) {
-    BeneficiaryListScreen(
-        navigateBack = {},
-        addBeneficiaryClicked = {}
-    )
-}
+//@Composable
+//@Preview(showSystemUi = true)
+//fun Preview(modifier: Modifier = Modifier) {
+//    BeneficiaryListScreen(
+//        navigateBack = {},
+//        addBeneficiaryClicked = {}
+//    )
+//}

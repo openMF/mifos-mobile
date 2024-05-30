@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.beneficiary_list
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.viewModels.BeneficiaryListViewModel
 
@@ -35,7 +37,9 @@ class BeneficiaryListsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshLis
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MifosMobileTheme {
-                    BeneficiaryListScreen(navigateBack = { /*TODO*/ }) {
+                    BeneficiaryListScreen(
+                        beneficiaryList = beneficiaryList,
+                        navigateBack = { activity?.supportFragmentManager?.popBackStack() }) {
                     }
                 }
             }
@@ -43,10 +47,23 @@ class BeneficiaryListsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
 
+
     override fun onRefresh() {
+
         viewModel.loadBeneficiaries()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (beneficiaryList != null) {
+            outState.putParcelableArrayList(
+                Constants.BENEFICIARY,
+                ArrayList<Parcelable?>(
+                    beneficiaryList,
+                ),
+            )
+        }
+    }
 
 //
 //    private fun retryClicked() {
