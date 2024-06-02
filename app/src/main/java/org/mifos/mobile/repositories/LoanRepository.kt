@@ -18,9 +18,9 @@ interface LoanRepository {
         loanWithdraw: LoanWithdraw?,
     ): Flow<ResponseBody?>?
 
-    fun template(): Flow<LoanTemplate?>?
+    fun template(): Flow<LoanTemplate?>
 
     fun getLoanTemplateByProduct(
         productId: Int?
-    ): Flow<LoanTemplate?>?
+    ): Flow<LoanTemplate?>
 }

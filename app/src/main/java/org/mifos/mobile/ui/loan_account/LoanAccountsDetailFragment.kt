@@ -18,7 +18,7 @@ import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
-import org.mifos.mobile.ui.fragments.LoanApplicationFragment
+import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
 import org.mifos.mobile.ui.fragments.LoanRepaymentScheduleFragment
 import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment

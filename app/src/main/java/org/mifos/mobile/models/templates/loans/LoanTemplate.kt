@@ -21,8 +21,6 @@ data class LoanTemplate(
 
     var clientOfficeId: Int? = null,
 
-    var loanProductId: Int? = null,
-
     var loanProductName: String? = null,
 
     @SerializedName("isLoanProductLinkedToFloatingRate")

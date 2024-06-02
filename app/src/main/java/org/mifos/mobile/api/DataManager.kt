@@ -1,5 +1,6 @@
 package org.mifos.mobile.api
 
+import android.util.Log
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.mifos.mobile.api.local.DatabaseHelper

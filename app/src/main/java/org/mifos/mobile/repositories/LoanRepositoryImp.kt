@@ -29,13 +29,13 @@ class LoanRepositoryImp @Inject constructor(private val dataManager: DataManager
         }
     }
 
-    override fun template(): Flow<LoanTemplate?>? {
+    override fun template(): Flow<LoanTemplate?> {
         return flow {
             emit(dataManager.loanTemplate())
         }
     }
 
-    override fun getLoanTemplateByProduct(productId: Int?): Flow<LoanTemplate?>? {
+    override fun getLoanTemplateByProduct(productId: Int?): Flow<LoanTemplate?> {
         return flow {
             emit(dataManager.getLoanTemplateByProduct(productId))
         }

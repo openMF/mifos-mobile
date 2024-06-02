@@ -26,13 +26,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosRoundIcon
-import org.mifos.mobile.core.ui.component.MifosTitleDescDoubleLine
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.accounts.savings.Status
 import org.mifos.mobile.utils.CurrencyUtil
@@ -109,7 +108,7 @@ fun AccountDetailsCard(
     val context = LocalContext.current
     OutlinedCard(modifier = modifier) {
         Column(modifier = Modifier.padding(14.dp)) {
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.account_balance),
                 description = stringResource(
                     id = R.string.string_and_string,
@@ -131,7 +130,7 @@ fun AccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.account_number),
                 description = savingsAccount.accountNo ?: "",
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
@@ -139,7 +138,7 @@ fun AccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.nominal_interest_rate),
                 description = stringResource(
                     id = R.string.double_and_string,
@@ -151,7 +150,7 @@ fun AccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.total_deposits),
                 description = if (savingsAccount.summary?.totalDeposits != null) {
                     stringResource(
@@ -170,7 +169,7 @@ fun AccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.total_withdrawal),
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
                 description = if (savingsAccount.summary?.totalDeposits != null) {
@@ -228,7 +227,7 @@ fun LastTransactionCard(
 
         OutlinedCard(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(14.dp)) {
-                MifosTitleDescDoubleLine(
+                MifosTextTitleDescDoubleLine(
                     title = stringResource(id = R.string.last_transaction),
                     descriptionStyle = MaterialTheme.typography.bodyLarge,
                     description = if (isTransactionEmpty) {
@@ -244,7 +243,7 @@ fun LastTransactionCard(
 
                 if (!isTransactionEmpty) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    MifosTitleDescDoubleLine(
+                    MifosTextTitleDescDoubleLine(
                         title = stringResource(id = R.string.made_on),
                         descriptionStyle = MaterialTheme.typography.bodyLarge,
                         description = DateHelper.getDateAsString(
@@ -255,7 +254,7 @@ fun LastTransactionCard(
 
                 if (savingsWithAssociations.minRequiredOpeningBalance != null) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    MifosTitleDescDoubleLine(
+                    MifosTextTitleDescDoubleLine(
                         title = stringResource(id = R.string.min_required_balance),
                         descriptionStyle = MaterialTheme.typography.bodyLarge,
                         description = stringResource(

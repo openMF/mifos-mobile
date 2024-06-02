@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLine
-import org.mifos.mobile.core.ui.component.MifosTitleStatusSingleLine
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescDrawableSingleLine
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
@@ -43,13 +43,13 @@ fun LoanAccountSummaryScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            MifosTitleDescSingleLine(
+            MifosTextTitleDescSingleLine(
                 modifier = Modifier.padding(horizontal = 14.dp),
                 title = stringResource(id = R.string.account_short),
                 description = loanWithAssociations?.accountNo ?: ""
             )
 
-            MifosTitleDescSingleLine(
+            MifosTextTitleDescSingleLine(
                 modifier = Modifier.padding(horizontal = 14.dp),
                 title = stringResource(id = R.string.loan_product),
                 description = loanWithAssociations?.loanProductName ?: ""
@@ -68,7 +68,7 @@ fun LoanAccountSummaryScreen(
                         .fillMaxWidth()
                         .padding(14.dp)
                 ) {
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.principal),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -77,7 +77,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.interest),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -86,7 +86,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.fees),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -95,7 +95,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.penalties),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -119,7 +119,7 @@ fun LoanAccountSummaryScreen(
                         .fillMaxWidth()
                         .padding(14.dp)
                 ) {
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.total_repayment),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -128,7 +128,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.total_paid),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -137,7 +137,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.interest_waived),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -146,7 +146,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.penalties_waived),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -155,7 +155,7 @@ fun LoanAccountSummaryScreen(
                         )
                     )
 
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.fees_waived),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -179,7 +179,7 @@ fun LoanAccountSummaryScreen(
                         .fillMaxWidth()
                         .padding(14.dp)
                 ) {
-                    MifosTitleDescSingleLine(
+                    MifosTextTitleDescSingleLine(
                         title = stringResource(id = R.string.outstanding_balance),
                         description = stringResource(
                             id = R.string.string_and_double,
@@ -187,7 +187,7 @@ fun LoanAccountSummaryScreen(
                             loanWithAssociations?.summary?.totalOutstanding ?: 0.0
                         )
                     )
-                    MifosTitleStatusSingleLine(
+                    MifosTextTitleDescDrawableSingleLine(
                         title = stringResource(id = R.string.account_status),
                         description = if (loanWithAssociations?.status?.active == true) stringResource(id = R.string.active_uc)
                         else stringResource(id = R.string.inactive_uc),

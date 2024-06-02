@@ -21,6 +21,7 @@ object DateHelper {
 
     val LOG_TAG: String? = DateHelper::class.java.simpleName
     const val FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy"
+    const val FORMAT_dd_MM_yyyy = "dd-MM-yyyy"
     fun getCurrentDate(dateFormat: String?, separator: String): List<Int> {
         val date: MutableList<Int> = ArrayList()
         val s = SimpleDateFormat(dateFormat, Locale.getDefault()).format(Date())
@@ -73,6 +74,15 @@ object DateHelper {
             Log.d(LOG_TAG, e.localizedMessage)
         }
         return finalFormat.format(date)
+    }
+
+    fun getSpecificFormat(format: String?, dateLong: Long?): String? {
+        try {
+            return SimpleDateFormat(format, Locale.getDefault()).format(dateLong)
+        } catch (e: ParseException) {
+            Log.d(LOG_TAG, e.localizedMessage)
+            return null
+        }
     }
 
     fun getFormatConverter(

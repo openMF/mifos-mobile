@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.core.ui.component.MifosTitleDescDoubleLine
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.ui.savings_account.MonitorListItemWithIcon
@@ -85,7 +85,7 @@ fun LoanAccountDetailsCard(
 
     OutlinedCard(modifier = modifier) {
         Column(modifier = Modifier.padding(14.dp)) {
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.outstanding_balance),
                 description = stringResource(
                     R.string.string_and_string,
@@ -100,7 +100,7 @@ fun LoanAccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.next_installment),
                 description = nextInstallment,
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
@@ -108,7 +108,7 @@ fun LoanAccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.due_date),
                 description = dueDate,
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
@@ -116,7 +116,7 @@ fun LoanAccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.account_number),
                 description = loanWithAssociations.accountNo ?: "",
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
@@ -124,14 +124,14 @@ fun LoanAccountDetailsCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.loan_type),
                 description = loanWithAssociations.loanType?.value ?: "",
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            MifosTitleDescDoubleLine(
+            MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.currency),
                 description = loanWithAssociations.summary?.currency?.code ?: "",
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
