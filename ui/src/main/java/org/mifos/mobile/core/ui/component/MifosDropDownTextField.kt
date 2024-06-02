@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.icons.Icons
@@ -41,7 +42,7 @@ fun MifosDropDownTextField(
     isEnabled: Boolean = true,
     supportingText: String? = null,
     error: Boolean = false,
-    onClick: (Int, String) -> Unit
+    onClick: (Int, String) -> Unit,
 ) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -49,7 +50,7 @@ fun MifosDropDownTextField(
     val isPressed by interactionSource.collectIsPressedAsState()
 
     LaunchedEffect(key1 = isPressed) {
-        if(isPressed) expanded = true
+        if(isPressed) expanded = true && isEnabled
     }
 
     Box(
@@ -63,6 +64,8 @@ fun MifosDropDownTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             readOnly = true,
+            enabled = isEnabled,
+            textStyle = MaterialTheme.typography.labelSmall,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {
@@ -73,8 +76,9 @@ fun MifosDropDownTextField(
                 )
             }
         )
+
         DropdownMenu(
-            expanded = expanded,
+            expanded = expanded && isEnabled,
             modifier = Modifier
                 .fillMaxWidth(0.92f)
                 .heightIn(max = 200.dp),
@@ -87,6 +91,77 @@ fun MifosDropDownTextField(
                         onClick(index, item)
                     },
                     text = { Text(text = item) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MifosDropDownDoubleTextField(
+    modifier: Modifier = Modifier,
+    optionsList: List<Pair<String, String>> = listOf(),
+    selectedOption: String? = null,
+    labelResId: Int = 0,
+    isEnabled: Boolean = true,
+    supportingText: String? = null,
+    error: Boolean = false,
+    onClick: (Int, Pair<String, String>) -> Unit,
+) {
+
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    LaunchedEffect(key1 = isPressed) {
+        if(isPressed) expanded = true && isEnabled
+    }
+
+    Box(
+        modifier = modifier.alpha(if (!isEnabled) 0.4f else 1f),
+    ) {
+        OutlinedTextField(
+            value = selectedOption ?: "",
+            onValueChange = {  },
+            label = { Text(stringResource(id = labelResId)) },
+            interactionSource = interactionSource,
+            modifier = Modifier
+                .fillMaxWidth(),
+            readOnly = true,
+            enabled = isEnabled,
+            textStyle = MaterialTheme.typography.labelSmall,
+            supportingText = { if (error) Text(text = supportingText ?: "") },
+            isError = error,
+            trailingIcon = {
+                Icon(
+                    imageVector = if (expanded) Icons.Filled.ArrowDropUp
+                    else Icons.Filled.ArrowDropDown,
+                    contentDescription = null,
+                )
+            }
+        )
+
+        DropdownMenu(
+            expanded = expanded && isEnabled,
+            modifier = Modifier
+                .fillMaxWidth(0.92f)
+                .heightIn(max = 200.dp),
+            onDismissRequest = { expanded = false },
+        ) {
+            optionsList.forEachIndexed { index, item ->
+                DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        onClick(index, item)
+                    },
+                    text = {
+                        Column {
+                            Text(text = item.first)
+                            Text(text = item.second)
+                        }
+
+                    }
+
                 )
             }
         }

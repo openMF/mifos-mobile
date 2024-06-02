@@ -36,10 +36,11 @@ fun MifosOutlinedTextField(
     singleLine: Boolean = true,
     icon: Int? = null,
     label: Int,
+    enabled: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable (() -> Unit)? = null,
     error: Boolean = false,
-    supportingText: String,
+    supportingText: String? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
 ) {
@@ -62,6 +63,7 @@ fun MifosOutlinedTextField(
         } else null,
         trailingIcon = trailingIcon,
         maxLines = maxLines,
+        enabled = enabled,
         singleLine = singleLine,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = if (isSystemInDarkTheme()) Color(
@@ -72,7 +74,7 @@ fun MifosOutlinedTextField(
             TextStyle(fontSize = 18.sp)
         },
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
+            imeAction = ImeAction.Done,
             keyboardType = keyboardType
             ),
         visualTransformation = visualTransformation,
@@ -81,7 +83,7 @@ fun MifosOutlinedTextField(
             if (error) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = supportingText,
+                    text = supportingText ?: "",
                     color = MaterialTheme.colorScheme.error
                 )
             } else null

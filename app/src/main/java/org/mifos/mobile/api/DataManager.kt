@@ -100,8 +100,11 @@ class DataManager @Inject constructor(
             .savingAccountsListApi.getSavingsWithAssociations(accountId, associationType)
     }
 
-    suspend fun accountTransferTemplate(): AccountOptionsTemplate =
-        baseApiManager.savingAccountsListApi.accountTransferTemplate()
+    suspend fun accountTransferTemplate(accountId: Long?, accountType: Long?): AccountOptionsTemplate =
+        baseApiManager.savingAccountsListApi.accountTransferTemplate(
+            accountId = accountId,
+            accountType = accountType
+        )
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): ResponseBody {
         return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)

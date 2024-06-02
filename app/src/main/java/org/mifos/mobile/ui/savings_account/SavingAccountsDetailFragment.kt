@@ -25,8 +25,9 @@ import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
 import org.mifos.mobile.ui.fragments.SavingAccountsTransactionFragment
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment
 import org.mifos.mobile.ui.savings_account_withdraw.SavingsAccountWithdrawFragment
-import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
+import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.QrCodeGenerator
@@ -99,7 +100,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
     fun deposit(isStatusActive: Boolean) {
         if (isStatusActive) {
             (activity as BaseActivity?)?.replaceFragment(
-                SavingsMakeTransferFragment.newInstance(
+                SavingsMakeTransferComposeFragment.newInstance(
                     viewModel.savingsId,
                     Constants.TRANSFER_PAY_TO,
                 ),
@@ -122,7 +123,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
     fun transfer(isStatusActive: Boolean) {
         if (isStatusActive) {
             (activity as BaseActivity?)?.replaceFragment(
-                SavingsMakeTransferFragment.newInstance(
+                SavingsMakeTransferComposeFragment.newInstance(
                     viewModel.savingsId,
                     Constants.TRANSFER_PAY_FROM,
                 ),

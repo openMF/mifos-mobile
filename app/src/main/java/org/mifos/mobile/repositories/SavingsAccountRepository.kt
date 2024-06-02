@@ -30,5 +30,5 @@ interface SavingsAccountRepository {
         payload: SavingsAccountWithdrawPayload?
     ): Flow<ResponseBody>
 
-    suspend fun loanAccountTransferTemplate(): Flow<AccountOptionsTemplate>
+    fun accountTransferTemplate(accountId: Long?, accountType: Long?): Flow<AccountOptionsTemplate>
 }

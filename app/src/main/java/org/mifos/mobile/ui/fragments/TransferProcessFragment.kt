@@ -138,7 +138,7 @@ class TransferProcessFragment : BaseFragment() {
                 DateHelper.FORMAT_dd_MMMM_yyyy,
                 getTodayFormatted(),
             ),
-            binding.tvAmount.text.toString().toDouble(),
+            binding.tvAmount.text.toString().replace(",", "").toDoubleOrNull(),
             binding.tvRemark.text.toString(),
             "dd MMMM yyyy",
             "en",

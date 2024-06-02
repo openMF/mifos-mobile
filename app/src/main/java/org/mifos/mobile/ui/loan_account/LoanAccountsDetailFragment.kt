@@ -21,10 +21,11 @@ import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.fragments.LoanApplicationFragment
 import org.mifos.mobile.ui.fragments.LoanRepaymentScheduleFragment
 import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
-import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
+import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.guarantor.GuarantorActivity
 import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
+import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.*
 import javax.inject.Inject
 
@@ -88,7 +89,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
      */
     private fun onMakePaymentClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            SavingsMakeTransferFragment.newInstance(
+            SavingsMakeTransferComposeFragment.newInstance(
                 viewModel.loanId,
                 viewModel.loanWithAssociations?.summary?.totalOutstanding,
                 Constants.TRANSFER_PAY_TO,

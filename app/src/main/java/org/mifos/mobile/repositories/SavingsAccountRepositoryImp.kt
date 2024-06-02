@@ -54,9 +54,9 @@ class SavingsAccountRepositoryImp @Inject constructor(private val dataManager: D
         }
     }
 
-    override suspend fun loanAccountTransferTemplate(): Flow<AccountOptionsTemplate> {
+    override fun accountTransferTemplate(accountId: Long?, accountType: Long?): Flow<AccountOptionsTemplate> {
         return flow {
-            emit(dataManager.accountTransferTemplate())
+            emit(dataManager.accountTransferTemplate(accountId = accountType, accountType = accountType))
         }
     }
 }

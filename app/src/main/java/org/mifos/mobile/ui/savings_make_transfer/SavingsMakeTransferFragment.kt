@@ -1,7 +1,6 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.savings_make_transfer
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,10 +21,10 @@ import org.mifos.mobile.databinding.FragmentSavingsMakeTransferBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.ui.fragments.TransferProcessFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
@@ -35,7 +34,6 @@ import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
 import org.mifos.mobile.utils.getTodayFormatted
-import org.mifos.mobile.viewModels.SavingsMakeTransferViewModel
 
 /**
  * Created by Rajan Maurya on 10/03/17.
@@ -83,7 +81,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
         sweetUIErrorHandler = SweetUIErrorHandler(activity, binding.root)
         showUserInterface()
         if (savedInstanceState == null) {
-            viewModel.loanAccountTransferTemplate()
+            //viewModel.loanAccountTransferTemplate()
         }
         return binding.root
     }
@@ -117,29 +115,29 @@ class SavingsMakeTransferFragment : BaseFragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.savingsMakeTransferUiState.collect { state ->
-                    when (state) {
-                        SavingsAccountUiState.Loading -> showProgress()
-
-                        is SavingsAccountUiState.ErrorMessage -> {
-                            hideProgress()
-                            showError(context?.getString(R.string.error_fetching_account_transfer_template))
-                        }
-
-                        is SavingsAccountUiState.ShowSavingsAccountTemplate -> {
-                            hideProgress()
-                            showSavingsAccountTemplate(state.accountOptionsTemplate)
-                        }
-
-                        is SavingsAccountUiState.Initial -> {}
-
-                        else -> throw IllegalStateException("Unexpected state : $state")
-                    }
-                }
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.savingsMakeTransferUiState.collect { state ->
+//                    when (state) {
+//                        SavingsAccountUiState.Loading -> showProgress()
+//
+//                        is SavingsAccountUiState.ErrorMessage -> {
+//                            hideProgress()
+//                            showError(context?.getString(R.string.error_fetching_account_transfer_template))
+//                        }
+//
+//                        is SavingsAccountUiState.ShowSavingsAccountTemplate -> {
+//                            hideProgress()
+//                            showSavingsAccountTemplate(state.accountOptionsTemplate)
+//                        }
+//
+//                        is SavingsAccountUiState.Initial -> {}
+//
+//                        else -> throw IllegalStateException("Unexpected state : $state")
+//                    }
+//                }
+//            }
+//        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -204,7 +202,7 @@ class SavingsMakeTransferFragment : BaseFragment() {
                 binding.llMakeTransfer,
                 binding.layoutError.root,
             )
-            viewModel.loanAccountTransferTemplate()
+            //viewModel.loanAccountTransferTemplate()
         } else {
             Toaster.show(binding.root, getString(R.string.internet_not_connected))
         }
@@ -238,24 +236,24 @@ class SavingsMakeTransferFragment : BaseFragment() {
     }
 
     private fun updateDetails() {
-        when (transferType) {
-            Constants.TRANSFER_PAY_TO -> {
-                setToolbarTitle(getString(R.string.deposit))
-                toAccountOption =
-                    viewModel.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
-                binding.payToFieldWrapper.isEnabled = false
-                binding.processOne.setCurrentCompleted()
-            }
-
-            Constants.TRANSFER_PAY_FROM -> {
-                setToolbarTitle(getString(R.string.transfer))
-                fromAccountOption =
-                    viewModel.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
-                binding.payFromFieldWrapper.isEnabled = false
-                binding.payFromFieldWrapper.visibility = View.VISIBLE
-                binding.processTwo.setCurrentCompleted()
-            }
-        }
+//        when (transferType) {
+//            Constants.TRANSFER_PAY_TO -> {
+//                setToolbarTitle(getString(R.string.deposit))
+//                toAccountOption =
+//                    viewModel.searchAccount(accountOptionsTemplate?.toAccountOptions, accountId)
+//                binding.payToFieldWrapper.isEnabled = false
+//                binding.processOne.setCurrentCompleted()
+//            }
+//
+//            Constants.TRANSFER_PAY_FROM -> {
+//                setToolbarTitle(getString(R.string.transfer))
+//                fromAccountOption =
+//                    viewModel.searchAccount(accountOptionsTemplate?.fromAccountOptions, accountId)
+//                binding.payFromFieldWrapper.isEnabled = false
+//                binding.payFromFieldWrapper.visibility = View.VISIBLE
+//                binding.processTwo.setCurrentCompleted()
+//            }
+//        }
     }
 
     /**
@@ -266,31 +264,31 @@ class SavingsMakeTransferFragment : BaseFragment() {
      */
     private fun showSavingsAccountTemplate(accountOptionsTemplate: AccountOptionsTemplate?) {
         this.accountOptionsTemplate = accountOptionsTemplate
-        binding.payToField.setAdapter(
-            AccountsSpinnerAdapter(
-                requireContext(),
-                viewModel.getAccountNumbers(
-                    accountOptionsTemplate?.toAccountOptions,
-                    false,
-                    context?.getString(R.string.account_type_loan)
-                ),
-            ),
-        )
-        binding.payFromField.setAdapter(
-            AccountsSpinnerAdapter(
-                requireContext(),
-                viewModel.getAccountNumbers(
-                    accountOptionsTemplate?.toAccountOptions,
-                    true,
-                    context?.getString(R.string.account_type_loan)
-                ),
-            ),
-        )
+//        binding.payToField.setAdapter(
+//            AccountsSpinnerAdapter(
+//                requireContext(),
+//                viewModel.getAccountNumbers(
+//                    accountOptionsTemplate?.toAccountOptions,
+//                    false,
+//                    context?.getString(R.string.account_type_loan)
+//                ),
+//            ),
+//        )
+//        binding.payFromField.setAdapter(
+//            AccountsSpinnerAdapter(
+//                requireContext(),
+//                viewModel.getAccountNumbers(
+//                    accountOptionsTemplate?.toAccountOptions,
+//                    true,
+//                    context?.getString(R.string.account_type_loan)
+//                ),
+//            ),
+//        )
     }
 
     /**
      * Shows a {@link Snackbar} with `message`
-     *
+     *f
      * @param message String to be shown
      */
     private fun showToaster(message: String?) {

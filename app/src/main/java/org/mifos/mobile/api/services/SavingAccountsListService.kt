@@ -24,7 +24,10 @@ interface SavingAccountsListService {
     ): SavingsWithAssociations
 
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template")
-    suspend fun accountTransferTemplate(): AccountOptionsTemplate
+    suspend fun accountTransferTemplate(
+        @Query("fromAccountId") accountId: Long?,
+        @Query("fromAccountType") accountType: Long?,
+    ): AccountOptionsTemplate
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
     suspend fun makeTransfer(@Body transferPayload: TransferPayload?): ResponseBody
