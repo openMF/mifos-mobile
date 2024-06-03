@@ -172,6 +172,11 @@ dependencies {
     api(libs.androidx.lifecycle.runtimeCompose)
     debugApi(libs.androidx.compose.ui.tooling)
     api(libs.androidx.hilt.navigation.compose)
+
+    // google maps
+    implementation ("com.google.maps.android:maps-compose:4.4.1")
+
+
 }
 
 
