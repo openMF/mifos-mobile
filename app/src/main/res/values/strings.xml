@@ -664,4 +664,5 @@
     <string name="guarantor_created_successfully">Guarantor created successfully</string>
     <string name="guarantor_updated_successfully">Guarantor updated successfully</string>
     <string name="required">Required</string>
+    <string name="s_no">S.No</string>
 </resources>
