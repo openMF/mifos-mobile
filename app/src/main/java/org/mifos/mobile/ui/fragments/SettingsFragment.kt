@@ -17,6 +17,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
 import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat
 import org.mifos.mobile.utils.ConfigurationPreference
 import org.mifos.mobile.utils.Constants
@@ -84,6 +85,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onResume() {
         super.onResume()
+        (activity as? BaseActivity)?.showToolbar()
         activity?.title = getString(R.string.settings)
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }

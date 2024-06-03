@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.user_profile
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,10 +19,10 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.Group
-import org.mifos.mobile.ui.activities.EditUserDetailActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
+import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
@@ -230,7 +229,11 @@ class UserProfileFragment : BaseFragment() {
     }
 
     private fun changePassword() {
-        startActivity(Intent(context, EditUserDetailActivity::class.java))
+        (activity as BaseActivity?)?.replaceFragment(
+            UpdatePasswordFragment.newInstance(),
+            true,
+            R.id.container,
+        )
     }
 
     private fun backToHome() {
