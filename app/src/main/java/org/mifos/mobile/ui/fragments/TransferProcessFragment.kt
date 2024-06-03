@@ -16,6 +16,7 @@ import org.mifos.mobile.databinding.FragmentTransferProcessBinding
 import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.models.templates.account.AccountOption
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
@@ -48,6 +49,7 @@ class TransferProcessFragment : BaseFragment() {
     private var transferType: TransferType? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as? BaseActivity)?.showToolbar()
         if (activity != null) {
             payload = arguments?.getParcelable(Constants.PAYLOAD)
             payload =

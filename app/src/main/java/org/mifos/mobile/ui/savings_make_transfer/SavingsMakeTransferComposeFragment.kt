@@ -77,6 +77,10 @@ class SavingsMakeTransferComposeFragment : BaseFragment() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as? BaseActivity)?.hideToolbar()
+    }
 
     companion object {
         /**
