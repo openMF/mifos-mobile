@@ -1,112 +1,85 @@
 package org.mifos.mobile.ui.beneficiary_list
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
 import org.mifos.mobile.ui.fragments.BeneficiaryDetailFragment
-import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
+//import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
-import org.mifos.mobile.viewModels.BeneficiaryListViewModel
+
 
 @AndroidEntryPoint
-class BeneficiaryListsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
-    private var sweetUIErrorHandler: SweetUIErrorHandler? = null
+class BeneficiaryListsFragment : BaseFragment() {
+
     private val viewModel: BeneficiaryListViewModel by viewModels()
-    private var beneficiaryList: List<Beneficiary?>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.loadBeneficiaries()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MifosMobileTheme {
-                    BeneficiaryListScreen(
-                        beneficiaryList = beneficiaryList,
-                        sweetUIErrorHandler = sweetUIErrorHandler,
-                        navigateBack = { activity?.supportFragmentManager?.popBackStack() },
-                        addBeneficiaryClicked = {}
-                        )
-                }
+        return mifosComposeView(requireContext()) {
+            MifosMobileTheme {
+                BeneficiaryListScreen(
+                    viewModel = viewModel,
+                    navigateBack = { activity?.supportFragmentManager?.popBackStack() },
+                    addBeneficiaryClicked = { addBeneficiary() },
+                    retryConnection = { loadBeneficiary() },
+                    onBeneficiaryItemClick = { position, beneficiaryList ->
+                        if (beneficiaryList != null) {
+                            onItemClick(
+                                position = position,
+                                beneficiaryList = beneficiaryList
+                            )
+                        }
+                    },
+                    retryLoadingBeneficiary = { loadBeneficiary() },
+                )
             }
         }
     }
 
-
-
-    override fun onRefresh() {
-
-        viewModel.loadBeneficiaries()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if (beneficiaryList != null) {
-            outState.putParcelableArrayList(
-                Constants.BENEFICIARY,
-                ArrayList<Parcelable?>(
-                    beneficiaryList,
-                ),
-            )
-        }
-    }
-
-    private fun onItemClick(position: Int) {
+    private fun onItemClick(position: Int, beneficiaryList: List<Beneficiary?>) {
         (activity as BaseActivity?)?.replaceFragment(
             BeneficiaryDetailFragment.newInstance(
-                beneficiaryList!![position],
+                beneficiaryList[position],
             ),
             true,
             R.id.container,
         )
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            val beneficiaries: List<Beneficiary?> =
-                savedInstanceState.getCheckedArrayListFromParcelable(
-                    Beneficiary::class.java,
-                    Constants.BENEFICIARY
-                ) ?: listOf()
-//            showBeneficiaryList(beneficiaries)
-        }
+    private fun addBeneficiary() {
+        (activity as BaseActivity?)?.replaceFragment(
+            BeneficiaryAddOptionsFragment.newInstance(),
+            true,
+            R.id.container,
+        )
     }
 
-//
-//    private fun retryClicked() {
-//        if (Network.isConnected((context?.applicationContext)!!)) {
-//            sweetUIErrorHandler?.hideSweetErrorLayoutUI(
-////                binding.rvBeneficiaries,
-////                binding.layoutError.root,
-//            )
-//            viewModel.loadBeneficiaries()
-//        } else {
-//            Toast.makeText(
-//                context,
-//                getString(R.string.internet_not_connected),
-//                Toast.LENGTH_SHORT,
-//            ).show()
-//        }
-//    }
+    private fun loadBeneficiary() {
+        viewModel.loadBeneficiaries()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (activity as? BaseActivity)?.showToolbar()
+    }
 
     override fun onResume() {
         super.onResume()

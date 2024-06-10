@@ -32,6 +32,7 @@ import org.mifos.mobile.databinding.NavDrawerHeaderBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.ui.about.AboutUsActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary_list.BeneficiaryListsFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
@@ -199,7 +200,7 @@ class HomeActivity :
             )
 
             R.id.item_beneficiaries -> replaceFragment(
-                BeneficiaryListFragment.newInstance(),
+                BeneficiaryListsFragment.newInstance(),
                 true,
                 R.id.container,
             )
@@ -418,7 +419,7 @@ class HomeActivity :
                     setNavigationViewSelectedItem(R.id.item_third_party_transfer)
                 }
 
-                is BeneficiaryListFragment -> {
+                is BeneficiaryListsFragment -> {
                     setNavigationViewSelectedItem(R.id.item_beneficiaries)
                 }
             }

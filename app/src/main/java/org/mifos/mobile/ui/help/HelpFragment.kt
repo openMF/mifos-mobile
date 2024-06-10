@@ -96,7 +96,7 @@ class HelpFragment : BaseFragment() {
 
     private fun findLocations() {
         (activity as BaseActivity?)?.replaceFragment(
-            BeneficiaryListsFragment.newInstance(),
+            LocationsFragment.newInstance(),
             true,
             R.id.container,
         )

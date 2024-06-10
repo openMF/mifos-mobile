@@ -172,6 +172,10 @@ dependencies {
     api(libs.androidx.lifecycle.runtimeCompose)
     debugApi(libs.androidx.compose.ui.tooling)
     api(libs.androidx.hilt.navigation.compose)
+
+    //pull to refresh
+    implementation ("androidx.compose:compose-bom:2024.05.00")
+
 }
 
 

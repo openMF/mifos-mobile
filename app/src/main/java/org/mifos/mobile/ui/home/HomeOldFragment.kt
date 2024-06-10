@@ -28,9 +28,9 @@ import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.NotificationActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary_list.BeneficiaryListsFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
 import org.mifos.mobile.ui.fragments.ClientAccountsFragment
 import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.fragments.SavingsMakeTransferFragment
@@ -299,7 +299,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      */
     fun beneficiaries() {
         (activity as HomeActivity?)?.replaceFragment(
-            BeneficiaryListFragment.newInstance(),
+            BeneficiaryListsFragment.newInstance(),
             true,
             R.id.container,
         )
