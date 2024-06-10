@@ -202,58 +202,58 @@ fun ErrorComponent(
         }
     }
 }
-
-class BeneficiaryListScreenUiStatesParameterProvider :
-    PreviewParameterProvider<BeneficiaryUiState> {
-    val beneficiaryList = listOf(
-        Beneficiary(
-            id = 1,
-            name = "John Doe",
-            officeName = "Mifos Head Office",
-            clientName = "Jane Smith",
-            accountType = null,
-            accountNumber = "1234567890",
-            transferLimit = 1000.00
-        ),
-        Beneficiary(
-            id = 2,
-            name = "Alice Johnson",
-            officeName = "Mifos Branch 1",
-            clientName = "Bob Smith",
-            accountType = null,
-            accountNumber = "0987654321",
-            transferLimit = 500.00
-        )
-    )
-
-    override val values: Sequence<BeneficiaryUiState>
-        get() = sequenceOf(
-            BeneficiaryUiState.ShowBeneficiaryList(beneficiaryList),
-            BeneficiaryUiState.Loading,
-            BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiaries)
-        )
-}
-
-@Composable
-@Preview(showSystemUi = true)
-fun PreviewBeneficiaryListScreen(
-    modifier: Modifier = Modifier,
-    viewModel: BeneficiaryListViewModel = hiltViewModel(),
-    @PreviewParameter(BeneficiaryListScreenUiStatesParameterProvider::class) beneficiaryUiState: BeneficiaryUiState
-) {
-    val uiState by viewModel.beneficiaryUiState.collectAsStateWithLifecycle()
-    MifosMobileTheme {
-        BeneficiaryListScreen(
-            uiState = uiState,
-            navigateBack = {},
-            addBeneficiaryClicked = {},
-            retryConnection = {},
-            onBeneficiaryItemClick = { _, _ ->
-
-            },
-            retryLoadingBeneficiary = {},
-            isRefreshing = false,
-            refreshBeneficiary = {}
-        )
-    }
-}
+//
+//class BeneficiaryListScreenUiStatesParameterProvider :
+//    PreviewParameterProvider<BeneficiaryUiState> {
+//    val beneficiaryList = listOf(
+//        Beneficiary(
+//            id = 1,
+//            name = "John Doe",
+//            officeName = "Mifos Head Office",
+//            clientName = "Jane Smith",
+//            accountType = null,
+//            accountNumber = "1234567890",
+//            transferLimit = 1000.00
+//        ),
+//        Beneficiary(
+//            id = 2,
+//            name = "Alice Johnson",
+//            officeName = "Mifos Branch 1",
+//            clientName = "Bob Smith",
+//            accountType = null,
+//            accountNumber = "0987654321",
+//            transferLimit = 500.00
+//        )
+//    )
+//
+//    override val values: Sequence<BeneficiaryUiState>
+//        get() = sequenceOf(
+//            BeneficiaryUiState.ShowBeneficiaryList(beneficiaryList),
+//            BeneficiaryUiState.Loading,
+//            BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiaries)
+//        )
+//}
+//
+//@Composable
+//@Preview(showSystemUi = true)
+//fun PreviewBeneficiaryListScreen(
+//    modifier: Modifier = Modifier,
+//    viewModel: BeneficiaryListViewModel = hiltViewModel(),
+//    @PreviewParameter(BeneficiaryListScreenUiStatesParameterProvider::class) beneficiaryUiState: BeneficiaryUiState
+//) {
+//    val uiState by viewModel.beneficiaryUiState.collectAsStateWithLifecycle()
+//    MifosMobileTheme {
+//        BeneficiaryListScreen(
+//            uiState = uiState,
+//            navigateBack = {},
+//            addBeneficiaryClicked = {},
+//            retryConnection = {},
+//            onBeneficiaryItemClick = { _, _ ->
+//
+//            },
+//            retryLoadingBeneficiary = {},
+//            isRefreshing = false,
+//            refreshBeneficiary = {}
+//        )
+//    }
+//}
