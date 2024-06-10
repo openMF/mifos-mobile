@@ -1,6 +1,7 @@
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,10 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MifosTitleDescSingleLine(
+fun MifosTextTitleDescSingleLine(
     modifier: Modifier = Modifier,
     title: String,
     description: String
@@ -47,7 +49,7 @@ fun MifosTitleDescSingleLine(
 
 
 @Composable
-fun MifosTitleDescDoubleLine(
+fun MifosTextTitleDescDoubleLine(
     title: String,
     description: String,
     descriptionStyle: TextStyle,
@@ -71,11 +73,13 @@ fun MifosTitleDescDoubleLine(
 }
 
 @Composable
-fun MifosTitleStatusSingleLine(
+fun MifosTextTitleDescDrawableSingleLine(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    imageResId: Int
+    imageResId: Int,
+    imageSize: Dp = 14.dp,
+    onDrawableClick: () -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -97,7 +101,7 @@ fun MifosTitleStatusSingleLine(
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = null,
-            modifier = Modifier.size(14.dp)
+            modifier = Modifier.size(imageSize).clickable { onDrawableClick() },
         )
     }
 }

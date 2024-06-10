@@ -13,4 +13,8 @@ data class AccountOptionsTemplate(
     var fromAccountOptions: List<AccountOption> = ArrayList(),
 
     var toAccountOptions: List<AccountOption> = ArrayList(),
+
+    var fromAccountTypeOptions: List<AccountType> = ArrayList(),
+
+    var toAccountTypeOptions: List<AccountType> = ArrayList()
 ) : Parcelable

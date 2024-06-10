@@ -1,4 +1,4 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.loan_repayment_schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,10 +26,10 @@ class LoanRepaymentScheduleViewModel @Inject constructor(private val loanReposit
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.REPAYMENT_SCHEDULE,
                 loanId,
-            )?.catch {
+            ).catch {
                 _loanUiState.value =
                     LoanUiState.ShowError(R.string.repayment_schedule)
-            }?.collect {
+            }.collect {
                 if (it?.repaymentSchedule?.periods?.isNotEmpty() == true) {
                     _loanUiState.value = LoanUiState.ShowLoan(it)
                 } else {

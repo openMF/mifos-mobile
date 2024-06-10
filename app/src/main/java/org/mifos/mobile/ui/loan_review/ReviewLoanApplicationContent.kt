@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.core.ui.component.MifosTitleDescDoubleLine
-import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLine
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
 import java.util.Locale
 
 @Composable
@@ -40,7 +40,7 @@ fun ReviewLoanApplicationContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        MifosTitleDescDoubleLine(
+        MifosTextTitleDescDoubleLine(
             title = stringResource(id = R.string.product),
             description = data.loanProduct ?: "",
             descriptionStyle = MaterialTheme.typography.bodyMedium
@@ -48,7 +48,7 @@ fun ReviewLoanApplicationContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        MifosTitleDescDoubleLine(
+        MifosTextTitleDescDoubleLine(
             title = stringResource(id = R.string.loan_purpose),
             description = data.loanPurpose ?: "",
             descriptionStyle = MaterialTheme.typography.bodyMedium
@@ -56,7 +56,7 @@ fun ReviewLoanApplicationContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        MifosTitleDescDoubleLine(
+        MifosTextTitleDescDoubleLine(
             title = stringResource(id = R.string.principal),
             description = String.format(
                 Locale.getDefault(),
@@ -67,21 +67,21 @@ fun ReviewLoanApplicationContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        MifosTitleDescSingleLine(
+        MifosTextTitleDescSingleLine(
             title = stringResource(id = R.string.currency),
             description = data.currency ?: ""
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        MifosTitleDescSingleLine(
+        MifosTextTitleDescSingleLine(
             title = stringResource(id = R.string.submission_date),
             description = data.submissionDate ?: ""
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        MifosTitleDescSingleLine(
+        MifosTextTitleDescSingleLine(
             title = stringResource(id = R.string.expected_disbursement_date),
             description = data.disbursementDate ?: ""
         )
