@@ -14,7 +14,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.repositories.BeneficiaryRepository
-import org.mifos.mobile.utils.BeneficiaryUiState
+import org.mifos.mobile.ui.beneficiary_list.BeneficiaryUiState
 import javax.inject.Inject
 
 @HiltViewModel

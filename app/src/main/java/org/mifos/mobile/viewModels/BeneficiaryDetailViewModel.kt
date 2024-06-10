@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.repositories.BeneficiaryRepository
-import org.mifos.mobile.utils.BeneficiaryUiState
+import org.mifos.mobile.ui.beneficiary_list.BeneficiaryUiState
 import javax.inject.Inject
 
 @HiltViewModel

@@ -88,12 +88,12 @@ fun BeneficiaryListScreen(
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { addBeneficiaryClicked.invoke() }) {
+            FloatingActionButton(
+                modifier = Modifier.padding(bottom = 50.dp, end = 32.dp),
+                onClick = { addBeneficiaryClicked.invoke() }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "",
-                    tint = MaterialTheme.colorScheme.surface,
-                    modifier = Modifier.padding(bottom = 32.dp, end = 16.dp)
                 )
             }
         }
