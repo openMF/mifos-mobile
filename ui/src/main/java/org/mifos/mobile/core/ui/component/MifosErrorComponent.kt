@@ -30,6 +30,7 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 @Composable
 fun MifosErrorComponent(
     isNetworkConnected: Boolean = true,
+    message: String? = null,
     isEmptyData: Boolean = false,
     isRetryEnabled: Boolean = false,
     onRetry: () -> Unit = {}
@@ -38,6 +39,7 @@ fun MifosErrorComponent(
         !isNetworkConnected -> NoInternetComponent(isRetryEnabled = isRetryEnabled) { onRetry() }
         else -> EmptyDataComponent(
             isEmptyData = isEmptyData,
+            message = message,
             isRetryEnabled = isRetryEnabled,
             onRetry = onRetry
         )
@@ -85,6 +87,7 @@ fun NoInternetComponent(
 fun EmptyDataComponent(
     modifier: Modifier = Modifier.fillMaxSize(),
     isEmptyData: Boolean = false,
+    message: String? = null,
     isRetryEnabled: Boolean = false,
     onRetry: () -> Unit = {}
 ) {
@@ -104,7 +107,7 @@ fun EmptyDataComponent(
 
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
-            text = if (isEmptyData) stringResource(id = R.string.no_data) else stringResource(id = R.string.something_went_wrong),
+            text = message ?: if (isEmptyData) stringResource(id = R.string.no_data) else stringResource(id = R.string.something_went_wrong),
             style = TextStyle(fontSize = 20.sp),
             color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center

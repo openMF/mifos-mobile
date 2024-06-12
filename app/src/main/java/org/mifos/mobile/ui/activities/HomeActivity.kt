@@ -39,6 +39,7 @@ import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.help.HelpActivity
 import org.mifos.mobile.ui.home.HomeOldFragment
 import org.mifos.mobile.ui.login.LoginActivity
+import org.mifos.mobile.ui.notification.NotificationFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster

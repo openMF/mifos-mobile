@@ -4,7 +4,7 @@ import android.os.Bundle
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityNotificationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.NotificationFragment
+import org.mifos.mobile.ui.notification.NotificationFragment
 
 class NotificationActivity : BaseActivity() {
 

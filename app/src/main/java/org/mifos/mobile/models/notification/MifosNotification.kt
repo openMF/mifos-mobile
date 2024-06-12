@@ -31,8 +31,8 @@ class MifosNotification : BaseModel() {
         this.timeStamp = timeStamp
     }
 
-    fun isRead(): Boolean? {
-        return read
+    fun isRead(): Boolean {
+        return read ?: false
     }
 
     fun setRead(read: Boolean?) {
