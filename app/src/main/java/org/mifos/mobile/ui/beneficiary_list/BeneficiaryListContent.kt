@@ -1,19 +1,26 @@
 package org.mifos.mobile.ui.beneficiary_list
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -33,13 +41,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
+import org.mifos.mobile.utils.Network
 
 
 @Composable
 fun ShowBeneficiary(
-    beneficiaryList: List<Beneficiary?>?,
+    beneficiaryList: List<Beneficiary>,
     onClick: (position: Int) -> Unit
 ) {
     Box(
@@ -47,12 +58,10 @@ fun ShowBeneficiary(
             .fillMaxSize()
     ) {
         LazyColumn {
-            itemsIndexed(beneficiaryList ?: emptyList()) { index, beneficiary ->
-                beneficiary?.let {
-                    BeneficiaryItem(beneficiary.name, onClick = {
-                        onClick(index)
-                    })
-                }
+            itemsIndexed(beneficiaryList) { index, beneficiary ->
+                BeneficiaryItem(beneficiary, onClick = {
+                    onClick(index)
+                })
             }
         }
     }
@@ -60,60 +69,64 @@ fun ShowBeneficiary(
 
 @Composable
 fun BeneficiaryItem(
-    beneficiaryName: String?,
+    beneficiary: Beneficiary,
     onClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick.invoke() },
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(0.dp),
+        onClick = onClick,
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )
     ) {
-        if (beneficiaryName != null) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 8.dp), text = beneficiaryName,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-    }
-}
-
-@Composable
-fun ShowBeneficiaryListEmpty(modifier: Modifier = Modifier) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
+        Column(
             modifier = Modifier
-                .size(100.dp)
-                .padding(bottom = 12.dp),
-            painter = painterResource(id = R.drawable.ic_error_black_24dp),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSecondary
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 16.dp)
+        ) {
+            Text(
+                text = "${beneficiary.name}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "${beneficiary.id}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
+                )
+
+                Text(
+                    text = "${beneficiary.officeName}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
+                )
+            }
+
+        }
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(0.2.dp),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = .3f)
         )
 
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(id = R.string.no_beneficiary_found_please_add),
-            style = TextStyle(fontSize = 20.sp),
-            color = MaterialTheme.colorScheme.onSecondary,
-            textAlign = TextAlign.Center
-        )
     }
 }
 
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewBeneficiaryListEmpty(modifier: Modifier = Modifier) {
+    val beneficiary = Beneficiary(name = "Victor", id = 242344343, officeName = "Main office")
     MifosMobileTheme {
-        ShowBeneficiaryListEmpty()
+        BeneficiaryItem(
+            beneficiary = beneficiary,
+            onClick = {}
+        )
     }
 }
+

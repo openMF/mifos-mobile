@@ -128,6 +128,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         super.onResume()
         registerReceiver()
         activity?.invalidateOptionsMenu()
+        (activity as? BaseActivity)?.showToolbar()
     }
 
     override fun onPause() {
