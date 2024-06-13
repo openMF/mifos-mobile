@@ -47,9 +47,6 @@ class BeneficiaryListViewModel @Inject constructor(private val beneficiaryReposi
     }
 }
 
-
-
-
 sealed class BeneficiaryUiState {
     object Initial : BeneficiaryUiState()
     object Loading : BeneficiaryUiState()
@@ -64,44 +61,3 @@ sealed class BeneficiaryUiState {
     data class ShowBeneficiaryList(val beneficiaries: List<Beneficiary?>) : BeneficiaryUiState()
 
 }
-
-
-
-//val beneficiaryList = listOf(
-//    Beneficiary(
-//        id = 1,
-//        name = "John Doe",
-//        officeName = "Mifos Head Office",
-//        clientName = "Jane Smith",
-//        accountType = null,
-//        accountNumber = "1234567890",
-//        transferLimit = 1000.00
-//    ),
-//    Beneficiary(
-//        id = 2,
-//        name = "Alice Johnson",
-//        officeName = "Mifos Branch 1",
-//        clientName = "Bob Smith",
-//        accountType = null,
-//        accountNumber = "0987654321",
-//        transferLimit = 500.00
-//    ),
-//    Beneficiary(
-//        id = 3,
-//        name = "Michael Brown",
-//        officeName = "Mifos Branch 2",
-//        clientName = "Sarah Jones",
-//        accountType = null,
-//        accountNumber = "9876543210",
-//        transferLimit = 2000.00
-//    ),
-//    Beneficiary(
-//        id = 4,
-//        name = "David Williams",
-//        officeName = "Mifos Head Office",
-//        clientName = "Emily Miller",
-//        accountType = null,
-//        accountNumber = "1011121314",
-//        transferLimit = 750.00
-//    )
-//)

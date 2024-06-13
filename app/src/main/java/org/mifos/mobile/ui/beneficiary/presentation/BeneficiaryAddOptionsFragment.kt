@@ -251,6 +251,15 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as? BaseActivity)?.hideToolbar()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (activity as? BaseActivity)?.showToolbar()
+    }
 
     companion object {
         @JvmStatic

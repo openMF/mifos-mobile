@@ -4,13 +4,23 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -38,6 +49,7 @@ import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
+import org.mifos.mobile.ui.beneficiary_detail.BeneficiaryDetailScreen
 import org.mifos.mobile.utils.Network
 
 @Composable
@@ -89,8 +101,9 @@ fun BeneficiaryListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier.padding(bottom = 50.dp, end = 32.dp),
-                onClick = { addBeneficiaryClicked.invoke() }) {
+                onClick = { addBeneficiaryClicked.invoke() },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "",
@@ -160,100 +173,81 @@ fun BeneficiaryListScreen(
             }
         }
     }
-
 }
 
-
-@Composable
-fun ErrorComponent(
-    retryConnection: () -> Unit,
-    retryLoadingBeneficiary: () -> Unit
-) {
-    val context = LocalContext.current
-    if (!Network.isConnected(context)) {
-        NoInternet(
-            icon = R.drawable.ic_portable_wifi_off_black_24dp,
-            error = R.string.no_internet_connection,
-            isRetryEnabled = true,
-            retry = retryConnection
+class BeneficiaryListScreenPreviewProvider : PreviewParameterProvider<BeneficiaryUiState> {
+val beneficiaryList = listOf(
+    Beneficiary(
+        id = 982098302,
+        name = "John Doe",
+        officeName = "Mifos Head Office",
+        clientName = "Jane Smith",
+        accountType = null,
+        accountNumber = "1234567890",
+        transferLimit = 1000.00
+    ),
+    Beneficiary(
+        id = 982098302,
+        name = "Alice Johnson",
+        officeName = "Mifos Branch 1",
+        clientName = "Bob Smith",
+        accountType = null,
+        accountNumber = "0987654321",
+        transferLimit = 500.00
+    ),
+    Beneficiary(
+        id = 982098302,
+        name = "Michael Brown",
+        officeName = "Mifos Branch 2",
+        clientName = "Sarah Jones",
+        accountType = null,
+        accountNumber = "9876543210",
+        transferLimit = 2000.00
+    ),
+    Beneficiary(
+        id = 982098302,
+        name = "David Williams",
+        officeName = "Mifos Head Office",
+        clientName = "Emily Miller",
+        accountType = null,
+        accountNumber = "1011121314",
+        transferLimit = 750.00
+    )
+)
+    override val values: Sequence<BeneficiaryUiState>
+        get() = sequenceOf(
+            BeneficiaryUiState.ShowBeneficiaryList(beneficiaryList) ,
+            BeneficiaryUiState.Loading,
+            BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiaries),
+            BeneficiaryUiState.Initial
         )
-        Toast.makeText(
-            context,
-            stringResource(R.string.internet_not_connected),
-            Toast.LENGTH_SHORT,
-        ).show()
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            EmptyDataView(
-                icon = R.drawable.ic_error_black_24dp,
-                error = R.string.error_fetching_beneficiaries,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                onClick = { retryLoadingBeneficiary.invoke() }
-            ) {
-                Text(text = stringResource(id = R.string.try_again))
-            }
-        }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun PreviewBeneficiaryListScreen(
+    @PreviewParameter(BeneficiaryListScreenPreviewProvider::class) beneficiaryUiState: BeneficiaryUiState
+) {
+    MifosMobileTheme {
+        BeneficiaryListScreen(
+            uiState = beneficiaryUiState,
+            navigateBack = {},
+            addBeneficiaryClicked = {},
+            retryConnection = {},
+            onBeneficiaryItemClick = {_, _ ->
+
+            },
+            refreshBeneficiary = {},
+            isRefreshing = false,
+            retryLoadingBeneficiary = {}
+        )
     }
 }
-//
-//class BeneficiaryListScreenUiStatesParameterProvider :
-//    PreviewParameterProvider<BeneficiaryUiState> {
-//    val beneficiaryList = listOf(
-//        Beneficiary(
-//            id = 1,
-//            name = "John Doe",
-//            officeName = "Mifos Head Office",
-//            clientName = "Jane Smith",
-//            accountType = null,
-//            accountNumber = "1234567890",
-//            transferLimit = 1000.00
-//        ),
-//        Beneficiary(
-//            id = 2,
-//            name = "Alice Johnson",
-//            officeName = "Mifos Branch 1",
-//            clientName = "Bob Smith",
-//            accountType = null,
-//            accountNumber = "0987654321",
-//            transferLimit = 500.00
-//        )
-//    )
-//
-//    override val values: Sequence<BeneficiaryUiState>
-//        get() = sequenceOf(
-//            BeneficiaryUiState.ShowBeneficiaryList(beneficiaryList),
-//            BeneficiaryUiState.Loading,
-//            BeneficiaryUiState.ShowError(R.string.error_fetching_beneficiaries)
-//        )
-//}
-//
-//@Composable
-//@Preview(showSystemUi = true)
-//fun PreviewBeneficiaryListScreen(
-//    modifier: Modifier = Modifier,
-//    viewModel: BeneficiaryListViewModel = hiltViewModel(),
-//    @PreviewParameter(BeneficiaryListScreenUiStatesParameterProvider::class) beneficiaryUiState: BeneficiaryUiState
-//) {
-//    val uiState by viewModel.beneficiaryUiState.collectAsStateWithLifecycle()
-//    MifosMobileTheme {
-//        BeneficiaryListScreen(
-//            uiState = uiState,
-//            navigateBack = {},
-//            addBeneficiaryClicked = {},
-//            retryConnection = {},
-//            onBeneficiaryItemClick = { _, _ ->
-//
-//            },
-//            retryLoadingBeneficiary = {},
-//            isRefreshing = false,
-//            refreshBeneficiary = {}
-//        )
-//    }
-//}
+
+@Composable
+@Preview(showSystemUi = true)
+fun PreviewEmptyBeneficiary(modifier: Modifier = Modifier) {
+    MifosMobileTheme {
+        ShowBeneficiaryListEmpty()
+    }
+}

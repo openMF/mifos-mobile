@@ -1,19 +1,26 @@
 package org.mifos.mobile.ui.beneficiary_list
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -33,8 +41,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
+import org.mifos.mobile.utils.Network
 
 
 @Composable
@@ -49,7 +60,7 @@ fun ShowBeneficiary(
         LazyColumn {
             itemsIndexed(beneficiaryList ?: emptyList()) { index, beneficiary ->
                 beneficiary?.let {
-                    BeneficiaryItem(beneficiary.name, onClick = {
+                    BeneficiaryItem(beneficiary, onClick = {
                         onClick(index)
                     })
                 }
@@ -60,25 +71,52 @@ fun ShowBeneficiary(
 
 @Composable
 fun BeneficiaryItem(
-    beneficiaryName: String?,
+    beneficiary: Beneficiary,
     onClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick.invoke() },
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(0.dp),
+        onClick = onClick,
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )
     ) {
-        if (beneficiaryName != null) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 16.dp)
+        ) {
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 8.dp), text = beneficiaryName,
-                style = MaterialTheme.typography.bodyLarge
+                text = "${beneficiary.name}",
+                style = MaterialTheme.typography.bodyMedium
             )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "${beneficiary.id}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
+                )
+
+                Text(
+                    text = "${beneficiary.officeName}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
+                )
+            }
+
         }
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(0.2.dp),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = .3f)
+        )
+
     }
 }
 
@@ -111,9 +149,50 @@ fun ShowBeneficiaryListEmpty(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun ErrorComponent(
+    retryConnection: () -> Unit,
+    retryLoadingBeneficiary: () -> Unit
+) {
+    val context = LocalContext.current
+    if (!Network.isConnected(context)) {
+        NoInternet(
+            icon = R.drawable.ic_portable_wifi_off_black_24dp,
+            error = R.string.no_internet_connection,
+            isRetryEnabled = true,
+            retry = retryConnection
+        )
+        Toast.makeText(
+            context,
+            stringResource(R.string.internet_not_connected),
+            Toast.LENGTH_SHORT,
+        ).show()
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            EmptyDataView(
+                icon = R.drawable.ic_error_black_24dp,
+                error = R.string.error_fetching_beneficiaries,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            Button(
+                modifier = Modifier.padding(top = 16.dp),
+                onClick = { retryLoadingBeneficiary.invoke() }
+            ) {
+                Text(text = stringResource(id = R.string.try_again))
+            }
+        }
+    }
+}
+
+@Composable
 @Preview(showSystemUi = true)
 fun PreviewBeneficiaryListEmpty(modifier: Modifier = Modifier) {
     MifosMobileTheme {
         ShowBeneficiaryListEmpty()
     }
 }
+
