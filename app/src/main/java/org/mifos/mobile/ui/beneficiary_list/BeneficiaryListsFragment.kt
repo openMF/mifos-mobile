@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
@@ -13,7 +12,7 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
-import org.mifos.mobile.ui.fragments.BeneficiaryDetailFragment
+import org.mifos.mobile.ui.beneficiary_detail.BeneficiaryDetailFragment
 //import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
@@ -36,10 +35,8 @@ class BeneficiaryListsFragment : BaseFragment() {
         return mifosComposeView(requireContext()) {
             MifosMobileTheme {
                 BeneficiaryListScreen(
-                    viewModel = viewModel,
                     navigateBack = { activity?.supportFragmentManager?.popBackStack() },
                     addBeneficiaryClicked = { addBeneficiary() },
-                    retryConnection = { loadBeneficiary() },
                     onBeneficiaryItemClick = { position, beneficiaryList ->
                         if (beneficiaryList != null) {
                             onItemClick(
@@ -74,11 +71,6 @@ class BeneficiaryListsFragment : BaseFragment() {
 
     private fun loadBeneficiary() {
         viewModel.loadBeneficiaries()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        (activity as? BaseActivity)?.showToolbar()
     }
 
     override fun onResume() {
