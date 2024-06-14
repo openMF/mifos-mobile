@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.recent_transactions
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,9 +25,9 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.Network.isConnected
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
-import org.mifos.mobile.viewModels.RecentTransactionViewModel
 import javax.inject.Inject
 
+/*
 /**
  * @author Vishwwajeet
  * @since 09/08/16
@@ -285,3 +284,5 @@ class RecentTransactionsFragment : BaseFragment(), OnRefreshListener {
         }
     }
 }
+
+ */
