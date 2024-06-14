@@ -28,11 +28,11 @@ import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.NotificationActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.BeneficiaryListFragment
 import org.mifos.mobile.ui.fragments.ClientAccountsFragment
-import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragment
@@ -124,9 +124,9 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
 
     override fun onResume() {
         super.onResume()
-        (activity as? BaseActivity)?.showToolbar()
         registerReceiver()
         activity?.invalidateOptionsMenu()
+        (activity as? BaseActivity)?.showToolbar()
     }
 
     override fun onPause() {
@@ -277,7 +277,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      */
     private fun chargesClicked() {
         (activity as HomeActivity?)?.replaceFragment(
-            ClientChargeFragment.newInstance(
+            ClientChargeComposeFragment.newInstance(
                 clientId,
                 ChargeType.CLIENT,
             ),

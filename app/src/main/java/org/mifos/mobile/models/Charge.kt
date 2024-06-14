@@ -49,8 +49,8 @@ class Charge : BaseModel, Parcelable {
     @Column
     var isActive = false
 
-    var isPaid: Boolean? = false
-    var isWaived: Boolean? = false
+    var isChargePaid: Boolean = false
+    var isChargeWaived: Boolean = false
 
     var paid = false
     var waived = false
@@ -75,8 +75,8 @@ class Charge : BaseModel, Parcelable {
         dest.writeValue(amountOutstanding)
         dest.writeValue(penalty)
         dest.writeValue(isActive)
-        dest.writeValue(isPaid)
-        dest.writeValue(isWaived)
+        dest.writeValue(isChargePaid)
+        dest.writeValue(isChargeWaived)
         dest.writeValue(paid)
         dest.writeValue(waived)
     }
@@ -99,10 +99,10 @@ class Charge : BaseModel, Parcelable {
         amountOutstanding = `in`.readValue(Double::class.java.classLoader) as Double
         penalty = `in`.readValue(Boolean::class.java.classLoader) as Boolean
         isActive = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        isPaid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        isWaived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        paid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        waived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isChargePaid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isChargeWaived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isChargePaid = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        isChargeWaived = `in`.readValue(Boolean::class.java.classLoader) as Boolean
     }
 
     companion object {

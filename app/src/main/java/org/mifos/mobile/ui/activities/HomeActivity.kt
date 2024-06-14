@@ -32,6 +32,7 @@ import org.mifos.mobile.databinding.NavDrawerHeaderBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.ui.about.AboutUsActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
@@ -190,7 +191,7 @@ class HomeActivity :
             )
 
             R.id.item_charges -> replaceFragment(
-                ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT),
+                ClientChargeComposeFragment.newInstance(clientId, ChargeType.CLIENT),
                 true,
                 R.id.container,
             )
@@ -413,7 +414,7 @@ class HomeActivity :
                     setNavigationViewSelectedItem(R.id.item_recent_transactions)
                 }
 
-                is ClientChargeFragment -> {
+                is ClientChargeComposeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_charges)
                 }
 

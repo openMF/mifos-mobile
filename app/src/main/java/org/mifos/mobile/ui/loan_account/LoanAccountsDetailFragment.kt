@@ -12,10 +12,10 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
-import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
@@ -140,7 +140,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     private fun chargesClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            ClientChargeFragment.newInstance(
+            ClientChargeComposeFragment.newInstance(
                 viewModel.loanWithAssociations?.id?.toLong(),
                 ChargeType.LOAN,
             ),

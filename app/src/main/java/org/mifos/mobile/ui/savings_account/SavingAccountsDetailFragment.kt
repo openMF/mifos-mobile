@@ -17,10 +17,10 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.SavingsAccountState
-import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
 import org.mifos.mobile.ui.fragments.SavingAccountsTransactionFragment
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment
@@ -161,7 +161,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
 
     private fun chargeClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            ClientChargeFragment.newInstance(viewModel.savingsId, ChargeType.SAVINGS),
+            ClientChargeComposeFragment.newInstance(viewModel.savingsId, ChargeType.SAVINGS),
             true,
             R.id.container,
         )

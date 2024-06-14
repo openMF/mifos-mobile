@@ -1,7 +1,6 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.client_charge
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,23 +16,18 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentClientChargeBinding
 import org.mifos.mobile.models.Charge
-import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.adapters.ClientChargeAdapter
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.ClientChargeUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.viewModels.ClientChargeViewModel
 
-/**
- * @author Vishwajeet
- * @since 17/8/16.
- */
+/*
+
 @AndroidEntryPoint
 class ClientChargeFragment : BaseFragment() {
 
@@ -93,17 +87,15 @@ class ClientChargeFragment : BaseFragment() {
                 viewModel.clientChargeUiState.collect {
                     when (it) {
                         is ClientChargeUiState.Loading -> showProgress()
-                        is ClientChargeUiState.ShowError -> {
+                        is ClientChargeUiState.Error -> {
                             hideProgress()
-                            showErrorFetchingClientCharges(getString(it.message))
+                           // showErrorFetchingClientCharges(getString(it.message))
                         }
 
-                        is ClientChargeUiState.ShowClientCharges -> {
+                        is ClientChargeUiState.Success -> {
                             hideProgress()
                             showClientCharges(it.charges)
                         }
-
-                        is ClientChargeUiState.Initial -> {}
                     }
                 }
             }
@@ -250,3 +242,5 @@ class ClientChargeFragment : BaseFragment() {
         }
     }
 }
+
+ */
