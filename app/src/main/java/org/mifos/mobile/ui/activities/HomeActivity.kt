@@ -39,6 +39,7 @@ import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.help.HelpActivity
 import org.mifos.mobile.ui.home.HomeOldFragment
 import org.mifos.mobile.ui.login.LoginActivity
+import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragment
 import org.mifos.mobile.ui.notification.NotificationFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.TextDrawable
@@ -194,7 +195,7 @@ class HomeActivity :
             )
 
             R.id.item_third_party_transfer -> replaceFragment(
-                ThirdPartyTransferFragment.newInstance(),
+                ThirdPartyTransferComposeFragment.newInstance(),
                 true,
                 R.id.container,
             )
@@ -415,7 +416,7 @@ class HomeActivity :
                     setNavigationViewSelectedItem(R.id.item_charges)
                 }
 
-                is ThirdPartyTransferFragment -> {
+                is ThirdPartyTransferComposeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_third_party_transfer)
                 }
 
