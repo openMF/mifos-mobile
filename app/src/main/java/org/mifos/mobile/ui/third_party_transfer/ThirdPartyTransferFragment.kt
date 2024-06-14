@@ -36,6 +36,7 @@ import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragmen
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.ui.fragments.TransferProcessFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
@@ -207,7 +208,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
     }
 
     /**
-     * Checks validation of `etRemark` and then opens [TransferProcessFragment] for
+     * Checks validation of `etRemark` and then opens [TransferProcessComposeFragment] for
      * initiating the transfer
      */
     private fun reviewTransfer() {
@@ -244,7 +245,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
         transferPayload.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         (activity as BaseActivity?)?.replaceFragment(
-            TransferProcessFragment.newInstance(
+            TransferProcessComposeFragment.newInstance(
                 transferPayload,
                 TransferType.TPT,
             ),
