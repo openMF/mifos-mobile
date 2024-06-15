@@ -69,6 +69,10 @@ android {
 }
 
 dependencies {
+
+    //logs module
+    implementation(projects.core.logs)
+
     implementation(projects.ui)
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
