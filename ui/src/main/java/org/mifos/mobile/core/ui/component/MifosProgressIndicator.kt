@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @Preview(showSystemUi = true)
 @Composable
 fun MifosProgressIndicator(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.fillMaxSize()
 ) {
     Column(
         modifier = modifier,

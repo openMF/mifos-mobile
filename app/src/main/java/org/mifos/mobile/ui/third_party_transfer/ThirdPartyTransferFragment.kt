@@ -1,4 +1,6 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.third_party_transfer
+
+/*
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -32,7 +34,9 @@ import org.mifos.mobile.ui.adapters.AccountsSpinnerAdapter
 import org.mifos.mobile.ui.adapters.BeneficiarySpinnerAdapter
 import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
 import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.ui.fragments.TransferProcessFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.Network
@@ -42,7 +46,6 @@ import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.Utils
 import org.mifos.mobile.utils.getTodayFormatted
-import org.mifos.mobile.viewModels.ThirdPartyTransferViewModel
 
 /**
  * Created by dilpreet on 21/6/17.
@@ -205,7 +208,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
     }
 
     /**
-     * Checks validation of `etRemark` and then opens [TransferProcessFragment] for
+     * Checks validation of `etRemark` and then opens [TransferProcessComposeFragment] for
      * initiating the transfer
      */
     private fun reviewTransfer() {
@@ -242,7 +245,7 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
         transferPayload.fromAccountNumber = fromAccountOption?.accountNo
         transferPayload.toAccountNumber = beneficiaryAccountOption?.accountNo
         (activity as BaseActivity?)?.replaceFragment(
-            TransferProcessFragment.newInstance(
+            TransferProcessComposeFragment.newInstance(
                 transferPayload,
                 TransferType.TPT,
             ),
@@ -471,3 +474,5 @@ class ThirdPartyTransferFragment : BaseFragment(), OnItemSelectedListener {
         }
     }
 }
+
+ */

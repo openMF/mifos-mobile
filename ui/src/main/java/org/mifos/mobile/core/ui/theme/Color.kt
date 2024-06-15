@@ -22,3 +22,5 @@ val LightYellow = Color(0xFFF9AC06)
 
 val Primary = Color(0xFF3F51B5)
 val DarkGray = Color(0xBB666666)
+
+val GreenSuccess = Color(0xff14c416)

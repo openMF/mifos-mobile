@@ -69,6 +69,10 @@ android {
 }
 
 dependencies {
+
+    //logs module
+    implementation(projects.core.logs)
+
     implementation(projects.ui)
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
@@ -162,6 +166,7 @@ dependencies {
 
     // Jetpack Compose
     api(libs.androidx.activity.compose)
+    api(platform(libs.androidx.compose.bom))
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)

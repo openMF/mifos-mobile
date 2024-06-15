@@ -2,6 +2,7 @@ package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -30,6 +31,7 @@ fun MifosTopBar(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     title: @Composable () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {}
 ) {
     TopAppBar(
         modifier = modifier,
@@ -51,6 +53,7 @@ fun MifosTopBar(
             else
                 Color(0xFFFEFBFF)
         ),
+        actions = actions,
     )
 }
 

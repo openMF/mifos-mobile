@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.repositories.TransferRepositoryImp
 import org.mifos.mobile.ui.enums.TransferType
 import org.mifos.mobile.util.RxSchedulersOverrideRule
@@ -26,6 +27,7 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
+import org.mifos.mobile.ui.transfer_process.TransferProcessViewModel
 
 @RunWith(MockitoJUnitRunner::class)
 class TransferProcessViewModelTest {
@@ -63,11 +65,12 @@ class TransferProcessViewModelTest {
         ).thenReturn(flowOf(responseBody))
         viewModel.transferUiState.test {
             viewModel.makeTransfer(
-                1, 2, 3,
-                4, 5, 6, 7,
-                8, "06 July 2023 ", 100.0, "Transfer",
-                "dd MMMM yyyy", "en", "0000001", "0000002",
-                TransferType.SELF
+                TransferPayload(
+                    1, 2, 3,
+                    4, 5, 6, 7,
+                    8, "06 July 2023 ", 100.0, "Transfer",
+                    "dd MMMM yyyy", "en", "0000001", "0000002"
+                )
             )
             assertEquals(TransferUiState.Initial, awaitItem())
             assertEquals(TransferUiState.TransferSuccess, awaitItem())
@@ -92,11 +95,12 @@ class TransferProcessViewModelTest {
         viewModel.transferUiState.test {
 
             viewModel.makeTransfer(
-                1, 2, 3,
-                4, 5, 6, 7,
-                8, "06 July 2023 ", 100.0, "Transfer",
-                "dd MMMM yyyy", "en", "0000001", "0000002",
-                TransferType.SELF
+                TransferPayload(
+                    1, 2, 3,
+                    4, 5, 6, 7,
+                    8, "06 July 2023 ", 100.0, "Transfer",
+                    "dd MMMM yyyy", "en", "0000001", "0000002"
+                )
             )
             assertEquals(TransferUiState.Initial, awaitItem())
             assertEquals(TransferUiState.Error(error), awaitItem())

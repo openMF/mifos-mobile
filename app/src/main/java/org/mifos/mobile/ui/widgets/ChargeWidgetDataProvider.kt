@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.repositories.ClientChargeRepository
-import org.mifos.mobile.viewModels.ClientChargeViewModel
+import org.mifos.mobile.ui.client_charge.ClientChargeViewModel
 import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
 

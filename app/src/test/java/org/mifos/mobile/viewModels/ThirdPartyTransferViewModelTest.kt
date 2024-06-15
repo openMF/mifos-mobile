@@ -2,13 +2,11 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -24,13 +22,13 @@ import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.account.AccountType
 import org.mifos.mobile.repositories.BeneficiaryRepositoryImp
 import org.mifos.mobile.repositories.ThirdPartyTransferRepositoryImp
+import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 
 @RunWith(MockitoJUnitRunner::class)

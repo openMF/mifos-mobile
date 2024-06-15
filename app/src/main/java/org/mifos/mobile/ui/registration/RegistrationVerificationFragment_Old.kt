@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.registration
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,13 +18,12 @@ import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.ui.registration.RegistrationViewModel
 
 /**
  * Created by dilpreet on 31/7/17.
  */
 @AndroidEntryPoint
-class RegistrationVerificationFragment : BaseFragment() {
+class RegistrationVerificationFragment_Old : BaseFragment() {
     private var _binding: FragmentRegistrationVerificationBinding? = null
     private val binding get() = _binding!!
 
@@ -100,8 +99,8 @@ class RegistrationVerificationFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance(): RegistrationVerificationFragment {
-            return RegistrationVerificationFragment()
+        fun newInstance(): RegistrationVerificationFragment_Old {
+            return RegistrationVerificationFragment_Old()
         }
     }
 }
