@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
@@ -18,7 +16,7 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 
 
 @AndroidEntryPoint
-class BeneficiaryListsFragment : BaseFragment() {
+class BeneficiaryListComposeFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,8 +58,8 @@ class BeneficiaryListsFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance(): BeneficiaryListsFragment {
-            return BeneficiaryListsFragment()
+        fun newInstance(): BeneficiaryListComposeFragment {
+            return BeneficiaryListComposeFragment()
         }
     }
 }
