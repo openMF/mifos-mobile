@@ -256,13 +256,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
         (activity as? BaseActivity)?.hideToolbar()
     }
 
-    override fun onPause() {
-        super.onPause()
-        (activity as? BaseActivity)?.showToolbar()
-    }
-
     companion object {
-        @JvmStatic
         fun newInstance(): BeneficiaryAddOptionsFragment {
             val fragment = BeneficiaryAddOptionsFragment()
             val args = Bundle()

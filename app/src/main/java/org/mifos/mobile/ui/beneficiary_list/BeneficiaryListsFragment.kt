@@ -35,10 +35,8 @@ class BeneficiaryListsFragment : BaseFragment() {
         return mifosComposeView(requireContext()) {
             MifosMobileTheme {
                 BeneficiaryListScreen(
-                    viewModel = viewModel,
                     navigateBack = { activity?.supportFragmentManager?.popBackStack() },
                     addBeneficiaryClicked = { addBeneficiary() },
-                    retryConnection = { loadBeneficiary() },
                     onBeneficiaryItemClick = { position, beneficiaryList ->
                         if (beneficiaryList != null) {
                             onItemClick(
@@ -73,11 +71,6 @@ class BeneficiaryListsFragment : BaseFragment() {
 
     private fun loadBeneficiary() {
         viewModel.loadBeneficiaries()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        (activity as? BaseActivity)?.showToolbar()
     }
 
     override fun onResume() {

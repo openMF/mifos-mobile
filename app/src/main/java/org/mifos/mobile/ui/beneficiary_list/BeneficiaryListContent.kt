@@ -50,7 +50,7 @@ import org.mifos.mobile.utils.Network
 
 @Composable
 fun ShowBeneficiary(
-    beneficiaryList: List<Beneficiary?>?,
+    beneficiaryList: List<Beneficiary>,
     onClick: (position: Int) -> Unit
 ) {
     Box(
@@ -58,12 +58,10 @@ fun ShowBeneficiary(
             .fillMaxSize()
     ) {
         LazyColumn {
-            itemsIndexed(beneficiaryList ?: emptyList()) { index, beneficiary ->
-                beneficiary?.let {
-                    BeneficiaryItem(beneficiary, onClick = {
-                        onClick(index)
-                    })
-                }
+            itemsIndexed(beneficiaryList) { index, beneficiary ->
+                BeneficiaryItem(beneficiary, onClick = {
+                    onClick(index)
+                })
             }
         }
     }
@@ -121,78 +119,14 @@ fun BeneficiaryItem(
 }
 
 @Composable
-fun ShowBeneficiaryListEmpty(modifier: Modifier = Modifier) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            modifier = Modifier
-                .size(100.dp)
-                .padding(bottom = 12.dp),
-            painter = painterResource(id = R.drawable.ic_error_black_24dp),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSecondary
-        )
-
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(id = R.string.no_beneficiary_found_please_add),
-            style = TextStyle(fontSize = 20.sp),
-            color = MaterialTheme.colorScheme.onSecondary,
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-fun ErrorComponent(
-    retryConnection: () -> Unit,
-    retryLoadingBeneficiary: () -> Unit
-) {
-    val context = LocalContext.current
-    if (!Network.isConnected(context)) {
-        NoInternet(
-            icon = R.drawable.ic_portable_wifi_off_black_24dp,
-            error = R.string.no_internet_connection,
-            isRetryEnabled = true,
-            retry = retryConnection
-        )
-        Toast.makeText(
-            context,
-            stringResource(R.string.internet_not_connected),
-            Toast.LENGTH_SHORT,
-        ).show()
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            EmptyDataView(
-                icon = R.drawable.ic_error_black_24dp,
-                error = R.string.error_fetching_beneficiaries,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                onClick = { retryLoadingBeneficiary.invoke() }
-            ) {
-                Text(text = stringResource(id = R.string.try_again))
-            }
-        }
-    }
-}
-
-@Composable
 @Preview(showSystemUi = true)
 fun PreviewBeneficiaryListEmpty(modifier: Modifier = Modifier) {
+    val beneficiary = Beneficiary(name = "Victor", id = 242344343, officeName = "Main office")
     MifosMobileTheme {
-        ShowBeneficiaryListEmpty()
+        BeneficiaryItem(
+            beneficiary = beneficiary,
+            onClick = {}
+        )
     }
 }
 

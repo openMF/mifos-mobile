@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.repositories.BeneficiaryRepository
 import javax.inject.Inject
 
@@ -20,9 +19,9 @@ import javax.inject.Inject
 class BeneficiaryListViewModel @Inject constructor(private val beneficiaryRepositoryImp: BeneficiaryRepository) :
     ViewModel() {
 
-    private val _beneficiaryUiState =
-        MutableStateFlow<BeneficiaryUiState>(BeneficiaryUiState.Initial)
-    val beneficiaryUiState: StateFlow<BeneficiaryUiState> get() = _beneficiaryUiState
+    private val _beneficiaryListUiState =
+        MutableStateFlow<BeneficiaryListUiState>(BeneficiaryListUiState.Initial)
+    val beneficiaryListUiState: StateFlow<BeneficiaryListUiState> get() = _beneficiaryListUiState
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
@@ -37,27 +36,28 @@ class BeneficiaryListViewModel @Inject constructor(private val beneficiaryReposi
 
     fun loadBeneficiaries() {
         viewModelScope.launch {
-            _beneficiaryUiState.value = BeneficiaryUiState.Loading
+            _beneficiaryListUiState.value = BeneficiaryListUiState.Loading
             beneficiaryRepositoryImp.beneficiaryList().catch {
-                _beneficiaryUiState.value = BeneficiaryUiState.ShowError(R.string.beneficiaries)
-            }.collect {
-                _beneficiaryUiState.value = BeneficiaryUiState.ShowBeneficiaryList(it)
+                _beneficiaryListUiState.value = BeneficiaryListUiState.ShowError(R.string.beneficiaries)
+            }.collect { beneficiaryList->
+                if(beneficiaryList.isEmpty()){
+                    _beneficiaryListUiState.value = BeneficiaryListUiState.EmptyBeneficiaryList
+                }
+                else{
+                    _beneficiaryListUiState.value = BeneficiaryListUiState.ShowBeneficiaryList(beneficiaryList)
+                }
             }
         }
     }
 }
 
-sealed class BeneficiaryUiState {
-    object Initial : BeneficiaryUiState()
-    object Loading : BeneficiaryUiState()
-    object CreatedSuccessfully : BeneficiaryUiState()
-    object UpdatedSuccessfully : BeneficiaryUiState()
-    object DeletedSuccessfully : BeneficiaryUiState()
-    data class ShowError(val message: Int) : BeneficiaryUiState()
-    data class SetVisibility(val visibility: Int) : BeneficiaryUiState()
-    data class ShowBeneficiaryTemplate(val beneficiaryTemplate: BeneficiaryTemplate) :
-        BeneficiaryUiState()
 
-    data class ShowBeneficiaryList(val beneficiaries: List<Beneficiary?>) : BeneficiaryUiState()
+sealed class BeneficiaryListUiState{
+    object Initial : BeneficiaryListUiState()
+    object Loading : BeneficiaryListUiState()
+    object EmptyBeneficiaryList : BeneficiaryListUiState()
+    data class ShowError(val message: Int) : BeneficiaryListUiState()
+    data class ShowBeneficiaryList(val beneficiaries: List<Beneficiary>) : BeneficiaryListUiState()
 
 }
+
