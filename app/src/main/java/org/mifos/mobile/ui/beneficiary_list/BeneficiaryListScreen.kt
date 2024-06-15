@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -43,19 +44,23 @@ fun BeneficiaryListScreen(
     viewModel: BeneficiaryListViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit,
-    onBeneficiaryItemClick: (position: Int, List<Beneficiary?>?) -> Unit,
-    retryLoadingBeneficiary: () -> Unit
+    onBeneficiaryItemClick: (position: Int, List<Beneficiary>) -> Unit,
 ) {
     val uiState by viewModel.beneficiaryListUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.loadBeneficiaries()
+    }
 
     BeneficiaryListScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         addBeneficiaryClicked = addBeneficiaryClicked,
         onBeneficiaryItemClick = onBeneficiaryItemClick,
-        retryLoadingBeneficiary = retryLoadingBeneficiary,
+        retryLoadingBeneficiary = { viewModel.loadBeneficiaries() },
         isRefreshing = isRefreshing,
+        refresh = { viewModel.refresh() }
     )
 }
 
@@ -63,48 +68,44 @@ fun BeneficiaryListScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BeneficiaryListScreen(
-    viewModel: BeneficiaryListViewModel = hiltViewModel(),
     uiState: BeneficiaryListUiState,
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit,
-    onBeneficiaryItemClick: (position: Int, List<Beneficiary?>?) -> Unit,
+    onBeneficiaryItemClick: (position: Int, List<Beneficiary>) -> Unit,
     retryLoadingBeneficiary: () -> Unit,
     isRefreshing: Boolean,
+    refresh: () -> Unit,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
     val context = LocalContext.current
 
     MFScaffold(
         topBarTitleResId = R.string.beneficiaries,
-        navigateBack = { navigateBack.invoke() },
+        navigateBack = navigateBack,
         floatingActionButtonContent = FloatingActionButtonContent(
             onClick = addBeneficiaryClicked,
             contentColor = MaterialTheme.colorScheme.onBackground,
             content = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_add_white_24dp),
-                    contentDescription = "add beneficiary list"
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.surfaceBright
                 )
             }
         )
-    )
-    {
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
                 .nestedScroll(pullRefreshState.nestedScrollConnection)
-
         ) {
             when (uiState) {
-
-                BeneficiaryListUiState.Initial -> Unit
-
                 BeneficiaryListUiState.Loading -> {
                     MifosProgressIndicatorOverlay()
                 }
 
-                is BeneficiaryListUiState.ShowError -> {
+                is BeneficiaryListUiState.Error -> {
                     MifosErrorComponent(
                         isNetworkConnected = Network.isConnected(context),
                         isRetryEnabled = true,
@@ -113,21 +114,21 @@ fun BeneficiaryListScreen(
                     )
                 }
 
-                is BeneficiaryListUiState.ShowBeneficiaryList -> {
-                    ShowBeneficiary(
-                        beneficiaryList = uiState.beneficiaries,
-                        onClick = { position ->
-                            onBeneficiaryItemClick.invoke(position, uiState.beneficiaries)
-                        }
-                    )
-                }
-
-                is BeneficiaryListUiState.EmptyBeneficiaryList -> {
-                    EmptyDataView(
-                        modifier = Modifier.fillMaxSize(),
-                        icon = R.drawable.ic_error_black_24dp,
-                        error = R.string.no_beneficiary_found_please_add
-                    )
+                is BeneficiaryListUiState.Success -> {
+                    if(uiState.beneficiaries.isEmpty()) {
+                        EmptyDataView(
+                            modifier = Modifier.fillMaxSize(),
+                            icon = R.drawable.ic_error_black_24dp,
+                            error = R.string.no_beneficiary_found_please_add
+                        )
+                    } else {
+                        ShowBeneficiary(
+                            beneficiaryList = uiState.beneficiaries,
+                            onClick = { position ->
+                                onBeneficiaryItemClick.invoke(position, uiState.beneficiaries)
+                            }
+                        )
+                    }
                 }
             }
 
@@ -145,7 +146,7 @@ fun BeneficiaryListScreen(
         LaunchedEffect(key1 = pullRefreshState.isRefreshing) {
             if (pullRefreshState.isRefreshing) {
                 if (Network.isConnected(context)) {
-                    viewModel.refresh()
+                    refresh()
                 } else {
                     Toast.makeText(
                         context,
@@ -179,31 +180,12 @@ class BeneficiaryListScreenPreviewProvider : PreviewParameterProvider<Beneficiar
             accountNumber = "0987654321",
             transferLimit = 500.00
         ),
-        Beneficiary(
-            id = 982098302,
-            name = "Michael Brown",
-            officeName = "Mifos Branch 2",
-            clientName = "Sarah Jones",
-            accountType = null,
-            accountNumber = "9876543210",
-            transferLimit = 2000.00
-        ),
-        Beneficiary(
-            id = 982098302,
-            name = "David Williams",
-            officeName = "Mifos Head Office",
-            clientName = "Emily Miller",
-            accountType = null,
-            accountNumber = "1011121314",
-            transferLimit = 750.00
-        )
     )
     override val values: Sequence<BeneficiaryListUiState>
         get() = sequenceOf(
-            BeneficiaryListUiState.ShowBeneficiaryList(beneficiaryList),
+            BeneficiaryListUiState.Success(beneficiaryList),
             BeneficiaryListUiState.Loading,
-            BeneficiaryListUiState.ShowError(R.string.error_fetching_beneficiaries),
-            BeneficiaryListUiState.Initial
+            BeneficiaryListUiState.Error(null),
         )
 }
 
@@ -217,12 +199,10 @@ private fun PreviewBeneficiaryListScreen(
             uiState = beneficiaryUiState,
             navigateBack = {},
             addBeneficiaryClicked = {},
-            onBeneficiaryItemClick = { _, _ ->
-
-            },
-
+            onBeneficiaryItemClick = { _, _ -> },
             isRefreshing = false,
-            retryLoadingBeneficiary = {}
+            retryLoadingBeneficiary = {},
+            refresh = {}
         )
     }
 }

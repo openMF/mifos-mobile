@@ -19,64 +19,44 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 
 @AndroidEntryPoint
 class BeneficiaryListsFragment : BaseFragment() {
-
-    private val viewModel: BeneficiaryListViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.loadBeneficiaries()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            MifosMobileTheme {
-                BeneficiaryListScreen(
-                    navigateBack = { activity?.supportFragmentManager?.popBackStack() },
-                    addBeneficiaryClicked = { addBeneficiary() },
-                    onBeneficiaryItemClick = { position, beneficiaryList ->
-                        if (beneficiaryList != null) {
-                            onItemClick(
-                                position = position,
-                                beneficiaryList = beneficiaryList
-                            )
-                        }
-                    },
-                    retryLoadingBeneficiary = { loadBeneficiary() },
-                )
-            }
+            BeneficiaryListScreen(
+                navigateBack = { activity?.supportFragmentManager?.popBackStack() },
+                addBeneficiaryClicked = { addBeneficiary() },
+                onBeneficiaryItemClick = { position, beneficiaryList ->
+                    onItemClick(
+                        position = position,
+                        beneficiaryList = beneficiaryList
+                    )
+                },
+            )
         }
     }
 
-    private fun onItemClick(position: Int, beneficiaryList: List<Beneficiary?>) {
-        (activity as BaseActivity?)?.replaceFragment(
-            BeneficiaryDetailFragment.newInstance(
-                beneficiaryList[position],
-            ),
+    private fun onItemClick(position: Int, beneficiaryList: List<Beneficiary>) {
+        (activity as? BaseActivity)?.replaceFragment(
+            BeneficiaryDetailFragment.newInstance(beneficiaryList[position]),
             true,
             R.id.container,
         )
     }
 
     private fun addBeneficiary() {
-        (activity as BaseActivity?)?.replaceFragment(
+        (activity as? BaseActivity)?.replaceFragment(
             BeneficiaryAddOptionsFragment.newInstance(),
             true,
             R.id.container,
         )
     }
 
-    private fun loadBeneficiary() {
-        viewModel.loadBeneficiaries()
-    }
-
     override fun onResume() {
         super.onResume()
         (activity as? BaseActivity)?.hideToolbar()
-        viewModel.loadBeneficiaries()
     }
 
     companion object {

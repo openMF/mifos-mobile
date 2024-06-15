@@ -13,14 +13,11 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.repositories.BeneficiaryRepository
 import javax.inject.Inject
 
-
-
 @HiltViewModel
 class BeneficiaryListViewModel @Inject constructor(private val beneficiaryRepositoryImp: BeneficiaryRepository) :
     ViewModel() {
 
-    private val _beneficiaryListUiState =
-        MutableStateFlow<BeneficiaryListUiState>(BeneficiaryListUiState.Initial)
+    private val _beneficiaryListUiState = MutableStateFlow<BeneficiaryListUiState>(BeneficiaryListUiState.Loading)
     val beneficiaryListUiState: StateFlow<BeneficiaryListUiState> get() = _beneficiaryListUiState
 
     private val _isRefreshing = MutableStateFlow(false)
@@ -30,7 +27,6 @@ class BeneficiaryListViewModel @Inject constructor(private val beneficiaryReposi
         viewModelScope.launch {
             _isRefreshing.emit(true)
             loadBeneficiaries()
-            _isRefreshing.emit(false)
         }
     }
 
@@ -38,14 +34,10 @@ class BeneficiaryListViewModel @Inject constructor(private val beneficiaryReposi
         viewModelScope.launch {
             _beneficiaryListUiState.value = BeneficiaryListUiState.Loading
             beneficiaryRepositoryImp.beneficiaryList().catch {
-                _beneficiaryListUiState.value = BeneficiaryListUiState.ShowError(R.string.beneficiaries)
+                _beneficiaryListUiState.value = BeneficiaryListUiState.Error(it.message)
             }.collect { beneficiaryList->
-                if(beneficiaryList.isEmpty()){
-                    _beneficiaryListUiState.value = BeneficiaryListUiState.EmptyBeneficiaryList
-                }
-                else{
-                    _beneficiaryListUiState.value = BeneficiaryListUiState.ShowBeneficiaryList(beneficiaryList)
-                }
+                _beneficiaryListUiState.value = BeneficiaryListUiState.Success(beneficiaryList)
+                _isRefreshing.emit(false)
             }
         }
     }
@@ -53,11 +45,8 @@ class BeneficiaryListViewModel @Inject constructor(private val beneficiaryReposi
 
 
 sealed class BeneficiaryListUiState{
-    object Initial : BeneficiaryListUiState()
-    object Loading : BeneficiaryListUiState()
-    object EmptyBeneficiaryList : BeneficiaryListUiState()
-    data class ShowError(val message: Int) : BeneficiaryListUiState()
-    data class ShowBeneficiaryList(val beneficiaries: List<Beneficiary>) : BeneficiaryListUiState()
-
+    data object Loading : BeneficiaryListUiState()
+    data class Error(val message: String?) : BeneficiaryListUiState()
+    data class Success(val beneficiaries: List<Beneficiary>) : BeneficiaryListUiState()
 }
 
