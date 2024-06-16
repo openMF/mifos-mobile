@@ -5,16 +5,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -24,14 +17,13 @@ import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.repositories.ClientChargeRepositoryImp
+import org.mifos.mobile.ui.client_charge.ClientChargeViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.ClientChargeUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -58,7 +50,7 @@ class ClientChargeViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = ClientChargeViewModel(clientChargeRepositoryImp) 
+        viewModel = ClientChargeViewModel(clientChargeRepositoryImp)
     }
 
     @Test

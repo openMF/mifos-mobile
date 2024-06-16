@@ -93,7 +93,7 @@ class ClientChargeAdapter(
                 if (charge?.dueDate?.isNotEmpty() == true) {
                     tvDueDate.text = getDateAsString(charge.dueDate)
                 }
-                if (charge?.isPaid == true || charge?.isWaived == true || charge?.paid == true || charge?.waived == true) {
+                if (charge?.isChargePaid == true || charge?.isChargeWaived == true || charge?.paid == true || charge?.waived == true) {
                     circleStatus.setBackgroundColor(itemView.context.getThemeAttributeColor(R.attr.colorError))
                 } else {
                     context?.getThemeAttributeColor(R.attr.colorSuccess)

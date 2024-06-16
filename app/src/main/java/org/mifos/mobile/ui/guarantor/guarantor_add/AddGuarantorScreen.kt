@@ -11,7 +11,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +31,6 @@ import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorPayload

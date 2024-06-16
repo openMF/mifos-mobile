@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.RegistrationVerificationFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.PasswordStrength

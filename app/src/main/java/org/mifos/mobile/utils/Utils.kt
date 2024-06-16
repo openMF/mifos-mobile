@@ -76,14 +76,16 @@ object Utils {
     @JvmStatic
     fun formatTransactionType(type: String?): String {
         val builder = StringBuilder()
-        for (str in type?.lowercase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
-            builder.append(
-                str[0].toString().uppercase(Locale.ROOT) + str.substring(
-                    1,
-                    str.length,
-                ) + " ",
-            )
-        }
+        try {
+            for (str in type?.lowercase(Locale.ROOT)?.split("_".toRegex())?.toTypedArray()!!) {
+                builder.append(
+                    str[0].toString().uppercase(Locale.ROOT) + str.substring(
+                        1,
+                        str.length,
+                    ) + " ",
+                )
+            }
+        } catch (_: Exception) {}
         return builder.toString()
     }
 }

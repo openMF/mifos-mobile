@@ -32,6 +32,8 @@ import org.mifos.mobile.databinding.NavDrawerHeaderBinding
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.ui.about.AboutUsActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary_list.BeneficiaryListComposeFragment
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.fragments.*
@@ -42,6 +44,7 @@ import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragment
 import org.mifos.mobile.ui.notification.NotificationFragment
 import org.mifos.mobile.ui.recent_transactions.RecentTransactionsComposeFragment
+import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
@@ -186,25 +189,25 @@ class HomeActivity :
             }
 
             R.id.item_recent_transactions -> replaceFragment(
-                RecentTransactionsFragment.newInstance(),
+                RecentTransactionsComposeFragment.newInstance(),
                 true,
                 R.id.container,
             )
 
             R.id.item_charges -> replaceFragment(
-                ClientChargeFragment.newInstance(clientId, ChargeType.CLIENT),
+                ClientChargeComposeFragment.newInstance(clientId, ChargeType.CLIENT),
                 true,
                 R.id.container,
             )
 
             R.id.item_third_party_transfer -> replaceFragment(
-                ThirdPartyTransferFragment.newInstance(),
+                ThirdPartyTransferComposeFragment.newInstance(),
                 true,
                 R.id.container,
             )
 
             R.id.item_beneficiaries -> replaceFragment(
-                BeneficiaryListFragment.newInstance(),
+                BeneficiaryListComposeFragment.newInstance(),
                 true,
                 R.id.container,
             )
@@ -388,8 +391,7 @@ class HomeActivity :
             doubleBackToExitPressedOnce = true
             Toaster.show(findViewById(android.R.id.content), getString(R.string.exit_message))
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else if (fragment is TransferProcessFragment) {
-            fragment.cancelTransferProcess()
+        } else if (fragment is TransferProcessComposeFragment) {
         }
 
         if (stackCount() != 0) {
@@ -411,19 +413,19 @@ class HomeActivity :
                     setNavigationViewSelectedItem(R.id.item_accounts)
                 }
 
-                is RecentTransactionsFragment -> {
+                is RecentTransactionsComposeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_recent_transactions)
                 }
 
-                is ClientChargeFragment -> {
+                is ClientChargeComposeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_charges)
                 }
 
-                is ThirdPartyTransferFragment -> {
+                is ThirdPartyTransferComposeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_third_party_transfer)
                 }
 
-                is BeneficiaryListFragment -> {
+                is BeneficiaryListComposeFragment -> {
                     setNavigationViewSelectedItem(R.id.item_beneficiaries)
                 }
             }

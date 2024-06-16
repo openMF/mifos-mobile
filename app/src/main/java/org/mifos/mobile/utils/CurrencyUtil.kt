@@ -43,4 +43,20 @@ object CurrencyUtil {
         currencyFormatter.decimalFormatSymbols = decimalFormatSymbols
         return currencyFormatter
     }
+
+    fun formatCurrency(amt: Double?): String {
+        return getDecimalFormatter().format(amt ?: 0.0)
+    }
+
+    private fun getDecimalFormatter(): DecimalFormat {
+        val currencyFormatter: DecimalFormat = try {
+            DecimalFormat.getCurrencyInstance(defaultLocale) as DecimalFormat
+        } catch (e: Exception) {
+            DecimalFormat.getCurrencyInstance(Locale.getDefault()) as DecimalFormat
+        }
+        val decimalFormatSymbols = currencyFormatter.decimalFormatSymbols
+        decimalFormatSymbols.currencySymbol = ""
+        currencyFormatter.decimalFormatSymbols = decimalFormatSymbols
+        return currencyFormatter
+    }
 }

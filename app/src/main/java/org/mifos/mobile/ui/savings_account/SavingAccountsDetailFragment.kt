@@ -17,16 +17,17 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.SavingsAccountState
-import org.mifos.mobile.ui.fragments.ClientChargeFragment
-import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
+import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayFragment
 import org.mifos.mobile.ui.fragments.SavingAccountsTransactionFragment
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment
 import org.mifos.mobile.ui.savings_account_withdraw.SavingsAccountWithdrawFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
@@ -161,7 +162,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
 
     private fun chargeClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            ClientChargeFragment.newInstance(viewModel.savingsId, ChargeType.SAVINGS),
+            ClientChargeComposeFragment.newInstance(viewModel.savingsId, ChargeType.SAVINGS),
             true,
             R.id.container,
         )
@@ -174,7 +175,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
             AccountType.SAVINGS,
         )
         (activity as BaseActivity?)?.replaceFragment(
-            QrCodeDisplayFragment.newInstance(
+            QrCodeDisplayComposeFragment.newInstance(
                 accountDetailsInJson,
             ),
             true,

@@ -1,20 +1,12 @@
 package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.After
@@ -24,13 +16,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.repositories.BeneficiaryRepositoryImp
+import org.mifos.mobile.ui.beneficiary_detail.BeneficiaryDetailViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class BeneficiaryDetailViewModelTest {

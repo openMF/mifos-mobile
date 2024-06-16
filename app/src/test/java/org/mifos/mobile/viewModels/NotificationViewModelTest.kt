@@ -2,7 +2,6 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -15,6 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.repositories.NotificationRepository
+import org.mifos.mobile.ui.notification.NotificationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.NotificationUiState
 import org.mockito.Mock

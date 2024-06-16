@@ -2,10 +2,9 @@ package org.mifos.mobile.ui.beneficiary.presentation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,39 +33,42 @@ fun BeneficiaryScreen(
     scaniconClicked: () -> Unit,
     uploadiconClicked: () -> Unit
 ) {
-    MifosTopBar(
-        navigateBack = topAppbarNavigateback,
-        title = {
-            Text(text = stringResource(id = R.string.add_beneficiary))
+    Scaffold(
+        topBar = {
+            MifosTopBar(
+                navigateBack = topAppbarNavigateback,
+                title = {
+                    Text(text = stringResource(id = R.string.add_beneficiary))
+                }
+            )
         }
-    )
-
-    Column(
-        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_10dp))
     ) {
-        Text(
-            stringResource(id = R.string.select_mode),
-            fontSize = 18.sp,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+        Column(
+            modifier = Modifier.padding(it).padding(dimensionResource(id = R.dimen.padding_10dp))
+        ) {
+            Text(
+                stringResource(id = R.string.select_mode),
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.onSurface
+            )
 
-        Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = stringResource(R.string.add_beneficiary_option),
-            fontSize = 18.sp,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+            Text(
+                modifier = Modifier.padding(top = 16.dp),
+                text = stringResource(R.string.add_beneficiary_option),
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.onSurface
+            )
 
-        BeneficiaryScreenIcons(
-            modifier = Modifier.padding(top = 20.dp),
-            addIconclicked = addiconClicked,
-            scanIconClicked = scaniconClicked,
-            uploadIconClicked = uploadiconClicked
-        )
-
+            BeneficiaryScreenIcons(
+                modifier = Modifier.padding(top = 20.dp),
+                addIconclicked = addiconClicked,
+                scanIconClicked = scaniconClicked,
+                uploadIconClicked = uploadiconClicked
+            )
+        }
     }
-
 }
+
 
 @Preview(
     name = "Night Mode",

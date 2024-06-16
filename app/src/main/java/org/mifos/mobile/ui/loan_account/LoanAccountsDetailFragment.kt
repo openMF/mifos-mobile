@@ -12,19 +12,20 @@ import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.LoanState
-import org.mifos.mobile.ui.fragments.ClientChargeFragment
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
 import org.mifos.mobile.ui.loan_repayment_schedule.LoanRepaymentScheduleFragment
-import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
+import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.guarantor.GuarantorActivity
 import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
+import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.*
 import javax.inject.Inject
@@ -140,7 +141,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     private fun chargesClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            ClientChargeFragment.newInstance(
+            ClientChargeComposeFragment.newInstance(
                 viewModel.loanWithAssociations?.id?.toLong(),
                 ChargeType.LOAN,
             ),
@@ -156,7 +157,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
             AccountType.LOAN,
         )
         (activity as BaseActivity?)?.replaceFragment(
-            QrCodeDisplayFragment.newInstance(
+            QrCodeDisplayComposeFragment.newInstance(
                 accountDetailsInJson,
             ),
             true,

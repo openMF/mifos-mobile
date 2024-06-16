@@ -18,14 +18,4 @@ class RegistrationActivity : BaseActivity() {
         replaceFragment(RegistrationFragment.newInstance(), false, R.id.container)
     }
 
-    override fun onBackPressed() {
-        MaterialDialog.Builder().init(this)
-            .setTitle(getString(R.string.dialog_cancel_registration_title))
-            .setMessage(getString(R.string.dialog_cancel_registration_message))
-            .setPositiveButton(getString(R.string.yes)) { _, _ -> super.onBackPressed() }
-            .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
-            .createMaterialDialog()
-            .show()
-    }
-
 }

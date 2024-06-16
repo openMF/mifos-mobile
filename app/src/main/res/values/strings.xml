@@ -170,6 +170,8 @@
         transfer
     </string>
 
+    <string name="empty_requestid">Request ID cannot be empty</string>
+    <string name="empty_authentication_token">Authentication Token cannot be empty</string>
     <string name="empty_savings_accounts">There is no SavingsAccount associated with you</string>
     <string name="empty_loan_accounts">There is no LoanAccount associated with you</string>
     <string name="empty_share_accounts">There is no ShareAccount associated with you</string>
