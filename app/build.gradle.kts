@@ -181,7 +181,6 @@ dependencies {
     // google maps
     implementation ("com.google.maps.android:maps-compose:4.4.1")
 
-
 }
 
 
