@@ -2,6 +2,7 @@ package org.mifos.mobile.ui.transfer_process
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -70,24 +74,34 @@ fun TransferProcessScreen(
         topBarTitleResId = R.string.transfer,
         navigateBack = navigateBack,
         scaffoldContent = { paddingValues ->
-            Box(modifier= Modifier
-                .padding(paddingValues)
-                .fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+            ) {
 
-                TransferProcessContent(payload = payload, transfer = transfer, cancelClicked = navigateBack)
+                TransferProcessContent(
+                    payload = payload,
+                    transfer = transfer,
+                    cancelClicked = navigateBack
+                )
 
                 when (uiState) {
                     is TransferProcessUiState.Loading -> {
-                       MifosProgressIndicatorOverlay()
+                        MifosProgressIndicatorOverlay()
                     }
 
                     is TransferProcessUiState.Success -> {
-                        Toast.makeText(context, R.string.transferred_successfully, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            R.string.transferred_successfully,
+                            Toast.LENGTH_SHORT
+                        ).show()
                         navigateBack()
                     }
 
                     is TransferProcessUiState.Error -> {
-                        MifosErrorComponent(isNetworkConnected = Network.isConnected(context),)
+                        MifosErrorComponent(isNetworkConnected = Network.isConnected(context))
                     }
 
                     is TransferProcessUiState.Initial -> Unit
@@ -103,116 +117,124 @@ fun TransferProcessContent(
     transfer: () -> Unit,
     cancelClicked: () -> Unit
 ) {
-    Card(
+    val scrollState = rememberScrollState()
+
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
-        border = BorderStroke(1.dp, Color.LightGray)
+            .fillMaxSize()
+            .verticalScroll(scrollState)
     ) {
-        Column(
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(14.dp)
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.background
+            ),
+            border = BorderStroke(1.dp, Color.LightGray)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(14.dp)
             ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.amount),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Text(text = payload?.transferAmount.toString())
+                }
+
                 Text(
-                    text = stringResource(id = R.string.amount),
+                    text = stringResource(id = R.string.transfer_from_savings),
+                    fontWeight = FontWeight(500),
+                    color = Color.Gray
+                )
+
+                Text(
+                    text = stringResource(id = R.string.pay_to),
+                    modifier = Modifier.padding(top = 8.dp),
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Text(text = payload?.transferAmount.toString())
-            }
+                Text(
+                    text = payload?.fromAccountNumber.toString(),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
+                )
 
-            Text(
-                text = stringResource(id = R.string.transfer_from_savings),
-                fontWeight = FontWeight(500),
-                color = Color.Gray
-            )
+                HorizontalDivider()
 
-            Text(
-                text = stringResource(id = R.string.pay_to),
-                modifier = Modifier.padding(top = 8.dp),
-                color = MaterialTheme.colorScheme.primary
-            )
+                Text(
+                    text = stringResource(id = R.string.pay_from),
+                    modifier = Modifier.padding(top = 8.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
 
-            Text(
-                text = payload?.fromAccountNumber.toString(),
-                modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
-            )
+                Text(
+                    text = payload?.fromAccountNumber.toString(),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
-            Text(
-                text = stringResource(id = R.string.pay_from),
-                modifier = Modifier.padding(top = 8.dp),
-                color = MaterialTheme.colorScheme.primary
-            )
+                Text(
+                    text = stringResource(id = R.string.date),
+                    modifier = Modifier.padding(top = 8.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
 
-            Text(
-                text = payload?.fromAccountNumber.toString(),
-                modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
-            )
+                Text(
+                    text = payload?.transferDate.toString(),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
-            Text(
-                text = stringResource(id = R.string.date),
-                modifier = Modifier.padding(top = 8.dp),
-                color = MaterialTheme.colorScheme.primary
-            )
+                Text(
+                    text = stringResource(id = R.string.remark),
+                    modifier = Modifier.padding(top = 8.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
 
-            Text(
-                text = payload?.transferDate.toString(),
-                modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
-            )
+                Text(
+                    text = payload?.transferDescription.toString(),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
-            Text(
-                text = stringResource(id = R.string.remark),
-                modifier = Modifier.padding(top = 8.dp),
-                color = MaterialTheme.colorScheme.primary
-            )
+                Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = payload?.transferDescription.toString(),
-                modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
-            )
-
-            HorizontalDivider()
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(30.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    Button(
-                        onClick = { cancelClicked() },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                            contentColor = MaterialTheme.colorScheme.primary
-                        )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(30.dp),
                     ) {
-                        Text(text = stringResource(id = R.string.cancel))
-                    }
-                    Button(
-                        onClick = {
-                            transfer()
+                        Button(
+                            onClick = { cancelClicked() },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent,
+                                contentColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Text(text = stringResource(id = R.string.cancel))
                         }
-                    ) {
-                        Text(text = stringResource(id = R.string.transfer))
+                        Button(
+                            onClick = {
+                                transfer()
+                            }
+                        ) {
+                            Text(text = stringResource(id = R.string.transfer))
+                        }
                     }
                 }
             }
