@@ -49,7 +49,9 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
 
                 MifosMobileTheme {
                     BeneficiaryScreen(
-                        topAppbarNavigateback = {},
+                        topAppbarNavigateback = {
+                            requireActivity().onBackPressedDispatcher.onBackPressed()
+                        },
                         addiconClicked = { addManually() },
                         scaniconClicked = { addUsingQrCode() },
                         uploadiconClicked = { addByImportingQrCode() }
