@@ -152,6 +152,7 @@ fun RecentTransactionScreen(
 
                 PullToRefreshContainer(
                     state = pullRefreshState,
+                    modifier = Modifier.padding(top=24.dp).align(Alignment.TopCenter),
                 )
             }
         }
