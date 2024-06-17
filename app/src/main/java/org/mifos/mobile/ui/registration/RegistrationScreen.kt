@@ -108,6 +108,7 @@ fun RegistrationScreen(
                     keyboardController?.hide()
                 })
             }) {
+
         MifosMobileIcon(id = R.drawable.mifos_logo)
 
         MifosOutlinedTextField(
