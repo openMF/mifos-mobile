@@ -1,4 +1,4 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.client_accounts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.functions.Predicate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.models.CheckboxStatus
@@ -29,6 +30,26 @@ class AccountsViewModel @Inject constructor(
 
     private val _accountsUiState = MutableStateFlow<AccountsUiState>(AccountsUiState.Loading)
     val accountsUiState: StateFlow<AccountsUiState> = _accountsUiState
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
+
+    fun refresh(accountType: String?) {
+        if( accountType == Constants.SAVINGS_ACCOUNTS)
+        {
+            _isRefreshing.value = true
+            loadAccounts(Constants.SAVINGS_ACCOUNTS)
+        }else if( accountType == Constants.LOAN_ACCOUNTS)
+        {
+            _isRefreshing.value = true
+            loadAccounts(Constants.LOAN_ACCOUNTS)
+        }else if( accountType == Constants.SHARE_ACCOUNTS)
+        {
+            _isRefreshing.value = true
+            loadAccounts(Constants.SHARE_ACCOUNTS)
+        }
+
+    }
 
     /**
      * Loads savings, loan and share accounts associated with the Client from the server
@@ -71,6 +92,7 @@ class AccountsViewModel @Inject constructor(
                     Constants.SHARE_ACCOUNTS -> _accountsUiState.value =
                         AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
                 }
+                _isRefreshing.emit(false)
             }
 
         }
