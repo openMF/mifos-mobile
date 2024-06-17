@@ -106,6 +106,7 @@ fun RecentTransactionScreen(
                 Column(modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState), verticalArrangement = Arrangement.Center) {
+
                     when (uiState) {
                         is RecentTransactionUiState.Error -> {
                             MifosErrorComponent(
