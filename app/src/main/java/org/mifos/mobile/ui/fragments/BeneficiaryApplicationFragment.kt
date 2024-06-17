@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.fragments
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
+import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.BeneficiaryUiState
@@ -346,6 +346,11 @@ class BeneficiaryApplicationFragment : BaseFragment() {
 
     private fun setVisibility(state: Int) {
         binding.llApplicationBeneficiary.visibility = state
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? BaseActivity)?.showToolbar()
     }
 
     fun showProgress() {

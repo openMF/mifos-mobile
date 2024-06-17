@@ -20,11 +20,12 @@ import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragme
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
 import org.mifos.mobile.ui.loan_repayment_schedule.LoanRepaymentScheduleFragment
-import org.mifos.mobile.ui.fragments.QrCodeDisplayFragment
+import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.guarantor.GuarantorActivity
 import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
+import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.*
 import javax.inject.Inject
@@ -156,7 +157,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
             AccountType.LOAN,
         )
         (activity as BaseActivity?)?.replaceFragment(
-            QrCodeDisplayFragment.newInstance(
+            QrCodeDisplayComposeFragment.newInstance(
                 accountDetailsInJson,
             ),
             true,
