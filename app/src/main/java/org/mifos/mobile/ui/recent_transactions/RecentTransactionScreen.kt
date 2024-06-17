@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.recent_transactions
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -91,60 +92,68 @@ fun RecentTransactionScreen(
 ) {
     val context = LocalContext.current
     val pullRefreshState = rememberPullToRefreshState()
+    val scrollState = rememberScrollState()
 
     MFScaffold(
         topBarTitleResId = R.string.recent_transactions,
         navigateBack = navigateBack,
         scaffoldContent = { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
-                when (uiState) {
-                    is RecentTransactionUiState.Error -> {
-                        MifosErrorComponent(
-                            isNetworkConnected = Network.isConnected(context),
-                            isRetryEnabled = true,
-                            onRetry = onRetry
-                        )
-                    }
 
-                    is RecentTransactionUiState.Loading -> {
-                        MifosProgressIndicatorOverlay()
-                    }
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .nestedScroll(pullRefreshState.nestedScrollConnection)){
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState), verticalArrangement = Arrangement.Center) {
+                    when (uiState) {
+                        is RecentTransactionUiState.Error -> {
+                            MifosErrorComponent(
+                                isNetworkConnected = Network.isConnected(context),
+                                isRetryEnabled = true,
+                                onRetry = onRetry
+                            )
+                        }
 
-                    is RecentTransactionUiState.Success -> {
-                        if (uiState.transactions.isEmpty()) {
-                            EmptyDataView(
-                                icon = R.drawable.ic_error_black_24dp,
-                                error = R.string.no_transaction,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        } else {
-                            RecentTransactionsContent(
-                                transactions = uiState.transactions,
-                                isPaginating = isPaginating,
-                                loadMore = loadMore,
-                                canPaginate = uiState.canPaginate
-                            )
+                        is RecentTransactionUiState.Loading -> {
+                            MifosProgressIndicatorOverlay()
+                        }
+
+                        is RecentTransactionUiState.Success -> {
+                            if (uiState.transactions.isEmpty()) {
+                                EmptyDataView(
+                                    icon = R.drawable.ic_error_black_24dp,
+                                    error = R.string.no_transaction,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            } else {
+                                RecentTransactionsContent(
+                                    transactions = uiState.transactions,
+                                    isPaginating = isPaginating,
+                                    loadMore = loadMore,
+                                    canPaginate = uiState.canPaginate
+                                )
+                            }
                         }
                     }
                 }
+                if (pullRefreshState.isRefreshing) {
+                    LaunchedEffect(key1 = true) {
+                        onRefresh()
+                    }
+                }
+                LaunchedEffect(key1 = isRefreshing) {
+                    if (isRefreshing)
+                        pullRefreshState.startRefresh()
+                    else
+                        pullRefreshState.endRefresh()
+                }
+
+                PullToRefreshContainer(
+                    state = pullRefreshState,
+                )
             }
         }
-    )
-
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(key1 = true) {
-            onRefresh()
-        }
-    }
-    LaunchedEffect(key1 = isRefreshing) {
-        if (isRefreshing)
-            pullRefreshState.startRefresh()
-        else
-            pullRefreshState.endRefresh()
-    }
-
-    PullToRefreshContainer(
-        state = pullRefreshState,
     )
 }
 
