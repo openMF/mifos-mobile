@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.owlbuddy.www.countrycodechooser.CountryCodeChooser
 import com.owlbuddy.www.countrycodechooser.utils.enums.CountryCodeType
 import org.mifos.mobile.R
+import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 
 /**
@@ -107,6 +108,9 @@ fun RegistrationScreen(
                     keyboardController?.hide()
                 })
             }) {
+
+        MifosMobileIcon(id = R.drawable.mifos_logo)
+
         MifosOutlinedTextField(
             value = accountNumber,
             onValueChange = { accountNumber = it },
