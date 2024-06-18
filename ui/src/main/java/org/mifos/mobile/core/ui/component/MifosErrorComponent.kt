@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CompareArrows
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material3.FilledTonalButton
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -121,6 +123,37 @@ fun EmptyDataComponent(
                 Text(text = stringResource(id = R.string.retry))
             }
         }
+    }
+}
+
+@Composable
+fun EmptyDataComponentWithModifiedMessageAndIcon(
+    modifier: Modifier = Modifier.fillMaxSize(),
+    isEmptyData: Boolean = false,
+    message: String,
+    icon: ImageVector
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(100.dp)
+                .padding(bottom = 12.dp),
+            imageVector = if(isEmptyData) icon else Icons.Filled.Info,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSecondary
+        )
+
+        Text(
+            modifier= Modifier.padding(horizontal = 20.dp),
+            text = if(isEmptyData) message else stringResource(id = R.string.something_went_wrong),
+            style = TextStyle(fontSize = 20.sp),
+            color = MaterialTheme.colorScheme.onSecondary,
+            textAlign = TextAlign.Center
+        )
     }
 }
 

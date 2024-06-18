@@ -1,9 +1,8 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.savings_account_transaction
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -45,9 +44,9 @@ import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getDatePickerDialog
-import org.mifos.mobile.viewModels.SavingAccountsTransactionViewModel
 import java.time.Instant
 import javax.inject.Inject
+
 
 /**
  * Created by dilpreet on 6/3/17.
@@ -116,29 +115,29 @@ class SavingAccountsTransactionFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.savingAccountsTransactionUiState.collect { state ->
-                    when (state) {
-                        SavingsAccountUiState.Loading -> showProgress()
-
-                        SavingsAccountUiState.Error -> {
-                            hideProgress()
-                            showErrorFetchingSavingAccountsDetail(context?.getString(R.string.saving_account_details))
-                        }
-
-                        is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
-                            hideProgress()
-                            showSavingAccountsDetail(state.savingAccount)
-                        }
-
-                        is SavingsAccountUiState.ShowFilteredTransactionsList -> {
-                            showFilteredList(state.savingAccountsTransactionList)
-                        }
-
-                        is SavingsAccountUiState.Initial -> {}
-
-                        else -> throw IllegalStateException("Unexpected State : $state")
-                    }
-                }
+//                viewModel.savingAccountsTransactionUiState.collect { state ->
+//                    when (state) {
+//                        SavingsAccountUiState.Loading -> showProgress()
+//
+//                        SavingsAccountUiState.Error -> {
+//                            hideProgress()
+//                            showErrorFetchingSavingAccountsDetail(context?.getString(R.string.saving_account_details))
+//                        }
+//
+//                        is SavingsAccountUiState.SuccessLoadingSavingsWithAssociations -> {
+//                            hideProgress()
+//                            showSavingAccountsDetail(state.savingAccount)
+//                        }
+//
+//                        is SavingsAccountUiState.ShowFilteredTransactionsList -> {
+//                            showFilteredList(state.savingAccountsTransactionList)
+//                        }
+//
+//                        is SavingsAccountUiState.Initial -> {}
+//
+//                        else -> throw IllegalStateException("Unexpected State : $state")
+//                    }
+//                }
             }
         }
     }
@@ -428,11 +427,11 @@ class SavingAccountsTransactionFragment : BaseFragment() {
         val hasOtherFilters = statusModelList?.any { it!!.isChecked }
         val transactionListToFilter = if (hasOtherFilters == true) filterSavingsAccountTransactionsByType(statusModelList) else transactionsList
 
-        viewModel.filterTransactionList(
-            transactionListToFilter,
-            startDate,
-            endDate,
-        )
+//        viewModel.filterTransactionList(
+//            transactionListToFilter,
+//            startDate,
+//            endDate,
+//        )
     }
 
     /**
@@ -450,12 +449,12 @@ class SavingAccountsTransactionFragment : BaseFragment() {
      */
     private fun filterSavingsAccountTransactionsByType(statusModelList: List<CheckboxStatus?>?): List<Transactions?> {
         val filteredSavingsTransactions: MutableList<Transactions?> = ArrayList()
-        for (status in viewModel
-            .getCheckedStatus(statusModelList)!!) {
-            viewModel
-                .filterTransactionListByType(transactionsList, status, getCheckBoxStatusStrings())
-                ?.let { filteredSavingsTransactions.addAll(it) }
-        }
+//        for (status in viewModel
+//            .getCheckedStatus(statusModelList)!!) {
+//            viewModel
+//                .filterTransactionListByType(transactionsList, status, getCheckBoxStatusStrings())
+//                ?.let { filteredSavingsTransactions.addAll(it) }
+//        }
         return filteredSavingsTransactions
     }
 

@@ -21,13 +21,13 @@ import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
 import org.mifos.mobile.ui.enums.SavingsAccountState
-import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayFragment
-import org.mifos.mobile.ui.fragments.SavingAccountsTransactionFragment
+import org.mifos.mobile.ui.savings_account_transaction.SavingAccountsTransactionComposeFragment
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment
 import org.mifos.mobile.ui.savings_account_withdraw.SavingsAccountWithdrawFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
+import org.mifos.mobile.ui.savings_account_transaction.SavingAccountsTransactionFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
@@ -154,7 +154,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
 
     private fun transactionsClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            SavingAccountsTransactionFragment.newInstance(viewModel.savingsId),
+            SavingAccountsTransactionComposeFragment.newInstance(viewModel.savingsId),
             true,
             R.id.container,
         )

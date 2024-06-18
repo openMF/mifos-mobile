@@ -2,6 +2,8 @@ package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -19,7 +21,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun EmptyDataView(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     icon: Int,
     error: Int,
     errorString: String? = null,
