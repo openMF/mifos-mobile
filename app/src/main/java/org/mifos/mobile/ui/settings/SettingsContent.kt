@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.settings
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,8 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.preference.PreferenceManager
 import org.mifos.mobile.R
+import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import java.util.Locale
 
 
 @Composable
@@ -93,8 +97,6 @@ fun UpdateEndpointDialogScreen(
         })
 }
 
-
-
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewUpdateEndpointDialogScreen(modifier: Modifier = Modifier) {
@@ -109,6 +111,35 @@ fun PreviewUpdateEndpointDialogScreen(modifier: Modifier = Modifier) {
         )
     }
 }
+
+fun getCurrentTheme(prefsHelper: PreferencesHelper): Int {
+    return prefsHelper.appTheme
+}
+
+fun updateTheme(selectedTheme: Int, prefsHelper: PreferencesHelper) {
+    prefsHelper.applyTheme(AppTheme.fromIndex(selectedTheme))
+    prefsHelper.applySavedTheme()
+}
+
+fun updateLanguage(context: Context, language: String) {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    sharedPreferences.edit().putString(context.getString(R.string.language_type), language).apply()
+}
+
+fun getSelectedLanguageIndex(context: Context, prefsHelper: PreferencesHelper): Int {
+    var selectedLanguageValue: String? =
+        prefsHelper.getString(context.getString(R.string.language_type), null)
+    val languageValuesArray = context.resources.getStringArray(R.array.languages_value)
+
+    if (!(languageValuesArray.contains(selectedLanguageValue))) {
+        selectedLanguageValue = if (languageValuesArray.contains(Locale.getDefault().language)) {
+            "System_Language"
+        } else "en"
+    }
+    return languageValuesArray.indexOf(selectedLanguageValue)
+}
+
+
 
 
 

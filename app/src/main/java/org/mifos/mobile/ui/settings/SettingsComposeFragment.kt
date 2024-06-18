@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,7 @@ import org.mifos.mobile.utils.LanguageHelper
 import java.util.Locale
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsComposeFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val viewModel: SettingsViewModel by viewModels()
     private val prefsHelper by lazy { PreferencesHelper(requireContext().applicationContext) }
@@ -40,39 +39,16 @@ class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceCha
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            MifosMobileTheme {
-                SettingsScreen(
-                    settingsCard = viewModel.getSettingsCards(),
-                    settingsCardClicked = { handleSettingsCardClick(it) },
-                    onBackPressed = { goBackToPreviousScreen() },
-                    handleEndpointupdate = { etBaseURL, etTenant ->
-                        handleEndpointUpdate(etBaseURL, etTenant)
-                    },
-                    getSelectedLanguageIndex = {
-                        getSelectedLanguageIndex()
-                    },
-                    updateLanguage = {
-                        updateLanguage(it)
-                    },
-                    getSelectedThemeIndex = {
-                        getCurrentTheme()
-                    },
-                    updateTheme = {
-                        updateTheme(selectedTheme = it)
-                    }
-
-                )
-            }
-        }
-    }
-
-    private fun handleSettingsCardClick(settingsCardItem: SettingsCardItem) {
-        when (settingsCardItem) {
-            is SettingsCardItem.Password -> changePassword()
-            is SettingsCardItem.Passcode -> changePasscode()
-            is SettingsCardItem.Language -> changeLanguage()
-            is SettingsCardItem.Theme -> changeTheme()
-            is SettingsCardItem.EndPoint -> updateEndpoint()
+            SettingsScreen(
+                prefsHelper = prefsHelper,
+                settingsCard = viewModel.getSettingsCards(),
+                onBackPressed = { goBackToPreviousScreen() },
+                handleEndpointupdate = { baseUrl, tenant ->
+                    handleEndpointUpdate(etTenant = tenant, etBaseURL = baseUrl)
+                },
+                changePasscode = { changePasscode() },
+                changePassword = { changePassword() }
+            )
         }
     }
 
@@ -121,52 +97,6 @@ class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceCha
         }
     }
 
-
-    private fun changeLanguage() {
-        withMutableSnapshot {
-            viewModel.invokeLanguageUpdate = true
-        }
-    }
-
-    private fun updateLanguage(language: String) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        sharedPreferences.edit().putString(getString(R.string.language_type), language).apply()
-    }
-
-    private fun getSelectedLanguageIndex(): Int {
-        var selectedLanguageValue: String? =
-            prefsHelper.getString(getString(R.string.language_type), null)
-        val languageValuesArray = resources.getStringArray(R.array.languages_value)
-
-        if (!(languageValuesArray.contains(selectedLanguageValue))) {
-            if (languageValuesArray.contains(Locale.getDefault().language)) {
-                selectedLanguageValue = "System_Language"
-            } else selectedLanguageValue = "en"
-        }
-        return languageValuesArray.indexOf(selectedLanguageValue)
-    }
-
-    private fun getCurrentTheme() : Int{
-        return prefsHelper.appTheme
-    }
-
-    private fun updateTheme(selectedTheme : Int){
-        prefsHelper.applyTheme(AppTheme.fromIndex(selectedTheme))
-        prefsHelper.applySavedTheme()
-    }
-
-    private fun changeTheme(){
-        withMutableSnapshot {
-            viewModel.invokeThemeUpdate = true
-        }
-    }
-
-    private fun updateEndpoint() {
-        withMutableSnapshot {
-            viewModel.invokeEndpointUpdate = true
-        }
-    }
-
     private fun handleEndpointUpdate(etBaseURL: String, etTenant: String) {
         val intentToLogin = viewModel.tryUpdatingEndpoint(etBaseURL, etTenant)
         if (intentToLogin) {
@@ -202,8 +132,8 @@ class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceCha
     }
 
     companion object {
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
+        fun newInstance(): SettingsComposeFragment {
+            return SettingsComposeFragment()
         }
     }
 }

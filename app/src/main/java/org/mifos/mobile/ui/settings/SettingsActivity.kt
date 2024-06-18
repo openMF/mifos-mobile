@@ -18,7 +18,7 @@ class SettingsActivity : BaseActivity() {
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(SettingsFragment.newInstance(), false, R.id.container)
+        replaceFragment(SettingsComposeFragment.newInstance(), false, R.id.container)
         if (intent.hasExtra(Constants.HAS_SETTINGS_CHANGED)) {
             hasSettingsChanged = intent.getBooleanExtra(
                 Constants.HAS_SETTINGS_CHANGED,
