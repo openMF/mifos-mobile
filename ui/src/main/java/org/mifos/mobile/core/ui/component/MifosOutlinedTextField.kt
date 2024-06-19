@@ -50,7 +50,6 @@ fun MifosOutlinedTextField(
         focusedBorderColor = if (isSystemInDarkTheme()) Color(0xFF9bb1e3) else Color(0xFF325ca8)
     )
 ) {
-
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -61,9 +60,8 @@ fun MifosOutlinedTextField(
                 Image(
                     painter = painterResource(id = icon),
                     contentDescription = null,
-                    colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(Color.White) else ColorFilter.tint(
-                        Color.Black
-                    )
+                    colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(Color.White)
+                    else ColorFilter.tint(Color.Black)
                 )
             }
         } else null,
@@ -76,7 +74,7 @@ fun MifosOutlinedTextField(
         textStyle = LocalDensity.current.run {
             TextStyle(fontSize = 18.sp)
         },
-        keyboardOptions = KeyboardOptions(
+        keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = imeAction,
             keyboardType = keyboardType
             ),

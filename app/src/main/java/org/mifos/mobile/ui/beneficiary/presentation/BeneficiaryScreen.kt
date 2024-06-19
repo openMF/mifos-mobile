@@ -18,14 +18,6 @@ import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 
-/**
- * This is a composable function that represent the beneficiary screen and the parameters include
- * @param[addiconClicked] to navigate to the add screen
- * @param[scaniconClicked] to navigate to the scanicon screen
- * @param[uploadiconClicked] to navigate to the upload icin screen
- **/
-
-
 @Composable
 fun BeneficiaryScreen(
     topAppbarNavigateback: () -> Unit,

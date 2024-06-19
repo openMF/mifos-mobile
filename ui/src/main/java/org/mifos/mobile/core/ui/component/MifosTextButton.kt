@@ -10,15 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 
 @Composable
 fun MifosTextButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     textResId: Int,
 ) {
     Button(
+        modifier = modifier,
         onClick = { onClick() },
         content = {
             Text(text = stringResource(id = textResId))

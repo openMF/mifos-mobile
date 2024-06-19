@@ -11,8 +11,8 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.ui.enums.BeneficiaryState
-import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 
@@ -45,7 +45,7 @@ class BeneficiaryDetailFragment : BaseFragment() {
 
     private fun updateBeneficiaryClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            BeneficiaryApplicationFragment.newInstance(
+            BeneficiaryApplicationComposeFragment.newInstance(
                 BeneficiaryState.UPDATE,
                 viewModel.getBeneficiary()
             ),

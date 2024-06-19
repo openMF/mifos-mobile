@@ -18,15 +18,14 @@ import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.ui.activities.base.BaseActivity
+import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationViewModel
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.BeneficiaryUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.viewModels.BeneficiaryApplicationViewModel
 
 /**
  * Created by dilpreet on 16/6/17.
@@ -50,9 +49,9 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         setToolbarTitle(getString(R.string.add_beneficiary))
         if (arguments != null) {
             beneficiaryState = requireArguments().getCheckedSerializable(
-                    BeneficiaryState::class.java,
-                    Constants.BENEFICIARY_STATE
-                ) as BeneficiaryState
+                BeneficiaryState::class.java,
+                Constants.BENEFICIARY_STATE
+            ) as BeneficiaryState
             when (beneficiaryState) {
                 BeneficiaryState.UPDATE -> {
                     beneficiary = arguments?.getCheckedParcelable(
@@ -94,43 +93,43 @@ class BeneficiaryApplicationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.beneficiaryUiState.collect {
-                    when (it) {
-                        is BeneficiaryUiState.Loading -> showProgress()
-                        is BeneficiaryUiState.ShowError -> {
-                            hideProgress()
-                            showError(getString(it.message))
-                        }
-
-                        is BeneficiaryUiState.SetVisibility -> {
-                            hideProgress()
-                            setVisibility(it.visibility)
-                        }
-
-                        is BeneficiaryUiState.ShowBeneficiaryTemplate -> {
-                            hideProgress()
-                            showBeneficiaryTemplate(it.beneficiaryTemplate)
-                        }
-
-                        is BeneficiaryUiState.CreatedSuccessfully -> {
-                            hideProgress()
-                            showBeneficiaryCreatedSuccessfully()
-                        }
-
-                        is BeneficiaryUiState.UpdatedSuccessfully -> {
-                            hideProgress()
-                            showBeneficiaryUpdatedSuccessfully()
-                        }
-
-                        is BeneficiaryUiState.Initial -> {}
-
-                        else -> throw IllegalStateException("Undesired $it")
-                    }
-                }
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.beneficiaryUiState.collect {
+//                    when (it) {
+//                        is BeneficiaryUiState.Loading -> showProgress()
+//                        is BeneficiaryUiState.ShowError -> {
+//                            hideProgress()
+//                            showError(getString(it.message))
+//                        }
+//
+//                        is BeneficiaryUiState.SetVisibility -> {
+//                            hideProgress()
+//                            setVisibility(it.visibility)
+//                        }
+//
+//                        is BeneficiaryUiState.ShowBeneficiaryTemplate -> {
+//                            hideProgress()
+//                            showBeneficiaryTemplate(it.beneficiaryTemplate)
+//                        }
+//
+//                        is BeneficiaryUiState.CreatedSuccessfully -> {
+//                            hideProgress()
+//                            showBeneficiaryCreatedSuccessfully()
+//                        }
+//
+//                        is BeneficiaryUiState.UpdatedSuccessfully -> {
+//                            hideProgress()
+//                            showBeneficiaryUpdatedSuccessfully()
+//                        }
+//
+//                        is BeneficiaryUiState.Initial -> {}
+//
+//                        else -> throw IllegalStateException("Undesired $it")
+//                    }
+//                }
+//            }
+//        }
 
         with(binding) {
             btnBeneficiarySubmit.setOnClickListener {
@@ -291,7 +290,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         }
 
         beneficiaryPayload.accountType = accountTypeId
-        viewModel.createBeneficiary(beneficiaryPayload)
+        //viewModel.createBeneficiary(beneficiaryPayload)
     }
 
     /**
@@ -301,7 +300,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         val payload = BeneficiaryUpdatePayload()
         payload.name = binding.tilBeneficiaryName.editText?.text.toString()
         payload.transferLimit = binding.tilTransferLimit.editText?.text.toString().toFloat()
-        viewModel.updateBeneficiary(beneficiary?.id?.toLong(), payload)
+        //viewModel.updateBeneficiary(beneficiary?.id?.toLong(), payload)
     }
 
     /**
@@ -383,3 +382,4 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         }
     }
 }
+
