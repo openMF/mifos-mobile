@@ -150,7 +150,7 @@
             android:name=".utils.fcm.RegistrationIntentService"
             android:exported="false" />
 
-        <activity android:name=".ui.activities.SettingsActivity" />
+        <activity android:name="org.mifos.mobile.ui.settings.SettingsActivity" />
     </application>
 
 </manifest>

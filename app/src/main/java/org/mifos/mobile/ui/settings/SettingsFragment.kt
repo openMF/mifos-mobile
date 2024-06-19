@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.settings
 
 import android.content.Intent
 import android.content.SharedPreferences

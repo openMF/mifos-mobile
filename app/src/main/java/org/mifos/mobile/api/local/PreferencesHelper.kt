@@ -5,9 +5,14 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.text.TextUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.callbackFlow
 import org.mifos.mobile.api.BaseURL
 import org.mifos.mobile.api.SelfServiceInterceptor
-import org.mifos.mobile.ui.fragments.AppTheme
+import org.mifos.mobile.utils.AppTheme
+import org.mifos.mobile.utils.MifosAppLanguage
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -84,8 +89,12 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
                 putLong(USER_ID, id)
             }
         }
-    val tenant: String?
+    var tenant: String?
         get() = getString(TENANT, SelfServiceInterceptor.DEFAULT_TENANT)
+        set(tenant) {
+            putString(TENANT, tenant)
+        }
+
     var passcode: String?
         get() = getString(PASSCODE, "")
         set(passcode) {
@@ -158,20 +167,58 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
             putInt(APPLICATION_THEME, value)
         }
 
+    var language
+        get() = getString(LANGUAGE_TYPE, MifosAppLanguage.ENGLISH.code) ?: MifosAppLanguage.SYSTEM_LANGUAGE.code
+        set(language) {
+            putString(LANGUAGE_TYPE, language)
+        }
+
+    var isDefaultSystemLanguage
+        get() = getBoolean(DEFAULT_SYSTEM_LANGUAGE, false) ?: false
+        set(value) { putBoolean(DEFAULT_SYSTEM_LANGUAGE, value) }
+
     companion object {
         private const val USER_ID = "preferences_user_id"
         private const val TOKEN = "preferences_token"
         private const val CLIENT_ID = "preferences_client"
         private const val OFFICE_NAME = "preferences_office_name"
         private const val USER_NAME = "preferences_user_name"
-        private const val PASSCODE = "preferences_passcode"
+        const val PASSCODE = "preferences_passcode"
         private const val OVERVIEW_STATE = "preferences_overview_state"
         private const val SENT_TOKEN_TO_SERVER = "sentTokenToServer"
         private const val GCM_TOKEN = "gcm_token"
-        private const val TENANT = "preferences_base_tenant"
-        private const val BASE_URL = "preferences_base_url_key"
+        const val TENANT = "preferences_base_tenant"
+        const val BASE_URL = "preferences_base_url_key"
         private const val PROFILE_IMAGE = "preferences_profile_image"
         const val CLIENT_NAME = "client_name"
-        private const val APPLICATION_THEME = "application_theme"
+        const val APPLICATION_THEME = "application_theme"
+        const val LANGUAGE_TYPE = "language_type"
+        const val DEFAULT_SYSTEM_LANGUAGE = "default_system_language"
     }
+
+
+    fun getStringFlowForKey(keyForString: String) = callbackFlow<String?> {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (keyForString == key) {
+                trySend(getString(keyForString, null))
+            }
+        }
+        sharedPreferences?.registerOnSharedPreferenceChangeListener(listener)
+        send(getString(keyForString, null))
+        awaitClose { sharedPreferences?.unregisterOnSharedPreferenceChangeListener(listener) }
+    }.buffer(Channel.UNLIMITED)
+
+
+    fun getIntFlowForKey(keyForInt: String) = callbackFlow<Int?> {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (keyForInt == key) {
+                trySend(getInt(keyForInt, -1))
+            }
+        }
+        sharedPreferences?.registerOnSharedPreferenceChangeListener(listener)
+        send(getInt(keyForInt, -1))
+        awaitClose { sharedPreferences?.unregisterOnSharedPreferenceChangeListener(listener) }
+    }.buffer(Channel.UNLIMITED)
+
 }
+

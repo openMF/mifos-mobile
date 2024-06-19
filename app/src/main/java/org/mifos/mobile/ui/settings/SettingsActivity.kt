@@ -1,24 +1,24 @@
-package org.mifos.mobile.ui.activities
+package org.mifos.mobile.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import org.mifos.mobile.R
-import org.mifos.mobile.databinding.ActivitySettingsBinding
+import org.mifos.mobile.databinding.ActivityUserProfileBinding
+import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.fragments.SettingsFragment
 import org.mifos.mobile.utils.Constants
 
 class SettingsActivity : BaseActivity() {
-    private lateinit var binding: ActivitySettingsBinding
-    private var hasSettingsChanged = false
+    private lateinit var binding: ActivityUserProfileBinding
+    var hasSettingsChanged = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbarTitle(getString(R.string.settings))
-        showBackButton()
-        replaceFragment(SettingsFragment.newInstance(), false, R.id.container)
+
+        replaceFragment(SettingsComposeFragment.newInstance(), false, R.id.container)
         if (intent.hasExtra(Constants.HAS_SETTINGS_CHANGED)) {
             hasSettingsChanged = intent.getBooleanExtra(
                 Constants.HAS_SETTINGS_CHANGED,
@@ -27,6 +27,7 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 0) {
             super.onBackPressed()

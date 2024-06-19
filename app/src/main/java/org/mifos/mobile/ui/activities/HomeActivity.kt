@@ -54,6 +54,8 @@ import org.mifos.mobile.ui.user_profile.UserDetailViewModel
 import org.mifos.mobile.ui.user_profile.UserProfileActivity
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import javax.inject.Inject
+import org.mifos.mobile.ui.settings.SettingsActivity
+
 
 /**
  * @author Vishwajeet
