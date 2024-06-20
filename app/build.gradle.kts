@@ -181,6 +181,9 @@ dependencies {
     // google maps
     implementation ("com.google.maps.android:maps-compose:4.4.1")
 
+    //image cropper
+    implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")
+
 }
 
 

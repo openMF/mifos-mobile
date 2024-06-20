@@ -385,6 +385,9 @@
     <string name="passcode_does_not_match">Passcode does not match.</string>
     <string name="forgot_passcode">Forgot passcode, login manually</string>
     <string name="proceed">Proceed</string>
+    <string name="grant_permission">Grant permission</string>
+    <string name="deny">Deny</string>
+    <string name="dismiss">Dismiss</string>
     <string name="amount_greater_than_zero">Amount should be greater than zero</string>
     <string name="about_us_under_construction">About Us Under Construction</string>
     <string name="help_under_construction">Help Under Construction</string>
@@ -432,13 +435,20 @@
         not be able to upload QR code to add beneficiary.Are you sure you want to deny this
         permission?
     </string>
+    <string name="dialog_message_photoes_permission_denied_prompt">Without photos permission you will
+        not be able to upload QR code to add beneficiary.Are you sure you want to deny this
+        permission?
+    </string>
     <string name="dialog_message_read_storage_permission_never_ask_again">You have denied permission to
         read storage, without this permission you will not be able to add beneficiaries using QR Code.
-        Please enable it in settings
+        Please enable it in settings.
     </string>
+    <string name="please_grant_us_storage_permissions"> Please grant us storage permission in settings.
+    </string>
+
     <string name="dialog_message_write_storage_permission_never_ask_again">You have denied permission to
         write to storage, without this permission you will not be able to add beneficiaries using QR Code.
-        Please enable it in settings
+        Are you sure you want to deny this permission?
     </string>
     <string name="dialog_message_phone_state_permission_denied_prompt">This permission is required
         to show currency according to your country.Are you sure you want to deny it?
@@ -451,6 +461,7 @@
         \nGo to \'Settings\' and grant permission manually.
     </string>
     <string name="permission_denied_storage">Permission denied to storage</string>
+
     <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
     <string name="err_during_login">Error During Login</string>
 
@@ -558,6 +569,8 @@
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
     <string name="please_wait">Please Wait...</string>
     <string name="message">message</string>
+    <string name="no_image_selected_or_something_went_wrong">No image seleted or Something went wrong</string>
+    <string name="seleted_qr_image">Selected QR image</string>
     <string name="no_notification">No Notification</string>
 
     <string name="pref_base_url_title">Update Endpoint</string>
