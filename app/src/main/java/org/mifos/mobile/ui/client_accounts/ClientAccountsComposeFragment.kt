@@ -1,12 +1,17 @@
 package org.mifos.mobile.ui.client_accounts
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.component.mifosComposeView
+import org.mifos.mobile.ui.activities.LoanAccountContainerActivity
+import org.mifos.mobile.ui.activities.LoanApplicationActivity
+import org.mifos.mobile.ui.activities.SavingsAccountApplicationActivity
+import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -26,9 +31,38 @@ class ClientAccountsComposeFragment : BaseFragment() {
         (activity as? BaseActivity)?.hideToolbar()
         return mifosComposeView(requireContext()) {
             ClientAccountsScreen(
-                navigateBack = { activity?.onBackPressed() }
+                navigateBack = { activity?.onBackPressed() },
+                openNextActivity = { currentPage -> openActivity(currentPage) },
+                onItemClick = { accountType, accountId -> onItemClick(accountType, accountId) }
             )
         }
+    }
+
+    private fun openActivity( currentPage : Int) {
+        when (currentPage) {
+            0 -> startActivity(Intent(activity, SavingsAccountApplicationActivity::class.java))
+            1 -> startActivity(Intent(activity, LoanApplicationActivity::class.java))
+        }
+    }
+
+    private fun onItemClick(accountType: String, accountId: Long
+    ) {
+        var intent: Intent? = null
+        when (accountType) {
+            Constants.SAVINGS_ACCOUNTS -> {
+                intent = Intent(activity, SavingsAccountContainerActivity::class.java)
+                intent.putExtra(Constants.SAVINGS_ID, accountId)
+            }
+            Constants.LOAN_ACCOUNTS -> {
+                intent = Intent(activity, LoanAccountContainerActivity::class.java)
+                intent.putExtra(Constants.LOAN_ID,accountId)
+            }
+        }
+        openActivity(intent)
+    }
+
+    private fun openActivity(intent: Intent?) {
+        intent?.let { startActivity(it) }
     }
 
     companion object {

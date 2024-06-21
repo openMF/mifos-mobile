@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -34,6 +35,19 @@ class AccountsViewModel @Inject constructor(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
 
+    private val _isSearching = MutableStateFlow(false)
+    val isSearching: StateFlow<Boolean> get() = _isSearching.asStateFlow()
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private val _isFiltered = MutableStateFlow(false)
+    val isFiltered: StateFlow<Boolean> get() = _isFiltered.asStateFlow()
+
+    private val _filterList = MutableStateFlow(emptyList<CheckboxStatus>())
+    val filterList: StateFlow<List<CheckboxStatus>> = _filterList.asStateFlow()
+
+
     fun refresh(accountType: String?) {
         if( accountType == Constants.SAVINGS_ACCOUNTS)
         {
@@ -48,8 +62,73 @@ class AccountsViewModel @Inject constructor(
             _isRefreshing.value = true
             loadAccounts(Constants.SHARE_ACCOUNTS)
         }
-
     }
+
+    fun updateSearchQuery(query: String) {
+        _isSearching.update { true }
+        _searchQuery.update { query }
+    }
+
+    fun stoppedSearching() {
+        _searchQuery.update { "" }
+        _isSearching.update { false }
+    }
+
+    fun setFilterList( statusList: List<CheckboxStatus>) {
+         _isFiltered.update { false }
+         _filterList.update { statusList  }
+    }
+
+    fun filterAccounts( checkBoxList : List<CheckboxStatus>) {
+            _isFiltered.update { true }
+            _filterList.update { checkBoxList }
+    }
+
+//    val accountListUiState: StateFlow<AccountsUiState> = searchQuery.map { query ->
+//        if(query.isNullOrEmpty())
+//        {
+//           return@map _accountsUiState.value
+//        }else {
+//            when (_accountsUiState.value) {
+//                is AccountsUiState.ShowSavingsAccounts -> {
+//                    val accountList =
+//                        (accountsUiState.value as AccountsUiState.ShowSavingsAccounts).savingAccounts
+//                    val newList = searchInSavingsList(accountList, query)
+//                    AccountsUiState.ShowSavingsAccounts(newList)
+//                }
+//
+//                is AccountsUiState.ShowLoanAccounts -> {
+//                    val accountList =
+//                        (accountsUiState.value as AccountsUiState.ShowLoanAccounts).loanAccounts
+//                    val newList = searchInLoanList(accountList, query)
+//                    AccountsUiState.ShowLoanAccounts(newList)
+//                }
+//
+//                is AccountsUiState.ShowShareAccounts -> {
+//                    val accountList =
+//                        (accountsUiState.value as AccountsUiState.ShowShareAccounts).shareAccounts
+//                    val newList = searchInSharesList(accountList, query)
+//                    AccountsUiState.ShowShareAccounts(newList)
+//                }
+//
+//                else -> _accountsUiState.value
+//            }
+//        }
+//    }.stateIn(
+//        viewModelScope,
+//        SharingStarted.WhileSubscribed(5000),
+//        initialValue = _accountsUiState.value
+//    )
+
+//    fun filterAccounts( checkBoxList: List<CheckboxStatus>, accountType: String) {
+//
+//        if(accountType == Constants.SAVINGS_ACCOUNTS){
+//        }else if(accountType == Constants.LOAN_ACCOUNTS) {
+//
+//        }else if(accountType == Constants.SHARE_ACCOUNTS) {
+//
+//        }
+//    }
 
     /**
      * Loads savings, loan and share accounts associated with the Client from the server
@@ -302,4 +381,5 @@ class AccountsViewModel @Inject constructor(
                 },
             ).toList().blockingGet()
     }
+
 }

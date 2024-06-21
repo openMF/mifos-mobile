@@ -1,9 +1,9 @@
 package org.mifos.mobile.ui.client_accounts
 
+import android.content.Context
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,31 +13,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.R
-import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -46,138 +46,401 @@ import org.mifos.mobile.models.accounts.share.ShareAccount
 import org.mifos.mobile.utils.AccountsUiState
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.Utils
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.share.Status
+import org.mifos.mobile.models.CheckboxStatus
+import org.mifos.mobile.utils.AccountsFilterUtil
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 
 @Composable
-fun AccountsScreen(navigateBack: () -> Unit?, accountType: String) {
-
+fun AccountsScreen(
+    navigateBack: () -> Unit?,
+    accountType: String,
+    onItemClick: (accountType: String, accountId: Long) -> Unit
+) {
 
     val viewModel : AccountsViewModel = hiltViewModel()
     val uiState by viewModel.accountsUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val isSearching by viewModel.isSearching.collectAsStateWithLifecycle()
+    val isFiltered by viewModel.isFiltered.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
+    val filterList by viewModel.filterList.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
-    LaunchedEffect(key1 = Unit) {
-        if(accountType == Constants.SAVINGS_ACCOUNTS)
+    if(accountType == Constants.SAVINGS_ACCOUNTS)
+    {
+        LaunchedEffect(key1 = Unit) {
             viewModel.loadAccounts(accountType)
-        else if(accountType == Constants.SHARE_ACCOUNTS)
-            viewModel.loadAccounts(accountType)
-        else if(accountType == Constants.LOAN_ACCOUNTS)
-            viewModel.loadAccounts(accountType)
+        }
+        AccountsSavingsScreen(
+            uiState = uiState,
+            isSearching = isSearching,
+            isFiltered = isFiltered,
+            navigateBack = { navigateBack },
+            onRetry = { viewModel.loadAccounts(accountType) },
+            isRefreshing = isRefreshing,
+            onRefresh = { viewModel.refresh(accountType) },
+            getUpdatedSearchList = { accountsList -> viewModel.searchInSavingsList(accountsList, searchQuery) },
+            getUpdatedFilterList = { accountsList -> getFilterSavingsAccountList(accountsList = accountsList, filterList, viewModel, context) },
+            onItemClick = onItemClick
+        )
+
     }
-
-    AccountsScreen(
-        uiState = uiState,
-        navigateBack = { navigateBack },
-        onRetry = { viewModel.loadAccounts(accountType) },
-        isRefreshing = isRefreshing,
-        onRefresh = { viewModel.refresh(accountType) }
-    )
+    else if(accountType == Constants.LOAN_ACCOUNTS){
+        LaunchedEffect(key1 = Unit) {
+            viewModel.loadAccounts(accountType)
+        }
+        AccountsLoanScreen(
+            uiState = uiState,
+            isSearching = isSearching,
+            isFiltered = isFiltered,
+            navigateBack = { navigateBack },
+            onRetry = { viewModel.loadAccounts(accountType) },
+            isRefreshing = isRefreshing,
+            onRefresh = { viewModel.refresh(accountType) },
+            getUpdatedSearchList = { accountsList -> viewModel.searchInLoanList(accountsList, searchQuery)!! },
+            getUpdatedFilterList = { accountsList -> getFilterLoanAccountList(accountsList =  accountsList, filterList, viewModel, context ) },
+            onItemClick = onItemClick
+        )
+    }
+    else if(accountType == Constants.SHARE_ACCOUNTS){
+        LaunchedEffect(key1 = Unit) {
+            viewModel.loadAccounts(accountType)
+        }
+        AccountsShareScreen(
+            uiState = uiState,
+            isSearching = isSearching,
+            isFiltered = isFiltered,
+            navigateBack = { navigateBack },
+            onRetry = { viewModel.loadAccounts(accountType) },
+            isRefreshing = isRefreshing,
+            onRefresh = { viewModel.refresh(accountType) },
+            getUpdatedSearchList = { accountsList -> viewModel.searchInSharesList(accountsList, searchQuery)!! },
+            getUpdatedFilterList = { accountsList -> getFilterShareAccountList(accountsList = accountsList, filterList, viewModel, context) },
+            onItemClick = onItemClick
+        )
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+fun getFilterLoanAccountList(
+    accountsList: List<LoanAccount?>,
+    filterList: List<CheckboxStatus>,
+    viewModel: AccountsViewModel,
+    context: Context
+): List<LoanAccount?> {
+    val newList : MutableList<LoanAccount?> = mutableListOf()
+    for( filter in filterList)
+    {
+        if(filter.isChecked)
+            newList.addAll( viewModel.getFilteredLoanAccount(accountsList,filter, getFilterStrings(context))!! )
+    }
+    return newList
+}
+
+fun getFilterSavingsAccountList(
+    accountsList: List<SavingAccount?>,
+    filterList: List<CheckboxStatus>,
+    viewModel: AccountsViewModel,
+    context: Context
+): List<SavingAccount?> {
+
+    val newList : MutableList<SavingAccount?> = mutableListOf()
+    for( filter in filterList)
+    {
+        if( filter.isChecked )
+            newList.addAll( viewModel.getFilteredSavingsAccount(accountsList,filter, getFilterStrings(context))!! )
+    }
+    return newList
+}
+
+fun getFilterShareAccountList(
+    accountsList: List<ShareAccount?>,
+    filterList: List<CheckboxStatus>,
+    viewModel: AccountsViewModel,
+    context: Context
+): List<ShareAccount?> {
+    val newList : MutableList<ShareAccount?> = mutableListOf()
+    for( filter in filterList)
+    {
+        if(filter.isChecked)
+            newList.addAll( viewModel.getFilteredShareAccount(accountsList,filter, getFilterStrings(context))!! )
+    }
+    return newList
+}
+
+private fun getFilterStrings( context : Context?): AccountsFilterUtil {
+    return AccountsFilterUtil().apply {
+        this.activeString = context?.getString(R.string.active)
+        this.approvedString = context?.getString(R.string.approved)
+        this.approvalPendingString = context?.getString(R.string.approval_pending)
+        this.maturedString = context?.getString(R.string.matured)
+        this.waitingForDisburseString = context?.getString(R.string.waiting_for_disburse)
+        this.overpaidString = context?.getString(R.string.overpaid)
+        this.closedString = context?.getString(R.string.closed)
+        this.withdrawnString = context?.getString(R.string.withdrawn)
+        this.inArrearsString = context?.getString(R.string.in_arrears)
+    }
+}
+
+@OptIn( ExperimentalMaterialApi::class)
 @Composable
-fun AccountsScreen(
+fun AccountsSavingsScreen(
     uiState: AccountsUiState,
     navigateBack: () -> Unit,
     onRetry: () -> Unit,
     isRefreshing: Boolean,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    isSearching: Boolean,
+    getUpdatedSearchList: (accountsList: List<SavingAccount?>) -> List<SavingAccount?>,
+    isFiltered: Boolean,
+    getUpdatedFilterList: (accountsList: List<SavingAccount?>) -> List<SavingAccount?>,
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
 ) {
     val context = LocalContext.current
-    val pullRefreshState = rememberPullToRefreshState()
-
-    Box() {
-
-        when (uiState) {
-            is AccountsUiState.Error -> {
-                MifosErrorComponent(
-                    isNetworkConnected = Network.isConnected(context),
-                    isRetryEnabled = true,
-                    onRetry = onRetry
-                )
-            }
-
-            is AccountsUiState.Loading -> {
-                MifosProgressIndicatorOverlay()
-            }
-
-            is AccountsUiState.ShowLoanAccounts -> {
-                if (uiState.loanAccounts!!.isEmpty()) {
-                    EmptyDataView(
-                        icon = R.drawable.ic_error_black_24dp,
-                        error = R.string.empty_loan_accounts,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    AccountScreenLoanContent(
-                        accounts = uiState.loanAccounts
-                    )
-                }
-            }
-
-            is AccountsUiState.ShowShareAccounts -> {
-                if (uiState.shareAccounts!!.isEmpty()) {
-                    EmptyDataView(
-                        icon = R.drawable.ic_error_black_24dp,
-                        error = R.string.empty_share_accounts,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    AccountScreenShareContent(
-                        accounts = uiState.shareAccounts
-                    )
-                }
-            }
-
-            is AccountsUiState.ShowSavingsAccounts -> {
-                if (uiState.savingAccounts!!.isEmpty()) {
-                    EmptyDataView(
-                        icon = R.drawable.ic_error_black_24dp,
-                        error = R.string.empty_savings_accounts,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    AccountScreenSavingsContent(
-                        accounts = uiState.savingAccounts
-                    )
-                }
-            }
-        }
-    }
-
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(key1 = true) {
-            onRefresh()
-        }
-    }
-    LaunchedEffect(key1 = isRefreshing) {
-        if (isRefreshing)
-            pullRefreshState.startRefresh()
-        else
-            pullRefreshState.endRefresh()
-    }
-
-    PullToRefreshContainer(
-        state = pullRefreshState,
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = onRefresh
     )
+
+    Column(
+        Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Box(Modifier.pullRefresh(pullRefreshState))
+        {
+            when (uiState) {
+                is AccountsUiState.Error -> {
+                    MifosErrorComponent(
+                        isNetworkConnected = Network.isConnected(context),
+                        isRetryEnabled = true,
+                        onRetry = onRetry
+                    )
+                }
+
+                is AccountsUiState.Loading -> {
+                    MifosProgressIndicatorOverlay()
+                }
+
+                is AccountsUiState.ShowLoanAccounts -> {}
+
+                is AccountsUiState.ShowSavingsAccounts -> {
+
+                    if( ( uiState.savingAccounts!!.isEmpty()) )
+                    {
+                        EmptyDataView(
+                            icon = R.drawable.ic_error_black_24dp,
+                            error = R.string.empty_savings_accounts,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }else {
+                        AccountScreenSavingsContent(
+                            accountsList = uiState.savingAccounts,
+                            isSearching = isSearching,
+                            isFiltered= isFiltered,
+                            getUpdatedSearchList = { accountsList -> getUpdatedSearchList(accountsList) },
+                            getUpdatedFilterList = { accountsList -> getUpdatedFilterList(accountsList) },
+                            onItemClick = onItemClick
+                        )
+                    }
+                }
+                is AccountsUiState.ShowShareAccounts -> {}
+            }
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
+    }
+}
+
+@OptIn( ExperimentalMaterialApi::class)
+@Composable
+fun AccountsLoanScreen(
+    uiState: AccountsUiState,
+    navigateBack: () -> Unit,
+    onRetry: () -> Unit,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
+    isSearching: Boolean,
+    getUpdatedSearchList: (accountsList: List<LoanAccount?>) -> List<LoanAccount?>,
+    isFiltered: Boolean,
+    getUpdatedFilterList: (accountsList: List<LoanAccount?>) -> List<LoanAccount?>,
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
+) {
+    val context = LocalContext.current
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = onRefresh
+    )
+
+    Column(
+        Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Box(Modifier.pullRefresh(pullRefreshState))
+        {
+            when (uiState) {
+                is AccountsUiState.Error -> {
+                    MifosErrorComponent(
+                        isNetworkConnected = Network.isConnected(context),
+                        isRetryEnabled = true,
+                        onRetry = onRetry,
+                    )
+                }
+
+                is AccountsUiState.Loading -> {
+                    MifosProgressIndicatorOverlay()
+                }
+
+                is AccountsUiState.ShowLoanAccounts -> {
+
+                    if( uiState.loanAccounts!!.isEmpty() )
+                    {
+                        EmptyDataView(
+                            icon = R.drawable.ic_error_black_24dp,
+                            error = R.string.empty_loan_accounts,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }else {
+                        AccountScreenLoanContent(
+                            accountsList = uiState.loanAccounts,
+                            isSearching = isSearching,
+                            isFiltered = isFiltered,
+                            getUpdatedSearchList = { accountsList -> getUpdatedSearchList(accountsList) },
+                            getUpdatedFilterList = { accountsList -> getUpdatedFilterList(accountsList) },
+                            onItemClick = onItemClick
+                        )
+                    }
+                }
+
+                is AccountsUiState.ShowSavingsAccounts -> {}
+                is AccountsUiState.ShowShareAccounts -> {}
+            }
+
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
+    }
+}
+
+@OptIn( ExperimentalMaterialApi::class)
+@Composable
+fun AccountsShareScreen(
+    uiState: AccountsUiState,
+    navigateBack: () -> Unit,
+    onRetry: () -> Unit,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
+    isSearching: Boolean,
+    getUpdatedSearchList: (accountsList: List<ShareAccount?>) -> List<ShareAccount?>,
+    isFiltered: Boolean,
+    getUpdatedFilterList: (accountsList: List<ShareAccount?>) -> List<ShareAccount?>,
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
+) {
+    val context = LocalContext.current
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = onRefresh
+    )
+
+    Column(
+        Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Box(Modifier.pullRefresh(pullRefreshState))
+        {
+            when (uiState) {
+                is AccountsUiState.Error -> {
+                    MifosErrorComponent(
+                        isNetworkConnected = Network.isConnected(context),
+                        isRetryEnabled = true,
+                        onRetry = onRetry
+                    )
+                }
+
+                is AccountsUiState.Loading -> {
+                    MifosProgressIndicatorOverlay()
+                }
+
+                is AccountsUiState.ShowLoanAccounts -> {}
+
+                is AccountsUiState.ShowSavingsAccounts -> {}
+
+                is AccountsUiState.ShowShareAccounts -> {
+
+                    if( uiState.shareAccounts!!.isEmpty() )
+                    {
+                        EmptyDataView(
+                            icon = R.drawable.ic_error_black_24dp,
+                            error = R.string.empty_share_accounts,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }else {
+                        AccountScreenShareContent(
+                            accountsList = uiState.shareAccounts,
+                            isSearching = isSearching,
+                            isFiltered = isFiltered,
+                            getUpdatedSearchList = { accountsList -> getUpdatedSearchList(accountsList) },
+                            getUpdatedFilterList = { accountsList -> getUpdatedFilterList(accountsList) }
+                        )
+                    }
+
+                }
+            }
+
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
+    }
 }
 
 @Composable
 fun AccountScreenSavingsContent(
-    accounts: List<SavingAccount?>
+    accountsList: List<SavingAccount?>,
+    isSearching: Boolean,
+    getUpdatedSearchList: (accountsList: List<SavingAccount?>) -> List<SavingAccount?>,
+    isFiltered: Boolean,
+    getUpdatedFilterList: (accountsList: List<SavingAccount?>) -> List<SavingAccount?>,
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
 ) {
+
+    var accounts by rememberSaveable {
+        mutableStateOf(accountsList)
+    }
+
+    if( isFiltered && isSearching)
+    {
+        accounts = getUpdatedSearchList(getUpdatedFilterList( accountsList))
+    }else if( isSearching ){
+        accounts = getUpdatedSearchList(accountsList)
+    }else if( isFiltered ){
+        accounts = getUpdatedFilterList(accountsList)
+    }else {
+        accounts = accountsList
+    }
+
     val lazyColumnState = rememberLazyListState()
-    val context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -192,7 +455,8 @@ fun AccountScreenSavingsContent(
                             savingAccount = savingAccount,
                             color = colorResource(R.color.deposit_green),
                             stringResource = getDateAsString( savingAccount.lastActiveTransactionDate),
-                            numcolor = colorResource(R.color.deposit_green)
+                            numcolor = colorResource(R.color.deposit_green),
+                            onItemClick = onItemClick
                         )
                     }
 
@@ -201,7 +465,8 @@ fun AccountScreenSavingsContent(
                             savingAccount = savingAccount,
                             color = colorResource(R.color.light_green),
                             stringResource = "${stringResource(id = R.string.approved)} ${getDateAsString( savingAccount.timeLine?.approvedOnDate)}",
-                            numcolor = null
+                            numcolor = null,
+                            onItemClick = onItemClick
                         )
                     }
 
@@ -210,7 +475,8 @@ fun AccountScreenSavingsContent(
                             savingAccount = savingAccount,
                             color = colorResource(R.color.light_yellow),
                             stringResource = "${stringResource(id = R.string.submitted)} ${getDateAsString( savingAccount.timeLine?.submittedOnDate)}",
-                            numcolor = null
+                            numcolor = null,
+                            onItemClick = onItemClick
                         )
                     }
 
@@ -219,7 +485,8 @@ fun AccountScreenSavingsContent(
                             savingAccount = savingAccount,
                             color = colorResource(R.color.red_light),
                             stringResource = getDateAsString( savingAccount.lastActiveTransactionDate),
-                            numcolor = colorResource(R.color.red_light)
+                            numcolor = colorResource(R.color.red_light),
+                            onItemClick = onItemClick
                         )
                     }
 
@@ -228,7 +495,8 @@ fun AccountScreenSavingsContent(
                             savingAccount = savingAccount,
                             color = colorResource(R.color.light_yellow),
                             stringResource = "${stringResource(id = R.string.closed)} ${getDateAsString( savingAccount?.timeLine?.closedOnDate)}",
-                            numcolor = null
+                            numcolor = null,
+                            onItemClick = onItemClick
                         )
                     }
                 }
@@ -240,8 +508,29 @@ fun AccountScreenSavingsContent(
 
 @Composable
 fun AccountScreenLoanContent(
-    accounts: List<LoanAccount?>
+    accountsList: List<LoanAccount?>,
+    isSearching: Boolean,
+    getUpdatedSearchList: (accountsList: List<LoanAccount?>) -> List<LoanAccount?>,
+    isFiltered: Boolean,
+    getUpdatedFilterList: (accountsList: List<LoanAccount?>) -> List<LoanAccount?>,
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
 ) {
+
+    var accounts by rememberSaveable {
+        mutableStateOf(accountsList)
+    }
+
+    if( isFiltered && isSearching)
+    {
+        accounts = getUpdatedSearchList(getUpdatedFilterList( accountsList))
+    }else if( isSearching ){
+        accounts = getUpdatedSearchList(accountsList)
+    }else if( isFiltered ){
+        accounts = getUpdatedFilterList(accountsList)
+    }else {
+        accounts = accountsList
+    }
+
     val lazyColumnState = rememberLazyListState()
 
     LazyColumn(
@@ -257,49 +546,56 @@ fun AccountScreenLoanContent(
                         loanAccount = loanAccount,
                         color = colorResource(R.color.red),
                         stringResource = "${stringResource(id = R.string.disbursement)} ${getDateAsString( loanAccount.timeline?.actualDisbursementDate)}",
-                        numcolor = colorResource(R.color.red)
+                        numcolor = colorResource(R.color.red),
+                        onItemClick= onItemClick
                     )
                 } else if (loanAccount?.status?.active == true) {
                     AccountScreenLoanListItem(
                         loanAccount = loanAccount,
                         color = colorResource(R.color.deposit_green),
                         stringResource = "${stringResource(id = R.string.disbursement)} ${getDateAsString( loanAccount.timeline?.actualDisbursementDate)}",
-                        numcolor = colorResource(R.color.deposit_green)
+                        numcolor = colorResource(R.color.deposit_green),
+                        onItemClick = onItemClick
                     )
                 } else if (loanAccount?.status?.waitingForDisbursal == true) {
                     AccountScreenLoanListItem(
                         loanAccount = loanAccount,
                         color = colorResource(id =R.color.blue),
                         stringResource = "${stringResource(id = R.string.approved)} ${getDateAsString( loanAccount.timeline?.approvedOnDate)}",
-                        numcolor = null
+                        numcolor = null,
+                        onItemClick = onItemClick
                     )
                 } else if (loanAccount?.status?.pendingApproval == true) {
                     AccountScreenLoanListItem(
                         loanAccount = loanAccount,
                         color = colorResource(R.color.light_yellow),
                         stringResource = "${stringResource(id = R.string.submitted)} ${getDateAsString( loanAccount.timeline?.submittedOnDate)}",
-                        numcolor = null
+                        numcolor = null,
+                        onItemClick = onItemClick
                     )
                 } else if (loanAccount?.status?.overpaid == true) {
                     AccountScreenLoanListItem(
                         loanAccount = loanAccount,
                         color = colorResource(R.color.purple),
                         stringResource = "${stringResource(id = R.string.approved)} ${getDateAsString( loanAccount.timeline?.actualDisbursementDate)}",
-                        numcolor = colorResource(R.color.purple)
+                        numcolor = colorResource(R.color.purple),
+                        onItemClick = onItemClick
                     )
                 } else if (loanAccount?.status?.closed == true) {
                     AccountScreenLoanListItem(
                         loanAccount = loanAccount,
                         color = colorResource(R.color.black),
                         stringResource = "${stringResource(id = R.string.closed)} ${getDateAsString( loanAccount.timeline?.closedOnDate)}",
-                        numcolor = null
+                        numcolor = null,
+                        onItemClick = onItemClick
                     )
                 } else {
                     AccountScreenLoanListItem(
                         loanAccount = loanAccount,
                         color = colorResource(R.color.gray_dark),
                         stringResource = "${stringResource(id = R.string.withdrawn)} ${getDateAsString( loanAccount.timeline?.withdrawnOnDate)}",
-                        numcolor = null
+                        numcolor = null,
+                        onItemClick = onItemClick
                     )
                 }
             }
@@ -310,8 +606,28 @@ fun AccountScreenLoanContent(
 
 @Composable
 fun AccountScreenShareContent(
-    accounts: List<ShareAccount?>
+    accountsList: List<ShareAccount?>,
+    isSearching: Boolean,
+    getUpdatedSearchList: (accountsList: List<ShareAccount?>) -> List<ShareAccount?>,
+    isFiltered: Boolean,
+    getUpdatedFilterList: (accountsList: List<ShareAccount?>) -> List<ShareAccount?>
 ) {
+
+    var accounts by rememberSaveable {
+        mutableStateOf(accountsList)
+    }
+
+    if( isFiltered && isSearching)
+    {
+        accounts = getUpdatedSearchList(getUpdatedFilterList( accountsList))
+    }else if( isSearching ){
+        accounts = getUpdatedSearchList(accountsList)
+    }else if( isFiltered ){
+        accounts = getUpdatedFilterList(accountsList)
+    }else {
+        accounts = accountsList
+    }
+
     val lazyColumnState = rememberLazyListState()
 
     LazyColumn(
@@ -366,11 +682,14 @@ fun AccountScreenLoanListItem(
     loanAccount: LoanAccount,
     color: Color,
     stringResource: String,
-    numcolor: Color?
+    numcolor: Color?,
+    onItemClick: (accountType: String, accountId: Long) -> Unit
 ) {
     val context = LocalContext.current
-    Row( verticalAlignment = Alignment.CenterVertically) {
-
+    Row(
+        modifier = Modifier.clickable { onItemClick.invoke( Constants.LOAN_ACCOUNTS, loanAccount.id) },
+        verticalAlignment = Alignment.CenterVertically)
+    {
         CustomShapeBox(color)
 
         Column(modifier = Modifier.padding(all=12.dp)) {
@@ -418,10 +737,12 @@ fun AccountScreenSavingsListItem(
     savingAccount: SavingAccount,
     color: Color,
     stringResource: String,
-    numcolor: Color?
+    numcolor: Color?,
+    onItemClick: (accountType: String, accountId: Long) -> Unit
 ) {
     val context = LocalContext.current
-    Row( verticalAlignment = Alignment.CenterVertically) {
+    Row( modifier = Modifier.clickable { onItemClick.invoke( Constants.SAVINGS_ACCOUNTS, savingAccount.id) },
+        verticalAlignment = Alignment.CenterVertically) {
 
         CustomShapeBox(color)
 
@@ -585,7 +906,6 @@ fun CustomShapeBox( color: Color) {
     }
 }
 
-
 class AccountsScreenPreviewProvider : PreviewParameterProvider<AccountsUiState> {
 
     override val values: Sequence<AccountsUiState>
@@ -606,7 +926,8 @@ private fun AccountScreenPreview(
     MifosMobileTheme {
         AccountsScreen(
             navigateBack = {},
-            accountType = ""
+            accountType = "",
+            onItemClick = { _, _ -> }
         )
     }
 }
