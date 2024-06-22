@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.client_accounts
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ import org.mifos.mobile.repositories.HomeRepository
 import org.mifos.mobile.utils.AccountsFilterUtil
 import org.mifos.mobile.utils.AccountsUiState
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.StatusUtils
 import java.util.*
 import javax.inject.Inject
 
@@ -49,16 +51,14 @@ class AccountsViewModel @Inject constructor(
 
 
     fun refresh(accountType: String?) {
-        if( accountType == Constants.SAVINGS_ACCOUNTS)
-        {
+
+        if( accountType == Constants.SAVINGS_ACCOUNTS) {
             _isRefreshing.value = true
             loadAccounts(Constants.SAVINGS_ACCOUNTS)
-        }else if( accountType == Constants.LOAN_ACCOUNTS)
-        {
+        }else if( accountType == Constants.LOAN_ACCOUNTS) {
             _isRefreshing.value = true
             loadAccounts(Constants.LOAN_ACCOUNTS)
-        }else if( accountType == Constants.SHARE_ACCOUNTS)
-        {
+        }else if( accountType == Constants.SHARE_ACCOUNTS) {
             _isRefreshing.value = true
             loadAccounts(Constants.SHARE_ACCOUNTS)
         }
@@ -74,61 +74,86 @@ class AccountsViewModel @Inject constructor(
         _isSearching.update { false }
     }
 
-    fun setFilterList( statusList: List<CheckboxStatus>) {
-         _isFiltered.update { false }
-         _filterList.update { statusList  }
+    fun setFilterList(
+        checkBoxList: List<CheckboxStatus>,
+        currentPage: Int,
+        context: Context
+    ){
+        if(checkBoxList.isEmpty()) {
+            when (currentPage) {
+                0 -> {
+                    _isFiltered.update { false }
+                    _filterList.update { StatusUtils.getSavingsAccountStatusList(context) }
+                }
+                1 -> {
+                    _isFiltered.update { false }
+                    _filterList.update { StatusUtils.getLoanAccountStatusList(context) }
+                }
+                2 -> {
+                    _isFiltered.update { false }
+                    _filterList.update { StatusUtils.getShareAccountStatusList(context) }
+                }
+            }
+        }else {
+            var isChanged = false
+            for( checkBox in checkBoxList )
+            {
+                if(checkBox.isChecked)
+                    isChanged = true
+            }
+            if(isChanged) {
+                _isFiltered.update { true }
+                _filterList.update { checkBoxList }
+            }
+            else {
+                _isFiltered.update { false }
+                _filterList.update { checkBoxList }
+                }
+        }
     }
 
-    fun filterAccounts( checkBoxList : List<CheckboxStatus>) {
-            _isFiltered.update { true }
-            _filterList.update { checkBoxList }
+    fun getFilterLoanAccountList(
+        accountsList: List<LoanAccount?>,
+        filterList: List<CheckboxStatus>,
+        context: Context
+    ): List<LoanAccount?> {
+        val newList : MutableList<LoanAccount?> = mutableListOf()
+        for( filter in filterList)
+        {
+            if(filter.isChecked)
+                newList.addAll( getFilteredLoanAccount(accountsList,filter,AccountsFilterUtil.getFilterStrings(context = context))!! )
+        }
+        return newList
     }
 
-//    val accountListUiState: StateFlow<AccountsUiState> = searchQuery.map { query ->
-//        if(query.isNullOrEmpty())
-//        {
-//           return@map _accountsUiState.value
-//        }else {
-//            when (_accountsUiState.value) {
-//                is AccountsUiState.ShowSavingsAccounts -> {
-//                    val accountList =
-//                        (accountsUiState.value as AccountsUiState.ShowSavingsAccounts).savingAccounts
-//                    val newList = searchInSavingsList(accountList, query)
-//                    AccountsUiState.ShowSavingsAccounts(newList)
-//                }
-//
-//                is AccountsUiState.ShowLoanAccounts -> {
-//                    val accountList =
-//                        (accountsUiState.value as AccountsUiState.ShowLoanAccounts).loanAccounts
-//                    val newList = searchInLoanList(accountList, query)
-//                    AccountsUiState.ShowLoanAccounts(newList)
-//                }
-//
-//                is AccountsUiState.ShowShareAccounts -> {
-//                    val accountList =
-//                        (accountsUiState.value as AccountsUiState.ShowShareAccounts).shareAccounts
-//                    val newList = searchInSharesList(accountList, query)
-//                    AccountsUiState.ShowShareAccounts(newList)
-//                }
-//
-//                else -> _accountsUiState.value
-//            }
-//        }
-//    }.stateIn(
-//        viewModelScope,
-//        SharingStarted.WhileSubscribed(5000),
-//        initialValue = _accountsUiState.value
-//    )
+    fun getFilterSavingsAccountList(
+        accountsList: List<SavingAccount?>,
+        filterList: List<CheckboxStatus>,
+        context: Context
+    ): List<SavingAccount?> {
 
-//    fun filterAccounts( checkBoxList: List<CheckboxStatus>, accountType: String) {
-//
-//        if(accountType == Constants.SAVINGS_ACCOUNTS){
-//        }else if(accountType == Constants.LOAN_ACCOUNTS) {
-//
-//        }else if(accountType == Constants.SHARE_ACCOUNTS) {
-//
-//        }
-//    }
+        val newList : MutableList<SavingAccount?> = mutableListOf()
+        for( filter in filterList)
+        {
+            if( filter.isChecked )
+                newList.addAll( getFilteredSavingsAccount(accountsList,filter, AccountsFilterUtil.getFilterStrings(context = context))!! )
+        }
+        return newList
+    }
+
+    fun getFilterShareAccountList(
+        accountsList: List<ShareAccount?>,
+        filterList: List<CheckboxStatus>,
+        context: Context
+    ): List<ShareAccount?> {
+        val newList : MutableList<ShareAccount?> = mutableListOf()
+        for( filter in filterList)
+        {
+            if(filter.isChecked)
+                newList.addAll( getFilteredShareAccount(accountsList,filter, AccountsFilterUtil.getFilterStrings(context = context))!! )
+        }
+        return newList
+    }
 
     /**
      * Loads savings, loan and share accounts associated with the Client from the server
