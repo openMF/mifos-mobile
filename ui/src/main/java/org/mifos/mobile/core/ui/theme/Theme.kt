@@ -16,6 +16,7 @@ private val LightThemeColors = lightColorScheme(
     onSurface = Black2,
     onSecondary = Color.Gray,
     outlineVariant = Color.Gray,
+    surfaceTint = LightSurfaceTint
 )
 
 private val DarkThemeColors = darkColorScheme(
@@ -27,7 +28,8 @@ private val DarkThemeColors = darkColorScheme(
     surface = Black1,
     onSurface = Color.White,
     onSecondary = Color.White,
-    outlineVariant = Color.White
+    outlineVariant = Color.White,
+    surfaceTint = DarkSurfaceTint
 )
 
 @Composable

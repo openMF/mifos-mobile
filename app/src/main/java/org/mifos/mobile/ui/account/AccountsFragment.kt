@@ -1,5 +1,6 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.account
 
+/*
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -29,7 +30,6 @@ import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
-import org.mifos.mobile.viewModels.AccountsViewModel
 import java.util.*
 
 /**
@@ -548,3 +548,4 @@ class AccountsFragment : BaseFragment(), OnRefreshListener {
         }
     }
 }
+*/

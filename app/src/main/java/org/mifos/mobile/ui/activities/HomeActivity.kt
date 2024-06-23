@@ -33,6 +33,7 @@ import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.ui.about.AboutUsActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_list.BeneficiaryListComposeFragment
+import org.mifos.mobile.ui.client_accounts.ClientAccountsComposeFragment
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
@@ -182,7 +183,7 @@ class HomeActivity :
             R.id.item_accounts -> {
                 hideToolbarElevation()
                 replaceFragment(
-                    ClientAccountsFragment.newInstance(AccountType.SAVINGS),
+                    ClientAccountsComposeFragment.newInstance(AccountType.SAVINGS),
                     true,
                     R.id.container,
                 )
@@ -408,7 +409,7 @@ class HomeActivity :
                     setNavigationViewSelectedItem(R.id.item_home)
                 }
 
-                is ClientAccountsFragment -> {
+                is ClientAccountsComposeFragment -> {
                     hideToolbarElevation()
                     setNavigationViewSelectedItem(R.id.item_accounts)
                 }

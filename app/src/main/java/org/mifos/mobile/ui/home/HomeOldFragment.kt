@@ -29,10 +29,10 @@ import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.NotificationActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_list.BeneficiaryListComposeFragment
+import org.mifos.mobile.ui.client_accounts.ClientAccountsComposeFragment
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.fragments.ClientAccountsFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragment
@@ -167,7 +167,7 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      */
     private fun openAccount(accountType: AccountType?) {
         (activity as BaseActivity?)?.replaceFragment(
-            ClientAccountsFragment.newInstance(accountType),
+            ClientAccountsComposeFragment.newInstance(accountType),
             true,
             R.id.container,
         )

@@ -1,5 +1,6 @@
-package org.mifos.mobile.viewModels
+package org.mifos.mobile.ui.account
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,7 +8,9 @@ import io.reactivex.Observable
 import io.reactivex.functions.Predicate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.models.accounts.loan.LoanAccount
@@ -16,8 +19,8 @@ import org.mifos.mobile.models.accounts.share.ShareAccount
 import org.mifos.mobile.repositories.AccountsRepository
 import org.mifos.mobile.repositories.HomeRepository
 import org.mifos.mobile.utils.AccountsFilterUtil
-import org.mifos.mobile.utils.AccountsUiState
 import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.utils.StatusUtils
 import java.util.*
 import javax.inject.Inject
 
@@ -29,6 +32,130 @@ class AccountsViewModel @Inject constructor(
 
     private val _accountsUiState = MutableStateFlow<AccountsUiState>(AccountsUiState.Loading)
     val accountsUiState: StateFlow<AccountsUiState> = _accountsUiState
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
+
+    private val _isSearching = MutableStateFlow(false)
+    val isSearching: StateFlow<Boolean> get() = _isSearching.asStateFlow()
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private val _isFiltered = MutableStateFlow(false)
+    val isFiltered: StateFlow<Boolean> get() = _isFiltered.asStateFlow()
+
+    private val _filterList = MutableStateFlow(emptyList<CheckboxStatus>())
+    val filterList: StateFlow<List<CheckboxStatus>> = _filterList.asStateFlow()
+
+
+    fun refresh(accountType: String?) {
+        when (accountType) {
+            Constants.SAVINGS_ACCOUNTS -> {
+                _isRefreshing.value = true
+                loadAccounts(Constants.SAVINGS_ACCOUNTS)
+            }
+            Constants.LOAN_ACCOUNTS -> {
+                _isRefreshing.value = true
+                loadAccounts(Constants.LOAN_ACCOUNTS)
+            }
+            Constants.SHARE_ACCOUNTS -> {
+                _isRefreshing.value = true
+                loadAccounts(Constants.SHARE_ACCOUNTS)
+            }
+        }
+    }
+
+    fun updateSearchQuery(query: String) {
+        _isSearching.update { true }
+        _searchQuery.update { query }
+    }
+
+    fun stoppedSearching() {
+        _searchQuery.update { "" }
+        _isSearching.update { false }
+    }
+
+    fun setFilterList(
+        checkBoxList: List<CheckboxStatus>,
+        currentPage: Int,
+        context: Context
+    ){
+        if(checkBoxList.isEmpty()) {
+            when (currentPage) {
+                0 -> {
+                    _isFiltered.update { false }
+                    _filterList.update { StatusUtils.getSavingsAccountStatusList(context) }
+                }
+                1 -> {
+                    _isFiltered.update { false }
+                    _filterList.update { StatusUtils.getLoanAccountStatusList(context) }
+                }
+                2 -> {
+                    _isFiltered.update { false }
+                    _filterList.update { StatusUtils.getShareAccountStatusList(context) }
+                }
+            }
+        }else {
+            var isChanged = false
+            for( checkBox in checkBoxList )
+            {
+                if(checkBox.isChecked)
+                    isChanged = true
+            }
+            if(isChanged) {
+                _isFiltered.update { true }
+                _filterList.update { checkBoxList }
+            }
+            else {
+                _isFiltered.update { false }
+                _filterList.update { checkBoxList }
+                }
+        }
+    }
+
+    fun getFilterLoanAccountList(
+        accountsList: List<LoanAccount?>,
+        filterList: List<CheckboxStatus>,
+        context: Context
+    ): List<LoanAccount> {
+        val newList : MutableList<LoanAccount> = mutableListOf()
+        for( filter in filterList)
+        {
+            if(filter.isChecked)
+                newList.plus( getFilteredLoanAccount(accountsList,filter,AccountsFilterUtil.getFilterStrings(context = context)))
+        }
+        return newList
+    }
+
+    fun getFilterSavingsAccountList(
+        accountsList: List<SavingAccount?>,
+        filterList: List<CheckboxStatus>,
+        context: Context
+    ): List<SavingAccount> {
+
+        val newList : MutableList<SavingAccount> = mutableListOf()
+        for( filter in filterList)
+        {
+            if( filter.isChecked )
+                newList.plus( getFilteredSavingsAccount(accountsList,filter, AccountsFilterUtil.getFilterStrings(context = context)))
+        }
+        return newList
+    }
+
+    fun getFilterShareAccountList(
+        accountsList: List<ShareAccount?>,
+        filterList: List<CheckboxStatus>,
+        context: Context
+    ): List<ShareAccount> {
+        val newList : MutableList<ShareAccount> = mutableListOf()
+        for( filter in filterList)
+        {
+            if(filter.isChecked)
+                newList.plus(getFilteredShareAccount(accountsList,filter, AccountsFilterUtil.getFilterStrings(context = context)))
+        }
+        return newList
+    }
 
     /**
      * Loads savings, loan and share accounts associated with the Client from the server
@@ -71,6 +198,7 @@ class AccountsViewModel @Inject constructor(
                     Constants.SHARE_ACCOUNTS -> _accountsUiState.value =
                         AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
                 }
+                _isRefreshing.emit(false)
             }
 
         }
@@ -86,7 +214,7 @@ class AccountsViewModel @Inject constructor(
     fun searchInSavingsList(
         accounts: List<SavingAccount?>?,
         input: String?,
-    ): List<SavingAccount?> {
+    ): List<SavingAccount> {
         return Observable.fromIterable(accounts)
             .filter { (accountNo, productName) ->
                 input?.lowercase(Locale.ROOT)
@@ -95,7 +223,7 @@ class AccountsViewModel @Inject constructor(
                             accountNo?.lowercase(Locale.ROOT)
                                 ?.contains(it)
                         } == true
-            }.toList().blockingGet()
+            }.toList().blockingGet().filterNotNull()
     }
 
     /**
@@ -108,7 +236,7 @@ class AccountsViewModel @Inject constructor(
     fun searchInLoanList(
         accounts: List<LoanAccount?>?,
         input: String?,
-    ): List<LoanAccount?>? {
+    ): List<LoanAccount> {
         return Observable.fromIterable(accounts)
             .filter { (_, _, _, accountNo, productName) ->
                 input?.lowercase(Locale.ROOT)
@@ -117,7 +245,7 @@ class AccountsViewModel @Inject constructor(
                             accountNo?.lowercase(Locale.ROOT)
                                 ?.contains(it)
                         } == true
-            }.toList().blockingGet()
+            }.toList().blockingGet().filterNotNull()
     }
 
     /**
@@ -130,7 +258,7 @@ class AccountsViewModel @Inject constructor(
     fun searchInSharesList(
         accounts: Collection<ShareAccount?>?,
         input: String?,
-    ): List<ShareAccount?>? {
+    ): List<ShareAccount> {
         return Observable.fromIterable(accounts)
             .filter { (accountNo, _, _, _, productName) ->
                 input?.lowercase(Locale.ROOT)
@@ -139,7 +267,7 @@ class AccountsViewModel @Inject constructor(
                             accountNo?.lowercase(Locale.ROOT)
                                 ?.contains(it)
                         } == true
-            }.toList().blockingGet()
+            }.toList().blockingGet().filterNotNull()
     }
 
     /**
@@ -164,7 +292,7 @@ class AccountsViewModel @Inject constructor(
         accounts: List<SavingAccount?>?,
         status: CheckboxStatus?,
         accountsFilterUtil: AccountsFilterUtil
-    ): Collection<SavingAccount?>? {
+    ): Collection<SavingAccount> {
         return Observable.fromIterable(accounts)
             .filter(
                 Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1) ->
@@ -191,7 +319,7 @@ class AccountsViewModel @Inject constructor(
                     }
                     false
                 },
-            ).toList().blockingGet()
+            ).toList().blockingGet().filterNotNull()
     }
 
     /**
@@ -205,7 +333,7 @@ class AccountsViewModel @Inject constructor(
         accounts: List<LoanAccount?>?,
         status: CheckboxStatus?,
         accountsFilterUtil: AccountsFilterUtil
-    ): Collection<LoanAccount?>? {
+    ): Collection<LoanAccount> {
         return Observable.fromIterable(accounts)
             .filter(
                 Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1, _, _, _, _, _, inArrears) ->
@@ -240,7 +368,7 @@ class AccountsViewModel @Inject constructor(
                     }
                     false
                 },
-            ).toList().blockingGet()
+            ).toList().blockingGet().filterNotNull()
     }
 
     /**
@@ -280,4 +408,13 @@ class AccountsViewModel @Inject constructor(
                 },
             ).toList().blockingGet()
     }
+
+}
+
+sealed class AccountsUiState {
+    data object Error : AccountsUiState()
+    data object Loading : AccountsUiState()
+    data class ShowSavingsAccounts(val savingAccounts: List<SavingAccount>?) : AccountsUiState()
+    data class ShowLoanAccounts(val loanAccounts: List<LoanAccount>?) : AccountsUiState()
+    data class ShowShareAccounts(val shareAccounts: List<ShareAccount>?) : AccountsUiState()
 }

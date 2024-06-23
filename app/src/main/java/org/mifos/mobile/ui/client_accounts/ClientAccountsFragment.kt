@@ -1,5 +1,6 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.client_accounts
 
+/*
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -34,7 +35,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.StatusUtils
-import org.mifos.mobile.viewModels.AccountsViewModel
 import javax.inject.Inject
 
 /*
@@ -468,3 +468,4 @@ class ClientAccountsFragment : BaseFragment() {
         }
     }
 }
+*/

@@ -3,14 +3,8 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -20,6 +14,7 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.AccountsRepository
 import org.mifos.mobile.repositories.HomeRepositoryImp
+import org.mifos.mobile.ui.account.AccountsViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.AccountsUiState
 import org.mockito.ArgumentMatchers.anyString
