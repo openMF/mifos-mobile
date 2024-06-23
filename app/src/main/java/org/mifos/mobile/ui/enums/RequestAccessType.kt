@@ -10,4 +10,6 @@ enum class RequestAccessType {
     EXTERNAL_STORAGE_READ,
 
     EXTERNAL_STORAGE_WRITE,
+
+    READ_MEDIA_IMAGES
 }

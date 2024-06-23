@@ -33,7 +33,7 @@ private val DarkThemeColors = darkColorScheme(
 @Composable
 fun MifosMobileTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
     val colors = when {
