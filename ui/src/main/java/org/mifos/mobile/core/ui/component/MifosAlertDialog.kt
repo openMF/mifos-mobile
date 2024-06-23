@@ -22,7 +22,9 @@ fun MifosAlertDialog(
 ) {
     AlertDialog(
         icon = {
-            if(icon != null) { Icon(imageVector = icon, contentDescription = null) }
+            if (icon != null) {
+                Icon(imageVector = icon, contentDescription = null)
+            }
         },
         title = { Text(text = dialogTitle) },
         text = { Text(text = dialogText) },
@@ -43,4 +45,3 @@ fun MifosAlertDialog(
         }
     )
 }
-

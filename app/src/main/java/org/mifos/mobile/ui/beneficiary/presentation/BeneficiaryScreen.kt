@@ -1,12 +1,20 @@
 package org.mifos.mobile.ui.beneficiary.presentation
 
+import android.Manifest
 import android.content.res.Configuration
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -18,12 +26,13 @@ import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun BeneficiaryScreen(
     topAppbarNavigateback: () -> Unit,
     addiconClicked: () -> Unit,
     scaniconClicked: () -> Unit,
-    uploadiconClicked: () -> Unit
+    uploadIconClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -36,7 +45,9 @@ fun BeneficiaryScreen(
         }
     ) {
         Column(
-            modifier = Modifier.padding(it).padding(dimensionResource(id = R.dimen.padding_10dp))
+            modifier = Modifier
+                .padding(it)
+                .padding(dimensionResource(id = R.dimen.padding_10dp))
         ) {
             Text(
                 stringResource(id = R.string.select_mode),
@@ -55,13 +66,13 @@ fun BeneficiaryScreen(
                 modifier = Modifier.padding(top = 20.dp),
                 addIconclicked = addiconClicked,
                 scanIconClicked = scaniconClicked,
-                uploadIconClicked = uploadiconClicked
+                uploadIconClicked = uploadIconClicked
             )
         }
     }
 }
 
-
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview(
     name = "Night Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
@@ -74,6 +85,5 @@ fun BeneficiaryScreen(
 fun BeneficiaryScreenPreview() {
     MifosMobileTheme {
         BeneficiaryScreen({}, {}, {}, {})
-
     }
 }

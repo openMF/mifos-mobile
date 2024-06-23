@@ -12,6 +12,7 @@
         android:padding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
         android:text="@string/select_region_qr" />
 
+
     <com.isseiaoki.simplecropview.CropImageView
         android:id="@+id/iv_crop_qr_code"
         android:layout_width="fill_parent"
@@ -35,7 +36,6 @@
         custom:scv_initial_frame_scale="1.0"
         custom:scv_min_frame_size="@dimen/min_frame_size"
         custom:scv_overlay_color="@color/gray_dark" />
-
 
     <Button
         android:id="@+id/btn_proceed"

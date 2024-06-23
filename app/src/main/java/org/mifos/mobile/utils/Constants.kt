@@ -35,8 +35,10 @@ object Constants {
     const val PERMISSIONS_REQUEST_READ_PHONE_STATE = 2
     const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 3
     const val PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 4
+    const val PERMISSIONS_REQUEST_READ_MEDIA_IMAGES = 5
     const val PERMISSIONS_CAMERA_STATUS = "camera_status"
     const val PERMISSIONS_STORAGE_STATUS = "storage_status"
+    const val READ_MEDIA_IMAGES_STATUS = "images_status"
     const val PERMISSIONS_READ_PHONE_STATE_STATUS = "read_phone_status"
     const val INTIAL_LOGIN = "initial_login"
     const val CHARGE_TYPE = "charge_type"

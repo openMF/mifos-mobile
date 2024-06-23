@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.fragments
+package org.mifos.mobile.ui.qr_code_import
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -17,7 +17,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.Result
 import com.isseiaoki.simplecropview.CropImageView
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
@@ -25,25 +24,24 @@ import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
-import org.mifos.mobile.utils.QrCodeUiState
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.viewModels.QrCodeImportViewModel
 import java.io.FileNotFoundException
 import java.io.InputStream
 
 /**
  * Created by manishkumar on 19/05/18.
  */
-@AndroidEntryPoint
+
 class QrCodeImportFragment : BaseFragment() {
 
     private var _binding: FragmentQrCodeImportBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: QrCodeImportViewModel by viewModels()
+    private val viewModel: org.mifos.mobile.ui.qr_code_import.QrCodeImportViewModel by viewModels()
 
     private lateinit var qrUri: Uri
     private var uriValue: String? = null
@@ -86,21 +84,21 @@ class QrCodeImportFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.qrCodeUiState.collect {
+                viewModel.qrCodeImportUiState.collect {
                     when (it) {
-                        is QrCodeUiState.Loading -> showProgress()
+                        is QrCodeImportUiState.Loading -> showProgress()
 
-                        is QrCodeUiState.ShowError -> {
+                        is QrCodeImportUiState.ShowError -> {
                             hideProgress()
                             showErrorReadingQr(getString(it.message))
                         }
 
-                        is QrCodeUiState.HandleDecodedResult -> {
+                        is QrCodeImportUiState.HandleDecodedResult -> {
                             hideProgress()
                             handleDecodedResult(it.result)
                         }
 
-                        QrCodeUiState.Initial -> {}
+                        QrCodeImportUiState.Initial -> {}
                     }
                 }
             }
@@ -128,7 +126,7 @@ class QrCodeImportFragment : BaseFragment() {
     }
 
     fun proceed() {
-        viewModel.getDecodedResult(qrUri, binding.ivCropQrCode)
+//        viewModel.getDecodedResult(qrUri, binding.ivCropQrCode)
     }
 
     /**
