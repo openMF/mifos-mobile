@@ -19,8 +19,8 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.ui.enums.BeneficiaryState
 import org.mifos.mobile.ui.enums.RequestAccessType
-import org.mifos.mobile.ui.fragments.QrCodeReaderFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.ui.qr.QrCodeReaderFragment
 import org.mifos.mobile.ui.qr_code_import.QrCodeImportComposeFragment
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission
