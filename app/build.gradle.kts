@@ -184,6 +184,14 @@ dependencies {
     //image cropper
     implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")
 
+    // Google Bar code scanner
+    implementation(libs.google.app.code.scanner)
+
+    //cameraX
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.core)
 }
 
 
