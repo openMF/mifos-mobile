@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -98,6 +100,7 @@ fun RegistrationScreen(
     val progressIndicator = progress(password.text)
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
     var confirmPasswordVisibility: Boolean by remember { mutableStateOf(false) }
+    var scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
@@ -107,7 +110,11 @@ fun RegistrationScreen(
                 detectTapGestures(onTap = {
                     keyboardController?.hide()
                 })
-            }) {
+            }
+            .verticalScroll(
+                state = scrollState,
+                enabled = true
+            )) {
 
         MifosMobileIcon(id = R.drawable.mifos_logo)
 
