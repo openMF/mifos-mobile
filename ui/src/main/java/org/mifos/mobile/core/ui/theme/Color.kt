@@ -24,3 +24,5 @@ val Primary = Color(0xFF3F51B5)
 val DarkGray = Color(0xBB666666)
 
 val GreenSuccess = Color(0xff14c416)
+val LightSurfaceTint = Color(0xFF325CA8)
+val DarkSurfaceTint = Color(0xFFAEC6FF)

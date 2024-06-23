@@ -4,9 +4,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.Search
 
 object MifosIcons {
     val Edit = Icons.Default.Edit
     val FilterList = Icons.Filled.FilterList
     val Add = Icons.Filled.Add
+    val Search = Icons.Filled.Search
 }

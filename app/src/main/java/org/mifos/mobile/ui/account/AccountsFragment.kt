@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.client_accounts
+package org.mifos.mobile.ui.account
 
 /*
 import android.content.Intent

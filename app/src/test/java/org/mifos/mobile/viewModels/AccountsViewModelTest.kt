@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.AccountsRepository
 import org.mifos.mobile.repositories.HomeRepositoryImp
-import org.mifos.mobile.ui.client_accounts.AccountsViewModel
+import org.mifos.mobile.ui.account.AccountsViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.AccountsUiState
 import org.mockito.ArgumentMatchers.anyString

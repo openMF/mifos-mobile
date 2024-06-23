@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -28,7 +29,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.models.CheckboxStatus
 
 @Composable
-fun ShowFilterDialog(
+fun ClientAccountFilterDialog(
     cancelDialog: () -> Unit,
     clearFilter: () -> Unit,
     updateFilterList: (checkBoxList: List<CheckboxStatus>) -> Unit,
@@ -44,7 +45,7 @@ fun ShowFilterDialog(
                 Text(modifier = Modifier.padding(bottom = 8.dp), text = "Filter $title")
                 Text(modifier = Modifier.padding(bottom = 16.dp), text = stringResource(R.string.select_you_want))
 
-                CheckBoxList( accountStatusList =  filterList ) { checkBoxList = it }
+                ClientAccountFilterCheckBox( accountStatusList =  filterList ) { checkBoxList = it }
 
                 Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween )
                 {
@@ -68,7 +69,7 @@ fun ShowFilterDialog(
 }
 
 @Composable
-fun CheckBoxList(
+fun ClientAccountFilterCheckBox(
     accountStatusList: List<CheckboxStatus>,
     updateList: (List<CheckboxStatus>) -> Unit
 ) {
@@ -98,12 +99,12 @@ fun CheckBoxList(
                         updateList.invoke(checkBoxList)
                     },
                     colors= CheckboxColors(
-                        checkedBoxColor = Color( checkBoxList[index].color),
+                        checkedBoxColor = Color(checkBoxList[index].color),
                         uncheckedBoxColor =  if (isSystemInDarkTheme()) colorResource(id = R.color.gray_light) else colorResource(id = R.color.white) ,
                         checkedCheckmarkColor = if (isSystemInDarkTheme()) colorResource(id = R.color.black) else colorResource(id = R.color.white),
                         uncheckedCheckmarkColor= colorResource(id = R.color.white),
-                        checkedBorderColor = Color( checkBoxList[index].color),
-                        uncheckedBorderColor = Color( checkBoxList[index].color ),
+                        checkedBorderColor = Color(checkBoxList[index].color),
+                        uncheckedBorderColor = Color(checkBoxList[index].color ),
                         disabledBorderColor = colorResource(id = R.color.gray_dark),
                         disabledIndeterminateBorderColor = colorResource(id = R.color.gray_dark),
                         disabledCheckedBoxColor= colorResource(id = R.color.black),
@@ -113,10 +114,11 @@ fun CheckBoxList(
                     )
                 )
                 Text(
-                    text = checkBoxList[index].status!!,
-                    color = if (isSystemInDarkTheme()) colorResource(id = R.color.white) else colorResource(id = R.color.black),
+                    text = checkBoxList[index].status ?: "",
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
     }
 }
+
