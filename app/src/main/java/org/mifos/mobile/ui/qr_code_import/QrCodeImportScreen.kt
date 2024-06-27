@@ -39,6 +39,7 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.google.zxing.Result
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -181,7 +182,7 @@ fun QrCodeImportContent(
     ) {
         if (showErrorScreen) {
             MifosErrorComponent(
-                isNetworkConnected = org.mifos.mobile.utils.Network.isConnected(context),
+                isNetworkConnected = Network.isConnected(context),
                 isRetryEnabled = false,
                 isEmptyData = true,
                 message = stringResource(

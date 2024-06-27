@@ -31,17 +31,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.selects.select
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
+import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosTextButton
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
-import org.mifos.mobile.models.templates.account.AccountType
-import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import org.mifos.mobile.ui.enums.BeneficiaryState
 
 @Composable
 fun BeneficiaryApplicationContent(
@@ -68,7 +66,7 @@ fun BeneficiaryApplicationContent(
     var beneficiaryNameError by rememberSaveable { mutableStateOf<Int?>(null) }
 
     fun validateFields() {
-        if (beneficiaryState != BeneficiaryState.UPDATE) {
+        if (beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE) {
             accountTypeError = if (accountType == -1) R.string.select_account_type else null
             accountNumberError = if (accountNumber.text.trim().isEmpty()) R.string.enter_account_number else null
             officeNameError = if (officeName.text.trim().isEmpty()) R.string.enter_office_name else null
@@ -111,8 +109,8 @@ fun BeneficiaryApplicationContent(
             optionsList = beneficiaryTemplate.accountTypeOptions?.mapNotNull { it.value } ?: listOf(),
             labelResId = R.string.select_account_type,
             onClick = { index, _ -> accountType = beneficiaryTemplate.accountTypeOptions?.filter{ it.value != null }?.get(index)?.id ?: -1 },
-            error = accountTypeError != null && beneficiaryState != BeneficiaryState.UPDATE,
-            isEnabled = beneficiaryState != BeneficiaryState.UPDATE,
+            error = accountTypeError != null && beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
+            isEnabled = beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
             supportingText = accountTypeError?.let { stringResource(id = it) }
         )
 
@@ -121,8 +119,8 @@ fun BeneficiaryApplicationContent(
             value = accountNumber,
             onValueChange = { accountNumber = it },
             label = R.string.account_number,
-            error = accountNumberError != null && beneficiaryState != BeneficiaryState.UPDATE,
-            enabled = beneficiaryState != BeneficiaryState.UPDATE,
+            error = accountNumberError != null && beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
+            enabled = beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
             supportingText = accountNumberError?.let { stringResource(id = it) }
         )
 
@@ -131,8 +129,8 @@ fun BeneficiaryApplicationContent(
             value = officeName,
             onValueChange = { officeName = it },
             label = R.string.office_name,
-            error = officeNameError != null && beneficiaryState != BeneficiaryState.UPDATE,
-            enabled = beneficiaryState != BeneficiaryState.UPDATE,
+            error = officeNameError != null && beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
+            enabled = beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
             supportingText = officeNameError?.let { stringResource(id = it) }
         )
 
@@ -162,7 +160,7 @@ fun BeneficiaryApplicationContent(
             textResId = R.string.submit_beneficiary,
             onClick = {
                 validateFields()
-                if ((beneficiaryState != BeneficiaryState.UPDATE && accountTypeError == null && accountNumberError == null && officeNameError == null) &&
+                if ((beneficiaryState != org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE && accountTypeError == null && accountNumberError == null && officeNameError == null) &&
                     transferLimitError == null && beneficiaryNameError == null) {
                     onSubmit(
                         BeneficiaryPayload(
@@ -173,7 +171,7 @@ fun BeneficiaryApplicationContent(
                             accountType = accountType
                         )
                     )
-                } else if (beneficiaryState == BeneficiaryState.UPDATE && transferLimitError == null && beneficiaryNameError == null) {
+                } else if (beneficiaryState == org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE && transferLimitError == null && beneficiaryNameError == null) {
                     onSubmit(
                         BeneficiaryPayload(
                             name = beneficiaryName.text,
@@ -197,7 +195,7 @@ fun BeneficiaryApplicationContentPreview() {
         BeneficiaryApplicationContent(
             prefilledBeneficiary = null,
             beneficiaryTemplate = BeneficiaryTemplate(),
-            beneficiaryState = BeneficiaryState.CREATE_QR,
+            beneficiaryState = org.mifos.mobile.core.model.enums.BeneficiaryState.CREATE_QR,
             onSubmit = {},
         )
     }

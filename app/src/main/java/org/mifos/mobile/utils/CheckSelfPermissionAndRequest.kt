@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import org.mifos.mobile.R
-import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 
 /**
  * Created by dilpreet on 14/7/17.
@@ -131,7 +131,7 @@ object CheckSelfPermissionAndRequest {
                             if (intent.resolveActivity(pm) != null) {
                                 activity.startActivityForResult(
                                     intent,
-                                    Constants.REQUEST_PERMISSION_SETTING,
+                                    org.mifos.mobile.core.common.Constants.REQUEST_PERMISSION_SETTING,
                                 )
                             } else {
                                 Toast.makeText(

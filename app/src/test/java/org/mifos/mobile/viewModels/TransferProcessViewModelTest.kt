@@ -17,11 +17,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mifos.mobile.models.payload.TransferPayload
-import org.mifos.mobile.repositories.TransferRepositoryImp
-import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.TransferUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -60,7 +58,7 @@ class TransferProcessViewModelTest {
                 4, 5, 6, 7,
                 8, "06 July 2023 ", 100.0, "Transfer",
                 "dd MMMM yyyy", "en", "0000001", "0000002",
-                TransferType.SELF
+                org.mifos.mobile.core.model.enums.TransferType.SELF
             )
         ).thenReturn(flowOf(responseBody))
         viewModel.transferUiState.test {

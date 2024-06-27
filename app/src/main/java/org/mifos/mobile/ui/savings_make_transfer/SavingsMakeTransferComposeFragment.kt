@@ -2,23 +2,18 @@ package org.mifos.mobile.ui.savings_make_transfer
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.getTodayFormatted
 
@@ -32,9 +27,9 @@ class SavingsMakeTransferComposeFragment : BaseFragment() {
         (activity as? BaseActivity)?.hideToolbar()
         if (arguments != null) {
             viewModel.initArgs(
-                accountId = arguments?.getLong(Constants.ACCOUNT_ID),
-                transferType =  arguments?.getString(Constants.TRANSFER_TYPE),
-                outstandingBalance = arguments?.getDouble(Constants.OUTSTANDING_BALANCE)
+                accountId = arguments?.getLong(org.mifos.mobile.core.common.Constants.ACCOUNT_ID),
+                transferType =  arguments?.getString(org.mifos.mobile.core.common.Constants.TRANSFER_TYPE),
+                outstandingBalance = arguments?.getDouble(org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE)
             )
         }
     }
@@ -92,8 +87,8 @@ class SavingsMakeTransferComposeFragment : BaseFragment() {
         fun newInstance(accountId: Long?, transferType: String?): SavingsMakeTransferComposeFragment {
             val transferFragment = SavingsMakeTransferComposeFragment()
             val args = Bundle()
-            if (accountId != null) args.putLong(Constants.ACCOUNT_ID, accountId)
-            args.putString(Constants.TRANSFER_TYPE, transferType)
+            if (accountId != null) args.putLong(org.mifos.mobile.core.common.Constants.ACCOUNT_ID, accountId)
+            args.putString(org.mifos.mobile.core.common.Constants.TRANSFER_TYPE, transferType)
             transferFragment.arguments = args
             return transferFragment
         }
@@ -105,15 +100,15 @@ class SavingsMakeTransferComposeFragment : BaseFragment() {
         ): SavingsMakeTransferComposeFragment {
             val transferFragment = SavingsMakeTransferComposeFragment()
             val args = Bundle()
-            if (accountId != null) args.putLong(Constants.ACCOUNT_ID, accountId)
-            args.putString(Constants.TRANSFER_TYPE, transferType)
+            if (accountId != null) args.putLong(org.mifos.mobile.core.common.Constants.ACCOUNT_ID, accountId)
+            args.putString(org.mifos.mobile.core.common.Constants.TRANSFER_TYPE, transferType)
             if (outstandingBalance != null) {
                 args.putDouble(
-                    Constants.OUTSTANDING_BALANCE,
+                    org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE,
                     outstandingBalance,
                 )
             }
-            args.putBoolean(Constants.LOAN_REPAYMENT, true)
+            args.putBoolean(org.mifos.mobile.core.common.Constants.LOAN_REPAYMENT, true)
             transferFragment.arguments = args
             return transferFragment
         }

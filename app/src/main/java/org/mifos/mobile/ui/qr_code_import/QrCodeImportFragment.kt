@@ -20,13 +20,13 @@ import com.isseiaoki.simplecropview.CropImageView
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
-import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.Toaster
 import java.io.FileNotFoundException
@@ -41,7 +41,7 @@ class QrCodeImportFragment : BaseFragment() {
     private var _binding: FragmentQrCodeImportBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: org.mifos.mobile.ui.qr_code_import.QrCodeImportViewModel by viewModels()
+    private val viewModel: QrCodeImportViewModel by viewModels()
 
     private lateinit var qrUri: Uri
     private var uriValue: String? = null
@@ -112,16 +112,16 @@ class QrCodeImportFragment : BaseFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // save data
-        outState.putParcelable(Constants.FRAME_RECT, binding.ivCropQrCode.actualCropRect)
-        outState.putParcelable(Constants.SOURCE_URI, binding.ivCropQrCode.sourceUri)
+        outState.putParcelable(org.mifos.mobile.core.common.Constants.FRAME_RECT, binding.ivCropQrCode.actualCropRect)
+        outState.putParcelable(org.mifos.mobile.core.common.Constants.SOURCE_URI, binding.ivCropQrCode.sourceUri)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             // restore data
-            mFrameRect = savedInstanceState.getCheckedParcelable(RectF::class.java, Constants.FRAME_RECT)
-            qrUri = savedInstanceState.getCheckedParcelable(Uri::class.java, Constants.SOURCE_URI)!!
+            mFrameRect = savedInstanceState.getCheckedParcelable(RectF::class.java, org.mifos.mobile.core.common.Constants.FRAME_RECT)
+            qrUri = savedInstanceState.getCheckedParcelable(Uri::class.java, org.mifos.mobile.core.common.Constants.SOURCE_URI)!!
         }
     }
 

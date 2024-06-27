@@ -8,10 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.qualifiers.ActivityContext
 import org.mifos.mobile.R
+import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.databinding.RowNotificationBinding
-
-
-import org.mifos.mobile.models.notification.MifosNotification
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.utils.DateHelper.getDateAndTimeAsStringFromLong
 import javax.inject.Inject

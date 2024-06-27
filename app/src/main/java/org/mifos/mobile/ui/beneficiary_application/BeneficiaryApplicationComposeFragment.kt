@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 
@@ -27,7 +27,7 @@ class BeneficiaryApplicationComposeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             viewModel.initArgs(
-                beneficiaryState = arguments?.getCheckedSerializable(BeneficiaryState::class.java, Constants.BENEFICIARY_STATE) as BeneficiaryState ,
+                beneficiaryState = arguments?.getCheckedSerializable(BeneficiaryState::class.java, Constants.BENEFICIARY_STATE) as BeneficiaryState,
                 beneficiary = arguments?.getCheckedParcelable(Beneficiary::class.java, Constants.BENEFICIARY)
             )
         }

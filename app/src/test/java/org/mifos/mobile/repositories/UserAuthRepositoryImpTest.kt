@@ -4,16 +4,14 @@ import CoroutineTestRule
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mifos.mobile.FakeRemoteDataSource
-import org.mifos.mobile.FakeRemoteDataSource.userVerify
+import com.mifos.mobile.core.data.utils.FakeRemoteDataSource
+import com.mifos.mobile.core.data.utils.FakeRemoteDataSource.userVerify
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.payload.LoginPayload
@@ -23,7 +21,6 @@ import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -43,7 +40,7 @@ class UserAuthRepositoryImpTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         userAuthRepositoryImp = UserAuthRepositoryImp(dataManager)
-        mockUser = FakeRemoteDataSource.user
+        mockUser = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.user
     }
 
     @Test

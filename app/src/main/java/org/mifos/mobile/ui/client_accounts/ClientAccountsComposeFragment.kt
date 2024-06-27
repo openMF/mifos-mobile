@@ -13,9 +13,9 @@ import org.mifos.mobile.ui.activities.LoanApplicationActivity
 import org.mifos.mobile.ui.activities.SavingsAccountApplicationActivity
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.AccountType
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 /*
 ~This project is licensed under the open source MPL V2.

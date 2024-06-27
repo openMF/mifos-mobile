@@ -21,7 +21,6 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import org.mifos.mobile.utils.Constants
 
 class RegistrationIntentService : IntentService(TAG) {
     override fun onHandleIntent(intent: Intent?) {
@@ -41,8 +40,8 @@ class RegistrationIntentService : IntentService(TAG) {
     }
 
     private fun sendRegistrationToServer(token: String?) {
-        val registrationComplete = Intent(Constants.REGISTER_ON_SERVER)
-        registrationComplete.putExtra(Constants.TOKEN, token)
+        val registrationComplete = Intent(org.mifos.mobile.core.common.Constants.REGISTER_ON_SERVER)
+        registrationComplete.putExtra(org.mifos.mobile.core.common.Constants.TOKEN, token)
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete)
     }
 

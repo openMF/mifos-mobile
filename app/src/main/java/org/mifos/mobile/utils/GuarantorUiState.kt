@@ -1,8 +1,8 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
-import org.mifos.mobile.models.guarantor.GuarantorPayload
-import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
 
 sealed class GuarantorUiState {
     object Loading : GuarantorUiState()

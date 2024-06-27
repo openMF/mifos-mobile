@@ -7,9 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.models.Charge
-import org.mifos.mobile.repositories.ClientChargeRepository
-import org.mifos.mobile.ui.enums.ChargeType
+import org.mifos.mobile.core.data.repositories.ClientChargeRepository
+import org.mifos.mobile.core.datastore.model.Charge
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,12 +21,12 @@ class ClientChargeViewModel @Inject constructor(private val clientChargeReposito
     private val _clientId = MutableStateFlow<Long?>(null)
     private val clientId: StateFlow<Long?> get() = _clientId
 
-    private val _chargeType = MutableStateFlow<ChargeType?>(null)
-    private val chargeType: StateFlow<ChargeType?> get() = _chargeType
+    private val _chargeType = MutableStateFlow<org.mifos.mobile.core.model.enums.ChargeType?>(null)
+    private val chargeType: StateFlow<org.mifos.mobile.core.model.enums.ChargeType?> get() = _chargeType
 
     fun initArgs(
         clientId: Long?,
-        chargeType: ChargeType
+        chargeType: org.mifos.mobile.core.model.enums.ChargeType
     ) {
         _clientId.value = clientId
         _chargeType.value = chargeType
@@ -37,9 +36,9 @@ class ClientChargeViewModel @Inject constructor(private val clientChargeReposito
     fun loadCharges() {
         clientId.value?.let { clientId ->
             when (chargeType.value) {
-                ChargeType.CLIENT -> loadClientCharges(clientId)
-                ChargeType.SAVINGS -> loadSavingsAccountCharges(clientId)
-                ChargeType.LOAN -> loadLoanAccountCharges(clientId)
+                org.mifos.mobile.core.model.enums.ChargeType.CLIENT -> loadClientCharges(clientId)
+                org.mifos.mobile.core.model.enums.ChargeType.SAVINGS -> loadSavingsAccountCharges(clientId)
+                org.mifos.mobile.core.model.enums.ChargeType.LOAN -> loadLoanAccountCharges(clientId)
                 null -> Unit
             }
         }

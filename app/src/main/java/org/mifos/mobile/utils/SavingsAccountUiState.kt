@@ -1,9 +1,9 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.models.accounts.savings.Transactions
-import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
+import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 
 sealed class SavingsAccountUiState {
     object Initial : SavingsAccountUiState()

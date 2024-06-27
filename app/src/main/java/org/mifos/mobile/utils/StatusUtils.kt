@@ -3,7 +3,7 @@ package org.mifos.mobile.utils
 import android.content.Context
 import androidx.core.content.ContextCompat
 import org.mifos.mobile.R
-import org.mifos.mobile.models.CheckboxStatus
+import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.ui.getThemeAttributeColor
 
 /**

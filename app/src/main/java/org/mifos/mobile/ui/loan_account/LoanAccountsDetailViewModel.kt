@@ -7,9 +7,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.repositories.LoanRepository
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.data.repositories.LoanRepository
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +28,7 @@ class LoanAccountsDetailViewModel @Inject constructor(private val loanRepository
     fun loadLoanAccountDetails(loanId: Long?) {
         viewModelScope.launch {
             _loanUiState.value = LoanAccountDetailUiState.Loading
-            loanRepositoryImp.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, loanId)
+            loanRepositoryImp.getLoanWithAssociations(org.mifos.mobile.core.common.Constants.REPAYMENT_SCHEDULE, loanId)
                 ?.catch { _loanUiState.value = LoanAccountDetailUiState.Error }
                 ?.collect { processLoanDetailsResponse(it) }
         }

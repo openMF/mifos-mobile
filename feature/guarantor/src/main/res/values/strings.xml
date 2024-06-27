@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="view_guarantor">View Guarantor</string>
+    <string name="add_guarantor">Add Guarantor</string>
+    <string name="delete_guarantor">Delete Guarantor</string>
+    <string name="update_guarantor">Update Guarantor</string>
+    <string name="guarantor_type">Guarantor Type</string>
+    <string name="no_guarantors">No Guarantors</string>
+    <string name="tap_to_add_guarantor">Tap to Add Guarantor</string>
+    <string name="guarantor_details">Guarantor Details</string>
+    <string name="screen_guarantor_list">Screen Guarantor List</string>
+    <string name="screen_guarantor_details">Screen Guarantor Details</string>
+    <string name="screen_guarantor_add">Screen Guarantor Add</string>
+    <string name="city">City</string>
+    <string name="guarantor_deleted_successfully">Guarantor deleted successfully</string>
+    <string name="guarantor_created_successfully">Guarantor created successfully</string>
+    <string name="guarantor_updated_successfully">Guarantor updated successfully</string>
+    <string name="error_validation_blank">%1$s cannot be blank</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="office_name">Office Name</string>
+    <string name="submit">Submit</string>
+    <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>
+    <string name="yes">Yes</string>
+    <string name="dismiss">Dismiss</string>
+</resources>

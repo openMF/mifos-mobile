@@ -19,11 +19,11 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
-import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import org.mifos.mobile.ui.enums.BeneficiaryState
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
+import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 
 
 @Composable
@@ -107,7 +107,7 @@ fun BeneficiaryApplicationScreenPreview(
             navigateBack = { },
             onRetry = { },
             beneficiary = Beneficiary(),
-            beneficiaryState = BeneficiaryState.CREATE_QR,
+            beneficiaryState = org.mifos.mobile.core.model.enums.BeneficiaryState.CREATE_QR,
             onSubmit = { }
         )
     }

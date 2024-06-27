@@ -26,21 +26,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentSavingAccountTransactionsBinding
-import org.mifos.mobile.models.CheckboxStatus
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.models.accounts.savings.Transactions
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.CheckBoxStatusUtil
-import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.DatePick
 import org.mifos.mobile.utils.DividerItemDecoration
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.CheckboxStatus
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
-import org.mifos.mobile.utils.SavingsAccountUiState
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getDatePickerDialog
@@ -83,7 +81,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
         (activity as? SavingsAccountContainerActivity)?.showToolbar()
         setHasOptionsMenu(true)
         setToolbarTitle(getString(R.string.saving_account_transactions_details))
-        if (arguments != null) savingsId = arguments?.getLong(Constants.SAVINGS_ID)!!
+        if (arguments != null) savingsId = arguments?.getLong(org.mifos.mobile.core.common.Constants.SAVINGS_ID)!!
     }
 
     override fun onCreateView(
@@ -151,7 +149,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(Constants.SAVINGS_ACCOUNTS, savingsWithAssociations)
+        outState.putParcelable(org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS, savingsWithAssociations)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -160,7 +158,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
             showSavingAccountsDetail(
                 savedInstanceState.getCheckedParcelable(
                     SavingsWithAssociations::class.java,
-                    Constants.SAVINGS_ACCOUNTS
+                    org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS
                 )
             )        }
     }
@@ -272,7 +270,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
             tvEndDate?.isEnabled = true
             tvStartDate?.text = DateHelper.getDateAsStringFromLong(it)
             startDate = it
-        }.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        }.show(requireActivity().supportFragmentManager, org.mifos.mobile.core.common.Constants.DFRAG_DATE_PICKER)
     }
 
     private fun endDatePick() {
@@ -281,7 +279,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
             endDate = it
             tvEndDate?.text = DateHelper.getDateAsStringFromLong(it)
             isReady = true
-        }.show(requireActivity().supportFragmentManager, Constants.DFRAG_DATE_PICKER)
+        }.show(requireActivity().supportFragmentManager, org.mifos.mobile.core.common.Constants.DFRAG_DATE_PICKER)
     }
 
     /**
@@ -488,7 +486,7 @@ class SavingAccountsTransactionFragment : BaseFragment() {
         fun newInstance(savingsId: Long?): SavingAccountsTransactionFragment {
             val fragment = SavingAccountsTransactionFragment()
             val args = Bundle()
-            if (savingsId != null) args.putLong(Constants.SAVINGS_ID, savingsId)
+            if (savingsId != null) args.putLong(org.mifos.mobile.core.common.Constants.SAVINGS_ID, savingsId)
             fragment.arguments = args
             return fragment
         }

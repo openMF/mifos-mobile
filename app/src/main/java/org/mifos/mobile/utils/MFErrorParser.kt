@@ -2,7 +2,7 @@ package org.mifos.mobile.utils
 
 import com.google.gson.Gson
 import io.reactivex.plugins.RxJavaPlugins
-import org.mifos.mobile.models.mifoserror.MifosError
+import org.mifos.mobile.core.model.entity.mifoserror.MifosError
 import retrofit2.HttpException
 
 object MFErrorParser {

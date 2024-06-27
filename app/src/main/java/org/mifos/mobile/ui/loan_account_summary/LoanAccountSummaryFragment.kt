@@ -7,15 +7,11 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.databinding.FragmentLoanAccountSummaryBinding
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.savings_account.SavingsAccountDetailScreen
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.CurrencyUtil
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 
 /*

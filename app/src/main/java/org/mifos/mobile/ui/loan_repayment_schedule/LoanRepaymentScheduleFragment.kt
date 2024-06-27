@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 /**
  * Created by Rajan Maurya on 03/03/17.

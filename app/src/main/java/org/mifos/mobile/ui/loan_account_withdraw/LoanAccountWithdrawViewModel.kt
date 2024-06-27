@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.models.accounts.loan.LoanWithdraw
-import org.mifos.mobile.repositories.LoanRepository
+import org.mifos.mobile.core.data.repositories.LoanRepository
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.LoanUiState
 import javax.inject.Inject

@@ -20,12 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FaqItemHolder
 import org.mifos.mobile.core.ui.component.MifosTextButtonWithTopDrawable
 import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
 import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.models.FAQ
 
 
 @Composable

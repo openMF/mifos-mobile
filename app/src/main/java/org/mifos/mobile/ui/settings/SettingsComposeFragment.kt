@@ -15,7 +15,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 @AndroidEntryPoint
 class SettingsComposeFragment : BaseFragment() {
@@ -55,15 +55,15 @@ class SettingsComposeFragment : BaseFragment() {
 
     private fun changePasscode(passcode: String) {
         val intent = Intent(activity, PassCodeActivity::class.java).apply {
-            putExtra(Constants.CURR_PASSWORD, passcode)
-            putExtra(Constants.IS_TO_UPDATE_PASS_CODE, true)
+            putExtra(org.mifos.mobile.core.common.Constants.CURR_PASSWORD, passcode)
+            putExtra(org.mifos.mobile.core.common.Constants.IS_TO_UPDATE_PASS_CODE, true)
         }
         startActivity(intent)
     }
 
     private fun languageChanged() {
         val intent = Intent(activity, activity?.javaClass)
-        intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
+        intent.putExtra(org.mifos.mobile.core.common.Constants.HAS_SETTINGS_CHANGED, true)
         startActivity(intent)
         activity?.finish()
     }

@@ -38,8 +38,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.utils.getTodayFormatted
 
 @Composable

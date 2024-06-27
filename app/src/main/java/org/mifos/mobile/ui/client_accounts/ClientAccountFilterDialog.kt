@@ -26,7 +26,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.models.CheckboxStatus
+import org.mifos.mobile.core.model.entity.CheckboxStatus
 
 @Composable
 fun ClientAccountFilterDialog(

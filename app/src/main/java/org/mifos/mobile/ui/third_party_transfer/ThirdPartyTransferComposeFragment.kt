@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
-import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
-import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.getTodayFormatted
 
@@ -53,7 +52,7 @@ class ThirdPartyTransferComposeFragment : BaseFragment() {
         }
 
         (activity as? BaseActivity)?.replaceFragment(
-            TransferProcessComposeFragment.newInstance(transferPayload, TransferType.TPT,),
+            TransferProcessComposeFragment.newInstance(transferPayload, org.mifos.mobile.core.model.enums.TransferType.TPT,),
             true, R.id.container
         )
     }

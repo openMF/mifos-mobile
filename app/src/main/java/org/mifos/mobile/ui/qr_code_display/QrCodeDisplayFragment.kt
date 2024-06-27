@@ -14,7 +14,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.databinding.FragmentQrCodeDisplayBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.QrCodeGenerator
 import org.mifos.mobile.utils.Utils
 

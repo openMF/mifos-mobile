@@ -14,13 +14,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
-import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
 import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat
 import org.mifos.mobile.utils.ConfigurationPreference
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.utils.LanguageHelper
 import java.util.Locale
 
@@ -55,8 +55,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             val currPassCode = passCodePreferencesHelper.passCode
             passCodePreferencesHelper.savePassCode("")
             val intent = Intent(activity, PassCodeActivity::class.java).apply {
-                putExtra(Constants.CURR_PASSWORD, currPassCode)
-                putExtra(Constants.IS_TO_UPDATE_PASS_CODE, true)
+                putExtra(org.mifos.mobile.core.common.Constants.CURR_PASSWORD, currPassCode)
+                putExtra(org.mifos.mobile.core.common.Constants.IS_TO_UPDATE_PASS_CODE, true)
             }
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
             startActivity(intent)
@@ -73,8 +73,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     val currPassCode = passCodePreferencesHelper.passCode
                     passCodePreferencesHelper.savePassCode("")
                     val intent = Intent(it, PassCodeActivity::class.java).apply {
-                        putExtra(Constants.CURR_PASSWORD, currPassCode)
-                        putExtra(Constants.IS_TO_UPDATE_PASS_CODE, true)
+                        putExtra(org.mifos.mobile.core.common.Constants.CURR_PASSWORD, currPassCode)
+                        putExtra(org.mifos.mobile.core.common.Constants.IS_TO_UPDATE_PASS_CODE, true)
                     }
                     preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
                     startActivity(intent)
@@ -116,7 +116,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(
+            org.mifos.mobile.core.common.Constants.PASSWORD -> (activity as BaseActivity?)?.replaceFragment(
                 UpdatePasswordFragment.newInstance(),
                 true,
                 R.id.container,
@@ -153,7 +153,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 }
             }
             val intent = Intent(activity, activity?.javaClass)
-            intent.putExtra(Constants.HAS_SETTINGS_CHANGED, true)
+            intent.putExtra(org.mifos.mobile.core.common.Constants.HAS_SETTINGS_CHANGED, true)
             startActivity(intent)
             activity?.finish()
         }

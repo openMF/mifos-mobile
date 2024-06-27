@@ -7,8 +7,9 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.ui.enums.AccountType
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.enums.AccountType
+
 
 /**
  * Created by dilpreet on 6/7/17.
@@ -60,7 +61,7 @@ object QrCodeGenerator {
         } else if (accountType === AccountType.LOAN) {
             accountId = 1
         }
-        val type = org.mifos.mobile.models.templates.account.AccountType()
+        val type = org.mifos.mobile.core.model.entity.templates.account.AccountType()
         type.id = accountId
         val payload = Beneficiary()
         payload.accountNumber = accountNumber

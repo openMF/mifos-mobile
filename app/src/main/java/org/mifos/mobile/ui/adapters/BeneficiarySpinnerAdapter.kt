@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryDetail
 import org.mifos.mobile.databinding.BeneficiarySpinnerLayoutBinding
-import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
 
 class BeneficiarySpinnerAdapter(
     context: Context,

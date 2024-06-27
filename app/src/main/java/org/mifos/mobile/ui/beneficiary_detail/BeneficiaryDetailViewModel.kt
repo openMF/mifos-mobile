@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.repositories.BeneficiaryRepository
+import org.mifos.mobile.core.data.repositories.BeneficiaryRepository
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import javax.inject.Inject
 
 @HiltViewModel

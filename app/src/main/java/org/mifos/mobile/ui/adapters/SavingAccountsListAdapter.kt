@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.databinding.RowSavingAccountBinding
-import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 

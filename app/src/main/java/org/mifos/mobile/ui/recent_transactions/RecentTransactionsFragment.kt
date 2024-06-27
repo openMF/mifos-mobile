@@ -1,32 +1,5 @@
 package org.mifos.mobile.ui.recent_transactions
 
-import android.os.Bundle
-import android.os.Parcelable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import org.mifos.mobile.R
-import org.mifos.mobile.databinding.FragmentRecentTransactionsBinding
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.adapters.RecentTransactionListAdapter
-import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.*
-import org.mifos.mobile.utils.Network.isConnected
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
-import javax.inject.Inject
-
 /*
 /**
  * @author Vishwwajeet

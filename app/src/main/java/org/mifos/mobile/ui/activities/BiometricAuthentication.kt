@@ -10,7 +10,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import org.mifos.mobile.R
-import org.mifos.mobile.ui.enums.BiometricCapability
+import org.mifos.mobile.core.model.enums.BiometricCapability
 
 open class BiometricAuthentication(
     val context: FragmentActivity,

@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.settings
 
 import android.content.Context
-import android.widget.Space
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,9 +38,9 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
 import org.mifos.mobile.core.ui.component.MifosTopBarTitle
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.AppTheme
+import org.mifos.mobile.core.model.enums.AppTheme
 import org.mifos.mobile.utils.LanguageHelper
-import org.mifos.mobile.utils.MifosAppLanguage
+import org.mifos.mobile.core.model.enums.MifosAppLanguage
 import java.util.Locale
 
 @Composable

@@ -9,11 +9,11 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.SavingsAccountState
+import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 
@@ -30,7 +30,8 @@ class SavingsAccountApplicationFragment : BaseFragment() {
         (activity as? BaseActivity)?.hideToolbar()
         if (arguments != null) {
             viewModel.setSavingsAccountState(arguments?.getCheckedSerializable(SavingsAccountState::class.java, Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState)
-            viewModel.setSavingsWithAssociations(arguments?.getCheckedParcelable(SavingsWithAssociations::class.java, Constants.SAVINGS_ACCOUNTS))
+            viewModel.setSavingsWithAssociations(arguments?.getCheckedParcelable(
+                SavingsWithAssociations::class.java, Constants.SAVINGS_ACCOUNTS))
         }
     }
 

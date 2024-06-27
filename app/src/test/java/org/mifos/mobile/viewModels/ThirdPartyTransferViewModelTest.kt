@@ -14,7 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
-import org.mifos.mobile.models.AccountOptionAndBeneficiary
+import org.mifos.mobile.core.model.models.AccountOptionAndBeneficiary
 import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.models.payload.AccountDetail
 import org.mifos.mobile.models.templates.account.AccountOption
@@ -83,10 +83,10 @@ class ThirdPartyTransferViewModelTest {
             )
         )
         thirdPartyTransferViewModel.accountOptionAndBeneficiary =
-            AccountOptionAndBeneficiary(
-            templateResult,
-            beneficiaryListResult
-        )
+            org.mifos.mobile.core.model.models.AccountOptionAndBeneficiary(
+                templateResult,
+                beneficiaryListResult
+            )
         thirdPartyTransferViewModel.thirdPartyTransferUiState.test {
             thirdPartyTransferViewModel.loadTransferTemplate()
             assertEquals(ThirdPartyTransferUiState.Initial, awaitItem())

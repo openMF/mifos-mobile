@@ -24,7 +24,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.models.accounts.share.ShareAccount
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.utils.AccountTypeItemIndicator
 
 @Composable

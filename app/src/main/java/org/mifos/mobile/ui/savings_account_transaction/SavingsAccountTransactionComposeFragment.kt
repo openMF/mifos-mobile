@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 
 @AndroidEntryPoint

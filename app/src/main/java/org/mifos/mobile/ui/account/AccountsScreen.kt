@@ -19,13 +19,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.models.accounts.loan.LoanAccount
-import org.mifos.mobile.models.accounts.savings.SavingAccount
-import org.mifos.mobile.models.accounts.share.ShareAccount
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 

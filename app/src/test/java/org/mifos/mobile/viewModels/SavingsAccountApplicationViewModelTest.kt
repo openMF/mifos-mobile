@@ -22,7 +22,7 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.repositories.SavingsAccountRepository
-import org.mifos.mobile.ui.enums.SavingsAccountState
+import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationUiState
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
@@ -71,7 +71,7 @@ class SavingsAccountApplicationViewModelTest {
     @Test
     fun testLoadSavingsAccountApplicationTemplate_InputCreateStateSuccessResponseFromRepository_ReturnsShowUserInterfaceSavingAccountApplication() =
        runTest {
-            val mockState = SavingsAccountState.CREATE
+            val mockState = org.mifos.mobile.core.model.enums.SavingsAccountState.CREATE
             val clientId = 1L
             val mockTemplate = Mockito.mock(SavingsAccountTemplate::class.java)
             Mockito.`when`(
@@ -90,7 +90,7 @@ class SavingsAccountApplicationViewModelTest {
     @Test
     fun testLoadSavingsAccountApplicationTemplate_InputUpdateStateSuccessResponseFromRepository_ReturnsShowUserInterfaceSavingAccountUpdate() =
        runTest {
-            val mockState = SavingsAccountState.UPDATE
+            val mockState = org.mifos.mobile.core.model.enums.SavingsAccountState.UPDATE
             val mockTemplate = Mockito.mock(SavingsAccountTemplate::class.java)
             val mockPayload = Mockito.mock(SavingsAccountUpdatePayload::class.java)
             val mockResponse = Mockito.mock(ResponseBody::class.java)
@@ -102,7 +102,7 @@ class SavingsAccountApplicationViewModelTest {
            `when`(savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId))
                .thenReturn(flow { emit(mockTemplate) })
           // Set state to UPDATE
-           savingsAccountApplicationViewModel.setSavingsAccountState(SavingsAccountState.UPDATE)
+           savingsAccountApplicationViewModel.setSavingsAccountState(org.mifos.mobile.core.model.enums.SavingsAccountState.UPDATE)
            savingsAccountApplicationViewModel.setSavingsWithAssociations(mockSavingsWithAssociations)
             savingsAccountApplicationViewModel.loadSavingsAccountApplicationTemplate()
             advanceUntilIdle()
@@ -117,7 +117,7 @@ class SavingsAccountApplicationViewModelTest {
     fun testLoadSavingsAccountApplicationTemplate_ErrorResponseFromRepository_ReturnsErrorMessage() =
        runTest {
             val errorResponse =  Exception("Loading Failed")
-            val mockState = SavingsAccountState.UPDATE
+            val mockState = org.mifos.mobile.core.model.enums.SavingsAccountState.UPDATE
             Mockito.`when`(
                 savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(mockClientId)
             ).thenThrow(errorResponse)
@@ -147,7 +147,7 @@ class SavingsAccountApplicationViewModelTest {
             )
             advanceUntilIdle()
             assertEquals(
-                SavingsAccountApplicationUiState.Success(SavingsAccountState.CREATE),
+                SavingsAccountApplicationUiState.Success(org.mifos.mobile.core.model.enums.SavingsAccountState.CREATE),
                 savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
             )
 
@@ -205,14 +205,14 @@ class SavingsAccountApplicationViewModelTest {
                 mockSavingsAccountUpdatePayload
             )
         ).thenReturn(flowOf(responseBody))
-        savingsAccountApplicationViewModel.setSavingsAccountState(SavingsAccountState.UPDATE)
+        savingsAccountApplicationViewModel.setSavingsAccountState(org.mifos.mobile.core.model.enums.SavingsAccountState.UPDATE)
         savingsAccountApplicationViewModel.updateSavingsAccount(
             mockAccountId,
             mockSavingsAccountUpdatePayload
         )
         advanceUntilIdle()
         assertEquals(
-            SavingsAccountApplicationUiState.Success(SavingsAccountState.UPDATE),
+            SavingsAccountApplicationUiState.Success(org.mifos.mobile.core.model.enums.SavingsAccountState.UPDATE),
             savingsAccountApplicationViewModel.savingsAccountApplicationUiState.value
         )
     }

@@ -7,7 +7,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityUserProfileBinding
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 class SettingsActivity : BaseActivity() {
     private lateinit var binding: ActivityUserProfileBinding
@@ -19,9 +19,9 @@ class SettingsActivity : BaseActivity() {
         setContentView(binding.root)
 
         replaceFragment(SettingsComposeFragment.newInstance(), false, R.id.container)
-        if (intent.hasExtra(Constants.HAS_SETTINGS_CHANGED)) {
+        if (intent.hasExtra(org.mifos.mobile.core.common.Constants.HAS_SETTINGS_CHANGED)) {
             hasSettingsChanged = intent.getBooleanExtra(
-                Constants.HAS_SETTINGS_CHANGED,
+                org.mifos.mobile.core.common.Constants.HAS_SETTINGS_CHANGED,
                 false,
             )
         }

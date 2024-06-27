@@ -4,7 +4,7 @@ import android.os.Bundle
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivitySavingsAccountApplicationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.SavingsAccountState
+import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment.Companion.newInstance
 
 /*

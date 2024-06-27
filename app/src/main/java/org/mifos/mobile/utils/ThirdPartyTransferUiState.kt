@@ -1,7 +1,7 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 
 sealed class ThirdPartyTransferUiState {
     object Initial : ThirdPartyTransferUiState()

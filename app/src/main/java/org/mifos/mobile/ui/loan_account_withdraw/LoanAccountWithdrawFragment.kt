@@ -7,24 +7,13 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.databinding.FragmentLoanWithdrawBinding
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.models.accounts.loan.LoanWithdraw
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.savings_account_withdraw.SavingsAccountWithdrawScreen
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.LoanUiState
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
-import org.mifos.mobile.utils.Toaster
 
 /**
  * Created by dilpreet on 7/6/17.

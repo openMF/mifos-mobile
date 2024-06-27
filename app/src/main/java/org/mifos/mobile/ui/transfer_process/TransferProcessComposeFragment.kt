@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.models.payload.TransferPayload
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 

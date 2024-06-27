@@ -14,10 +14,10 @@ import butterknife.OnClick
 import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
 import org.mifos.mobile.R
-import org.mifos.mobile.ui.enums.BiometricCapability
+import org.mifos.mobile.core.model.enums.BiometricCapability
 import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.MaterialDialog
 import org.mifos.mobile.utils.Toaster
 
@@ -81,12 +81,12 @@ class PassCodeActivity : MifosPassCodeActivity() {
         CheckSelfPermissionAndRequest.requestPermission(
             this,
             Manifest.permission.READ_PHONE_STATE,
-            Constants.PERMISSIONS_REQUEST_READ_PHONE_STATE,
+            org.mifos.mobile.core.common.Constants.PERMISSIONS_REQUEST_READ_PHONE_STATE,
             resources.getString(
                 R.string.dialog_message_phone_state_permission_denied_prompt,
             ),
             resources.getString(R.string.dialog_message_phone_state_permission_never_ask_again),
-            Constants.PERMISSIONS_READ_PHONE_STATE_STATUS,
+            org.mifos.mobile.core.common.Constants.PERMISSIONS_READ_PHONE_STATE_STATUS,
         )
     }
 

@@ -18,15 +18,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.utils.AccountTypeItemIndicator
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper
 
@@ -124,7 +123,7 @@ fun AccountScreenSavingsListItem(
 
     Row(
         modifier = Modifier.clickable {
-            onItemClick.invoke(Constants.SAVINGS_ACCOUNTS, savingAccount.id)
+            onItemClick.invoke(org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS, savingAccount.id)
         },
         verticalAlignment = Alignment.CenterVertically
     ) {

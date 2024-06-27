@@ -1,7 +1,7 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.models.templates.loans.LoanTemplate
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 
 sealed class LoanUiState {
     object Loading : LoanUiState()

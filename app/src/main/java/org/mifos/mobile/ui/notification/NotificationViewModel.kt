@@ -8,9 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.models.notification.MifosNotification
-import org.mifos.mobile.repositories.NotificationRepository
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.data.repositories.NotificationRepository
+import org.mifos.mobile.core.datastore.model.MifosNotification
 import javax.inject.Inject
 
 @HiltViewModel

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import org.mifos.mobile.R
-import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.core.model.entity.client.Client
 
 /**
  * @author Vishwajeet

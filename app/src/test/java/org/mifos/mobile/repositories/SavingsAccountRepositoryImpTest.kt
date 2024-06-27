@@ -18,13 +18,12 @@ import org.mifos.mobile.models.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -38,7 +37,7 @@ class SavingsAccountRepositoryImpTest {
 
     private lateinit var savingsAccountRepositoryImp: SavingsAccountRepository
     private val mockAccountId = 1L
-    private val mockAssociationType = Constants.TRANSACTIONS
+    private val mockAssociationType = org.mifos.mobile.core.common.Constants.TRANSACTIONS
     private val mockClientId = 1L
 
     @Before

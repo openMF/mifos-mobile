@@ -16,9 +16,8 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.registration.RegistrationActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.LoginUiState
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
 
 /**
  * @author Vishwajeet
@@ -216,7 +215,7 @@ class LoginActivity : BaseActivity() {
 
     private fun startPassCodeActivity() {
         val intent = Intent(this@LoginActivity, PassCodeActivity::class.java)
-        intent.putExtra(Constants.INTIAL_LOGIN, true)
+        intent.putExtra(org.mifos.mobile.core.common.Constants.INTIAL_LOGIN, true)
         startActivity(intent)
         finish()
     }

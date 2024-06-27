@@ -10,10 +10,10 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 

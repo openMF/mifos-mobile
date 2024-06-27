@@ -27,10 +27,9 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosIcons
 import org.mifos.mobile.core.ui.component.MifosTabPager
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.CheckboxStatus
 import org.mifos.mobile.ui.account.AccountsScreen
 import org.mifos.mobile.ui.account.AccountsViewModel
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.model.entity.CheckboxStatus
 
 @Composable
 fun ClientAccountsScreen(
@@ -195,7 +194,7 @@ fun ClientAccountsTabRow(
     ) {
         when (currentPage) {
             0 -> AccountsScreen(
-                accountType = Constants.SAVINGS_ACCOUNTS,
+                accountType = org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS,
                 onItemClick = { accType, accountId ->
                     onItemClick.invoke(
                         accType,
@@ -205,7 +204,7 @@ fun ClientAccountsTabRow(
             )
 
             1 -> AccountsScreen(
-                accountType = Constants.LOAN_ACCOUNTS,
+                accountType = org.mifos.mobile.core.common.Constants.LOAN_ACCOUNTS,
                 onItemClick = { accType, accountId ->
                     onItemClick.invoke(
                         accType,
@@ -215,7 +214,7 @@ fun ClientAccountsTabRow(
             )
 
             2 -> AccountsScreen(
-                accountType = Constants.SHARE_ACCOUNTS,
+                accountType = org.mifos.mobile.core.common.Constants.SHARE_ACCOUNTS,
                 onItemClick = { accType, accountId ->
                     onItemClick.invoke(
                         accType,

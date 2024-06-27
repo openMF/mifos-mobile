@@ -3,8 +3,8 @@ package org.mifos.mobile.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.databinding.RowBeneficiaryBinding
-import org.mifos.mobile.models.beneficiary.Beneficiary
 
 /**
  * Created by dilpreet on 15/6/17.

@@ -37,11 +37,11 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.models.accounts.loan.Periods
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.LoanUiState
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 
 @Composable
 fun LoanRepaymentScheduleScreen(

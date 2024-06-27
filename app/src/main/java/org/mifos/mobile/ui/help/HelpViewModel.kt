@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.mifos.mobile.models.FAQ
+import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.utils.HelpUiState
 import java.util.Locale
 import javax.inject.Inject

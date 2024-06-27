@@ -13,8 +13,8 @@ import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 
 @Composable
 fun LoanAccountDetailScreen(

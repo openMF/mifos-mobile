@@ -19,7 +19,7 @@ import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.LoanUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -54,7 +54,7 @@ class LoanAccountTransactionViewModelTest {
         val response = mock(LoanWithAssociations::class.java)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
-                Constants.TRANSACTIONS,
+                org.mifos.mobile.core.common.Constants.TRANSACTIONS,
                 1
             )
         ).thenReturn(flowOf(response))
@@ -76,7 +76,7 @@ class LoanAccountTransactionViewModelTest {
 
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
-                Constants.TRANSACTIONS,
+                org.mifos.mobile.core.common.Constants.TRANSACTIONS,
                 1
             )
         ).thenReturn(flowOf(response))
@@ -94,7 +94,7 @@ class LoanAccountTransactionViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
-                Constants.TRANSACTIONS,
+                org.mifos.mobile.core.common.Constants.TRANSACTIONS,
                 1
             )
         ).thenThrow(Exception("Error occurred"))

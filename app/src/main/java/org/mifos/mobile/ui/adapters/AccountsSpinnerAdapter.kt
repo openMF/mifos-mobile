@@ -8,8 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
 import org.mifos.mobile.R
-import org.mifos.mobile.models.payload.AccountDetail
-import java.util.*
+import org.mifos.mobile.core.model.entity.payload.AccountDetail
 
 /**
  * Created by dilpreet on 19/03/18.

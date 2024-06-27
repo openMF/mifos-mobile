@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.ui.savings_account_withdraw.ErrorComponent
 
 

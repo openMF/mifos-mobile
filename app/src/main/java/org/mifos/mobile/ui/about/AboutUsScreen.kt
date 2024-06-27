@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.core.ui.component.AboutUsItemCard
 import org.mifos.mobile.core.ui.component.MifosItemCard
-import org.mifos.mobile.ui.enums.AboutUsListItemId
 
 @Composable
 fun AboutUsScreen(viewModel: AboutUsViewModel) {

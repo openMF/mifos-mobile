@@ -26,9 +26,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.mifos.mobile.R
-import org.mifos.mobile.models.notification.MifosNotification
+import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.ui.activities.HomeActivity
-import org.mifos.mobile.utils.Constants
 
 class MifosFirebaseMessagingService : FirebaseMessagingService() {
     // [START receive_message]
@@ -42,7 +41,7 @@ class MifosFirebaseMessagingService : FirebaseMessagingService() {
             // normal downstream message.
         }
         sendNotification(message)
-        val registrationComplete = Intent(Constants.NOTIFY_HOME_FRAGMENT)
+        val registrationComplete = Intent(org.mifos.mobile.core.common.Constants.NOTIFY_HOME_FRAGMENT)
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete)
     }
     // [END receive_message]
@@ -71,11 +70,10 @@ class MifosFirebaseMessagingService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notification = MifosNotification()
+        val notification = org.mifos.mobile.core.datastore.model.MifosNotification()
         notification.msg = message
         notification.timeStamp = System.currentTimeMillis()
         notification.setRead(false)
-        notification.save()
         notificationManager.notify(0, notificationBuilder.build())
     }
 

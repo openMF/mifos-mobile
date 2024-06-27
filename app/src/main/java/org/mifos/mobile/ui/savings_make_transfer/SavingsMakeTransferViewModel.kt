@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.savings_make_transfer
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,13 +9,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.mifos.mobile.models.templates.account.AccountOption
-import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.repositories.SavingsAccountRepository
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.Result
-import org.mifos.mobile.utils.asResult
+import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
+import org.mifos.mobile.core.model.entity.templates.account.AccountOption
+import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.network.asResult
+import org.mifos.mobile.core.network.Result
 import javax.inject.Inject
+
 
 @HiltViewModel
 class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :

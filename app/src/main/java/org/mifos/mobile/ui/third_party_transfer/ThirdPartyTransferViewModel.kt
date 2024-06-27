@@ -4,25 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
-import org.mifos.mobile.models.AccountOptionAndBeneficiary
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.beneficiary.BeneficiaryDetail
-import org.mifos.mobile.models.payload.AccountDetail
-import org.mifos.mobile.models.templates.account.AccountOption
-import org.mifos.mobile.models.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.repositories.BeneficiaryRepository
-import org.mifos.mobile.repositories.ThirdPartyTransferRepository
-import org.mifos.mobile.ui.guarantor.guarantor_add.GuarantorAddUiState
-import org.mifos.mobile.utils.asResult
+import org.mifos.mobile.core.data.repositories.BeneficiaryRepository
+import org.mifos.mobile.core.data.repositories.ThirdPartyTransferRepository
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import javax.inject.Inject
 
 @HiltViewModel

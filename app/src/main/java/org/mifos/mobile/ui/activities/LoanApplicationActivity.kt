@@ -4,7 +4,7 @@ import android.os.Bundle
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityLoanApplicationBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.LoanState
+import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
 
 class LoanApplicationActivity : BaseActivity() {

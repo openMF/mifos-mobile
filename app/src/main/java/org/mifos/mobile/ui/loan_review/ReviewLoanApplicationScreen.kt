@@ -27,9 +27,9 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.utils.MFErrorParser
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.enums.LoanState
 
 
 @Composable

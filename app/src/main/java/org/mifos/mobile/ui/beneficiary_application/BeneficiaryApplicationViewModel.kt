@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
-import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
-import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
-import org.mifos.mobile.repositories.BeneficiaryRepository
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.data.repositories.BeneficiaryRepository
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
+import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +23,8 @@ class BeneficiaryApplicationViewModel @Inject constructor(private val beneficiar
     private val _beneficiaryUiState = MutableStateFlow<BeneficiaryApplicationUiState>(BeneficiaryApplicationUiState.Loading)
     val beneficiaryUiState: StateFlow<BeneficiaryApplicationUiState> get() = _beneficiaryUiState
 
-    private val _beneficiaryState: MutableStateFlow<BeneficiaryState> = MutableStateFlow(BeneficiaryState.CREATE_QR)
+    private val _beneficiaryState: MutableStateFlow<BeneficiaryState> = MutableStateFlow(
+        BeneficiaryState.CREATE_QR)
     val beneficiaryState: StateFlow<BeneficiaryState> get() = _beneficiaryState
 
     private var _beneficiary: MutableStateFlow<Beneficiary?> = MutableStateFlow(null)
@@ -48,7 +49,7 @@ class BeneficiaryApplicationViewModel @Inject constructor(private val beneficiar
 
     fun submitBeneficiary(beneficiaryPayload: BeneficiaryPayload) {
         when(beneficiaryState.value) {
-            BeneficiaryState.UPDATE -> updateBeneficiary(
+            org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE -> updateBeneficiary(
                 beneficiaryId = beneficiary.value?.id?.toLong(),
                 payload = BeneficiaryUpdatePayload(
                     name = beneficiaryPayload.name,

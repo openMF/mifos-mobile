@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.mifos.mobile.MifosSelfServiceApp.Companion.context
 import org.mifos.mobile.R
-import org.mifos.mobile.models.AboutUsItem
-import org.mifos.mobile.ui.enums.AboutUsListItemId
+import org.mifos.mobile.core.model.entity.AboutUsItem
+import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import java.util.*
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class AboutUsViewModel @Inject constructor() : ViewModel() {
         context?.getString(R.string.copy_right_mifos)
             ?.replace("%1\$s", currentYear.toString())
 
-    val aboutUsItems: List<AboutUsItem> = listOf(
+    val aboutUsItems =  listOf(
         AboutUsItem(
             title = context?.getString(R.string.app_version_text),
             itemId = AboutUsListItemId.APP_VERSION_TEXT

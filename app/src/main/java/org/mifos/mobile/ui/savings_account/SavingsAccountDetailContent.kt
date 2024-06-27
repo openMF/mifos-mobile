@@ -29,11 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.Status
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosRoundIcon
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.models.accounts.savings.Status
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.SymbolsUtils

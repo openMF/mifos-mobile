@@ -1,12 +1,11 @@
 package org.mifos.mobile.ui.activities
 
 import android.os.Bundle
-import android.view.View
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.savings_account.SavingAccountsDetailFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 /**
  * Created by Rajan Maurya on 05/03/17.

@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.models.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.repositories.GuarantorRepositoryImp
-import org.mifos.mobile.ui.enums.GuarantorState
+import org.mifos.mobile.core.model.enums.GuarantorState
 import org.mifos.mobile.ui.guarantor.guarantor_add.AddGuarantorViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.GuarantorUiState
@@ -73,7 +73,7 @@ class AddGuarantorViewModelTest {
             flowOf(response)
         )
         viewModel.guarantorUiState.test {
-            viewModel.getGuarantorTemplate(GuarantorState.UPDATE, 123L)
+            viewModel.getGuarantorTemplate(org.mifos.mobile.core.model.enums.GuarantorState.UPDATE, 123L)
             assertEquals(GuarantorUiState.Loading, awaitItem())
             assertEquals(
                 GuarantorUiState.ShowGuarantorUpdation(
@@ -81,7 +81,7 @@ class AddGuarantorViewModelTest {
                 ),
                 awaitItem()
             )
-            viewModel.getGuarantorTemplate(GuarantorState.CREATE, 123L)
+            viewModel.getGuarantorTemplate(org.mifos.mobile.core.model.enums.GuarantorState.CREATE, 123L)
             assertEquals(GuarantorUiState.Loading, awaitItem())
             assertEquals(
                     GuarantorUiState.ShowGuarantorApplication(
@@ -98,7 +98,7 @@ class AddGuarantorViewModelTest {
             .thenThrow( Exception("Error occurred"))
          viewModel.guarantorUiState.test {
             try {
-                viewModel.getGuarantorTemplate(GuarantorState.UPDATE, 123L)
+                viewModel.getGuarantorTemplate(org.mifos.mobile.core.model.enums.GuarantorState.UPDATE, 123L)
                 assertEquals(GuarantorUiState.Loading, awaitItem())
             } catch (e: Exception) {
                 assertEquals(

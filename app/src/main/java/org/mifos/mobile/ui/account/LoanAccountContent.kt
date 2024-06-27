@@ -23,9 +23,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
-import org.mifos.mobile.models.accounts.loan.LoanAccount
 import org.mifos.mobile.utils.AccountTypeItemIndicator
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper
 @Composable
@@ -136,7 +136,7 @@ fun AccountScreenLoanListItem(
 
     Row(
         modifier = Modifier.clickable {
-            onItemClick.invoke(Constants.LOAN_ACCOUNTS, loanAccount.id)
+            onItemClick.invoke(org.mifos.mobile.core.common.Constants.LOAN_ACCOUNTS, loanAccount.id)
         },
         verticalAlignment = Alignment.CenterVertically
     ) {

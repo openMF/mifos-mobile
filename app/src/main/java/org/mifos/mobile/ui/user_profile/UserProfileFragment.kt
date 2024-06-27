@@ -15,17 +15,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
-import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.client.Client
-import org.mifos.mobile.models.client.Group
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
-import org.mifos.mobile.utils.Constants
 import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.model.entity.client.Client
+import org.mifos.mobile.core.model.entity.client.Group
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
@@ -110,7 +109,7 @@ class UserProfileFragment : BaseFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(Constants.USER_DETAILS, client)
+        outState.putParcelable(org.mifos.mobile.core.common.Constants.USER_DETAILS, client)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -118,7 +117,7 @@ class UserProfileFragment : BaseFragment() {
         if (savedInstanceState != null) {
             client = savedInstanceState.getCheckedParcelable(
                 Client::class.java,
-                Constants.USER_DETAILS
+                org.mifos.mobile.core.common.Constants.USER_DETAILS
             )
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)

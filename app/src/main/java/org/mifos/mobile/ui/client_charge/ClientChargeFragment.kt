@@ -1,31 +1,5 @@
 package org.mifos.mobile.ui.client_charge
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import org.mifos.mobile.R
-import org.mifos.mobile.databinding.FragmentClientChargeBinding
-import org.mifos.mobile.models.Charge
-import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.adapters.ClientChargeAdapter
-import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.Network
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
-import org.mifos.mobile.utils.Toaster
-
 /*
 
 @AndroidEntryPoint

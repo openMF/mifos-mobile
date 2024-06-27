@@ -1,35 +1,25 @@
 package org.mifos.mobile.ui.qr_code_import
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.viewModels
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
 import com.google.zxing.Result
-import com.isseiaoki.simplecropview.CropImageView
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
-import org.mifos.mobile.ui.location.LocationsFragment
 
 @AndroidEntryPoint
 class QrCodeImportComposeFragment : BaseFragment() {

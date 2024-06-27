@@ -2,25 +2,19 @@ package org.mifos.mobile.repositories
 
 import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.Credentials
-import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mifos.mobile.FakeRemoteDataSource
-import org.mifos.mobile.api.BaseURL
+import com.mifos.mobile.core.data.utils.FakeRemoteDataSource
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.client.Client
-import org.mifos.mobile.util.checkForUnsuccessfulOperation
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -28,8 +22,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
-import retrofit2.Retrofit 
+import retrofit2.Retrofit
 
 @RunWith(MockitoJUnitRunner::class)
 class ClientRepositoryImpTest {
@@ -57,7 +50,7 @@ class ClientRepositoryImpTest {
             preferencesHelper,
             retrofit
         )
-        mockClientPage = FakeRemoteDataSource.clients
+        mockClientPage = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.clients
     }
 
     @Test

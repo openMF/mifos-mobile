@@ -1,6 +1,6 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.FAQ
+import org.mifos.mobile.core.model.entity.FAQ
 
 sealed class HelpUiState {
     object Initial : HelpUiState()

@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.models.payload.TransferPayload
-import org.mifos.mobile.repositories.TransferRepository
-import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.core.data.repositories.TransferRepository
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
+import org.mifos.mobile.core.model.enums.TransferType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +22,8 @@ class TransferProcessViewModel @Inject constructor(private val transferRepositor
     private var _transferPayload: MutableStateFlow<TransferPayload?> = MutableStateFlow(null)
     val transferPayload: StateFlow<TransferPayload?> get() = _transferPayload
 
-    private var _transferType: MutableStateFlow<TransferType?> = MutableStateFlow(null)
-    val transferType: StateFlow<TransferType?> get() = _transferType
+    private var _transferType: MutableStateFlow<org.mifos.mobile.core.model.enums.TransferType?> = MutableStateFlow(null)
+    val transferType: StateFlow<org.mifos.mobile.core.model.enums.TransferType?> get() = _transferType
 
     fun makeTransfer() {
         transferPayload.value?.let { payload ->

@@ -5,24 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.github.therajanmaurya.sweeterror.SweetUIErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Constants.BENEFICIARY
+import org.mifos.mobile.core.common.Constants.BENEFICIARY_STATE
 import org.mifos.mobile.databinding.FragmentBeneficiaryApplicationBinding
-import org.mifos.mobile.models.beneficiary.Beneficiary
-import org.mifos.mobile.models.beneficiary.BeneficiaryPayload
-import org.mifos.mobile.models.beneficiary.BeneficiaryUpdatePayload
-import org.mifos.mobile.models.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationViewModel
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
+import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.utils.Toaster
@@ -50,13 +47,13 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         if (arguments != null) {
             beneficiaryState = requireArguments().getCheckedSerializable(
                 BeneficiaryState::class.java,
-                Constants.BENEFICIARY_STATE
+                BENEFICIARY_STATE
             ) as BeneficiaryState
             when (beneficiaryState) {
-                BeneficiaryState.UPDATE -> {
+               BeneficiaryState.UPDATE -> {
                     beneficiary = arguments?.getCheckedParcelable(
                         Beneficiary::class.java,
-                        Constants.BENEFICIARY
+                        BENEFICIARY
                     )
                     setToolbarTitle(getString(R.string.update_beneficiary))
                 }
@@ -64,7 +61,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
                 BeneficiaryState.CREATE_QR -> {
                     beneficiary = arguments?.getCheckedParcelable(
                         Beneficiary::class.java,
-                        Constants.BENEFICIARY
+                        BENEFICIARY
                     )
                     setToolbarTitle(getString(R.string.add_beneficiary))
                 }
@@ -143,7 +140,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(Constants.TEMPLATE, beneficiaryTemplate)
+        outState.putParcelable(org.mifos.mobile.core.common.Constants.TEMPLATE, beneficiaryTemplate)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -152,7 +149,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
             showBeneficiaryTemplate(
                 savedInstanceState.getCheckedParcelable(
                     BeneficiaryTemplate::class.java,
-                    Constants.TEMPLATE
+                    org.mifos.mobile.core.common.Constants.TEMPLATE
                 )
             )
         }
@@ -184,7 +181,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
             listAccountType.add(value)
         }
         binding.accountTypeField.setSimpleItems(listAccountType.toTypedArray())
-        if (beneficiaryState == BeneficiaryState.UPDATE) {
+        if (beneficiaryState == org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE) {
             with(binding) {
                 accountTypeField.setText(beneficiary?.accountType?.value!!, false)
                 accountTypeFieldParent.isEnabled = false
@@ -195,7 +192,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
                 tilBeneficiaryName.editText?.setText(beneficiary?.name)
                 tilTransferLimit.editText?.setText(beneficiary?.transferLimit.toString())
             }
-        } else if (beneficiaryState == BeneficiaryState.CREATE_QR) {
+        } else if (beneficiaryState == org.mifos.mobile.core.model.enums.BeneficiaryState.CREATE_QR) {
             with(binding) {
                 accountTypeField.setText(beneficiary?.accountType?.value!!, false)
                 tilAccountNumber.editText?.setText(beneficiary?.accountNumber)
@@ -259,7 +256,7 @@ class BeneficiaryApplicationFragment : BaseFragment() {
             beneficiaryState == BeneficiaryState.CREATE_QR
         ) {
             submitNewBeneficiaryApplication()
-        } else if (beneficiaryState == BeneficiaryState.UPDATE) {
+        } else if (beneficiaryState == org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE) {
             submitUpdateBeneficiaryApplication()
         }
     }
@@ -373,9 +370,9 @@ class BeneficiaryApplicationFragment : BaseFragment() {
         ): BeneficiaryApplicationFragment {
             val fragment = BeneficiaryApplicationFragment()
             val args = Bundle()
-            args.putSerializable(Constants.BENEFICIARY_STATE, beneficiaryState)
+            args.putSerializable(BENEFICIARY_STATE, beneficiaryState)
             if (beneficiary != null) {
-                args.putParcelable(Constants.BENEFICIARY, beneficiary)
+                args.putParcelable(BENEFICIARY, beneficiary)
             }
             fragment.arguments = args
             return fragment

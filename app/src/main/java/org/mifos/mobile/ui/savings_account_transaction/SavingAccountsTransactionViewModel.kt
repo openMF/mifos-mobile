@@ -2,7 +2,6 @@ package org.mifos.mobile.ui.savings_account_transaction
 
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,10 +15,9 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.DepositGreen
 import org.mifos.mobile.core.ui.theme.GreenSuccess
 import org.mifos.mobile.core.ui.theme.RedLight
-import org.mifos.mobile.models.accounts.savings.TransactionType
-import org.mifos.mobile.models.accounts.savings.Transactions
-import org.mifos.mobile.repositories.SavingsAccountRepository
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
+import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
+import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.utils.DateHelper
 import javax.inject.Inject
 
@@ -46,7 +44,7 @@ class SavingAccountsTransactionViewModel @Inject constructor(private val savings
             _savingAccountsTransactionUiState.value = SavingsAccountTransactionUiState.Loading
             savingsAccountRepositoryImp.getSavingsWithAssociations(
                 accountId,
-                Constants.TRANSACTIONS,
+                org.mifos.mobile.core.common.Constants.TRANSACTIONS,
             ).catch {
                 _savingAccountsTransactionUiState.value =
                     SavingsAccountTransactionUiState.Error(it.message)

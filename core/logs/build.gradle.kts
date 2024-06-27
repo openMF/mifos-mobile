@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "org.mifospay.core.analytics"
+    namespace = "org.mifos.mobile.core.logs"
 }
 
 
@@ -14,4 +14,8 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.models.templates.loans.LoanTemplate
 import org.mifos.mobile.repositories.LoanRepositoryImp
-import org.mifos.mobile.ui.enums.LoanState
+import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.ui.loan_account_application.LoanApplicationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.LoanUiState
@@ -51,12 +51,12 @@ class LoanApplicationViewModelTest {
     fun testLoadLoanApplicationTemplate_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanTemplate::class.java)
-        val mockLoanState = mock(LoanState::class.java)
+        val mockLoanState = mock(org.mifos.mobile.core.model.enums.LoanState::class.java)
         `when`(loanRepositoryImp.template()).thenReturn(flowOf(response))
         viewModel.loanUiState.test {
             viewModel.loadLoanApplicationTemplate(mockLoanState)
             assertEquals(LoanUiState.Loading, awaitItem())
-            if (mockLoanState == LoanState.CREATE) {
+            if (mockLoanState == org.mifos.mobile.core.model.enums.LoanState.CREATE) {
                 assertEquals(LoanUiState.ShowLoanTemplateByProduct(response), awaitItem())
             } else {
                 assertEquals(LoanUiState.ShowUpdateLoanTemplateByProduct(response), awaitItem())
@@ -68,7 +68,7 @@ class LoanApplicationViewModelTest {
     @Test(expected = Exception::class)
     fun testLoadLoanApplicationTemplate_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val loanState = mock(LoanState::class.java)
+        val loanState = mock(org.mifos.mobile.core.model.enums.LoanState::class.java)
         `when`(loanRepositoryImp.template())
             .thenThrow(Exception("Error occurred"))
         viewModel.loanUiState.test {
@@ -84,13 +84,13 @@ class LoanApplicationViewModelTest {
     fun loadLoanApplicationTemplateByProduct_Successful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val response = mock(LoanTemplate::class.java)
-        val mockLoanState = mock(LoanState::class.java)
+        val mockLoanState = mock(org.mifos.mobile.core.model.enums.LoanState::class.java)
 
         `when`(loanRepositoryImp.getLoanTemplateByProduct(1)).thenReturn(flowOf(response))
         viewModel.loanUiState.test {
             viewModel.loadLoanApplicationTemplateByProduct(1, mockLoanState)
             assertEquals(LoanUiState.Loading, awaitItem())
-            if (mockLoanState == LoanState.CREATE) {
+            if (mockLoanState == org.mifos.mobile.core.model.enums.LoanState.CREATE) {
                 assertEquals(LoanUiState.ShowLoanTemplate(response), awaitItem())
             } else {
                 assertEquals(LoanUiState.ShowUpdateLoanTemplate(response), awaitItem())
@@ -103,7 +103,7 @@ class LoanApplicationViewModelTest {
     @Test(expected = Exception::class)
     fun loadLoanApplicationTemplateByProduct_Unsuccessful() = runTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val mockLoanState = mock(LoanState::class.java)
+        val mockLoanState = mock(org.mifos.mobile.core.model.enums.LoanState::class.java)
         `when`(loanRepositoryImp.getLoanTemplateByProduct(1))
             .thenThrow(Exception("Error occurred"))
         viewModel.loanUiState.test {

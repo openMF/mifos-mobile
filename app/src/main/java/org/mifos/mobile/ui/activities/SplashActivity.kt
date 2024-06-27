@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.login.LoginActivity
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 /*
 * Created by saksham on 01/June/2018

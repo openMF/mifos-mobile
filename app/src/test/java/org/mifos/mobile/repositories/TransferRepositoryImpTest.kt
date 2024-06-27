@@ -12,7 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.api.DataManager
 import org.mifos.mobile.models.payload.TransferPayload
-import org.mifos.mobile.ui.enums.TransferType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -75,7 +75,7 @@ class TransferRepositoryImpTest {
             transferPayload.locale,
             transferPayload.fromAccountNumber,
             transferPayload.toAccountNumber,
-            TransferType.TPT
+            org.mifos.mobile.core.model.enums.TransferType.TPT
         )
         result.test {
             Assert.assertEquals(success, awaitItem())
@@ -125,7 +125,7 @@ class TransferRepositoryImpTest {
             transferPayload.locale,
             transferPayload.fromAccountNumber,
             transferPayload.toAccountNumber,
-            TransferType.SELF
+            org.mifos.mobile.core.model.enums.TransferType.SELF
         )
         result.test {
             Assert.assertEquals(success, awaitItem())
@@ -174,7 +174,7 @@ class TransferRepositoryImpTest {
             transferPayload.locale,
             transferPayload.fromAccountNumber,
             transferPayload.toAccountNumber,
-            TransferType.TPT
+            org.mifos.mobile.core.model.enums.TransferType.TPT
         )
         result.test {
             Assert.assertEquals(Throwable("Error occurred"), awaitError())
@@ -223,7 +223,7 @@ class TransferRepositoryImpTest {
             transferPayload.locale,
             transferPayload.fromAccountNumber,
             transferPayload.toAccountNumber,
-            TransferType.SELF
+            org.mifos.mobile.core.model.enums.TransferType.SELF
         )
         result.test {
             Assert.assertEquals(Throwable("Error occurred"), awaitError())

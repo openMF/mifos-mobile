@@ -1,6 +1,6 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.accounts.Account
+import org.mifos.mobile.core.model.entity.accounts.Account
 
 /**
  * Created by dilpreet on 14/6/17.

@@ -3,7 +3,7 @@ package org.mifos.mobile.utils
 import android.content.Context
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
-import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 
 /**
  * Created by dilpreet on 11/03/18.

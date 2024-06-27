@@ -8,13 +8,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.models.accounts.savings.SavingsAccountApplicationPayload
-import org.mifos.mobile.models.accounts.savings.SavingsAccountUpdatePayload
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.models.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.repositories.SavingsAccountRepository
-import org.mifos.mobile.ui.enums.SavingsAccountState
+import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
+import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
+import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.getTodayFormatted
 import javax.inject.Inject
@@ -76,7 +76,7 @@ class SavingsAccountApplicationViewModel @Inject constructor(
         }
     }
 
-    fun setSavingsAccountState(savingsAccountState: SavingsAccountState) {
+    fun setSavingsAccountState(savingsAccountState: org.mifos.mobile.core.model.enums.SavingsAccountState) {
         _savingsAccountState = savingsAccountState
     }
 
@@ -89,7 +89,7 @@ class SavingsAccountApplicationViewModel @Inject constructor(
     }
 
     fun onSubmit(productId: Int, clientId: Int, showToast: (Int) -> Unit) {
-        if (savingsAccountState == SavingsAccountState.CREATE) {
+        if (savingsAccountState == org.mifos.mobile.core.model.enums.SavingsAccountState.CREATE) {
             submitSavingsAccount(productId = productId, clientId = clientId, showToast = showToast)
         } else {
             updateSavingAccount(productId = productId, clientId = clientId)

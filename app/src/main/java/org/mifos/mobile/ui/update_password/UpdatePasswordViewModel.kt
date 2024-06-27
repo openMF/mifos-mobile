@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.repositories.ClientRepository
-import org.mifos.mobile.repositories.UserAuthRepository
+import org.mifos.mobile.core.data.repositories.ClientRepository
+import org.mifos.mobile.core.data.repositories.UserAuthRepository
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 

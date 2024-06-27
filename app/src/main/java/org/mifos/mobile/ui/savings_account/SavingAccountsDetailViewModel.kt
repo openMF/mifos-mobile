@@ -13,10 +13,9 @@ import org.mifos.mobile.core.ui.theme.Blue
 import org.mifos.mobile.core.ui.theme.DepositGreen
 import org.mifos.mobile.core.ui.theme.LightYellow
 import org.mifos.mobile.core.ui.theme.RedLight
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.models.accounts.savings.Status
-import org.mifos.mobile.repositories.SavingsAccountRepository
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.Status
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +41,7 @@ class SavingAccountsDetailViewModel @Inject constructor(private val savingsAccou
         viewModelScope.launch {
             _savingAccountsDetailUiState.value = SavingsAccountDetailUiState.Loading
             savingsAccountRepositoryImp.getSavingsWithAssociations(
-                accountId, Constants.TRANSACTIONS,
+                accountId, org.mifos.mobile.core.common.Constants.TRANSACTIONS,
             ).catch {
                 _savingAccountsDetailUiState.value = SavingsAccountDetailUiState.Error
             }.collect {

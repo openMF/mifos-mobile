@@ -70,9 +70,12 @@ android {
 
 dependencies {
 
-    //logs module
     implementation(projects.core.logs)
-
+    implementation(projects.feature.guarantor)
+    implementation(projects.core.common)
+    implementation(projects.core.model)
+    implementation(projects.core.data)
+    implementation(projects.core.datastore)
     implementation(projects.ui)
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

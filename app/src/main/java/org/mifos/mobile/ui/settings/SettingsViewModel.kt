@@ -1,6 +1,7 @@
 package org.mifos.mobile.ui.settings
 
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,10 +12,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.R
-import org.mifos.mobile.api.local.PreferencesHelper
-import org.mifos.mobile.utils.AppTheme
-import org.mifos.mobile.utils.MifosAppLanguage
-import org.mifos.mobile.utils.applySavedTheme
+import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.model.enums.AppTheme
+import org.mifos.mobile.core.model.enums.MifosAppLanguage
 import javax.inject.Inject
 
 @HiltViewModel
@@ -118,4 +118,5 @@ enum class SettingsCardItem(
         subclassOf = R.string.other
     )
 }
+
 

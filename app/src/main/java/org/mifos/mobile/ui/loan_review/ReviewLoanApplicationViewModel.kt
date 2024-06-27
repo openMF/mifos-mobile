@@ -1,7 +1,5 @@
 package org.mifos.mobile.ui.loan_review
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,9 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.models.payload.LoansPayload
-import org.mifos.mobile.repositories.ReviewLoanApplicationRepository
-import org.mifos.mobile.ui.enums.LoanState
+import org.mifos.mobile.core.data.repositories.ReviewLoanApplicationRepository
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
+import org.mifos.mobile.core.model.enums.LoanState
 import javax.inject.Inject
 
 @HiltViewModel

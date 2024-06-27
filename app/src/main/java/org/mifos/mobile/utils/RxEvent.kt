@@ -1,6 +1,6 @@
 package org.mifos.mobile.utils
 
-import org.mifos.mobile.models.guarantor.GuarantorApplicationPayload
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 
 /*
  * Created by saksham on 29/July/2018

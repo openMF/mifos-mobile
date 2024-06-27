@@ -9,10 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.models.client.Type
-import org.mifos.mobile.repositories.RecentTransactionRepository
+import org.mifos.mobile.core.data.repositories.RecentTransactionRepository
+import org.mifos.mobile.core.model.entity.Transaction
 import javax.inject.Inject
 
 @HiltViewModel

@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.CompoundButtonCompat
 import androidx.recyclerview.widget.RecyclerView
+import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.databinding.RowCheckboxBinding
-import org.mifos.mobile.models.CheckboxStatus
 import javax.inject.Inject
 
 /**

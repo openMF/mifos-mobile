@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 
 /*
 ~This project is licensed under the open source MPL V2.

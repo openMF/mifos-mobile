@@ -10,22 +10,21 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.app.ActivityCompat
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.databinding.FragmentBeneficiaryAddOptionsBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
-import org.mifos.mobile.ui.enums.BeneficiaryState
-import org.mifos.mobile.ui.enums.RequestAccessType
+import org.mifos.mobile.core.model.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.RequestAccessType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.qr.QrCodeReaderFragment
 import org.mifos.mobile.ui.qr_code_import.QrCodeImportComposeFragment
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.requestPermission
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.Toaster
 
 /**
@@ -149,7 +148,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
         grantResults: IntArray,
     ) {
         when (requestCode) {
-            Constants.PERMISSIONS_REQUEST_CAMERA -> {
+            org.mifos.mobile.core.common.Constants.PERMISSIONS_REQUEST_CAMERA -> {
                 if (grantResults.size > 0 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {

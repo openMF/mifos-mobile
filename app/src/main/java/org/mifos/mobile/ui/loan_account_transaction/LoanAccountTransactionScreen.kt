@@ -39,12 +39,12 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionUiState.Success
 import org.mifos.mobile.utils.CurrencyUtil
 import org.mifos.mobile.utils.DateHelper.getDateAsString
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.utils.Utils.formatTransactionType
 
 @Composable

@@ -9,10 +9,10 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 
 /*
@@ -26,7 +26,7 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? SavingsAccountContainerActivity)?.hideToolbar()
-        arguments?.getCheckedParcelable(SavingsWithAssociations::class.java, Constants.SAVINGS_ACCOUNTS)?.let {
+        arguments?.getCheckedParcelable(SavingsWithAssociations::class.java, org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS)?.let {
             viewModel.setContent(it)
         }
     }
@@ -61,7 +61,7 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
         ): SavingsAccountWithdrawFragment {
             val fragment = SavingsAccountWithdrawFragment()
             val bundle = Bundle()
-            bundle.putParcelable(Constants.SAVINGS_ACCOUNTS, savingsWithAssociations)
+            bundle.putParcelable(org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS, savingsWithAssociations)
             fragment.arguments = bundle
             return fragment
         }

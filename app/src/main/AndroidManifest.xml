@@ -24,9 +24,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.guarantor.GuarantorActivity"
-            android:exported="false"
-            android:label="@string/title_activity_guarantor"
+            android:name=".feature.guarantor.screens.GuarantorActivity"
             android:theme="@style/AppTheme" />
 
         <meta-data

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material3.Scaffold
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
@@ -16,11 +15,11 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
-import org.mifos.mobile.ui.enums.AboutUsListItemId
+import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants.LICENSE_LINK
-import org.mifos.mobile.utils.Constants.SOURCE_CODE_LINK
-import org.mifos.mobile.utils.Constants.WEBSITE_LINK
+import org.mifos.mobile.core.common.Constants.LICENSE_LINK
+import org.mifos.mobile.core.common.Constants.SOURCE_CODE_LINK
+import org.mifos.mobile.core.common.Constants.WEBSITE_LINK
 
 /*
 ~This project is licensed under the open source MPL V2.

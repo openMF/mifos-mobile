@@ -8,11 +8,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.repositories.LoanRepository
-import org.mifos.mobile.utils.Constants
-import org.mifos.mobile.utils.asResult
-import org.mifos.mobile.utils.Result
+import org.mifos.mobile.core.data.repositories.LoanRepository
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.network.asResult
+import org.mifos.mobile.core.network.Result
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +24,7 @@ class LoanAccountTransactionViewModel @Inject constructor(private val loanReposi
     private val loanId get() = _loanId
 
     fun loadLoanAccountDetails() {
-        loanUiState = loanRepositoryImp.getLoanWithAssociations(Constants.TRANSACTIONS, loanId)
+        loanUiState = loanRepositoryImp.getLoanWithAssociations(org.mifos.mobile.core.common.Constants.TRANSACTIONS, loanId)
             .asResult()
             .map { result ->
                 when (result) {

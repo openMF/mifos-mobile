@@ -1,7 +1,6 @@
 package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -9,10 +8,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mifos.mobile.FakeRemoteDataSource
+import com.mifos.mobile.core.data.utils.FakeRemoteDataSource
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.models.User
 import org.mifos.mobile.models.client.Client
@@ -20,13 +18,11 @@ import org.mifos.mobile.repositories.ClientRepository
 import org.mifos.mobile.repositories.UserAuthRepository
 import org.mifos.mobile.ui.login.LoginViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.LoginUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class LoginViewModelTest {
@@ -53,9 +49,9 @@ class LoginViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         loginViewModel = LoginViewModel(userAuthRepositoryImp, clientRepositoryImp)
-        mockUser = FakeRemoteDataSource.user
-        emptyClientPage = FakeRemoteDataSource.noClients
-        clientPage = FakeRemoteDataSource.clients
+        mockUser = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.user
+        emptyClientPage = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.noClients
+        clientPage = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.clients
     }
 
     @Test

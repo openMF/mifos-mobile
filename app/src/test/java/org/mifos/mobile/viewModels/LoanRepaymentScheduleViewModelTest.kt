@@ -18,7 +18,7 @@ import org.mifos.mobile.models.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.repositories.LoanRepositoryImp
 import org.mifos.mobile.ui.loan_repayment_schedule.LoanRepaymentScheduleViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.LoanUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -53,7 +53,7 @@ class LoanRepaymentScheduleViewModelTest {
         val response = mock(LoanWithAssociations::class.java)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
-                Constants.REPAYMENT_SCHEDULE,
+                org.mifos.mobile.core.common.Constants.REPAYMENT_SCHEDULE,
                 1
             )
         ).thenReturn(flowOf(response))
@@ -74,7 +74,7 @@ class LoanRepaymentScheduleViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         `when`(
             loanRepositoryImp.getLoanWithAssociations(
-                Constants.REPAYMENT_SCHEDULE,
+                org.mifos.mobile.core.common.Constants.REPAYMENT_SCHEDULE,
                 1
             )
         ).thenThrow(Exception("Error occurred"))

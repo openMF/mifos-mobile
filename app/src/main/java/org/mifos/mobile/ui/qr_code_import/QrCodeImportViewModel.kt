@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.R
-import org.mifos.mobile.models.beneficiary.Beneficiary
 import javax.inject.Inject
 
 @HiltViewModel

@@ -8,10 +8,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
+import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.models.payload.LoansPayload
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable

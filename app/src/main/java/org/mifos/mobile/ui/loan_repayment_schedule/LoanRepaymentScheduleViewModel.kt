@@ -8,8 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.repositories.LoanRepository
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.data.repositories.LoanRepository
 import org.mifos.mobile.utils.LoanUiState
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class LoanRepaymentScheduleViewModel @Inject constructor(private val loanReposit
         viewModelScope.launch {
             _loanUiState.value = LoanUiState.Loading
             loanRepositoryImp.getLoanWithAssociations(
-                Constants.REPAYMENT_SCHEDULE,
+                org.mifos.mobile.core.common.Constants.REPAYMENT_SCHEDULE,
                 loanId,
             ).catch {
                 _loanUiState.value =

@@ -1,7 +1,7 @@
 package org.mifos.mobile.utils
 
 import android.graphics.Bitmap
-import org.mifos.mobile.models.client.Client
+import org.mifos.mobile.core.model.entity.client.Client
 
 
 sealed class UserDetailUiState {

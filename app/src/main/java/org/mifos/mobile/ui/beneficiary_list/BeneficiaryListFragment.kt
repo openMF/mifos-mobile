@@ -27,9 +27,9 @@
 //import org.mifos.mobile.ui.adapters.BeneficiaryListAdapter
 //import org.mifos.mobile.ui.fragments.base.BaseFragment
 //import org.mifos.mobile.utils.BeneficiaryUiState
-//import org.mifos.mobile.utils.Constants
+//import org.mifos.mobile.core.common.Constants
 //import org.mifos.mobile.utils.DividerItemDecoration
-//import org.mifos.mobile.utils.Network
+//import org.mifos.mobile.core.common.Network
 //import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 //import org.mifos.mobile.viewModels.BeneficiaryListViewModel
 //

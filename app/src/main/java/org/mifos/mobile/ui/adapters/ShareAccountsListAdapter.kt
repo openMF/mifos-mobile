@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.mifos.mobile.R
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.databinding.RowShareAccountBinding
-import org.mifos.mobile.models.accounts.share.ShareAccount
 
 class ShareAccountsListAdapter(
     private val onItemClick: (itemPosition: Int) -> Unit,

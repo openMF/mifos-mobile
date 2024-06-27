@@ -8,10 +8,8 @@ import org.mifos.mobile.MifosSelfServiceApp.Companion.context
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.RowRecentTransactionBinding
 import dagger.hilt.android.qualifiers.ActivityContext
-
-
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.models.client.Type
+import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.model.entity.client.Type
 import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
 import org.mifos.mobile.utils.DateHelper.getDateAsString
 import org.mifos.mobile.utils.Utils.formatTransactionType

@@ -17,7 +17,7 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
 
 @Composable
 fun ThirdPartyTransferScreen(

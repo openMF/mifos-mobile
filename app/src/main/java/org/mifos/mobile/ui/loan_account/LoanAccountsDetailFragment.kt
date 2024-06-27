@@ -9,21 +9,22 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
-import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.guarantor.screens.GuarantorActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
-import org.mifos.mobile.ui.enums.AccountType
-import org.mifos.mobile.ui.enums.ChargeType
-import org.mifos.mobile.ui.enums.LoanState
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
 import org.mifos.mobile.ui.loan_account_withdraw.LoanAccountWithdrawFragment
 import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
 import org.mifos.mobile.ui.loan_repayment_schedule.LoanRepaymentScheduleFragment
-import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.guarantor.GuarantorActivity
 import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
 import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
@@ -46,7 +47,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            viewModel.setLoanId(arguments?.getLong(Constants.LOAN_ID))
+            viewModel.setLoanId(arguments?.getLong(org.mifos.mobile.core.common.Constants.LOAN_ID))
         }
     }
 
@@ -93,7 +94,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
             SavingsMakeTransferComposeFragment.newInstance(
                 viewModel.loanId,
                 viewModel.loanWithAssociations?.summary?.totalOutstanding,
-                Constants.TRANSFER_PAY_TO,
+                org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO,
             ),
             true,
             R.id.container,
@@ -200,7 +201,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     private fun viewGuarantor() {
         val intent = Intent(requireContext(), GuarantorActivity::class.java)
-        intent.putExtra(Constants.LOAN_ID, viewModel.loanId)
+        intent.putExtra(org.mifos.mobile.core.common.Constants.LOAN_ID, viewModel.loanId)
         startActivity(intent)
     }
 

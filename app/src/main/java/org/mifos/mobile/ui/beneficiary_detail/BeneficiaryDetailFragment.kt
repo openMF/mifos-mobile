@@ -9,12 +9,12 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.models.beneficiary.Beneficiary
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
-import org.mifos.mobile.ui.enums.BeneficiaryState
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.Constants
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 
 @AndroidEntryPoint
 class BeneficiaryDetailFragment : BaseFragment() {
@@ -24,7 +24,7 @@ class BeneficiaryDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            viewModel.setBeneficiary(it.getParcelable(Constants.BENEFICIARY))
+            viewModel.setBeneficiary(it.getParcelable(org.mifos.mobile.core.common.Constants.BENEFICIARY))
         }
     }
 
@@ -46,7 +46,7 @@ class BeneficiaryDetailFragment : BaseFragment() {
     private fun updateBeneficiaryClicked() {
         (activity as BaseActivity?)?.replaceFragment(
             BeneficiaryApplicationComposeFragment.newInstance(
-                BeneficiaryState.UPDATE,
+                org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE,
                 viewModel.getBeneficiary()
             ),
             true,
@@ -68,7 +68,7 @@ class BeneficiaryDetailFragment : BaseFragment() {
         fun newInstance(beneficiary: Beneficiary?): BeneficiaryDetailFragment {
             val fragment = BeneficiaryDetailFragment()
             val args = Bundle().apply {
-                putParcelable(Constants.BENEFICIARY, beneficiary)
+                putParcelable(org.mifos.mobile.core.common.Constants.BENEFICIARY, beneficiary)
             }
             fragment.arguments = args
             return fragment

@@ -1,13 +1,10 @@
 package org.mifos.mobile.ui.loan_account_application
 
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,13 +19,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.ui.enums.LoanState
-import org.mifos.mobile.utils.Network
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.enums.LoanState
 
 
 @Composable
@@ -61,7 +56,7 @@ fun LoanApplicationScreen(
 @Composable
 fun LoanApplicationScreen(
     uiState: LoanApplicationUiState,
-    loanState: LoanState,
+    loanState: org.mifos.mobile.core.model.enums.LoanState,
     uiData: LoanApplicationScreenData,
     navigateBack: (isSuccess: Boolean) -> Unit,
     selectProduct: (Int) -> Unit,
