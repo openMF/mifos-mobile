@@ -36,7 +36,6 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragment
 import org.mifos.mobile.ui.user_profile.UserProfileActivity
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.utils.MaterialDialog
 import org.mifos.mobile.utils.Toaster

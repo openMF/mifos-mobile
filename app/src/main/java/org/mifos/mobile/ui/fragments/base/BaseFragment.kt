@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import org.mifos.mobile.core.common.utils.LanguageHelper
+import org.mifos.mobile.core.common.utils.ProgressBarHandler
 import org.mifos.mobile.ui.views.BaseActivityCallback
-import org.mifos.mobile.utils.LanguageHelper
-import org.mifos.mobile.utils.ProgressBarHandler
 
 open class BaseFragment : Fragment() {
     private var callback: BaseActivityCallback? = null

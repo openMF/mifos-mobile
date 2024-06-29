@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="working">Working</string>
+    <string name="default_system_language" translatable="false">default_system_language</string>
+    <string name="language_type" translatable="false">language_type</string>
+    <string-array name="languages_value" translatable="false">
+        <item>System_Language</item>
+        <item>en</item>
+        <item>hi</item>
+        <item>ar</item>
+        <item>ur</item>
+        <item>bn</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>in</item>
+        <item>km</item>
+        <item>kn</item>
+        <item>te</item>
+        <item>my</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>ru</item>
+        <item>sw</item>
+        <item>fa</item>
+    </string-array>
+</resources>

@@ -39,7 +39,7 @@ import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
 import org.mifos.mobile.core.ui.component.MifosTopBarTitle
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AppTheme
-import org.mifos.mobile.utils.LanguageHelper
+import org.mifos.mobile.core.common.utils.LanguageHelper
 import org.mifos.mobile.core.model.enums.MifosAppLanguage
 import java.util.Locale
 

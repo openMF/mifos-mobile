@@ -12,7 +12,7 @@ import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.hilt.android.HiltAndroidApp
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.ui.settings.applySavedTheme
-import org.mifos.mobile.utils.LanguageHelper.onAttach
+import org.mifos.mobile.core.common.utils.LanguageHelper.onAttach
 
 /**
  * @author ishan

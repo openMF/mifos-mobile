@@ -29,7 +29,7 @@ import org.mifos.mobile.ui.adapters.SavingAccountsListAdapter
 import org.mifos.mobile.ui.adapters.ShareAccountsListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedArrayListFromParcelable
 import java.util.*
 
 /**

@@ -15,9 +15,9 @@ import androidx.fragment.app.FragmentManager
 import com.mifos.mobile.passcode.BasePassCodeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.utils.LanguageHelper
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.views.BaseActivityCallback
-import org.mifos.mobile.utils.LanguageHelper
 
 /**
  * @author ishan

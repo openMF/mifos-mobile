@@ -5,7 +5,6 @@ import android.view.View
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.help.HelpFragment
 
 /**
  * @author Rajan Maurya

@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.qr
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
+import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
 /**
@@ -43,7 +42,7 @@ class QrCodeReaderFragment : BaseFragment() {
             val beneficiary = gson.fromJson(text, Beneficiary::class.java)
             activity?.supportFragmentManager?.popBackStack()
             (activity as BaseActivity?)?.replaceFragment(
-                BeneficiaryApplicationFragment.newInstance(
+                BeneficiaryApplicationComposeFragment.newInstance(
                     BeneficiaryState.CREATE_QR,
                     beneficiary,
                 ),

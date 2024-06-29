@@ -11,9 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 
 /*
 * Created by saksham on 02/July/2018

@@ -12,8 +12,8 @@ import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 
 /**
  * Created by dilpreet on 1/7/17.

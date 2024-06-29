@@ -5,7 +5,6 @@ import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityContainerBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.loan_account.LoanAccountsDetailFragment
-import org.mifos.mobile.core.common.Constants
 
 /*
 ~This project is licensed under the open source MPL V2.

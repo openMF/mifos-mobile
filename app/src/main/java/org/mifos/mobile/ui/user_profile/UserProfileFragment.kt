@@ -25,7 +25,7 @@ import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.Group
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.UserDetailUiState

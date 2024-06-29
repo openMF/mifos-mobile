@@ -25,6 +25,7 @@ import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.requestPermission
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.feature.beneficiary.presentation.BeneficiaryScreen
 import org.mifos.mobile.utils.Toaster
 
 /**
@@ -72,7 +73,7 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
      */
     fun addManually() {
         (activity as BaseActivity?)?.replaceFragment(
-            BeneficiaryApplicationComposeFragment.newInstance(
+            org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment.newInstance(
                 BeneficiaryState.CREATE_MANUAL,
                 null,
             ),

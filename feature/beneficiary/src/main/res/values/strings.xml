@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Failed to fetch Beneficiaries</string>
+    <string name="error_fetching_beneficiary_template">Failed to fetch Beneficiary Template</string>
+    <string name="error_fetching_template">Failed to fetch template</string>
+    <string name="error_creating_beneficiary">Failed to create Beneficiary</string>
+    <string name="error_updating_beneficiary">Failed to update Beneficiary</string>
+    <string name="error_deleting_beneficiary">Failed to delete Beneficiary</string>
+    <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
+    <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer
+        template
+    </string>
+    <string name="no_beneficiary_found_please_add">Currently, you don\'t have any Beneficiary. Please add Beneficiary</string>
+    <string name="beneficiary">Beneficiary</string>
+    <string name="manage_beneficiaries">Manage Beneficiaries</string>
+    <string name="beneficiaries">Beneficiaries</string>
+    <string name="beneficiary_detail">Beneficiary Detail</string>
+    <string name="beneficiary_name">Beneficiary Name</string>
+    <string name="account_type">Account Type</string>
+    <string name="transfer_limit">Transfer Limit</string>
+    <string name="add_beneficiary">Add Beneficiary</string>
+    <string name="office_name">Office Name</string>
+    <string name="select_account_type">Select Account Type*</string>
+    <string name="submit_beneficiary">Submit Beneficiary</string>
+    <string name="enter_office_name">Enter Beneficiary Office Name</string>
+    <string name="enter_beneficiary_name">Enter Beneficiary Name</string>
+    <string name="enter_transfer_limit">Enter Transfer Limit</string>
+    <string name="enter_account_number">Enter Beneficiary Account Number</string>
+    <string name="choose_account_type">Select Account Type from the dropdown</string>
+    <string name="beneficiary_created_successfully">Beneficiary created successfully</string>
+    <string name="beneficiary_updated_successfully">Beneficiary updated successfully</string>
+    <string name="update_beneficiary">Update Beneficiary</string>
+    <string name="delete_beneficiary">Delete Beneficiary</string>
+    <string name="delete_beneficiary_confirmation">Are you sure you want to delete this
+        Beneficiary
+    </string>
+    <string name="login_using_password_confirmation">Are you sure you want to login using Password?
+    </string>
+    <string name="delete">Delete</string>
+    <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
+    <string name="third_party_transfer">Third Party Transfer</string>
+    <string name="total_loan">Total Loan</string>
+    <string name="total_saving">Total Savings</string>
+    <string name="accounts_overview">Account Overview</string>
+    <string name="show_hide_total_saving_amount">Show or hide the total saving amount</string>
+    <string name="show_hide_total_loan_amount">Show or hide the total loan amount</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Surveys</string>
+    <string name="activation_date">Activation Date</string>
+    <string name="groups">Groups</string>
+    <string name="user_details">User Details</string>
+    <string name="client_type">Client Type</string>
+    <string name="client_classification">Client Classification</string>
+    <string name="select_mode">Select Mode</string>
+    <string name="add_beneficiary_option">Add Third Party Beneficiaries to your account.\nEither
+        enter manually or scan account QR code
+    </string>
+    <string name="invalid_amount">Invalid Amount</string>
+    <string name="account_number">Account Number</string>
+    <string name="client_name">Client Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
+    <string name="add">Add</string>
+    <string name="scan">Scan</string>
+    <string name="upload_qr_code">Upload QR</string>
+</resources>

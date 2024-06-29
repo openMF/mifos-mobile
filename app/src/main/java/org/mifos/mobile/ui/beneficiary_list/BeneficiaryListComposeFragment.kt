@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
-import org.mifos.mobile.R
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
-import org.mifos.mobile.ui.beneficiary_detail.BeneficiaryDetailFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
+import org.mifos.mobile.feature.beneficiary.beneficiary_list.BeneficiaryListScreen
+import org.mifos.mobile.feature.guarantor.R
 
 @AndroidEntryPoint
 class BeneficiaryListComposeFragment : BaseFragment() {
@@ -36,7 +36,7 @@ class BeneficiaryListComposeFragment : BaseFragment() {
 
     private fun onItemClick(position: Int, beneficiaryList: List<Beneficiary>) {
         (activity as? BaseActivity)?.replaceFragment(
-            BeneficiaryDetailFragment.newInstance(beneficiaryList[position]),
+            org.mifos.mobile.ui.beneficiary_detail.BeneficiaryDetailFragment.newInstance(beneficiaryList[position]),
             true,
             R.id.container,
         )

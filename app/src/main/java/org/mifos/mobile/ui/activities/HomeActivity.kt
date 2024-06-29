@@ -35,7 +35,6 @@ import org.mifos.mobile.ui.client_accounts.ClientAccountsComposeFragment
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
-import org.mifos.mobile.ui.fragments.*
 import org.mifos.mobile.ui.getThemeAttributeColor
 import org.mifos.mobile.ui.help.HelpActivity
 import org.mifos.mobile.ui.home.HomeOldFragment
@@ -44,7 +43,6 @@ import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragmen
 import org.mifos.mobile.ui.notification.NotificationFragment
 import org.mifos.mobile.ui.recent_transactions.RecentTransactionsComposeFragment
 import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.utils.TextDrawable
@@ -53,7 +51,7 @@ import org.mifos.mobile.utils.UserDetailUiState
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
 import org.mifos.mobile.ui.user_profile.UserDetailViewModel
 import org.mifos.mobile.ui.user_profile.UserProfileActivity
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import javax.inject.Inject
 import org.mifos.mobile.ui.settings.SettingsActivity
 

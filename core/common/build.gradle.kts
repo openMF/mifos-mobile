@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.mifos.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.mifos.android.hilt)
 }
 
 

@@ -7,7 +7,6 @@ import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityUserProfileBinding
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.core.common.Constants
 
 class SettingsActivity : BaseActivity() {
     private lateinit var binding: ActivityUserProfileBinding

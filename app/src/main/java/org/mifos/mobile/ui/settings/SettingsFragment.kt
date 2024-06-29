@@ -19,9 +19,8 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.update_password.UpdatePasswordFragment
 import org.mifos.mobile.utils.ConfigurationDialogFragmentCompat
 import org.mifos.mobile.utils.ConfigurationPreference
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.datastore.PreferencesHelper
-import org.mifos.mobile.utils.LanguageHelper
+import org.mifos.mobile.core.common.utils.LanguageHelper
 import java.util.Locale
 
 /**

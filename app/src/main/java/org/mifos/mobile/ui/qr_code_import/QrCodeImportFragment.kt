@@ -23,11 +23,10 @@ import org.mifos.mobile.databinding.FragmentQrCodeImportBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.ui.fragments.BeneficiaryApplicationFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.Toaster
 import java.io.FileNotFoundException
 import java.io.InputStream

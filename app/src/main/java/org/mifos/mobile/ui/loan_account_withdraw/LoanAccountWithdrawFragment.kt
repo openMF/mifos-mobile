@@ -13,7 +13,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 
 /**
  * Created by dilpreet on 7/6/17.

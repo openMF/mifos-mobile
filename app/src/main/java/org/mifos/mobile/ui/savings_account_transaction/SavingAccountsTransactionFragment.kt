@@ -38,7 +38,7 @@ import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.getDatePickerDialog

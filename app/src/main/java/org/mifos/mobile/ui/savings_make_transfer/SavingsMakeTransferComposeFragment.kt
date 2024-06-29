@@ -12,7 +12,6 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.utils.DateHelper
 import org.mifos.mobile.utils.getTodayFormatted

@@ -13,8 +13,8 @@ import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedParcelable
-import org.mifos.mobile.utils.ParcelableAndSerializableUtils.getCheckedSerializable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 
 @AndroidEntryPoint
 class ReviewLoanApplicationFragment : BaseFragment() {
