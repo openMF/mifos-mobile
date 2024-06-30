@@ -140,7 +140,8 @@ fun RegistrationVerificationScreen(
                     }
                 }
             }
-        })
+        }
+    )
 }
 
 @Composable
@@ -198,7 +199,7 @@ fun RegistrationVerificationContent(verifyUser: (authenticationToken: String, re
                 requestIDError = false
             },
             label = R.string.request_id,
-            supportingText = getString(context, R.string.empty_requestid) ,
+            supportingText = getString(context, R.string.empty_requestid),
             error = requestIDError,
             keyboardType = KeyboardType.Number,
             trailingIcon = {

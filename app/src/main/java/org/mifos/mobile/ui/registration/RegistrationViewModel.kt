@@ -1,5 +1,7 @@
 package org.mifos.mobile.ui.registration
 
+import android.content.Context
+import androidx.core.content.ContextCompat.getString
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +12,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.R
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
+import org.mifos.mobile.utils.PasswordStrength
 import org.mifos.mobile.utils.RegistrationUiState
 import javax.inject.Inject
 
@@ -24,30 +27,6 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     private val _registrationVerificationUiState =
         MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
     val registrationVerificationUiState: StateFlow<RegistrationUiState> get() = _registrationVerificationUiState
-
-    fun isInputFieldBlank(fieldText: String): Boolean {
-        return fieldText.trim().isEmpty()
-    }
-
-    fun isPhoneNumberNotValid(fieldText: String): Boolean{
-        return fieldText.trim().toIntOrNull() == null
-    }
-
-    fun isInputLengthInadequate(fieldText: String): Boolean {
-        return fieldText.trim().length < 6
-    }
-
-    fun inputHasSpaces(fieldText: String): Boolean {
-        return fieldText.trim().contains(" ")
-    }
-
-    fun hasLeadingTrailingSpaces(fieldText: String): Boolean {
-        return fieldText.trim().length < fieldText.length
-    }
-
-    fun isEmailInvalid(emailText: String): Boolean {
-        return !PatternsCompat.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
-    }
 
     fun registerUser(
         accountNumber: String,

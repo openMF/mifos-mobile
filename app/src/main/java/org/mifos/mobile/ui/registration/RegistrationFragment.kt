@@ -16,11 +16,11 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.utils.PasswordStrength
 import org.mifos.mobile.utils.RegistrationUiState
 import org.mifos.mobile.utils.Toaster
 
+/*
 /**
  * Created by dilpreet on 31/7/17.
  */
@@ -261,3 +261,4 @@ class RegistrationFragment : BaseFragment() {
         }
     }
 }
+*/

@@ -13,7 +13,7 @@ class RegistrationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(RegistrationFragment.newInstance(), false, R.id.container)
+        replaceFragment(RegistrationComposeFragment.newInstance(), false, R.id.container)
     }
 
 }
