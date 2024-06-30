@@ -8,8 +8,8 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.datastore.model.Charge
 import org.mifos.mobile.databinding.RowClientChargeBinding
 import org.mifos.mobile.ui.getThemeAttributeColor
-import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
-import org.mifos.mobile.utils.DateHelper.getDateAsString
+import org.mifos.mobile.core.common.utils.CurrencyUtil.formatCurrency
+import org.mifos.mobile.core.common.utils.DateHelper.getDateAsString
 
 /**
  * @author Vishwajeet

@@ -1,7 +1,5 @@
 package org.mifos.mobile.ui.savings_account_withdraw
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +10,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.core.common.utils.getTodayFormatted
 import javax.inject.Inject
 
 @HiltViewModel

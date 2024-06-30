@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.mifos.mobile.R
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.databinding.RowSavingAccountBinding
-import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
-import org.mifos.mobile.utils.DateHelper.getDateAsString
+import org.mifos.mobile.core.common.utils.CurrencyUtil.formatCurrency
+import org.mifos.mobile.core.common.utils.DateHelper.getDateAsString
 
 /**
  * @author Vishwajeet

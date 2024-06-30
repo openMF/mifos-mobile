@@ -10,9 +10,9 @@ import org.mifos.mobile.databinding.RowRecentTransactionBinding
 import dagger.hilt.android.qualifiers.ActivityContext
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.client.Type
-import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
-import org.mifos.mobile.utils.DateHelper.getDateAsString
-import org.mifos.mobile.utils.Utils.formatTransactionType
+import org.mifos.mobile.core.common.utils.CurrencyUtil.formatCurrency
+import org.mifos.mobile.core.common.utils.DateHelper.getDateAsString
+import org.mifos.mobile.core.common.utils.Utils.formatTransactionType
 import javax.inject.Inject
 
 /**

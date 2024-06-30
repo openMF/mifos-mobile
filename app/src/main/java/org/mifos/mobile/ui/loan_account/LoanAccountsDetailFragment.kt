@@ -17,6 +17,8 @@ import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.guarantor.screens.GuarantorActivity
+import org.mifos.mobile.feature.loan.loan_account.LoanAccountDetailScreen
+import org.mifos.mobile.feature.loan.loan_account.LoanAccountsDetailViewModel
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment

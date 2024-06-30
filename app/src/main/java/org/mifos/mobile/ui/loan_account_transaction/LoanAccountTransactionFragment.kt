@@ -10,6 +10,8 @@ import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.feature.loan.loan_account_transaction.LoanAccountTransactionScreen
+import org.mifos.mobile.feature.loan.loan_account_transaction.LoanAccountTransactionViewModel
 
 /*
 ~This project is licensed under the open source MPL V2.

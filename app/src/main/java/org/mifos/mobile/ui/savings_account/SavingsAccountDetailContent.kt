@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.savings_account
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,10 +31,10 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
 import org.mifos.mobile.core.ui.component.MifosLinkText
-import org.mifos.mobile.core.ui.component.MifosRoundIcon
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.ui.component.MonitorListItemWithIcon
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.utils.SymbolsUtils
 
 @Composable
@@ -306,44 +305,6 @@ fun SavingsMonitorComponent(
             iconId = R.drawable.ic_qrcode_scan,
             onClick = viewQrCode
         )
-    }
-}
-
-@Composable
-fun MonitorListItemWithIcon(
-    modifier: Modifier = Modifier,
-    titleId: Int,
-    subTitleId: Int,
-    iconId: Int,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = modifier
-            .clickable { onClick.invoke() }
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        MifosRoundIcon(
-            iconId = iconId,
-            modifier = Modifier.size(39.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Column {
-            Text(
-                text = stringResource(id = titleId),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Text(
-                text = stringResource(id = subTitleId),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .alpha(0.7f)
-                    .fillMaxWidth(),
-            )
-        }
     }
 }
 

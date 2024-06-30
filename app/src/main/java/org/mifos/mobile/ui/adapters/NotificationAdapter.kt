@@ -11,7 +11,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.databinding.RowNotificationBinding
 import org.mifos.mobile.ui.getThemeAttributeColor
-import org.mifos.mobile.utils.DateHelper.getDateAndTimeAsStringFromLong
+import org.mifos.mobile.core.common.utils.DateHelper.getDateAndTimeAsStringFromLong
 import javax.inject.Inject
 
 /**

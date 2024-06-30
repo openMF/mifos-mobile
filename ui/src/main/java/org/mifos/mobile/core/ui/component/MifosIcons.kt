@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.FlashOff
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.WifiOff
 
 object MifosIcons {
     val Edit = Icons.Default.Edit
@@ -15,4 +16,5 @@ object MifosIcons {
     val FlashOff = Icons.Default.FlashOff
     val Add = Icons.Filled.Add
     val Search = Icons.Filled.Search
+    val WifiOff = Icons.Filled.WifiOff
 }

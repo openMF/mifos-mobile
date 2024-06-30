@@ -12,8 +12,8 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.beneficiary.presentation.BeneficiaryAddOptionsFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.getTodayFormatted
 
 @AndroidEntryPoint
 class ThirdPartyTransferComposeFragment : BaseFragment() {

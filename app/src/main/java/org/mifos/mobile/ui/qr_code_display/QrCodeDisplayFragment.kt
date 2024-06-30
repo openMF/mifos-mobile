@@ -16,7 +16,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.QrCodeGenerator
-import org.mifos.mobile.utils.Utils
+import org.mifos.mobile.core.common.utils.Utils
 
 /**
  * Created by dilpreet on 16/8/17.

@@ -31,7 +31,7 @@ import org.mifos.mobile.ui.adapters.CheckBoxAdapter
 import org.mifos.mobile.ui.adapters.SavingAccountsTransactionListAdapter
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.CheckBoxStatusUtil
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.utils.DatePick
 import org.mifos.mobile.utils.DividerItemDecoration
 import org.mifos.mobile.core.common.Network
@@ -41,7 +41,7 @@ import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.utils.StatusUtils
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.getDatePickerDialog
+import org.mifos.mobile.core.common.utils.getDatePickerDialog
 import java.time.Instant
 import javax.inject.Inject
 

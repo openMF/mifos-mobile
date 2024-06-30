@@ -14,8 +14,8 @@ import org.mifos.mobile.databinding.CellLoanRepaymentScheduleBinding
 import org.mifos.mobile.databinding.ColumnHeaderLoanRepaymentScheduleBinding
 import org.mifos.mobile.databinding.CornerViewLoanRepaymentScheduleBinding
 import org.mifos.mobile.databinding.RowHeaderLoanRepaymentScheduleBinding
-import org.mifos.mobile.utils.CurrencyUtil.formatCurrency
-import org.mifos.mobile.utils.DateHelper.getDateAsString
+import org.mifos.mobile.core.common.utils.CurrencyUtil.formatCurrency
+import org.mifos.mobile.core.common.utils.DateHelper.getDateAsString
 import javax.inject.Inject
 
 /**

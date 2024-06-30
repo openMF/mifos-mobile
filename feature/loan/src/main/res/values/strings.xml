@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="not_available">NA</string>
+    <string name="outstanding_balance">Outstanding Balance</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="next_installment">Next Installment</string>
+    <string name="due_date">Due Date</string>
+    <string name="account_number">Account Number</string>
+    <string name="loan_type">Loan Type</string>
+    <string name="repayment_schedule">Repayment Schedule</string>
+    <string name="loan_account_details">Loan Account Details</string>
+    <string name="loan_summary">Loan Summary</string>
+    <string name="loan_name">Loan Name</string>
+    <string name="loan_charges">Loan Charges</string>
+    <string name="view_charges">View Charges</string>
+    <string name="view_loan_summary">View Loan summary</string>
+    <string name="view_repayment">View Repayment Schedule</string>
+    <string name="view_qr_code">View QR Code for this account</string>
+    <string name="last_trans">Last Transaction Details</string>
+    <string name="view_transactions">View Transactions</string>
+    <string name="qr_code">QR Code</string>
+    <string name="transactions">Transactions</string>
+    <string name="monitor">Monitor</string>
+    <string name="waiting_for_disburse">Waiting for Disburse</string>
+    <string name="approval_pending">Approval Pending</string>
+    <string name="error_fetching_template">Failed to fetch template</string>
+    <string name="update_loan_application">Update Loan Application for</string>
+    <string name="update_loan">Update Loan</string>
+    <string name="view_guarantor">View Guarantor</string>
+    <string name="withdraw_loan">Withdraw Loan</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="loan_application_submitted_successfully">Loan Application Submitted Successfully
+    </string>
+    <string name="loan_application_updated_successfully">Loan Application Updated Successfully
+    </string>
+    <string name="loan_application_withdrawn_successfully">Loan Application Withdrawn Successfully
+    </string>
+    <string name="product">Product</string>
+    <string name="currency">Currency</string>
+    <string name="loan_purpose">Loan Purpose</string>
+    <string name="principal">Principal</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
+    <string name="select_loan_product_field">Select Loan Product</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="amount_greater_than_zero">Amount should be greater than zero</string>
+    <string name="new_loan_application">New Loan Application for</string>
+    <string name="select_loan_product">Select Loan Product*</string>
+    <string name="purpose_of_loan">Purpose of Loan*</string>
+    <string name="principal_amount">Principal Amount*</string>
+    <string name="amount">Amount</string>
+    <string name="remark">Remark</string>
+    <string name="expected_disbursement_date">Expected Disbursement Date</string>
+    <string name="submission_date">Submission Date</string>
+    <string name="review">Review</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_cancel">Cancel</string>
+    <string name="account_short">A/C</string>
+    <string name="string_and_double">%1$s %2$.2f</string>
+    <string name="interest">Interest</string>
+    <string name="fees">Fees</string>
+    <string name="penalties">Penalties</string>
+    <string name="total_repayment">Total Expected Repayment</string>
+    <string name="total_paid">Total Paid</string>
+    <string name="interest_waived">Interest Waived</string>
+    <string name="penalties_waived">Penalties Waived</string>
+    <string name="fees_waived">Fee Waived</string>
+    <string name="loan_product">Loan Product</string>
+    <string name="account_status">Account Status</string>
+    <string name="active_uc">ACTIVE</string>
+    <string name="inactive_uc">INACTIVE</string>
+    <string name="atm_icon">ATM Icon</string>
+    <string name="client_name">Client Name</string>
+    <string name="withdraw_loan_reason">Reason to Withdraw Loan</string>
+    <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
+    <string name="loan_repayment_schedule">Repayment Schedule</string>
+    <string name="disbursement_date">Disbursement Date</string>
+    <string name="no_of_payments">Number of payments</string>
+    <string name="date">Date</string>
+    <string name="loan_balance">Loan Balance</string>
+    <string name="repayment">Repayment</string>
+    <string name="loan_repayment">Loan Repayment</string>
+    <string name="s_no">S.No</string>
+    <string name="submit_loan">Submit Loan</string>
+    <string name="apply_for_loan">Apply for Loan</string>
+
+</resources>

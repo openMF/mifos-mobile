@@ -43,11 +43,11 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.model.entity.Transaction
-import org.mifos.mobile.utils.Utils
+import org.mifos.mobile.core.common.utils.Utils
 
 @Composable
 fun RecentTransactionScreen(

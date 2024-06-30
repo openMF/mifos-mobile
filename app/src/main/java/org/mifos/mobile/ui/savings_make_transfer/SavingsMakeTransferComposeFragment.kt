@@ -13,8 +13,8 @@ import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.getTodayFormatted
 
 
 @AndroidEntryPoint

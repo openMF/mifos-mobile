@@ -8,16 +8,19 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants.LOAN_STATE
+import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.core.model.enums.LoanState
-import org.mifos.mobile.ui.loan_review.ReviewLoanApplicationFragment.Companion.newInstance
+import org.mifos.mobile.feature.loan.loan_account_application.LoanApplicationScreen
+import org.mifos.mobile.feature.loan.loan_account_application.LoanApplicationViewModel
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.utils.*
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
+import org.mifos.mobile.ui.loan_review.ReviewLoanApplicationFragment
 
 /**
  * Created by Rajan Maurya on 06/03/17.
@@ -82,7 +85,7 @@ class LoanApplicationFragment : BaseFragment() {
         }
 
         (activity as BaseActivity?)?.replaceFragment(
-            newInstance(
+            ReviewLoanApplicationFragment.newInstance(
                 viewModel.loanState,
                 loansPayload,
                 getString(R.string.string_and_string, getString(R.string.new_loan_application) + " ", viewModel.loanApplicationScreenData.value.clientName ?: ""),
@@ -115,7 +118,7 @@ class LoanApplicationFragment : BaseFragment() {
         }
 
         (activity as BaseActivity?)?.replaceFragment(
-            newInstance(
+            ReviewLoanApplicationFragment.newInstance(
                 viewModel.loanState,
                 loansPayload,
                 viewModel.loanWithAssociations?.id?.toLong(),

@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.savings_account_transaction
 
 
-import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
@@ -9,9 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -39,8 +35,8 @@ import org.mifos.mobile.core.ui.component.MifosIconTextButton
 import org.mifos.mobile.core.ui.component.MifosIcons
 import org.mifos.mobile.core.ui.component.MifosRadioButton
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.DateHelper.getDateAsStringFromLong
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.DateHelper.getDateAsStringFromLong
 import java.time.Instant
 
 @Composable

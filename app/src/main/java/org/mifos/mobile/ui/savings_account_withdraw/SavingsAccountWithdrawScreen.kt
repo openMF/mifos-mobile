@@ -37,7 +37,7 @@ import org.mifos.mobile.core.ui.component.NoInternet
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.core.common.utils.getTodayFormatted
 
 
 @Composable

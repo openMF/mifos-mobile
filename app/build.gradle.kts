@@ -76,6 +76,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.datastore)
     implementation(projects.ui)
+    implementation(projects.feature.loan)
 
     implementation(projects.feature.beneficiary)
     implementation(projects.feature.guarantor)

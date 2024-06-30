@@ -18,7 +18,7 @@ import org.mifos.mobile.core.ui.theme.RedLight
 import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.common.utils.DateHelper
 import javax.inject.Inject
 
 @HiltViewModel

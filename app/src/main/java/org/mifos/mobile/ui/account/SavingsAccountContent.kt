@@ -24,10 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
 import org.mifos.mobile.utils.AccountTypeItemIndicator
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
 
 @Composable
 fun SavingsAccountContent(

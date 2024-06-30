@@ -14,6 +14,8 @@ import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.feature.loan.loan_account_withdraw.LoanAccountWithdrawScreen
+import org.mifos.mobile.feature.loan.loan_account_withdraw.LoanAccountWithdrawViewModel
 
 /**
  * Created by dilpreet on 7/6/17.

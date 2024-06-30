@@ -39,7 +39,7 @@ import org.mifos.mobile.core.ui.component.MifosHiddenTextRow
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.CurrencyUtil
 
 @Composable
 fun HomeContent(

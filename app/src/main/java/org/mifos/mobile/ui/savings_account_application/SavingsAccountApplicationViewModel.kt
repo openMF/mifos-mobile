@@ -15,8 +15,8 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdateP
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.enums.SavingsAccountState
-import org.mifos.mobile.utils.DateHelper
-import org.mifos.mobile.utils.getTodayFormatted
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.getTodayFormatted
 import javax.inject.Inject
 
 @HiltViewModel

@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import org.mifos.mobile.R
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.CurrencyUtil
-import org.mifos.mobile.utils.DateHelper
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
 
 @Composable
 fun SavingsAccountTransactionContent(
