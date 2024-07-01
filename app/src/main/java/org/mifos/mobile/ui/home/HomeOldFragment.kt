@@ -33,7 +33,7 @@ import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
+import org.mifos.mobile.ui.savings_account.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferComposeFragment
 import org.mifos.mobile.ui.user_profile.UserProfileActivity
 import org.mifos.mobile.core.datastore.PreferencesHelper

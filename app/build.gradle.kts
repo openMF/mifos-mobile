@@ -76,10 +76,13 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.datastore)
     implementation(projects.ui)
+
     implementation(projects.feature.loan)
     implementation(projects.feature.registration)
     implementation(projects.feature.beneficiary)
     implementation(projects.feature.guarantor)
+    implementation(projects.feature.savings)
+
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

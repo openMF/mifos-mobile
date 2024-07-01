@@ -29,7 +29,7 @@ import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosTextButton
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.feature.guarantor.R
+import org.mifos.mobile.feature.beneficiary.R
 
 @Composable
 fun BeneficiaryApplicationContent(

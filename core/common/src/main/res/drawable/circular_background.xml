@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
     <size
-        android:width="@dimen/account_status_width"
-        android:height="@dimen/account_status_height" />
+        android:width="25dp"
+        android:height="25dp" />
 </shape>

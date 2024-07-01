@@ -16,19 +16,16 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
-import org.mifos.mobile.ui.savings_account_transaction.SavingAccountsTransactionComposeFragment
-import org.mifos.mobile.ui.savings_account_application.SavingsAccountApplicationFragment
-import org.mifos.mobile.ui.savings_account_withdraw.SavingsAccountWithdrawFragment
-import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
-import org.mifos.mobile.ui.savings_make_transfer.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.SavingsAccountState
+import org.mifos.mobile.feature.savings.savings_account.SavingAccountsDetailViewModel
+import org.mifos.mobile.feature.savings.savings_account.SavingsAccountDetailScreen
 import org.mifos.mobile.utils.QrCodeGenerator
 import javax.inject.Inject
 

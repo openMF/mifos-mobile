@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.feature.guarantor.R
+import org.mifos.mobile.feature.beneficiary.R
 
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "org.mifos.mobile.feature.guarantor"
+    namespace = "org.mifos.mobile.feature.beneficiary"
 }
 
 dependencies {

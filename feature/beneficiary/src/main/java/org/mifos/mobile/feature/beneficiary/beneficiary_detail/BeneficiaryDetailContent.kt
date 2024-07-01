@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.feature.guarantor.R
+import org.mifos.mobile.feature.beneficiary.R
 
 @Composable
 fun BeneficiaryDetailContent(

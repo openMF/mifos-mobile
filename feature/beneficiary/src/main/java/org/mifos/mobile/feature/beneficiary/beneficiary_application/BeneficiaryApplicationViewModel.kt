@@ -13,7 +13,7 @@ import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.feature.guarantor.R
+import org.mifos.mobile.feature.beneficiary.R
 import javax.inject.Inject
 
 @HiltViewModel

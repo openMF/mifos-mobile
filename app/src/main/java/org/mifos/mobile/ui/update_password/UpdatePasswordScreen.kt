@@ -29,8 +29,8 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.ui.savings_account_withdraw.UiStatesParameterProvider
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.feature.savings.savings_account_withdraw.UiStatesParameterProvider
 import org.mifos.mobile.feature.registration.utils.RegistrationState
 
 

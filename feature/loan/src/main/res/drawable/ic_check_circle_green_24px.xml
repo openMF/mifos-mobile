@@ -14,7 +14,7 @@
             android:name="tick"
             android:pathData="M6,11 l0,0 l0,0"
             android:strokeWidth="1"
-            android:strokeColor="@color/white" />
+            android:strokeColor="#ffffff" />
     </group>
 
 </vector>

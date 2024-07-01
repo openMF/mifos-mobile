@@ -3,6 +3,7 @@ package org.mifos.mobile.core.ui.component
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.FlashOff
 import androidx.compose.material.icons.filled.FlashOn
@@ -17,4 +18,5 @@ object MifosIcons {
     val Add = Icons.Filled.Add
     val Search = Icons.Filled.Search
     val WifiOff = Icons.Filled.WifiOff
+    val Error = Icons.Filled.Error
 }
