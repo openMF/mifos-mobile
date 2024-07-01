@@ -23,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -47,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -164,9 +166,7 @@ fun LoginScreen(
                 .padding(start = 16.dp, end = 16.dp, top = 4.dp),
             contentPadding = PaddingValues(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isSystemInDarkTheme()) Color(
-                    0xFF9bb1e3
-                ) else Color(0xFF325ca8)
+                containerColor = MaterialTheme.colorScheme.primary
             )
         ) {
             Text(text = stringResource(id = R.string.login))
@@ -189,7 +189,7 @@ fun LoginScreen(
                 modifier = Modifier.padding(8.dp),
                 text = "or",
                 fontSize = 18.sp,
-                color = if (isSystemInDarkTheme()) Color.White else Color.Black
+                color = MaterialTheme.colorScheme.onSurface
             )
             Divider(
                 modifier = Modifier
@@ -207,9 +207,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally),
             colors = ButtonDefaults.textButtonColors(
-                contentColor = if (isSystemInDarkTheme()) Color(
-                    0xFF9bb1e3
-                ) else Color(0xFF325ca8)
+                contentColor = MaterialTheme.colorScheme.primary
             )
         ) {
             Text(text = stringResource(id = R.string.create_an_account))
@@ -217,8 +215,10 @@ fun LoginScreen(
     }
 }
 
-@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_NO)
+@Preview(showSystemUi = true, device = "id:pixel_5")
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen({ _, _ -> }, {}, { "" }, { "" })
+fun LoanScreenPreview() {
+    MifosMobileTheme {
+        LoginScreen({ _, _ -> }, {}, { "" }, { "" })
+    }
 }

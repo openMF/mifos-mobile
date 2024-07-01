@@ -72,6 +72,7 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.registration.utils.PasswordStrength
 import org.mifos.mobile.feature.registration.viewmodel.RegistrationViewModel
 
+
 /**
  * @author pratyush
  * @since 28/12/2023
@@ -343,7 +344,7 @@ fun RegistrationContent(
             Text(
                 text = stringResource(id = R.string.verification_mode),
                 modifier = Modifier.padding(end = 8.dp),
-                color = if (isSystemInDarkTheme()) Color.White else Color.Black
+                color = MaterialTheme.colorScheme.onSurface
             )
             radioOptions.forEach { authMode ->
                 RadioButton(
@@ -352,7 +353,7 @@ fun RegistrationContent(
                 )
                 Text(
                     text = authMode,
-                    color = if (isSystemInDarkTheme()) Color.White else Color.Black
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -568,6 +569,7 @@ class RegistrationScreenPreviewProvider : PreviewParameterProvider<RegistrationS
 
 @Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
+
 private fun RegistrationScreenPreview(
     @PreviewParameter(RegistrationScreenPreviewProvider::class) registrationUiState: RegistrationState
 ) {
@@ -579,5 +581,6 @@ private fun RegistrationScreenPreview(
             { _, _, _, _, _, _, _, _, _ -> },
             { 0f }
         )
+
     }
 }

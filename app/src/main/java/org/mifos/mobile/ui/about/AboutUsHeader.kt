@@ -33,7 +33,7 @@ fun AboutUsHeader() {
         Text(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.headlineMedium,
-            color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
@@ -43,7 +43,7 @@ fun AboutUsHeader() {
         Text(
             text = stringResource(id = R.string.about_app_description),
             style = MaterialTheme.typography.titleSmall.copy(),
-            color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()

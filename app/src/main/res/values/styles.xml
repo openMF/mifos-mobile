@@ -1,6 +1,8 @@
 <resources>
 
-    <style name="AppTheme" parent="Mifos.DesignSystem.Theme.Base" />
+    <style name="AppTheme" parent="Mifos.DesignSystem.Theme.Base">
+        <item name="colorPrimary">@color/primary</item>
+    </style>
 
     <style name="SplashTheme" parent="Mifos.DesignSystem.Theme.Base">
         <item name="android:windowBackground">@drawable/splash_background</item>

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -36,9 +37,7 @@ fun MifosTextButtonWithTopDrawable(
         onClick = { onClick.invoke() },
         modifier = modifier,
         colors = ButtonDefaults.textButtonColors(
-            contentColor = if (isSystemInDarkTheme()) Color(
-                0xFF9bb1e3
-            ) else Color(0xFF325ca8)
+            contentColor = MaterialTheme.colorScheme.primary
         ),
         content = {
             Column(

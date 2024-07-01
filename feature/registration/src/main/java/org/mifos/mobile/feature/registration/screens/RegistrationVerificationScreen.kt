@@ -18,6 +18,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -238,8 +239,7 @@ fun RegistrationVerificationContent(verifyUser: (authenticationToken: String, re
                 .padding(start = 16.dp, end = 16.dp, top = 12.dp),
             contentPadding = PaddingValues(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isSystemInDarkTheme()) Color(0xFF9bb1e3)
-                else Color(0xFF325ca8)
+                containerColor = MaterialTheme.colorScheme.primary
             )
         ) {
             Text(text = stringResource(id = R.string.verify))

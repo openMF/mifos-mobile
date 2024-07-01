@@ -61,7 +61,7 @@ fun HelpScreen(
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 8.dp),
             style = MaterialTheme.typography.titleMedium,
-            color = if (isSystemInDarkTheme()) Color.White else Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         if (!faqArrayList.isNullOrEmpty()) {

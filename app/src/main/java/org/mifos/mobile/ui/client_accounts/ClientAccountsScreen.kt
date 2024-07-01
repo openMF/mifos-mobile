@@ -128,13 +128,12 @@ fun ClientAccountsScreen(
                     1 -> openNextActivity(currentPage)
                 }
             },
-            contentColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.secondary
-            else MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.primary,
             content = {
                 Icon(
                     imageVector = MifosIcons.Add,
                     contentDescription = "Create Account",
-                    tint = if (isSystemInDarkTheme()) Color.Black else Color.White
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         ),

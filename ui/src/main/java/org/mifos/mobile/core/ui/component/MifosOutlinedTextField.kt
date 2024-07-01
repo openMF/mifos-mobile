@@ -47,7 +47,7 @@ fun MifosOutlinedTextField(
     imeAction: ImeAction = ImeAction.Next,
     modifier: Modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        focusedBorderColor = if (isSystemInDarkTheme()) Color(0xFF9bb1e3) else Color(0xFF325ca8)
+        focusedBorderColor = MaterialTheme.colorScheme.primary
     )
 ) {
     OutlinedTextField(

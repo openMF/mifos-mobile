@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.core.ui.component.AboutUsItemCard
 import org.mifos.mobile.core.ui.component.MifosItemCard
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 @Composable
 fun AboutUsScreen(viewModel: AboutUsViewModel) {
@@ -64,8 +65,10 @@ fun AboutUsScreen(viewModel: AboutUsViewModel) {
 
 }
 
+@Preview(showSystemUi = true, device = "id:pixel_5")
 @Composable
-@Preview
 fun AboutScreenPreview() {
-    AboutUsScreen(AboutUsViewModel())
+    MifosMobileTheme {
+        AboutUsScreen(AboutUsViewModel())
+    }
 }

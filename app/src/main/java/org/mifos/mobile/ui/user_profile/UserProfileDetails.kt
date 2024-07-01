@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +32,7 @@ fun UserProfileDetails(
         Text(
             modifier = Modifier.padding(top = 16.dp, start = 8.dp),
             text = stringResource(id = R.string.user_details),
-            color = Color(0xFF8E9099),
+            color = MaterialTheme.colorScheme.onSecondary,
             style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold),
         )
         Row(
@@ -41,13 +42,13 @@ fun UserProfileDetails(
             Icon(
                 modifier = Modifier.padding(top = 8.dp, end = 8.dp),
                 painter = painterResource(id = R.drawable.ic_phone_24dp),
-                tint = if (isSystemInDarkTheme()) Color(0xFF9bb1e3) else Color(0xFF325ca8),
+                tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = null
             )
             userDetails.phoneNumber?.let {
                 Text(
                     text = it,
-                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = TextStyle(fontSize = 14.sp)
                 )
             }
@@ -59,13 +60,13 @@ fun UserProfileDetails(
             Icon(
                 modifier = Modifier.padding(top = 8.dp, end = 8.dp),
                 painter = painterResource(id = R.drawable.ic_cake_24dp),
-                tint = if (isSystemInDarkTheme()) Color(0xFF9bb1e3) else Color(0xFF325ca8),
+                tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = null
             )
             userDetails.dob?.let {
                 Text(
                     text = it,
-                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = TextStyle(fontSize = 14.sp)
                 )
             }
@@ -77,13 +78,13 @@ fun UserProfileDetails(
             Icon(
                 modifier = Modifier.padding(top = 8.dp, end = 8.dp),
                 painter = painterResource(id = R.drawable.ic_gender_24dp),
-                tint = if (isSystemInDarkTheme()) Color(0xFF9bb1e3) else Color(0xFF325ca8),
+                tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = null
             )
             userDetails.gender?.let {
                 Text(
                     text = it,
-                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = TextStyle(fontSize = 14.sp)
                 )
             }
