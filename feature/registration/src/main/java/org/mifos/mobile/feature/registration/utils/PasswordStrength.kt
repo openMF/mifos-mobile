@@ -1,8 +1,8 @@
-package org.mifos.mobile.utils
+package org.mifos.mobile.feature.registration.utils
 
 import android.content.Context
 import android.graphics.Color
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.registration.R
 
 enum class PasswordStrength(private var resId: Int, var color: Int) {
 

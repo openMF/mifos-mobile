@@ -77,7 +77,7 @@ dependencies {
     implementation(projects.core.datastore)
     implementation(projects.ui)
     implementation(projects.feature.loan)
-
+    implementation(projects.feature.registration)
     implementation(projects.feature.beneficiary)
     implementation(projects.feature.guarantor)
 
@@ -150,7 +150,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
-    // Unit tests dependencies  
+    // Unit tests dependencies
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.4.0")
     implementation("org.mockito:mockito-core:5.4.0")
@@ -201,5 +201,3 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.core)
 }
-
-

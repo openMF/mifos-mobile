@@ -73,4 +73,7 @@ object Constants {
     const val GUARANTOR_LIST_SCREEN_ROUTE_BASE = "guarantor_list_screen"
     const val GUARANTOR_DETAIL_SCREEN_ROUTE_BASE = "guarantor_detail_screen"
     const val GUARANTOR_ADD_SCREEN_ROUTE_BASE = "guarantor_add_screen"
+
+    const val REGISTRATION_SCREEN_ROUTE_BASE = "registration_screen"
+    const val REGISTRATION_VERIFICATION_SCREEN_ROUTE_BASE = "registration_verification_screen"
 }

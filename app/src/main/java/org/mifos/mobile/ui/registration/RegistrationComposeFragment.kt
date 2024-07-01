@@ -10,6 +10,7 @@ import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
+/*
 /**
  * Created by dilpreet on 31/7/17.
  */
@@ -22,7 +23,7 @@ class RegistrationComposeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            RegistrationScreen(
+            org.mifos.mobile.feature.registration.screens.RegistrationScreen(
                 onVerified = { showRegisteredSuccessfully() },
                 navigateBack = { activity?.onBackPressed() },
             )
@@ -43,3 +44,4 @@ class RegistrationComposeFragment : BaseFragment() {
         }
     }
 }
+*/

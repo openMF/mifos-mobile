@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.registration
 
+/*
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,8 +22,8 @@ class RegistrationVerificationComposeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            RegistrationVerificationScreen(
-                navigateBack = { activity?.finish() } ,
+            org.mifos.mobile.feature.registration.screens.RegistrationVerificationScreen(
+                navigateBack = { activity?.finish() },
                 onVerified = {
                     startActivity(Intent(activity, LoginActivity::class.java))
                     activity?.finish()
@@ -36,3 +37,4 @@ class RegistrationVerificationComposeFragment : BaseFragment() {
         }
     }
 }
+*/

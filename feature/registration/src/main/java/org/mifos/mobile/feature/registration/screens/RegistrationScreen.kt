@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.registration
+package org.mifos.mobile.feature.registration.screens
 
 import android.content.Context
 import android.content.res.Configuration
@@ -55,20 +55,22 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getString
 import androidx.core.util.PatternsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.owlbuddy.www.countrycodechooser.CountryCodeChooser
 import com.owlbuddy.www.countrycodechooser.utils.enums.CountryCodeType
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.registration.utils.RegistrationState
+import org.mifos.mobile.feature.registration.R
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.utils.PasswordStrength
-import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.feature.registration.utils.PasswordStrength
+import org.mifos.mobile.feature.registration.viewmodel.RegistrationViewModel
 
 /**
  * @author pratyush
@@ -107,7 +109,7 @@ fun RegistrationScreen(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RegistrationScreen(
-    uiState: RegistrationUiState,
+    uiState: RegistrationState,
     onVerified: () -> Unit,
     navigateBack: () -> Unit,
     register: (accountNumber: String, username: String, firstName: String, lastName: String, phoneNumber: String, email: String, password: String, authMode: String, countryCode: String) -> Unit,
@@ -137,17 +139,17 @@ fun RegistrationScreen(
 
                 when (uiState) {
 
-                    RegistrationUiState.Initial -> Unit
+                    RegistrationState.Initial -> Unit
 
-                    is RegistrationUiState.Error -> {
+                    is RegistrationState.Error -> {
                         Toast.makeText(context, uiState.exception, Toast.LENGTH_SHORT).show()
                     }
 
-                    RegistrationUiState.Loading -> {
+                    RegistrationState.Loading -> {
                         MifosProgressIndicatorOverlay()
                     }
 
-                    RegistrationUiState.Success -> {
+                    RegistrationState.Success -> {
                         onVerified()
                     }
                 }
@@ -546,35 +548,35 @@ fun areFieldsValidated(
 fun updatePasswordStrengthView(password: String, context: Context): Float {
     val str = PasswordStrength.calculateStrength(password)
     return when (str.getText(context)) {
-        ContextCompat.getString(context, R.string.password_strength_weak) -> 0.25f
-        ContextCompat.getString(context, R.string.password_strength_medium) -> 0.5f
-        ContextCompat.getString(context, R.string.password_strength_strong) -> 0.75f
+        getString(context, R.string.password_strength_weak) -> 0.25f
+        getString(context, R.string.password_strength_medium) -> 0.5f
+        getString(context, R.string.password_strength_strong) -> 0.75f
         else -> 1f
     }
 }
 
-class RegistrationScreenPreviewProvider : PreviewParameterProvider<RegistrationUiState> {
+class RegistrationScreenPreviewProvider : PreviewParameterProvider<RegistrationState> {
 
-    override val values: Sequence<RegistrationUiState>
+    override val values: Sequence<RegistrationState>
     get() = sequenceOf(
-        RegistrationUiState.Loading,
-        RegistrationUiState.Error(1),
-        RegistrationUiState.Success,
-        RegistrationUiState.Initial,
+        RegistrationState.Loading,
+        RegistrationState.Error(1),
+        RegistrationState.Success,
+        RegistrationState.Initial,
     )
 }
 
 @Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun RegistrationScreenPreview(
-    @PreviewParameter(RegistrationScreenPreviewProvider::class) registrationUiState: RegistrationUiState
+    @PreviewParameter(RegistrationScreenPreviewProvider::class) registrationUiState: RegistrationState
 ) {
     MifosMobileTheme {
         RegistrationScreen(
             registrationUiState,
             {},
             {},
-            { _, _, _, _, _, _, _, _, _ -> "" },
+            { _, _, _, _, _, _, _, _, _ -> },
             { 0f }
         )
     }

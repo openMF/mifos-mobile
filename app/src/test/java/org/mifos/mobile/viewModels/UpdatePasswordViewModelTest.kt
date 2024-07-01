@@ -10,11 +10,11 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mifos.mobile.repositories.ClientRepository
-import org.mifos.mobile.repositories.UserAuthRepository
+import org.mifos.mobile.core.data.repositories.ClientRepository
+import org.mifos.mobile.core.data.repositories.UserAuthRepository
 import org.mifos.mobile.ui.update_password.UpdatePasswordViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.feature.registration.utils.RegistrationState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -93,9 +93,9 @@ class UpdatePasswordViewModelTest {
         ).thenReturn(flowOf(responseBody))
         updatePasswordViewModel.updatePasswordUiState.test {
              updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
-                assertEquals(RegistrationUiState.Initial, awaitItem())
-                assertEquals(RegistrationUiState.Loading, awaitItem())
-                assertEquals(RegistrationUiState.Success, awaitItem())
+                assertEquals(RegistrationState.Initial, awaitItem())
+                assertEquals(RegistrationState.Loading, awaitItem())
+                assertEquals(RegistrationState.Success, awaitItem())
                 cancelAndIgnoreRemainingEvents()
         }
     }
@@ -108,9 +108,9 @@ class UpdatePasswordViewModelTest {
 
         updatePasswordViewModel.updatePasswordUiState.test{
             updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
-            assertEquals(RegistrationUiState.Initial, awaitItem())
-            assertEquals(RegistrationUiState.Loading, awaitItem())
-            assertEquals(RegistrationUiState.Error(0), awaitItem())
+            assertEquals(RegistrationState.Initial, awaitItem())
+            assertEquals(RegistrationState.Loading, awaitItem())
+            assertEquals(RegistrationState.Error(0), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

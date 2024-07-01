@@ -1,8 +1,5 @@
-package org.mifos.mobile.ui.registration
+package org.mifos.mobile.feature.registration.viewmodel
 
-import android.content.Context
-import androidx.core.content.ContextCompat.getString
-import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,10 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.registration.R
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
-import org.mifos.mobile.utils.PasswordStrength
-import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.feature.registration.utils.RegistrationState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,12 +17,12 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     ViewModel() {
 
     private val _registrationUiState =
-        MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
-    val registrationUiState: StateFlow<RegistrationUiState> get() = _registrationUiState
+        MutableStateFlow<RegistrationState>(RegistrationState.Initial)
+    val registrationUiState: StateFlow<RegistrationState> get() = _registrationUiState
 
     private val _registrationVerificationUiState =
-        MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
-    val registrationVerificationUiState: StateFlow<RegistrationUiState> get() = _registrationVerificationUiState
+        MutableStateFlow<RegistrationState>(RegistrationState.Initial)
+    val registrationVerificationUiState: StateFlow<RegistrationState> get() = _registrationVerificationUiState
 
     fun registerUser(
         accountNumber: String,
@@ -39,7 +35,7 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         username: String
     ) {
         viewModelScope.launch {
-            _registrationUiState.value = RegistrationUiState.Loading
+            _registrationUiState.value = RegistrationState.Loading
             userAuthRepositoryImp.registerUser(
                 accountNumber,
                 authenticationMode,
@@ -51,22 +47,22 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
                 username
             ).catch {
                 _registrationUiState.value =
-                    RegistrationUiState.Error(R.string.could_not_register_user_error)
+                    RegistrationState.Error(R.string.could_not_register_user_error)
             }.collect {
-                _registrationUiState.value = RegistrationUiState.Success
+                _registrationUiState.value = RegistrationState.Success
             }
         }
     }
 
     fun verifyUser(authenticationToken: String?, requestId: String?) {
         viewModelScope.launch {
-            _registrationVerificationUiState.value = RegistrationUiState.Loading
+            _registrationVerificationUiState.value = RegistrationState.Loading
             userAuthRepositoryImp.verifyUser(authenticationToken, requestId).catch {
                 _registrationVerificationUiState.value =
-                    RegistrationUiState.Error(R.string.could_not_register_user_error)
+                    RegistrationState.Error(R.string.could_not_register_user_error)
             }.collect {
                 _registrationVerificationUiState.value =
-                    RegistrationUiState.Success
+                    RegistrationState.Success
             }
         }
     }

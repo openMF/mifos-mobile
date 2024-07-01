@@ -2,7 +2,6 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,15 +10,13 @@ import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mifos.mobile.repositories.UserAuthRepository
-import org.mifos.mobile.ui.registration.RegistrationViewModel
+import org.mifos.mobile.core.data.repositories.UserAuthRepository
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.RegistrationUiState
+import org.mifos.mobile.feature.registration.utils.RegistrationState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class RegistrationViewModelTest {
@@ -38,12 +35,15 @@ class RegistrationViewModelTest {
     @Mock
     lateinit var userAuthRepositoryImp: UserAuthRepository
 
-    private lateinit var registrationViewModel: RegistrationViewModel
+    private lateinit var registrationViewModel: org.mifos.mobile.feature.registration.viewmodel.RegistrationViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        registrationViewModel = RegistrationViewModel(userAuthRepositoryImp)
+        registrationViewModel =
+            org.mifos.mobile.feature.registration.viewmodel.RegistrationViewModel(
+                userAuthRepositoryImp
+            )
         
     }
 
@@ -136,9 +136,9 @@ class RegistrationViewModelTest {
                     "password",
                     "username"
                 )
-                assertEquals(RegistrationUiState.Initial, awaitItem())
-                assertEquals(RegistrationUiState.Loading, awaitItem())
-                assertEquals(RegistrationUiState.Success, awaitItem())
+                assertEquals(RegistrationState.Initial, awaitItem())
+                assertEquals(RegistrationState.Loading, awaitItem())
+                assertEquals(RegistrationState.Success, awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -169,9 +169,9 @@ class RegistrationViewModelTest {
                     "password",
                     "username"
                 )
-                assertEquals(RegistrationUiState.Initial, awaitItem())
-                assertEquals(RegistrationUiState.Loading, awaitItem())
-                assertEquals(RegistrationUiState.Error(0), awaitItem())
+                assertEquals(RegistrationState.Initial, awaitItem())
+                assertEquals(RegistrationState.Loading, awaitItem())
+                assertEquals(RegistrationState.Error(0), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -185,9 +185,9 @@ class RegistrationViewModelTest {
 
             registrationViewModel.registrationVerificationUiState.test {
             registrationViewModel.verifyUser("authenticationToken", "requestId")
-            assertEquals(RegistrationUiState.Initial,awaitItem())
-            assertEquals(RegistrationUiState.Loading,awaitItem())
-            assertEquals(RegistrationUiState.Success,awaitItem())
+            assertEquals(RegistrationState.Initial,awaitItem())
+            assertEquals(RegistrationState.Loading,awaitItem())
+            assertEquals(RegistrationState.Success,awaitItem())
             cancelAndIgnoreRemainingEvents()
             }
         }
@@ -201,9 +201,9 @@ class RegistrationViewModelTest {
             ).thenThrow(errorResponse)
             registrationViewModel.registrationVerificationUiState.test{
                 registrationViewModel.verifyUser("authenticationToken", "requestId")
-                assertEquals(RegistrationUiState.Initial,awaitItem())
-                assertEquals(RegistrationUiState.Loading,awaitItem())
-                assertEquals(RegistrationUiState.Error(0),awaitItem())
+                assertEquals(RegistrationState.Initial,awaitItem())
+                assertEquals(RegistrationState.Loading,awaitItem())
+                assertEquals(RegistrationState.Error(0),awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
