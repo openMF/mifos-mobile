@@ -27,7 +27,7 @@ import org.mifos.mobile.ui.loan_account_application.LoanApplicationFragment
 import org.mifos.mobile.ui.loan_repayment_schedule.LoanRepaymentScheduleFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.loan_account_summary.LoanAccountSummaryFragment
-import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
+import org.mifos.mobile.ui.qr.QrCodeDisplayComposeFragment
 import org.mifos.mobile.ui.savings_account.SavingsMakeTransferComposeFragment
 import org.mifos.mobile.utils.*
 import javax.inject.Inject
@@ -153,7 +153,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     }
 
     private fun onQrCodeClicked() {
-        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
+        val accountDetailsInJson = org.mifos.mobile.feature.qr.utils.QrCodeGenerator.getAccountDetailsInString(
             viewModel.loanWithAssociations?.accountNo,
             preferencesHelper.officeName,
             AccountType.LOAN,

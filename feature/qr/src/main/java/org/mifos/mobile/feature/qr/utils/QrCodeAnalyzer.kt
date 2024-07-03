@@ -1,4 +1,4 @@
-package org.mifos.mobile.utils
+package org.mifos.mobile.feature.qr.utils
 
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis

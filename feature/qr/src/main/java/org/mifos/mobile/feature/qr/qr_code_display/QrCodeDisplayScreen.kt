@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_display
+package org.mifos.mobile.feature.qr.qr_code_display
 
 import android.content.Context
 import android.content.Intent
@@ -30,13 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.utils.Utils
+import org.mifos.mobile.feature.qr.R
 
 
 @Composable
@@ -143,7 +143,7 @@ class QrCodeDisplayScreenPreviewProvider : PreviewParameterProvider<QrCodeDispla
         get() = sequenceOf(
             QrCodeDisplayUiState.Loading,
             QrCodeDisplayUiState.Error(""),
-            QrCodeDisplayUiState.Success( Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888))
+            QrCodeDisplayUiState.Success(Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888))
         )
 }
 

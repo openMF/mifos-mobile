@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr
+package org.mifos.mobile.feature.qr.qr
 
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
@@ -16,10 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosIcons
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.qr.R
 
 @Composable
 fun QrCodeReaderScreen(

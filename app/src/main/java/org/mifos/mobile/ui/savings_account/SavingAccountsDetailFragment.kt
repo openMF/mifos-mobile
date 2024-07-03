@@ -17,7 +17,7 @@ import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.qr_code_display.QrCodeDisplayComposeFragment
+import org.mifos.mobile.ui.qr.QrCodeDisplayComposeFragment
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
@@ -26,7 +26,6 @@ import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.feature.savings.savings_account.SavingAccountsDetailViewModel
 import org.mifos.mobile.feature.savings.savings_account.SavingsAccountDetailScreen
-import org.mifos.mobile.utils.QrCodeGenerator
 import javax.inject.Inject
 
 /**
@@ -164,7 +163,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
     }
 
     private fun qrCodeClicked(savingsWithAssociations: SavingsWithAssociations) {
-        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
+        val accountDetailsInJson = org.mifos.mobile.feature.qr.utils.QrCodeGenerator.getAccountDetailsInString(
             savingsWithAssociations.accountNo,
             preferencesHelper.officeName,
             AccountType.SAVINGS,

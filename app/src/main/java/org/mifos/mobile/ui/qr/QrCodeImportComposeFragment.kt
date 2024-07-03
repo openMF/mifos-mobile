@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_import
+package org.mifos.mobile.ui.qr
 
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +19,7 @@ import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import com.google.zxing.Result
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.ui.qr_code_import.QrCodeImportScreen
 
 @AndroidEntryPoint
 class QrCodeImportComposeFragment : BaseFragment() {

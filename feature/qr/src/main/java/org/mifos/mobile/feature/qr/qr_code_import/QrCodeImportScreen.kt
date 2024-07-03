@@ -38,11 +38,13 @@ import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.google.zxing.Result
-import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.feature.qr.R
+import org.mifos.mobile.feature.qr.qr_code_import.PermissionBox
+import org.mifos.mobile.feature.qr.qr_code_import.convertToMutableBitmap
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable

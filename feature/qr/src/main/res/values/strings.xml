@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Add Beneficiary</string>
+    <string name="qr_code">QR Code</string>
+    <string name="choose_option">Choose option</string>
+    <string name="please_grant_us_storage_permissions"> Please grant us storage permission in settings.
+    </string>
+    <string name="permission_denied_storage">Permission denied to storage</string>
+    <string name="grant_permission">Grant permission</string>
+    <string name="deny">Deny</string>
+    <string name="no_image_selected_or_something_went_wrong">No image seleted or Something went wrong</string>
+    <string name="seleted_qr_image">Selected QR image</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">You have denied permission to
+        write to storage, without this permission you will not be able to add beneficiaries using QR Code.
+        Are you sure you want to deny this permission?
+    </string>
+    <string name="proceed">Proceed</string>
+    <string name="import_qr">Import QR</string>
+    <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
+    </string>
+</resources>

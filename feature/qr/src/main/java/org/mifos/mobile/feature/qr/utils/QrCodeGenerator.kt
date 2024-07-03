@@ -1,4 +1,4 @@
-package org.mifos.mobile.utils
+package org.mifos.mobile.feature.qr.utils
 
 import android.graphics.Bitmap
 import android.graphics.Color

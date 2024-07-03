@@ -13,6 +13,7 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.core.model.enums.BeneficiaryState
+import org.mifos.mobile.feature.qr.qr.QrCodeReaderScreen
 import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_import
+package org.mifos.mobile.feature.qr.qr_code_import
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
+import org.mifos.mobile.feature.qr.R
 
 @Composable
 fun PermissionBox(

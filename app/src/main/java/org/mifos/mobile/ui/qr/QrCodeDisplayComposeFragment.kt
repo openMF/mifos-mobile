@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_display
+package org.mifos.mobile.ui.qr
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.feature.qr.qr_code_display.QrCodeDisplayScreen
+import org.mifos.mobile.feature.qr.qr_code_display.QrCodeDisplayViewModel
 
 @AndroidEntryPoint
 class QrCodeDisplayComposeFragment : BaseFragment() {

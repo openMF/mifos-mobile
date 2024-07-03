@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_display
+package org.mifos.mobile.feature.qr.qr_code_display
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.logs.AnalyticsEvent
 import org.mifos.mobile.core.logs.AnalyticsHelper
-import org.mifos.mobile.utils.QrCodeGenerator
+import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
 import javax.inject.Inject
 
 @HiltViewModel

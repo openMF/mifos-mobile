@@ -15,12 +15,11 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.databinding.FragmentBeneficiaryAddOptionsBinding
 import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.ui.beneficiary_application.BeneficiaryApplicationComposeFragment
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.model.enums.RequestAccessType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.qr.QrCodeReaderFragment
-import org.mifos.mobile.ui.qr_code_import.QrCodeImportComposeFragment
+import org.mifos.mobile.ui.qr.QrCodeImportComposeFragment
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.requestPermission
