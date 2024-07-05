@@ -12,6 +12,8 @@ import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
+import org.mifos.mobile.feature.client_charge.screens.ClientChargeScreen
+import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 
 /**
  * @author Vishwajeet
@@ -39,7 +41,7 @@ class ClientChargeComposeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            ClientChargeScreen (
+            ClientChargeScreen(
                 navigateBack = { activity?.onBackPressed() }
             )
         }

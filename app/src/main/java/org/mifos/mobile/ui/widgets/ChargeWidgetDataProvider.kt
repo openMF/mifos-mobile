@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.R
 import org.mifos.mobile.core.data.repositories.ClientChargeRepository
 import org.mifos.mobile.core.datastore.model.Charge
-import org.mifos.mobile.ui.client_charge.ClientChargeViewModel
+import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
 
@@ -22,14 +22,17 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     @Inject
     lateinit var clientChargeRepository: ClientChargeRepository
 
-    private lateinit var clientChargeViewModel: ClientChargeViewModel
+    private lateinit var clientChargeViewModel: org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 
     private var charges: List<Charge?>?
     private val `object`: ReentrantLock = ReentrantLock()
     private val condition = `object`.newCondition()
 
     override fun onCreate() {
-        clientChargeViewModel = ClientChargeViewModel(clientChargeRepository)
+        clientChargeViewModel =
+            ClientChargeViewModel(
+                clientChargeRepository
+            )
     }
 
     override fun onDataSetChanged() {

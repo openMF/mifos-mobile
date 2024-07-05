@@ -17,7 +17,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.models.Charge
 import org.mifos.mobile.models.Page
 import org.mifos.mobile.repositories.ClientChargeRepositoryImp
-import org.mifos.mobile.ui.client_charge.ClientChargeViewModel
+import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.utils.ClientChargeUiState
 import org.mockito.Mock
@@ -45,12 +45,14 @@ class ClientChargeViewModelTest {
     @Mock
     private lateinit var clientChargeUiStateObserver: Observer<ClientChargeUiState>
 
-    private lateinit var viewModel: ClientChargeViewModel
+    private lateinit var viewModel: org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = ClientChargeViewModel(clientChargeRepositoryImp)
+        viewModel = org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel(
+            clientChargeRepositoryImp
+        )
     }
 
     @Test

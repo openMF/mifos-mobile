@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.client_charge
+package org.mifos.mobile.feature.client_charge.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,14 +9,15 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repositories.ClientChargeRepository
 import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.feature.client_charge.utils.ClientChargeState
 import javax.inject.Inject
 
 @HiltViewModel
 class ClientChargeViewModel @Inject constructor(private val clientChargeRepositoryImp: ClientChargeRepository) :
     ViewModel() {
 
-    private val _clientChargeUiState = MutableStateFlow<ClientChargeUiState>(ClientChargeUiState.Loading)
-    val clientChargeUiState: StateFlow<ClientChargeUiState> get() = _clientChargeUiState
+    private val _clientChargeUiState = MutableStateFlow<ClientChargeState>(ClientChargeState.Loading)
+    val clientChargeUiState: StateFlow<ClientChargeState> get() = _clientChargeUiState
 
     private val _clientId = MutableStateFlow<Long?>(null)
     private val clientId: StateFlow<Long?> get() = _clientId
@@ -46,51 +47,46 @@ class ClientChargeViewModel @Inject constructor(private val clientChargeReposito
 
     private fun loadClientCharges(clientId: Long) {
         viewModelScope.launch {
-            _clientChargeUiState.value = ClientChargeUiState.Loading
+            _clientChargeUiState.value = ClientChargeState.Loading
             clientChargeRepositoryImp.getClientCharges(clientId).catch {
-                _clientChargeUiState.value = ClientChargeUiState.Error(it.message)
+                _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
-                _clientChargeUiState.value = ClientChargeUiState.Success(it.pageItems)
+                _clientChargeUiState.value = ClientChargeState.Success(it.pageItems)
             }
         }
     }
 
     private fun loadLoanAccountCharges(loanId: Long) {
         viewModelScope.launch {
-            _clientChargeUiState.value = ClientChargeUiState.Loading
+            _clientChargeUiState.value = ClientChargeState.Loading
             clientChargeRepositoryImp.getLoanCharges(loanId).catch {
-                _clientChargeUiState.value = ClientChargeUiState.Error(it.message)
+                _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
-                _clientChargeUiState.value = ClientChargeUiState.Success(it)
+                _clientChargeUiState.value = ClientChargeState.Success(it)
             }
         }
     }
 
     private fun loadSavingsAccountCharges(savingsId: Long) {
         viewModelScope.launch {
-            _clientChargeUiState.value = ClientChargeUiState.Loading
+            _clientChargeUiState.value = ClientChargeState.Loading
             clientChargeRepositoryImp.getSavingsCharges(savingsId).catch {
-                _clientChargeUiState.value = ClientChargeUiState.Error(it.message)
+                _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
-                _clientChargeUiState.value = ClientChargeUiState.Success(it)
+                _clientChargeUiState.value = ClientChargeState.Success(it)
             }
         }
     }
 
     fun loadClientLocalCharges() {
         viewModelScope.launch {
-            _clientChargeUiState.value = ClientChargeUiState.Loading
+            _clientChargeUiState.value = ClientChargeState.Loading
             clientChargeRepositoryImp.clientLocalCharges().catch {
-                _clientChargeUiState.value = ClientChargeUiState.Error(it.message)
+                _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
-                _clientChargeUiState.value = ClientChargeUiState.Success(it.pageItems.filterNotNull())
+                _clientChargeUiState.value =
+                    ClientChargeState.Success(it.pageItems.filterNotNull())
             }
         }
     }
-}
-
-sealed class ClientChargeUiState {
-    data object Loading : ClientChargeUiState()
-    data class Error(val message: String?) : ClientChargeUiState()
-    data class Success(val charges: List<Charge>) : ClientChargeUiState()
 }

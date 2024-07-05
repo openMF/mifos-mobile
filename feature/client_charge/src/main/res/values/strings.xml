@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="client_charges">Client Charges</string>
+    <string name="error_no_charge">No charges found</string>
+    <string name="amount_due">Due:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Outstanding:</string>
+    <string name="amount_waived">Waved:</string>
+    <string name="amount_paid">Paid:</string>
+</resources>

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.client_charge
+package org.mifos.mobile.feature.client_charge.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.client_charge.R
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -40,7 +40,8 @@ import org.mifos.mobile.core.common.utils.CurrencyUtil
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.datastore.model.Charge
-
+import org.mifos.mobile.feature.client_charge.utils.ClientChargeState
+import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 
 @Composable
 fun ClientChargeScreen(
@@ -57,7 +58,7 @@ fun ClientChargeScreen(
 
 @Composable
 fun ClientChargeScreen(
-    uiState: ClientChargeUiState,
+    uiState: ClientChargeState,
     navigateBack: () -> Unit,
     onRetry: () -> Unit
 ) {
@@ -72,11 +73,11 @@ fun ClientChargeScreen(
                     .fillMaxSize()
             ) {
                 when (uiState) {
-                    is ClientChargeUiState.Loading -> {
+                    is ClientChargeState.Loading -> {
                         MifosProgressIndicator()
                     }
 
-                    is ClientChargeUiState.Error -> {
+                    is ClientChargeState.Error -> {
                         MifosErrorComponent(
                             isNetworkConnected = Network.isConnected(context),
                             isRetryEnabled = true,
@@ -84,7 +85,7 @@ fun ClientChargeScreen(
                         )
                     }
 
-                    is ClientChargeUiState.Success -> {
+                    is ClientChargeState.Success -> {
                         if (uiState.charges.isEmpty()) {
                             EmptyDataView(
                                 modifier = Modifier.fillMaxSize(),
@@ -197,7 +198,7 @@ fun ClientChargeItem(
 @Preview(showSystemUi = true)
 @Composable
 fun ClientChargeScreenPreview(
-    @PreviewParameter(ClientChargeUiStatesPreviews::class) uiState: ClientChargeUiState
+    @PreviewParameter(ClientChargeUiStatesPreviews::class) uiState: ClientChargeState
 ) {
     MifosMobileTheme {
         ClientChargeScreen(
@@ -208,11 +209,11 @@ fun ClientChargeScreenPreview(
     }
 }
 
-class ClientChargeUiStatesPreviews : PreviewParameterProvider<ClientChargeUiState> {
-    override val values: Sequence<ClientChargeUiState>
+class ClientChargeUiStatesPreviews : PreviewParameterProvider<ClientChargeState> {
+    override val values: Sequence<ClientChargeState>
         get() = sequenceOf(
-            ClientChargeUiState.Success(listOf(Charge(), Charge())),
-            ClientChargeUiState.Error(""),
-            ClientChargeUiState.Loading,
+            ClientChargeState.Success(listOf(Charge(), Charge())),
+            ClientChargeState.Error(""),
+            ClientChargeState.Loading,
         )
 }
