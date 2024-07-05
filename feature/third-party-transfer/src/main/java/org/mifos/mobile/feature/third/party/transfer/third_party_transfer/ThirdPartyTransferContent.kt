@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.third_party_transfer
+package org.mifos.mobile.feature.third.party.transfer.third_party_transfer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +32,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.R
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.ui.component.MFStepProcess
@@ -45,6 +44,7 @@ import org.mifos.mobile.core.ui.component.getStepState
 import org.mifos.mobile.core.ui.theme.DarkGray
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.theme.Primary
+import org.mifos.mobile.feature.third.party.transfer.R
 
 @Composable
 fun ThirdPartyTransferContent(

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.third_party_transfer
+package org.mifos.mobile.feature.third.party.transfer.third_party_transfer
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -12,12 +12,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.feature.third.party.transfer.R
 
 @Composable
 fun ThirdPartyTransferScreen(

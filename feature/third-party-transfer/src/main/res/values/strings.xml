@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="third_party_transfer">Third Party Transfer</string>
+    <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfertemplate</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="amount_greater_than_zero">Amount should be greater than zero</string>
+    <string name="pay_to">Pay To</string>
+    <string name="pay_from">Pay From</string>
+    <string name="select_pay_to">Select Account to Pay To</string>
+    <string name="select_pay_from">Select Account to Pay From</string>
+    <string name="required">Required</string>
+    <string name="continue_str">Continue</string>
+    <string name="invalid_amount">Invalid Amount</string>
+    <string name="amount">Amount</string>
+    <string name="review">Review</string>
+    <string name="enter_remarks">Enter Remarks for transfer</string>
+    <string name="transfer">Transfer</string>
+    <string name="remark_is_mandatory">Remark is mandatory</string>
+    <string name="remark">Remark</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_beneficiary">Select Beneficiary</string>
+    <string name="add_beneficiary">Add Beneficiary</string>
+    <string name="beneficiary">Beneficiary</string>
+    <string name="no_beneficiary_found_please_add">Currently, you don\'t have any Beneficiary. Please add Beneficiary</string>
+    <string name="loan_type">Loan Type</string>
+
+</resources>

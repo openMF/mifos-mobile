@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.third_party_transfer
+package org.mifos.mobile.feature.third.party.transfer.third_party_transfer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,10 +21,14 @@ class ThirdPartyTransferViewModel @Inject constructor(
     private val beneficiaryRepositoryImp: BeneficiaryRepository
 ) : ViewModel() {
 
-    private val _thirdPartyTransferUiState = MutableStateFlow<ThirdPartyTransferUiState>(ThirdPartyTransferUiState.Loading)
+    private val _thirdPartyTransferUiState = MutableStateFlow<ThirdPartyTransferUiState>(
+        ThirdPartyTransferUiState.Loading
+    )
     val thirdPartyTransferUiState: StateFlow<ThirdPartyTransferUiState> get() = _thirdPartyTransferUiState
 
-    private val _thirdPartyTransferUiData = MutableStateFlow<ThirdPartyTransferUiData>(ThirdPartyTransferUiData())
+    private val _thirdPartyTransferUiData = MutableStateFlow<ThirdPartyTransferUiData>(
+        ThirdPartyTransferUiData()
+    )
     val thirdPartyTransferUiData: StateFlow<ThirdPartyTransferUiData> get() = _thirdPartyTransferUiData
 
     init {
@@ -45,7 +49,8 @@ class ThirdPartyTransferViewModel @Inject constructor(
                     )
                 }
             }.catch {
-                _thirdPartyTransferUiState.value = ThirdPartyTransferUiState.Error(errorMessage = it.message)
+                _thirdPartyTransferUiState.value =
+                    ThirdPartyTransferUiState.Error(errorMessage = it.message)
             }.collect {
                 _thirdPartyTransferUiState.value = ThirdPartyTransferUiState.ShowUI
             }
