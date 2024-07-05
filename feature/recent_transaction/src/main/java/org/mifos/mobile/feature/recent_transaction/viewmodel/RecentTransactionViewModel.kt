@@ -1,6 +1,5 @@
-package org.mifos.mobile.ui.recent_transactions
+package org.mifos.mobile.feature.recent_transaction.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repositories.RecentTransactionRepository
 import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.feature.recent_transaction.utils.RecentTransactionState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,8 +20,9 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
     private val limit = 50
     private var transactions: MutableList<Transaction> = mutableListOf()
 
-    private val _recentTransactionUiState = MutableStateFlow<RecentTransactionUiState>(RecentTransactionUiState.Loading)
-    val recentTransactionUiState: StateFlow<RecentTransactionUiState> = _recentTransactionUiState
+    private val _recentTransactionUiState = MutableStateFlow<RecentTransactionState>(RecentTransactionState.Loading)
+
+    val recentTransactionUiState: StateFlow<RecentTransactionState> = _recentTransactionUiState
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
@@ -41,7 +42,7 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
     }
 
     fun loadInitialTransactions() {
-        _recentTransactionUiState.value = RecentTransactionUiState.Loading
+        _recentTransactionUiState.value = RecentTransactionState.Loading
         loadRecentTransactions(0)
     }
 
@@ -49,21 +50,18 @@ class RecentTransactionViewModel @Inject constructor(private val recentTransacti
         viewModelScope.launch {
             recentTransactionRepositoryImp.recentTransactions(offset, limit)
                 .catch {
-                    _recentTransactionUiState.value = RecentTransactionUiState.Error(it.message)
+                    _recentTransactionUiState.value = RecentTransactionState.Error(it.message)
                 }
                 .collect {
                     transactions.plus(it.pageItems)
-                    _recentTransactionUiState.value = RecentTransactionUiState.Success(transactions = transactions, canPaginate = it.pageItems.isNotEmpty())
+                    _recentTransactionUiState.value = RecentTransactionState.Success(
+                        transactions = transactions,
+                        canPaginate = it.pageItems.isNotEmpty()
+                    )
                     _isPaginating.emit(false)
                     _isRefreshing.emit(false)
                 }
         }
     }
 
-}
-
-sealed class RecentTransactionUiState {
-    data object Loading : RecentTransactionUiState()
-    data class Error(val message: String?) : RecentTransactionUiState()
-    data class Success(val transactions: List<Transaction>, val canPaginate: Boolean) : RecentTransactionUiState()
 }

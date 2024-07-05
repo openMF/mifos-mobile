@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="no_transaction">No Transaction</string>
+    <string name="atm_icon">ATM Icon</string>
+    <string name="string_and_string">%1$s %2$s</string>
+</resources>

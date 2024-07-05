@@ -10,14 +10,13 @@ import kotlinx.coroutines.test.runTest
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
-import org.mifos.mobile.models.Page
-import org.mifos.mobile.models.Transaction
-import org.mifos.mobile.models.client.Currency
-import org.mifos.mobile.models.client.Type
-import org.mifos.mobile.repositories.RecentTransactionRepository
-import org.mifos.mobile.ui.recent_transactions.RecentTransactionViewModel
+import org.mifos.mobile.core.data.repositories.RecentTransactionRepository
+import org.mifos.mobile.core.model.entity.Currency
+import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.model.entity.accounts.loan.calendardata.Type
+import org.mifos.mobile.feature.recent_transaction.utils.RecentTransactionState
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.RecentTransactionUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
@@ -47,13 +46,16 @@ class RecentTransactionViewModelTest {
     @Mock
     lateinit var currency: Currency
 
-    lateinit var viewModel: RecentTransactionViewModel
+    lateinit var viewModel: org.mifos.mobile.feature.recent_transaction.viewmodel.RecentTransactionViewModel
 
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = RecentTransactionViewModel(recentTransactionRepositoryImp)
+        viewModel =
+            org.mifos.mobile.feature.recent_transaction.viewmodel.RecentTransactionViewModel(
+                recentTransactionRepositoryImp
+            )
     }
 
     @Test
@@ -78,9 +80,9 @@ class RecentTransactionViewModelTest {
             .thenReturn(flowOf(transactions))
         viewModel.recentTransactionUiState.test {
             viewModel.loadRecentTransactions(loadMore = false, offset)
-            assertEquals(RecentTransactionUiState.Initial, awaitItem())
-            assertEquals(RecentTransactionUiState.Loading, awaitItem())
-            assertEquals(transactions.pageItems.let { RecentTransactionUiState.RecentTransactions(it) }, awaitItem())
+            assertEquals(RecentTransactionState.Initial, awaitItem())
+            assertEquals(RecentTransactionState.Loading, awaitItem())
+            assertEquals(transactions.pageItems.let { RecentTransactionState.RecentTransactions(it) }, awaitItem())
         }
     }
 
@@ -106,9 +108,9 @@ class RecentTransactionViewModelTest {
             .thenReturn(flowOf(transactions))
         viewModel.recentTransactionUiState.test {
             viewModel.loadRecentTransactions(loadMore = false, offset)
-            assertEquals(RecentTransactionUiState.Initial, awaitItem())
-            assertEquals(RecentTransactionUiState.Loading, awaitItem())
-            assertEquals(RecentTransactionUiState.EmptyTransaction, awaitItem())
+            assertEquals(RecentTransactionState.Initial, awaitItem())
+            assertEquals(RecentTransactionState.Loading, awaitItem())
+            assertEquals(RecentTransactionState.EmptyTransaction, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -136,9 +138,9 @@ class RecentTransactionViewModelTest {
 
         viewModel.recentTransactionUiState.test {
             viewModel.loadRecentTransactions(loadMore = false, offset)
-            assertEquals(RecentTransactionUiState.Initial, awaitItem())
-            assertEquals(RecentTransactionUiState.Loading, awaitItem())
-            assertEquals(transactions.pageItems.let { RecentTransactionUiState.RecentTransactions(it) }, awaitItem())
+            assertEquals(RecentTransactionState.Initial, awaitItem())
+            assertEquals(RecentTransactionState.Loading, awaitItem())
+            assertEquals(transactions.pageItems.let { RecentTransactionState.RecentTransactions(it) }, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -149,9 +151,9 @@ class RecentTransactionViewModelTest {
             .thenThrow(Exception("Error occurred"))
         viewModel.recentTransactionUiState.test {
         viewModel.loadRecentTransactions(false, 0)
-        assertEquals(RecentTransactionUiState.Initial, awaitItem())
-        assertEquals(RecentTransactionUiState.Loading, awaitItem())
-        assertEquals(RecentTransactionUiState.Error(R.string.recent_transactions), awaitItem())
+        assertEquals(RecentTransactionState.Initial, awaitItem())
+        assertEquals(RecentTransactionState.Loading, awaitItem())
+        assertEquals(RecentTransactionState.Error(R.string.recent_transactions), awaitItem())
         cancelAndIgnoreRemainingEvents()
         }
     }

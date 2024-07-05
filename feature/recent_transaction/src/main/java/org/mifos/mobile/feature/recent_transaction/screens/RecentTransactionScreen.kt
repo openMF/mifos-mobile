@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.recent_transactions
+package org.mifos.mobile.feature.recent_transaction.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -35,8 +35,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.MifosSelfServiceApp
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.recent_transaction.R
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -48,6 +47,8 @@ import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.common.utils.Utils
+import org.mifos.mobile.feature.recent_transaction.utils.RecentTransactionState
+import org.mifos.mobile.feature.recent_transaction.viewmodel.RecentTransactionViewModel
 
 @Composable
 fun RecentTransactionScreen(
@@ -76,7 +77,7 @@ fun RecentTransactionScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecentTransactionScreen(
-    uiState: RecentTransactionUiState,
+    uiState: RecentTransactionState,
     navigateBack: () -> Unit,
     onRetry: () -> Unit,
     isRefreshing: Boolean,
@@ -104,7 +105,7 @@ fun RecentTransactionScreen(
                 ) {
 
                     when (uiState) {
-                        is RecentTransactionUiState.Error -> {
+                        is RecentTransactionState.Error -> {
                             MifosErrorComponent(
                                 isNetworkConnected = Network.isConnected(context),
                                 isRetryEnabled = true,
@@ -112,11 +113,11 @@ fun RecentTransactionScreen(
                             )
                         }
 
-                        is RecentTransactionUiState.Loading -> {
+                        is RecentTransactionState.Loading -> {
                             MifosProgressIndicatorOverlay()
                         }
 
-                        is RecentTransactionUiState.Success -> {
+                        is RecentTransactionState.Success -> {
                             if (uiState.transactions.isEmpty()) {
                                 EmptyDataView(
                                     icon = R.drawable.ic_error_black_24dp,
@@ -192,6 +193,9 @@ fun RecentTransactionsContent(
 
 @Composable
 fun RecentTransactionListItem(transaction: Transaction?) {
+
+    val context = LocalContext.current
+
     Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
         Image(
             painter = painterResource(id = R.drawable.ic_local_atm_black_24dp),
@@ -213,7 +217,7 @@ fun RecentTransactionListItem(transaction: Transaction?) {
                         id = R.string.string_and_string,
                         transaction?.currency?.displaySymbol ?: transaction?.currency?.code ?: "",
                         CurrencyUtil.formatCurrency(
-                            MifosSelfServiceApp.context,
+                            context,
                             transaction?.amount ?: 0.0,
                         )
                     ),
@@ -235,19 +239,19 @@ fun RecentTransactionListItem(transaction: Transaction?) {
     }
 }
 
-class RecentTransactionScreenPreviewProvider : PreviewParameterProvider<RecentTransactionUiState> {
-    override val values: Sequence<RecentTransactionUiState>
+class RecentTransactionScreenPreviewProvider : PreviewParameterProvider<RecentTransactionState> {
+    override val values: Sequence<RecentTransactionState>
         get() = sequenceOf(
-            RecentTransactionUiState.Loading,
-            RecentTransactionUiState.Error(""),
-            RecentTransactionUiState.Success(listOf(), canPaginate = true)
+            RecentTransactionState.Loading,
+            RecentTransactionState.Error(""),
+            RecentTransactionState.Success(listOf(), canPaginate = true)
         )
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun RecentTransactionScreenPreview(
-    @PreviewParameter(RecentTransactionScreenPreviewProvider::class) recentTransactionUiState: RecentTransactionUiState
+    @PreviewParameter(RecentTransactionScreenPreviewProvider::class) recentTransactionUiState: RecentTransactionState
 ) {
     MifosMobileTheme {
         RecentTransactionScreen(
