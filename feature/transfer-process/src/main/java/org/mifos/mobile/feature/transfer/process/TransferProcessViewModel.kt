@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.transfer_process
+package org.mifos.mobile.feature.transfer.process
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

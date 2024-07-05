@@ -14,6 +14,8 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
+import org.mifos.mobile.feature.transfer.process.TransferProcessScreen
+import org.mifos.mobile.feature.transfer.process.TransferProcessViewModel
 
 /**
  * Created by dilpreet on 1/7/17.

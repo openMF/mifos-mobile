@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer">Transfer</string>
+    <string name="transferred_successfully">Transferred Successfully</string>
+    <string name="amount">Amount</string>
+    <string name="transfer_from_savings">Transfer from Savings</string>
+    <string name="pay_to">Pay To</string>
+    <string name="pay_from">Pay From</string>
+    <string name="date">Date</string>
+    <string name="cancel">Cancel</string>
+    <string name="remark">Remark</string>
+</resources>

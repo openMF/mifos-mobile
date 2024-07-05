@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.transfer_process
+package org.mifos.mobile.feature.transfer.process
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -34,7 +34,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
