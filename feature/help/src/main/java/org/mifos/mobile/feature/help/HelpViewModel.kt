@@ -1,11 +1,10 @@
-package org.mifos.mobile.ui.help
+package org.mifos.mobile.feature.help
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.mifos.mobile.core.model.entity.FAQ
-import org.mifos.mobile.utils.HelpUiState
 import java.util.Locale
 import javax.inject.Inject
 
@@ -14,6 +13,7 @@ class HelpViewModel @Inject constructor() : ViewModel() {
 
     private val _helpUiState = MutableStateFlow<HelpUiState>(HelpUiState.Initial)
     val helpUiState: StateFlow<HelpUiState> get() = _helpUiState
+
     private var allFaqList: ArrayList<FAQ?>? = null
 
     fun loadFaq(qs: Array<String>?, ans: Array<String>?) {
@@ -53,4 +53,12 @@ class HelpViewModel @Inject constructor() : ViewModel() {
             _helpUiState.value = currentState.copy(selectedFaqPosition = selectFaqPosition)
         }
     }
+}
+
+sealed class HelpUiState {
+    data object Initial : HelpUiState()
+    data class ShowFaq(
+        val faqArrayList: ArrayList<FAQ?>,
+        val selectedFaqPosition: Int = -1
+    ) : HelpUiState()
 }

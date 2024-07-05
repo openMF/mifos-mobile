@@ -1,6 +1,6 @@
-package org.mifos.mobile.ui.help
+package org.mifos.mobile.feature.help
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,23 +15,58 @@ import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FaqItemHolder
+import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosTextButtonWithTopDrawable
 import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
 import org.mifos.mobile.core.ui.component.MifosTopBar
 
 
+
 @Composable
 fun HelpScreen(
-    faqArrayList: List<FAQ?>?,
-    selectedFaqPosition: Int = -1,
+    viewModel: HelpViewModel = hiltViewModel(),
+    callNow: () -> Unit,
+    leaveEmail: () -> Unit,
+    findLocations: () -> Unit,
+    navigateBack: () -> Unit,
+) {
+
+    val context = LocalContext.current
+    val uiState by viewModel.helpUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.loadFaq(
+            context.resources?.getStringArray(R.array.faq_qs),
+            context.resources?.getStringArray(R.array.faq_ans)
+        )
+    }
+
+    HelpScreen(
+        uiState = uiState,
+        callNow = callNow,
+        leaveEmail = leaveEmail,
+        findLocations = findLocations,
+        navigateBack = navigateBack,
+        searchQuery = { viewModel.filterList(it) },
+        onSearchDismiss = { viewModel.loadFaq(qs = null, ans = null) },
+        updateFaqPosition = { viewModel.updateSelectedFaqPosition(it) }
+    )
+}
+
+@Composable
+fun HelpScreen(
+    uiState: HelpUiState,
     callNow: () -> Unit,
     leaveEmail: () -> Unit,
     findLocations: () -> Unit,
@@ -40,21 +75,55 @@ fun HelpScreen(
     onSearchDismiss: () -> Unit,
     updateFaqPosition: (Int) -> Unit,
 ) {
+
+    MFScaffold(
+        topBar = {
+            MifosTopBar(
+                navigateBack = navigateBack,
+                title = {
+                    MifosTitleSearchCard(
+                        searchQuery = searchQuery,
+                        titleResourceId = R.string.help,
+                        onSearchDismiss = onSearchDismiss
+                    )
+                }
+            )
+        },
+        scaffoldContent = { paddingValues ->
+            Box(modifier = Modifier.padding(paddingValues)) {
+                when(uiState) {
+                    is HelpUiState.Initial -> Unit
+                    is HelpUiState.ShowFaq -> {
+                        HelpContent(
+                            faqArrayList = uiState.faqArrayList.toList().filterNotNull(),
+                            selectedFaqPosition = uiState.selectedFaqPosition,
+                            callNow = callNow,
+                            leaveEmail = leaveEmail,
+                            findLocations = findLocations,
+                            updateFaqPosition = updateFaqPosition
+                        )
+                    }
+                }
+            }
+        }
+    )
+
+}
+
+
+@Composable
+fun HelpContent(
+    faqArrayList: List<FAQ>,
+    selectedFaqPosition: Int,
+    callNow: () -> Unit,
+    leaveEmail: () -> Unit,
+    findLocations: () -> Unit,
+    updateFaqPosition: (Int) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        MifosTopBar(
-            navigateBack = navigateBack,
-            title = {
-                MifosTitleSearchCard(
-                    searchQuery = searchQuery,
-                    titleResourceId = R.string.help,
-                    onSearchDismiss = onSearchDismiss
-                )
-            }
-        )
-
         Text(
             text = stringResource(id = R.string.faq),
             modifier = Modifier
@@ -116,11 +185,8 @@ fun HelpScreen(
         } else {
             EmptyDataView(
                 modifier = Modifier.fillMaxSize(),
-                icon = R.drawable.ic_help_black_24dp,
                 error = R.string.no_questions_found
             )
         }
-
     }
 }
-

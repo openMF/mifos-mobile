@@ -89,6 +89,7 @@ dependencies {
     implementation(projects.feature.clientCharge)
     implementation(projects.feature.recentTransaction)
     implementation(projects.feature.thirdPartyTransfer)
+    implementation(projects.feature.help)
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

@@ -7,23 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import org.mifos.mobile.R
-import org.mifos.mobile.core.model.entity.FAQ
+import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.help.HelpScreen
+import org.mifos.mobile.feature.help.HelpViewModel
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.location.LocationsFragment
-import org.mifos.mobile.utils.HelpUiState
 
 /*
 ~This project is licensed under the open source MPL V2.
@@ -32,58 +27,18 @@ import org.mifos.mobile.utils.HelpUiState
 @AndroidEntryPoint
 class HelpFragment : BaseFragment() {
 
-    private val viewModel: HelpViewModel by viewModels()
-    private var faqArrayList: MutableState<List<FAQ?>> = mutableStateOf(arrayListOf())
-    private var selectedFaqPosition: MutableState<Int> = mutableStateOf(-1)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        if (savedInstanceState == null) {
-            viewModel.loadFaq(
-                context?.resources?.getStringArray(R.array.faq_qs),
-                context?.resources?.getStringArray(R.array.faq_ans)
+        return mifosComposeView(requireContext()) {
+            HelpScreen(
+                callNow = { callHelpline() },
+                leaveEmail = { mailHelpline() },
+                findLocations = { findLocations() },
+                navigateBack = { activity?.finish() },
             )
-        }
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MifosMobileTheme {
-                    HelpScreen(
-                        faqArrayList = faqArrayList.value,
-                        callNow = { callHelpline() },
-                        leaveEmail = { mailHelpline() },
-                        findLocations = { findLocations() },
-                        navigateBack = { activity?.finish() },
-                        onSearchDismiss = { viewModel.loadFaq(qs = null, ans = null) },
-                        searchQuery = { viewModel.filterList(it) },
-                        selectedFaqPosition = selectedFaqPosition.value,
-                        updateFaqPosition = { viewModel.updateSelectedFaqPosition(it) }
-                    )
-                }
-            }
-        }
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.helpUiState.collect() {
-                    when (it) {
-
-                        is HelpUiState.ShowFaq -> {
-                            faqArrayList.value = it.faqArrayList
-                            selectedFaqPosition.value = it.selectedFaqPosition
-                        }
-
-                        HelpUiState.Initial -> {}
-                    }
-                }
-            }
         }
     }
 

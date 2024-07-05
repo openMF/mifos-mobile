@@ -1,7 +1,6 @@
 package org.mifos.mobile.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -11,7 +10,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.models.FAQ
-import org.mifos.mobile.ui.help.HelpViewModel
 import org.mifos.mobile.utils.HelpUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
