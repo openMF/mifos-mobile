@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.login
+package org.mifos.mobile.feature.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repositories.ClientRepository
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
-import org.mifos.mobile.utils.LoginUiState
+import org.mifos.mobile.feature.login.utils.LoginState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,24 +19,8 @@ class LoginViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Initial)
-    val loginUiState: StateFlow<LoginUiState> get() = _loginUiState
-
-    fun isFieldEmpty(fieldText: String): Boolean {
-        return fieldText.isEmpty()
-    }
-
-    fun isUsernameLengthInadequate(username: String): Boolean {
-        return username.length < 5
-    }
-
-    fun isPasswordLengthInadequate(password: String): Boolean {
-        return password.length < 6
-    }
-
-    fun usernameHasSpaces(username: String): Boolean {
-        return username.trim().contains(" ")
-    }
+    private var _loginUiState = MutableStateFlow<LoginState>(LoginState.Initial)
+    val loginUiState: StateFlow<LoginState> get() = _loginUiState
 
     /**
      * This method attempts to authenticate the user from
@@ -45,12 +29,12 @@ class LoginViewModel @Inject constructor(
      */
     fun login(username: String, password: String) {
         viewModelScope.launch {
-            _loginUiState.value = LoginUiState.Loading
+            _loginUiState.value = LoginState.Loading
             userAuthRepositoryImp.login(username, password).catch {
-                _loginUiState.value = LoginUiState.Error
+                _loginUiState.value = LoginState.Error
             }.collect {
                 clientRepositoryImp.saveAuthenticationTokenForSession(it)
-                _loginUiState.value = LoginUiState.LoginSuccess
+                _loginUiState.value = LoginState.LoginSuccess
             }
         }
     }
@@ -61,7 +45,7 @@ class LoginViewModel @Inject constructor(
     fun loadClient() {
         viewModelScope.launch {
             clientRepositoryImp.loadClient().catch {
-                _loginUiState.value = LoginUiState.Error
+                _loginUiState.value = LoginState.Error
                 clientRepositoryImp.clearPrefHelper()
                 clientRepositoryImp.reInitializeService()
             }.collect {
@@ -70,7 +54,7 @@ class LoginViewModel @Inject constructor(
                     val clientName = it.pageItems[0].displayName
                     clientRepositoryImp.setClientId(clientId)
                     clientRepositoryImp.reInitializeService()
-                    _loginUiState.value = LoginUiState.LoadClientSuccess(clientName)
+                    _loginUiState.value = LoginState.LoadClientSuccess(clientName)
                 }
             }
         }

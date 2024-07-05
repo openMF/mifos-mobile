@@ -158,4 +158,3 @@ fun SavingsAccountTransactionScreenPreview(
         )
     }
 }
-

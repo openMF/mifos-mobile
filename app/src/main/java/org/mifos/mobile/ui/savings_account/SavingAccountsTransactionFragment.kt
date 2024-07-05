@@ -46,7 +46,6 @@ import org.mifos.mobile.feature.savings.savings_account_transaction.SavingAccoun
 import java.time.Instant
 import javax.inject.Inject
 
-
 /**
  * Created by dilpreet on 6/3/17.
  */

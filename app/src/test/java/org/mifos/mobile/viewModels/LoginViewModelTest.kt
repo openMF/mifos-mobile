@@ -10,14 +10,15 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.runner.RunWith
-import com.mifos.mobile.core.data.utils.FakeRemoteDataSource
-import org.mifos.mobile.models.Page
-import org.mifos.mobile.models.User
-import org.mifos.mobile.models.client.Client
-import org.mifos.mobile.repositories.ClientRepository
-import org.mifos.mobile.repositories.UserAuthRepository
-import org.mifos.mobile.ui.login.LoginViewModel
+import org.mifos.mobile.core.data.repositories.ClientRepository
+import org.mifos.mobile.core.data.repositories.UserAuthRepository
+import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.User
+import org.mifos.mobile.core.model.entity.client.Client
+import org.mifos.mobile.feature.login.utils.LoginState
+import org.mifos.mobile.feature.login.viewmodel.LoginViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
+import org.mifos.mobile.utils.FakeRemoteDataSource
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
@@ -48,10 +49,13 @@ class LoginViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        loginViewModel = LoginViewModel(userAuthRepositoryImp, clientRepositoryImp)
-        mockUser = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.user
-        emptyClientPage = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.noClients
-        clientPage = com.mifos.mobile.core.data.utils.FakeRemoteDataSource.clients
+        loginViewModel = LoginViewModel(
+            userAuthRepositoryImp,
+            clientRepositoryImp
+        )
+        mockUser = FakeRemoteDataSource.user
+        emptyClientPage = FakeRemoteDataSource.noClients
+        clientPage = FakeRemoteDataSource.clients
     }
 
     @Test
@@ -110,8 +114,8 @@ class LoginViewModelTest {
         ).thenReturn(flowOf(mockUser))
         loginViewModel.loginUiState.test {
             loginViewModel.login("username", "password")
-            Assert.assertEquals(LoginUiState.Initial, awaitItem())
-            Assert.assertEquals(LoginUiState.LoginSuccess, awaitItem())
+            Assert.assertEquals(LoginState.Initial, awaitItem())
+            Assert.assertEquals(LoginState.LoginSuccess, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
         Dispatchers.resetMain()
@@ -125,8 +129,8 @@ class LoginViewModelTest {
         ).thenThrow(Exception("Error occurred"))
         loginViewModel.loginUiState.test {
             loginViewModel.login("username", "password")
-            Assert.assertEquals(LoginUiState.Initial, awaitItem())
-            Assert.assertEquals(LoginUiState.Error, awaitItem())
+            Assert.assertEquals(LoginState.Initial, awaitItem())
+            Assert.assertEquals(LoginState.Error, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
         Dispatchers.resetMain()
@@ -140,9 +144,9 @@ class LoginViewModelTest {
         ).thenThrow(Exception("Error occurred"))
         loginViewModel.loginUiState.test {
             loginViewModel.loadClient()
-            Assert.assertEquals(LoginUiState.Initial, awaitItem())
-            Assert.assertEquals(LoginUiState.Loading, awaitItem())
-            Assert.assertEquals(LoginUiState.Error, awaitItem())
+            Assert.assertEquals(LoginState.Initial, awaitItem())
+            Assert.assertEquals(LoginState.Loading, awaitItem())
+            Assert.assertEquals(LoginState.Error, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
         Mockito.verify(clientRepositoryImp).clearPrefHelper()
@@ -158,9 +162,9 @@ class LoginViewModelTest {
         ).thenThrow(Exception("Error occurred"))
         loginViewModel.loginUiState.test {
             loginViewModel.loadClient()
-            Assert.assertEquals(LoginUiState.Initial, awaitItem())
-            Assert.assertEquals(LoginUiState.Loading, awaitItem())
-            Assert.assertEquals(LoginUiState.Error, awaitItem())
+            Assert.assertEquals(LoginState.Initial, awaitItem())
+            Assert.assertEquals(LoginState.Loading, awaitItem())
+            Assert.assertEquals(LoginState.Error, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
         Dispatchers.resetMain()
@@ -188,8 +192,8 @@ class LoginViewModelTest {
             )
             loginViewModel.loginUiState.test {
                 loginViewModel.loadClient()
-                Assert.assertEquals(LoginUiState.Initial, awaitItem())
-                Assert.assertEquals(LoginUiState.LoadClientSuccess(clientName), awaitItem())
+                Assert.assertEquals(LoginState.Initial, awaitItem())
+                Assert.assertEquals(LoginState.LoadClientSuccess(clientName), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
             Dispatchers.resetMain()

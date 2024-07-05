@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="account_status_width">25dp</dimen>
+    <dimen name="account_status_height">25dp</dimen>
+
+</resources>

@@ -1,9 +1,12 @@
 package org.mifos.mobile.feature.registration.screens
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.view.WindowInsets
 import android.widget.Toast
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -11,8 +14,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,12 +37,15 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -45,6 +53,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -57,6 +66,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getString
 import androidx.core.util.PatternsCompat
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.owlbuddy.www.countrycodechooser.CountryCodeChooser
@@ -107,7 +117,7 @@ fun RegistrationScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+
 @Composable
 fun RegistrationScreen(
     uiState: RegistrationState,
@@ -124,6 +134,7 @@ fun RegistrationScreen(
     MFScaffold(
         topBarTitleResId = R.string.register,
         navigateBack = navigateBack,
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         scaffoldContent = { contentPadding ->
 
             Box(
@@ -155,7 +166,7 @@ fun RegistrationScreen(
                     }
                 }
             }
-        }, snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
+        }
     )
 }
 
@@ -166,7 +177,6 @@ fun RegistrationContent(
     snackBarHostState: SnackbarHostState,
 ) {
     val context = LocalContext.current
-
     val keyboardController = LocalSoftwareKeyboardController.current
 
     var accountNumber by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -199,8 +209,8 @@ fun RegistrationContent(
     var countryCode by rememberSaveable {
         mutableStateOf("")
     }
-    val radioOptions =
-        listOf(stringResource(id = R.string.rb_email), stringResource(id = R.string.rb_mobile))
+    val radioOptions = listOf(stringResource(id = R.string.rb_email), stringResource(id = R.string.rb_mobile))
+
     var authenticationMode by remember { mutableStateOf(radioOptions[0]) }
 
     val progressIndicator = progress(password.text)
@@ -208,6 +218,10 @@ fun RegistrationContent(
     var confirmPasswordVisibility: Boolean by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(scrollState.canScrollForward){
+        if (scrollState.canScrollForward) scrollState.scrollTo(scrollState.maxValue)
+    }
 
     Column(
         modifier = Modifier
@@ -221,7 +235,8 @@ fun RegistrationContent(
             .verticalScroll(
                 state = scrollState,
                 enabled = true
-            )) {
+            )
+    ) {
 
         MifosMobileIcon(id = R.drawable.mifos_logo)
 
@@ -405,6 +420,8 @@ fun RegistrationContent(
         ) {
             Text(text = stringResource(id = R.string.register))
         }
+
+        Spacer(modifier = Modifier.imePadding())
     }
 }
 
@@ -567,7 +584,7 @@ class RegistrationScreenPreviewProvider : PreviewParameterProvider<RegistrationS
     )
 }
 
-@Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showSystemUi = true)
 @Composable
 
 private fun RegistrationScreenPreview(
