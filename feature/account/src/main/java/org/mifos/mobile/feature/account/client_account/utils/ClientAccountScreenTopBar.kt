@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.client_accounts
+package org.mifos.mobile.feature.account.client_account.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -94,7 +94,8 @@ fun ClientAccountsScreenTopBar(
                 ) {
                     Image(
                         imageVector = MifosIcons.FilterList,
-                        contentDescription = "Add account"
+                        contentDescription = "Add account",
+                        colorFilter = ColorFilter.tint(if (isSystemInDarkTheme()) Color.White else Color.Black)
                     )
                 }
             }

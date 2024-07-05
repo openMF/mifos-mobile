@@ -1,7 +1,7 @@
-package org.mifos.mobile.utils
+package org.mifos.mobile.feature.account.account.utils
 
 import android.content.Context
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.account.R
 
 data class AccountsFilterUtil(
     var activeString: String? = null,

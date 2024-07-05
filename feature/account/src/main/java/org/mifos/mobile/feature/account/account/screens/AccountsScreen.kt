@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.account
+package org.mifos.mobile.feature.account.account.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.common.Network
@@ -28,6 +28,8 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.account.utils.AccountState
+import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 
 
 @Composable
@@ -101,7 +103,7 @@ fun AccountsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountsScreen(
-    uiState: AccountsUiState,
+    uiState: AccountState,
     onRetry: () -> Unit,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
@@ -129,7 +131,7 @@ fun AccountsScreen(
         Box(modifier = Modifier.pullRefresh(pullRefreshState))
         {
             when (uiState) {
-                is AccountsUiState.Error -> {
+                is AccountState.Error -> {
                     MifosErrorComponent(
                         isNetworkConnected = Network.isConnected(context),
                         isRetryEnabled = true,
@@ -137,11 +139,11 @@ fun AccountsScreen(
                     )
                 }
 
-                is AccountsUiState.Loading -> {
+                is AccountState.Loading -> {
                     MifosProgressIndicatorOverlay()
                 }
 
-                is AccountsUiState.ShowSavingsAccounts -> {
+                is AccountState.ShowSavingsAccounts -> {
                     if ((uiState.savingAccounts.isNullOrEmpty())) {
                         EmptyDataView(
                             icon = R.drawable.ic_error_black_24dp,
@@ -160,7 +162,7 @@ fun AccountsScreen(
                     }
                 }
 
-                is AccountsUiState.ShowLoanAccounts -> {
+                is AccountState.ShowLoanAccounts -> {
                     if ((uiState.loanAccounts.isNullOrEmpty())) {
                         EmptyDataView(
                             icon = R.drawable.ic_error_black_24dp,
@@ -179,7 +181,7 @@ fun AccountsScreen(
                     }
                 }
 
-                is AccountsUiState.ShowShareAccounts -> {
+                is AccountState.ShowShareAccounts -> {
                     if ((uiState.shareAccounts.isNullOrEmpty())) {
                         EmptyDataView(
                             icon = R.drawable.ic_error_black_24dp,
@@ -207,22 +209,22 @@ fun AccountsScreen(
     }
 }
 
-class AccountsScreenPreviewProvider : PreviewParameterProvider<AccountsUiState> {
+class AccountsScreenPreviewProvider : PreviewParameterProvider<AccountState> {
 
-    override val values: Sequence<AccountsUiState>
+    override val values: Sequence<AccountState>
         get() = sequenceOf(
-            AccountsUiState.Loading,
-            AccountsUiState.Error,
-            AccountsUiState.ShowLoanAccounts(listOf()),
-            AccountsUiState.ShowShareAccounts(listOf()),
-            AccountsUiState.ShowSavingsAccounts(listOf()),
+            AccountState.Loading,
+            AccountState.Error,
+            AccountState.ShowLoanAccounts(listOf()),
+            AccountState.ShowShareAccounts(listOf()),
+            AccountState.ShowSavingsAccounts(listOf()),
         )
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun AccountSavingsScreenPreview(
-    @PreviewParameter(AccountsScreenPreviewProvider::class) accountUiState: AccountsUiState
+    @PreviewParameter(AccountsScreenPreviewProvider::class) accountUiState: AccountState
 ) {
     MifosMobileTheme {
         AccountsScreen(

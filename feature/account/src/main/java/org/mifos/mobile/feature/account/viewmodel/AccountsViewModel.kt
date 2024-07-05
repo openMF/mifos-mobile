@@ -1,10 +1,9 @@
-package org.mifos.mobile.ui.account
+package org.mifos.mobile.feature.account.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Observable
 import io.reactivex.functions.Predicate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,14 +12,15 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.utils.AccountsFilterUtil
+import org.mifos.mobile.feature.account.account.utils.AccountsFilterUtil
 import org.mifos.mobile.core.data.repositories.AccountsRepository
 import org.mifos.mobile.core.data.repositories.HomeRepository
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
-import org.mifos.mobile.utils.StatusUtils
+import org.mifos.mobile.feature.account.utils.AccountState
+import org.mifos.mobile.feature.account.utils.StatusUtils
 import java.util.*
 import javax.inject.Inject
 
@@ -30,8 +30,8 @@ class AccountsViewModel @Inject constructor(
     private val homeRepositoryImp: HomeRepository
 ) : ViewModel() {
 
-    private val _accountsUiState = MutableStateFlow<AccountsUiState>(AccountsUiState.Loading)
-    val accountsUiState: StateFlow<AccountsUiState> = _accountsUiState
+    private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
+    val accountsUiState: StateFlow<AccountState> = _accountsUiState
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
@@ -174,16 +174,16 @@ class AccountsViewModel @Inject constructor(
      */
     fun loadClientAccounts() {
         viewModelScope.launch {
-            _accountsUiState.value = AccountsUiState.Loading
+            _accountsUiState.value = AccountState.Loading
             homeRepositoryImp.clientAccounts().catch {
-                _accountsUiState.value = AccountsUiState.Error
+                _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 _accountsUiState.value =
-                    AccountsUiState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
+                    AccountState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
                 _accountsUiState.value =
-                    AccountsUiState.ShowLoanAccounts(clientAccounts.loanAccounts)
+                    AccountState.ShowLoanAccounts(clientAccounts.loanAccounts)
                 _accountsUiState.value =
-                    AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
+                    AccountState.ShowShareAccounts(clientAccounts.shareAccounts)
             }
         }
     }
@@ -196,17 +196,17 @@ class AccountsViewModel @Inject constructor(
      */
     fun loadAccounts(accountType: String?) {
         viewModelScope.launch {
-            _accountsUiState.value = AccountsUiState.Loading
+            _accountsUiState.value = AccountState.Loading
             accountsRepositoryImp.loadAccounts(accountType).catch {
-                _accountsUiState.value = AccountsUiState.Error
+                _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 when (accountType) {
                     Constants.SAVINGS_ACCOUNTS -> _accountsUiState.value =
-                        AccountsUiState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
+                        AccountState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
                     Constants.LOAN_ACCOUNTS -> _accountsUiState.value =
-                        AccountsUiState.ShowLoanAccounts(clientAccounts.loanAccounts)
+                        AccountState.ShowLoanAccounts(clientAccounts.loanAccounts)
                     Constants.SHARE_ACCOUNTS -> _accountsUiState.value =
-                        AccountsUiState.ShowShareAccounts(clientAccounts.shareAccounts)
+                        AccountState.ShowShareAccounts(clientAccounts.shareAccounts)
                 }
                 _isRefreshing.emit(false)
             }
@@ -225,7 +225,7 @@ class AccountsViewModel @Inject constructor(
         accounts: List<SavingAccount?>?,
         input: String?,
     ): List<SavingAccount> {
-        return Observable.fromIterable(accounts)
+        return io.reactivex.Observable.fromIterable(accounts)
             .filter { (accountNo, productName) ->
                 input?.lowercase(Locale.ROOT)
                     ?.let { productName?.lowercase(Locale.ROOT)?.contains(it) } == true ||
@@ -247,7 +247,7 @@ class AccountsViewModel @Inject constructor(
         accounts: List<LoanAccount?>?,
         input: String?,
     ): List<LoanAccount> {
-        return Observable.fromIterable(accounts)
+        return io.reactivex.Observable.fromIterable(accounts)
             .filter { (_, _, _, accountNo, productName) ->
                 input?.lowercase(Locale.ROOT)
                     ?.let { productName?.lowercase(Locale.ROOT)?.contains(it) } == true ||
@@ -269,7 +269,7 @@ class AccountsViewModel @Inject constructor(
         accounts: Collection<ShareAccount?>?,
         input: String?,
     ): List<ShareAccount> {
-        return Observable.fromIterable(accounts)
+        return io.reactivex.Observable.fromIterable(accounts)
             .filter { (accountNo, _, _, _, productName) ->
                 input?.lowercase(Locale.ROOT)
                     ?.let { productName?.lowercase(Locale.ROOT)?.contains(it) } == true ||
@@ -287,7 +287,7 @@ class AccountsViewModel @Inject constructor(
      * `checkboxStatus.isChecked()` as true.
      */
     fun getCheckedStatus(statusModelList: List<CheckboxStatus?>?): List<CheckboxStatus?>? {
-        return Observable.fromIterable(statusModelList)
+        return io.reactivex.Observable.fromIterable(statusModelList)
             .filter { (_, _, isChecked) -> isChecked }.toList().blockingGet()
     }
 
@@ -303,7 +303,7 @@ class AccountsViewModel @Inject constructor(
         status: CheckboxStatus?,
         accountsFilterUtil: AccountsFilterUtil
     ): Collection<SavingAccount> {
-        return Observable.fromIterable(accounts)
+        return io.reactivex.Observable.fromIterable(accounts)
             .filter(
                 Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1) ->
                     if (accountsFilterUtil.activeString
@@ -344,7 +344,7 @@ class AccountsViewModel @Inject constructor(
         status: CheckboxStatus?,
         accountsFilterUtil: AccountsFilterUtil
     ): Collection<LoanAccount> {
-        return Observable.fromIterable(accounts)
+        return io.reactivex.Observable.fromIterable(accounts)
             .filter(
                 Predicate { (_, _, _, _, _, _, _, _, _, _, _, status1, _, _, _, _, _, inArrears) ->
                     if (accountsFilterUtil.inArrearsString?.let { status?.status?.compareTo(it) }
@@ -393,7 +393,7 @@ class AccountsViewModel @Inject constructor(
         status: CheckboxStatus?,
         accountsFilterUtil: AccountsFilterUtil
     ): Collection<ShareAccount> {
-        return Observable.fromIterable(accounts)
+        return io.reactivex.Observable.fromIterable(accounts)
             .filter(
                 Predicate { (_, _, _, _, _, _, status1) ->
                     if (accountsFilterUtil.activeString
@@ -419,12 +419,4 @@ class AccountsViewModel @Inject constructor(
             ).toList().blockingGet().filterNotNull()
     }
 
-}
-
-sealed class AccountsUiState {
-    data object Error : AccountsUiState()
-    data object Loading : AccountsUiState()
-    data class ShowSavingsAccounts(val savingAccounts: List<SavingAccount>?) : AccountsUiState()
-    data class ShowLoanAccounts(val loanAccounts: List<LoanAccount>?) : AccountsUiState()
-    data class ShowShareAccounts(val shareAccounts: List<ShareAccount>?) : AccountsUiState()
 }

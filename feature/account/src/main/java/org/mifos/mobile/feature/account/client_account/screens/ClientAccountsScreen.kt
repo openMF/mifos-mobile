@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.client_accounts
+package org.mifos.mobile.feature.account.client_account.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -21,15 +21,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.ui.component.FloatingActionButtonContent
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosIcons
 import org.mifos.mobile.core.ui.component.MifosTabPager
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.ui.account.AccountsScreen
-import org.mifos.mobile.ui.account.AccountsViewModel
+import org.mifos.mobile.feature.account.account.screens.AccountsScreen
 import org.mifos.mobile.core.model.entity.CheckboxStatus
+import org.mifos.mobile.feature.account.client_account.utils.ClientAccountFilterDialog
+import org.mifos.mobile.feature.account.client_account.utils.ClientAccountsScreenTopBar
+import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 
 @Composable
 fun ClientAccountsScreen(
@@ -133,7 +136,7 @@ fun ClientAccountsScreen(
                 Icon(
                     imageVector = MifosIcons.Add,
                     contentDescription = "Create Account",
-                    tint = MaterialTheme.colorScheme.onSurface
+                    tint = if (isSystemInDarkTheme()) Color.Black else Color.White
                 )
             }
         ),
@@ -193,7 +196,7 @@ fun ClientAccountsTabRow(
     ) {
         when (currentPage) {
             0 -> AccountsScreen(
-                accountType = org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS,
+                accountType = Constants.SAVINGS_ACCOUNTS,
                 onItemClick = { accType, accountId ->
                     onItemClick.invoke(
                         accType,
@@ -203,7 +206,7 @@ fun ClientAccountsTabRow(
             )
 
             1 -> AccountsScreen(
-                accountType = org.mifos.mobile.core.common.Constants.LOAN_ACCOUNTS,
+                accountType = Constants.LOAN_ACCOUNTS,
                 onItemClick = { accType, accountId ->
                     onItemClick.invoke(
                         accType,
@@ -213,7 +216,7 @@ fun ClientAccountsTabRow(
             )
 
             2 -> AccountsScreen(
-                accountType = org.mifos.mobile.core.common.Constants.SHARE_ACCOUNTS,
+                accountType = Constants.SHARE_ACCOUNTS,
                 onItemClick = { accType, accountId ->
                     onItemClick.invoke(
                         accType,

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.account
+package org.mifos.mobile.feature.account.account.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,13 +19,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
-import org.mifos.mobile.utils.AccountTypeItemIndicator
+import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
 fun AccountScreenShareContent(

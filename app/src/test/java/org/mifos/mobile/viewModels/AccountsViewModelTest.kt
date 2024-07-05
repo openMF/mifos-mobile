@@ -11,12 +11,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mifos.mobile.models.client.ClientAccounts
-import org.mifos.mobile.repositories.AccountsRepository
-import org.mifos.mobile.repositories.HomeRepositoryImp
-import org.mifos.mobile.ui.account.AccountsViewModel
+import org.mifos.mobile.core.data.repositories.AccountsRepository
+import org.mifos.mobile.core.data.repositories.HomeRepositoryImp
+import org.mifos.mobile.core.model.entity.client.ClientAccounts
+import org.mifos.mobile.feature.account.utils.AccountState
+import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.AccountsUiState
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -51,7 +51,10 @@ class AccountsViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        accountsViewModel = AccountsViewModel(accountsRepositoryImp, homeRepositoryImp)
+        accountsViewModel = org.mifos.mobile.feature.account.viewmodel.AccountsViewModel(
+            accountsRepositoryImp,
+            homeRepositoryImp
+        )
         mockClientAccounts = Mockito.mock(ClientAccounts::class.java)
     }
 
@@ -61,15 +64,15 @@ class AccountsViewModelTest {
         `when`(homeRepositoryImp.clientAccounts()).thenReturn(flowOf(mockClientAccounts))
         accountsViewModel.accountsUiState.test {
             accountsViewModel.loadClientAccounts()
-            assertEquals(AccountsUiState.Loading, awaitItem())
+            assertEquals(AccountState.Loading, awaitItem())
             assertEquals(
-                AccountsUiState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts), awaitItem()
+                AccountState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts), awaitItem()
             )
             assertEquals(
-                AccountsUiState.ShowLoanAccounts(mockClientAccounts.loanAccounts), awaitItem()
+                AccountState.ShowLoanAccounts(mockClientAccounts.loanAccounts), awaitItem()
             )
             assertEquals(
-                AccountsUiState.ShowShareAccounts(mockClientAccounts.shareAccounts), awaitItem()
+                AccountState.ShowShareAccounts(mockClientAccounts.shareAccounts), awaitItem()
             )
             cancelAndIgnoreRemainingEvents()
         }
@@ -86,9 +89,9 @@ class AccountsViewModelTest {
         )
         accountsViewModel.accountsUiState.test {
             accountsViewModel.loadAccounts(mockAccountType)
-            assertEquals(AccountsUiState.Loading, awaitItem())
+            assertEquals(AccountState.Loading, awaitItem())
             assertEquals(
-                AccountsUiState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts), awaitItem()
+                AccountState.ShowSavingsAccounts(mockClientAccounts.savingsAccounts), awaitItem()
             )
             cancelAndIgnoreRemainingEvents()
         }
@@ -101,9 +104,9 @@ class AccountsViewModelTest {
         accountsViewModel.accountsUiState.test {
             try {
                 accountsViewModel.loadAccounts(mockAccountType)
-                assertEquals(AccountsUiState.Loading, awaitItem())
+                assertEquals(AccountState.Loading, awaitItem())
             } catch (e: RuntimeException) {
-                assertEquals(AccountsUiState.Error, awaitItem())
+                assertEquals(AccountState.Error, awaitItem())
             }
             cancelAndIgnoreRemainingEvents()
         }

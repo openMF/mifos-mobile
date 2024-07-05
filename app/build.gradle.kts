@@ -84,6 +84,7 @@ dependencies {
     implementation(projects.feature.savings)
     implementation(projects.feature.qr)
     implementation(projects.feature.transferProcess)
+    implementation(projects.feature.account)
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation(libs.androidx.lifecycle.ktx)

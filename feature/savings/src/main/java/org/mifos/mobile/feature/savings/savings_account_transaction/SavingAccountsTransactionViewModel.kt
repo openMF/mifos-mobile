@@ -1,6 +1,5 @@
 package org.mifos.mobile.feature.savings.savings_account_transaction
 
-
 import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
@@ -204,4 +203,3 @@ enum class SavingsTransactionCheckBoxFilter(
         checkBoxColor = GreenSuccess
     )
 }
-

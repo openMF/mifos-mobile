@@ -1,6 +1,5 @@
 package org.mifos.mobile.ui.client_accounts
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +15,7 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.feature.account.client_account.screens.ClientAccountsScreen
 
 /*
 ~This project is licensed under the open source MPL V2.

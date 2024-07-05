@@ -1,4 +1,4 @@
-package org.mifos.mobile.utils
+package org.mifos.mobile.feature.account.account.utils
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.client_accounts
+package org.mifos.mobile.feature.account.client_account.utils
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 
 @Composable

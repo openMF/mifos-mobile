@@ -34,7 +34,7 @@ import org.mifos.mobile.ui.enums.AccountType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
-import org.mifos.mobile.utils.StatusUtils
+import org.mifos.mobile.feature.account.utils.StatusUtils
 import javax.inject.Inject
 
 /*

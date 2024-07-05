@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="active">Active</string>
+    <string name="approved">Approved</string>
+    <string name="approval_pending">Approval Pending</string>
+    <string name="matured">Matured</string>
+    <string name="waiting_for_disburse">Waiting for Disburse</string>
+    <string name="overpaid">Overpaid</string>
+    <string name="closed">Closed</string>
+    <string name="withdrawn">Withdrawn</string>
+    <string name="in_arrears">In Arrears</string>
+    <string name="empty_savings_accounts">There is no SavingsAccount associated with you</string>
+    <string name="empty_loan_accounts">There is no LoanAccount associated with you</string>
+    <string name="empty_share_accounts">There is no ShareAccount associated with you</string>
+    <string name="disbursement">Disbursement</string>
+    <string name="submitted">Submitted</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="pending">Pending</string>
+    <string name="savings_account">Savings Account</string>
+    <string name="share_account">Share Account</string>
+    <string name="loan_account">Loan Account</string>
+    <string name="savings">Saving</string>
+    <string name="loan">Loan</string>
+    <string name="share">Share</string>
+    <string name="select_you_want">Select all filters you want to apply</string>
+    <string name="clear_filters">Clear Filters</string>
+    <string name="cancel">Cancel</string>
+    <string name="filter">Filter</string>
+    <string name="deposit">Deposit</string>
+    <string name="dividend_payout">Dividend Payout</string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="interest_posting">Interest Posting</string>
+    <string name="fee_deduction">Fee Deduction</string>
+    <string name="withdrawal_transfer">Withdrawal Transfer</string>
+    <string name="rejected_transfer">Rejected Transfer</string>
+    <string name="overdraft_fee">Overdraft Fee</string>
+</resources>
