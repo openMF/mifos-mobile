@@ -8,27 +8,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.fragment.app.viewModels
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
-import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants.LICENSE_LINK
 import org.mifos.mobile.core.common.Constants.SOURCE_CODE_LINK
 import org.mifos.mobile.core.common.Constants.WEBSITE_LINK
+import org.mifos.mobile.core.model.enums.AboutUsListItemId
+import org.mifos.mobile.core.ui.component.mifosComposeView
+import org.mifos.mobile.feature.about.ui.AboutUsScreen
 
-/*
-~This project is licensed under the open source MPL V2.
-~See https://github.com/openMF/self-service-app/blob/master/LICENSE.md
-*/
+
 @AndroidEntryPoint
 class AboutUsFragment : BaseFragment() {
-
-    private val viewModel: AboutUsViewModel by viewModels()
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreateView(
@@ -36,42 +29,38 @@ class AboutUsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MifosMobileTheme {
-                    AboutUsScreen(viewModel)
+        return mifosComposeView(requireContext()) {
+            AboutUsScreen(
+                navigateToItem = {
+                    navigateToItem(it.itemId)
                 }
-            }
+            )
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.aboutUsItemEvent.observe(viewLifecycleOwner) {
-            when (it) {
-                AboutUsListItemId.OFFICE_WEBSITE -> {
-                    startActivity(WEBSITE_LINK)
-                }
-
-                AboutUsListItemId.LICENSES -> {
-                    startActivity(LICENSE_LINK)
-                }
-
-                AboutUsListItemId.PRIVACY_POLICY -> {
-                    startActivity(PrivacyPolicyActivity::class.java)
-                }
-
-                AboutUsListItemId.SOURCE_CODE -> {
-                    startActivity(SOURCE_CODE_LINK)
-                }
-
-                AboutUsListItemId.LICENSES_STRING_WITH_VALUE -> {
-                    startActivity(OssLicensesMenuActivity::class.java)
-                }
-
-                else -> {}
+    private fun navigateToItem(aboutUsItem: AboutUsListItemId) {
+        when(aboutUsItem) {
+            AboutUsListItemId.OFFICE_WEBSITE -> {
+                startActivity(WEBSITE_LINK)
             }
+
+            AboutUsListItemId.LICENSES -> {
+                startActivity(LICENSE_LINK)
+            }
+
+            AboutUsListItemId.PRIVACY_POLICY -> {
+                startActivity(PrivacyPolicyActivity::class.java)
+            }
+
+            AboutUsListItemId.SOURCE_CODE -> {
+                startActivity(SOURCE_CODE_LINK)
+            }
+
+            AboutUsListItemId.LICENSES_STRING_WITH_VALUE -> {
+                startActivity(OssLicensesMenuActivity::class.java)
+            }
+
+            AboutUsListItemId.APP_VERSION_TEXT -> Unit
         }
     }
 

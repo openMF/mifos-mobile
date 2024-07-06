@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mifos Mobile</string>
+    <string name="about_app_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
+    <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
+    <string name="app_version_text">App version  1.0</string>
+    <string name="official_website">Official Website</string>
+    <string name="licenses">Licenses</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="sources">Source Code</string>
+    <string name="license_string_with_value">License: MPL-2.0</string>
+    <string name="about_us">About Us</string>
+
+</resources>

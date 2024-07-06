@@ -2,6 +2,7 @@ package org.mifos.mobile.core.model.entity
 
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
 
+
 data class AboutUsItem(
     val title: String?,
     val subtitle: Int? = null,
