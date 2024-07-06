@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.settings.SettingsScreen
 import org.mifos.mobile.ui.activities.HomeActivity
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.settings
+package org.mifos.mobile.feature.settings
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
 import org.mifos.mobile.core.ui.component.MifosTopBarTitle

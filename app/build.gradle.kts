@@ -93,6 +93,7 @@ dependencies {
     implementation(projects.feature.notification)
     implementation(projects.feature.location)
     implementation(projects.feature.about)
+    implementation(projects.feature.settings)
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

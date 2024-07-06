@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.settings
+package org.mifos.mobile.feature.settings
 
 
 import android.os.Build
@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import org.mifos.mobile.R
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.enums.AppTheme
 import org.mifos.mobile.core.model.enums.MifosAppLanguage
@@ -72,7 +71,7 @@ class SettingsViewModel @Inject constructor(
             }
         )
         preferencesHelper.appTheme = theme.ordinal
-        preferencesHelper.applySavedTheme()
+        preferencesHelper.applyTheme(theme)
     }
 }
 
@@ -119,4 +118,28 @@ enum class SettingsCardItem(
     )
 }
 
+fun PreferencesHelper.applySavedTheme() {
+    val applicationTheme = AppTheme.entries.find { it.ordinal == this.appTheme }
+    AppCompatDelegate.setDefaultNightMode(
+        when {
+            applicationTheme == AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            applicationTheme == AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            Build.VERSION.SDK_INT > Build.VERSION_CODES.P -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            else -> AppCompatDelegate.MODE_NIGHT_NO
+        },
+    )
+}
+
+
+fun PreferencesHelper.applyTheme(applicationTheme: AppTheme) {
+    this.appTheme = applicationTheme.ordinal
+    AppCompatDelegate.setDefaultNightMode(
+        when {
+            applicationTheme == AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            applicationTheme == AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            Build.VERSION.SDK_INT > Build.VERSION_CODES.P -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            else -> AppCompatDelegate.MODE_NIGHT_NO
+        },
+    )
+}
 
