@@ -21,11 +21,5 @@
         android:layout_height="wrap_content"
         android:text="@string/mifos_location" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_0dp"
-        android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.CardInnerPaddingLarge"
-        android:layout_weight="1" />
 
 </LinearLayout>

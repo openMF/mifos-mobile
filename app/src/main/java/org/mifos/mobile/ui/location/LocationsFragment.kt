@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.mifos.mobile.core.ui.component.mifosComposeView
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.location.LocationsScreen
 
 class LocationsFragment : Fragment() {
 
@@ -16,9 +16,7 @@ class LocationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return mifosComposeView(requireContext()) {
-            MifosMobileTheme {
-                LocationsScreen()
-            }
+            LocationsScreen()
         }
     }
 

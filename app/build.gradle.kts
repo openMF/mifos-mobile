@@ -91,6 +91,7 @@ dependencies {
     implementation(projects.feature.thirdPartyTransfer)
     implementation(projects.feature.help)
     implementation(projects.feature.notification)
+    implementation(projects.feature.location)
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
@@ -99,7 +100,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.preference)
-    implementation(libs.play.services.maps)
+
 
     // DBFlow
     implementation(libs.dbflow)
@@ -197,8 +198,6 @@ dependencies {
     debugApi(libs.androidx.compose.ui.tooling)
     api(libs.androidx.hilt.navigation.compose)
 
-    // google maps
-    implementation ("com.google.maps.android:maps-compose:4.4.1")
 
     //image cropper
     implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")

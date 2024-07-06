@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mifos_initiative">Mifos Initiative</string>
+    <string name="mifos_location">Mifos Initiative , Seattle , Washington 98121</string>
+    <string name="map_marker_heading">Seattle</string>
+    <string name="map_marker_desc">Home to large tech industry</string>
+</resources>
