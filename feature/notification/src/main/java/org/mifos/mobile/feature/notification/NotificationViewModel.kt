@@ -1,6 +1,5 @@
-package org.mifos.mobile.ui.notification
+package org.mifos.mobile.feature.notification
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

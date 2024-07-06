@@ -90,6 +90,7 @@ dependencies {
     implementation(projects.feature.recentTransaction)
     implementation(projects.feature.thirdPartyTransfer)
     implementation(projects.feature.help)
+    implementation(projects.feature.notification)
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

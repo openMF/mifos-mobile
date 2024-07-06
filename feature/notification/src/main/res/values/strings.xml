@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification">Notification</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="no_notification">No Notification</string>
+
+</resources>
