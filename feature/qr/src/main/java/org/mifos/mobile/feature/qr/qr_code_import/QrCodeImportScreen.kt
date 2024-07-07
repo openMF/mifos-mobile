@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_import
+package org.mifos.mobile.feature.qr.qr_code_import
 
 import android.Manifest
 import android.graphics.Bitmap
@@ -43,8 +43,6 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.feature.qr.R
-import org.mifos.mobile.feature.qr.qr_code_import.PermissionBox
-import org.mifos.mobile.feature.qr.qr_code_import.convertToMutableBitmap
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.update_password
+package org.mifos.mobile.feature.update_password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,10 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
 import org.mifos.mobile.core.data.repositories.ClientRepository
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
-import org.mifos.mobile.feature.registration.utils.RegistrationState
+import org.mifos.mobile.feature.update.password.R
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,19 +18,27 @@ class UpdatePasswordViewModel @Inject constructor(
     private val clientRepositoryImp: ClientRepository,
 ) : ViewModel() {
 
-    private val _updatePasswordUiState = MutableStateFlow<RegistrationState>(RegistrationState.Initial)
-    val updatePasswordUiState: StateFlow<RegistrationState> get() = _updatePasswordUiState
+    private val _updatePasswordUiState = MutableStateFlow<UpdatePasswordUiState>(UpdatePasswordUiState.Initial)
+    val updatePasswordUiState: StateFlow<UpdatePasswordUiState> get() = _updatePasswordUiState
 
     fun updateAccountPassword(newPassword: String, confirmPassword: String) {
         viewModelScope.launch {
-            _updatePasswordUiState.value = RegistrationState.Loading
+            _updatePasswordUiState.value = UpdatePasswordUiState.Loading
             userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword).catch {
                 _updatePasswordUiState.value =
-                    RegistrationState.Error(R.string.could_not_update_password_error)
+                    UpdatePasswordUiState.Error(R.string.could_not_update_password_error)
             }.collect {
-                _updatePasswordUiState.value = RegistrationState.Success
+                _updatePasswordUiState.value = UpdatePasswordUiState.Success
                 clientRepositoryImp.updateAuthenticationToken(newPassword)
             }
         }
     }
+}
+
+
+sealed class UpdatePasswordUiState {
+    data class Error(val exception: Int) : UpdatePasswordUiState()
+    data object Success : UpdatePasswordUiState()
+    data object Loading : UpdatePasswordUiState()
+    data object Initial: UpdatePasswordUiState()
 }

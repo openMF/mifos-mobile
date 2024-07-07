@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.update_password
+package org.mifos.mobile.feature.update_password
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -33,10 +32,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
+import org.mifos.mobile.feature.update.password.R
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun UpdatePasswordContent(
     viewModel: UpdatePasswordViewModel = hiltViewModel(),

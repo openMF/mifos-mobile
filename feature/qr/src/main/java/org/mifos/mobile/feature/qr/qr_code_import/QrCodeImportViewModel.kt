@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.qr_code_import
+package org.mifos.mobile.feature.qr.qr_code_import
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel

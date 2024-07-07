@@ -158,9 +158,6 @@
     <string name="change_passcode">Change Passcode</string>
     <string name="change_app_passcode">Change App Passcode</string>
     <string name="change_password">Change Password</string>
-    <string name="change_account_password">Change your Account Password</string>
-    <string name="current_password">Current Password</string>
-    <string name="new_password">New Password</string>
     <string name="string_changed_successfully">%1$s changed successfully</string>
 
     <string name="account_not_active_to_perform_deposit">Account should to be Active to perform a
@@ -630,7 +627,6 @@
     </string-array>
     <string name="app_info">App Info</string>
     <string name="login_failed">Login Failed, Please Try Again Later.</string>
-    <string name="could_not_update_password_error">We were unable to update password.</string>
     <string name="password_changed_successfully">Password changed successfully</string>
     <string name="could_not_register_user_error">We were unable to register the user.</string>
     <string name="no_questions_found">No Questions Found</string>

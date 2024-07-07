@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.update_password
+package org.mifos.mobile.feature.update_password
 
 import android.content.Context
 import android.widget.Toast
@@ -23,15 +23,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.feature.savings.savings_account_withdraw.UiStatesParameterProvider
-import org.mifos.mobile.feature.registration.utils.RegistrationState
+import org.mifos.mobile.feature.update.password.R
 
 
 @Composable
@@ -49,7 +48,7 @@ fun UpdatePasswordScreen(
 
 @Composable
 fun UpdatePasswordScreen(
-    uiState: RegistrationState,
+    uiState: UpdatePasswordUiState,
     navigateBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -76,7 +75,7 @@ fun UpdatePasswordScreen(
             )
 
             when (uiState) {
-                is RegistrationState.Loading -> {
+                is UpdatePasswordUiState.Loading -> {
                     MifosProgressIndicator(
                         modifier = Modifier
                             .fillMaxSize()
@@ -84,7 +83,7 @@ fun UpdatePasswordScreen(
                     )
                 }
 
-                is RegistrationState.Error -> {
+                is UpdatePasswordUiState.Error -> {
                     if (updatePasswordButtonClicked) {
                         LaunchedEffect(snackbarHostState) {
                             snackbarHostState.showSnackbar(
@@ -96,9 +95,9 @@ fun UpdatePasswordScreen(
                     }
                 }
 
-                is RegistrationState.Initial -> Unit
+                is UpdatePasswordUiState.Initial -> Unit
 
-                is RegistrationState.Success -> {
+                is UpdatePasswordUiState.Success -> {
                     LaunchedEffect(snackbarHostState) {
                         snackbarHostState.showSnackbar(
                             context.getString(R.string.password_changed_successfully),
@@ -113,10 +112,20 @@ fun UpdatePasswordScreen(
     }
 }
 
+class UiStatesParameterProvider : PreviewParameterProvider<UpdatePasswordUiState> {
+    override val values: Sequence<UpdatePasswordUiState>
+        get() = sequenceOf(
+            UpdatePasswordUiState.Initial,
+            UpdatePasswordUiState.Error(1),
+            UpdatePasswordUiState.Loading,
+            UpdatePasswordUiState.Success
+        )
+}
+
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 fun UpdatePasswordScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class) registrationUiState: RegistrationState
+    @PreviewParameter(UiStatesParameterProvider::class) updatePasswordUiState: UpdatePasswordUiState
 ) {
     MifosMobileTheme {
         UpdatePasswordScreen(navigateBack = {})

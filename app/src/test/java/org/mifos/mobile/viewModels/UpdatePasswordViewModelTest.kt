@@ -12,7 +12,7 @@ import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.core.data.repositories.ClientRepository
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
-import org.mifos.mobile.ui.update_password.UpdatePasswordViewModel
+import org.mifos.mobile.feature.update_password.UpdatePasswordViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.feature.registration.utils.RegistrationState
 import org.mockito.Mock
@@ -40,13 +40,16 @@ class UpdatePasswordViewModelTest {
     @Mock
     lateinit var clientRepositoryImp: ClientRepository
 
-    private lateinit var updatePasswordViewModel: UpdatePasswordViewModel
+    private lateinit var updatePasswordViewModel: org.mifos.mobile.feature.update_password.UpdatePasswordViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         updatePasswordViewModel =
-            UpdatePasswordViewModel(userAuthRepositoryImp, clientRepositoryImp)
+            org.mifos.mobile.feature.update_password.UpdatePasswordViewModel(
+                userAuthRepositoryImp,
+                clientRepositoryImp
+            )
        }
 
     @Test

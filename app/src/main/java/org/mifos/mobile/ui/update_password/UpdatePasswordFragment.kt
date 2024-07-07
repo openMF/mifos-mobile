@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.mifosComposeView
+import org.mifos.mobile.feature.update_password.UpdatePasswordScreen
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 
@@ -22,17 +21,12 @@ class UpdatePasswordFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MifosMobileTheme {
-                    UpdatePasswordScreen(
-                        navigateBack = {
-                            requireActivity().onBackPressedDispatcher.onBackPressed()
-                        }
-                    )
+        return mifosComposeView(requireContext()) {
+            UpdatePasswordScreen(
+                navigateBack = {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
-            }
+            )
         }
     }
 
