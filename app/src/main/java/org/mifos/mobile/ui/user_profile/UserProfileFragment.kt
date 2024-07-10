@@ -1,5 +1,7 @@
 package org.mifos.mobile.ui.user_profile
 
+
+/*
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Constants.USER_DETAILS
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.ui.getThemeAttributeColor
@@ -26,6 +29,7 @@ import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.Group
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.feature.user_profile.utils.UserDetails
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.UserDetailUiState
@@ -117,7 +121,7 @@ class UserProfileFragment : BaseFragment() {
         if (savedInstanceState != null) {
             client = savedInstanceState.getCheckedParcelable(
                 Client::class.java,
-                org.mifos.mobile.core.common.Constants.USER_DETAILS
+                USER_DETAILS
             )
             viewModel.setUserProfile(preferencesHelper?.userProfileImage)
             showUserDetails(client)
@@ -263,3 +267,4 @@ class UserProfileFragment : BaseFragment() {
         }
     }
 }
+*/

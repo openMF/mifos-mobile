@@ -47,14 +47,13 @@ import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.utils.TextDrawable
 import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.UserDetailUiState
 import org.mifos.mobile.utils.fcm.RegistrationIntentService
-import org.mifos.mobile.ui.user_profile.UserDetailViewModel
 import org.mifos.mobile.ui.user_profile.UserProfileActivity
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.feature.user_profile.viewmodel.UserDetailUiState
+import org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel
 import javax.inject.Inject
 import org.mifos.mobile.ui.settings.SettingsActivity
-
 
 /**
  * @author Vishwajeet
@@ -100,12 +99,11 @@ class HomeActivity :
             replaceFragment(NotificationFragment.newInstance(), true, R.id.container)
         }
         if (savedInstanceState == null) {
-            viewModel.userDetails
-            viewModel.userImage
+            viewModel.loadUserData()
             showUserImage(null)
         } else {
             client = savedInstanceState.getCheckedParcelable(Client::class.java, org.mifos.mobile.core.common.Constants.USER_DETAILS)
-            viewModel.setUserProfile(preferencesHelper?.userProfileImage)
+            showUserImage(viewModel.getUserProfile(preferencesHelper?.userProfileImage))
             showUserDetails(client)
         }
         if (checkPlayServices() && preferencesHelper?.sentTokenToServerState() == false) {
@@ -121,9 +119,6 @@ class HomeActivity :
                     is UserDetailUiState.ShowUserDetails -> {
                         hideProgress()
                         showUserDetails(it.client)
-                    }
-                    is UserDetailUiState.ShowUserImage -> {
-                        hideProgress()
                         showUserImage(it.image)
                     }
                     is UserDetailUiState.ShowError -> {

@@ -3,12 +3,9 @@ package org.mifos.mobile.viewModels
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import junit.framework.Assert
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -19,9 +16,8 @@ import org.mifos.mobile.api.local.PreferencesHelper
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.repositories.HomeRepositoryImp
 import org.mifos.mobile.repositories.UserDetailRepositoryImp
-import org.mifos.mobile.ui.user_profile.UserDetailViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.UserDetailUiState
+import org.mifos.mobile.feature.user_profile.utils.UserDetailUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -51,12 +47,15 @@ class UserDetailViewModelTest {
     private lateinit var preferencesHelper: PreferencesHelper
 
 
-    private lateinit var viewModel: UserDetailViewModel
+    private lateinit var viewModel: org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = UserDetailViewModel(userDetailRepositoryImp, homeRepositoryImp)
+        viewModel = org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel(
+            userDetailRepositoryImp,
+            homeRepositoryImp
+        )
         viewModel.preferencesHelper = preferencesHelper
     }
 

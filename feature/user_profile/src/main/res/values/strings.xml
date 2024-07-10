@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="user_details">User Details</string>
+    <string name="error_fetching_user_profile">Failed to fetch User Profile</string>
+    <string name="username">Username</string>
+    <string name="account_number">Account Number</string>
+    <string name="activation_date">Activation Date</string>
+    <string name="office_name">Office Name</string>
+    <string name="groups">Groups</string>
+    <string name="client_type">Client Type</string>
+    <string name="client_classification">Client Classification</string>
+    <string name="change_password">Change Password</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="no_dob_found">No DOB found.</string>
+    <string name="gender">Gender</string>
+    <string name="no">No</string>
+    <string name="found">found</string>x
+    <string name="blank">&#160;</string>
+    <string name="not_assigned_with_any_group">Not Assigned with any group</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="error_fetching_client">Failed to fetch Client</string>
+</resources>

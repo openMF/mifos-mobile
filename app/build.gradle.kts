@@ -94,6 +94,7 @@ dependencies {
     implementation(projects.feature.settings)
     implementation(projects.feature.updatePassword)
     implementation(projects.feature.auth)
+    implementation(projects.feature.userProfile)
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

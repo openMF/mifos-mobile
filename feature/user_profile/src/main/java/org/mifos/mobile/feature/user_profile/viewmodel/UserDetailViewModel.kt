@@ -1,7 +1,10 @@
-package org.mifos.mobile.ui.user_profile
+package org.mifos.mobile.feature.user_profile.viewmodel
 
+import android.graphics.Bitmap
+import android.os.Build
 import android.util.Base64
 import android.util.Log
+import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,14 +12,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
 import org.mifos.mobile.core.data.repositories.HomeRepository
 import org.mifos.mobile.core.data.repositories.UserDetailRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
-import org.mifos.mobile.utils.ImageUtil
-import org.mifos.mobile.utils.UserDetailUiState
-import retrofit2.HttpException
+import org.mifos.mobile.feature.third.party.user_profile.R
+import org.mifos.mobile.feature.user_profile.utils.ImageUtil
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,49 +33,47 @@ class UserDetailViewModel @Inject constructor(
     private val _userDetailUiState = MutableStateFlow<UserDetailUiState>(UserDetailUiState.Loading)
     val userDetailUiState: StateFlow<UserDetailUiState> = _userDetailUiState
 
-    val userDetails: Unit
-        get() {
-            viewModelScope.launch {
-                homeRepositoryImp.currentClient().catch {
-                    _userDetailUiState.value =
-                        UserDetailUiState.ShowError(R.string.error_fetching_client)
-                }.collect { client ->
-                    preferencesHelper.officeName = client.officeName
-                    _userDetailUiState.value = UserDetailUiState.ShowUserDetails(client)
-                }
+    fun loadUserData() {
+        var userData : Client = Client()
+
+        viewModelScope.launch {
+            homeRepositoryImp.currentClient().catch {
+                _userDetailUiState.value = UserDetailUiState.ShowError(R.string.error_fetching_client)
+            }.collect { client ->
+                preferencesHelper.officeName = client.officeName
+                _userDetailUiState.value = UserDetailUiState.ShowUserDetails( client, null)
+                userData = client
             }
         }
 
-    val userImage: Unit
-        get() {
-            viewModelScope.launch {
-                setUserProfile(preferencesHelper.userProfileImage)
-                homeRepositoryImp.clientImage().catch {
-                    _userDetailUiState.value = UserDetailUiState.ShowUserImage(null)
-                }.collect {
-                    val encodedString = it.string()
-                    val pureBase64Encoded =
-                        encodedString.substring(encodedString.indexOf(',') + 1)
-                    preferencesHelper.userProfileImage = pureBase64Encoded
-                    setUserProfile(pureBase64Encoded)
-                }
+        viewModelScope.launch {
+            homeRepositoryImp.clientImage().catch {
+
+            }.collect {
+                val encodedString = it.string()
+                val pureBase64Encoded =
+                    encodedString.substring(encodedString.indexOf(',') + 1)
+                preferencesHelper.userProfileImage = pureBase64Encoded
+                _userDetailUiState.value = UserDetailUiState.ShowUserDetails( userData, getUserProfile(pureBase64Encoded))
             }
         }
+    }
 
-    fun setUserProfile(image: String?) {
+    fun getUserProfile(image: String?): Bitmap? {
         if (image == null) {
-            return
+            return null
         }
         val decodedBytes = Base64.decode(image, Base64.DEFAULT)
         val decodedBitmap = ImageUtil.instance?.compressImage(decodedBytes)
-        _userDetailUiState.value = UserDetailUiState.ShowUserImage(decodedBitmap)
+        return decodedBitmap
     }
 
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun registerNotification(token: String) {
         viewModelScope.launch {
             val payload = preferencesHelper.clientId?.let { NotificationRegisterPayload(it, token) }
             userDetailRepositoryImp.registerNotification(payload).catch { e ->
-                if (e is HttpException && e.code() == 500) {
+                if (e is retrofit2.HttpException && e.code() == 500) {
                     payload?.let { getUserNotificationId(it, token) }
                 }
             }.collect {
@@ -109,5 +109,10 @@ class UserDetailViewModel @Inject constructor(
             }
         }
     }
+}
 
+sealed class UserDetailUiState {
+    object Loading : UserDetailUiState()
+    data class ShowError(val message: Int) : UserDetailUiState()
+    data class ShowUserDetails(val client: Client, val image: Bitmap?) : UserDetailUiState()
 }

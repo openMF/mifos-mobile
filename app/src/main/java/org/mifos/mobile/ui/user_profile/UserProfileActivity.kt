@@ -13,6 +13,6 @@ class UserProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(UserProfileFragment.newInstance(), false, R.id.container)
+        replaceFragment(UserProfileComposeFragment.newInstance(), false, R.id.container)
     }
 }

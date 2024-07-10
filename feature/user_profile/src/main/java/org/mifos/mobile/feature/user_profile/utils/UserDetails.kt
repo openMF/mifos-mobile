@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.user_profile
+package org.mifos.mobile.feature.user_profile.utils
 
 data class UserDetails(
     val userName: String?,

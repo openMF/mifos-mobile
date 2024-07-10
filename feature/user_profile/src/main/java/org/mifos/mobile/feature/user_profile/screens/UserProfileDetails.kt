@@ -1,6 +1,5 @@
-package org.mifos.mobile.ui.user_profile
+package org.mifos.mobile.feature.user_profile.screens
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -10,14 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.mifos.mobile.R
+import org.mifos.mobile.feature.third.party.user_profile.R
+import org.mifos.mobile.feature.user_profile.utils.UserDetails
 
 /**
  * @author pratyush
@@ -45,9 +44,9 @@ fun UserProfileDetails(
                 tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = null
             )
-            userDetails.phoneNumber?.let {
+            if( userDetails.phoneNumber != null ){
                 Text(
-                    text = it,
+                    text = userDetails.phoneNumber,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = TextStyle(fontSize = 14.sp)
                 )
@@ -63,9 +62,9 @@ fun UserProfileDetails(
                 tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = null
             )
-            userDetails.dob?.let {
+            if( userDetails.dob != null ){
                 Text(
-                    text = it,
+                    text = userDetails.dob,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = TextStyle(fontSize = 14.sp)
                 )
@@ -81,9 +80,9 @@ fun UserProfileDetails(
                 tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = null
             )
-            userDetails.gender?.let {
+            if(userDetails.gender != null) {
                 Text(
-                    text = it,
+                    text = userDetails.gender,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = TextStyle(fontSize = 14.sp)
                 )
