@@ -42,15 +42,15 @@ import org.mifos.mobile.feature.guarantor.R
 fun GuarantorListScreen(
     viewModel: GuarantorListViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    addGuarantor: () -> Unit,
-    onGuarantorClicked: (Int) -> Unit
+    addGuarantor: (Long) -> Unit,
+    onGuarantorClicked: (Int, Long) -> Unit
 ) {
     val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
     GuarantorListScreen(
         uiState = uiState.value,
         navigateBack = navigateBack,
-        addGuarantor = addGuarantor,
-        onGuarantorClicked = onGuarantorClicked
+        addGuarantor = { addGuarantor(viewModel.loanId.value) },
+        onGuarantorClicked = { onGuarantorClicked(it, viewModel.loanId.value) }
     )
 }
 

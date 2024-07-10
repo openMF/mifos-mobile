@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.feature.auth.navigation.AuthenticationNavigation
 import org.mifos.mobile.feature.auth.navigation.AuthenticationRoute
 import org.mifos.mobile.navigation.RootNavGraph
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -27,6 +28,7 @@ class LoginActivity : BaseActivity() {
                 RootNavGraph(
                     startDestination = AuthenticationRoute.AUTH_NAVIGATION_ROUTE,
                     navController = navController,
+                    nestedStartDestination = AuthenticationNavigation.Login.route,
                 )
             }
         }

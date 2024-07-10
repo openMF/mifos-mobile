@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.core.data.repositories.GuarantorRepository
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
@@ -26,8 +27,9 @@ class GuarantorListViewModel @Inject constructor(
     private val guarantorRepositoryImp: GuarantorRepository
 ) : ViewModel() {
 
-    val guarantorUiState =
-        savedStateHandle.getStateFlow<Long>(key = LOAN_ID, initialValue = -1)
+    val loanId = savedStateHandle.getStateFlow<Long>(key = Constants.LOAN_ID, initialValue = -1)
+
+    val guarantorUiState = loanId
             .flatMapLatest { loanId ->
                 guarantorRepositoryImp.getGuarantorList(loanId = loanId)
             }

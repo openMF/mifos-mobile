@@ -1,11 +1,10 @@
 package org.mifos.mobile.feature.guarantor.navigation
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import org.mifos.mobile.feature.guarantor.screens.guarantor_add.AddGuarantorScreen
 import org.mifos.mobile.feature.guarantor.screens.guarantor_details.GuarantorDetailScreen
@@ -13,12 +12,16 @@ import org.mifos.mobile.feature.guarantor.screens.guarantor_list.GuarantorListSc
 import org.mifos.mobile.core.common.Constants.INDEX
 import org.mifos.mobile.core.common.Constants.LOAN_ID
 
-@Composable
-fun SetUpGuarantorNavGraph(
-    startDestination: String, navController: NavHostController, loanId: Long, navigateBack: () -> Unit
+fun NavGraphBuilder.guarantorNavGraph(
+    startDestination: String,
+    navController: NavHostController,
+    navigateBack: () -> Unit,
+    loanId: Long
 ) {
-    NavHost(navController = navController, startDestination = startDestination) {
-
+    navigation(
+        startDestination = startDestination,
+        route = GuarantorRoute.GUARANTOR_NAVIGATION_ROUTE
+    ) {
         addGuarantorRoute(
             navigateBack = { navController.popBackStack() }
         )
@@ -27,11 +30,11 @@ fun SetUpGuarantorNavGraph(
             loanId = loanId,
             navigateBack = navigateBack,
             addGuarantor = {
-                navController.navigate(GuarantorScreen.GuarantorAdd.passArguments(-1, loanId))
+                navController.navigate(GuarantorNavigation.GuarantorAdd.passArguments(-1, loanId))
             },
-            onGuarantorClicked = { index->
+            onGuarantorClicked = { index, loanId ->
                 navController.navigate(
-                    GuarantorScreen.GuarantorDetails.passArguments(
+                    GuarantorNavigation.GuarantorDetails.passArguments(
                         index = index,
                         loanId = loanId
                     )
@@ -43,7 +46,7 @@ fun SetUpGuarantorNavGraph(
             navigateBack = { navController.popBackStack() },
             updateGuarantor = { index, loanId ->
                 navController.navigate(
-                    GuarantorScreen.GuarantorAdd.passArguments(
+                    GuarantorNavigation.GuarantorAdd.passArguments(
                         index = index,
                         loanId = loanId
                     )
@@ -57,17 +60,17 @@ fun NavGraphBuilder.listGuarantorRoute(
     loanId: Long,
     navigateBack: () -> Unit,
     addGuarantor: (Long) -> Unit,
-    onGuarantorClicked: (Int) -> Unit
+    onGuarantorClicked: (Int, Long) -> Unit
 ) {
     composable(
-        route = GuarantorScreen.GuarantorList.route,
+        route = GuarantorNavigation.GuarantorList.route,
         arguments = listOf(
             navArgument(name = LOAN_ID) { type = NavType.LongType; defaultValue = loanId }
         )
     ) {
         GuarantorListScreen(
             navigateBack = navigateBack,
-            addGuarantor = { addGuarantor(loanId) },
+            addGuarantor = addGuarantor,
             onGuarantorClicked = onGuarantorClicked
         )
     }
@@ -78,7 +81,7 @@ fun NavGraphBuilder.detailGuarantorRoute(
     updateGuarantor: (index: Int, loanId: Long) -> Unit
 ) {
     composable(
-        route = GuarantorScreen.GuarantorDetails.route,
+        route = GuarantorNavigation.GuarantorDetails.route,
         arguments = listOf(
             navArgument(name = INDEX) { type = NavType.IntType },
             navArgument(name = LOAN_ID) { type = NavType.LongType }
@@ -95,7 +98,7 @@ fun NavGraphBuilder.addGuarantorRoute(
     navigateBack: () -> Unit
 ) {
     composable(
-        route = GuarantorScreen.GuarantorAdd.route,
+        route = GuarantorNavigation.GuarantorAdd.route,
         arguments = listOf(
             navArgument(name = INDEX) { type = NavType.IntType; defaultValue = -1 },
             navArgument(name = LOAN_ID) { type = NavType.LongType }
