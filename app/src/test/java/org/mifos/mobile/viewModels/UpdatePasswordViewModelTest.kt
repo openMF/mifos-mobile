@@ -14,7 +14,7 @@ import org.mifos.mobile.core.data.repositories.ClientRepository
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
 import org.mifos.mobile.feature.update_password.UpdatePasswordViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.feature.registration.utils.RegistrationState
+import org.mifos.mobile.feature.registration.utils.RegistrationUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -96,9 +96,9 @@ class UpdatePasswordViewModelTest {
         ).thenReturn(flowOf(responseBody))
         updatePasswordViewModel.updatePasswordUiState.test {
              updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
-                assertEquals(RegistrationState.Initial, awaitItem())
-                assertEquals(RegistrationState.Loading, awaitItem())
-                assertEquals(RegistrationState.Success, awaitItem())
+                assertEquals(RegistrationUiState.Initial, awaitItem())
+                assertEquals(RegistrationUiState.Loading, awaitItem())
+                assertEquals(RegistrationUiState.Success, awaitItem())
                 cancelAndIgnoreRemainingEvents()
         }
     }
@@ -111,9 +111,9 @@ class UpdatePasswordViewModelTest {
 
         updatePasswordViewModel.updatePasswordUiState.test{
             updatePasswordViewModel.updateAccountPassword("newPassword", "newPassword")
-            assertEquals(RegistrationState.Initial, awaitItem())
-            assertEquals(RegistrationState.Loading, awaitItem())
-            assertEquals(RegistrationState.Error(0), awaitItem())
+            assertEquals(RegistrationUiState.Initial, awaitItem())
+            assertEquals(RegistrationUiState.Loading, awaitItem())
+            assertEquals(RegistrationUiState.Error(0), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

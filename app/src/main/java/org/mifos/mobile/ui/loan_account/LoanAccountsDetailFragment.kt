@@ -16,7 +16,7 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.feature.guarantor.screens.GuarantorActivity
+import org.mifos.mobile.ui.activities.GuarantorActivity
 import org.mifos.mobile.feature.loan.loan_account.LoanAccountDetailScreen
 import org.mifos.mobile.feature.loan.loan_account.LoanAccountsDetailViewModel
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -95,7 +95,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
             SavingsMakeTransferComposeFragment.newInstance(
                 viewModel.loanId,
                 viewModel.loanWithAssociations?.summary?.totalOutstanding,
-                org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO,
+                Constants.TRANSFER_PAY_TO,
             ),
             true,
             R.id.container,
@@ -202,7 +202,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     private fun viewGuarantor() {
         val intent = Intent(requireContext(), GuarantorActivity::class.java)
-        intent.putExtra(org.mifos.mobile.core.common.Constants.LOAN_ID, viewModel.loanId)
+        intent.putExtra(Constants.LOAN_ID, viewModel.loanId)
         startActivity(intent)
     }
 

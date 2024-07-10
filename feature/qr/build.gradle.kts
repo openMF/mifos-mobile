@@ -14,10 +14,6 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.logs)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-
     //cameraX
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)

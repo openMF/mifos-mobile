@@ -1,10 +1,10 @@
 package org.mifos.mobile.feature.guarantor.navigation
 
-import org.mifos.mobile.core.common.Constants.GUARANTOR_ADD_SCREEN_ROUTE_BASE
-import org.mifos.mobile.core.common.Constants.GUARANTOR_DETAIL_SCREEN_ROUTE_BASE
-import org.mifos.mobile.core.common.Constants.GUARANTOR_LIST_SCREEN_ROUTE_BASE
 import org.mifos.mobile.core.common.Constants.INDEX
 import org.mifos.mobile.core.common.Constants.LOAN_ID
+import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_ADD_SCREEN_ROUTE_BASE
+import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_DETAIL_SCREEN_ROUTE_BASE
+import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_LIST_SCREEN_ROUTE_BASE
 
 sealed class GuarantorScreen(val route: String) {
     data object GuarantorList : GuarantorScreen(

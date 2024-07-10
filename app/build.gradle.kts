@@ -78,8 +78,6 @@ dependencies {
     implementation(projects.ui)
 
     implementation(projects.feature.loan)
-    implementation(projects.feature.login)
-    implementation(projects.feature.registration)
     implementation(projects.feature.beneficiary)
     implementation(projects.feature.guarantor)
     implementation(projects.feature.savings)
@@ -95,6 +93,7 @@ dependencies {
     implementation(projects.feature.about)
     implementation(projects.feature.settings)
     implementation(projects.feature.updatePassword)
+    implementation(projects.feature.auth)
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

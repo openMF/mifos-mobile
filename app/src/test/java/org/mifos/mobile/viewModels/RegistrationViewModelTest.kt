@@ -11,8 +11,9 @@ import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.core.data.repositories.UserAuthRepository
+import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.feature.registration.utils.RegistrationState
+import org.mifos.mobile.feature.registration.utils.RegistrationUiState
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -35,13 +36,13 @@ class RegistrationViewModelTest {
     @Mock
     lateinit var userAuthRepositoryImp: UserAuthRepository
 
-    private lateinit var registrationViewModel: org.mifos.mobile.feature.registration.viewmodel.RegistrationViewModel
+    private lateinit var registrationViewModel: RegistrationViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         registrationViewModel =
-            org.mifos.mobile.feature.registration.viewmodel.RegistrationViewModel(
+            RegistrationViewModel(
                 userAuthRepositoryImp
             )
         
@@ -136,9 +137,9 @@ class RegistrationViewModelTest {
                     "password",
                     "username"
                 )
-                assertEquals(RegistrationState.Initial, awaitItem())
-                assertEquals(RegistrationState.Loading, awaitItem())
-                assertEquals(RegistrationState.Success, awaitItem())
+                assertEquals(RegistrationUiState.Initial, awaitItem())
+                assertEquals(RegistrationUiState.Loading, awaitItem())
+                assertEquals(RegistrationUiState.Success, awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -169,9 +170,9 @@ class RegistrationViewModelTest {
                     "password",
                     "username"
                 )
-                assertEquals(RegistrationState.Initial, awaitItem())
-                assertEquals(RegistrationState.Loading, awaitItem())
-                assertEquals(RegistrationState.Error(0), awaitItem())
+                assertEquals(RegistrationUiState.Initial, awaitItem())
+                assertEquals(RegistrationUiState.Loading, awaitItem())
+                assertEquals(RegistrationUiState.Error(0), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -185,9 +186,9 @@ class RegistrationViewModelTest {
 
             registrationViewModel.registrationVerificationUiState.test {
             registrationViewModel.verifyUser("authenticationToken", "requestId")
-            assertEquals(RegistrationState.Initial,awaitItem())
-            assertEquals(RegistrationState.Loading,awaitItem())
-            assertEquals(RegistrationState.Success,awaitItem())
+            assertEquals(RegistrationUiState.Initial,awaitItem())
+            assertEquals(RegistrationUiState.Loading,awaitItem())
+            assertEquals(RegistrationUiState.Success,awaitItem())
             cancelAndIgnoreRemainingEvents()
             }
         }
@@ -201,9 +202,9 @@ class RegistrationViewModelTest {
             ).thenThrow(errorResponse)
             registrationViewModel.registrationVerificationUiState.test{
                 registrationViewModel.verifyUser("authenticationToken", "requestId")
-                assertEquals(RegistrationState.Initial,awaitItem())
-                assertEquals(RegistrationState.Loading,awaitItem())
-                assertEquals(RegistrationState.Error(0),awaitItem())
+                assertEquals(RegistrationUiState.Initial,awaitItem())
+                assertEquals(RegistrationUiState.Loading,awaitItem())
+                assertEquals(RegistrationUiState.Error(0),awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }

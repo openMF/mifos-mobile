@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="register">Register</string>
+    <string name="login_failed">Login Failed, Please Try Again Later.</string>
+    <string name="toast_welcome">Welcome %1$s</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="rb_mobile">mobile</string>
+    <string name="rb_email">email</string>
+    <string name="account_number">Account Number</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="verification_mode">Verification Mode</string>
+    <string name="dialog_cancel_registration_message">Do you want to cancel registering New Account ?</string>
+    <string name="dialog_cancel_registration_title">Cancel Registration</string>
+    <string name="request_id">Request Id</string>
+    <string name="empty_requestid">Request ID cannot be empty</string>
+    <string name="authentication_token">Authentication Token</string>
+    <string name="empty_authentication_token">Authentication Token cannot be empty</string>
+    <string name="verify">Verify</string>
+    <string name="verified">User has been verified successfully</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="could_not_register_user_error">We were unable to register the user.</string>
+    <string name="password_strength_weak">Weak</string>
+    <string name="password_strength_medium">Medium</string>
+    <string name="password_strength_strong">Strong</string>
+    <string name="password_strength_very_strong">Very Strong</string>
+    <string name="error_message_server">Error loading response from server</string>
+    <string name="error_validation_blank">%1$s cannot be blank</string>
+    <string name="error_validation_minimum_chars">%1$s cannot be less than %2$d characters</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s cannot contain %2$s</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s cannot begin orend with blank space</string>
+    <string name="error_username_greater_than_six">Username should be greater than 6 alphabets</string>
+    <string name="not_contain_username">Spaces</string>
+    <string name="invalid_phn_number">Invalid Phone Number</string>
+    <string name="error_invalid_email">Invalid email id</string>
+    <string name="error_password_not_match">Password does not match.</string>
+</resources>
