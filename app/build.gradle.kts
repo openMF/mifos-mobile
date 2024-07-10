@@ -93,9 +93,9 @@ dependencies {
     implementation(projects.feature.about)
     implementation(projects.feature.settings)
     implementation(projects.feature.updatePassword)
+    implementation(projects.feature.home)
     implementation(projects.feature.auth)
     implementation(projects.feature.userProfile)
-
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation(libs.androidx.lifecycle.ktx)

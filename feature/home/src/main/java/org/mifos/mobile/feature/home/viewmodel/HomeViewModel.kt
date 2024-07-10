@@ -1,6 +1,5 @@
-package org.mifos.mobile.ui.home
+package org.mifos.mobile.feature.home.viewmodel
 
-import android.graphics.Bitmap
 import android.util.Base64
 import android.util.Log
 import androidx.compose.runtime.State
@@ -12,12 +11,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.R
 import org.mifos.mobile.core.data.repositories.HomeRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.utils.ImageUtil
+import org.mifos.mobile.feature.home.R
+import org.mifos.mobile.feature.home.utils.HomeState
+import org.mifos.mobile.feature.home.utils.HomeUiState
+import org.mifos.mobile.feature.home.utils.ImageUtil
 import javax.inject.Inject
 
 @HiltViewModel
@@ -75,7 +76,6 @@ class HomeViewModel @Inject constructor(private val homeRepositoryImp: HomeRepos
             }
         }
     }
-
 
     private fun setUserProfile(image: String?) {
         if (image == null) {
@@ -161,16 +161,3 @@ sealed class HomeCardItem(
 
     data object SurveyCard : HomeCardItem(R.string.survey, R.drawable.ic_surveys_48px)
 }
-
-sealed class HomeUiState {
-    data object Loading : HomeUiState()
-    data class Error(val errorMessage: Int) : HomeUiState()
-    data class Success(val homeState: HomeState) : HomeUiState()
-}
-
-data class HomeState(
-    val username: String? = "",
-    val image: Bitmap? = null,
-    val loanAmount: Double = 0.0,
-    val savingsAmount: Double = 0.0
-)

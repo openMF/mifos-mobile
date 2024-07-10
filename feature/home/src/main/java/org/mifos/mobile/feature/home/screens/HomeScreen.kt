@@ -1,15 +1,17 @@
-package org.mifos.mobile.ui.home
+package org.mifos.mobile.feature.home.screens
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-
+import org.mifos.mobile.feature.home.R
+import org.mifos.mobile.feature.home.utils.HomeState
+import org.mifos.mobile.feature.home.utils.HomeUiState
+import org.mifos.mobile.feature.home.viewmodel.HomeCardItem
 
 @Composable
 fun HomeScreen(

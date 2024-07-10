@@ -2,12 +2,10 @@ package org.mifos.mobile.viewModels
 
 import CoroutineTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import io.reactivex.Observer
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -20,9 +18,9 @@ import org.mifos.mobile.models.accounts.savings.SavingAccount
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.models.client.ClientAccounts
 import org.mifos.mobile.repositories.HomeRepositoryImp
-import org.mifos.mobile.ui.home.HomeState
-import org.mifos.mobile.ui.home.HomeUiState
-import org.mifos.mobile.ui.home.HomeViewModel
+import org.mifos.mobile.feature.home.viewmodels.HomeState
+import org.mifos.mobile.feature.home.viewmodels.HomeUiState
+import org.mifos.mobile.feature.home.viewmodels.HomeViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -51,12 +49,12 @@ class HomeViewModelTest {
     private lateinit var mockPreferencesHelper: PreferencesHelper
     
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: org.mifos.mobile.feature.home.viewmodels.HomeViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = HomeViewModel(homeRepositoryImp)
+        viewModel = org.mifos.mobile.feature.home.viewmodels.HomeViewModel(homeRepositoryImp)
         viewModel.preferencesHelper = mockPreferencesHelper
     }
 
@@ -81,9 +79,12 @@ class HomeViewModelTest {
         viewModel.loadClientAccountDetails()
 
         assertEquals(viewModel.homeUiState.value,
-            HomeUiState.Success(
-                HomeState( loanAmount = expectedLoanBalance,
-                    savingsAmount = expectedSavingBalance))
+            org.mifos.mobile.feature.home.viewmodels.HomeUiState.Success(
+                org.mifos.mobile.feature.home.viewmodels.HomeState(
+                    loanAmount = expectedLoanBalance,
+                    savingsAmount = expectedSavingBalance
+                )
+            )
             )
 
     }
@@ -96,8 +97,8 @@ class HomeViewModelTest {
 
         viewModel.loadClientAccountDetails()
 
-        assertTrue(viewModel.homeUiState.value is HomeUiState.Error)
-        assertEquals(errorMessageResId, (viewModel.homeUiState.value as HomeUiState.Error).errorMessage)
+        assertTrue(viewModel.homeUiState.value is org.mifos.mobile.feature.home.viewmodels.HomeUiState.Error)
+        assertEquals(errorMessageResId, (viewModel.homeUiState.value as org.mifos.mobile.feature.home.viewmodels.HomeUiState.Error).errorMessage)
     }
 
     @Test
@@ -107,9 +108,9 @@ class HomeViewModelTest {
         `when`(homeRepositoryImp.currentClient()).thenReturn(flowOf(mockClient))
 
         viewModel.getUserDetails()
-        assertTrue(viewModel.homeUiState.value is HomeUiState.Success)
+        assertTrue(viewModel.homeUiState.value is org.mifos.mobile.feature.home.viewmodels.HomeUiState.Success)
         assertEquals(mockClient.officeName,
-            (viewModel.homeUiState.value as HomeUiState.Success).homeState.username)
+            (viewModel.homeUiState.value as org.mifos.mobile.feature.home.viewmodels.HomeUiState.Success).homeState.username)
     }
 
     @Test(expected = Exception::class)
@@ -119,8 +120,8 @@ class HomeViewModelTest {
         `when`(homeRepositoryImp.currentClient()).thenThrow( Exception())
 
         viewModel.getUserDetails()
-            assertTrue(viewModel.homeUiState.value is HomeUiState.Error)
-            assertEquals(errorMessageResId,HomeUiState.Error(R.string.error_fetching_client))
+            assertTrue(viewModel.homeUiState.value is org.mifos.mobile.feature.home.viewmodels.HomeUiState.Error)
+            assertEquals(errorMessageResId, org.mifos.mobile.feature.home.viewmodels.HomeUiState.Error(R.string.error_fetching_client))
 
     }
 

@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.home
+package org.mifos.mobile.feature.home.screens
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.clickable
@@ -34,12 +34,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.R
 import org.mifos.mobile.core.ui.component.MifosHiddenTextRow
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.feature.home.R
+import org.mifos.mobile.feature.home.viewmodel.HomeCardItem
 
 @Composable
 fun HomeContent(
