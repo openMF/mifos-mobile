@@ -55,7 +55,6 @@ fun RegistrationVerificationScreen(
     onVerified: () -> Unit
 ) {
 
-    val context = LocalContext.current
     var showConfirmationDialog by remember { mutableStateOf(false) }
 
     BackHandler(enabled = true) {
@@ -65,19 +64,19 @@ fun RegistrationVerificationScreen(
     if (showConfirmationDialog) {
         AlertDialog(
             onDismissRequest = { showConfirmationDialog = false },
-            title = { Text(text = getString(context, R.string.dialog_cancel_registration_title)) },
-            text = { Text(text = getString(context, R.string.dialog_cancel_registration_message)) },
+            title = { Text(text = stringResource(R.string.dialog_cancel_registration_title)) },
+            text = { Text(text = stringResource(R.string.dialog_cancel_registration_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showConfirmationDialog = false
                     navigateBack.invoke()
                 }) {
-                    Text(text = getString(context, R.string.yes))
+                    Text(text = stringResource(R.string.yes))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showConfirmationDialog = false }) {
-                    Text(text = getString(context, R.string.no))
+                    Text(text = stringResource(R.string.no))
                 }
             }
         )
@@ -130,11 +129,7 @@ fun RegistrationVerificationScreen(
                     }
 
                     RegistrationUiState.Success -> {
-                        Toast.makeText(
-                            context,
-                            getString(context, R.string.verified),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(context, stringResource(R.string.verified), Toast.LENGTH_SHORT).show()
                         onVerified()
                     }
                 }
@@ -198,7 +193,7 @@ fun RegistrationVerificationContent(verifyUser: (authenticationToken: String, re
                 requestIDError = false
             },
             label = R.string.request_id,
-            supportingText = getString(context, R.string.empty_requestid),
+            supportingText = stringResource(R.string.empty_requestid),
             error = requestIDError,
             keyboardType = KeyboardType.Number,
             trailingIcon = {
@@ -215,7 +210,7 @@ fun RegistrationVerificationContent(verifyUser: (authenticationToken: String, re
                 authenticationTokenError = false
             },
             label = R.string.authentication_token,
-            supportingText = getString(context, R.string.empty_authentication_token),
+            supportingText = stringResource(R.string.empty_authentication_token),
             error = authenticationTokenError,
             keyboardType = KeyboardType.Number,
             trailingIcon = {

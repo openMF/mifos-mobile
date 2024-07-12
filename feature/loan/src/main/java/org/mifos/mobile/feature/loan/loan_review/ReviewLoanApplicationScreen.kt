@@ -68,7 +68,9 @@ fun ReviewLoanApplicationScreen(
 
             when (uiState) {
                 is ReviewLoanApplicationUiState.Loading -> {
-                    MifosProgressIndicator(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background.copy(0.8f)))
+                    MifosProgressIndicator(modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background.copy(0.8f)))
                 }
 
                 is ReviewLoanApplicationUiState.Error -> {
@@ -78,10 +80,14 @@ fun ReviewLoanApplicationScreen(
                 is ReviewLoanApplicationUiState.Success -> {
                     when (uiState.loanState) {
                         LoanState.CREATE ->
-                            Toast.makeText(context, stringResource(id = R.string.loan_application_submitted_successfully), Toast.LENGTH_SHORT).show()
+                            LaunchedEffect(key1 = true) {
+                                Toast.makeText(context, context.getString(R.string.loan_application_submitted_successfully), Toast.LENGTH_SHORT).show()
+                            }
 
                         LoanState.UPDATE ->
-                            Toast.makeText(context, stringResource(id = R.string.loan_application_updated_successfully), Toast.LENGTH_SHORT).show()
+                            LaunchedEffect(key1 = true) {
+                                Toast.makeText(context, context.getString(R.string.loan_application_updated_successfully), Toast.LENGTH_SHORT).show()
+                            }
                     }
                     navigateBack(true)
                 }

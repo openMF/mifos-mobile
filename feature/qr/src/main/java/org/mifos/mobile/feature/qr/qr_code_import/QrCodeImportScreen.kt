@@ -31,17 +31,22 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
+import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.qr.R
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -284,5 +289,31 @@ fun QrCodeImportFunctions(
         if (!hasImagePicked) {
             imagePickerLauncher.launch("image/*")
         }
+    }
+}
+
+class QrCodeImportPreviewProvider : PreviewParameterProvider<QrCodeImportUiState> {
+    override val values: Sequence<QrCodeImportUiState>
+        get() = sequenceOf(
+            QrCodeImportUiState.Initial,
+            QrCodeImportUiState.Loading,
+            QrCodeImportUiState.ShowError(0),
+            QrCodeImportUiState.HandleDecodedResult(Result("", byteArrayOf(), arrayOf(), BarcodeFormat.CODE_128)),
+        )
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun QrCodeImportPreview(
+    @PreviewParameter( QrCodeImportPreviewProvider::class) qrCodeImportUiState: QrCodeImportUiState
+) {
+    MifosMobileTheme {
+        QrCodeImportScreen(
+            uiState= qrCodeImportUiState,
+            navigateBack= {},
+            proceedClicked= { _-> },
+            handleDecodedResult= { _-> },
+            showRationaleChecker= { _-> true}
+        )
     }
 }

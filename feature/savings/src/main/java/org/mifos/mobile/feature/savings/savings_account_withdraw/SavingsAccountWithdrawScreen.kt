@@ -80,11 +80,15 @@ fun SavingsAccountWithdrawScreen(
 
             when (uiState) {
                 is SavingsAccountWithdrawUiState.Loading -> {
-                    MifosProgressIndicator(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)))
+                    MifosProgressIndicator(modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)))
                 }
 
                 is SavingsAccountWithdrawUiState.Success -> {
-                    Toast.makeText(context, R.string.savings_account_withdraw_successful, Toast.LENGTH_SHORT).show()
+                    LaunchedEffect(true) {
+                        Toast.makeText(context, R.string.savings_account_withdraw_successful, Toast.LENGTH_SHORT).show()
+                    }
                     navigateBack(true)
                 }
 

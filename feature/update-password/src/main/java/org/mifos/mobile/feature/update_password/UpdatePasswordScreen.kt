@@ -39,17 +39,28 @@ fun UpdatePasswordScreen(
     navigateBack: () -> Unit
 ) {
     val uiState by viewModel.updatePasswordUiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     UpdatePasswordScreen(
         uiState = uiState,
-        navigateBack = navigateBack
+        navigateBack = navigateBack,
+        validateAndUpdatePassword = { newPassword, confirmPassword, newPasswordError, confirmPasswordError, setNewPasswordErrorContent, setConfirmPasswordErrorContent ->
+            validateAndUpdatePassword( context, viewModel, newPassword, confirmPassword, newPasswordError, confirmPasswordError, setNewPasswordErrorContent, setConfirmPasswordErrorContent) }
     )
 }
 
 @Composable
 fun UpdatePasswordScreen(
     uiState: UpdatePasswordUiState,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    validateAndUpdatePassword: (
+        newPassword: String,
+        confirmPassword: String,
+        newPasswordError: (isError: Boolean) -> Unit,
+        confirmPasswordError: (isError: Boolean) -> Unit,
+        setNewPasswordErrorContent: (error: String) -> Unit,
+        setConfirmPasswordErrorContent: (error: String) -> Unit
+    ) -> Unit,
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -71,7 +82,8 @@ fun UpdatePasswordScreen(
             UpdatePasswordContent(
                 updatePasswordButtonClicked = {
                     updatePasswordButtonClicked = true
-                }
+                },
+                validateAndUpdatePassword= validateAndUpdatePassword
             )
 
             when (uiState) {
@@ -109,26 +121,6 @@ fun UpdatePasswordScreen(
                 }
             }
         }
-    }
-}
-
-class UiStatesParameterProvider : PreviewParameterProvider<UpdatePasswordUiState> {
-    override val values: Sequence<UpdatePasswordUiState>
-        get() = sequenceOf(
-            UpdatePasswordUiState.Initial,
-            UpdatePasswordUiState.Error(1),
-            UpdatePasswordUiState.Loading,
-            UpdatePasswordUiState.Success
-        )
-}
-
-@Composable
-@Preview(showSystemUi = true, showBackground = true)
-fun UpdatePasswordScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class) updatePasswordUiState: UpdatePasswordUiState
-) {
-    MifosMobileTheme {
-        UpdatePasswordScreen(navigateBack = {})
     }
 }
 
@@ -227,7 +219,29 @@ fun validatePasswordMatch(newPassword: String, confirmPassword: String): Boolean
     return newPassword == confirmPassword
 }
 
+class UiStatesParameterProvider : PreviewParameterProvider<UpdatePasswordUiState> {
+    override val values: Sequence<UpdatePasswordUiState>
+        get() = sequenceOf(
+            UpdatePasswordUiState.Initial,
+            UpdatePasswordUiState.Error(1),
+            UpdatePasswordUiState.Loading,
+            UpdatePasswordUiState.Success
+        )
+}
 
+@Composable
+@Preview(showSystemUi = true, showBackground = true)
+fun UpdatePasswordScreenPreview(
+    @PreviewParameter(UiStatesParameterProvider::class) updatePasswordUiState: UpdatePasswordUiState
+) {
+    MifosMobileTheme {
+        UpdatePasswordScreen(
+            uiState = updatePasswordUiState,
+            navigateBack = {},
+            validateAndUpdatePassword= { _,_,_,_,_,_-> }
+        )
+    }
+}
 
 
 

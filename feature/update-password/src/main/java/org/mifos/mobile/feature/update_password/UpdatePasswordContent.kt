@@ -37,8 +37,16 @@ import org.mifos.mobile.feature.update.password.R
 
 @Composable
 fun UpdatePasswordContent(
-    viewModel: UpdatePasswordViewModel = hiltViewModel(),
-    updatePasswordButtonClicked : () -> Unit
+    updatePasswordButtonClicked : () -> Unit,
+    validateAndUpdatePassword: (
+            newPassword: String,
+            confirmPassword: String,
+            newPasswordError: (isError: Boolean) -> Unit,
+            confirmPasswordError: (isError: Boolean) -> Unit,
+            setNewPasswordErrorContent: (error: String) -> Unit,
+            setConfirmPasswordErrorContent: (error: String) -> Unit
+        ) -> Unit,
+
 ) {
     var newPassword by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
@@ -56,7 +64,6 @@ fun UpdatePasswordContent(
     var newPasswordErrorContent by rememberSaveable { mutableStateOf("") }
     var confirmPasswordErrorContent by rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val context = LocalContext.current
 
 
     Column(
@@ -125,22 +132,22 @@ fun UpdatePasswordContent(
                 keyboardController?.hide()
                 updatePasswordButtonClicked.invoke()
 
-                validateAndUpdatePassword(context,
-                    viewModel,
+                validateAndUpdatePassword(
                     newPassword.text,
                     confirmPassword.text,
-                    newPasswordError = {
+                     {
                         newPasswordError = it
                     },
-                    confirmPasswordError = {
+                     {
                         confirmPasswordError = it
                     },
-                    setNewPasswordErrorContent = {
+                    {
                         newPasswordErrorContent = it
                     },
-                    setConfirmPasswordErrorContent = {
+                    {
                         confirmPasswordErrorContent = it
-                    })
+                    }
+                )
             },
             modifier = Modifier
                 .fillMaxWidth()

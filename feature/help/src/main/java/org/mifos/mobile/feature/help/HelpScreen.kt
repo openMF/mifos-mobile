@@ -20,6 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,7 +33,7 @@ import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosTextButtonWithTopDrawable
 import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
 import org.mifos.mobile.core.ui.component.MifosTopBar
-
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 
 @Composable
@@ -188,5 +191,32 @@ fun HelpContent(
                 error = R.string.no_questions_found
             )
         }
+    }
+}
+
+class HelpScreenPreviewProvider : PreviewParameterProvider<HelpUiState> {
+    override val values: Sequence<HelpUiState>
+        get() = sequenceOf(
+            HelpUiState.Initial,
+            HelpUiState.ShowFaq(arrayListOf())
+        )
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun HelpScreenPreview(
+    @PreviewParameter( HelpScreenPreviewProvider::class) helpUiState: HelpUiState
+) {
+    MifosMobileTheme {
+        HelpScreen(
+        uiState= helpUiState,
+        callNow = { },
+        leaveEmail= { },
+        findLocations= {},
+        updateFaqPosition= { _-> },
+        navigateBack= {},
+        searchQuery= {_ -> },
+        onSearchDismiss= { },
+        )
     }
 }
