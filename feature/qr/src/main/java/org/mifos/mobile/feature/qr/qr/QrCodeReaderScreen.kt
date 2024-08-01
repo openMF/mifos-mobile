@@ -1,5 +1,6 @@
 package org.mifos.mobile.feature.qr.qr
 
+import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.compose.foundation.layout.Box
@@ -14,8 +15,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosIcons
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
@@ -23,18 +29,33 @@ import org.mifos.mobile.feature.qr.R
 
 @Composable
 fun QrCodeReaderScreen(
-    qrScanned: (String) -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    openBeneficiaryApplication: ( Beneficiary, BeneficiaryState ) -> Unit,
 ) {
+    val context = LocalContext.current
+    val gson = Gson()
+
+
     MFScaffold(
         topBarTitleResId = R.string.add_beneficiary,
         navigateBack = navigateBack,
-        scaffoldContent = {
+        scaffoldContent = { it ->
             Box(modifier = Modifier
                 .padding(it)
                 .fillMaxSize()) {
                 QrCodeReaderContent(
-                    qrScanned = qrScanned,
+                    qrScanned = { text->
+                        try {
+                            val beneficiary = gson.fromJson(text, Beneficiary::class.java)
+                            openBeneficiaryApplication.invoke(beneficiary, BeneficiaryState.CREATE_QR)
+                        } catch (e: JsonSyntaxException) {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.invalid_qr),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    },
                     navigateBack = navigateBack
                 )
             }
@@ -83,7 +104,7 @@ fun QrCodeReaderContent(
 fun QrCodeReaderScreenPreview() {
     MifosMobileTheme {
         QrCodeReaderScreen(
-            qrScanned = {},
+            openBeneficiaryApplication = { _, _ -> },
             navigateBack = {}
         )
     }

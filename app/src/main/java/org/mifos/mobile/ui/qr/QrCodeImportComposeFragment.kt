@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.qr
 
+/*
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -78,7 +79,6 @@ class QrCodeImportComposeFragment : BaseFragment() {
         return ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)
     }
 
-
     override fun onResume() {
         super.onResume()
         (activity as? BaseActivity)?.hideToolbar()
@@ -90,3 +90,4 @@ class QrCodeImportComposeFragment : BaseFragment() {
         }
     }
 }
+*/

@@ -20,6 +20,8 @@ import org.mifos.mobile.feature.beneficiary.beneficiary_application.BeneficiaryA
 /**
  * Created by dilpreet on 16/6/17.
  */
+// File Can be deleted After fully implementing compose navigation.
+// Has Instances left out in Qr Code Import and Qr Code Reader Fragment
 @AndroidEntryPoint
 class BeneficiaryApplicationComposeFragment : BaseFragment() {
 
@@ -41,9 +43,11 @@ class BeneficiaryApplicationComposeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            BeneficiaryApplicationScreen(
-                navigateBack = { activity?.onBackPressed() }
-            )
+//            BeneficiaryApplicationScreen(
+//                navigateBack = { activity?.onBackPressed() },
+//                beneficiary = beneficiary,
+//                beneficiaryState = beneficiaryState
+//            )
         }
     }
 

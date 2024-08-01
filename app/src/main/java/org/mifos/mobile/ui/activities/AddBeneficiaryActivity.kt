@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.activities
 
+/*
 import android.os.Bundle
 import org.mifos.mobile.R
 import org.mifos.mobile.databinding.ActivityContainerBinding
@@ -22,3 +23,4 @@ class AddBeneficiaryActivity : BaseActivity() {
         replaceFragment(BeneficiaryAddOptionsFragment.newInstance(), false, R.id.container)
     }
 }
+*/

@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.beneficiary_detail;
 
+/*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -75,6 +76,4 @@ class BeneficiaryDetailFragment : BaseFragment() {
         }
     }
 }
-
-
-
+ */

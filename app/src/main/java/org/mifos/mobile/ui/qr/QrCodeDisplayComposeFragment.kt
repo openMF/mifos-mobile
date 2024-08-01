@@ -13,6 +13,8 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.feature.qr.qr_code_display.QrCodeDisplayScreen
 import org.mifos.mobile.feature.qr.qr_code_display.QrCodeDisplayViewModel
 
+// Can be deleted after fully implementing compose navigation
+// Used in LoanAccountDetail and SavingsAccountDetail Fragments
 @AndroidEntryPoint
 class QrCodeDisplayComposeFragment : BaseFragment() {
 
@@ -32,9 +34,9 @@ class QrCodeDisplayComposeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            QrCodeDisplayScreen(
-                navigateBack = { activity?.onBackPressed() }
-            )
+//            QrCodeDisplayScreen(
+//                navigateBack = { activity?.onBackPressed() }
+//            )
         }
     }
 

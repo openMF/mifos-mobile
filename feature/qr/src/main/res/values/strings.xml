@@ -18,4 +18,7 @@
     <string name="import_qr">Import QR</string>
     <string name="error_reading_qr"> Error while reading QR, make sure you select proper region
     </string>
+    <string name="invalid_qr">You can\'t make action into your account, please scan other user
+        Savings and Loans Account QRCode
+    </string>
 </resources>

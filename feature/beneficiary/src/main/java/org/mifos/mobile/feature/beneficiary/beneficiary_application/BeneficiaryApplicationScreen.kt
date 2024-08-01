@@ -14,11 +14,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
+import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
@@ -29,10 +32,19 @@ import org.mifos.mobile.feature.beneficiary.R
 @Composable
 fun BeneficiaryApplicationScreen(
     viewModel: BeneficiaryApplicationViewModel = hiltViewModel(),
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    beneficiary: Beneficiary?,
+    beneficiaryState: BeneficiaryState?
 ) {
-    val beneficiaryState by viewModel.beneficiaryState.collectAsStateWithLifecycle()
-    val beneficiary by viewModel.beneficiary.collectAsStateWithLifecycle()
+    beneficiaryState?.let {
+        viewModel.initArgs(
+            beneficiaryState = beneficiaryState,
+            beneficiary = beneficiary
+        )
+    }
+
+    val newBeneficiaryState by viewModel.beneficiaryState.collectAsStateWithLifecycle()
+    val newBeneficiary by viewModel.beneficiary.collectAsStateWithLifecycle()
     val uiState by viewModel.beneficiaryUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
@@ -42,8 +54,8 @@ fun BeneficiaryApplicationScreen(
     BeneficiaryApplicationScreen (
         uiState = uiState,
         navigateBack = navigateBack,
-        beneficiaryState = beneficiaryState,
-        beneficiary = beneficiary,
+        beneficiaryState = newBeneficiaryState,
+        beneficiary = newBeneficiary,
         onRetry = { viewModel.loadBeneficiaryTemplate() },
         onSubmit = { viewModel.submitBeneficiary(it) }
     )

@@ -33,4 +33,6 @@ dependencies {
     //guava for ListenableFuture
     implementation ("com.google.guava:guava:33.0.0-android")
 
+    //permissions
+    implementation ("com.google.accompanist:accompanist-permissions:0.25.0")
 }

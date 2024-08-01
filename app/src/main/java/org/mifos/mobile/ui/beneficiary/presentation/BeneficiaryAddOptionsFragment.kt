@@ -18,8 +18,8 @@ import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.model.enums.RequestAccessType
 import org.mifos.mobile.ui.fragments.base.BaseFragment
-import org.mifos.mobile.ui.qr.QrCodeReaderFragment
-import org.mifos.mobile.ui.qr.QrCodeImportComposeFragment
+//import org.mifos.mobile.ui.qr.QrCodeReaderFragment
+//import org.mifos.mobile.ui.qr.QrCodeImportComposeFragment
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.checkSelfPermission
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest.requestPermission
@@ -30,6 +30,8 @@ import org.mifos.mobile.utils.Toaster
 /**
  * Created by dilpreet on 5/7/17.
  */
+// File Can be deleted After fully implementing compose navigation.
+// Has Instances Left out in ThirdPartyTransfer Fragment
 @AndroidEntryPoint
 class BeneficiaryAddOptionsFragment : BaseFragment() {
 
@@ -51,16 +53,15 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
             setContent {
 
                 MifosMobileTheme {
-                    BeneficiaryScreen(
-                        topAppbarNavigateback = {
-                            requireActivity().onBackPressedDispatcher.onBackPressed()
-                        },
-                        addiconClicked = { addManually() },
-                        scaniconClicked = { addUsingQrCode() },
-                        uploadIconClicked = { addByImportingQrCode() },
-                    )
+//                    BeneficiaryScreen(
+//                        topAppbarNavigateback = {
+//                            requireActivity().onBackPressedDispatcher.onBackPressed()
+//                        },
+//                        addiconClicked = { addManually() },
+//                        scaniconClicked = { addUsingQrCode() },
+//                        uploadIconClicked = { addByImportingQrCode() },
+//                    )
                 }
-
             }
 
         }
@@ -92,11 +93,11 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
                 Manifest.permission.CAMERA,
             )
         ) {
-            (activity as BaseActivity?)?.replaceFragment(
-                QrCodeReaderFragment.newInstance(),
-                true,
-                R.id.container,
-            )
+//            (activity as BaseActivity?)?.replaceFragment(
+//                QrCodeReaderFragment.newInstance(),
+//                true,
+//                R.id.container,
+//            )
         } else {
             requestPermission(RequestAccessType.CAMERA)
         }
@@ -108,11 +109,11 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
      */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun addByImportingQrCode() {
-        (activity as BaseActivity?)?.replaceFragment(
-            QrCodeImportComposeFragment.newInstance(),
-            true,
-            R.id.container,
-        )
+//        (activity as BaseActivity?)?.replaceFragment(
+//            QrCodeImportComposeFragment.newInstance(),
+//            true,
+//            R.id.container,
+//        )
     }
 
     /**
@@ -152,11 +153,11 @@ class BeneficiaryAddOptionsFragment : BaseFragment() {
                 if (grantResults.size > 0 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
-                    (activity as BaseActivity?)?.replaceFragment(
-                        QrCodeReaderFragment.newInstance(),
-                        true,
-                        R.id.container,
-                    )
+//                    (activity as BaseActivity?)?.replaceFragment(
+//                        QrCodeReaderFragment.newInstance(),
+//                        true,
+//                        R.id.container,
+//                    )
                 } else {
                     Toaster.show(
                         binding.root,

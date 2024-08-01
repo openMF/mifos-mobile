@@ -1,5 +1,6 @@
 package org.mifos.mobile.feature.qr.qr_code_import
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -22,39 +23,52 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.feature.qr.R
 
 @Composable
+@OptIn(ExperimentalPermissionsApi::class)
 fun PermissionBox(
     requiredPermissions: List<String>,
     title: Int,
     description: Int,
     confirmButtonText: Int,
     dismissButtonText: Int,
-    rationaleChecker: (permission: String) -> Boolean,
     onGranted: @Composable (() -> Unit)? = null,
     onDenied: @Composable (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val permissionStates : MutableList<PermissionState> = mutableListOf()
+
+    for( permission in requiredPermissions)
+    {
+        permissionStates.add(rememberPermissionState(permission = permission))
+    }
+
+    fun checkPermissionStatus() : Boolean{
+        for( permissionState in permissionStates){
+            if(permissionState.status.shouldShowRationale)
+                return true
+        }
+        return false
+    }
 
     var permissionGranted by remember {
         mutableStateOf(
             requiredPermissions.all {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    it
-                ) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission( context, it ) == PackageManager.PERMISSION_GRANTED
             }
         )
     }
 
     var shouldShowPermissionRationale by remember {
         mutableStateOf(
-            requiredPermissions.all {
-                rationaleChecker.invoke(it)
-            }
+            checkPermissionStatus()
         )
     }
 
@@ -87,10 +101,7 @@ fun PermissionBox(
             permissionGranted = isGranted
 
             if (!isGranted) {
-                shouldShowPermissionRationale =
-                    requiredPermissions.all {
-                        rationaleChecker.invoke(it)
-                    }
+                shouldShowPermissionRationale = checkPermissionStatus()
             }
             shouldDirectUserToApplicationSettings =
                 !shouldShowPermissionRationale && !permissionGranted

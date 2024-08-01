@@ -1,5 +1,6 @@
 package org.mifos.mobile.ui.qr
 
+/*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,3 +66,4 @@ class QrCodeReaderFragment : BaseFragment() {
         }
     }
 }
+ */

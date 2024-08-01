@@ -31,7 +31,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
@@ -41,8 +43,12 @@ import org.mifos.mobile.feature.beneficiary.R
 fun BeneficiaryDetailScreen(
     viewModel: BeneficiaryDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    updateBeneficiary: () -> Unit,
+    updateBeneficiary: ( beneficiary : Beneficiary? ) -> Unit,
+    beneficiary: Beneficiary?
 ) {
+    beneficiary?.let {
+        viewModel.setBeneficiary(beneficiary)
+    }
     val uiState by viewModel.beneficiaryDetailsUiStates.collectAsStateWithLifecycle()
     val beneficiary by viewModel.beneficiary.collectAsStateWithLifecycle()
 
@@ -50,7 +56,11 @@ fun BeneficiaryDetailScreen(
         beneficiary = beneficiary,
         uiState = uiState,
         navigateBack = navigateBack,
-        updateBeneficiary = updateBeneficiary,
+        updateBeneficiary = {
+            updateBeneficiary.invoke(
+                viewModel.getBeneficiary()
+            )
+        },
         deleteBeneficiary = {
             viewModel.deleteBeneficiary(it)
         }
