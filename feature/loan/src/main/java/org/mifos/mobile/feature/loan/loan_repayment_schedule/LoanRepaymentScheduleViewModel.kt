@@ -1,5 +1,6 @@
 package org.mifos.mobile.feature.loan.loan_repayment_schedule
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repositories.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
@@ -15,18 +17,22 @@ import org.mifos.mobile.feature.loan.R
 import javax.inject.Inject
 
 @HiltViewModel
-class LoanRepaymentScheduleViewModel @Inject constructor(private val loanRepositoryImp: LoanRepository) :
-    ViewModel() {
+class LoanRepaymentScheduleViewModel @Inject constructor(
+    private val loanRepositoryImp: LoanRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val _loanUiState = MutableStateFlow<LoanUiState>(LoanUiState.Loading)
     val loanUiState: StateFlow<LoanUiState> get() = _loanUiState
+    private val _loanUiState = MutableStateFlow<LoanUiState>(LoanUiState.Loading)
 
-    fun loanLoanWithAssociations(loanId: Long?) {
+    val loanId = savedStateHandle.getStateFlow<Long?>(key = Constants.LOAN_ID, initialValue = null)
+
+    fun loanLoanWithAssociations() {
         viewModelScope.launch {
             _loanUiState.value = LoanUiState.Loading
             loanRepositoryImp.getLoanWithAssociations(
-                org.mifos.mobile.core.common.Constants.REPAYMENT_SCHEDULE,
-                loanId,
+                Constants.REPAYMENT_SCHEDULE,
+                loanId.value,
             ).catch {
                 _loanUiState.value =
                     LoanUiState.ShowError(R.string.repayment_schedule)

@@ -1,14 +1,21 @@
 package org.mifos.mobile.feature.account.viewmodel
 
 import android.content.Context
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.functions.Predicate
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
@@ -19,6 +26,8 @@ import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.account.utils.AccountState
 import org.mifos.mobile.feature.account.utils.StatusUtils
 import java.util.*
@@ -27,7 +36,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
     private val accountsRepositoryImp: AccountsRepository,
-    private val homeRepositoryImp: HomeRepository
+    private val homeRepositoryImp: HomeRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
@@ -48,6 +58,16 @@ class AccountsViewModel @Inject constructor(
     private val _filterList = MutableStateFlow(emptyList<CheckboxStatus>())
     val filterList: StateFlow<List<CheckboxStatus>> = _filterList.asStateFlow()
 
+    private val _accountTypeString = savedStateHandle.getStateFlow<String>(key = Constants.ACCOUNT_TYPE, initialValue = AccountType.SAVINGS.name)
+
+    val accountType: StateFlow<AccountType?> = _accountTypeString
+        .flatMapLatest { accountTypeString ->
+            flowOf(AccountType.valueOf(accountTypeString))
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null
+        )
 
     fun refresh(accountType: String?) {
         when (accountType) {

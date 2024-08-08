@@ -1,74 +1,78 @@
 package org.mifos.mobile.feature.beneficiary.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.feature.beneficiary.beneficiary_application.BeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.beneficiary_detail.BeneficiaryDetailScreen
 import org.mifos.mobile.feature.beneficiary.beneficiary_list.BeneficiaryListScreen
-import org.mifos.mobile.feature.beneficiary.navigation.BeneficiaryRoute.BENEFICIARY_LIST_ROUTE
-import org.mifos.mobile.feature.beneficiary.navigation.BeneficiaryRoute.BENEFICIARY_NAVIGATION_ROUTE
 import org.mifos.mobile.feature.beneficiary.presentation.BeneficiaryScreen
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun NavController.navigateToBeneficiaryListScreen() {
+    navigate(BeneficiaryNavigation.BeneficiaryList.route)
+}
+
+fun NavController.navigateToAddBeneficiaryScreen() {
+    navigate(BeneficiaryNavigation.AddBeneficiary.route)
+}
+
+fun NavController.navigateToBeneficiaryApplicationScreen(beneficiary: Beneficiary?, beneficiaryState: BeneficiaryState) {
+    navigate(
+        BeneficiaryNavigation.BeneficiaryApplication.passArguments(
+            beneficiaryId = beneficiary?.id ?: -1,
+            beneficiaryState = beneficiaryState
+        )
+    )
+}
+
 fun NavGraphBuilder.beneficiaryNavGraph(
-    startDestination: String,
     navController: NavHostController,
-    navigateBack: () -> Unit,
     openQrReaderScreen: () -> Unit,
     openQrImportScreen: () -> Unit
 ) {
     navigation(
-        startDestination = startDestination,
-        route = BENEFICIARY_NAVIGATION_ROUTE
+        startDestination = BeneficiaryNavigation.BeneficiaryList.route,
+        route = BeneficiaryNavigation.BeneficiaryBaseRoute.route
     ) {
         beneficiaryListRoute(
-            navigateBack = navigateBack,
+            navigateBack = navController::popBackStack,
             addBeneficiary = {
                 navController.navigate(BeneficiaryNavigation.AddBeneficiary.route)
-             },
-            showBeneficiaryDetail = { beneficiaryId, beneficiaryList ->
-                navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryDetail(
-                        beneficiaryList[beneficiaryId]
-                    ).route
-                )
+            },
+            showBeneficiaryDetail = { beneficiaryId ->
+                navController.navigate(BeneficiaryNavigation.BeneficiaryDetail.passArguments(beneficiaryId = beneficiaryId))
             }
         )
 
         addBeneficiaryRoute(
-            navigateBack= { navController.popBackStack() },
+            navigateBack = navController::popBackStack,
             addBeneficiaryManually = {
                 navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryApplication(
-                        BeneficiaryState.CREATE_MANUAL,
-                        null,
-                    ).route
+                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(-1, BeneficiaryState.CREATE_MANUAL)
                 )
-             },
+            },
             openQrScanner = openQrReaderScreen,
             uploadQrCode = openQrImportScreen
         )
 
         beneficiaryDetailRoute(
-            navigateBack = { navController.popBackStack() },
+            navigateBack = navController::popBackStack,
             updateBeneficiary = { beneficiary ->
                 navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryApplication(
-                        BeneficiaryState.UPDATE,
-                        beneficiary
-                    ).route
+                   BeneficiaryNavigation.BeneficiaryApplication.passArguments(beneficiary?.id ?: -1, BeneficiaryState.UPDATE)
                 )
             }
         )
 
         beneficiaryApplicationRoute(
-            navigateBack = { navController.popBackStack() }
+            navigateBack = navController::popBackStack,
         )
     }
 }
@@ -76,20 +80,17 @@ fun NavGraphBuilder.beneficiaryNavGraph(
 fun NavGraphBuilder.beneficiaryListRoute(
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    showBeneficiaryDetail: ( Int, List<Beneficiary>) -> Unit
+    showBeneficiaryDetail: (Int) -> Unit
 ) {
     composable(route = BeneficiaryNavigation.BeneficiaryList.route) {
         BeneficiaryListScreen(
             navigateBack = navigateBack,
             addBeneficiaryClicked = addBeneficiary,
-            onBeneficiaryItemClick = { beneficiaryId, beneficiaryList ->
-                showBeneficiaryDetail(beneficiaryId, beneficiaryList)
-            },
+            onBeneficiaryItemClick = showBeneficiaryDetail
         )
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 fun NavGraphBuilder.addBeneficiaryRoute(
     navigateBack: () -> Unit,
     addBeneficiaryManually: () -> Unit,
@@ -98,9 +99,9 @@ fun NavGraphBuilder.addBeneficiaryRoute(
 ) {
     composable(route = BeneficiaryNavigation.AddBeneficiary.route) {
         BeneficiaryScreen(
-            topAppbarNavigateback= navigateBack,
-            addiconClicked= addBeneficiaryManually,
-            scaniconClicked= openQrScanner,
+            topAppbarNavigateback = navigateBack,
+            addiconClicked = addBeneficiaryManually,
+            scaniconClicked = openQrScanner,
             uploadIconClicked = uploadQrCode
         )
     }
@@ -108,28 +109,33 @@ fun NavGraphBuilder.addBeneficiaryRoute(
 
 fun NavGraphBuilder.beneficiaryDetailRoute(
     navigateBack: () -> Unit,
-    updateBeneficiary: ( beneficiary : Beneficiary? ) -> Unit,
-    beneficiary : Beneficiary? = null
+    updateBeneficiary: (beneficiary: Beneficiary?) -> Unit,
 ) {
-    composable(route = BeneficiaryNavigation.BeneficiaryDetail(beneficiary).route) {
+    composable(
+        route = BeneficiaryNavigation.BeneficiaryDetail.route,
+        arguments = listOf(
+            navArgument(name = BENEFICIARY_ID) { type = NavType.IntType }
+        )
+    ) {
         BeneficiaryDetailScreen(
             navigateBack = navigateBack,
             updateBeneficiary = updateBeneficiary,
-            beneficiary = beneficiary
         )
     }
 }
 
 fun NavGraphBuilder.beneficiaryApplicationRoute(
     navigateBack: () -> Unit,
-    beneficiary : Beneficiary? = null,
-    beneficiaryState: BeneficiaryState? = null
 ) {
-    composable(route = BeneficiaryNavigation.BeneficiaryApplication(beneficiaryState, beneficiary).route) {
+    composable(
+        route = BeneficiaryNavigation.BeneficiaryApplication.route,
+        arguments = listOf(
+            navArgument(name = BENEFICIARY_ID) { type = NavType.IntType },
+            navArgument(name = Constants.BENEFICIARY_STATE) { type = NavType.EnumType(BeneficiaryState::class.java) }
+        )
+    ) {
         BeneficiaryApplicationScreen(
             navigateBack = navigateBack,
-            beneficiary = beneficiary,
-            beneficiaryState = beneficiaryState
         )
     }
 }

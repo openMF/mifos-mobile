@@ -35,7 +35,6 @@ import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
-
 @Composable
 fun HelpScreen(
     viewModel: HelpViewModel = hiltViewModel(),

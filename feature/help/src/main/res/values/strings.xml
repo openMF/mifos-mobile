@@ -6,6 +6,10 @@
     <string name="leave_email">Leave an email</string>
     <string name="find_locations">Find Locations</string>
     <string name="no_questions_found">No Questions Found</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="user_query">User Query</string>
+    <string name="no_app_to_support_action">There is no application that support this action</string>
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>

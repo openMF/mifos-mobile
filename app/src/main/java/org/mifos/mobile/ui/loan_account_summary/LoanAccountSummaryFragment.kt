@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -14,6 +16,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
 import org.mifos.mobile.feature.loan.loan_account_summary.LoanAccountSummaryScreen
+import org.mifos.mobile.feature.loan.loan_account_summary.LoanAccountSummaryViewModel
 
 /*
 ~This project is licensed under the open source MPL V2.
@@ -25,12 +28,15 @@ import org.mifos.mobile.feature.loan.loan_account_summary.LoanAccountSummaryScre
 class LoanAccountSummaryFragment : BaseFragment() {
 
     private var loanWithAssociations: LoanWithAssociations? = null
+
+    private val viewModel: LoanAccountSummaryViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.hideToolbar()
-        if (arguments != null) {
-            loanWithAssociations = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT)
-        }
+//        if (arguments != null) {
+//            viewModel.setArgs(loan = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT))
+//        }
     }
 
     override fun onCreateView(
@@ -43,8 +49,7 @@ class LoanAccountSummaryFragment : BaseFragment() {
             setContent {
                 MifosMobileTheme {
                     LoanAccountSummaryScreen(
-                        navigateBack = { },
-                        loanWithAssociations = loanWithAssociations
+                        navigateBack = { view?.findNavController()?.popBackStack() },
                     )
                 }
             }

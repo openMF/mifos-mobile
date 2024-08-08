@@ -40,8 +40,8 @@ import org.mifos.mobile.feature.savings.R
 @Composable
 fun SavingsAccountDetailContent(
     savingsAccount: SavingsWithAssociations,
-    deposit: (Boolean) -> Unit,
-    makeTransfer: (Boolean) -> Unit,
+    deposit: () -> Unit,
+    makeTransfer: () -> Unit,
     viewTransaction: () -> Unit,
     viewCharges: () -> Unit,
     viewQrCode: (SavingsWithAssociations) -> Unit,
@@ -100,8 +100,8 @@ fun SavingsAccountDetailContent(
 fun AccountDetailsCard(
     modifier: Modifier = Modifier,
     savingsAccount: SavingsWithAssociations,
-    deposit: (Boolean) -> Unit,
-    makeTransfer: (Boolean) -> Unit,
+    deposit: () -> Unit,
+    makeTransfer: () -> Unit,
     currencySymbol: String
 ) {
     val context = LocalContext.current
@@ -188,17 +188,17 @@ fun AccountDetailsCard(
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedButton(onClick = {
-                    deposit.invoke(
-                        savingsAccount.status?.active ?: false
-                    )
+                    if(savingsAccount.status?.active == true) {
+                        deposit()
+                    }
                 }) { Text(text = stringResource(id = R.string.deposit)) }
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 OutlinedButton(onClick = {
-                    makeTransfer.invoke(
-                        savingsAccount.status?.active ?: false
-                    )
+                    if(savingsAccount.status?.active == true) {
+                        makeTransfer()
+                    }
                 }) { Text(text = stringResource(id = R.string.make_transfer)) }
             }
         }

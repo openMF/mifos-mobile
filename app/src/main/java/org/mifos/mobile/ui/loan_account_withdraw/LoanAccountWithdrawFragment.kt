@@ -28,11 +28,11 @@ class LoanAccountWithdrawFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.hideToolbar()
-        if (arguments != null) {
-            viewModel.setLoanContent(
-                loanWithAssociations = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT)
-            )
-        }
+//        if (arguments != null) {
+//            viewModel.setLoanContent(
+//                loanWithAssociations = arguments?.getCheckedParcelable(LoanWithAssociations::class.java, Constants.LOAN_ACCOUNT)
+//            )
+//        }
     }
 
     override fun onCreateView(

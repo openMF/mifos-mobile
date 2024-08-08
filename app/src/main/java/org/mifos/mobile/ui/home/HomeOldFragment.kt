@@ -76,28 +76,12 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
             setContent {
                 MifosMobileTheme {
                     HomeScreen(
-                        homeUiState = viewModel.homeUiState.value,
-                        homeCards = viewModel.getHomeCardItems(),
                         callHelpline = { callHelpline() },
                         mailHelpline = { mailHelpline() },
-                        totalSavings = { onClickSavings() },
-                        totalLoan = { onClickLoan() },
-                        userProfile = { userImageClicked() },
-                        homeCardClicked = { handleHomeCardClick(it) }
+                        onNavigate = {}
                     )
                 }
             }
-        }
-    }
-
-    private fun handleHomeCardClick(homeCardItem: HomeCardItem) {
-        when (homeCardItem) {
-            is HomeCardItem.AccountCard -> accountsClicked()
-            is HomeCardItem.BeneficiariesCard -> beneficiaries()
-            is HomeCardItem.ChargesCard -> chargesClicked()
-            is HomeCardItem.LoanCard -> applyForLoan()
-            is HomeCardItem.SurveyCard -> surveys()
-            is HomeCardItem.TransferCard -> transferClicked()
         }
     }
 
@@ -175,21 +159,21 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
         )
     }
 
-    /**
-     * Open LOAN tab under ClientAccountsFragment
-     */
-    private fun onClickLoan() {
-        openAccount(AccountType.LOAN)
-        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
-    }
-
-    /**
-     * Open SAVINGS tab under ClientAccountsFragment
-     */
-    private fun onClickSavings() {
-        openAccount(AccountType.SAVINGS)
-        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
-    }
+//    /**
+//     * Open LOAN tab under ClientAccountsFragment
+//     */
+//    private fun onClickLoan() {
+//        openAccount(AccountType.LOAN)
+//        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
+//    }
+//
+//    /**
+//     * Open SAVINGS tab under ClientAccountsFragment
+//     */
+//    private fun onClickSavings() {
+//        openAccount(AccountType.SAVINGS)
+//        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -239,10 +223,10 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
     /**
      * Calls `openAccount()` for opening [ClientAccountsFragment]
      */
-    private fun accountsClicked() {
-        openAccount(AccountType.SAVINGS)
-        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
-    }
+//    private fun accountsClicked() {
+//        openAccount(AccountType.SAVINGS)
+//        (activity as HomeActivity?)?.setNavigationViewSelectedItem(R.id.item_accounts)
+//    }
 
     /**
      * Shows a dialog with options: Normal Transfer and Third Party Transfer
@@ -315,13 +299,13 @@ class HomeOldFragment : BaseFragment(), OnRefreshListener {
      *
      * @param errorMessage Error message that tells the user about the problem.
      */
-    fun showError(errorMessage: String?) {
-        val checkedItem = (activity as HomeActivity?)?.checkedItem
-        if (checkedItem == R.id.item_about_us || checkedItem == R.id.item_help || checkedItem == R.id.item_settings) {
-            return
-        }
-        Toaster.show(view, errorMessage)
-    }
+//    fun showError(errorMessage: String?) {
+//        val checkedItem = (activity as HomeActivity?)?.checkedItem
+//        if (checkedItem == R.id.item_about_us || checkedItem == R.id.item_help || checkedItem == R.id.item_settings) {
+//            return
+//        }
+//        Toaster.show(view, errorMessage)
+//    }
 
     companion object {
         fun newInstance(): HomeOldFragment {

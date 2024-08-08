@@ -23,9 +23,7 @@ class QrCodeDisplayComposeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.hideToolbar()
-        if (arguments != null) {
-            viewModel.setQrString(arguments?.getString(Constants.QR_DATA))
-        }
+
     }
 
     override fun onCreateView(

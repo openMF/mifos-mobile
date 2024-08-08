@@ -22,22 +22,18 @@ class ChargeWidgetDataProvider(@param:ApplicationContext private val context: Co
     @Inject
     lateinit var clientChargeRepository: ClientChargeRepository
 
-    private lateinit var clientChargeViewModel: org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 
     private var charges: List<Charge?>?
     private val `object`: ReentrantLock = ReentrantLock()
     private val condition = `object`.newCondition()
 
     override fun onCreate() {
-        clientChargeViewModel =
-            ClientChargeViewModel(
-                clientChargeRepository
-            )
+
     }
 
     override fun onDataSetChanged() {
         // TODO Make ClientId Dynamic
-        clientChargeViewModel.loadClientLocalCharges()
+        //clientChargeViewModel.loadClientLocalCharges()
         synchronized(`object`) {
             try {
                 // Calling wait() will block this thread until another thread

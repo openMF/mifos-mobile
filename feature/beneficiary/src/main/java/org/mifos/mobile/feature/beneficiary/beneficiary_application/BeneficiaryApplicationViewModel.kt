@@ -1,12 +1,18 @@
 package org.mifos.mobile.feature.beneficiary.beneficiary_application
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.Constants.BENEFICIARY_STATE
 import org.mifos.mobile.core.data.repositories.BeneficiaryRepository
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
@@ -14,28 +20,35 @@ import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.feature.beneficiary.R
+import org.mifos.mobile.feature.beneficiary.navigation.BENEFICIARY_ID
 import javax.inject.Inject
 
 @HiltViewModel
-class BeneficiaryApplicationViewModel @Inject constructor(private val beneficiaryRepositoryImp: BeneficiaryRepository) :
+class BeneficiaryApplicationViewModel @Inject constructor(
+    private val beneficiaryRepositoryImp: BeneficiaryRepository,
+    savedStateHandle: SavedStateHandle
+) :
     ViewModel() {
 
-    private val _beneficiaryUiState = MutableStateFlow<BeneficiaryApplicationUiState>(
-        BeneficiaryApplicationUiState.Loading
-    )
+    private val _beneficiaryUiState = MutableStateFlow<BeneficiaryApplicationUiState>(BeneficiaryApplicationUiState.Loading)
     val beneficiaryUiState: StateFlow<BeneficiaryApplicationUiState> get() = _beneficiaryUiState
 
-    private val _beneficiaryState: MutableStateFlow<BeneficiaryState> = MutableStateFlow(
-        BeneficiaryState.CREATE_QR)
-    val beneficiaryState: StateFlow<BeneficiaryState> get() = _beneficiaryState
+    private val beneficiaryId = savedStateHandle.getStateFlow<Int?>(key = BENEFICIARY_ID, initialValue = null)
 
-    private var _beneficiary: MutableStateFlow<Beneficiary?> = MutableStateFlow(null)
-    val beneficiary: StateFlow<Beneficiary?> get() = _beneficiary
+    val beneficiaryState = savedStateHandle.getStateFlow<BeneficiaryState>(key = BENEFICIARY_STATE, initialValue = BeneficiaryState.CREATE_QR)
 
-    fun initArgs(beneficiaryState: BeneficiaryState, beneficiary: Beneficiary?) {
-        _beneficiaryState.value = beneficiaryState
-        _beneficiary.value = beneficiary
-    }
+    val beneficiary: StateFlow<Beneficiary?> = beneficiaryId
+        .flatMapLatest {
+            beneficiaryRepositoryImp.beneficiaryList()
+        }.map { beneficiaryList ->
+            beneficiaryId.value?.let { beneficiaryId ->
+                beneficiaryList.find { it.id == beneficiaryId }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = null
+        )
 
     fun loadBeneficiaryTemplate() {
         viewModelScope.launch {
@@ -51,7 +64,7 @@ class BeneficiaryApplicationViewModel @Inject constructor(private val beneficiar
 
     fun submitBeneficiary(beneficiaryPayload: BeneficiaryPayload) {
         when(beneficiaryState.value) {
-            org.mifos.mobile.core.model.enums.BeneficiaryState.UPDATE -> updateBeneficiary(
+            BeneficiaryState.UPDATE -> updateBeneficiary(
                 beneficiaryId = beneficiary.value?.id?.toLong(),
                 payload = BeneficiaryUpdatePayload(
                     name = beneficiaryPayload.name,

@@ -1,39 +1,53 @@
 package org.mifos.mobile.feature.qr.navigation
 
+import android.icu.text.MessagePattern.ArgType
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.feature.qr.navigation.QrRoute.QR_NAVIGATION_ROUTE
 import org.mifos.mobile.feature.qr.qr.QrCodeReaderScreen
 import org.mifos.mobile.feature.qr.qr_code_display.QrCodeDisplayScreen
 import org.mifos.mobile.feature.qr.qr_code_import.QrCodeImportScreen
 
+
+fun NavController.navigateToQrDisplayScreen(qrString: String) {
+    navigate(
+        QrNavigation.QrDisplayScreen.passArguments(qrString = qrString)
+    )
+}
+
+fun NavController.navigateToQrImportScreen() {
+    navigate(QrNavigation.QrImportScreen.route)
+}
+
+fun NavController.navigateToQrReaderScreen() {
+    navigate(QrNavigation.QrReaderScreen.route)
+}
+
 fun NavGraphBuilder.qrNavGraph(
-    startDestination: String,
     navController: NavHostController,
-    navigateBack: () -> Unit,
     openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
-    qrData: String?
 ) {
     navigation(
-        startDestination = startDestination,
-        route = QR_NAVIGATION_ROUTE
+        startDestination = QrNavigation.QrDisplayScreen.route,
+        route = QrNavigation.QrBase.route
     ) {
         readerRoute(
-            navigateBack = navigateBack,
+            navigateBack = navController::popBackStack,
             openBeneficiaryApplication = openBeneficiaryApplication
         )
 
         displayRoute(
-            navigateBack = navigateBack,
-            qrData = qrData
+            navigateBack = navController::popBackStack,
         )
 
         importRoute(
-            navigateBack = { navController.popBackStack() },
+            navigateBack = navController::popBackStack,
             openBeneficiaryApplication = openBeneficiaryApplication
         )
     }
@@ -41,9 +55,9 @@ fun NavGraphBuilder.qrNavGraph(
 
 fun NavGraphBuilder.readerRoute(
     navigateBack: () -> Unit,
-    openBeneficiaryApplication: ( Beneficiary, BeneficiaryState ) -> Unit,
+    openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
 ) {
-    composable(route = QrNavigation.Reader.route) {
+    composable(route = QrNavigation.QrReaderScreen.route) {
         QrCodeReaderScreen(
             navigateBack= navigateBack,
             openBeneficiaryApplication= openBeneficiaryApplication
@@ -53,12 +67,15 @@ fun NavGraphBuilder.readerRoute(
 
 fun NavGraphBuilder.displayRoute(
     navigateBack: () -> Unit,
-    qrData: String?
 ) {
-    composable(route = QrNavigation.Display.route){
+    composable(
+        route = QrNavigation.QrDisplayScreen.route,
+        arguments = listOf(
+            navArgument(name = QR_ARGS) { type = NavType.StringType }
+        )
+    ){
         QrCodeDisplayScreen(
             navigateBack = navigateBack,
-            qrData = qrData
         )
     }
 }
@@ -67,7 +84,7 @@ fun NavGraphBuilder.importRoute(
     navigateBack: () -> Unit,
     openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit
 ) {
-    composable(route = QrNavigation.Import.route){
+    composable(route = QrNavigation.QrImportScreen.route){
         QrCodeImportScreen(
             navigateBack= navigateBack,
             openBeneficiaryApplication = openBeneficiaryApplication

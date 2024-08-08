@@ -22,17 +22,15 @@ import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 @AndroidEntryPoint
 class ClientChargeComposeFragment : BaseFragment() {
 
-    private val viewModel: ClientChargeViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.hideToolbar()
-        if (arguments != null) {
-            viewModel.initArgs(
-                clientId = arguments?.getLong(Constants.CLIENT_ID),
-                chargeType = arguments?.getCheckedSerializable(ChargeType::class.java, Constants.CHARGE_TYPE) as ChargeType
-            )
-        }
+//        if (arguments != null) {
+//            viewModel.initArgs(
+//                clientId = arguments?.getLong(Constants.CLIENT_ID),
+//                chargeType = arguments?.getCheckedSerializable(ChargeType::class.java, Constants.CHARGE_TYPE) as ChargeType
+//            )
+//        }
     }
 
     override fun onCreateView(

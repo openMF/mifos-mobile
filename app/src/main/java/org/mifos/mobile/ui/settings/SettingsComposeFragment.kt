@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Constants.HAS_SETTINGS_CHANGED
 import org.mifos.mobile.core.ui.component.mifosComposeView
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.settings.SettingsScreen
@@ -63,7 +64,7 @@ class SettingsComposeFragment : BaseFragment() {
 
     private fun languageChanged() {
         val intent = Intent(activity, activity?.javaClass)
-        intent.putExtra(org.mifos.mobile.core.common.Constants.HAS_SETTINGS_CHANGED, true)
+        intent.putExtra(HAS_SETTINGS_CHANGED, true)
         startActivity(intent)
         activity?.finish()
     }

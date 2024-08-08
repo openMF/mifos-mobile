@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -19,31 +20,126 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import org.mifos.mobile.core.ui.component.MifosHiddenTextRow
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.ui.component.MFScaffold
+import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.feature.home.R
+import org.mifos.mobile.feature.home.components.HomeNavigationDrawer
+import org.mifos.mobile.feature.home.components.HomeTopBar
+import org.mifos.mobile.feature.home.components.TransferDialog
+import org.mifos.mobile.feature.home.navigation.HomeDestinations
+import org.mifos.mobile.feature.home.navigation.toDestination
 import org.mifos.mobile.feature.home.viewmodel.HomeCardItem
+import org.mifos.mobile.feature.home.viewmodel.HomeNavigationItems
 
 @Composable
 fun HomeContent(
+    username: String,
+    totalLoanAmount: Double,
+    totalSavingsAmount: Double,
+    userBitmap: Bitmap?,
+    notificationCount: Int,
+    homeCards: List<HomeCardItem>,
+    userProfile: () -> Unit,
+    totalSavings: () -> Unit,
+    totalLoan: () -> Unit,
+    callHelpline: () -> Unit,
+    mailHelpline: () -> Unit,
+    onNavigate: (HomeDestinations) -> Unit,
+    openNotifications: () -> Unit,
+) {
+
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    var showLogoutDialog by rememberSaveable { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    HomeNavigationDrawer(
+        drawerState = drawerState,
+        userBitmap = userBitmap,
+        username = username,
+        navigateItem = {
+            coroutineScope.launch { drawerState.close() }
+            when(it) {
+                HomeNavigationItems.Logout -> showLogoutDialog = true
+                else -> onNavigate(it.toDestination())
+            }
+        },
+        content = {
+            MFScaffold(
+                topBar = {
+                    HomeTopBar(
+                        openNavigationDrawer = {
+                            coroutineScope.launch { drawerState.open() }
+                        },
+                        notificationCount = notificationCount,
+                        openNotifications = openNotifications
+                    )
+                }
+            ) {
+                HomeContent(
+                    modifier = Modifier.padding(it),
+                    username = username,
+                    totalLoanAmount = totalLoanAmount,
+                    totalSavingsAmount = totalSavingsAmount,
+                    userBitmap = userBitmap,
+                    homeCards = homeCards,
+                    userProfile = userProfile,
+                    totalSavings = totalSavings,
+                    totalLoan = totalLoan,
+                    callHelpline = callHelpline,
+                    mailHelpline = mailHelpline,
+                    onNavigate = onNavigate
+                )
+            }
+        }
+    )
+
+    if(showLogoutDialog) {
+        MifosAlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            dismissText = stringResource(id = R.string.cancel),
+            onConfirmation = {
+                onNavigate(HomeDestinations.LOGOUT)
+                showLogoutDialog = false
+            },
+            confirmationText = stringResource(id = R.string.logout),
+            dialogTitle = stringResource(id = R.string.dialog_logout),
+            dialogText = ""
+        )
+    }
+}
+
+@Composable
+private fun HomeContent(
+    modifier: Modifier = Modifier,
     username: String,
     totalLoanAmount: Double,
     totalSavingsAmount: Double,
@@ -52,13 +148,14 @@ fun HomeContent(
     userProfile: () -> Unit,
     totalSavings: () -> Unit,
     totalLoan: () -> Unit,
-    callHelpline: (String) -> Unit,
-    mailHelpline: (String) -> Unit,
-    homeCardClicked: (HomeCardItem) -> Unit,
+    callHelpline: () -> Unit,
+    mailHelpline: () -> Unit,
+    onNavigate: (HomeDestinations) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
             .verticalScroll(scrollState)
@@ -80,18 +177,21 @@ fun HomeContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        HomeCards(homeCardClicked = homeCardClicked, homeCards = homeCards)
+        HomeCards(onNavigate = onNavigate, homeCards = homeCards)
 
         ContactUsRow(callHelpline = callHelpline, mailHelpline = mailHelpline)
     }
 }
 
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun HomeCards(
-    homeCardClicked: (HomeCardItem) -> Unit,
+    onNavigate: (HomeDestinations) -> Unit,
     homeCards: List<HomeCardItem>
 ) {
+    var showTransferDialog by rememberSaveable { mutableStateOf(false) }
+
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         maxItemsInEachRow = 3,
@@ -104,9 +204,23 @@ private fun HomeCards(
                     .padding(bottom = 8.dp),
                 titleId = card.titleId,
                 drawableResId = card.drawableResId,
-                onClick = { homeCardClicked(card) }
+                onClick = {
+                    if(card == HomeCardItem.TransferCard) {
+                        showTransferDialog = true
+                    } else {
+                        onNavigate(card.toDestination())
+                    }
+                }
             )
         }
+    }
+
+    if(showTransferDialog) {
+        TransferDialog(
+            onDismissRequest = { showTransferDialog = false },
+            navigateToTransfer = { onNavigate(HomeDestinations.TRANSFER) },
+            navigateToThirdPartyTransfer = {  onNavigate(HomeDestinations.THIRD_PARTY_TRANSFER) }
+        )
     }
 }
 
@@ -144,7 +258,6 @@ fun UserDetailsRow(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeCard(
     modifier: Modifier,
@@ -187,6 +300,7 @@ private fun AccountOverviewCard(
     totalLoan: () -> Unit
 ) {
     val context = LocalContext.current
+    val isInPreview = LocalInspectionMode.current
 
     Row {
         Card(
@@ -209,7 +323,10 @@ private fun AccountOverviewCard(
 
                 MifosHiddenTextRow(
                     title = stringResource(id = R.string.total_saving),
-                    hiddenText = CurrencyUtil.formatCurrency(context, totalSavingsAmount),
+                    hiddenText = if (isInPreview) "" else CurrencyUtil.formatCurrency(
+                        context,
+                        totalSavingsAmount
+                    ),
                     hiddenColor = colorResource(id = R.color.deposit_green),
                     hidingText = stringResource(id = R.string.hidden_amount),
                     visibilityIconId = R.drawable.ic_visibility_24px,
@@ -221,7 +338,10 @@ private fun AccountOverviewCard(
 
                 MifosHiddenTextRow(
                     title = stringResource(id = R.string.total_loan),
-                    hiddenText = CurrencyUtil.formatCurrency(context, totalLoanAmount),
+                    hiddenText = if (isInPreview) "" else CurrencyUtil.formatCurrency(
+                        context,
+                        totalLoanAmount
+                    ),
                     hiddenColor = colorResource(id = R.color.red),
                     hidingText = stringResource(id = R.string.hidden_amount),
                     visibilityIconId = R.drawable.ic_visibility_24px,
@@ -235,8 +355,8 @@ private fun AccountOverviewCard(
 
 @Composable
 private fun ContactUsRow(
-    callHelpline: (String) -> Unit,
-    mailHelpline: (String) -> Unit
+    callHelpline: () -> Unit,
+    mailHelpline: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -282,8 +402,10 @@ fun PreviewHomeContent() {
             totalSavings = {},
             totalLoan = {},
             userProfile = {},
-            homeCardClicked = {},
-            homeCards = listOf()
+            onNavigate = {},
+            notificationCount = 0,
+            homeCards = listOf(),
+            openNotifications = {},
         )
     }
 }

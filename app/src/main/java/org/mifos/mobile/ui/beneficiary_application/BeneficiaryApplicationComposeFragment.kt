@@ -29,12 +29,12 @@ class BeneficiaryApplicationComposeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            viewModel.initArgs(
-                beneficiaryState = arguments?.getCheckedSerializable(BeneficiaryState::class.java, Constants.BENEFICIARY_STATE) as BeneficiaryState,
-                beneficiary = arguments?.getCheckedParcelable(Beneficiary::class.java, Constants.BENEFICIARY)
-            )
-        }
+//        if (arguments != null) {
+//            viewModel.initArgs(
+//                beneficiaryState = arguments?.getCheckedSerializable(BeneficiaryState::class.java, Constants.BENEFICIARY_STATE) as BeneficiaryState,
+//                beneficiary = arguments?.getCheckedParcelable(Beneficiary::class.java, Constants.BENEFICIARY)
+//            )
+//        }
     }
 
     override fun onCreateView(

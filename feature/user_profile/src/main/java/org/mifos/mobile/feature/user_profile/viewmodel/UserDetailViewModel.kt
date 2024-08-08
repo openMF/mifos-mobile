@@ -68,7 +68,6 @@ class UserDetailViewModel @Inject constructor(
         return decodedBitmap
     }
 
-    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun registerNotification(token: String) {
         viewModelScope.launch {
             val payload = preferencesHelper.clientId?.let { NotificationRegisterPayload(it, token) }

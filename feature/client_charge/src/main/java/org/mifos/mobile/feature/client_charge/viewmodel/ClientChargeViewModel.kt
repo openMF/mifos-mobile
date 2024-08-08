@@ -1,5 +1,7 @@
 package org.mifos.mobile.feature.client_charge.viewmodel
 
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,39 +9,39 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repositories.ClientChargeRepository
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.model.entity.client.ClientType
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.client_charge.utils.ClientChargeState
 import javax.inject.Inject
 
 @HiltViewModel
-class ClientChargeViewModel @Inject constructor(private val clientChargeRepositoryImp: ClientChargeRepository) :
-    ViewModel() {
+class ClientChargeViewModel @Inject constructor(
+    private val clientChargeRepositoryImp: ClientChargeRepository,
+    val preferencesHelper: PreferencesHelper,
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
     private val _clientChargeUiState = MutableStateFlow<ClientChargeState>(ClientChargeState.Loading)
     val clientChargeUiState: StateFlow<ClientChargeState> get() = _clientChargeUiState
 
-    private val _clientId = MutableStateFlow<Long?>(null)
-    private val clientId: StateFlow<Long?> get() = _clientId
+    private val clientId = preferencesHelper.clientId
+    private val chargeTypeString = savedStateHandle.getStateFlow<String?>(key = Constants.CHARGE_TYPE, initialValue = null)
 
-    private val _chargeType = MutableStateFlow<org.mifos.mobile.core.model.enums.ChargeType?>(null)
-    private val chargeType: StateFlow<org.mifos.mobile.core.model.enums.ChargeType?> get() = _chargeType
-
-    fun initArgs(
-        clientId: Long?,
-        chargeType: org.mifos.mobile.core.model.enums.ChargeType
-    ) {
-        _clientId.value = clientId
-        _chargeType.value = chargeType
+    init {
         loadCharges()
     }
 
     fun loadCharges() {
-        clientId.value?.let { clientId ->
-            when (chargeType.value) {
-                org.mifos.mobile.core.model.enums.ChargeType.CLIENT -> loadClientCharges(clientId)
-                org.mifos.mobile.core.model.enums.ChargeType.SAVINGS -> loadSavingsAccountCharges(clientId)
-                org.mifos.mobile.core.model.enums.ChargeType.LOAN -> loadLoanAccountCharges(clientId)
+        clientId?.let { clientId ->
+            val chargeType = chargeTypeString.value?.let { ChargeType.valueOf(it) }
+            when (chargeType) {
+                ChargeType.CLIENT -> loadClientCharges(clientId)
+                ChargeType.SAVINGS -> loadSavingsAccountCharges(clientId)
+                ChargeType.LOAN -> loadLoanAccountCharges(clientId)
                 null -> Unit
             }
         }

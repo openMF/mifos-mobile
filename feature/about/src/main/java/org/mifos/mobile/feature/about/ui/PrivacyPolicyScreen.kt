@@ -1,4 +1,4 @@
-package org.mifos.mobile.ui.activities
+package org.mifos.mobile.feature.about.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,31 +6,21 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import org.mifos.mobile.R
-import org.mifos.mobile.core.ui.component.FloatingActionButtonContent
 import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosIcons
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.feature.account.client_account.screens.ClientAccountsTabRow
-import org.mifos.mobile.feature.account.client_account.utils.ClientAccountsScreenTopBar
+import org.mifos.mobile.feature.about.R
 
 @Composable
 fun PrivacyPolicyScreen(

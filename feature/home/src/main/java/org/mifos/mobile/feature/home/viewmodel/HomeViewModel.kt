@@ -22,17 +22,18 @@ import org.mifos.mobile.feature.home.utils.ImageUtil
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val homeRepositoryImp: HomeRepository) :
-    ViewModel() {
+class HomeViewModel @Inject constructor(
+    val homeRepositoryImp: HomeRepository,
+    val preferencesHelper: PreferencesHelper
+) : ViewModel() {
 
-    @Inject
-    lateinit var preferencesHelper: PreferencesHelper
-
-    private val _homeUiState = mutableStateOf<HomeUiState>(HomeUiState.Loading)
-    val homeUiState: State<HomeUiState> get() = _homeUiState
+    private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+    val homeUiState: StateFlow<HomeUiState> get() = _homeUiState
 
     private val _notificationsCount = MutableStateFlow<Int>(0)
     val notificationsCount: StateFlow<Int> get() = _notificationsCount
+
+    val clientId = preferencesHelper.clientId
 
     fun loadClientAccountDetails() {
         viewModelScope.launch {
@@ -146,18 +147,76 @@ sealed class HomeCardItem(
     val titleId: Int,
     val drawableResId: Int
 ) {
-    data object AccountCard :
-        HomeCardItem(R.string.accounts, R.drawable.ic_account_balance_black_24dp)
-
-    data object TransferCard :
-        HomeCardItem(R.string.transfer, R.drawable.ic_compare_arrows_black_24dp)
-
-    data object ChargesCard :
-        HomeCardItem(R.string.charges, R.drawable.ic_account_balance_wallet_black_24dp)
-
+    data object AccountCard : HomeCardItem(R.string.accounts, R.drawable.ic_account_balance_black_24dp)
+    data object TransferCard : HomeCardItem(R.string.transfer, R.drawable.ic_compare_arrows_black_24dp)
+    data object ChargesCard : HomeCardItem(R.string.charges, R.drawable.ic_account_balance_wallet_black_24dp)
     data object LoanCard : HomeCardItem(R.string.apply_for_loan, R.drawable.ic_loan)
-    data object BeneficiariesCard :
-        HomeCardItem(R.string.beneficiaries, R.drawable.ic_beneficiaries_48px)
-
+    data object BeneficiariesCard : HomeCardItem(R.string.beneficiaries, R.drawable.ic_beneficiaries_48px)
     data object SurveyCard : HomeCardItem(R.string.survey, R.drawable.ic_surveys_48px)
 }
+
+enum class HomeNavigationItems(
+    val nameResId: Int,
+    val iconResId: Int
+) {
+    Home(
+        nameResId = R.string.home,
+        iconResId = R.drawable.ic_account_balance_black_24dp
+    ),
+
+    Accounts(
+        nameResId = R.string.accounts,
+        iconResId = R.drawable.ic_account_balance_wallet_black_24dp
+    ),
+
+    RecentTransactions(
+        nameResId = R.string.recent_transactions,
+        iconResId = R.drawable.ic_label_black_24dp
+    ),
+
+    Charges(
+        nameResId = R.string.charges,
+        iconResId = R.drawable.ic_charges
+    ),
+
+    ThirdPartyTransfer(
+        nameResId = R.string.third_party_transfer,
+        iconResId = R.drawable.ic_compare_arrows_black_24dp
+    ),
+
+    ManageBeneficiaries(
+        nameResId = R.string.manage_beneficiaries,
+        iconResId = R.drawable.ic_beneficiaries_48px
+    ),
+
+    Settings(
+        nameResId = R.string.settings,
+        iconResId = R.drawable.ic_settings
+    ),
+
+    AboutUs(
+        nameResId = R.string.about_us,
+        iconResId = R.drawable.ic_about_us_black_24dp
+    ),
+
+    Help(
+        nameResId = R.string.help,
+        iconResId = R.drawable.ic_help_black_24dp
+    ),
+
+    Share(
+        nameResId = R.string.share,
+        iconResId = R.drawable.ic_share_black_24dp
+    ),
+
+    AppInfo(
+        nameResId = R.string.app_info,
+        iconResId = R.drawable.ic_info_black_24dp
+    ),
+
+    Logout(
+        nameResId = R.string.logout,
+        iconResId = R.drawable.ic_logout
+    )
+}
+

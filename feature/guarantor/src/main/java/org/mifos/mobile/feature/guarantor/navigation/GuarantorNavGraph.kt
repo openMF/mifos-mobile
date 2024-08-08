@@ -1,36 +1,45 @@
 package org.mifos.mobile.feature.guarantor.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.feature.guarantor.screens.guarantor_add.AddGuarantorScreen
 import org.mifos.mobile.feature.guarantor.screens.guarantor_details.GuarantorDetailScreen
 import org.mifos.mobile.feature.guarantor.screens.guarantor_list.GuarantorListScreen
 import org.mifos.mobile.core.common.Constants.INDEX
 import org.mifos.mobile.core.common.Constants.LOAN_ID
+import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_NAVIGATION_ROUTE_BASE
+
+
+fun NavController.navigateToGuarantorScreen(loanId: Long) {
+    navigate(GuarantorNavigation.GuarantorScreenBase.passArguments(loanId = loanId.toString()))
+}
 
 fun NavGraphBuilder.guarantorNavGraph(
-    startDestination: String,
     navController: NavHostController,
-    navigateBack: () -> Unit,
-    loanId: Long
 ) {
     navigation(
-        startDestination = startDestination,
-        route = GuarantorRoute.GUARANTOR_NAVIGATION_ROUTE
+        startDestination = GuarantorNavigation.GuarantorList.route,
+        route = GuarantorNavigation.GuarantorScreenBase.route,
     ) {
         addGuarantorRoute(
-            navigateBack = { navController.popBackStack() }
+            navigateBack = navController::popBackStack,
         )
 
         listGuarantorRoute(
-            loanId = loanId,
-            navigateBack = navigateBack,
-            addGuarantor = {
-                navController.navigate(GuarantorNavigation.GuarantorAdd.passArguments(-1, loanId))
+            navigateBack = navController::popBackStack,
+            addGuarantor = { loanId ->
+                navController.navigate(
+                    GuarantorNavigation.GuarantorAdd.passArguments(
+                        index = -1,
+                        loanId = loanId
+                    )
+                )
             },
             onGuarantorClicked = { index, loanId ->
                 navController.navigate(
@@ -43,7 +52,7 @@ fun NavGraphBuilder.guarantorNavGraph(
         )
 
         detailGuarantorRoute(
-            navigateBack = { navController.popBackStack() },
+            navigateBack = navController::popBackStack,
             updateGuarantor = { index, loanId ->
                 navController.navigate(
                     GuarantorNavigation.GuarantorAdd.passArguments(
@@ -57,7 +66,6 @@ fun NavGraphBuilder.guarantorNavGraph(
 }
 
 fun NavGraphBuilder.listGuarantorRoute(
-    loanId: Long,
     navigateBack: () -> Unit,
     addGuarantor: (Long) -> Unit,
     onGuarantorClicked: (Int, Long) -> Unit
@@ -65,7 +73,7 @@ fun NavGraphBuilder.listGuarantorRoute(
     composable(
         route = GuarantorNavigation.GuarantorList.route,
         arguments = listOf(
-            navArgument(name = LOAN_ID) { type = NavType.LongType; defaultValue = loanId }
+            navArgument(name = LOAN_ID) { type = NavType.StringType }
         )
     ) {
         GuarantorListScreen(

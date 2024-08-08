@@ -27,9 +27,9 @@ class LoanAccountTransactionFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as BaseActivity).hideToolbar()
-        if (arguments != null) {
-            viewModel.setLoanId(arguments?.getLong(Constants.LOAN_ID))
-        }
+//        if (arguments != null) {
+//            viewModel.setLoanId(arguments?.getLong(Constants.LOAN_ID))
+//        }
     }
 
     override fun onCreateView(

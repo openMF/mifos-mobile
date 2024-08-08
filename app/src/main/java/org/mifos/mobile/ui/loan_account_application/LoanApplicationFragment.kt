@@ -34,14 +34,14 @@ class LoanApplicationFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         (activity as? BaseActivity)?.hideToolbar()
-        if (arguments != null) {
-            viewModel.loanState = arguments?.getCheckedSerializable(LoanState::class.java, LOAN_STATE) as? LoanState
-                ?: LoanState.CREATE
-            if (viewModel.loanState == org.mifos.mobile.core.model.enums.LoanState.UPDATE) {
-                viewModel.loanWithAssociations = arguments?.getCheckedParcelable(
-                    LoanWithAssociations::class.java, org.mifos.mobile.core.common.Constants.LOAN_ACCOUNT)
-            }
-        }
+//        if (arguments != null) {
+//            viewModel.loanState = arguments?.getCheckedSerializable(LoanState::class.java, LOAN_STATE) as? LoanState
+//                ?: LoanState.CREATE
+//            if (viewModel.loanState == org.mifos.mobile.core.model.enums.LoanState.UPDATE) {
+//                viewModel.loanWithAssociations = arguments?.getCheckedParcelable(
+//                    LoanWithAssociations::class.java, org.mifos.mobile.core.common.Constants.LOAN_ACCOUNT)
+//            }
+//        }
     }
 
     override fun onCreateView(
@@ -49,7 +49,6 @@ class LoanApplicationFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel.loadLoanTemplate()
         return mifosComposeView(requireContext()) {
             LoanApplicationScreen(
                 navigateBack = { activity?.finish() },
@@ -86,7 +85,7 @@ class LoanApplicationFragment : BaseFragment() {
 
         (activity as BaseActivity?)?.replaceFragment(
             ReviewLoanApplicationFragment.newInstance(
-                viewModel.loanState,
+                viewModel.loanState.value,
                 loansPayload,
                 getString(R.string.string_and_string, getString(R.string.new_loan_application) + " ", viewModel.loanApplicationScreenData.value.clientName ?: ""),
                 getString(R.string.string_and_string, getString(R.string.account_number) + " ", viewModel.loanApplicationScreenData.value.accountNumber ?: "")
@@ -119,9 +118,9 @@ class LoanApplicationFragment : BaseFragment() {
 
         (activity as BaseActivity?)?.replaceFragment(
             ReviewLoanApplicationFragment.newInstance(
-                viewModel.loanState,
+                viewModel.loanState.value,
                 loansPayload,
-                viewModel.loanWithAssociations?.id?.toLong(),
+                viewModel.loanWithAssociations.value?.id?.toLong(),
                 getString(R.string.string_and_string, getString(R.string.new_loan_application) + " ", viewModel.loanApplicationScreenData.value.clientName ?: ""),
                 getString(R.string.string_and_string, getString(R.string.account_number) + " ", viewModel.loanApplicationScreenData.value.accountNumber ?: "")
             ),

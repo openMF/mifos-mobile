@@ -49,8 +49,6 @@ class UserProfileComposeFragment : BaseFragment() {
                     UserProfileScreen(
                         navigateBack = { backToHome() },
                         changePassword = { changePassword() },
-                        client = client,
-                        bitmap = userBitmap
                     )
                 }
             }

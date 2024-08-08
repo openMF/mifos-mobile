@@ -43,12 +43,8 @@ import org.mifos.mobile.feature.beneficiary.R
 fun BeneficiaryDetailScreen(
     viewModel: BeneficiaryDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    updateBeneficiary: ( beneficiary : Beneficiary? ) -> Unit,
-    beneficiary: Beneficiary?
+    updateBeneficiary: (beneficiary: Beneficiary?) -> Unit,
 ) {
-    beneficiary?.let {
-        viewModel.setBeneficiary(beneficiary)
-    }
     val uiState by viewModel.beneficiaryDetailsUiStates.collectAsStateWithLifecycle()
     val beneficiary by viewModel.beneficiary.collectAsStateWithLifecycle()
 
@@ -57,9 +53,7 @@ fun BeneficiaryDetailScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         updateBeneficiary = {
-            updateBeneficiary.invoke(
-                viewModel.getBeneficiary()
-            )
+            updateBeneficiary(viewModel.getBeneficiary())
         },
         deleteBeneficiary = {
             viewModel.deleteBeneficiary(it)

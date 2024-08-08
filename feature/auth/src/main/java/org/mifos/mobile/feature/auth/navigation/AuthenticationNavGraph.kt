@@ -1,23 +1,28 @@
 package org.mifos.mobile.feature.auth.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.mifos.mobile.feature.auth.login.screens.LoginScreen
-import org.mifos.mobile.feature.auth.navigation.AuthenticationRoute.AUTH_NAVIGATION_ROUTE
 import org.mifos.mobile.feature.auth.registration.screens.RegistrationScreen
 import org.mifos.mobile.feature.auth.registration.screens.RegistrationVerificationScreen
 
+
+fun NavController.navigateToLoginScreen() {
+    navigate(AuthenticationNavigation.Login.route) {
+        popUpTo(AuthenticationNavigation.Login.route) { inclusive = true }
+    }
+}
+
 fun NavGraphBuilder.authenticationNavGraph(
-    startDestination: String,
     navController: NavHostController,
-    navigateBack: () -> Unit,
     navigateToPasscodeScreen: () -> Unit
 ) {
     navigation(
-        startDestination = startDestination,
-        route = AUTH_NAVIGATION_ROUTE
+        startDestination = AuthenticationNavigation.Login.route,
+        route = AuthenticationNavigation.AuthenticationBase.route
     ) {
         loginRoute(
             navigateToRegisterScreen = { navController.navigate(AuthenticationNavigation.Registration.route) },
@@ -25,13 +30,13 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
 
         registrationRoute(
-            navigateBack = navigateBack,
+            navigateBack = navController::popBackStack,
             onRegistered = { navController.navigate(AuthenticationNavigation.RegistrationVerification.route) }
         )
 
         registrationVerificationRoute(
-            navigateBack = { navController.popBackStack() },
-            onRegistrationVerified = { navController.navigate(AuthenticationNavigation.Login.route) }
+            navigateBack = navController::popBackStack,
+            onRegistrationVerified = navController::navigateToLoginScreen
         )
     }
 }

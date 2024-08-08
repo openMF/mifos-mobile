@@ -90,7 +90,6 @@ class ReviewLoanApplicationFragment : BaseFragment() {
             setContent {
                 MifosMobileTheme {
                     ReviewLoanApplicationScreen(
-                        submit = { viewModel.submitLoan() },
                         navigateBack = { reviewSuccess ->
                             if(reviewSuccess)activity?.finish()
                             else activity?.supportFragmentManager?.popBackStack()

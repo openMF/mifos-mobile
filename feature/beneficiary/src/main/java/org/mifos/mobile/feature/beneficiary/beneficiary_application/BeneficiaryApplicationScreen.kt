@@ -33,18 +33,9 @@ import org.mifos.mobile.feature.beneficiary.R
 fun BeneficiaryApplicationScreen(
     viewModel: BeneficiaryApplicationViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    beneficiary: Beneficiary?,
-    beneficiaryState: BeneficiaryState?
 ) {
-    beneficiaryState?.let {
-        viewModel.initArgs(
-            beneficiaryState = beneficiaryState,
-            beneficiary = beneficiary
-        )
-    }
-
-    val newBeneficiaryState by viewModel.beneficiaryState.collectAsStateWithLifecycle()
-    val newBeneficiary by viewModel.beneficiary.collectAsStateWithLifecycle()
+    val beneficiaryState by viewModel.beneficiaryState.collectAsStateWithLifecycle()
+    val beneficiary by viewModel.beneficiary.collectAsStateWithLifecycle()
     val uiState by viewModel.beneficiaryUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
@@ -54,8 +45,8 @@ fun BeneficiaryApplicationScreen(
     BeneficiaryApplicationScreen (
         uiState = uiState,
         navigateBack = navigateBack,
-        beneficiaryState = newBeneficiaryState,
-        beneficiary = newBeneficiary,
+        beneficiaryState = beneficiaryState,
+        beneficiary = beneficiary,
         onRetry = { viewModel.loadBeneficiaryTemplate() },
         onSubmit = { viewModel.submitBeneficiary(it) }
     )

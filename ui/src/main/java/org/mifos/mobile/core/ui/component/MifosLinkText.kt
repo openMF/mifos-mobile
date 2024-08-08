@@ -15,7 +15,7 @@ import org.mifos.mobile.core.ui.theme.Blue700
 fun MifosLinkText(
     modifier: Modifier = Modifier,
     text: String,
-    onClick: (String) -> Unit,
+    onClick: () -> Unit,
     isUnderlined: Boolean = true
 ) {
     Text(
@@ -27,7 +27,7 @@ fun MifosLinkText(
         modifier = modifier
             .padding(vertical = 2.dp)
             .clickable {
-                onClick(text)
+                onClick()
             },
     )
 }

@@ -23,20 +23,20 @@ import org.mifos.mobile.feature.account.client_account.screens.ClientAccountsScr
 */
 @AndroidEntryPoint
 class ClientAccountsComposeFragment : BaseFragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        (activity as? BaseActivity)?.hideToolbar()
-        return mifosComposeView(requireContext()) {
-            ClientAccountsScreen(
-                navigateBack = { activity?.onBackPressed() },
-                openNextActivity = { currentPage -> openActivity(currentPage) },
-                onItemClick = { accountType, accountId -> onItemClick(accountType, accountId) }
-            )
-        }
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?,
+//    ): View {
+//        (activity as? BaseActivity)?.hideToolbar()
+////        return mifosComposeView(requireContext()) {
+////            ClientAccountsScreen(
+////                navigateBack = { activity?.onBackPressed() },
+////                openNextActivity = { currentPage -> openActivity(currentPage) },
+////                onItemClick = { accountType, accountId -> onItemClick(accountType, accountId) }
+////            )
+////        }
+//    }
 
     private fun openActivity( currentPage : Int) {
         when (currentPage) {

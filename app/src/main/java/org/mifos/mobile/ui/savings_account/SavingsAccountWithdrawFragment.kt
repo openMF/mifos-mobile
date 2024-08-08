@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.fragments.base.BaseFragment
@@ -26,10 +27,6 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? SavingsAccountContainerActivity)?.hideToolbar()
-        arguments?.getCheckedParcelable(SavingsWithAssociations::class.java, org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS)?.let {
-            viewModel.setContent(it)
-        }
     }
 
     override fun onCreateView(
@@ -42,7 +39,6 @@ class SavingsAccountWithdrawFragment : BaseFragment() {
             setContent {
                 MifosMobileTheme {
                     SavingsAccountWithdrawScreen(
-                        withdraw = { viewModel.submitWithdrawSavingsAccount(it) },
                         navigateBack = { withdrawSuccess ->
                             if (withdrawSuccess) {
                                 activity?.finish()

@@ -58,12 +58,9 @@ fun UserProfileScreen(
     viewModel: UserDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
     changePassword: () -> Unit,
-    client: Client?,
-    bitmap: Bitmap?
 ) {
 
     val uiState by viewModel.userDetailUiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         viewModel.loadUserData()
@@ -76,8 +73,6 @@ fun UserProfileScreen(
             viewModel.loadUserData()
         },
         changePassword = changePassword,
-        client = client,
-        bitmap = bitmap
     )
 }
 
@@ -87,16 +82,11 @@ fun UserProfileScreen(
     uiState: UserDetailUiState,
     onRetry: () -> Unit,
     changePassword: () -> Unit,
-    client: Client?,
-    bitmap: Bitmap?
 ) {
     val context = LocalContext.current
     val snackBarHostState = remember {
         SnackbarHostState()
     }
-
-    var newClient = client
-    var newBitmap  = bitmap
 
     MFScaffold(
         topBar = {
@@ -129,12 +119,10 @@ fun UserProfileScreen(
             }
 
             is UserDetailUiState.ShowUserDetails -> {
-                newClient = uiState.client
-                newBitmap = uiState.image
                 UserProfileContent(
                     changePassword = changePassword,
-                    client = newClient!!,
-                    bitmap = getUserImage(bitmap = newBitmap, context = context)
+                    client = uiState.client,
+                    bitmap = getUserImage(bitmap = uiState.image, context = context)
                 )
             }
         }
@@ -287,13 +275,10 @@ class UserProfileScreenPreviewProvider : PreviewParameterProvider<UserDetailUiSt
 fun UserProfileScreenPreview(
     @PreviewParameter(UserProfileScreenPreviewProvider::class) userDetailUiState: UserDetailUiState
 ) {
-    val sampleBitmap = BitmapFactory.decodeResource( null, R.drawable.mifos_logo)
     UserProfileScreen(
         {},
         userDetailUiState,
         {},
         {},
-        Client(),
-        sampleBitmap
     )
 }

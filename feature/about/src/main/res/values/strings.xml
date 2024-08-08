@@ -10,5 +10,6 @@
     <string name="sources">Source Code</string>
     <string name="license_string_with_value">License: MPL-2.0</string>
     <string name="about_us">About Us</string>
-
+    <string name="privacy_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="privacy_policy_host_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
 </resources>

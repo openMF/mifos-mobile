@@ -22,8 +22,8 @@ class TransferProcessViewModel @Inject constructor(private val transferRepositor
     private var _transferPayload: MutableStateFlow<TransferPayload?> = MutableStateFlow(null)
     val transferPayload: StateFlow<TransferPayload?> get() = _transferPayload
 
-    private var _transferType: MutableStateFlow<org.mifos.mobile.core.model.enums.TransferType?> = MutableStateFlow(null)
-    val transferType: StateFlow<org.mifos.mobile.core.model.enums.TransferType?> get() = _transferType
+    private var _transferType: MutableStateFlow<TransferType?> = MutableStateFlow(null)
+    val transferType: StateFlow<TransferType?> get() = _transferType
 
     fun makeTransfer() {
         transferPayload.value?.let { payload ->

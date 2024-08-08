@@ -38,7 +38,7 @@ fun BeneficiaryListScreen(
     viewModel: BeneficiaryListViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit,
-    onBeneficiaryItemClick: (position: Int, List<Beneficiary>) -> Unit,
+    onBeneficiaryItemClick: (position: Int) -> Unit,
 ) {
     val uiState by viewModel.beneficiaryListUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
@@ -65,7 +65,7 @@ fun BeneficiaryListScreen(
     uiState: BeneficiaryListUiState,
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit,
-    onBeneficiaryItemClick: (position: Int, List<Beneficiary>) -> Unit,
+    onBeneficiaryItemClick: (position: Int) -> Unit,
     retryLoadingBeneficiary: () -> Unit,
     isRefreshing: Boolean,
     refresh: () -> Unit,
@@ -118,9 +118,7 @@ fun BeneficiaryListScreen(
                     } else {
                         ShowBeneficiary(
                             beneficiaryList = uiState.beneficiaries,
-                            onClick = { position ->
-                                onBeneficiaryItemClick.invoke(position, uiState.beneficiaries)
-                            }
+                            onClick = onBeneficiaryItemClick
                         )
                     }
                 }
@@ -193,7 +191,7 @@ private fun PreviewBeneficiaryListScreen(
             uiState = beneficiaryUiState,
             navigateBack = {},
             addBeneficiaryClicked = {},
-            onBeneficiaryItemClick = { _, _ -> },
+            onBeneficiaryItemClick = {  },
             isRefreshing = false,
             retryLoadingBeneficiary = {},
             refresh = {}

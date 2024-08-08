@@ -46,18 +46,17 @@ import org.mifos.mobile.feature.loan.R
 fun LoanRepaymentScheduleScreen(
     viewmodel: LoanRepaymentScheduleViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    loanId: Long
 ) {
     val loanRepaymentScheduleUiState by viewmodel.loanUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
-        viewmodel.loanLoanWithAssociations(loanId)
+        viewmodel.loanLoanWithAssociations()
     }
 
     LoanRepaymentScheduleScreen(
         loanRepaymentScheduleUiState = loanRepaymentScheduleUiState,
         navigateBack = navigateBack,
-        onRetry = { viewmodel.loanLoanWithAssociations(loanId) }
+        onRetry = { viewmodel.loanLoanWithAssociations() }
     )
 }
 

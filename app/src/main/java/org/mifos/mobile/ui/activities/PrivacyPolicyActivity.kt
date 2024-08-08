@@ -27,11 +27,6 @@ class PrivacyPolicyActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent{
-            MifosMobileTheme {
-                PrivacyPolicyScreen(
-                    navigateBack = { this.onBackPressed() }
-                )
-            }
         }
     }
 }

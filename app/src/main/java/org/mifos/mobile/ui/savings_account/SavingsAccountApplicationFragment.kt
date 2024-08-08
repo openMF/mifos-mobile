@@ -29,12 +29,7 @@ class SavingsAccountApplicationFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? BaseActivity)?.hideToolbar()
-        if (arguments != null) {
-            viewModel.setSavingsAccountState(arguments?.getCheckedSerializable(SavingsAccountState::class.java, Constants.SAVINGS_ACCOUNT_STATE) as SavingsAccountState)
-            viewModel.setSavingsWithAssociations(arguments?.getCheckedParcelable(
-                SavingsWithAssociations::class.java, Constants.SAVINGS_ACCOUNTS))
-        }
+
     }
 
     override fun onCreateView(
@@ -46,17 +41,7 @@ class SavingsAccountApplicationFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                MifosMobileTheme {
-                    SavingsAccountApplicationScreen(
-                        uiState = viewModel.savingsAccountApplicationUiState.value,
-                        savingsWithAssociations = viewModel.savingsWithAssociations,
-                        navigateBack = { activity?.finish() },
-                        retryConnection = { viewModel.onRetry() },
-                        submit = { productId, clientId, showToast ->
-                            viewModel.onSubmit(productId = productId, clientId = clientId, showToast = showToast)
-                        }
-                    )
-                }
+
             }
         }
     }

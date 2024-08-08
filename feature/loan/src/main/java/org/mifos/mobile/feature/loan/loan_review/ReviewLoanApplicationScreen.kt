@@ -35,7 +35,6 @@ import org.mifos.mobile.feature.loan.R
 fun ReviewLoanApplicationScreen(
     viewModel: ReviewLoanApplicationViewModel = hiltViewModel(),
     navigateBack: (isSuccess: Boolean) -> Unit,
-    submit: () -> Unit,
 ) {
     val uiState by viewModel.reviewLoanApplicationUiState.collectAsStateWithLifecycle()
     val data by viewModel.reviewLoanApplicationUiData.collectAsStateWithLifecycle()
@@ -44,7 +43,7 @@ fun ReviewLoanApplicationScreen(
         uiState = uiState,
         data = data,
         navigateBack = navigateBack,
-        submit = submit
+        submit = { viewModel.submitLoan() }
     )
 }
 

@@ -22,11 +22,11 @@ class SavingAccountsTransactionComposeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? SavingsAccountContainerActivity)?.hideToolbar()
-        if (arguments != null) {
-            arguments?.getLong(Constants.SAVINGS_ID)?.let {
-                viewModel.setSavingsId(it)
-            }
-        }
+//        if (arguments != null) {
+//            arguments?.getLong(Constants.SAVINGS_ID)?.let {
+//                viewModel.setSavingsId(it)
+//            }
+//        }
     }
 
     override fun onCreateView(

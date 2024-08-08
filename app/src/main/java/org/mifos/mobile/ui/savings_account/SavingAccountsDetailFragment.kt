@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.SavingsAccountContainerActivity
 import org.mifos.mobile.ui.activities.base.BaseActivity
@@ -24,8 +25,8 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.SavingsAccountState
+import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
 import org.mifos.mobile.feature.savings.savings_account.SavingAccountsDetailViewModel
-import org.mifos.mobile.feature.savings.savings_account.SavingsAccountDetailScreen
 import javax.inject.Inject
 
 /**
@@ -39,36 +40,29 @@ class SavingAccountsDetailFragment : BaseFragment() {
     lateinit var preferencesHelper: PreferencesHelper
     private val viewModel: SavingAccountsDetailViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            viewModel.setSavingsId(arguments?.getLong(org.mifos.mobile.core.common.Constants.SAVINGS_ID))
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel.loadSavingsWithAssociations(viewModel.savingsId)
+        //viewModel.loadSavingsWithAssociations()
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MifosMobileTheme {
-                    SavingsAccountDetailScreen(
-                        uiState = viewModel.savingAccountsDetailUiState.value,
-                        navigateBack = { activity?.finish() },
-                        updateSavingsAccount = { updateSavingsAccount(it) },
-                        withdrawSavingsAccount = { withdrawSavingsAccount(it) },
-                        makeTransfer = { transfer(it) },
-                        viewTransaction = { transactionsClicked() },
-                        viewCharges = { chargeClicked() },
-                        viewQrCode = { qrCodeClicked(it) },
-                        callUs = { dialHelpLineNumber() },
-                        deposit = { deposit(it) },
-                        retryConnection = { onRetry() }
-                    )
+//                    SavingsAccountDetailScreen(
+//                        uiState = viewModel.savingAccountsDetailUiState,
+//                        navigateBack = { activity?.finish() },
+//                        updateSavingsAccount = { updateSavingsAccount(it) },
+//                        withdrawSavingsAccount = { withdrawSavingsAccount(it) },
+//                        makeTransfer = { transfer(it) },
+//                        viewTransaction = { transactionsClicked() },
+//                        viewCharges = { chargeClicked() },
+//                        viewQrCode = { qrCodeClicked(it) },
+//                        callUs = { dialHelpLineNumber() },
+//                        deposit = { deposit(it) },
+//                        retryConnection = { onRetry() }
+//                    )
                 }
             }
         }
@@ -96,8 +90,8 @@ class SavingAccountsDetailFragment : BaseFragment() {
         if (isStatusActive) {
             (activity as BaseActivity?)?.replaceFragment(
                 SavingsMakeTransferComposeFragment.newInstance(
-                    viewModel.savingsId,
-                    org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO,
+                    viewModel.savingsId.value,
+                    TRANSFER_PAY_TO,
                 ),
                 true,
                 R.id.container,
@@ -119,7 +113,7 @@ class SavingAccountsDetailFragment : BaseFragment() {
         if (isStatusActive) {
             (activity as BaseActivity?)?.replaceFragment(
                 SavingsMakeTransferComposeFragment.newInstance(
-                    viewModel.savingsId,
+                    viewModel.savingsId.value,
                     org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM,
                 ),
                 true,
@@ -142,13 +136,13 @@ class SavingAccountsDetailFragment : BaseFragment() {
                 Toast.LENGTH_SHORT,
             ).show()
         } else {
-            viewModel.loadSavingsWithAssociations(viewModel.savingsId)
+            //viewModel.loadSavingsWithAssociations()
         }
     }
 
     private fun transactionsClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            SavingAccountsTransactionComposeFragment.newInstance(viewModel.savingsId),
+            SavingAccountsTransactionComposeFragment.newInstance(viewModel.savingsId.value),
             true,
             R.id.container,
         )
@@ -156,14 +150,14 @@ class SavingAccountsDetailFragment : BaseFragment() {
 
     private fun chargeClicked() {
         (activity as BaseActivity?)?.replaceFragment(
-            ClientChargeComposeFragment.newInstance(viewModel.savingsId, ChargeType.SAVINGS),
+            ClientChargeComposeFragment.newInstance(viewModel.savingsId.value, ChargeType.SAVINGS),
             true,
             R.id.container,
         )
     }
 
     private fun qrCodeClicked(savingsWithAssociations: SavingsWithAssociations) {
-        val accountDetailsInJson = org.mifos.mobile.feature.qr.utils.QrCodeGenerator.getAccountDetailsInString(
+        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
             savingsWithAssociations.accountNo,
             preferencesHelper.officeName,
             AccountType.SAVINGS,

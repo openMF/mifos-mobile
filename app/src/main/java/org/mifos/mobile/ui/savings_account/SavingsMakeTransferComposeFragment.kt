@@ -27,11 +27,7 @@ class SavingsMakeTransferComposeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.hideToolbar()
         if (arguments != null) {
-            viewModel.initArgs(
-                accountId = arguments?.getLong(org.mifos.mobile.core.common.Constants.ACCOUNT_ID),
-                transferType =  arguments?.getString(org.mifos.mobile.core.common.Constants.TRANSFER_TYPE),
-                outstandingBalance = arguments?.getDouble(org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE)
-            )
+
         }
     }
 

@@ -1,14 +1,18 @@
 package org.mifos.mobile.feature.savings.savings_make_transfer
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
@@ -18,21 +22,35 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
-    ViewModel() {
+class SavingsMakeTransferViewModel @Inject constructor(
+    private val savingsAccountRepositoryImp: SavingsAccountRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val _accountId: MutableStateFlow<Long?> = MutableStateFlow(null)
-    val accountId get() = _accountId
+    val accountId = savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
 
+    private val transferType: StateFlow<String> = savedStateHandle.getStateFlow(
+        key = Constants.TRANSFER_TYPE,
+        initialValue = TRANSFER_PAY_TO
+    )
+
+    private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(
+        key = Constants.OUTSTANDING_BALANCE,
+        initialValue = null
+    ).map { balanceString ->
+        balanceString?.toDoubleOrNull() ?: 0.0
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = 0.0,
+    )
 
     private val _savingsMakeTransferUiData = MutableStateFlow(SavingsMakeTransferUiData())
     val savingsMakeTransferUiData: StateFlow<SavingsMakeTransferUiData> get() = _savingsMakeTransferUiData
 
-
     val savingsMakeTransferUiState = accountId
         .flatMapLatest { id ->
-            savingsAccountRepositoryImp
-                .accountTransferTemplate(accountId = id, accountType = 2L)
+            savingsAccountRepositoryImp.accountTransferTemplate(accountId = id, accountType = 2L)
         }
         .asResult()
         .map { result ->
@@ -40,7 +58,12 @@ class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccoun
                 is Result.Success -> SavingsMakeTransferUiState.ShowUI
                     .also {
                         _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
-                            .copy(accountOptionsTemplate = result.data)
+                            .copy(
+                                accountOptionsTemplate = result.data,
+                                transferType = transferType.value,
+                                outstandingBalance = if(outstandingBalance.value == 0.0) null else outstandingBalance.value,
+                                accountId = accountId.value
+                            )
                     }
                 is Result.Loading -> SavingsMakeTransferUiState.Loading
                 is Result.Error -> SavingsMakeTransferUiState.Error(result.exception.message)
@@ -51,19 +74,6 @@ class SavingsMakeTransferViewModel @Inject constructor(private val savingsAccoun
             initialValue = SavingsMakeTransferUiState.Loading,
         )
 
-    fun initArgs(
-        accountId: Long?,
-        transferType: String?,
-        outstandingBalance: Double?
-    ) {
-        _accountId.value = accountId
-        _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
-            .copy(
-                accountId = accountId,
-                transferType = transferType,
-                outstandingBalance = if(outstandingBalance == 0.0) null else outstandingBalance
-            )
-    }
 }
 
 sealed class SavingsMakeTransferUiState {

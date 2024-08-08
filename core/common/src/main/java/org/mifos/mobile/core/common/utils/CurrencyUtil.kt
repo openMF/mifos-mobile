@@ -19,7 +19,6 @@ object CurrencyUtil {
         return getDecimalFormatter(context).format(amt)
     }
 
-    @JvmStatic
     fun formatCurrency(context: Context?, amt: Double?): String {
         return getDecimalFormatter(context).format(amt ?: 0.0)
     }

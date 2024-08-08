@@ -27,7 +27,7 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 @Composable
 fun ShowBeneficiary(
     beneficiaryList: List<Beneficiary>,
-    onClick: (position: Int) -> Unit
+    onClick: (beneficiaryId: Int) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -35,9 +35,10 @@ fun ShowBeneficiary(
     ) {
         LazyColumn {
             itemsIndexed(beneficiaryList) { index, beneficiary ->
-                BeneficiaryItem(beneficiary, onClick = {
-                    onClick(index)
-                })
+                BeneficiaryItem(
+                    beneficiary = beneficiary,
+                    onClick = { onClick(beneficiary.id ?: -1) }
+                )
             }
         }
     }

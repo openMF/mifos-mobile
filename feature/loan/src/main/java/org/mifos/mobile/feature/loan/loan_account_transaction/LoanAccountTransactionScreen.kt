@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -50,13 +51,11 @@ fun LoanAccountTransactionScreen(
     viewModel: LoanAccountTransactionViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
 ) {
-
     val uiState by viewModel.loanUiState.collectAsStateWithLifecycle()
 
     LoanAccountTransactionScreen(
         uiState = uiState,
         navigateBack = navigateBack,
-        retryConnection = { viewModel.loadLoanAccountDetails() }
     )
 }
 
@@ -64,7 +63,6 @@ fun LoanAccountTransactionScreen(
 fun LoanAccountTransactionScreen(
     uiState: LoanAccountTransactionUiState,
     navigateBack: () -> Unit,
-    retryConnection: () -> Unit
 ) {
     val context = LocalContext.current
     var loanWithAssociations by rememberSaveable { mutableStateOf(LoanWithAssociations()) }
@@ -95,8 +93,6 @@ fun LoanAccountTransactionScreen(
                     MifosErrorComponent(
                         isNetworkConnected = Network.isConnected(context),
                         isEmptyData = false,
-                        isRetryEnabled = true,
-                        onRetry = retryConnection
                     )
                 }
             }
@@ -198,7 +194,6 @@ fun LoanAccountTransactionScreenPreview(
         LoanAccountTransactionScreen(
             uiState = loanAccountTransactionUiState,
             navigateBack = {},
-            retryConnection = {}
         )
     }
 }

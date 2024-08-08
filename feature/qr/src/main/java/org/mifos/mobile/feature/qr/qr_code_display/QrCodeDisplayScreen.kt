@@ -43,12 +43,9 @@ import org.mifos.mobile.feature.qr.R
 fun QrCodeDisplayScreen(
     viewModel: QrCodeDisplayViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    qrData : String?
 ) {
-    qrData?.let {
-        viewModel.setQrString(it)
-    }
     val uiState by viewModel.qrCodeDisplayUiState.collectAsStateWithLifecycle()
+
     QrCodeDisplayScreen(
         uiState = uiState,
         navigateBack = navigateBack

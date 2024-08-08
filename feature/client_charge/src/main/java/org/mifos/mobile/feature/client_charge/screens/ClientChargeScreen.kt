@@ -49,6 +49,7 @@ fun ClientChargeScreen(
     navigateBack: () -> Unit
 ) {
     val uiState by viewModel.clientChargeUiState.collectAsStateWithLifecycle()
+
     ClientChargeScreen(
         uiState = uiState,
         navigateBack = navigateBack,

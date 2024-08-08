@@ -2,11 +2,18 @@ package org.mifos.mobile.feature.savings.savings_account_application
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
@@ -16,26 +23,43 @@ import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTempla
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.getTodayFormatted
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 
 @HiltViewModel
 class SavingsAccountApplicationViewModel @Inject constructor(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
-    private val preferencesHelper: PreferencesHelper
+    private val preferencesHelper: PreferencesHelper,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val savingsAccountApplicationUiState: State<SavingsAccountApplicationUiState> get() = _savingsAccountApplicationUiState
+    val savingsAccountApplicationUiState: StateFlow<SavingsAccountApplicationUiState> get() = _savingsAccountApplicationUiState
     private val _savingsAccountApplicationUiState =
-        mutableStateOf<SavingsAccountApplicationUiState>(SavingsAccountApplicationUiState.Loading)
+        MutableStateFlow<SavingsAccountApplicationUiState>(SavingsAccountApplicationUiState.Loading)
 
-    private val savingsAccountState get() = _savingsAccountState
-    private var _savingsAccountState: SavingsAccountState = SavingsAccountState.CREATE
-
-    val savingsWithAssociations get() = _savingsWithAssociations
-    private var _savingsWithAssociations: SavingsWithAssociations? = null
 
     private val clientId get() = preferencesHelper.clientId
+
+    val savingsId = savedStateHandle.getStateFlow(key = Constants.SAVINGS_ID, initialValue = -1L)
+    val savingsAccountState = savedStateHandle.getStateFlow(
+        key = Constants.SAVINGS_ACCOUNT_STATE,
+        initialValue = SavingsAccountState.CREATE
+    )
+
+    var savingsWithAssociations: StateFlow<SavingsWithAssociations?> = savingsId
+        .flatMapLatest {
+            savingsAccountRepositoryImp.getSavingsWithAssociations(
+                savingsId.value, Constants.TRANSACTIONS,
+            )
+        }
+        .also { loadSavingsAccountApplicationTemplate() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
 
     fun loadSavingsAccountApplicationTemplate() {
         viewModelScope.launch {
@@ -45,7 +69,10 @@ class SavingsAccountApplicationViewModel @Inject constructor(
                     SavingsAccountApplicationUiState.Error(e.message)
             }.collect {
                 _savingsAccountApplicationUiState.value =
-                    SavingsAccountApplicationUiState.ShowUserInterface(it, savingsAccountState)
+                    SavingsAccountApplicationUiState.ShowUserInterface(
+                        it,
+                        savingsAccountState.value
+                    )
             }
         }
     }
@@ -58,7 +85,7 @@ class SavingsAccountApplicationViewModel @Inject constructor(
                     SavingsAccountApplicationUiState.Error(e.message)
             }.collect {
                 _savingsAccountApplicationUiState.value =
-                    SavingsAccountApplicationUiState.Success(savingsAccountState)
+                    SavingsAccountApplicationUiState.Success(savingsAccountState.value)
             }
         }
     }
@@ -71,17 +98,9 @@ class SavingsAccountApplicationViewModel @Inject constructor(
                     SavingsAccountApplicationUiState.Error(e.message)
             }.collect {
                 _savingsAccountApplicationUiState.value =
-                    SavingsAccountApplicationUiState.Success(savingsAccountState)
+                    SavingsAccountApplicationUiState.Success(savingsAccountState.value)
             }
         }
-    }
-
-    fun setSavingsAccountState(savingsAccountState: org.mifos.mobile.core.model.enums.SavingsAccountState) {
-        _savingsAccountState = savingsAccountState
-    }
-
-    fun setSavingsWithAssociations(savingsAssociations: SavingsWithAssociations?) {
-        _savingsWithAssociations = savingsAssociations
     }
 
     fun onRetry() {
@@ -89,7 +108,7 @@ class SavingsAccountApplicationViewModel @Inject constructor(
     }
 
     fun onSubmit(productId: Int, clientId: Int, showToast: (Int) -> Unit) {
-        if (savingsAccountState == org.mifos.mobile.core.model.enums.SavingsAccountState.CREATE) {
+        if (savingsAccountState.value == SavingsAccountState.CREATE) {
             submitSavingsAccount(productId = productId, clientId = clientId, showToast = showToast)
         } else {
             updateSavingAccount(productId = productId, clientId = clientId)
@@ -100,7 +119,7 @@ class SavingsAccountApplicationViewModel @Inject constructor(
         val payload = SavingsAccountUpdatePayload()
         payload.clientId = clientId.toLong()
         payload.productId = productId.toLong()
-        updateSavingsAccount(savingsWithAssociations?.id, payload)
+        updateSavingsAccount(savingsWithAssociations.value?.id, payload)
     }
 
     private fun submitSavingsAccount(productId: Int, clientId: Int, showToast: (Int) -> Unit) {
@@ -112,7 +131,8 @@ class SavingsAccountApplicationViewModel @Inject constructor(
             showToast(R.string.select_product_id)
             return
         }
-        payload.submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, getTodayFormatted(),)
+        payload.submittedOnDate =
+            DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, getTodayFormatted())
         submitSavingsAccountApplication(payload)
     }
 }
@@ -120,8 +140,11 @@ class SavingsAccountApplicationViewModel @Inject constructor(
 sealed class SavingsAccountApplicationUiState {
     data object Loading : SavingsAccountApplicationUiState()
     data class Error(val errorMessage: String?) : SavingsAccountApplicationUiState()
-    data class  Success(val requestType: SavingsAccountState) : SavingsAccountApplicationUiState()
-    data class ShowUserInterface(val template: SavingsAccountTemplate, val requestType: SavingsAccountState) :
+    data class Success(val requestType: SavingsAccountState) : SavingsAccountApplicationUiState()
+    data class ShowUserInterface(
+        val template: SavingsAccountTemplate,
+        val requestType: SavingsAccountState
+    ) :
         SavingsAccountApplicationUiState()
 }
 

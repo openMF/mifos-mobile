@@ -17,8 +17,8 @@ import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.activities.GuarantorActivity
-import org.mifos.mobile.feature.loan.loan_account.LoanAccountDetailScreen
 import org.mifos.mobile.feature.loan.loan_account.LoanAccountsDetailViewModel
+import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
 import org.mifos.mobile.ui.activities.base.BaseActivity
 import org.mifos.mobile.ui.client_charge.ClientChargeComposeFragment
 import org.mifos.mobile.ui.loan_account_transaction.LoanAccountTransactionFragment
@@ -47,9 +47,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            viewModel.setLoanId(arguments?.getLong(org.mifos.mobile.core.common.Constants.LOAN_ID))
-        }
+
     }
 
     override fun onCreateView(
@@ -57,25 +55,22 @@ class LoanAccountsDetailFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel.loadLoanAccountDetails(viewModel.loanId)
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MifosMobileTheme {
-                    LoanAccountDetailScreen(
-                        uiState = viewModel.loanUiState.value,
-                        navigateBack = { activity?.finish() },
-                        viewGuarantor = { viewGuarantor() },
-                        updateLoan = { updateLoan() },
-                        withdrawLoan = { withdrawLoan() },
-                        viewLoanSummary = {  onLoanSummaryClicked() },
-                        viewCharges = { chargesClicked() },
-                        viewRepaymentSchedule = { onRepaymentScheduleClicked() },
-                        viewTransactions = { onTransactionsClicked() },
-                        viewQr = {  onQrCodeClicked() },
-                        makePayment = { onMakePaymentClicked() },
-                        retryConnection = { retryClicked() }
-                    )
+//                    LoanAccountDetailScreen(
+//                        navigateBack = { activity?.finish() },
+//                        viewGuarantor = { viewGuarantor() },
+//                        updateLoan = { updateLoan() },
+//                        withdrawLoan = { withdrawLoan() },
+//                        viewLoanSummary = {  onLoanSummaryClicked() },
+//                        viewCharges = { chargesClicked() },
+//                        viewRepaymentSchedule = { onRepaymentScheduleClicked() },
+//                        viewTransactions = { onTransactionsClicked() },
+//                        viewQr = {  onQrCodeClicked() },
+//                        makePayment = { onMakePaymentClicked() },
+//                    )
                 }
             }
         }
@@ -93,7 +88,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     private fun onMakePaymentClicked() {
         (activity as BaseActivity?)?.replaceFragment(
             SavingsMakeTransferComposeFragment.newInstance(
-                viewModel.loanId,
+                viewModel.loanId.value,
                 viewModel.loanWithAssociations?.summary?.totalOutstanding,
                 Constants.TRANSFER_PAY_TO,
             ),
@@ -121,7 +116,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     private fun onRepaymentScheduleClicked() {
         (activity as BaseActivity?)?.replaceFragment(
             LoanRepaymentScheduleFragment.newInstance(
-                viewModel.loanId,
+                viewModel.loanId.value,
             ),
             true,
             R.id.container,
@@ -134,7 +129,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     private fun onTransactionsClicked() {
         (activity as BaseActivity?)?.replaceFragment(
             LoanAccountTransactionFragment.newInstance(
-                viewModel.loanId,
+                viewModel.loanId.value,
             ),
             true,
             R.id.container,
@@ -153,7 +148,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
     }
 
     private fun onQrCodeClicked() {
-        val accountDetailsInJson = org.mifos.mobile.feature.qr.utils.QrCodeGenerator.getAccountDetailsInString(
+        val accountDetailsInJson = QrCodeGenerator.getAccountDetailsInString(
             viewModel.loanWithAssociations?.accountNo,
             preferencesHelper.officeName,
             AccountType.LOAN,
@@ -169,7 +164,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     private fun retryClicked() {
         if (Network.isConnected(context)) {
-            viewModel.loadLoanAccountDetails(viewModel.loanId)
+            viewModel.loadLoanAccountDetails()
         } else {
             Toast.makeText(
                 context,
@@ -202,7 +197,7 @@ class LoanAccountsDetailFragment : BaseFragment() {
 
     private fun viewGuarantor() {
         val intent = Intent(requireContext(), GuarantorActivity::class.java)
-        intent.putExtra(Constants.LOAN_ID, viewModel.loanId)
+        intent.putExtra(Constants.LOAN_ID, viewModel.loanId.value)
         startActivity(intent)
     }
 

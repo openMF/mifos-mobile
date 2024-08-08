@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.ui.fragments.base.BaseFragment
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.feature.loan.loan_repayment_schedule.LoanRepaymentScheduleScreen
+import org.mifos.mobile.feature.loan.loan_repayment_schedule.LoanRepaymentScheduleViewModel
 
 /**
  * Created by Rajan Maurya on 03/03/17.
@@ -18,10 +20,10 @@ import org.mifos.mobile.feature.loan.loan_repayment_schedule.LoanRepaymentSchedu
 @AndroidEntryPoint
 class LoanRepaymentScheduleFragment : BaseFragment() {
 
-    private var loanId: Long? = 0
+    val viewModel: LoanRepaymentScheduleViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) loanId = arguments?.getLong(Constants.LOAN_ID)
     }
 
     override fun onCreateView(
@@ -33,7 +35,7 @@ class LoanRepaymentScheduleFragment : BaseFragment() {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 MifosMobileTheme {
-                    LoanRepaymentScheduleScreen(navigateBack = { activity?.supportFragmentManager?.popBackStack() }, loanId = loanId ?: 1)
+                    LoanRepaymentScheduleScreen(navigateBack = { activity?.supportFragmentManager?.popBackStack() })
                 }
             }
         }

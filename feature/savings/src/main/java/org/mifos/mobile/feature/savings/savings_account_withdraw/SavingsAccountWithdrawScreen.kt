@@ -44,7 +44,6 @@ import org.mifos.mobile.feature.savings.R
 fun SavingsAccountWithdrawScreen(
     viewModel: SavingsAccountWithdrawViewModel = hiltViewModel(),
     navigateBack: (withdrawSuccess: Boolean) -> Unit,
-    withdraw: (String) -> Unit,
 ) {
     val uiState by viewModel.savingsAccountWithdrawUiState.collectAsStateWithLifecycle()
     val savingsWithAssociations by viewModel.savingsWithAssociations.collectAsStateWithLifecycle()
@@ -53,7 +52,7 @@ fun SavingsAccountWithdrawScreen(
         uiState = uiState,
         savingsWithAssociations = savingsWithAssociations,
         navigateBack = navigateBack,
-        withdraw = withdraw,
+        withdraw = { viewModel.submitWithdrawSavingsAccount(it) }
     )
 }
 

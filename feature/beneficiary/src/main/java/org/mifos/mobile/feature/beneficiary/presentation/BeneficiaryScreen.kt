@@ -20,7 +20,6 @@ import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.beneficiary.R
 
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun BeneficiaryScreen(
     topAppbarNavigateback: () -> Unit,

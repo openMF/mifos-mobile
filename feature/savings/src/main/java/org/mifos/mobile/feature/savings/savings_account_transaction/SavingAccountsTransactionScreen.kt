@@ -8,6 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,10 +40,16 @@ fun SavingsAccountTransactionScreen(
     navigateBack: () -> Unit,
 ) {
     val uiState by viewModel.savingAccountsTransactionUiState.collectAsStateWithLifecycle()
+    val savingsId by viewModel.savingsId.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = savingsId) {
+        viewModel.loadSavingsWithAssociations(accountId = savingsId)
+    }
+
     SavingsAccountTransactionScreen(
         uiState = uiState,
         navigateBack = navigateBack,
-        retryConnection = { viewModel.loadSavingsWithAssociations(viewModel.savingsId) },
+        retryConnection = { viewModel.loadSavingsWithAssociations(savingsId) },
         filterList = { viewModel.filterList(filter = it) }
     )
 }

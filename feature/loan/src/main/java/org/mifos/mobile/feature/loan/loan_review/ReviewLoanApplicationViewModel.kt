@@ -18,8 +18,7 @@ class ReviewLoanApplicationViewModel @Inject constructor(
     private val reviewLoanApplicationRepositoryImpl: ReviewLoanApplicationRepository
 ) : ViewModel() {
 
-    private val _reviewLoanApplicationUiState =
-        MutableStateFlow<ReviewLoanApplicationUiState>(ReviewLoanApplicationUiState.Loading)
+    private val _reviewLoanApplicationUiState = MutableStateFlow<ReviewLoanApplicationUiState>(ReviewLoanApplicationUiState.Loading)
     val reviewLoanApplicationUiState: StateFlow<ReviewLoanApplicationUiState> = _reviewLoanApplicationUiState
 
     private var _reviewLoanApplicationUiData: MutableStateFlow<ReviewLoanApplicationUiData> = MutableStateFlow(ReviewLoanApplicationUiData())

@@ -1,57 +1,64 @@
 package org.mifos.mobile.feature.savings.savings_account
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.ui.theme.Blue
 import org.mifos.mobile.core.ui.theme.DepositGreen
 import org.mifos.mobile.core.ui.theme.LightYellow
 import org.mifos.mobile.core.ui.theme.RedLight
 import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.network.Result
+import org.mifos.mobile.core.network.asResult
+import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
 import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingAccountsDetailViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
-    ViewModel() {
+class SavingAccountsDetailViewModel @Inject constructor(
+    private val savingsAccountRepositoryImp: SavingsAccountRepository,
+    savedStateHandle: SavedStateHandle,
+    private var preferencesHelper: PreferencesHelper
+) : ViewModel() {
 
-    private val _savingAccountsDetailUiState =
-        mutableStateOf<SavingsAccountDetailUiState>(SavingsAccountDetailUiState.Loading)
-    val savingAccountsDetailUiState: State<SavingsAccountDetailUiState>
-        get() = _savingAccountsDetailUiState
+    val savingsId = savedStateHandle.getStateFlow<Long?>(key = Constants.SAVINGS_ID, initialValue = null)
 
-    private var _savingsId: Long? = 0
-    val savingsId: Long? get() = _savingsId
-
-    /**
-     * Load details of a particular saving account from the server and notify the view
-     * to display it. Notify the view, in case there is any error in fetching
-     * the details from server.
-     *
-     * @param accountId Id of Savings Account
-     */
-    fun loadSavingsWithAssociations(accountId: Long?) {
-        viewModelScope.launch {
-            _savingAccountsDetailUiState.value = SavingsAccountDetailUiState.Loading
+    val savingAccountsDetailUiState = savingsId
+        .flatMapLatest {
             savingsAccountRepositoryImp.getSavingsWithAssociations(
-                accountId, org.mifos.mobile.core.common.Constants.TRANSACTIONS,
-            ).catch {
-                _savingAccountsDetailUiState.value = SavingsAccountDetailUiState.Error
-            }.collect {
-                _savingAccountsDetailUiState.value = SavingsAccountDetailUiState.Success(it)
-            }
+                savingsId.value, Constants.TRANSACTIONS,
+            )
         }
-    }
+        .asResult()
+        .map { result ->
+            when (result) {
+                is Result.Success -> SavingsAccountDetailUiState.Success(result.data)
+                is Result.Loading -> SavingsAccountDetailUiState.Loading
+                is Result.Error -> SavingsAccountDetailUiState.Error
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = SavingsAccountDetailUiState.Loading
+        )
 
-    fun setSavingsId(savingsId: Long?) {
-        _savingsId = savingsId
+    fun getQrString(savingsWithAssociations: SavingsWithAssociations?): String {
+        return QrCodeGenerator.getAccountDetailsInString(
+            savingsWithAssociations?.accountNo,
+            preferencesHelper.officeName,
+            AccountType.SAVINGS,
+        )
     }
 }
 

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,25 +30,30 @@ import org.mifos.mobile.feature.loan.R
 @Composable
 fun LoanApplicationScreen(
     viewModel: LoanApplicationViewModel = hiltViewModel(),
-    navigateBack: (isSuccess: Boolean) -> Unit,
+    navigateBack: () -> Unit,
     reviewNewLoanApplication: () -> Unit,
     submitUpdateLoanApplication: () -> Unit
 ) {
     val uiState by viewModel.loanUiState.collectAsStateWithLifecycle()
     val uiData by viewModel.loanApplicationScreenData.collectAsStateWithLifecycle()
+    val loanState by viewModel.loanState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = loanState) {
+        viewModel.loadLoanApplicationTemplate(loanState)
+    }
 
     LoanApplicationScreen(
         uiState = uiState,
         uiData = uiData,
         navigateBack = navigateBack,
-        loanState = viewModel.loanState,
-        onRetry = { viewModel.loadLoanTemplate() },
+        loanState = loanState,
+        onRetry = { viewModel.loadLoanApplicationTemplate(loanState) },
         selectProduct = { viewModel.productSelected(it) },
         selectPurpose = { viewModel.purposeSelected(it) },
         setDisbursementDate = { viewModel.setDisburseDate(it) },
         reviewClicked = {
             viewModel.setPrincipalAmount(it)
-            if (viewModel.loanState == LoanState.CREATE) reviewNewLoanApplication()
+            if (loanState == LoanState.CREATE) reviewNewLoanApplication()
             else submitUpdateLoanApplication()
         }
     )
@@ -56,9 +62,9 @@ fun LoanApplicationScreen(
 @Composable
 fun LoanApplicationScreen(
     uiState: LoanApplicationUiState,
-    loanState: org.mifos.mobile.core.model.enums.LoanState,
+    loanState: LoanState,
     uiData: LoanApplicationScreenData,
-    navigateBack: (isSuccess: Boolean) -> Unit,
+    navigateBack: () -> Unit,
     selectProduct: (Int) -> Unit,
     selectPurpose: (Int) -> Unit,
     setDisbursementDate: (String) -> Unit,
@@ -71,7 +77,7 @@ fun LoanApplicationScreen(
         topBar = {
             MifosTopBar(
                 modifier = Modifier.fillMaxWidth(),
-                navigateBack = { navigateBack(false) },
+                navigateBack = { navigateBack() },
                 title = {
                     Text(text = stringResource(
                         id = if (loanState == LoanState.CREATE) R.string.apply_for_loan
@@ -81,7 +87,9 @@ fun LoanApplicationScreen(
             )
         },
         content = {
-            Column(modifier = Modifier.padding(it).fillMaxSize()) {
+            Column(modifier = Modifier
+                .padding(it)
+                .fillMaxSize()) {
                 Box(modifier = Modifier.weight(1f)) {
                     LoanApplicationContent(
                         uiData = uiData,

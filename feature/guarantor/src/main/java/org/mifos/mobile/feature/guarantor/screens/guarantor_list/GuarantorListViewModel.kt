@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.Constants
@@ -27,7 +29,11 @@ class GuarantorListViewModel @Inject constructor(
     private val guarantorRepositoryImp: GuarantorRepository
 ) : ViewModel() {
 
-    val loanId = savedStateHandle.getStateFlow<Long>(key = Constants.LOAN_ID, initialValue = -1)
+    private val _loanId = savedStateHandle.getStateFlow<String?>(key = LOAN_ID, initialValue = null)
+
+    val loanId: StateFlow<Long> = _loanId
+        .flatMapLatest { flowOf(it?.toLongOrNull() ?: -1L) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, -1L)
 
     val guarantorUiState = loanId
             .flatMapLatest { loanId ->

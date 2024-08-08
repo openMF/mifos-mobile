@@ -2,6 +2,7 @@ package org.mifos.mobile.feature.savings.savings_account_transaction
 
 import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
+import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.ui.theme.DepositGreen
 import org.mifos.mobile.core.ui.theme.GreenSuccess
 import org.mifos.mobile.core.ui.theme.RedLight
@@ -21,7 +23,10 @@ import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingAccountsTransactionViewModel @Inject constructor(private val savingsAccountRepositoryImp: SavingsAccountRepository) :
+class SavingAccountsTransactionViewModel @Inject constructor(
+    private val savingsAccountRepositoryImp: SavingsAccountRepository,
+    savedStateHandle: SavedStateHandle
+) :
     ViewModel() {
 
     private val _savingAccountsTransactionUiState = MutableStateFlow<SavingsAccountTransactionUiState>(
@@ -32,13 +37,10 @@ class SavingAccountsTransactionViewModel @Inject constructor(private val savings
     private var _transactionsList: List<Transactions> = mutableListOf()
     private val transactionsList: List<Transactions> get() = _transactionsList
 
-    private var _savingsId: Long = 0
-    val savingsId get() = _savingsId
-
-    fun setSavingsId(savingsId: Long) {
-        _savingsId = savingsId
-        loadSavingsWithAssociations(savingsId)
-    }
+    val savingsId: StateFlow<Long> = savedStateHandle.getStateFlow<Long>(
+        key = SAVINGS_ID,
+        initialValue = -1L
+    )
 
     fun loadSavingsWithAssociations(accountId: Long) {
         viewModelScope.launch {
