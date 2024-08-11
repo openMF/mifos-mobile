@@ -63,13 +63,16 @@ import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationS
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
 import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
-import org.mifos.mobile.feature.savings.savings_make_transfer.SavingsMakeTransferScreen
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.ui.activities.PassCodeActivity
 import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
 import android.provider.Settings
 import android.widget.Toast
 import org.mifos.mobile.R
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.activities.HomeActivity
 
 
@@ -119,7 +122,7 @@ fun RootNavGraph(
         thirdPartyTransferNavGraph(
             navController = navController,
             addBeneficiary = navController::navigateToAddBeneficiaryScreen,
-            reviewTransfer = { } // navigate To Transfer Process Screen with payload
+            reviewTransfer = navController::navigateToTransferProcessScreen
         )
 
         settingsNavGraph(
@@ -178,7 +181,7 @@ fun RootNavGraph(
             viewCharges = navController::navigateToClientChargeScreen,
             viewQrCode = navController::navigateToQrDisplayScreen,
             callHelpline = { callHelpline(context) },
-            reviewTransfer = { } // navigate To Transfer Process Screen with payload
+            reviewTransfer = navController::navigateToTransferProcessScreen
         )
 
         clientAccountsNavGraph(
@@ -215,7 +218,7 @@ fun handleHomeNavigation(
         HomeDestinations.SHARE -> { shareApp(context) }
         HomeDestinations.APP_INFO -> { openAppInfo(context) }
         HomeDestinations.LOGOUT -> navController.navigateToLoginScreen()
-        HomeDestinations.TRANSFER -> navController.navigateToTransferProcessScreen()
+        HomeDestinations.TRANSFER -> navController.navigateToSavingsMakeTransfer(accountId = 1, transferType = TRANSFER_PAY_TO)
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> Unit
         HomeDestinations.NOTIFICATIONS -> navController.navigateToNotificationScreen()

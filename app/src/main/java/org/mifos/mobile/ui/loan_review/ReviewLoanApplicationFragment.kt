@@ -75,16 +75,16 @@ class ReviewLoanApplicationFragment : BaseFragment() {
         (activity as? BaseActivity)?.hideToolbar()
         val loanState =
             arguments?.getCheckedSerializable(LoanState::class.java, LOAN_STATE) as LoanState
-        viewModel.insertData(
-            loanState = loanState,
-            loansPayload = arguments?.getCheckedParcelable(
-                LoansPayload::class.java,
-                LOANS_PAYLOAD
-            )!!,
-            loanName = arguments?.getString(LOAN_NAME),
-            accountNo = arguments?.getString(ACCOUNT_NO),
-            loanId = arguments?.getLong(LOAN_ID),
-        )
+//        viewModel.insertData(
+//            loanState = loanState,
+//            loansPayload = arguments?.getCheckedParcelable(
+//                LoansPayload::class.java,
+//                LOANS_PAYLOAD
+//            )!!,
+//            loanName = arguments?.getString(LOAN_NAME),
+//            accountNo = arguments?.getString(ACCOUNT_NO),
+//            loanId = arguments?.getLong(LOAN_ID),
+//        )
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {

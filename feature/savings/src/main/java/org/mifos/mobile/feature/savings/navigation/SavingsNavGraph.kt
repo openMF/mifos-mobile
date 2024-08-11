@@ -14,14 +14,15 @@ import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.model.enums.SavingsAccountState
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.savings.savings_account.SavingsAccountDetailScreen
 import org.mifos.mobile.feature.savings.savings_account_application.SavingsAccountApplicationScreen
 import org.mifos.mobile.feature.savings.savings_account_transaction.SavingsAccountTransactionScreen
 import org.mifos.mobile.feature.savings.savings_account_withdraw.SavingsAccountWithdrawScreen
-import org.mifos.mobile.feature.savings.savings_make_transfer.ReviewTransferPayload
 import org.mifos.mobile.feature.savings.savings_make_transfer.SavingsMakeTransferScreen
 
 fun NavController.navigateToSavingsMakeTransfer(accountId: Long, outstandingBalance: Double? = null, transferType: String) {
@@ -45,7 +46,7 @@ fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     viewQrCode: (String) -> Unit,
     viewCharges: (ChargeType) -> Unit,
-    reviewTransfer: (ReviewTransferPayload) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
     callHelpline: () -> Unit
 ) {
     navigation(
@@ -126,7 +127,6 @@ fun NavGraphBuilder.savingsApplication(
     ) {
         SavingsAccountApplicationScreen(
             navigateBack = navigateBack,
-            submit = { _, _, _ -> },
         )
     }
 }
@@ -159,7 +159,7 @@ fun NavGraphBuilder.savingsWithdraw(
 
 fun NavGraphBuilder.savingsMakeTransfer(
     navigateBack: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload) -> Unit
+    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit
 ) {
     composable(
         route = SavingsNavigation.SavingsMakeTransfer.route,

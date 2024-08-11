@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -24,7 +26,7 @@ fun ThirdPartyTransferScreen(
     viewModel: ThirdPartyTransferViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    reviewTransfer: (ThirdPartyTransferPayload) -> Unit
+    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit
 ) {
     val uiState by viewModel.thirdPartyTransferUiState.collectAsStateWithLifecycle()
     val uiData by viewModel.thirdPartyTransferUiData.collectAsStateWithLifecycle()
@@ -34,7 +36,7 @@ fun ThirdPartyTransferScreen(
         uiData = uiData,
         navigateBack = navigateBack,
         addBeneficiary = addBeneficiary,
-        reviewTransfer = reviewTransfer
+        reviewTransfer = { reviewTransfer(it, TransferType.TPT) }
     )
 }
 
@@ -44,7 +46,7 @@ fun ThirdPartyTransferScreen(
     uiData: ThirdPartyTransferUiData,
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    reviewTransfer: (ThirdPartyTransferPayload) -> Unit
+    reviewTransfer: (ReviewTransferPayload) -> Unit
 ) {
     val context = LocalContext.current
     MFScaffold(

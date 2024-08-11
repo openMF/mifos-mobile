@@ -91,9 +91,3 @@ data class SavingsMakeTransferUiData(
     var fromAccountOptionPrefilled: AccountOption? = null
 )
 
-data class ReviewTransferPayload(
-    var payToAccount: AccountOption? = null,
-    var payFromAccount: AccountOption? = null,
-    var amount: String = "",
-    var review: String = ""
-)

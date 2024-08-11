@@ -35,14 +35,13 @@ import org.mifos.mobile.feature.savings.R
 fun SavingsAccountApplicationScreen(
     viewModel: SavingsAccountApplicationViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    submit: (Int, Int, showToast: (Int) -> Unit) -> Unit,
 ) {
     val uiState by viewModel.savingsAccountApplicationUiState.collectAsStateWithLifecycle()
 
     SavingsAccountApplicationScreen(
         uiState = uiState,
         navigateBack = navigateBack,
-        submit = submit
+        submit = viewModel::onSubmit
     )
 }
 

@@ -15,7 +15,7 @@ import org.mifos.mobile.ui.transfer_process.TransferProcessComposeFragment
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.getTodayFormatted
-import org.mifos.mobile.feature.savings.savings_make_transfer.ReviewTransferPayload
+import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.feature.savings.savings_make_transfer.SavingsMakeTransferScreen
 import org.mifos.mobile.feature.savings.savings_make_transfer.SavingsMakeTransferViewModel
 
@@ -37,11 +37,11 @@ class SavingsMakeTransferComposeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            SavingsMakeTransferScreen(
-                navigateBack = { activity?.onBackPressedDispatcher?.onBackPressed() },
-                onCancelledClicked = { activity?.onBackPressedDispatcher?.onBackPressed() },
-                reviewTransfer = { reviewTransfer(payload = it) }
-            )
+//            SavingsMakeTransferScreen(
+//                navigateBack = { activity?.onBackPressedDispatcher?.onBackPressed() },
+//                onCancelledClicked = { activity?.onBackPressedDispatcher?.onBackPressed() },
+//                reviewTransfer = { reviewTransfer(payload = it) }
+//            )
         }
     }
 

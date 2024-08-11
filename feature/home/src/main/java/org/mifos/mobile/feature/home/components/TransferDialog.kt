@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,7 +27,7 @@ fun TransferDialog(
     navigateToThirdPartyTransfer: () -> Unit
 ) {
     Dialog(onDismissRequest = onDismissRequest) {
-        Surface {
+        Card {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -34,18 +35,22 @@ fun TransferDialog(
             ) {
                 Text(
                     text = stringResource(id = R.string.transfer),
-                    modifier = Modifier.clickable {
-                        navigateToTransfer()
-                    }
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            navigateToTransfer()
+                        }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 HorizontalDivider()
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = stringResource(id = R.string.third_party_transfer),
-                    modifier = Modifier.clickable {
-                        navigateToThirdPartyTransfer()
-                    }
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            navigateToThirdPartyTransfer()
+                        }
                 )
             }
         }

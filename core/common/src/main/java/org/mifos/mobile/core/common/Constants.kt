@@ -6,7 +6,9 @@ object Constants {
     const val CLIENT_ID = "clientId"
     const val ACCOUNT_ID = "accountId"
     const val LOAN_ID = "loanId"
+    const val LOAN_NAME = "loanName"
     const val SAVINGS_ID = "savingsId"
+    const val ACCOUNT_NUMBER = "accountNo"
     const val BASIC = "Basic "
     const val BACK_SLASH = "/"
     const val SAVINGS_ACCOUNTS = "savingsAccounts"
@@ -27,6 +29,7 @@ object Constants {
     const val LOAN_STATE = "loanType"
     const val LOAN_ACCOUNT = "loanAccount"
     const val PAYLOAD = "payload"
+    const val LOANS_PAYLOAD = "loans_payload"
     const val REQUEST_PERMISSION_SETTING = 254
     const val PERMISSIONS_REQUEST_CAMERA = 1
     const val PERMISSIONS_REQUEST_READ_PHONE_STATE = 2

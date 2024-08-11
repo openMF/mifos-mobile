@@ -1,29 +1,49 @@
 package org.mifos.mobile.feature.transfer.process
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Constants.PAYLOAD
+import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.data.repositories.TransferRepository
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferProcessViewModel @Inject constructor(private val transferRepositoryImp: TransferRepository) :
+class TransferProcessViewModel @Inject constructor(
+    private val transferRepositoryImp: TransferRepository,
+    savedStateHandle: SavedStateHandle
+) :
     ViewModel() {
 
     private val _transferUiState = MutableStateFlow<TransferProcessUiState>(TransferProcessUiState.Initial)
     val transferUiState: StateFlow<TransferProcessUiState> get() = _transferUiState
 
-    private var _transferPayload: MutableStateFlow<TransferPayload?> = MutableStateFlow(null)
-    val transferPayload: StateFlow<TransferPayload?> get() = _transferPayload
+    private val transferPayloadString = savedStateHandle.getStateFlow<String?>(key = PAYLOAD, initialValue = null)
+    private val transferType = savedStateHandle.getStateFlow<TransferType?>(key = TRANSFER_TYPE, initialValue = null)
 
-    private var _transferType: MutableStateFlow<TransferType?> = MutableStateFlow(null)
-    val transferType: StateFlow<TransferType?> get() = _transferType
+    val transferPayload: StateFlow<TransferPayload?> = transferPayloadString
+        .map { jsonString ->
+            jsonString?.let {
+                Gson().fromJson(it, TransferPayload::class.java)
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null
+        )
 
     fun makeTransfer() {
         transferPayload.value?.let { payload ->
@@ -53,14 +73,6 @@ class TransferProcessViewModel @Inject constructor(private val transferRepositor
                 }
             }
         }
-    }
-
-    fun setContent(payload: TransferPayload) {
-        _transferPayload.value = payload
-    }
-
-    fun setTransferType(transferType: TransferType) {
-        _transferType.value = transferType
     }
 }
 

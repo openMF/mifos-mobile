@@ -28,12 +28,7 @@ class TransferProcessComposeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (activity != null) {
-            arguments?.getCheckedParcelable(TransferPayload::class.java, Constants.PAYLOAD)?.let {
-                viewModel.setContent(it)
-            }
-            (arguments?.getCheckedSerializable(TransferType::class.java, Constants.TRANSFER_TYPE) as TransferType).let {
-                viewModel.setTransferType(it)
-            }
+
         }
     }
 

@@ -16,6 +16,8 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.savings.R
 
 @Composable
@@ -23,7 +25,7 @@ fun SavingsMakeTransferScreen(
     viewModel: SavingsMakeTransferViewModel = hiltViewModel(),
     onCancelledClicked: () -> Unit,
     navigateBack: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload) -> Unit
+    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit
 ) {
     val uiState = viewModel.savingsMakeTransferUiState.collectAsStateWithLifecycle()
     val uiData = viewModel.savingsMakeTransferUiData.collectAsStateWithLifecycle()
@@ -33,7 +35,7 @@ fun SavingsMakeTransferScreen(
         onCancelledClicked = onCancelledClicked,
         uiState = uiState.value,
         uiData = uiData.value,
-        reviewTransfer = reviewTransfer
+        reviewTransfer = { reviewTransfer(it, TransferType.SELF) }
     )
 }
 

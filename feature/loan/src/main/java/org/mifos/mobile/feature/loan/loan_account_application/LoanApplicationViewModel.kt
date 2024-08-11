@@ -17,6 +17,7 @@ import org.mifos.mobile.core.common.utils.getTodayFormatted
 import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.data.repositories.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
@@ -239,6 +240,7 @@ class LoanApplicationViewModel @Inject constructor(
     fun setPrincipalAmount(amount: String) {
         _loanApplicationScreenData.update { it.copy(principalAmount = amount) }
     }
+
 }
 
 data class LoanApplicationScreenData(

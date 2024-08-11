@@ -50,11 +50,7 @@ class LoanApplicationFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         return mifosComposeView(requireContext()) {
-            LoanApplicationScreen(
-                navigateBack = { activity?.finish() },
-                reviewNewLoanApplication = { reviewNewLoanApplication() },
-                submitUpdateLoanApplication = { submitUpdateLoanApplication() }
-            )
+
         }
     }
 

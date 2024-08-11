@@ -27,11 +27,7 @@ class ThirdPartyTransferComposeFragment : BaseFragment() {
     ): View {
         (activity as? BaseActivity)?.hideToolbar()
         return mifosComposeView(requireContext()) {
-            ThirdPartyTransferScreen(
-                navigateBack = { activity?.onBackPressed() },
-                addBeneficiary = { addBeneficiary() },
-                reviewTransfer = { reviewTransfer(it) }
-            )
+
         }
     }
 

@@ -1,5 +1,7 @@
 package org.mifos.mobile.feature.loan.loan_account_application
 
+import android.content.Context
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,25 +20,30 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.gson.Gson
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.loan.R
+import org.mifos.mobile.feature.loan.navigation.LoanRoute
 
 
 @Composable
 fun LoanApplicationScreen(
     viewModel: LoanApplicationViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    reviewNewLoanApplication: () -> Unit,
-    submitUpdateLoanApplication: () -> Unit
+    reviewNewLoanApplication: (loanState: LoanState, loansPayloadString: String, loanId: Long?, loanName: String, accountNo: String) -> Unit,
+    submitUpdateLoanApplication: (loanState: LoanState, loansPayloadString: String, loanId: Long?, loanName: String, accountNo: String) -> Unit,
 ) {
     val uiState by viewModel.loanUiState.collectAsStateWithLifecycle()
     val uiData by viewModel.loanApplicationScreenData.collectAsStateWithLifecycle()
     val loanState by viewModel.loanState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = loanState) {
         viewModel.loadLoanApplicationTemplate(loanState)
@@ -53,8 +60,13 @@ fun LoanApplicationScreen(
         setDisbursementDate = { viewModel.setDisburseDate(it) },
         reviewClicked = {
             viewModel.setPrincipalAmount(it)
-            if (loanState == LoanState.CREATE) reviewNewLoanApplication()
-            else submitUpdateLoanApplication()
+            getLoanPayload(
+                context = context,
+                loanState = loanState,
+                reviewNewLoanApplication = reviewNewLoanApplication,
+                submitUpdateLoanApplication = submitUpdateLoanApplication,
+                viewModel = viewModel
+            )
         }
     )
 }
@@ -149,3 +161,51 @@ fun ReviewLoanApplicationScreenPreview(
     }
 }
 
+private fun getLoanPayload(
+    context: Context,
+    viewModel: LoanApplicationViewModel,
+    loanState: LoanState,
+    reviewNewLoanApplication: (loanState: LoanState, loansPayloadString: String, loanId: Long?, loanName: String, accountNo: String) -> Unit,
+    submitUpdateLoanApplication: (loanState: LoanState, loansPayloadString: String, loanId: Long?, loanName: String, accountNo: String) -> Unit,
+) {
+    val payload = LoansPayload().apply {
+        clientId = viewModel.loanTemplate.clientId.takeIf { loanState == LoanState.CREATE }
+        loanPurpose = viewModel.loanApplicationScreenData.value.selectedLoanPurpose ?: "Not provided"
+        productName = viewModel.loanApplicationScreenData.value.selectedLoanProduct
+        currency = viewModel.loanApplicationScreenData.value.currencyLabel
+        if (viewModel.purposeId > 0) loanPurposeId = viewModel.purposeId
+        productId = viewModel.productId
+        principal = viewModel.loanApplicationScreenData.value.principalAmount?.toDoubleOrNull() ?: 0.0
+        loanTermFrequency = viewModel.loanTemplate.termFrequency
+        loanTermFrequencyType = viewModel.loanTemplate.interestRateFrequencyType?.id
+        loanType = "individual".takeIf { loanState == LoanState.CREATE }
+        numberOfRepayments = viewModel.loanTemplate.numberOfRepayments
+        repaymentEvery = viewModel.loanTemplate.repaymentEvery
+        repaymentFrequencyType = viewModel.loanTemplate.interestRateFrequencyType?.id
+        interestRatePerPeriod = viewModel.loanTemplate.interestRatePerPeriod
+        expectedDisbursementDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, viewModel.loanApplicationScreenData.value.disbursementDate)
+        submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, viewModel.loanApplicationScreenData.value.submittedDate).takeIf { loanState == LoanState.CREATE }
+        transactionProcessingStrategyId = viewModel.loanTemplate.transactionProcessingStrategyId
+        amortizationType = viewModel.loanTemplate.amortizationType?.id
+        interestCalculationPeriodType = viewModel.loanTemplate.interestCalculationPeriodType?.id
+        interestType = viewModel.loanTemplate.interestType?.id
+    }
+    
+    val loansPayloadString = Gson().toJson(payload)
+    when(loanState) {
+        LoanState.CREATE -> reviewNewLoanApplication(
+            loanState,
+            loansPayloadString,
+            viewModel.loanId.value,
+            context.getString(R.string.string_and_string, context.getString(R.string.new_loan_application) + " ", viewModel.loanApplicationScreenData.value.clientName ?: ""),
+            context.getString(R.string.string_and_string, context.getString(R.string.account_number) + " ", viewModel.loanApplicationScreenData.value.accountNumber ?: "")
+        )
+        LoanState.UPDATE -> submitUpdateLoanApplication(
+            loanState,
+            loansPayloadString,
+            null,
+            context.getString(R.string.string_and_string, context.getString(R.string.update_loan_application) + " ", viewModel.loanApplicationScreenData.value.clientName ?: ""),
+            context.getString(R.string.string_and_string, context.getString(R.string.account_number) + " ", viewModel.loanApplicationScreenData.value.accountNumber ?: "")
+        )
+    }
+}
