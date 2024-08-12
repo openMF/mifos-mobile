@@ -1,7 +1,6 @@
 package org.mifos.mobile.ui.activities
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -16,7 +15,6 @@ import com.mifos.mobile.passcode.MifosPassCodeActivity
 import com.mifos.mobile.passcode.utils.EncryptionUtil
 import org.mifos.mobile.R
 import org.mifos.mobile.core.model.enums.BiometricCapability
-import org.mifos.mobile.ui.login.LoginActivity
 import org.mifos.mobile.utils.CheckSelfPermissionAndRequest
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.utils.MaterialDialog

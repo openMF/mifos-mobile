@@ -65,7 +65,6 @@ import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
 import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.ui.activities.PassCodeActivity
-import org.mifos.mobile.ui.activities.PrivacyPolicyActivity
 import android.provider.Settings
 import android.widget.Toast
 import org.mifos.mobile.R

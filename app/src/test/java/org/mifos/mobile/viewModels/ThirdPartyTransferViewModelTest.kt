@@ -24,7 +24,6 @@ import org.mifos.mobile.repositories.BeneficiaryRepositoryImp
 import org.mifos.mobile.repositories.ThirdPartyTransferRepositoryImp
 import org.mifos.mobile.ui.third_party_transfer.ThirdPartyTransferViewModel
 import org.mifos.mobile.util.RxSchedulersOverrideRule
-import org.mifos.mobile.utils.ThirdPartyTransferUiState
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
