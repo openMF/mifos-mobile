@@ -9,13 +9,13 @@ androidGradlePlugin = "8.2.2"
 androidTools = "31.2.1"
 androidxActivity = "1.7.2"
 androidxComposeBom = "2023.10.01"
-androidxComposeCompiler = "1.5.8"
+androidxComposeCompiler = "1.5.14"
 androidxCore = "1.10.1"
 androidxHilt = "1.1.0-alpha01"
 androidxLifecycle = "2.6.1"
 hilt = "2.50"
 junit = "4.13.2"
-kotlin = "1.9.22"
+kotlin = "1.9.24"
 ksp = "1.9.21-1.0.16"
 firebaseCrashlyticsPlugin = "2.9.2"
 gmsPlugin = "4.3.14"
@@ -147,6 +147,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 room = { id = "androidx.room", version.ref = "room" }
 spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 # Plugins defined by this project
 mifos-android-application = { id = "mifos.android.application", version = "unspecified" }

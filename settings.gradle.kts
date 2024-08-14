@@ -20,7 +20,7 @@ dependencyResolutionManagement {
 rootProject.name = "mifos-mobile"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include(":app")
+include(":androidApp")
 include(":ui")
 include(":core:logs")
 include(":feature:guarantor")
@@ -47,3 +47,4 @@ include(":feature:auth")
 include(":feature:update-password")
 include(":feature:home")
 include(":feature:user_profile")
+include(":shared")
