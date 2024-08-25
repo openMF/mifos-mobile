@@ -4,16 +4,20 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import org.mifos.mobile.core.common.Constants.CURR_PASSWORD
+import com.mifos.compose.component.PasscodeScreen
+import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants.INTIAL_LOGIN
-import org.mifos.mobile.core.common.Constants.IS_TO_UPDATE_PASS_CODE
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
@@ -22,19 +26,19 @@ import org.mifos.mobile.feature.account.navigation.clientAccountsNavGraph
 import org.mifos.mobile.feature.account.navigation.navigateToClientAccountsScreen
 import org.mifos.mobile.feature.auth.navigation.authenticationNavGraph
 import org.mifos.mobile.feature.auth.navigation.navigateToLoginScreen
-import org.mifos.mobile.feature.client_charge.navigation.clientChargeNavGraph
-import org.mifos.mobile.feature.client_charge.navigation.navigateToClientChargeScreen
-import org.mifos.mobile.feature.beneficiary.navigation.BeneficiaryNavigation
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToAddBeneficiaryScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
+import org.mifos.mobile.feature.client_charge.navigation.clientChargeNavGraph
+import org.mifos.mobile.feature.client_charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.guarantor.navigation.guarantorNavGraph
 import org.mifos.mobile.feature.guarantor.navigation.navigateToGuarantorScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
+import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
@@ -42,37 +46,28 @@ import org.mifos.mobile.feature.location.navigation.locationsNavGraph
 import org.mifos.mobile.feature.location.navigation.navigateToLocationsScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationNavGraph
+import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
+import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.recent_transaction.navigation.navigateToRecentTransaction
 import org.mifos.mobile.feature.recent_transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
+import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.third_party_transfer.navigation.navigateToThirdPartyTransfer
 import org.mifos.mobile.feature.third.party.transfer.third_party_transfer.navigation.thirdPartyTransferNavGraph
+import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
 import org.mifos.mobile.feature.update_password.navigation.navigateToUpdatePassword
 import org.mifos.mobile.feature.update_password.navigation.updatePasswordNavGraph
 import org.mifos.mobile.feature.user_profile.navigation.navigateToUserProfile
 import org.mifos.mobile.feature.user_profile.navigation.userProfileNavGraph
-import org.mifos.mobile.feature.qr.navigation.QrNavigation
-import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
-import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
-import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
-import org.mifos.mobile.feature.qr.navigation.qrNavGraph
-import org.mifos.mobile.feature.savings.navigation.SavingsNavigation
-import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
-import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
-import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
-import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
-import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
-import org.mifos.mobile.ui.activities.PassCodeActivity
-import android.provider.Settings
-import android.widget.Toast
-import org.mifos.mobile.R
-import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
-import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
-import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.ui.activities.HomeActivity
+import org.mifos.mobile.ui.activities.PassCodeActivity
 
 
 @Composable
@@ -127,7 +122,7 @@ fun RootNavGraph(
         settingsNavGraph(
             navController = navController,
             changePassword = navController::navigateToUpdatePassword,
-            changePasscode = { navigateToUpdatePasscodeActivity(it, context) },
+            changePasscode = {}, // { navigateToUpdatePasscodeActivity(it, context) },
             navigateToLoginScreen = navController::navigateToLoginScreen,
             languageChanged = { startActivity(context, HomeActivity::class.java) }
         )
@@ -160,7 +155,7 @@ fun RootNavGraph(
             navigateToOssLicense = { startActivity(context, OssLicensesMenuActivity::class.java) }
         )
 
-        transferProcessNavGraph (
+        transferProcessNavGraph(
             navController = navController
         )
 
@@ -188,14 +183,31 @@ fun RootNavGraph(
             navigateToLoanApplicationScreen = navController::navigateToLoanApplication,
             navigateToSavingsApplicationScreen = navController::navigateToSavingsApplicationScreen,
             navigateToAccountDetail = { accountType, id ->
-                when(accountType) {
+                when (accountType) {
                     AccountType.SAVINGS -> navController.navigateToSavingsDetailScreen(savingsId = id)
                     AccountType.LOAN -> navController.navigateToLoanDetailScreen(loanId = id)
                     AccountType.SHARE -> {}
                 }
             }
         )
+
+        composable(PASSCODE_SCREEN) {
+            PasscodeScreen(
+                onForgotButton = navController::navigateToHomeScreen,
+                onSkipButton = navController::navigateToHomeScreen,
+                onPasscodeConfirm = {
+                    navController.navigateToHomeScreen()
+                },
+                onPasscodeRejected = {}
+            )
+        }
     }
+}
+
+const val PASSCODE_SCREEN = "passcode_screen"
+
+fun NavController.navigateToPasscodeScreen(navOptions: NavOptions? = null) {
+    return this.navigate(PASSCODE_SCREEN, navOptions)
 }
 
 fun handleHomeNavigation(
@@ -214,10 +226,20 @@ fun handleHomeNavigation(
         HomeDestinations.SETTINGS -> navController.navigateToSettings()
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
-        HomeDestinations.SHARE -> { shareApp(context) }
-        HomeDestinations.APP_INFO -> { openAppInfo(context) }
+        HomeDestinations.SHARE -> {
+            shareApp(context)
+        }
+
+        HomeDestinations.APP_INFO -> {
+            openAppInfo(context)
+        }
+
         HomeDestinations.LOGOUT -> navController.navigateToLoginScreen()
-        HomeDestinations.TRANSFER -> navController.navigateToSavingsMakeTransfer(accountId = 1, transferType = TRANSFER_PAY_TO)
+        HomeDestinations.TRANSFER -> navController.navigateToSavingsMakeTransfer(
+            accountId = 1,
+            transferType = TRANSFER_PAY_TO
+        )
+
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> Unit
         HomeDestinations.NOTIFICATIONS -> navController.navigateToNotificationScreen()
@@ -234,26 +256,33 @@ private fun startPassCodeActivity(context: Context) {
     intent.putExtra(INTIAL_LOGIN, true)
     context.startActivity(intent)
 }
-
-private fun navigateToUpdatePasscodeActivity(passcode: String, context: Context) {
-    val intent = Intent(context, PassCodeActivity::class.java).apply {
-        putExtra(CURR_PASSWORD, passcode)
-        putExtra(IS_TO_UPDATE_PASS_CODE, true)
-    }
-    context.startActivity(intent)
-}
+//
+//private fun navigateToUpdatePasscodeActivity(passcode: String, context: Context) {
+//    val intent = Intent(context, PassCodeActivity::class.java).apply {
+//        putExtra(CURR_PASSWORD, passcode)
+//        putExtra(IS_TO_UPDATE_PASS_CODE, true)
+//    }
+//    context.startActivity(intent)
+//}
 
 private fun callHelpline(context: Context) {
     val intent = Intent(Intent.ACTION_DIAL)
-    intent.data = Uri.parse("tel:" + context.getString(org.mifos.mobile.feature.home.R.string.help_line_number))
+    intent.data =
+        Uri.parse("tel:" + context.getString(org.mifos.mobile.feature.home.R.string.help_line_number))
     context.startActivity(intent)
 }
 
 private fun mailHelpline(context: Context) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:")
-        putExtra(Intent.EXTRA_EMAIL, arrayOf(context.getString(org.mifos.mobile.feature.home.R.string.contact_email)))
-        putExtra(Intent.EXTRA_SUBJECT, context.getString(org.mifos.mobile.feature.home.R.string.user_query))
+        putExtra(
+            Intent.EXTRA_EMAIL,
+            arrayOf(context.getString(org.mifos.mobile.feature.home.R.string.contact_email))
+        )
+        putExtra(
+            Intent.EXTRA_SUBJECT,
+            context.getString(org.mifos.mobile.feature.home.R.string.user_query)
+        )
     }
     try {
         context.startActivity(intent)

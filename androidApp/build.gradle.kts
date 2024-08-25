@@ -107,7 +107,7 @@ dependencies {
     implementation(projects.feature.auth)
     implementation(projects.feature.userProfile)
 
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.androidx.lifecycle.extensions)
     implementation(libs.androidx.appcompat)
@@ -120,16 +120,18 @@ dependencies {
     kapt(libs.dbflow.processor)
     implementation(libs.dbflow.core)
 
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.vectordrawable)
     implementation(libs.google.oss.licenses)
-    implementation("com.isseiaoki:simplecropview:1.1.8")
+
+//    implementation(libs.simplecropview)
+
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
 
     //Country Code picker
-    implementation("com.hbb20:ccp:2.7.2")
-    implementation("com.github.ParveshSandila:CountryCodeChooser:1.0")
+//    implementation(libs.ccp)
+//    implementation(libs.countrycodechooser)
 
     //Square dependencies
     implementation(libs.squareup.retrofit2) {
@@ -150,51 +152,49 @@ dependencies {
     implementation(libs.jakewharton.compiler)
 
     //Annotation library
-    implementation("androidx.annotation:annotation:1.1.0")
+    implementation(libs.androidx.annotation)
 
     //qr code
-    implementation("com.google.zxing:core:3.5.2")
-    implementation("me.dm7.barcodescanner:zxing:1.9.13")
+//    implementation(libs.zxing.core)
+//    implementation(libs.zxing)
 
     //sweet error dependency
-    implementation("com.github.therajanmaurya:Sweet-Error:1.0.0")
+    implementation(libs.sweet.error)
 
     //mifos passcode
-    implementation("com.mifos.mobile:mifos-passcode:1.0.0")
+    implementation(libs.mifos.passcode)
 
     //multidex
-    implementation("androidx.multidex:multidex:2.0.1")
+    implementation(libs.androidx.multidex)
 
     //TableView
-    implementation("com.evrencoskun.library:tableview:0.8.9.4")
+//    implementation(libs.tableview)
 
     //Biometric Authentication
-    implementation("androidx.biometric:biometric:1.1.0")
+    implementation(libs.androidx.biometric)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Unit tests dependencies
     testImplementation(libs.junit)
-    testImplementation("org.mockito:mockito-core:5.4.0")
-    implementation("org.mockito:mockito-core:5.4.0")
+    testImplementation(libs.mockito.core)
+    implementation(libs.mockito.core)
     //turbine
-    testImplementation("app.cash.turbine:turbine:1.1.0")
-    implementation("org.mockito:mockito-android:5.4.0")
+    testImplementation(libs.turbine)
+    implementation(libs.mockito.android)
     androidTestImplementation((libs.junit))
-    androidTestImplementation("org.mockito:mockito-core:5.4.0")
-    androidTestImplementation("org.mockito:mockito-android:5.4.0")
-    androidTestImplementation("androidx.annotation:annotation:1.0.0")
-    implementation("androidx.arch.core:core-testing:2.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") {
+    androidTestImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.androidx.annotation)
+    implementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
 
-    }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.test:runner:1.6.0-alpha04")
-    androidTestImplementation("androidx.test:rules:1.6.0-alpha01")
-
-    implementation("com.github.rahul-gill.mifos-ui-library:uihouse:alpha-2.1")
+    implementation(libs.uihouse)
 
     // Jetpack Compose
     api(libs.androidx.activity.compose)
@@ -213,7 +213,7 @@ dependencies {
 
 
     //image cropper
-    implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")
+    implementation(libs.android.image.cropper)
 
     // Google Bar code scanner
     implementation(libs.google.app.code.scanner)

@@ -2,27 +2,18 @@ package org.mifos.mobile.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper
-import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.core.common.Constants
+import androidx.activity.ComponentActivity
 
 /*
 * Created by saksham on 01/June/2018
 */
-class SplashActivity : BaseActivity() {
-
-    private var passcodePreferencesHelper: PasscodePreferencesHelper? = null
+class SplashActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val intent: Intent?
         super.onCreate(savedInstanceState)
-        passcodePreferencesHelper = PasscodePreferencesHelper(this)
-        if (passcodePreferencesHelper?.passCode?.isNotEmpty() == true) {
-            intent = Intent(this, PassCodeActivity::class.java)
-            intent.putExtra(Constants.INTIAL_LOGIN, true)
-        } else {
-            intent = Intent(this, LoginActivity::class.java)
-        }
+        // TODO:: check for user logged in or not, and if logged in move to PasscodeActivity instead.
+        val intent = Intent(this, LoginActivity::class.java)
+
         startActivity(intent)
         finish()
     }

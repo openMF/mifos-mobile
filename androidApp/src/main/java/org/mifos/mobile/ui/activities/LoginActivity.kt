@@ -1,7 +1,7 @@
 package org.mifos.mobile.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
@@ -9,14 +9,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.auth.navigation.AuthenticationNavigation
 import org.mifos.mobile.navigation.RootNavGraph
-import org.mifos.mobile.ui.activities.base.BaseActivity
 
 /**
  * @author Vishwajeet
  * @since 05/06/16
  */
 @AndroidEntryPoint
-class LoginActivity : BaseActivity() {
+class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
