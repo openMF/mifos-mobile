@@ -1,17 +1,11 @@
 package org.mifos.mobile.feature.home.navigation
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import org.mifos.mobile.feature.home.R
 import org.mifos.mobile.feature.home.screens.HomeScreen
-import org.mifos.mobile.feature.home.viewmodel.HomeCardItem
 
 fun NavGraphBuilder.homeNavGraph(
     onNavigate: (HomeDestinations) -> Unit,
@@ -44,4 +38,8 @@ fun NavGraphBuilder.homeRoute(
             onNavigate = onNavigate
         )
     }
+}
+
+fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) {
+    return this.navigate(HomeNavigation.HomeScreen.route, navOptions)
 }

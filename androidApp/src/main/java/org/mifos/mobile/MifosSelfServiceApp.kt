@@ -6,12 +6,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.mifos.mobile.passcode.utils.ForegroundChecker
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.hilt.android.HiltAndroidApp
-import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.common.utils.LanguageHelper.onAttach
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.feature.settings.applySavedTheme
 
 /**
@@ -41,7 +40,6 @@ class MifosSelfServiceApp : MultiDexApplication() {
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         instance = this
         FlowManager.init(FlowConfig.Builder(this).build())
-        ForegroundChecker.init(this)
         PreferencesHelper(this).applySavedTheme()
     }
 

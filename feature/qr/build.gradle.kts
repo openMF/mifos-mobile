@@ -22,7 +22,7 @@ dependencies {
 
     //qr code
     implementation("com.google.zxing:core:3.5.2")
-    implementation("me.dm7.barcodescanner:zxing:1.9.13")
+//    implementation("me.dm7.barcodescanner:zxing:1.9.13")
 
     //gson
     implementation(libs.squareup.retrofit.converter.gson)

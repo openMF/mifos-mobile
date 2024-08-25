@@ -4,18 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.MenuItem
-import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.common.ConnectionResult
@@ -23,20 +19,19 @@ import com.google.android.gms.common.GoogleApiAvailability
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.ui.activities.base.BaseActivity
-import org.mifos.mobile.utils.Toaster
-import org.mifos.mobile.utils.fcm.RegistrationIntentService
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel
 import org.mifos.mobile.navigation.RootNavGraph
+import org.mifos.mobile.utils.Toaster
+import org.mifos.mobile.utils.fcm.RegistrationIntentService
 
 /**
  * @author Vishwajeet
  * @since 14/07/2016
  */
 @AndroidEntryPoint
-class HomeActivity : BaseActivity() {
+class HomeActivity : ComponentActivity() {
 
     private val viewModel: UserDetailViewModel by viewModels()
     private var isReceiverRegistered = false
@@ -84,22 +79,25 @@ class HomeActivity : BaseActivity() {
     /**
      * Handling back press
      */
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val currentRoute = navHostController.currentBackStackEntry?.destination?.route
 
         if (currentRoute == HomeNavigation.HomeScreen.route) {
-            if (doubleBackToExitPressedOnce && stackCount() == 0) {
-                finish()
-                return
-            }
+//            if (doubleBackToExitPressedOnce && stackCount() == 0) {
+//                finish()
+//                return
+//            }
             doubleBackToExitPressedOnce = true
             Toaster.show(findViewById(android.R.id.content), getString(R.string.exit_message))
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
         }
 
-        if (stackCount() != 0) {
-            super.onBackPressed()
-        }
+        super.onBackPressed()
+
+//        if (stackCount() != 0) {
+//            super.onBackPressed()
+//        }
     }
 
 

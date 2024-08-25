@@ -4,19 +4,18 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven("https://www.jitpack.io")
-        maven("https://plugins.gradle.org/m2/")
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
-        maven("https://www.jitpack.io")
+        maven("https://jitpack.io")
         maven("https://plugins.gradle.org/m2/")
     }
 }
+
 rootProject.name = "mifos-mobile"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
