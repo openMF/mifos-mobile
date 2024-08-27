@@ -10,8 +10,8 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mifos.mobile.core.data.repositories.ClientRepository
-import org.mifos.mobile.core.data.repositories.UserAuthRepository
+import org.mifos.mobile.core.data.repository.ClientRepository
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.model.entity.client.Client

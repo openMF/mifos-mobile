@@ -9,17 +9,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.common.utils.getTodayFormatted
-import org.mifos.mobile.core.network.Result
-import org.mifos.mobile.core.network.asResult
-import org.mifos.mobile.feature.savings.savings_account.SavingsAccountDetailUiState
+import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
 import javax.inject.Inject
 
 @HiltViewModel

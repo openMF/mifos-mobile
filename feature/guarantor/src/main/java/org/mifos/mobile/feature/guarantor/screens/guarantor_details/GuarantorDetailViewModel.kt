@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.data.repositories.GuarantorRepository
+import org.mifos.mobile.core.data.repository.GuarantorRepository
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
-import org.mifos.mobile.core.network.asResult
-import javax.inject.Inject
 import org.mifos.mobile.core.network.Result
+import org.mifos.mobile.core.network.asResult
 import org.mifos.mobile.feature.guarantor.R
+import javax.inject.Inject
 
 
 /**

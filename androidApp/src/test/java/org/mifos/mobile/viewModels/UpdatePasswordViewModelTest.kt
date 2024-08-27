@@ -10,11 +10,10 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mifos.mobile.core.data.repositories.ClientRepository
-import org.mifos.mobile.core.data.repositories.UserAuthRepository
-import org.mifos.mobile.feature.update_password.UpdatePasswordViewModel
-import org.mifos.mobile.util.RxSchedulersOverrideRule
+import org.mifos.mobile.core.data.repository.ClientRepository
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.feature.registration.utils.RegistrationUiState
+import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations

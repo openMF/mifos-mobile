@@ -6,13 +6,13 @@ import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mifos.mobile.core.data.repositories.AccountsRepository
-import org.mifos.mobile.core.data.repositories.HomeRepositoryImp
+import org.mifos.mobile.core.data.repository.AccountsRepository
+import org.mifos.mobile.core.data.repositoryImpl.HomeRepositoryImp
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.feature.account.utils.AccountState
 import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
@@ -20,8 +20,8 @@ import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 

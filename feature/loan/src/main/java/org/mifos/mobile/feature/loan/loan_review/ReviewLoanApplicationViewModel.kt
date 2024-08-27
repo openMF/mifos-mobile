@@ -3,7 +3,6 @@ package org.mifos.mobile.feature.loan.loan_review
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavType
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,11 +16,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.LOANS_PAYLOAD
-import org.mifos.mobile.core.data.repositories.ReviewLoanApplicationRepository
+import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
-import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.LoanState
-import org.mifos.mobile.core.model.enums.TransferType
 import javax.inject.Inject
 
 @HiltViewModel

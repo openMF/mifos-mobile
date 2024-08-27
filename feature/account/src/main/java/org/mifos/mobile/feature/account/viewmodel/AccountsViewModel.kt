@@ -1,7 +1,6 @@
 package org.mifos.mobile.feature.account.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,24 +12,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.feature.account.account.utils.AccountsFilterUtil
-import org.mifos.mobile.core.data.repositories.AccountsRepository
-import org.mifos.mobile.core.data.repositories.HomeRepository
+import org.mifos.mobile.core.data.repository.AccountsRepository
+import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.feature.account.account.utils.AccountsFilterUtil
 import org.mifos.mobile.feature.account.utils.AccountState
 import org.mifos.mobile.feature.account.utils.StatusUtils
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel

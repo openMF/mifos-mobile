@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
-import org.mifos.mobile.core.data.repositories.RecentTransactionRepository
+import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.model.entity.Currency
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction

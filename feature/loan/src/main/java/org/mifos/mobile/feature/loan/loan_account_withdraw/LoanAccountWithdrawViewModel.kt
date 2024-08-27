@@ -13,10 +13,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.data.repositories.LoanRepository
+import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
-import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.loan.R
 import javax.inject.Inject
 

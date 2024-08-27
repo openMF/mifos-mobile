@@ -1,6 +1,5 @@
 package org.mifos.mobile.feature.client_charge.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,10 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.data.repositories.ClientChargeRepository
+import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
-import org.mifos.mobile.core.datastore.model.Charge
-import org.mifos.mobile.core.model.entity.client.ClientType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.client_charge.utils.ClientChargeState
 import javax.inject.Inject
