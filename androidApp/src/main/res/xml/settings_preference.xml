@@ -21,9 +21,9 @@
         <androidx.preference.ListPreference
             android:defaultValue="System_Language"
             android:entries="@array/languages"
-            android:entryValues="@array/languages_value"
+            android:entryValues="@array/core_common_languages_value"
             android:icon="@drawable/ic_translate"
-            android:key="@string/language_type"
+            android:key="@string/core_common_language_type"
             android:summary="@string/choose_language"
             android:title="@string/language" />
 

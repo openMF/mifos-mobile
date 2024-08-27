@@ -36,7 +36,7 @@
     <string name="share">اشتراک کریں</string>
     <string name="share_account">اکاؤنٹ کا اشتراک کریں</string>
     <string name="clients_list">کسٹمر چیز</string>
-    <string name="working">کام کر رہے ہیں</string>
+    <string name="core_common_working">کام کر رہے ہیں</string>
     <string name="status_image">موجودہ حالت کی تصویر</string>
     <string name="loan_repayment_schedule">قرض کی ادائیگی کی شیڈول</string>
     <string name="last_transaction">پچھلا ٹرانزیکشن</string>

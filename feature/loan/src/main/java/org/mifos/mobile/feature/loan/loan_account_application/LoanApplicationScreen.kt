@@ -1,7 +1,6 @@
 package org.mifos.mobile.feature.loan.loan_account_application
 
 import android.content.Context
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,16 +20,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.gson.Gson
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.component.MifosTopBar
+import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.loan.R
-import org.mifos.mobile.feature.loan.navigation.LoanRoute
 
 
 @Composable
@@ -183,8 +181,8 @@ private fun getLoanPayload(
         repaymentEvery = viewModel.loanTemplate.repaymentEvery
         repaymentFrequencyType = viewModel.loanTemplate.interestRateFrequencyType?.id
         interestRatePerPeriod = viewModel.loanTemplate.interestRatePerPeriod
-        expectedDisbursementDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, viewModel.loanApplicationScreenData.value.disbursementDate)
-        submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, viewModel.loanApplicationScreenData.value.submittedDate).takeIf { loanState == LoanState.CREATE }
+        expectedDisbursementDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_MMMM, viewModel.loanApplicationScreenData.value.disbursementDate)
+        submittedOnDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_MMMM, viewModel.loanApplicationScreenData.value.submittedDate).takeIf { loanState == LoanState.CREATE }
         transactionProcessingStrategyId = viewModel.loanTemplate.transactionProcessingStrategyId
         amortizationType = viewModel.loanTemplate.amortizationType?.id
         interestCalculationPeriodType = viewModel.loanTemplate.interestCalculationPeriodType?.id

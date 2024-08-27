@@ -22,7 +22,7 @@ import org.mifos.mobile.feature.about.R
 fun AboutUsHeader() {
     Column {
         Image(
-            painter = painterResource(id = R.mipmap.mifos_icon),
+            painter = painterResource(id = R.mipmap.core_common_mifos_icon),
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)

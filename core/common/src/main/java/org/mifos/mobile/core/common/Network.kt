@@ -1,13 +1,20 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.telephony.TelephonyManager
 
-/**
- * Created by rishabhkhanna on 07/03/17.
- */
 object Network {
     /**
      * Get the network info
@@ -15,6 +22,7 @@ object Network {
      * @param context
      * @return
      */
+    @SuppressLint("MissingPermission")
     private fun getNetworkInfo(context: Context): NetworkInfo? {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo
@@ -86,6 +94,7 @@ object Network {
      * @param subType
      * @return
      */
+    @Suppress("CyclomaticComplexMethod")
     private fun isConnectionFast(type: Int, subType: Int): Boolean {
         return when (type) {
             ConnectivityManager.TYPE_WIFI -> {

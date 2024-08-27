@@ -35,7 +35,7 @@
     <string name="share">শেয়ার</string>
     <string name="share_account">আপনার অ্যাকাউন্ট শেয়ার করুন</string>
     <string name="clients_list">একটি গ্রাহক চয়ন করুন</string>
-    <string name="working">কাজ</string>
+    <string name="core_common_working">কাজ</string>
     <string name="status_image">রাষ্ট্রের ছবি</string>
     <string name="loan_repayment_schedule">পরিশোধের সময়সূচী</string>
     <string name="last_transaction">শেষ লেনদেন</string>

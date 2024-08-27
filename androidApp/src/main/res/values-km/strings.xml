@@ -35,7 +35,7 @@
     <string name="share">ចែករំលែក</string>
     <string name="share_account">ចែករំលែកគណនីរបស់អ្នក</string>
     <string name="clients_list">ជ្រើសរើសអតិថិជន</string>
-    <string name="working">ធ្វើការ</string>
+    <string name="core_common_working">ធ្វើការ</string>
     <string name="status_image">រូបភាពរបស់រដ្ឋ</string>
     <string name="loan_repayment_schedule">កាលវិភាគសងប្រាក់</string>
     <string name="last_transaction">កិច្ចការចុងក្រោយ</string>

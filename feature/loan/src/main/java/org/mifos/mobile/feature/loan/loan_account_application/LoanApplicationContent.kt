@@ -1,6 +1,5 @@
 package org.mifos.mobile.feature.loan.loan_account_application
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
@@ -16,16 +14,15 @@ import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -35,7 +32,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.utils.DateHelper.FORMAT_dd_MM_yyyy
+import org.mifos.mobile.core.common.utils.DateHelper.FORMAT_MM
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDrawableSingleLine
@@ -43,8 +40,6 @@ import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
 import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.PresentOrFutureSelectableDates
 import org.mifos.mobile.feature.loan.R
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -216,7 +211,7 @@ fun LoanApplicationContent(
                 TextButton(
                     onClick = {
                         val formattedDate = DateHelper.getSpecificFormat(
-                            format = FORMAT_dd_MM_yyyy,
+                            format = FORMAT_MM,
                             dateLong = datePickerState.selectedDateMillis
                         )
                         formattedDate?.let {

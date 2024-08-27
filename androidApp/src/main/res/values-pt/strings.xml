@@ -35,7 +35,7 @@
     <string name="share">Partilhar</string>
     <string name="share_account">Partilhar conta</string>
     <string name="clients_list">Escolheu um cliente</string>
-    <string name="working">A trabalhar</string>
+    <string name="core_common_working">A trabalhar</string>
     <string name="status_image">Imagem de Status</string>
     <string name="loan_repayment_schedule">Cronograma de Reembolso</string>
     <string name="last_transaction">Última Transação </string>

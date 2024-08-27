@@ -37,7 +37,7 @@
     <string name="share">Share</string>
     <string name="share_account">Share Account</string>
     <string name="clients_list">Chose a client</string>
-    <string name="working">Working</string>
+    <string name="core_common_working">Working</string>
     <string name="status_image">Status Image</string>
     <string name="loan_repayment_schedule">Repayment Schedule</string>
     <string name="last_transaction">Last Transaction</string>
@@ -510,8 +510,8 @@
     <string name="scan_your_fingerprint">Scan your fingerprint</string>
 
 
-    <string name="language_type" translatable="false">language_type</string>
-    <string name="default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
     <string name="theme_type" translatable="false">theme_type</string>
     <string name="total_saving_balance">Total Savings Balance</string>
     <string name="total_loan_balance">Total Loan Balance</string>
@@ -599,7 +599,7 @@
         <item>فارسی</item>
     </string-array>
 
-    <string-array name="languages_value" translatable="false">
+    <string-array name="core_common_languages_value" translatable="false">
         <item>System_Language</item>
         <item>en</item>
         <item>hi</item>

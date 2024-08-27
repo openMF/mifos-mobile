@@ -421,7 +421,7 @@
     <string name="withdrawal_date">تاریخ برداشت</string>
     <string name="withdrawal_transfer">انتقال برداشت</string>
     <string name="withdrawn">برداشت</string>
-    <string name="working">کار کردن</string>
+    <string name="core_common_working">کار کردن</string>
     <string name="yes">بلي</string>
     <string name="app_info">اطلاعات برنامه</string>
     <string name="login_failed">ورود ناموفق بود، لطفاً بعداً دوباره امتحان کنید.</string>

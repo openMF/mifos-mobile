@@ -35,7 +35,7 @@
     <string name="share">Kushiriki</string>
     <string name="share_account">Shiriki akaunti yako</string>
     <string name="clients_list">Chagua mteja</string>
-    <string name="working">Kazi</string>
+    <string name="core_common_working">Kazi</string>
     <string name="status_image">Picha ya hali</string>
     <string name="loan_repayment_schedule">Ratiba ya kulipa</string>
     <string name="last_transaction">Shughuli ya mwisho</string>

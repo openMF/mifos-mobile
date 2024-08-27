@@ -35,7 +35,7 @@
     <string name="share">ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="share_account">ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="clients_list">ಗ್ರಾಹಕರನ್ನು ಆಯ್ಕೆ ಮಾಡಿ</string>
-    <string name="working">ಕೆಲಸ</string>
+    <string name="core_common_working">ಕೆಲಸ</string>
     <string name="status_image">ರಾಜ್ಯದ ಚಿತ್ರ</string>
     <string name="loan_repayment_schedule">ಮರುಪಾವತಿಯ ವೇಳಾಪಟ್ಟಿ</string>
     <string name="last_transaction">ಕೊನೆಯ ವಹಿವಾಟು</string>

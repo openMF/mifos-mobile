@@ -26,7 +26,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.mifos.mobile.R
-import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.ui.activities.HomeActivity
 
 class MifosFirebaseMessagingService : FirebaseMessagingService() {
@@ -62,7 +61,7 @@ class MifosFirebaseMessagingService : FirebaseMessagingService() {
         )
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)
-            .setSmallIcon(R.mipmap.mifos_icon)
+            .setSmallIcon(R.mipmap.core_common_mifos_icon)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(message)
             .setAutoCancel(true)

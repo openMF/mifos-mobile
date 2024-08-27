@@ -1,6 +1,11 @@
 /*
- * This project is licensed under the open source MPL V2.
- * See https://github.com/openMF/android-client/blob/master/LICENSE.md
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 package org.mifos.mobile.core.common.utils
 
@@ -11,17 +16,11 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-/**
- * Created by ishankhanna on 30/05/14.
- *
- * This is a helper class that will be used to convert List<Interger> Type Dates
- * from MifosX into Simple Strings or Date Formats</Interger>
- */
 object DateHelper {
 
-    val LOG_TAG: String? = DateHelper::class.java.simpleName
-    const val FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy"
-    const val FORMAT_dd_MM_yyyy = "dd-MM-yyyy"
+    private val LOG_TAG: String? = DateHelper::class.java.simpleName
+    const val FORMAT_MMMM = "dd MMMM yyyy"
+    const val FORMAT_MM = "dd-MM-yyyy"
     fun getCurrentDate(dateFormat: String?, separator: String): List<Int> {
         val date: MutableList<Int> = ArrayList()
         val s = SimpleDateFormat(dateFormat, Locale.getDefault()).format(Date())
@@ -164,3 +163,6 @@ object DateHelper {
         return sdf.format(timeInMillis?.let { Date(it) })
     }
 }
+
+fun getTodayFormatted(): String =
+    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)

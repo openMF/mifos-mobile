@@ -39,7 +39,7 @@
     <string name="share">शेयर</string>
     <string name="share_account">शेयर खाता</string>
     <string name="clients_list">एक ग्राहक चुनें</string>
-    <string name="working">काम कर रहे</string>
+    <string name="core_common_working">काम कर रहे</string>
     <string name="submitted">जमा किया गया</string>
     <string name="disbursement">अदायगी</string>
     <string name="status_image">स्थिति छवि</string>
