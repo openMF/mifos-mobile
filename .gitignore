@@ -43,6 +43,9 @@ build/
 # Gradle cache
 .gradle
 
+# Kotlin
+.kotlin
+
 # Android Studio captures folder
 captures/
 
