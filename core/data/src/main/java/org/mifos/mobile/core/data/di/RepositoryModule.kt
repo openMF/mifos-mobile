@@ -1,97 +1,119 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.di
 
-import org.mifos.mobile.core.network.DataManager
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.mifos.mobile.core.data.repositories.*
-import retrofit2.Retrofit
+import org.mifos.mobile.core.data.repository.AccountsRepository
+import org.mifos.mobile.core.data.repository.BeneficiaryRepository
+import org.mifos.mobile.core.data.repository.ClientChargeRepository
+import org.mifos.mobile.core.data.repository.ClientRepository
+import org.mifos.mobile.core.data.repository.GuarantorRepository
+import org.mifos.mobile.core.data.repository.HomeRepository
+import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.data.repository.NotificationRepository
+import org.mifos.mobile.core.data.repository.RecentTransactionRepository
+import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
+import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
+import org.mifos.mobile.core.data.repository.TransferRepository
+import org.mifos.mobile.core.data.repository.UserAuthRepository
+import org.mifos.mobile.core.data.repository.UserDetailRepository
+import org.mifos.mobile.core.data.repositoryImpl.AccountsRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.BeneficiaryRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.ClientChargeRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.ClientRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.GuarantorRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.HomeRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.LoanRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.NotificationRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.RecentTransactionRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.ReviewLoanApplicationRepositoryImpl
+import org.mifos.mobile.core.data.repositoryImpl.SavingsAccountRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.ThirdPartyTransferRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.TransferRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.UserAuthRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.UserDetailRepositoryImp
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
-    @Provides
-    fun providesUserAuthRepository(dataManager: DataManager): UserAuthRepository {
-        return UserAuthRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesUserAuthRepository(
+        repository: UserAuthRepositoryImp,
+    ): UserAuthRepository
 
-    @Provides
-    fun providesSavingsAccountRepository(dataManager: DataManager): SavingsAccountRepository {
-        return SavingsAccountRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesSavingsAccountRepository(
+        repository: SavingsAccountRepositoryImp,
+    ): SavingsAccountRepository
 
-    @Provides
-    fun providesLoanRepository(dataManager: DataManager): LoanRepository {
-        return LoanRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesLoanRepository(repository: LoanRepositoryImp): LoanRepository
 
-    @Provides
-    fun providesNotificationRepository(dataManager: DataManager): NotificationRepository {
-        return NotificationRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesNotificationRepository(
+        repository: NotificationRepositoryImp,
+    ): NotificationRepository
 
-    @Provides
-    fun providesClientRepository(
-        dataManager: DataManager, preferencesHelper: org.mifos.mobile.core.datastore.PreferencesHelper, retrofit: Retrofit
-    ): ClientRepository {
-        return ClientRepositoryImp(
-            dataManager,
-            preferencesHelper,
-            retrofit
-        )
-    }
+    @Binds
+    internal abstract fun providesClientRepository(repository: ClientRepositoryImp): ClientRepository
 
-    @Provides
-    fun providesRecentTransactionRepository(dataManager: DataManager): RecentTransactionRepository {
-        return RecentTransactionRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesRecentTransactionRepository(
+        repository: RecentTransactionRepositoryImp,
+    ): RecentTransactionRepository
 
-    @Provides
-    fun provideAccountsRepository(dataManager: DataManager): AccountsRepository {
-        return AccountsRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun provideAccountsRepository(
+        repository: AccountsRepositoryImp,
+    ): AccountsRepository
 
-    @Provides
-    fun providesGuarantorRepository(dataManager: DataManager): GuarantorRepository {
-        return GuarantorRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesGuarantorRepository(
+        repository: GuarantorRepositoryImp,
+    ): GuarantorRepository
 
-    @Provides
-    fun providesBeneficiaryRepository(dataManager: DataManager): BeneficiaryRepository {
-        return BeneficiaryRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesBeneficiaryRepository(
+        repository: BeneficiaryRepositoryImp,
+    ): BeneficiaryRepository
 
-    @Provides
-    fun providesTransferRepository(dataManager: DataManager): TransferRepository {
-        return TransferRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesTransferRepository(
+        repository: TransferRepositoryImp,
+    ): TransferRepository
 
-    @Provides
-    fun providesThirdPartyTransferRepository(dataManager: DataManager): ThirdPartyTransferRepository {
-        return ThirdPartyTransferRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesThirdPartyTransferRepository(
+        repository: ThirdPartyTransferRepositoryImp,
+    ): ThirdPartyTransferRepository
 
-    @Provides
-    fun providesClientChargeRepository(dataManager: DataManager): ClientChargeRepository {
-        return ClientChargeRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesClientChargeRepository(
+        repository: ClientChargeRepositoryImp,
+    ): ClientChargeRepository
 
-    @Provides
-    fun providesHomeRepository(dataManager: DataManager): HomeRepository {
-        return HomeRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesHomeRepository(repository: HomeRepositoryImp): HomeRepository
 
-    @Provides
-    fun providesUserDetailRepository(dataManager: DataManager): UserDetailRepository {
-        return UserDetailRepositoryImp(dataManager)
-    }
+    @Binds
+    internal abstract fun providesUserDetailRepository(
+        repository: UserDetailRepositoryImp,
+    ): UserDetailRepository
 
-    @Provides
-    fun providesReviewLoanApplicationRepository(dataManager: DataManager): ReviewLoanApplicationRepository {
-        return ReviewLoanApplicationRepositoryImpl(dataManager)
-    }
-
+    @Binds
+    internal abstract fun providesReviewLoanApplicationRepository(
+        repository: ReviewLoanApplicationRepositoryImpl,
+    ): ReviewLoanApplicationRepository
 }

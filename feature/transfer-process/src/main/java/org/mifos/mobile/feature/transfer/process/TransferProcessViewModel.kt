@@ -9,14 +9,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.PAYLOAD
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
-import org.mifos.mobile.core.data.repositories.TransferRepository
+import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import javax.inject.Inject

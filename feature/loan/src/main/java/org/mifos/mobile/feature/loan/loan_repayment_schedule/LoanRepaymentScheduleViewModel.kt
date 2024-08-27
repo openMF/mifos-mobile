@@ -8,11 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.data.repositories.LoanRepository
+import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.feature.loan.R
 import javax.inject.Inject
 

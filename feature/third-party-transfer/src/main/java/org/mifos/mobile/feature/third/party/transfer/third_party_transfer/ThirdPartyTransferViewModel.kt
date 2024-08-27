@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.data.repositories.BeneficiaryRepository
-import org.mifos.mobile.core.data.repositories.ThirdPartyTransferRepository
+import org.mifos.mobile.core.data.repository.BeneficiaryRepository
+import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import javax.inject.Inject

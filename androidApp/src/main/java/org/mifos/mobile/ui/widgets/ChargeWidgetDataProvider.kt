@@ -6,9 +6,8 @@ import android.widget.RemoteViewsService.RemoteViewsFactory
 import android.widget.Toast
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mifos.mobile.R
-import org.mifos.mobile.core.data.repositories.ClientChargeRepository
+import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.datastore.model.Charge
-import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
 

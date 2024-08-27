@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.data.repositories.NotificationRepository
+import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.datastore.model.MifosNotification
 import javax.inject.Inject
 

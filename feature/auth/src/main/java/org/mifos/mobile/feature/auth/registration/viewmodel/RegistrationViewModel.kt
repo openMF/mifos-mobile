@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.data.repositories.UserAuthRepository
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.feature.auth.R
 import javax.inject.Inject
 

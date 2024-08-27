@@ -4,17 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.data.repositories.LoanRepository
+import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.network.asResult
 import org.mifos.mobile.core.network.Result
+import org.mifos.mobile.core.network.asResult
 import javax.inject.Inject
 
 @HiltViewModel

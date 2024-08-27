@@ -10,10 +10,10 @@ import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mifos.mobile.core.data.repositories.UserAuthRepository
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationViewModel
-import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mifos.mobile.feature.registration.utils.RegistrationUiState
+import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations

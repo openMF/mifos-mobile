@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.logs
 
 /**
@@ -16,9 +25,8 @@ data class AnalyticsEvent(
 ) {
     // Standard analytics types.
     enum class AnalyticsEventTypes(val type: String) {
-        EXCEPTION(type = "Exception")
+        EXCEPTION(type = "Exception"),
     }
-
 
     /**
      * A key-value pair used to supply extra context to an analytics event.
@@ -33,9 +41,7 @@ data class AnalyticsEvent(
     data class Param(val key: String, val value: String)
 
     // Standard parameter keys.
-    class ParamKeys {
-        companion object {
-            const val SCREEN_NAME = "screen_name"
-        }
+    object ParamKeys {
+        const val SCREEN_NAME = "screen_name"
     }
 }

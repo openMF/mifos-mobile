@@ -4,6 +4,7 @@ import com.android.build.api.dsl.Lint
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import java.io.File
 
 class AndroidLintConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -27,4 +28,10 @@ class AndroidLintConventionPlugin : Plugin<Project> {
 private fun Lint.configure() {
     xmlReport = true
     checkDependencies = true
+    abortOnError = false
+    // Disable this rule until we ship the libraries to some maven.
+    disable += "ResourceName"
+    baseline = File("lint-baseline.xml")
+    explainIssues = true
+    htmlReport = true
 }

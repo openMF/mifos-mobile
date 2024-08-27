@@ -1,12 +1,21 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.datastore
 
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
-import org.mifos.mobile.core.datastore.utils.NotificationComparator
 import org.mifos.mobile.core.datastore.model.Charge
-import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.core.datastore.model.MifosNotification_Table
+import org.mifos.mobile.core.datastore.utils.NotificationComparator
+import org.mifos.mobile.core.model.entity.Page
 import java.util.Collections
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,12 +59,11 @@ class DatabaseHelper @Inject constructor() {
             .queryList().size
     }
 
-
     private fun deleteOldNotifications() {
         Observable.defer<Void> {
             val thirtyDaysInSeconds: Long = 2592000
             val thirtyDaysFromCurrentTimeInSeconds = System.currentTimeMillis() / 1000 -
-                    thirtyDaysInSeconds
+                thirtyDaysInSeconds
             SQLite.delete(MifosNotification::class.java)
                 .where(MifosNotification_Table.timeStamp.lessThan(thirtyDaysFromCurrentTimeInSeconds * 1000))
                 .execute()

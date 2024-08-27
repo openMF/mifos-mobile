@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.data.repositories.RecentTransactionRepository
+import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.feature.recent_transaction.utils.RecentTransactionState
 import javax.inject.Inject
