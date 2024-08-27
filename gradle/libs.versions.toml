@@ -10,6 +10,7 @@ coreKtxVersion = "1.12.0"
 coreTestingVersion = "2.2.0"
 coreVersion = "3.5.2"
 countrycodechooserVersion = "1.0"
+detekt = "1.23.5"
 espressoContribVersion = "3.5.1"
 kotlinxCoroutinesAndroidVersion = "1.6.4"
 kotlinxCoroutinesTestVersion = "1.7.3"
@@ -69,6 +70,7 @@ dbflowVersion = "4.2.4"
 preference = "1.0.0"
 playServicesVersion = "17.0.1"
 spotbugs = "4.8.0"
+spotlessVersion = "6.23.3"
 material3 = "1.2.1"
 playServicesCodeScanner = "16.1.0"
 googleAppCodeScanner = "17.2.0"
@@ -76,6 +78,7 @@ cameraxVersion = "1.3.1"
 compose-material = "1.6.8"
 googleMaps = "4.4.1"
 turbineVersion = "1.1.0"
+twitter-detekt-compose = "0.0.26"
 uihouseVersion = "alpha-2.1"
 vectordrawableVersion = "1.1.0"
 zxingVersion = "1.9.13"
@@ -163,6 +166,10 @@ androidx-camera-view = { group = "androidx.camera", name = "camera-view", versio
 androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraxVersion" }
 google-map-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "googleMaps" }
 
+#Detekt
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+twitter-detekt-compose = { group = "com.twitter.compose.rules", name = "detekt", version.ref = "twitter-detekt-compose" }
+
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
@@ -178,10 +185,12 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 zxing = { module = "me.dm7.barcodescanner:zxing", version.ref = "zxingVersion" }
+spotless-gradle = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotlessVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 gms = { id = "com.google.gms.google-services", version.ref = "gmsPlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
@@ -198,6 +207,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 room = { id = "androidx.room", version.ref = "room" }
 spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotlessVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 # Plugins defined by this project
