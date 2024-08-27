@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.common.utils
 
 import android.content.Context
@@ -18,9 +27,6 @@ import java.io.IOException
 import java.text.DateFormatSymbols
 import java.util.Locale
 
-/**
- * Created by michaelsosnick on 12/12/16.
- */
 object Utils {
     fun getMonth(month: Int): String {
         return DateFormatSymbols().months[month - 1]
@@ -41,7 +47,7 @@ object Utils {
 
     fun setCircularBackground(colorId: Int, context: Context?): LayerDrawable {
         val color: Drawable = ColorDrawable(ContextCompat.getColor(context!!, colorId))
-        val image = ContextCompat.getDrawable(context, R.drawable.circular_background)
+        val image = ContextCompat.getDrawable(context, R.drawable.core_common_circular_background)
         return LayerDrawable(arrayOf(image, color))
     }
 
@@ -85,7 +91,8 @@ object Utils {
                     ) + " ",
                 )
             }
-        } catch (_: Exception) {}
+        } catch (_: Exception) {
+        }
         return builder.toString()
     }
 }

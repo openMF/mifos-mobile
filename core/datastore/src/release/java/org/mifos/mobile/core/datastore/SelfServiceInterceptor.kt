@@ -2,16 +2,13 @@
  * This project is licensed under the open source MPL V2.
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
-package org.mifos.mobile.api
+package org.mifos.mobile.core.datastore
 
-import android.text.TextUtils
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Request.Builder
 import okhttp3.Response
 import java.io.IOException
-import kotlin.jvm.Throws
-import org.mifos.mobile.api.local.PreferencesHelper
 
 /**
  * @author Vishwajeet
@@ -23,10 +20,16 @@ class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest: Request = chain.request()
         val builder: Builder = chainRequest.newBuilder()
-            .header(HEADER_TENANT, preferencesHelper.tenant)
-        if (!TextUtils.isEmpty(preferencesHelper.token)) {
-            builder.header(HEADER_AUTH, preferencesHelper.token)
+
+        preferencesHelper.tenant?.let {
+            builder.header(HEADER_TENANT, it)
         }
+        preferencesHelper.token?.let {
+            if (it.isNotEmpty()) {
+                builder.header(HEADER_AUTH, it)
+            }
+        }
+
         val request: Request = builder.build()
         return chain.proceed(request)
     }

@@ -37,7 +37,7 @@
     <string name="share">شارك</string>
     <string name="share_account">حصة الحساب</string>
     <string name="clients_list">شيء العميل</string>
-    <string name="working">العمل</string>
+    <string name="core_common_working">العمل</string>
     <string name="status_image">صورة الحالة</string>
     <string name="loan_repayment_schedule">جدول الدفع</string>
     <string name="last_transaction">آخر معاملة</string>

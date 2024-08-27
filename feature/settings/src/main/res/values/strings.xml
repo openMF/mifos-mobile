@@ -19,8 +19,8 @@
     <string name="cancel">Cancel</string>
     <string name="dialog_action_ok">OK</string>
 
-    <string name="default_system_language" translatable="false">default_system_language</string>
-    <string name="language_type" translatable="false">language_type</string>
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
     <string-array name="languages" translatable="false">
         <item>System Language</item>
         <item>English</item>

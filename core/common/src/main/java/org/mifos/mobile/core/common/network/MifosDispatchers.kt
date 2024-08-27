@@ -7,8 +7,16 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.common.utils
+package org.mifos.mobile.core.common.network
 
-object SymbolsUtils {
-    const val PERCENT = "%"
+import javax.inject.Qualifier
+import kotlin.annotation.AnnotationRetention.RUNTIME
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class Dispatcher(val dispatcher: MifosDispatchers)
+
+enum class MifosDispatchers {
+    Default,
+    IO,
 }

@@ -81,8 +81,8 @@
 
 
     <!-- Dimen values for Account Status-->
-    <dimen name="account_status_width">25dp</dimen>
-    <dimen name="account_status_height">25dp</dimen>
+    <dimen name="core_common_account_status_width">25dp</dimen>
+    <dimen name="core_common_account_status_height">25dp</dimen>
 
     <!-- Dimen values for Account Status-->
     <dimen name="dashboard_status_width">55dp</dimen>

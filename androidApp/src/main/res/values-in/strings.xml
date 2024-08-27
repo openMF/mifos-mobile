@@ -35,7 +35,7 @@
     <string name="share">Saham</string>
     <string name="share_account">Bagikan akun Anda</string>
     <string name="clients_list">Pilih pelanggan</string>
-    <string name="working">Kerja</string>
+    <string name="core_common_working">Kerja</string>
     <string name="status_image">Citra negara</string>
     <string name="loan_repayment_schedule">Jadwal pembayaran kembali</string>
     <string name="last_transaction">Transaksi terakhir</string>

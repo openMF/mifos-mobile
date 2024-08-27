@@ -37,7 +37,7 @@
     <string name="share">ဝေစု</string>
     <string name="share_account">ဝေမျှမယ်အကောင့်</string>
     <string name="clients_list">တစ်ဦးကို client ကို ရွေးချယ်.</string>
-    <string name="working">အလုပ်အဖွဲ့</string>
+    <string name="core_common_working">အလုပ်အဖွဲ့</string>
     <string name="status_image">အဆင့်အတန်းပုံရိပ်</string>
     <string name="loan_repayment_schedule">ပြန်ဆပ်ဇယား</string>
     <string name="last_transaction">နောက်ဆုံးငွေသွင်းငွေထုတ်</string>

@@ -35,7 +35,7 @@
     <string name="share">Cuota</string>
     <string name="share_account">Comparte tu cuenta</string>
     <string name="clients_list">Elige un cliente</string>
-    <string name="working">Laboral</string>
+    <string name="core_common_working">Laboral</string>
     <string name="status_image">Imagen del estado</string>
     <string name="loan_repayment_schedule">Calendario de reembolso</string>
     <string name="last_transaction">Ultima transaccion</string>

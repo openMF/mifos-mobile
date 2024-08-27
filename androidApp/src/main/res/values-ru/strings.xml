@@ -35,7 +35,7 @@
     <string name="share">Доля</string>
     <string name="share_account">Поделитесь своим аккаунтом</string>
     <string name="clients_list">Выберите клиента</string>
-    <string name="working">Работа</string>
+    <string name="core_common_working">Работа</string>
     <string name="status_image">Изображение государства</string>
     <string name="loan_repayment_schedule">График погашения</string>
     <string name="last_transaction">Последняя сделка</string>

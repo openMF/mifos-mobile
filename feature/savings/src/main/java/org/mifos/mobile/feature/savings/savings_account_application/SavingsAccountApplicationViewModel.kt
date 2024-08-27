@@ -1,7 +1,5 @@
 package org.mifos.mobile.feature.savings.savings_account_application
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +12,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.getTodayFormatted
 import org.mifos.mobile.core.data.repositories.SavingsAccountRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
@@ -21,10 +21,6 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdateP
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.enums.SavingsAccountState
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.utils.getTodayFormatted
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 
@@ -132,7 +128,7 @@ class SavingsAccountApplicationViewModel @Inject constructor(
             return
         }
         payload.submittedOnDate =
-            DateHelper.getSpecificFormat(DateHelper.FORMAT_dd_MMMM_yyyy, getTodayFormatted())
+            DateHelper.getSpecificFormat(DateHelper.FORMAT_MMMM, getTodayFormatted())
         submitSavingsAccountApplication(payload)
     }
 }
