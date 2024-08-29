@@ -7,14 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import org.mifos.mobile.core.common.Constants.CHARGE_TYPE
-import org.mifos.mobile.core.model.entity.client.ClientType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.client_charge.screens.ClientChargeScreen
 
 fun NavController.navigateToClientChargeScreen(
     chargeType: ChargeType,
 ) {
-    navigate(ClientChargeNavigation.ClientChargeBase.passArguments(chargeType))
+    navigate(ClientChargeNavigation.ClientChargeScreen.passArguments(chargeType))
 }
 
 fun NavGraphBuilder.clientChargeNavGraph(

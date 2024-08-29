@@ -1,6 +1,5 @@
 package org.mifos.mobile.feature.loan.loan_account_summary
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,17 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDrawableSingleLine
-import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
 import org.mifos.mobile.feature.loan.R
-import org.mifos.mobile.feature.loan.loan_repayment_schedule.LoanUiState
 
 
 @Composable
@@ -60,10 +55,10 @@ fun LoanAccountSummaryScreen(
     uiState: LoanAccountSummaryUiState
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.loan_summary,
         navigateBack = navigateBack,
-        scaffoldContent = {
+        content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
                     is LoanAccountSummaryUiState.Loading -> {

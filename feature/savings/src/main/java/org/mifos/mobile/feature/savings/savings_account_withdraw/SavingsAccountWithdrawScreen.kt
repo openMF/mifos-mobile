@@ -28,15 +28,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.common.utils.getTodayFormatted
+import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
-import org.mifos.mobile.core.ui.component.MifosTopBar
 import org.mifos.mobile.core.ui.component.NoInternet
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.core.common.utils.getTodayFormatted
 import org.mifos.mobile.feature.savings.R
 
 

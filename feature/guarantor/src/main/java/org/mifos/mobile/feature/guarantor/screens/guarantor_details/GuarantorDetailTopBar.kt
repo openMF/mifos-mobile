@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.feature.guarantor.R
 
 @OptIn(ExperimentalMaterial3Api::class)

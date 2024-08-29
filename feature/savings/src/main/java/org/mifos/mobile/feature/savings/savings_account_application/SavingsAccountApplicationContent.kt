@@ -37,9 +37,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.utils.getTodayFormatted
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.feature.savings.R
 
 @Composable

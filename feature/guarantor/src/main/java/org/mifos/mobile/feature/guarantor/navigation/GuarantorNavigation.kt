@@ -16,8 +16,10 @@ sealed class GuarantorNavigation(val route: String) {
     }
 
     data object GuarantorList : GuarantorNavigation(
-        route = GUARANTOR_LIST_SCREEN_ROUTE
-    )
+        route = "$GUARANTOR_LIST_SCREEN_ROUTE/{$LOAN_ID}"
+    ){
+        fun passArguments(loanId: String) = "$GUARANTOR_LIST_SCREEN_ROUTE/$loanId"
+    }
 
     data object GuarantorDetails : GuarantorNavigation(
         route = "$GUARANTOR_DETAIL_SCREEN_ROUTE/{$LOAN_ID}/{$INDEX}"

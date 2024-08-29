@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -26,7 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,13 +42,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosHiddenTextRow
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosUserImage
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.utils.CurrencyUtil
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.feature.home.R
 import org.mifos.mobile.feature.home.components.HomeNavigationDrawer
 import org.mifos.mobile.feature.home.components.HomeTopBar
@@ -93,7 +91,7 @@ fun HomeContent(
             }
         },
         content = {
-            MFScaffold(
+            MifosScaffold(
                 topBar = {
                     HomeTopBar(
                         openNavigationDrawer = {

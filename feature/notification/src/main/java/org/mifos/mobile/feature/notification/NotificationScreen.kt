@@ -36,14 +36,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.datastore.model.MifosNotification
 
 @Composable
 fun NotificationScreen(
@@ -73,10 +73,10 @@ fun NotificationScreen(
     onRefresh: () -> Unit
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.notification,
         navigateBack = navigateBack,
-        scaffoldContent = {
+        content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
                     is NotificationUiState.Loading -> {

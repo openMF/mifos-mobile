@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-wallet/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="lib_mifos_passcode_title">Passcode will be reset, are you sure?</string>
+    <string name="lib_mifos_passcode_cancel">Cancel</string>
+    <string name="lib_mifos_passcode_yes">Yes</string>
+    <string name="lib_mifos_passcode_pref_name">Passcode</string>
+    <string name="lib_mifos_passcode_has_passcode">hasPasscode</string>
+    <string name="lib_mifos_passcode_has_drag_passcode">hasDragPasscode</string>
+    <string name="lib_mifos_passcode">passcode</string>
+    <string name="lib_mifos_passcode_drag_passcode">drag_passcode</string>
+
+    <string name="library_mifos_passcode_create_passcode">Create Passcode</string>
+    <string name="library_mifos_passcode_confirm_passcode">Confirm Passcode</string>
+    <string name="library_mifos_passcode_enter_your_passcode">Enter your Passcode</string>
+    <string name="library_mifos_passcode_forgot_passcode">Forgot Passcode</string>
+    <string name="library_mifos_passcode_delete_passcode">Delete Passcode Key Button</string>
+    <string name="library_mifos_passcode_drag_guide">Drag your finger here only in one direction.</string>
+    <string name="library_mifos_passcode_drag_your_pattern">Drag your Pattern</string>
+    <string name="library_mifos_passcode_exit">Exit</string>
+    <string name="library_mifos_passcode_skip">Skip</string>
+    <string name="library_mifos_passcode_login_manually">Forgot Passcode, Login Manually</string>
+    <string name="library_mifos_passcode_try_again">Try again</string>
+    <string name="library_mifos_passcode_do_not_match">Passcode do not match!</string>
+    <string name="library_mifos_passcode_exit_message">Are you sure you want to exit?</string>
+</resources>

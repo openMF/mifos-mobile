@@ -27,19 +27,19 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.feature.client_charge.R
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.GreenSuccess
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.RedErrorDark
 import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
-import org.mifos.mobile.core.ui.theme.GreenSuccess
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.theme.RedErrorDark
-import org.mifos.mobile.core.common.utils.CurrencyUtil
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.feature.client_charge.R
 import org.mifos.mobile.feature.client_charge.utils.ClientChargeState
 import org.mifos.mobile.feature.client_charge.viewmodel.ClientChargeViewModel
 
@@ -64,10 +64,10 @@ fun ClientChargeScreen(
     onRetry: () -> Unit
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.client_charges,
         navigateBack = navigateBack,
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(
                 modifier = Modifier
                     .padding(paddingValues = paddingValues)

@@ -1,6 +1,5 @@
 package org.mifos.mobile.feature.account.client_account.screens
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
@@ -9,7 +8,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -23,16 +21,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.ui.component.FloatingActionButtonContent
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosIcons
-import org.mifos.mobile.core.ui.component.MifosTabPager
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.feature.account.account.screens.AccountsScreen
+import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.components.MifosTabPager
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.account.screens.AccountsScreen
 import org.mifos.mobile.feature.account.client_account.utils.ClientAccountFilterDialog
 import org.mifos.mobile.feature.account.client_account.utils.ClientAccountsScreenTopBar
 import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
@@ -124,7 +122,7 @@ fun ClientAccountsScreen(
         )
     }
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             ClientAccountsScreenTopBar(
                 navigateBack = navigateBack,
@@ -151,7 +149,7 @@ fun ClientAccountsScreen(
             }
         ),
 
-        scaffoldContent = {
+        content = {
             ClientAccountsTabRow(
                 modifier = Modifier.padding(it),
                 pageChanged = { index -> pageChanged.invoke(index) },

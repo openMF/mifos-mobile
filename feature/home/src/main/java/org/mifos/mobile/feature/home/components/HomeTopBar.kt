@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.mifos.mobile.core.ui.component.MifosIcons
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.feature.home.R
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import org.mifos.mobile.core.ui.component.MFScaffold
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.feature.about.R
 
@@ -27,10 +27,10 @@ fun PrivacyPolicyScreen(
     navigateBack: () -> Unit,
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId= R.string.privacy_policy,
         navigateBack= navigateBack,
-        scaffoldContent = {
+        content = {
             WebView(
                 url = context.getString(R.string.privacy_policy_host_url)
             )

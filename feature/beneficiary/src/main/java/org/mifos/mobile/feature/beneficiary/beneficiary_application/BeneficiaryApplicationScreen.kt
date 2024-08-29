@@ -14,18 +14,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedParcelable
-import org.mifos.mobile.core.common.utils.ParcelableAndSerializableUtils.getCheckedSerializable
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.feature.beneficiary.R
 
 
@@ -62,13 +59,13 @@ fun BeneficiaryApplicationScreen(
     onSubmit: (BeneficiaryPayload) -> Unit
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = when(beneficiaryState) {
             BeneficiaryState.UPDATE -> R.string.update_beneficiary
             else -> R.string.add_beneficiary
         },
         navigateBack = navigateBack,
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
                 when(uiState) {
                     is BeneficiaryApplicationUiState.Error -> {

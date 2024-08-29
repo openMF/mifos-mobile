@@ -33,13 +33,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
-import org.mifos.mobile.core.ui.component.MifosTopBarTitle
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.enums.AppTheme
 import org.mifos.mobile.core.common.utils.LanguageHelper
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.components.MifosTopBarTitle
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.enums.AppTheme
 import org.mifos.mobile.core.model.enums.MifosAppLanguage
+import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
 import java.util.Locale
 
 @Composable
@@ -101,7 +101,7 @@ fun SettingsScreen(
     var showEndpointUpdateDialog by rememberSaveable { mutableStateOf(false) }
     var showThemeUpdateDialog by rememberSaveable { mutableStateOf(false) }
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             MifosTopBarTitle(
                 navigateBack = navigateBack,

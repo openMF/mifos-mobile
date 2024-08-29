@@ -1,19 +1,29 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.network.services
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import org.mifos.mobile.core.common.ApiEndPoints
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
-import org.mifos.mobile.core.common.ApiEndPoints
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.Query
 
-/**
- * @author Vishwajeet
- * @since 23/6/16.
- */
 interface LoanAccountsListService {
     @GET(ApiEndPoints.LOANS + "/{loanId}/")
     fun getLoanAccountsDetail(@Path("loanId") loanId: Long): Observable<LoanAccount?>?

@@ -1,8 +1,17 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.network
 
-import org.mifos.mobile.core.datastore.PreferencesHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.datastore.SelfServiceInterceptor
 import java.security.SecureRandom
 import java.security.cert.CertificateException
@@ -15,7 +24,7 @@ import javax.net.ssl.X509TrustManager
 class SelfServiceOkHttpClient(private val preferences: PreferencesHelper) {
     // Create a trust manager that does not validate certificate chains
     val mifosOkHttpClient: OkHttpClient
-        //Interceptor :> Full Body Logger and ApiRequest Header
+        // Interceptor :> Full Body Logger and ApiRequest Header
         get() {
             val builder = OkHttpClient.Builder()
             try {
@@ -25,21 +34,21 @@ class SelfServiceOkHttpClient(private val preferences: PreferencesHelper) {
                         @Throws(CertificateException::class)
                         override fun checkClientTrusted(
                             chain: Array<X509Certificate>,
-                            authType: String
+                            authType: String,
                         ) {
                         }
 
                         @Throws(CertificateException::class)
                         override fun checkServerTrusted(
                             chain: Array<X509Certificate>,
-                            authType: String
+                            authType: String,
                         ) {
                         }
 
                         override fun getAcceptedIssuers(): Array<X509Certificate> {
                             return emptyArray()
                         }
-                    }
+                    },
                 )
 
                 // Install the all-trusting trust manager
@@ -48,11 +57,11 @@ class SelfServiceOkHttpClient(private val preferences: PreferencesHelper) {
                 // Create an ssl socket factory with our all-trusting manager
                 val sslSocketFactory = sslContext.socketFactory
 
-                //Enable Full Body Logging
+                // Enable Full Body Logging
                 val logger = HttpLoggingInterceptor()
                 logger.level = HttpLoggingInterceptor.Level.BODY
 
-                //Set SSL certificate to OkHttpClient Builder
+                // Set SSL certificate to OkHttpClient Builder
 //                builder.sslSocketFactory(sslSocketFactory)
                 builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
                 builder.hostnameVerifier { hostname, session -> true }

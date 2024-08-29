@@ -26,16 +26,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorType
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.guarantor.R
 
 
@@ -70,10 +70,10 @@ fun AddGuarantorScreen(
     val context = LocalContext.current
     val guarantorTypeOptions = rememberSaveable { mutableStateOf(listOf<GuarantorType>()) }
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = if(guarantorItem == null) R.string.add_guarantor else R.string.update_guarantor,
         navigateBack = navigateBack,
-        scaffoldContent = {
+        content = {
             Box(modifier = Modifier.padding(it)) {
                 AddGuarantorContent(
                     guarantorItem = guarantorItem,

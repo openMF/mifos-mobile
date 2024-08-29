@@ -1,11 +1,20 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.network.di
 
-import org.mifos.mobile.core.datastore.PreferencesHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.mifos.mobile.core.datastore.BaseURL
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.network.SelfServiceOkHttpClient
 import org.mifos.mobile.core.network.services.AuthenticationService
 import org.mifos.mobile.core.network.services.BeneficiaryService
@@ -23,11 +32,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
-/**
- * @author pratyush
- * @since 21/8/23
- */
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -34,12 +34,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.MFScaffold
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.model.entity.payload.TransferPayload
 
 
 @Composable
@@ -67,10 +67,10 @@ fun TransferProcessScreen(
 ) {
     val context = LocalContext.current
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.transfer,
         navigateBack = navigateBack,
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(
                 modifier = Modifier
                     .padding(paddingValues)

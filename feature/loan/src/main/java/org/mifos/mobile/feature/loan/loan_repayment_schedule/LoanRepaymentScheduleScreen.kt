@@ -31,15 +31,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.feature.loan.R
 
 @Composable
@@ -67,7 +67,7 @@ fun LoanRepaymentScheduleScreen(
     onRetry: () -> Unit
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.loan_repayment_schedule,
         navigateBack = { navigateBack.invoke() }) { contentPadding ->
         when (loanRepaymentScheduleUiState) {

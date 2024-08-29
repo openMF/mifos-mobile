@@ -23,14 +23,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.FloatingActionButtonContent
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.feature.beneficiary.R
 
 @Composable
@@ -73,7 +73,7 @@ fun BeneficiaryListScreen(
     val pullRefreshState = rememberPullToRefreshState()
     val context = LocalContext.current
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.beneficiaries,
         navigateBack = navigateBack,
         floatingActionButtonContent = FloatingActionButtonContent(

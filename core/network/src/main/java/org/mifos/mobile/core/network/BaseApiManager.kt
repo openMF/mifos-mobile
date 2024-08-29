@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.network
 
 import org.mifos.mobile.core.network.services.AuthenticationService
@@ -12,12 +21,8 @@ import org.mifos.mobile.core.network.services.RegistrationService
 import org.mifos.mobile.core.network.services.SavingAccountsListService
 import org.mifos.mobile.core.network.services.ThirdPartyTransferService
 import org.mifos.mobile.core.network.services.UserDetailsService
-import org.mifos.mobile.core.network.services.*
 import javax.inject.Inject
 
-/**
- * @since 13/6/16
- */
 class BaseApiManager @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val clientsService: ClientService,
@@ -30,7 +35,7 @@ class BaseApiManager @Inject constructor(
     private val registrationService: RegistrationService,
     private val notificationService: NotificationService,
     private val userDetailsService: UserDetailsService,
-    private val guarantorService: GuarantorService
+    private val guarantorService: GuarantorService,
 ) {
     val authenticationApi: AuthenticationService
         get() = authenticationService

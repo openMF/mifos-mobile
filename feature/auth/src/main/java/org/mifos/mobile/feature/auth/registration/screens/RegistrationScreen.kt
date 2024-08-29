@@ -62,11 +62,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.owlbuddy.www.countrycodechooser.CountryCodeChooser
 import com.owlbuddy.www.countrycodechooser.utils.enums.CountryCodeType
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.ui.component.MFScaffold
+import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
-import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.auth.R
 import org.mifos.mobile.feature.auth.registration.utils.PasswordStrength
 import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationUiState
@@ -121,11 +121,11 @@ fun RegistrationScreen(
         SnackbarHostState()
     }
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.register,
         navigateBack = navigateBack,
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-        scaffoldContent = { contentPadding ->
+        content = { contentPadding ->
 
             Box(
                 modifier = Modifier

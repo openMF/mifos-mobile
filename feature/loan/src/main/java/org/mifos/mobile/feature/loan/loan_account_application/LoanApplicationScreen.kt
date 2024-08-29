@@ -22,12 +22,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.gson.Gson
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.loan.R
 
 

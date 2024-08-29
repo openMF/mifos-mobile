@@ -19,7 +19,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import dagger.hilt.android.AndroidEntryPoint
 import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel
 import org.mifos.mobile.navigation.RootNavGraph

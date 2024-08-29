@@ -19,8 +19,12 @@ dependencyResolutionManagement {
 rootProject.name = "mifos-mobile"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":androidApp")
-include(":ui")
+
+// Core Modules
+include(":core:ui")
+include(":core:designsystem")
 include(":core:logs")
 include(":feature:guarantor")
 include(":core:model")
@@ -28,6 +32,8 @@ include(":core:common")
 include(":core:data")
 include(":core:network")
 include(":core:datastore")
+
+// Feature Modules
 include(":feature:loan")
 include(":feature:beneficiary")
 include(":feature:savings")
@@ -46,4 +52,15 @@ include(":feature:auth")
 include(":feature:update-password")
 include(":feature:home")
 include(":feature:user_profile")
+
+// Lint Modules
+include(":lint")
+
+// Library Modules
+include(":libs:country-code-picker")
+include(":libs:pullrefresh")
+include(":libs:material3-navigation")
+include(":libs:mifos-passcode")
+
+// Kotlin Multiplatform Modules
 include(":shared")

@@ -13,12 +13,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.third.party.transfer.R
 
 @Composable
@@ -49,10 +49,10 @@ fun ThirdPartyTransferScreen(
     reviewTransfer: (ReviewTransferPayload) -> Unit
 ) {
     val context = LocalContext.current
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.third_party_transfer,
         navigateBack = navigateBack,
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
                when(uiState) {
                    is ThirdPartyTransferUiState.ShowUI -> {
