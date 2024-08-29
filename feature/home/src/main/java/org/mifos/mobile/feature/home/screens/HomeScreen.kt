@@ -1,7 +1,6 @@
 package org.mifos.mobile.feature.home.screens
 
 import android.graphics.Bitmap
-import androidx.camera.core.processing.SurfaceProcessorNode.In
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,17 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.home.R
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
-import org.mifos.mobile.feature.home.navigation.HomeNavigation
-import org.mifos.mobile.feature.home.navigation.toDestination
 import org.mifos.mobile.feature.home.utils.HomeState
 import org.mifos.mobile.feature.home.utils.HomeUiState
 import org.mifos.mobile.feature.home.viewmodel.HomeCardItem
-import org.mifos.mobile.feature.home.viewmodel.HomeNavigationItems
 import org.mifos.mobile.feature.home.viewmodel.HomeViewModel
 
 @Composable

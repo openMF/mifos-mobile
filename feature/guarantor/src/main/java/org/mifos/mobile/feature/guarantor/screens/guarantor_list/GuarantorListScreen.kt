@@ -29,12 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
-import org.mifos.mobile.core.ui.component.FloatingActionButtonContent
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.guarantor.R
 
 
@@ -61,7 +61,7 @@ fun GuarantorListScreen(
     addGuarantor: () -> Unit,
     onGuarantorClicked: (Int) -> Unit
 ) {
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.view_guarantor,
         navigateBack = navigateBack,
         floatingActionButtonContent = FloatingActionButtonContent(
@@ -75,7 +75,7 @@ fun GuarantorListScreen(
             },
             contentColor = MaterialTheme.colorScheme.primary
         ),
-        scaffoldContent = {
+        content = {
             GuarantorListContent(
                 modifier = Modifier.padding(it),
                 uiState = uiState,

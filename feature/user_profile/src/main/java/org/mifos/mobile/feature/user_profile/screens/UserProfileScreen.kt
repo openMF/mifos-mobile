@@ -34,9 +34,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.Group
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosUserImage
@@ -88,12 +88,12 @@ fun UserProfileScreen(
         SnackbarHostState()
     }
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             UserProfileTopBar(home = navigateBack, text = R.string.user_details)
         },
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
 
         when (uiState) {
             is UserDetailUiState.ShowError -> {

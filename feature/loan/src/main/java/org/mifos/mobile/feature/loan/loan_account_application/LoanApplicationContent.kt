@@ -33,11 +33,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.DateHelper.FORMAT_MM
+import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
-import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDrawableSingleLine
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.PresentOrFutureSelectableDates
 import org.mifos.mobile.feature.loan.R
 

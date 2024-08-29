@@ -22,15 +22,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosIcons
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
+import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.feature.savings.R
 import java.time.Instant
 
@@ -75,7 +75,7 @@ fun SavingsAccountTransactionScreen(
         )
     }
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             MifosTopBar(
                 navigateBack = navigateBack,
@@ -97,7 +97,7 @@ fun SavingsAccountTransactionScreen(
                 }
             )
         },
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
                 when (uiState) {
                     is SavingsAccountTransactionUiState.Loading -> {

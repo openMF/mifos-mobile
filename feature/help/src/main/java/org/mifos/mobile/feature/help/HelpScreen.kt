@@ -26,14 +26,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FaqItemHolder
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosTextButtonWithTopDrawable
 import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
-import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 
 @Composable
 fun HelpScreen(
@@ -78,7 +78,7 @@ fun HelpScreen(
     updateFaqPosition: (Int) -> Unit,
 ) {
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             MifosTopBar(
                 navigateBack = navigateBack,
@@ -91,7 +91,7 @@ fun HelpScreen(
                 }
             )
         },
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
                 when(uiState) {
                     is HelpUiState.Initial -> Unit
@@ -143,11 +143,11 @@ fun HelpContent(
             ) {
                 itemsIndexed(items = faqArrayList) { index, faqItem ->
                     FaqItemHolder(
-                        question = faqItem?.question,
-                        answer = faqItem?.answer,
+                        index = index,
                         isSelected = selectedFaqPosition == index,
                         onItemSelected = { updateFaqPosition(it) },
-                        index = index
+                        question = faqItem?.question,
+                        answer = faqItem?.answer
                     )
                 }
             }

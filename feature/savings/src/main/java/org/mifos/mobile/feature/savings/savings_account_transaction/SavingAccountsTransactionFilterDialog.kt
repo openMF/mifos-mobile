@@ -29,13 +29,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import org.mifos.mobile.core.ui.component.MifosCheckBox
-import org.mifos.mobile.core.ui.component.MifosIconTextButton
-import org.mifos.mobile.core.ui.component.MifosIcons
-import org.mifos.mobile.core.ui.component.MifosRadioButton
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.DateHelper.getDateAsStringFromLong
+import org.mifos.mobile.core.designsystem.components.MifosIconTextButton
+import org.mifos.mobile.core.designsystem.components.MifosRadioButton
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.MifosCheckBox
 import org.mifos.mobile.feature.savings.R
 import java.time.Instant
 

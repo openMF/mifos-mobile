@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.model.entity.templates.loans
 
 import android.os.Parcelable
@@ -11,7 +20,6 @@ import org.mifos.mobile.core.model.entity.accounts.loan.InterestRateFrequencyTyp
 import org.mifos.mobile.core.model.entity.accounts.loan.InterestType
 import org.mifos.mobile.core.model.entity.accounts.loan.RepaymentFrequencyType
 import org.mifos.mobile.core.model.entity.accounts.loan.TermPeriodFrequencyType
-import java.util.*
 
 /**
  * Created by Rajan Maurya on 15/07/16.
@@ -132,7 +140,7 @@ data class LoanTemplate(
 
     var accountLinkingOptions: List<AccountLinkingOptions> = ArrayList(),
 
-    ) : Parcelable {
+) : Parcelable {
     /**
      * Required to set default value to the Fund spinner
      *

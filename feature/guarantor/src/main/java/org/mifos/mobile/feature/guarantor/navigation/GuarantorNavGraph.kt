@@ -7,17 +7,19 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Constants.INDEX
+import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.feature.guarantor.screens.guarantor_add.AddGuarantorScreen
 import org.mifos.mobile.feature.guarantor.screens.guarantor_details.GuarantorDetailScreen
 import org.mifos.mobile.feature.guarantor.screens.guarantor_list.GuarantorListScreen
-import org.mifos.mobile.core.common.Constants.INDEX
-import org.mifos.mobile.core.common.Constants.LOAN_ID
-import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_NAVIGATION_ROUTE_BASE
 
 
 fun NavController.navigateToGuarantorScreen(loanId: Long) {
     navigate(GuarantorNavigation.GuarantorScreenBase.passArguments(loanId = loanId.toString()))
+}
+
+fun NavController.navigateToGuarantorListScreen(loanId: Long) {
+    navigate(GuarantorNavigation.GuarantorList.passArguments(loanId = loanId.toString()))
 }
 
 fun NavGraphBuilder.guarantorNavGraph(

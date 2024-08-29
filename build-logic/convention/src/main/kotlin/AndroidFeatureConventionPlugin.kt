@@ -3,6 +3,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.kotlin
 import org.mifos.mobile.libs
 
 class AndroidFeatureConventionPlugin : Plugin<Project> {
@@ -20,12 +21,28 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("implementation", project(":ui"))
-                //add("implementation", project(":core:designsystem"))
+                add("implementation", project(":core:designsystem"))
+                add("implementation", project(":core:ui"))
+                add("implementation", project(":core:data"))
+
+                add("implementation", project(":libs:material3-navigation"))
+
+                add("implementation", libs.findLibrary("kotlinx.collections.immutable").get())
 
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
+
+                add("androidTestImplementation", libs.findLibrary("androidx.lifecycle.runtimeTesting").get())
+
+                add("testImplementation", kotlin("test"))
+                add("testImplementation", libs.findLibrary("hilt.android.testing").get())
+
+                add("debugImplementation", libs.findLibrary("androidx.compose.ui.test.manifest").get())
+                add("androidTestImplementation", libs.findLibrary("androidx.navigation.testing").get())
+                add("androidTestImplementation", libs.findLibrary("androidx.compose.ui.test").get())
+                add("androidTestImplementation", libs.findLibrary("hilt.android.testing").get())
+                add("androidTestImplementation", libs.findLibrary("androidx.lifecycle.runtimeTesting").get())
             }
         }
     }

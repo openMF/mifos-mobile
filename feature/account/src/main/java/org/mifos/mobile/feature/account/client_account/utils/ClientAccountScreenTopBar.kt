@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -29,8 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.ui.component.MifosIcons
-import org.mifos.mobile.core.ui.component.MifosSearchTextField
+import org.mifos.mobile.core.designsystem.components.MifosSearchTextField
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
 
 @Composable
 fun ClientAccountsScreenTopBar(

@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.network
 
 import io.reactivex.Observable
@@ -6,15 +15,32 @@ import org.mifos.mobile.core.datastore.DatabaseHelper
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.datastore.model.Charge
 import org.mifos.mobile.core.datastore.model.MifosNotification
-import org.mifos.mobile.core.model.entity.*
-import org.mifos.mobile.core.model.entity.accounts.loan.*
-import org.mifos.mobile.core.model.entity.accounts.savings.*
-import org.mifos.mobile.core.model.entity.beneficiary.*
-import org.mifos.mobile.core.model.entity.client.*
-import org.mifos.mobile.core.model.entity.guarantor.*
-import org.mifos.mobile.core.model.entity.notification.*
-import org.mifos.mobile.core.model.entity.payload.*
-import org.mifos.mobile.core.model.entity.register.*
+import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
+import org.mifos.mobile.core.model.entity.User
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
+import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
+import org.mifos.mobile.core.model.entity.client.Client
+import org.mifos.mobile.core.model.entity.client.ClientAccounts
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
+import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
+import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
+import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
+import org.mifos.mobile.core.model.entity.payload.LoginPayload
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
+import org.mifos.mobile.core.model.entity.register.RegisterPayload
+import org.mifos.mobile.core.model.entity.register.UserVerify
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
@@ -22,10 +48,8 @@ import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTempla
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * @since 13/6/16.
- */
 @Singleton
+@Suppress("TooManyFunctions")
 class DataManager @Inject constructor(
     val preferencesHelper: PreferencesHelper,
     private val baseApiManager: BaseApiManager,
@@ -56,7 +80,11 @@ class DataManager @Inject constructor(
     }
 
     suspend fun getRecentTransactions(offset: Int, limit: Int): Page<Transaction> {
-        return baseApiManager.recentTransactionsApi.getRecentTransactionsList(clientId, offset, limit)
+        return baseApiManager.recentTransactionsApi.getRecentTransactionsList(
+            clientId,
+            offset,
+            limit,
+        )
     }
 
     suspend fun getClientCharges(clientId: Long): Page<Charge> {
@@ -73,11 +101,20 @@ class DataManager @Inject constructor(
         return baseApiManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
     }
 
-    suspend fun getSavingsWithAssociations(accountId: Long?, associationType: String?): SavingsWithAssociations {
-        return baseApiManager.savingAccountsListApi.getSavingsWithAssociations(accountId, associationType)
+    suspend fun getSavingsWithAssociations(
+        accountId: Long?,
+        associationType: String?,
+    ): SavingsWithAssociations {
+        return baseApiManager.savingAccountsListApi.getSavingsWithAssociations(
+            accountId,
+            associationType,
+        )
     }
 
-    suspend fun accountTransferTemplate(accountId: Long?, accountType: Long?): AccountOptionsTemplate =
+    suspend fun accountTransferTemplate(
+        accountId: Long?,
+        accountType: Long?,
+    ): AccountOptionsTemplate =
         baseApiManager.savingAccountsListApi.accountTransferTemplate(accountId, accountType)
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): ResponseBody {
@@ -92,11 +129,17 @@ class DataManager @Inject constructor(
         return baseApiManager.savingAccountsListApi.submitSavingAccountApplication(payload)
     }
 
-    suspend fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?): ResponseBody {
+    suspend fun updateSavingsAccount(
+        accountId: Long?,
+        payload: SavingsAccountUpdatePayload?,
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi.updateSavingsAccountUpdate(accountId, payload)
     }
 
-    suspend fun submitWithdrawSavingsAccount(accountId: String?, payload: SavingsAccountWithdrawPayload?): ResponseBody {
+    suspend fun submitWithdrawSavingsAccount(
+        accountId: String?,
+        payload: SavingsAccountWithdrawPayload?,
+    ): ResponseBody {
         return baseApiManager.savingAccountsListApi.submitWithdrawSavingsAccount(accountId, payload)
     }
 
@@ -104,11 +147,15 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi.getLoanAccountsDetail(loanId)
     }
 
-    suspend fun getLoanWithAssociations(associationType: String?, loanId: Long?): LoanWithAssociations {
+    suspend fun getLoanWithAssociations(
+        associationType: String?,
+        loanId: Long?,
+    ): LoanWithAssociations {
         return baseApiManager.loanAccountsListApi.getLoanWithAssociations(loanId, associationType)
     }
 
-    suspend fun loanTemplate(): LoanTemplate = baseApiManager.loanAccountsListApi.getLoanTemplate(clientId)
+    suspend fun loanTemplate(): LoanTemplate =
+        baseApiManager.loanAccountsListApi.getLoanTemplate(clientId)
 
     suspend fun getLoanTemplateByProduct(productId: Int?): LoanTemplate {
         return baseApiManager.loanAccountsListApi.getLoanTemplateByProduct(clientId, productId)
@@ -126,15 +173,20 @@ class DataManager @Inject constructor(
         return baseApiManager.loanAccountsListApi.withdrawLoanAccount(loanId, loanWithdraw)
     }
 
-    suspend fun beneficiaryList(): List<Beneficiary> = baseApiManager.beneficiaryApi.beneficiaryList()
+    suspend fun beneficiaryList(): List<Beneficiary> =
+        baseApiManager.beneficiaryApi.beneficiaryList()
 
-    suspend fun beneficiaryTemplate(): BeneficiaryTemplate = baseApiManager.beneficiaryApi.beneficiaryTemplate()
+    suspend fun beneficiaryTemplate(): BeneficiaryTemplate =
+        baseApiManager.beneficiaryApi.beneficiaryTemplate()
 
     suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): ResponseBody {
         return baseApiManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
     }
 
-    suspend fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?): ResponseBody {
+    suspend fun updateBeneficiary(
+        beneficiaryId: Long?,
+        payload: BeneficiaryUpdatePayload?,
+    ): ResponseBody {
         return baseApiManager.beneficiaryApi.updateBeneficiary(beneficiaryId, payload)
     }
 
@@ -157,7 +209,7 @@ class DataManager @Inject constructor(
         return baseApiManager.registrationApi.verifyUser(userVerify)
     }
 
-    suspend fun clientLocalCharges(): Page<Charge?> = databaseHelper.clientCharges()
+    fun clientLocalCharges(): Page<Charge?> = databaseHelper.clientCharges()
 
     fun notifications(): List<MifosNotification> = databaseHelper.notifications()
 
@@ -169,7 +221,10 @@ class DataManager @Inject constructor(
         return baseApiManager.notificationApi.registerNotification(payload)
     }
 
-    suspend fun updateRegisterNotification(id: Long, payload: NotificationRegisterPayload?): ResponseBody {
+    suspend fun updateRegisterNotification(
+        id: Long,
+        payload: NotificationRegisterPayload?,
+    ): ResponseBody {
         return baseApiManager.notificationApi.updateRegisterNotification(id, payload)
     }
 
@@ -189,11 +244,18 @@ class DataManager @Inject constructor(
         return baseApiManager.guarantorApi.getGuarantorList(loanId)
     }
 
-    suspend fun createGuarantor(loanId: Long?, payload: GuarantorApplicationPayload?): ResponseBody {
+    suspend fun createGuarantor(
+        loanId: Long?,
+        payload: GuarantorApplicationPayload?,
+    ): ResponseBody {
         return baseApiManager.guarantorApi.createGuarantor(loanId, payload)
     }
 
-    suspend fun updateGuarantor(payload: GuarantorApplicationPayload?, loanId: Long?, guarantorId: Long?): ResponseBody {
+    suspend fun updateGuarantor(
+        payload: GuarantorApplicationPayload?,
+        loanId: Long?,
+        guarantorId: Long?,
+    ): ResponseBody {
         return baseApiManager.guarantorApi.updateGuarantor(payload, loanId, guarantorId)
     }
 

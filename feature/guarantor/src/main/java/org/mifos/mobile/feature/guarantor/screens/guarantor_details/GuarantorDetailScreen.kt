@@ -17,12 +17,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.guarantor.R
 
 
@@ -53,7 +53,7 @@ fun GuarantorDetailScreen(
     var openAlertDialog by rememberSaveable { mutableStateOf(false) }
     val guarantorItem = rememberSaveable { mutableStateOf(GuarantorPayload()) }
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             GuarantorDetailTopBar(
                 navigateBack = navigateBack,
@@ -61,7 +61,7 @@ fun GuarantorDetailScreen(
                 updateGuarantor = updateGuarantor
             )
         },
-        scaffoldContent = {
+        content = {
             Box(modifier = Modifier.padding(it)) {
                 GuarantorDetailContent(data = guarantorItem.value)
                 when (uiState) {

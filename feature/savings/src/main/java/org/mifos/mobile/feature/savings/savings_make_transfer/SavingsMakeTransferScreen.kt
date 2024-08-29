@@ -11,13 +11,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.feature.savings.R
 
 @Composable
@@ -49,11 +50,11 @@ fun SavingsMakeTransferScreen(
 ) {
     val context = LocalContext.current
 
-    MFScaffold(
-        topBarTitleResId = if(uiData.transferType == org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO) R.string.deposit
+    MifosScaffold(
+        topBarTitleResId = if(uiData.transferType == Constants.TRANSFER_PAY_TO) R.string.deposit
         else R.string.transfer,
         navigateBack = navigateBack,
-        scaffoldContent = {
+        content = {
             Box(modifier = Modifier.padding(it).fillMaxSize()) {
                 SavingsMakeTransferContent(
                     uiData = uiData,

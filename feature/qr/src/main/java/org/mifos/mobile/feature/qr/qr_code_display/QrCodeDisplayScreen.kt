@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.MFScaffold
+import org.mifos.mobile.core.common.utils.Utils
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.component.MifosTopBar
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.utils.Utils
 import org.mifos.mobile.feature.qr.R
 
 
@@ -60,7 +60,7 @@ fun QrCodeDisplayScreen(
     val context = LocalContext.current
     var qrBitmap by rememberSaveable { mutableStateOf<Bitmap?>(null) }
 
-    MFScaffold(
+    MifosScaffold(
         topBar = {
             MifosTopBar(
                 navigateBack = navigateBack,
@@ -82,7 +82,7 @@ fun QrCodeDisplayScreen(
                 }
             )
         },
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
             Box(
                 modifier = Modifier
                     .padding(paddingValues = paddingValues)

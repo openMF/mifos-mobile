@@ -40,10 +40,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.auth.R
 import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationUiState
 import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationViewModel
@@ -102,10 +102,10 @@ fun RegistrationVerificationScreen(
 ) {
     val context = LocalContext.current
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.register,
         navigateBack = navigateBack,
-        scaffoldContent = { contentPadding ->
+        content = { contentPadding ->
 
             Box(
                 modifier = Modifier

@@ -14,11 +14,11 @@ import kotlinx.parcelize.Parcelize
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.designsystem.theme.DepositGreen
+import org.mifos.mobile.core.designsystem.theme.GreenSuccess
+import org.mifos.mobile.core.designsystem.theme.RedLight
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.core.ui.theme.DepositGreen
-import org.mifos.mobile.core.ui.theme.GreenSuccess
-import org.mifos.mobile.core.ui.theme.RedLight
 import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 

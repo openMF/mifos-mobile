@@ -35,18 +35,18 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.feature.recent_transaction.R
+import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.Utils
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MFScaffold
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
-import org.mifos.mobile.core.common.utils.CurrencyUtil
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.model.entity.Transaction
-import org.mifos.mobile.core.common.utils.Utils
+import org.mifos.mobile.feature.recent_transaction.R
 import org.mifos.mobile.feature.recent_transaction.utils.RecentTransactionState
 import org.mifos.mobile.feature.recent_transaction.viewmodel.RecentTransactionViewModel
 
@@ -88,10 +88,10 @@ fun RecentTransactionScreen(
     val context = LocalContext.current
     val pullRefreshState = rememberPullToRefreshState()
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.recent_transactions,
         navigateBack = navigateBack,
-        scaffoldContent = { paddingValues ->
+        content = { paddingValues ->
 
             Box(
                 Modifier

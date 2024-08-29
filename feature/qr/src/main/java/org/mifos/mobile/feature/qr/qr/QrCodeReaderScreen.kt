@@ -20,11 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.core.ui.component.MFScaffold
-import org.mifos.mobile.core.ui.component.MifosIcons
-import org.mifos.mobile.core.ui.theme.MifosMobileTheme
 import org.mifos.mobile.feature.qr.R
 
 @Composable
@@ -36,10 +36,10 @@ fun QrCodeReaderScreen(
     val gson = Gson()
 
 
-    MFScaffold(
+    MifosScaffold(
         topBarTitleResId = R.string.add_beneficiary,
         navigateBack = navigateBack,
-        scaffoldContent = { it ->
+        content = { it ->
             Box(modifier = Modifier
                 .padding(it)
                 .fillMaxSize()) {

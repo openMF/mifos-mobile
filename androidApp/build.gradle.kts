@@ -85,7 +85,8 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.data)
     implementation(projects.core.datastore)
-    implementation(projects.ui)
+    implementation(projects.core.ui)
+    implementation(projects.core.designsystem)
 
     implementation(projects.feature.loan)
     implementation(projects.feature.beneficiary)
