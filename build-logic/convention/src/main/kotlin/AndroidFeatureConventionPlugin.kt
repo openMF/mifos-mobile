@@ -25,8 +25,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:ui"))
                 add("implementation", project(":core:data"))
 
-                add("implementation", project(":libs:material3-navigation"))
-
                 add("implementation", libs.findLibrary("kotlinx.collections.immutable").get())
 
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
