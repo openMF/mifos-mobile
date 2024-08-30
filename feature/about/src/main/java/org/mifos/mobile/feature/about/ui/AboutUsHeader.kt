@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.about.ui
 
 import androidx.compose.foundation.Image
@@ -13,21 +22,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.about.R
 
-@Preview
+@DevicePreviews
 @Composable
-fun AboutUsHeader() {
-    Column {
+fun AboutUsHeader(
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier) {
         Image(
             painter = painterResource(id = R.mipmap.core_common_mifos_icon),
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)
                 .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         )
 
         Text(
@@ -37,7 +48,7 @@ fun AboutUsHeader() {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp)
+                .padding(bottom = 8.dp),
         )
 
         Text(
@@ -47,7 +58,7 @@ fun AboutUsHeader() {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 16.dp),
         )
     }
 }

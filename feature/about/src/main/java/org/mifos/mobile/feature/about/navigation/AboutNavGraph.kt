@@ -1,6 +1,14 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.about.navigation
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -20,26 +28,28 @@ fun NavController.navigateToAboutUsScreen() {
 
 fun NavGraphBuilder.aboutUsNavGraph(
     navController: NavController,
-    navigateToOssLicense: () -> Unit
+    navigateToOssLicense: () -> Unit,
 ) {
     navigation(
         startDestination = AboutUsNavigation.AboutUsScreen.route,
         route = AboutUsNavigation.AboutUsBase.route,
     ) {
         aboutUsScreenRoute(
-            navigateToPrivacyPolicy = { navController.navigate(AboutUsNavigation.PrivacyPolicyScreen.route) },
-            navigateToOssLicense = navigateToOssLicense
+            navigateToPrivacyPolicy = {
+                navController.navigate(AboutUsNavigation.PrivacyPolicyScreen.route)
+            },
+            navigateToOssLicense = navigateToOssLicense,
         )
 
         privacyPolicyScreenRoute(
-            navigateBack = navController::popBackStack
+            navigateBack = navController::popBackStack,
         )
     }
 }
 
 fun NavGraphBuilder.aboutUsScreenRoute(
     navigateToPrivacyPolicy: () -> Unit,
-    navigateToOssLicense: () -> Unit
+    navigateToOssLicense: () -> Unit,
 ) {
     composable(
         route = AboutUsNavigation.AboutUsScreen.route,
@@ -52,21 +62,21 @@ fun NavGraphBuilder.aboutUsScreenRoute(
                     context = context,
                     aboutUsItem = it.itemId,
                     navigateToOssLicense = navigateToOssLicense,
-                    navigateToPrivacyPolicy = navigateToPrivacyPolicy
+                    navigateToPrivacyPolicy = navigateToPrivacyPolicy,
                 )
-            }
+            },
         )
     }
 }
 
 fun NavGraphBuilder.privacyPolicyScreenRoute(
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
 ) {
     composable(
         route = AboutUsNavigation.PrivacyPolicyScreen.route,
     ) {
         PrivacyPolicyScreen(
-            navigateBack = navigateBack
+            navigateBack = navigateBack,
         )
     }
 }
@@ -75,7 +85,7 @@ private fun navigateToItem(
     context: Context,
     aboutUsItem: AboutUsListItemId,
     navigateToPrivacyPolicy: () -> Unit,
-    navigateToOssLicense: () -> Unit
+    navigateToOssLicense: () -> Unit,
 ) {
     when (aboutUsItem) {
         AboutUsListItemId.OFFICE_WEBSITE -> {
