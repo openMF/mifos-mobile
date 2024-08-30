@@ -260,9 +260,9 @@ private fun startPassCodeActivity(context: Context) {
 //private fun navigateToUpdatePasscodeActivity(passcode: String, context: Context) {
 //    val intent = Intent(context, PassCodeActivity::class.java).apply {
 //        putExtra(CURR_PASSWORD, passcode)
-//        putExtra(IS_TO_UPDATE_PASS_CODE, true)
+//        putExtra(IS_TO_UPDATE_PASS_CODE, true)s
 //    }
-//    context.startActivity(intent)
+//    context.startActivity(intent)ss
 //}
 
 private fun callHelpline(context: Context) {

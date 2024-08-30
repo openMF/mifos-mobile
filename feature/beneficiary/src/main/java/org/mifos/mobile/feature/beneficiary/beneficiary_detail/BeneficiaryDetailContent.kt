@@ -58,7 +58,7 @@ fun BeneficiaryDetailContent(
                 MifosTitleDescSingleLineEqual(
                     modifier = Modifier.padding(vertical = 4.dp),
                     title = stringResource(id = R.string.client_name),
-                    beneficiary?.clientName.toString()
+                    description = beneficiary?.clientName.toString()
                 )
 
                 MifosTitleDescSingleLineEqual(
