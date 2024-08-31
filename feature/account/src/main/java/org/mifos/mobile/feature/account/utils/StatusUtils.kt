@@ -1,49 +1,57 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.account.utils
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.core.model.entity.CheckboxStatus
-import org.mifos.mobile.ui.getThemeAttributeColor
+import org.mifos.mobile.core.ui.utils.getThemeAttributeColor
+import org.mifos.mobile.feature.account.R
 
-/**
- * Created by dilpreet on 3/7/17.
- */
 object StatusUtils {
 
     fun getSavingsAccountStatusList(context: Context?): List<CheckboxStatus> {
         val arrayList = ArrayList<CheckboxStatus>()
+
         arrayList.add(
             CheckboxStatus(
-                context?.getString(R.string.active),
+                context?.getString(R.string.feature_account_active),
                 ContextCompat.getColor(context!!, R.color.deposit_green),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.approved),
+                context.getString(R.string.feature_account_approved),
                 ContextCompat.getColor(context, R.color.light_green),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.approval_pending),
+                context.getString(R.string.feature_account_approval_pending),
                 ContextCompat
                     .getColor(context, R.color.light_yellow),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.matured),
+                context.getString(R.string.feature_account_matured),
                 ContextCompat.getColor(context, R.color.red_light),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.closed),
+                context.getString(R.string.feature_account_closed),
                 context.getThemeAttributeColor(R.attr.colorOnSurface),
             ),
-        )or
+        )
+
         return arrayList
     }
 
@@ -51,44 +59,44 @@ object StatusUtils {
         val arrayList = ArrayList<CheckboxStatus>()
         arrayList.add(
             CheckboxStatus(
-                context?.getString(R.string.in_arrears),
+                context?.getString(R.string.feature_account_in_arrears),
                 ContextCompat.getColor(context!!, R.color.red),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.active),
+                context.getString(R.string.feature_account_active),
                 ContextCompat.getColor(context, R.color.deposit_green),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.waiting_for_disburse),
+                context.getString(R.string.feature_account_disburse),
                 ContextCompat.getColor(context, R.color.blue),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.approval_pending),
+                context.getString(R.string.feature_account_approval_pending),
                 ContextCompat
                     .getColor(context, R.color.light_yellow),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.overpaid),
+                context.getString(R.string.feature_account_overpaid),
                 ContextCompat.getColor(context, R.color.purple),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.closed),
+                context.getString(R.string.feature_account_closed),
                 context.getThemeAttributeColor(R.attr.colorOnSurface),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.withdrawn),
+                context.getString(R.string.feature_account_withdrawn),
                 context.getThemeAttributeColor(R.attr.colorOnSurfaceVariant),
             ),
         )
@@ -99,26 +107,26 @@ object StatusUtils {
         val arrayList = ArrayList<CheckboxStatus>()
         arrayList.add(
             CheckboxStatus(
-                context?.getString(R.string.active),
+                context?.getString(R.string.feature_account_active),
                 ContextCompat.getColor(context!!, R.color.deposit_green),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.approved),
+                context.getString(R.string.feature_account_approved),
                 ContextCompat.getColor(context, R.color.light_green),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.approval_pending),
+                context.getString(R.string.feature_account_approval_pending),
                 ContextCompat
                     .getColor(context, R.color.light_yellow),
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.closed),
+                context.getString(R.string.feature_account_closed),
                 ContextCompat.getColor(context, R.color.light_blue),
             ),
         )

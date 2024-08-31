@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextButton
 import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
-import org.mifos.mobile.core.designsystem.components.MifosTextButton
+import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.theme.DarkGray
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.Primary
@@ -222,7 +222,7 @@ fun BeneficiaryStep(
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.labelMedium
                 )
-                MifosTextButton(
+                MifosButton(
                     onClick = { addBeneficiary() },
                     textResId = R.string.add_beneficiary
                 )
@@ -239,7 +239,7 @@ fun BeneficiaryStep(
                         beneficiaryError = false
                     }
                 )
-                MifosTextButton(
+                MifosButton(
                     onClick = {
                         if (beneficiary == null) beneficiaryError = true
                         else onContinueClick(beneficiary!!)
@@ -294,7 +294,7 @@ fun EnterAmountStep(
                 supportingText = amountError?.let { stringResource(id = it) },
                 label = R.string.enter_amount,
             )
-            MifosTextButton(
+            MifosButton(
                 onClick = {
                     if (amountError == null) {
                         onContinueClick(amount.text)
@@ -352,7 +352,7 @@ fun RemarkStep(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Row {
-                MifosTextButton(
+                MifosButton(
                     onClick = {
                         remarkError?.let { showRemarkError = true }
                             ?: onContinueClicked(remark.text)

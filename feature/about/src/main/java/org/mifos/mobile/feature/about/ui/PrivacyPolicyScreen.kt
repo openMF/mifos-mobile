@@ -33,18 +33,18 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.feature.about.R
 
 @Composable
-fun PrivacyPolicyScreen(
+internal fun PrivacyPolicyScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     MifosScaffold(
-        topBarTitleResId = R.string.privacy_policy,
+        topBarTitleResId = R.string.feature_about_privacy_policy,
         navigateBack = navigateBack,
         modifier = modifier,
         content = {
             WebView(
-                url = context.getString(R.string.privacy_policy_host_url),
+                url = context.getString(R.string.feature_about_policy_url),
             )
         },
     )
@@ -52,7 +52,7 @@ fun PrivacyPolicyScreen(
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebView(
+private fun WebView(
     url: String,
     modifier: Modifier = Modifier,
 ) {
@@ -67,6 +67,7 @@ fun WebView(
                     settings.domStorageEnabled = true
                     overScrollMode = WebView.OVER_SCROLL_NEVER
                     this.webViewClient = object : WebViewClient() {
+                        @Deprecated("Deprecated in Java")
                         override fun shouldOverrideUrlLoading(
                             view: WebView,
                             url: String,
@@ -101,5 +102,5 @@ fun WebView(
 }
 
 private fun Context.checkUri(uri: String): Boolean {
-    return Uri.parse(uri)?.host?.endsWith(this.getString(R.string.privacy_policy_host)) == true
+    return Uri.parse(uri)?.host?.endsWith(this.getString(R.string.feature_about_policy_host)) == true
 }

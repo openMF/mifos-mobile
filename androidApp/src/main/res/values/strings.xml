@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mifos Mobile</string>
+    <string name="feature_about_app_name">Mifos Mobile</string>
     <string name="login">Login</string>
     <string name="toast_welcome">Welcome %1$s</string>
     <string name="unable_to_connect">Not connected to internet</string>
@@ -15,9 +15,9 @@
     <string name="recent_transactions">Recent Transactions</string>
     <string name="charges">Charges</string>
     <string name="questionnaire">Questionnaire</string>
-    <string name="about_us">About Us</string>
+    <string name="feature_about_about_us">About Us</string>
     <string name="saving_account_details">Saving Account Details</string>
-    <string name="savings_account">Savings Account</string>
+    <string name="feature_account_savings_account">Savings Account</string>
     <string name="error_loan_account_details_loading">Error loading in loan accounts detail</string>
     <string name="nominal_interest_rate">Nominal Interest Rate</string>
     <string name="account_number">Account Number</string>
@@ -31,11 +31,11 @@
     <string name="small_text">Small Text</string>
     <string name="client_accounts">Client Accounts</string>
     <string name="splash">Splash</string>
-    <string name="savings">Saving</string>
-    <string name="loan">Loan</string>
-    <string name="loan_account">Loan Account</string>
-    <string name="share">Share</string>
-    <string name="share_account">Share Account</string>
+    <string name="feature_account_savings">Saving</string>
+    <string name="feature_account_loan">Loan</string>
+    <string name="feature_account_loan_account">Loan Account</string>
+    <string name="feature_account_share">Share</string>
+    <string name="feature_account_share_account">Share Account</string>
     <string name="clients_list">Chose a client</string>
     <string name="core_common_working">Working</string>
     <string name="status_image">Status Image</string>
@@ -50,8 +50,8 @@
     <string name="remark">Remark</string>
     <string name="expected_disbursement_date">Expected Disbursement Date</string>
     <string name="submission_date">Submission Date</string>
-    <string name="submitted">Submitted</string>
-    <string name="disbursement">Disbursement</string>
+    <string name="feature_account_submitted">Submitted</string>
+    <string name="feature_account_disbursement">Disbursement</string>
     <string name="transfer_date">Transfer Date</string>
     <string name="apply_for_loan">Apply for Loan</string>
     <string name="update_loan">Update Loan</string>
@@ -68,23 +68,23 @@
     <string name="repayment_strategy">Repayment Strategy</string>
     <string name="pay_to">Pay To</string>
     <string name="pay_from">Pay From</string>
-    <string name="cancel">Cancel</string>
+    <string name="feature_account_cancel">Cancel</string>
     <string name="review_transfer">Review</string>
     <string name="transfer_to">Transfer To</string>
     <string name="transfer_from">Transfer From</string>
     <string name="making_transfer">Making Transfer</string>
-    <string name="deposit">Deposit</string>
+    <string name="feature_account_deposit">Deposit</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="remark_is_mandatory">Remark is mandatory</string>
-    <string name="approved">Approved</string>
+    <string name="feature_account_approved">Approved</string>
     <string name="shares_pending">Pending</string>
     <string name="loan_amount_paid">Paid</string>
     <string name="balance">Balance</string>
     <string name="rejected">Rejected</string>
     <string name="waiting">Waiting</string>
-    <string name="overpaid">Overpaid</string>
-    <string name="in_arrears">In Arrears</string>
-    <string name="select_you_want">Select all filters you want to apply</string>
+    <string name="feature_account_overpaid">Overpaid</string>
+    <string name="feature_account_in_arrears">In Arrears</string>
+    <string name="feature_account_select_you_want">Select all filters you want to apply</string>
     <string name="filter_savings">Filter Savings Accounts</string>
     <string name="filter_loan">Filter Loan Accounts</string>
     <string name="filter_share">Filter Share Accounts</string>
@@ -100,12 +100,12 @@
     <string name="transfer_from_savings">Transfer from Savings</string>
     <string name="loan_charges">Loan Charges</string>
     <string name="savings_charges">Savings Charges</string>
-    <string name="active">Active</string>
-    <string name="closed">Closed</string>
-    <string name="withdrawn">Withdrawn</string>
+    <string name="feature_account_active">Active</string>
+    <string name="feature_account_closed">Closed</string>
+    <string name="feature_account_withdrawn">Withdrawn</string>
     <string name="need_approval">Need Approval</string>
-    <string name="pending">Pending</string>
-    <string name="matured">Matured</string>
+    <string name="feature_account_pending">Pending</string>
+    <string name="feature_account_matured">Matured</string>
     <string name="create_an_account">Create an account</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -169,9 +169,9 @@
 
     <string name="empty_requestid">Request ID cannot be empty</string>
     <string name="empty_authentication_token">Authentication Token cannot be empty</string>
-    <string name="empty_savings_accounts">There is no SavingsAccount associated with you</string>
-    <string name="empty_loan_accounts">There is no LoanAccount associated with you</string>
-    <string name="empty_share_accounts">There is no ShareAccount associated with you</string>
+    <string name="feature_account_empty_savings_accounts">There is no SavingsAccount associated with you</string>
+    <string name="feature_account_empty_loan_accounts">There is no LoanAccount associated with you</string>
+    <string name="feature_account_empty_share_accounts">There is no ShareAccount associated with you</string>
     <string name="empty_transactions">There is no transactions associated with you</string>
     <string name="empty_repayment_schedule">There is no repayment schedule associated with you
     </string>
@@ -273,8 +273,8 @@
     <string name="repayment_schedule">Repayment Schedule</string>
     <string name="transactions">Transactions</string>
     <string name="transfer">Transfer</string>
-    <string name="approval_pending">Approval Pending</string>
-    <string name="waiting_for_disburse">Waiting for Disburse</string>
+    <string name="feature_account_approval_pending">Approval Pending</string>
+    <string name="feature_account_disburse">Waiting for Disburse</string>
     <string name="closed_because_of_obligation">Closed because of some Obligations</string>
     <string name="loan_closed">Loan Closed</string>
     <string name="due_date_in_charges">Due Date:</string>
@@ -301,7 +301,7 @@
     <string name="four_weeks">4 Weeks</string>
     <string name="three_months">3 Months</string>
     <string name="six_months">6 Months</string>
-    <string name="filter">Filter</string>
+    <string name="feature_account_filter">Filter</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="filtered">Filtered</string>
@@ -466,7 +466,7 @@
     <string name="hello_client">Hello, %1$s</string>
     <string name="double_amount">%1$.2f</string>
     <string name="double_and_string">%1$.2f %2$s</string>
-    <string name="string_and_string">%1$s %2$s</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
     <string name="playstore_link">%1$s%2$s</string>
     <string name="string_and_double">%1$s %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
@@ -492,7 +492,7 @@
     <string name="leave_email">Leave an email</string>
     <string name="find_locations">Find Locations</string>
     <string name="no_withdrawals">No withdrawals</string>
-    <string name="clear_filters">Clear Filters</string>
+    <string name="feature_account_clear_filters">Clear Filters</string>
     <string name="manage_accounts">Manage Accounts</string>
     <string name="more">More</string>
     <string name="settings">Settings</string>
@@ -523,12 +523,12 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="error_password_not_match">Password does not match.</string>
     <string name="app_version">Version %1$s</string>
-    <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
+    <string name="feature_about_copyright_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
-    <string name="licenses">Licenses</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
-    <string name="privacy_policy_host_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="feature_about_licenses">Licenses</string>
+    <string name="feature_about_privacy_policy">Privacy Policy</string>
+    <string name="feature_about_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="feature_about_policy_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
     <string name="transfer_error">Unable to complete transfer, please try again later</string>
     <string name="please_wait">Please Wait...</string>
     <string name="message">message</string>
@@ -553,13 +553,13 @@
     <string name="details">Details</string>
     <string name="product">Product</string>
 
-    <string name="dividend_payout">Dividend Payout</string>
-    <string name="withdrawal">Withdrawal</string>
-    <string name="interest_posting">Interest Posting</string>
-    <string name="fee_deduction">Fee Deduction</string>
-    <string name="withdrawal_transfer">Withdrawal Transfer</string>
-    <string name="rejected_transfer">Rejected Transfer</string>
-    <string name="overdraft_fee">Overdraft Fee</string>
+    <string name="feature_account_dividend_payout">Dividend Payout</string>
+    <string name="feature_account_withdrawal">Withdrawal</string>
+    <string name="feature_account_interest_posting">Interest Posting</string>
+    <string name="feature_account_fee_deduction">Fee Deduction</string>
+    <string name="feature_account_withdrawal_transfer">Withdrawal Transfer</string>
+    <string name="feature_account_rejected_transfer">Rejected Transfer</string>
+    <string name="feature_account_overdraft_fee">Overdraft Fee</string>
     <string name="savings_account_transaction">Savings Account Transaction</string>
     <string name="transaction_period">Transaction Period</string>
     <string name="transaction_type">Transaction Type</string>
@@ -568,11 +568,11 @@
 
     <string name="dialog_cancel_registration_message">Do you want to cancel registering New Account ?</string>
     <string name="dialog_cancel_registration_title">Cancel Registration</string>
-    <string name="sources">Source Code</string>
-    <string name="official_website">Official Website</string>
-    <string name="app_version_text">App version  1.0</string>
-    <string name="license_string_with_value">License: MPL-2.0</string>
-    <string name="about_app_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
+    <string name="feature_about_sources">Source Code</string>
+    <string name="feature_about_official_website">Official Website</string>
+    <string name="feature_about_app_version">App version  1.0</string>
+    <string name="feature_about_license">License: MPL-2.0</string>
+    <string name="feature_about_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
     <string name="or">or</string>
     <string name="no_app_to_support_action">There is no application that support this action</string>
     <string name="theme">Theme</string>

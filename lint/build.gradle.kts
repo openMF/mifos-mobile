@@ -29,8 +29,11 @@ kotlin {
 }
 
 dependencies {
+    lintChecks(libs.slack.compose.lint)
+
     compileOnly(libs.kotlin.stdlib)
     compileOnly(libs.lint.api)
+
     testImplementation(libs.lint.checks)
     testImplementation(libs.lint.tests)
     testImplementation(kotlin("test"))

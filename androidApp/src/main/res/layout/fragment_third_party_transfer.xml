@@ -311,7 +311,7 @@
                             android:layout_marginTop="@dimen/margin_10dp"
                             android:layout_marginBottom="@dimen/margin_16dp"
                             android:layout_weight="0.5"
-                            android:text="@string/cancel"
+                            android:text="@string/feature_account_cancel"
                             android:textColor="?attr/colorPrimary"
                             app:backgroundTint="@color/white" />
 

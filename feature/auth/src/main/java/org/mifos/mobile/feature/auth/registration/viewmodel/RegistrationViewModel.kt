@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.auth.registration.viewmodel
 
 import androidx.lifecycle.ViewModel
@@ -12,8 +21,9 @@ import org.mifos.mobile.feature.auth.R
 import javax.inject.Inject
 
 @HiltViewModel
-class RegistrationViewModel @Inject constructor(private val userAuthRepositoryImp: UserAuthRepository) :
-    ViewModel() {
+internal class RegistrationViewModel @Inject constructor(
+    private val userAuthRepositoryImp: UserAuthRepository,
+) : ViewModel() {
 
     private val _registrationUiState =
         MutableStateFlow<RegistrationUiState>(RegistrationUiState.Initial)
@@ -29,21 +39,22 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
         email: String,
         firstName: String,
         lastName: String,
+        countryCode: String,
         mobileNumber: String,
         password: String,
-        username: String
+        username: String,
     ) {
         viewModelScope.launch {
             _registrationUiState.value = RegistrationUiState.Loading
             userAuthRepositoryImp.registerUser(
-                accountNumber,
-                authenticationMode,
-                email,
-                firstName,
-                lastName,
-                mobileNumber,
-                password,
-                username
+                accountNumber = accountNumber,
+                authenticationMode = authenticationMode,
+                email = email,
+                firstName = firstName,
+                lastName = lastName,
+                mobileNumber = countryCode + mobileNumber,
+                password = password,
+                username = username,
             ).catch {
                 _registrationUiState.value =
                     RegistrationUiState.Error(R.string.could_not_register_user_error)
@@ -67,10 +78,9 @@ class RegistrationViewModel @Inject constructor(private val userAuthRepositoryIm
     }
 }
 
-
-sealed class RegistrationUiState {
+internal sealed class RegistrationUiState {
     data class Error(val exception: Int) : RegistrationUiState()
     data object Success : RegistrationUiState()
     data object Loading : RegistrationUiState()
-    data object Initial: RegistrationUiState()
+    data object Initial : RegistrationUiState()
 }

@@ -26,19 +26,19 @@
     <item
         android:id="@+id/menu_filter_savings"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="@string/savings_account"
+        android:title="@string/feature_account_savings_account"
         android:visible="false"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_filter_loan"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="@string/loan_account"
+        android:title="@string/feature_account_loan_account"
         android:visible="false"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_filter_shares"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="@string/share_account"
+        android:title="@string/feature_account_share_account"
         android:visible="false"
         app:showAsAction="always" />
 

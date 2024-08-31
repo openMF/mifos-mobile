@@ -35,7 +35,7 @@
                     app:border="true"
                     app:border_width="1dp"
                     app:shapeAppearance="@dimen/Mifos.DesignSystem.Size.CircularUserImageSize"
-                    tools:src="@drawable/ic_person_black_24dp" />
+                    tools:src="@drawable/feature_auth_ic_person" />
 
                 <TextView
                     android:id="@+id/tv_user_name"

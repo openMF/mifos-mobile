@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mifos Mobile</string>
+    <string name="feature_about_app_name">Mifos Mobile</string>
     <string name="login">Entrar</string>
     <string name="toast_welcome">Bem-vindo %1$s</string>
     <string name="unable_to_connect">Não conectado à internet</string>
@@ -15,9 +15,9 @@
     <string name="recent_transactions">Transações recentes</string>
     <string name="charges">Cobranças</string>
     <string name="questionnaire">Questionário</string>
-    <string name="about_us">Sobre nós</string>
+    <string name="feature_about_about_us">Sobre nós</string>
     <string name="saving_account_details">Detalhes da conta de poupança</string>
-    <string name="savings_account">Conta Poupança</string>
+    <string name="feature_account_savings_account">Conta Poupança</string>
     <string name="nominal_interest_rate">Taxa de Interesse Nominal</string>
     <string name="account_number">Número da conta</string>
     <string name="account_balance">Saldo da Conta</string>
@@ -29,11 +29,11 @@
     <string name="small_text">Texto pequeno</string>
     <string name="client_accounts">Contas de Clientes</string>
     <string name="splash">esguicho</string>
-    <string name="savings">Poupança</string>
-    <string name="loan">Empréstimo</string>
-    <string name="loan_account">Conta de Empréstimos</string>
-    <string name="share">Partilhar</string>
-    <string name="share_account">Partilhar conta</string>
+    <string name="feature_account_savings">Poupança</string>
+    <string name="feature_account_loan">Empréstimo</string>
+    <string name="feature_account_loan_account">Conta de Empréstimos</string>
+    <string name="feature_account_share">Partilhar</string>
+    <string name="feature_account_share_account">Partilhar conta</string>
     <string name="clients_list">Escolheu um cliente</string>
     <string name="core_common_working">A trabalhar</string>
     <string name="status_image">Imagem de Status</string>
@@ -48,8 +48,8 @@
     <string name="remark">Observação</string>
     <string name="expected_disbursement_date">Data de desembolso esperada</string>
     <string name="submission_date">Data de submissão</string>
-    <string name="submitted">Submetido</string>
-    <string name="disbursement">Desembolso</string>
+    <string name="feature_account_submitted">Submetido</string>
+    <string name="feature_account_disbursement">Desembolso</string>
     <string name="transfer_date">Data de transferência</string>
     <string name="apply_for_loan">Solicitar empréstimo</string>
     <string name="update_loan">Atualizar empréstimo</string>
@@ -65,23 +65,23 @@
     <string name="repayment_strategy">Estratégia de Reembolso</string>
     <string name="pay_to">Pagar para</string>
     <string name="pay_from">Pagar da</string>
-    <string name="cancel">Cancelar</string>
+    <string name="feature_account_cancel">Cancelar</string>
     <string name="review_transfer">Rever</string>
     <string name="transfer_to">Transferir para</string>
     <string name="transfer_from">Transferir da</string>
     <string name="making_transfer">Fazendo Transferência</string>
-    <string name="deposit">Depositar</string>
+    <string name="feature_account_deposit">Depositar</string>
     <string name="enter_amount">Digite Montante</string>
     <string name="remark_is_mandatory">Observação é obrigatória</string>
-    <string name="approved">Aprovado</string>
+    <string name="feature_account_approved">Aprovado</string>
     <string name="shares_pending">Pendente</string>
     <string name="loan_amount_paid">Pago</string>
     <string name="balance">Saldo</string>
     <string name="rejected">Rejeitado</string>
     <string name="waiting">À espera</string>
-    <string name="overpaid">Excesso de pagamento</string>
-    <string name="in_arrears">Em atraso</string>
-    <string name="select_you_want">Selecione tudo o que você deseja aplicar</string>
+    <string name="feature_account_overpaid">Excesso de pagamento</string>
+    <string name="feature_account_in_arrears">Em atraso</string>
+    <string name="feature_account_select_you_want">Selecione tudo o que você deseja aplicar</string>
     <string name="filter_savings">Filtrar Contas Poupança</string>
     <string name="filter_loan">Filtrar Contas Empréstimo</string>
     <string name="filter_share">Filtrar contas de compartilhamento</string>
@@ -97,12 +97,12 @@
     <string name="transfer_from_savings">Transferir da poupança</string>
     <string name="loan_charges">Cobranças de empréstimos</string>
     <string name="savings_charges">Cobranças de poupanças</string>
-    <string name="active">Ativo</string>
-    <string name="closed">Fechado</string>
-    <string name="withdrawn">Retirada</string>
+    <string name="feature_account_active">Ativo</string>
+    <string name="feature_account_closed">Fechado</string>
+    <string name="feature_account_withdrawn">Retirada</string>
     <string name="need_approval">Necessita de aprovação</string>
-    <string name="pending">Pendente</string>
-    <string name="matured">Amadurecido</string>
+    <string name="feature_account_pending">Pendente</string>
+    <string name="feature_account_matured">Amadurecido</string>
     <string name="create_an_account">Crie uma conta</string>
     <string name="first_name">Primeiro Nome</string>
     <string name="last_name">Último Nome</string>
@@ -136,9 +136,9 @@
     <string name="account_not_active_to_perform_transfer">Conta deve estar ativa para transferir</string>
 
 
-    <string name="empty_savings_accounts">Não existe nenhuma Conta Poupança associada</string>
-    <string name="empty_loan_accounts">Não existe nenhuma Conta de Empréstimo associada</string>
-    <string name="empty_share_accounts">Não existe nenhuma Conta Partilha associada</string>
+    <string name="feature_account_empty_savings_accounts">Não existe nenhuma Conta Poupança associada</string>
+    <string name="feature_account_empty_loan_accounts">Não existe nenhuma Conta de Empréstimo associada</string>
+    <string name="feature_account_empty_share_accounts">Não existe nenhuma Conta Partilha associada</string>
     <string name="empty_transactions">Não existem transações associadas</string>
     <string name="empty_repayment_schedule">Não existe nenhum cronograma de reembolso associado</string>
     <string name="no_more_transactions_available">Não há mais transações disponíveis</string>
@@ -238,8 +238,8 @@
     <string name="repayment_schedule">Cronograma de pagamento</string>
     <string name="transactions">Transações</string>
     <string name="transfer">Transferência</string>
-    <string name="approval_pending">Aprovação pendente</string>
-    <string name="waiting_for_disburse">À espera de desembolso</string>
+    <string name="feature_account_approval_pending">Aprovação pendente</string>
+    <string name="feature_account_disburse">À espera de desembolso</string>
     <string name="closed_because_of_obligation">Fechado devido a algumas obrigações</string>
     <string name="loan_closed">Empréstimo fechado</string>
     <string name="due_date_in_charges">Data de vencimento:</string>
@@ -265,7 +265,7 @@
     <string name="four_weeks">4 Semanas</string>
     <string name="three_months">3 Meses</string>
     <string name="six_months">6 Meses</string>
-    <string name="filter">Filtro</string>
+    <string name="feature_account_filter">Filtro</string>
     <string name="start_date">Data inicial</string>
     <string name="end_date">Data final</string>
     <string name="filtered">Filtrado</string>
@@ -408,7 +408,7 @@
     <string name="hello_client">Olá, %1$s</string>
     <string name="double_amount">%1$.2f</string>
     <string name="double_and_string">%1$.2f %2$s</string>
-    <string name="string_and_string">%1$s%2$s</string>
+    <string name="feature_account_string_and_string">%1$s%2$s</string>
     <string name="string_and_double">%1$s: %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
     <string name="invalid_amount">Quantia inválida</string>
@@ -432,7 +432,7 @@
     <string name="leave_email">Deixar um email</string>
     <string name="find_locations">Procurar Lugares</string>
     <string name="no_withdrawals">Nenhum levantamento</string>
-    <string name="clear_filters">Limpar os Filtros</string>
+    <string name="feature_account_clear_filters">Limpar os Filtros</string>
     <string name="manage_accounts">Gerir contas</string>
     <string name="more">Mais</string>
     <string name="settings">Definições</string>
@@ -487,9 +487,9 @@
     <string name="confirm_password">Confirme a palavra-passe</string>
     <string name="error_password_not_match">A palavra-passe não coincide.</string>
     <string name="app_version">Versão %1$s</string>
-    <string name="copy_right_mifos">©2016-%1$s Inicitiva Mifos.</string>
+    <string name="feature_about_copyright_mifos">©2016-%1$s Inicitiva Mifos.</string>
     <string name="all_rights_reserved">Todos os direitos reservados.</string>
-    <string name="licenses">Licenças</string>
+    <string name="feature_about_licenses">Licenças</string>
     <string name="transfer_error">Não é possível concluir a transferência, por favor, tente novamente mais tarde</string>
     <string name="please_wait">Por favor espere…</string>
     <string name="message">mensagem</string>

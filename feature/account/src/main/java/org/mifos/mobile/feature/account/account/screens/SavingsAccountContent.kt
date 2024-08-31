@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.account.account.screens
 
 import androidx.compose.foundation.clickable
@@ -22,25 +31,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.feature.account.R
-import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.CurrencyUtil
 import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
-fun SavingsAccountContent(
+internal fun SavingsAccountContent(
     accountsList: List<SavingAccount>,
     isSearching: Boolean,
-    getUpdatedSearchList: (accountsList: List<SavingAccount>) -> List<SavingAccount>,
     isFiltered: Boolean,
+    getUpdatedSearchList: (accountsList: List<SavingAccount>) -> List<SavingAccount>,
     getUpdatedFilterList: (accountsList: List<SavingAccount>) -> List<SavingAccount>,
     onItemClick: (accountType: String, accountId: Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val lazyColumnState = rememberLazyListState()
 
-    var accounts by rememberSaveable {
-        mutableStateOf(accountsList)
-    }
+    var accounts by rememberSaveable { mutableStateOf(accountsList) }
 
     accounts = when {
         isFiltered && isSearching -> {
@@ -60,25 +70,24 @@ fun SavingsAccountContent(
         }
     }
 
-    val lazyColumnState = rememberLazyListState()
-
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = lazyColumnState
+        modifier = modifier.fillMaxSize(),
+        state = lazyColumnState,
     ) {
         items(items = accounts) { savingAccount ->
             AccountScreenSavingsListItem(
                 savingAccount = savingAccount,
-                onItemClick = onItemClick
+                onItemClick = onItemClick,
             )
         }
     }
 }
 
 @Composable
-fun AccountScreenSavingsListItem(
+private fun AccountScreenSavingsListItem(
     savingAccount: SavingAccount,
-    onItemClick: (accountType: String, accountId: Long) -> Unit
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -87,44 +96,47 @@ fun AccountScreenSavingsListItem(
             Triple(
                 colorResource(R.color.deposit_green),
                 DateHelper.getDateAsString(savingAccount.lastActiveTransactionDate),
-                colorResource(R.color.deposit_green)
+                colorResource(R.color.deposit_green),
             )
         }
         savingAccount.status?.approved == true -> {
             Triple(
                 colorResource(R.color.light_green),
-                "${stringResource(id = R.string.approved)} ${DateHelper.getDateAsString(savingAccount.timeLine?.approvedOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_approved)} " +
+                    DateHelper.getDateAsString(savingAccount.timeLine?.approvedOnDate),
+                null,
             )
         }
         savingAccount.status?.submittedAndPendingApproval == true -> {
             Triple(
                 colorResource(R.color.light_yellow),
-                "${stringResource(id = R.string.submitted)} ${DateHelper.getDateAsString(savingAccount.timeLine?.submittedOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_submitted)} " +
+                    DateHelper.getDateAsString(savingAccount.timeLine?.submittedOnDate),
+                null,
             )
         }
         savingAccount.status?.matured == true -> {
             Triple(
                 colorResource(R.color.red_light),
                 DateHelper.getDateAsString(savingAccount.lastActiveTransactionDate),
-                colorResource(R.color.red_light)
+                colorResource(R.color.red_light),
             )
         }
         else -> {
             Triple(
                 colorResource(R.color.light_yellow),
-                "${stringResource(id = R.string.closed)} ${DateHelper.getDateAsString(savingAccount?.timeLine?.closedOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_closed)} " +
+                    DateHelper.getDateAsString(savingAccount.timeLine?.closedOnDate),
+                null,
             )
         }
     }
 
     Row(
-        modifier = Modifier.clickable {
-            onItemClick.invoke(org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNTS, savingAccount.id)
+        modifier = modifier.clickable {
+            onItemClick.invoke(Constants.SAVINGS_ACCOUNTS, savingAccount.id)
         },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AccountTypeItemIndicator(color)
 
@@ -132,7 +144,7 @@ fun AccountScreenSavingsListItem(
             savingAccount.accountNo?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
 
@@ -155,9 +167,9 @@ fun AccountScreenSavingsListItem(
 
         numColor?.let {
             val amountBalance = context.getString(
-                R.string.string_and_string,
+                R.string.feature_account_string_and_string,
                 savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code,
-                CurrencyUtil.formatCurrency(context, savingAccount.accountBalance)
+                CurrencyUtil.formatCurrency(context, savingAccount.accountBalance),
             )
 
             Text(
@@ -165,7 +177,7 @@ fun AccountScreenSavingsListItem(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp),
-                color = it
+                color = it,
             )
         }
     }

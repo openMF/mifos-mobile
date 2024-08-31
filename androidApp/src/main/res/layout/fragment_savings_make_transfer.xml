@@ -273,7 +273,7 @@
                             style="@style/Mifos.DesignSystem.Components.Button.Outline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/cancel" />
+                            android:text="@string/feature_account_cancel" />
 
                     </LinearLayout>
 

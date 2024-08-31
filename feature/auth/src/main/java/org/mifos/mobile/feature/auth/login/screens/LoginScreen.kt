@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.auth.login.screens
 
 import android.content.Context
@@ -15,18 +24,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,7 +47,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -52,105 +54,114 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.components.MifosTextButton
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.auth.R
 import org.mifos.mobile.feature.auth.login.viewmodel.LoginUiState
 import org.mifos.mobile.feature.auth.login.viewmodel.LoginViewModel
 
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel(),
+internal fun LoginScreen(
     navigateToRegisterScreen: () -> Unit,
     navigateToPasscodeScreen: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = hiltViewModel(),
 ) {
-
     val context = LocalContext.current
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
 
     LoginScreen(
         uiState = uiState,
-        loadClient = { viewModel.loadClient() },
+        loadClient = viewModel::loadClient,
         startPassCodeActivity = navigateToPasscodeScreen,
         startRegisterActivity = navigateToRegisterScreen,
+        modifier = modifier,
         login = { username, password ->
             if (Network.isConnected(context)) {
-                if (isCredentialsValid(username, password))
+                if (isCredentialsValid(username, password)) {
                     viewModel.login(username, password)
+                }
             } else {
-                Toast.makeText(context, context.getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.no_internet_connection),
+                    Toast.LENGTH_SHORT,
+                ).show()
             }
-        }
+        },
     )
 }
 
 @Composable
-fun LoginScreen(
+private fun LoginScreen(
     uiState: LoginUiState,
     loadClient: () -> Unit,
     startPassCodeActivity: () -> Unit,
     startRegisterActivity: () -> Unit,
-    login: ( username: String, password: String ) -> Unit
+    login: (username: String, password: String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxSize(),
     ) {
-
         LoginContent(
-            login= login,
-            createAccount = startRegisterActivity
+            login = login,
+            createAccount = startRegisterActivity,
         )
 
         when (uiState) {
-
             LoginUiState.Initial -> Unit
 
             is LoginUiState.Error -> {
                 LaunchedEffect(key1 = true) {
-                    Toast.makeText(context, context.getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    showToast(context, context.getString(R.string.login_failed))
                 }
             }
 
-            LoginUiState.Loading -> {
-                MifosProgressIndicatorOverlay()
-            }
+            LoginUiState.Loading -> MifosProgressIndicatorOverlay()
 
-            is LoginUiState.LoginSuccess -> {
-                loadClient.invoke()
-            }
+            is LoginUiState.LoginSuccess -> loadClient.invoke()
 
             is LoginUiState.LoadClientSuccess -> {
                 startPassCodeActivity.invoke()
                 LaunchedEffect(key1 = true) {
-                    Toast.makeText(context, context.getString(R.string.toast_welcome, uiState.clientName), Toast.LENGTH_SHORT).show()
+                    showToast(
+                        context,
+                        context.getString(R.string.toast_welcome, uiState.clientName),
+                    )
                 }
             }
         }
     }
 }
 
-
 @Composable
-fun LoginContent(
+@Suppress("LongMethod")
+private fun LoginContent(
     login: (username: String, password: String) -> Unit,
-    createAccount: () -> Unit
+    createAccount: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     var username by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(
-            TextFieldValue("")
+            TextFieldValue(""),
         )
     }
     var password by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(
-            TextFieldValue("")
+            TextFieldValue(""),
         )
     }
 
@@ -162,16 +173,18 @@ fun LoginContent(
     val passwordErrorContent = validatePassword(password.text, context)
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    keyboardController?.hide()
-                })
-            }
+                detectTapGestures(
+                    onTap = {
+                        keyboardController?.hide()
+                    },
+                )
+            },
     ) {
-        MifosMobileIcon(id = R.drawable.mifos_logo)
+        MifosMobileIcon(id = R.drawable.feature_auth_mifos_logo)
 
         MifosOutlinedTextField(
             value = username,
@@ -180,14 +193,14 @@ fun LoginContent(
                 usernameError = false
             },
             label = R.string.username,
-            icon = R.drawable.ic_person_black_24dp,
+            icon = R.drawable.feature_auth_ic_person,
             error = usernameError,
             supportingText = usernameErrorContent,
             trailingIcon = {
                 if (usernameError) {
-                    Icon(imageVector = Icons.Filled.Error, contentDescription = null)
+                    Icon(imageVector = MifosIcons.Error, contentDescription = null)
                 }
-            }
+            },
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -199,28 +212,35 @@ fun LoginContent(
                 passwordError = false
             },
             label = R.string.password,
-            icon = R.drawable.ic_lock_black_24dp,
-            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            icon = R.drawable.feature_auth_lock,
+            visualTransformation = if (passwordVisibility) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
             trailingIcon = {
                 if (!passwordError) {
-                    val image = if (passwordVisibility)
-                        Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
+                    val image = if (passwordVisibility) {
+                        MifosIcons.Visibility
+                    } else {
+                        MifosIcons.VisibilityOff
+                    }
                     IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                         Icon(imageVector = image, null)
                     }
                 } else {
-                    Icon(imageVector = Icons.Filled.Error, contentDescription = null)
+                    Icon(imageVector = MifosIcons.Error, contentDescription = null)
                 }
             },
             error = passwordError,
             supportingText = passwordErrorContent,
-            keyboardType = KeyboardType.Password
+            keyboardType = KeyboardType.Password,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Button(
+        MifosButton(
+            textResId = R.string.login,
             onClick = {
                 when {
                     usernameErrorContent.isEmpty() && passwordErrorContent.isEmpty() -> {
@@ -247,68 +267,68 @@ fun LoginContent(
                 .padding(start = 16.dp, end = 16.dp, top = 4.dp),
             contentPadding = PaddingValues(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            Text(text = stringResource(id = R.string.login))
-        }
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp)
-                    .weight(1f), color = Color.Gray, thickness = 1.dp
+                    .weight(1f),
+                thickness = 1.dp,
+                color = Color.Gray,
             )
             Text(
                 modifier = Modifier.padding(8.dp),
                 text = "or",
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(end = 16.dp)
-                    .weight(1f), color = Color.Gray, thickness = 1.dp
+                    .weight(1f),
+                thickness = 1.dp,
+                color = Color.Gray,
             )
         }
 
-        TextButton(
-            onClick = {
-                createAccount.invoke()
-            },
+        MifosTextButton(
+            onClick = createAccount,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally),
             colors = ButtonDefaults.textButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary
-            )
+                contentColor = MaterialTheme.colorScheme.primary,
+            ),
         ) {
             Text(text = stringResource(id = R.string.create_an_account))
         }
     }
 }
 
-fun isFieldEmpty(fieldText: String): Boolean {
+private fun isFieldEmpty(fieldText: String): Boolean {
     return fieldText.isEmpty()
 }
 
-fun isUsernameLengthInadequate(username: String): Boolean {
+private fun isUsernameLengthInadequate(username: String): Boolean {
     return username.length < 5
 }
 
-fun isPasswordLengthInadequate(password: String): Boolean {
+private fun isPasswordLengthInadequate(password: String): Boolean {
     return password.length < 6
 }
 
-fun usernameHasSpaces(username: String): Boolean {
+private fun usernameHasSpaces(username: String): Boolean {
     return username.trim().contains(" ")
 }
 
@@ -347,7 +367,7 @@ private fun validateUsername(username: String, context: Context): String {
             usernameError = context.getString(
                 R.string.error_validation_blank,
                 context.getString(R.string.username),
-            ).toString()
+            )
         }
 
         isUsernameLengthInadequate(username) -> {
@@ -355,7 +375,7 @@ private fun validateUsername(username: String, context: Context): String {
                 R.string.error_validation_minimum_chars,
                 context.getString(R.string.username),
                 context.resources?.getInteger(R.integer.username_minimum_length),
-            ).toString()
+            )
         }
 
         usernameHasSpaces(username) -> {
@@ -363,7 +383,7 @@ private fun validateUsername(username: String, context: Context): String {
                 R.string.error_validation_cannot_contain_spaces,
                 context.getString(R.string.username),
                 context.getString(R.string.not_contain_username),
-            ).toString()
+            )
         }
     }
     return usernameError
@@ -376,7 +396,7 @@ private fun validatePassword(password: String, context: Context): String {
             passwordError = context.getString(
                 R.string.error_validation_blank,
                 context.getString(R.string.password),
-            ).toString()
+            )
         }
 
         isPasswordLengthInadequate(password) -> {
@@ -384,13 +404,13 @@ private fun validatePassword(password: String, context: Context): String {
                 R.string.error_validation_minimum_chars,
                 context.getString(R.string.password),
                 context.resources.getInteger(R.integer.password_minimum_length),
-            ).toString()
+            )
         }
     }
     return passwordError
 }
 
-class LoginScreenPreviewProvider : PreviewParameterProvider<LoginUiState> {
+internal class LoginScreenPreviewProvider : PreviewParameterProvider<LoginUiState> {
 
     override val values: Sequence<LoginUiState>
         get() = sequenceOf(
@@ -402,14 +422,14 @@ class LoginScreenPreviewProvider : PreviewParameterProvider<LoginUiState> {
         )
 }
 
-private fun showToast(context: Context, text : String){
+private fun showToast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_LONG).show()
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
 private fun LoginScreenPreview(
-    @PreviewParameter(LoginScreenPreviewProvider::class) loginUiState: LoginUiState
+    @PreviewParameter(LoginScreenPreviewProvider::class) loginUiState: LoginUiState,
 ) {
     MifosMobileTheme {
         LoginScreen(
@@ -417,7 +437,7 @@ private fun LoginScreenPreview(
             {},
             {},
             {},
-            { _, _ -> }
+            { _, _ -> },
         )
     }
 }

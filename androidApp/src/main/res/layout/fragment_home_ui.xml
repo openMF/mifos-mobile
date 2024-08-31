@@ -40,7 +40,7 @@
                         android:background="?selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:visibility="visible"
-                        app:srcCompat="@drawable/ic_person_black_24dp" />
+                        app:srcCompat="@drawable/feature_auth_ic_person" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_circular_user_image"
@@ -52,7 +52,7 @@
                         android:clickable="true"
                         android:visibility="gone"
                         app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
-                        tools:src="@drawable/ic_person_black_24dp" />
+                        tools:src="@drawable/feature_auth_ic_person" />
 
                     <TextView
                         android:id="@+id/tv_user_name"

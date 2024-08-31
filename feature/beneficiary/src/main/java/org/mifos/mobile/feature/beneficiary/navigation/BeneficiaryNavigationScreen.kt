@@ -1,9 +1,16 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.beneficiary.navigation
 
 import org.mifos.mobile.core.common.Constants.BENEFICIARY_STATE
-import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-
 
 const val BENEFICIARY_NAVIGATION_ROUTE = "beneficiary_route"
 const val BENEFICIARY_LIST_ROUTE = "beneficiary_list_screen"
@@ -19,11 +26,14 @@ sealed class BeneficiaryNavigation(val route: String) {
 
     data object AddBeneficiary : BeneficiaryNavigation(route = ADD_BENEFICIARY_SCREEN_ROUTE)
 
-    data object BeneficiaryDetail : BeneficiaryNavigation(route = "$BENEFICIARY_DETAIL_SCREEN_ROUTE/{$BENEFICIARY_ID}") {
-        fun passArguments(beneficiaryId: Int) = "$BENEFICIARY_DETAIL_SCREEN_ROUTE/${beneficiaryId}"
+    data object BeneficiaryDetail :
+        BeneficiaryNavigation(route = "$BENEFICIARY_DETAIL_SCREEN_ROUTE/{$BENEFICIARY_ID}") {
+        fun passArguments(beneficiaryId: Int) = "$BENEFICIARY_DETAIL_SCREEN_ROUTE/$beneficiaryId"
     }
 
-    data object BeneficiaryApplication : BeneficiaryNavigation(route = "$BENEFICIARY_APPLICATION_SCREEN_ROUTE/{$BENEFICIARY_ID}/{$BENEFICIARY_STATE}") {
-        fun passArguments(beneficiaryId: Int, beneficiaryState: BeneficiaryState) = "$BENEFICIARY_APPLICATION_SCREEN_ROUTE/${beneficiaryId}/${beneficiaryState}"
+    data object BeneficiaryApplication :
+        BeneficiaryNavigation(route = "$BENEFICIARY_APPLICATION_SCREEN_ROUTE/{$BENEFICIARY_ID}/{$BENEFICIARY_STATE}") {
+        fun passArguments(beneficiaryId: Int, beneficiaryState: BeneficiaryState) =
+            "$BENEFICIARY_APPLICATION_SCREEN_ROUTE/$beneficiaryId/$beneficiaryState"
     }
 }

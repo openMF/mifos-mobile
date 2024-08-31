@@ -1,10 +1,17 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.auth.registration.screens
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,16 +23,14 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -50,97 +55,87 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getString
 import androidx.core.util.PatternsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.owlbuddy.www.countrycodechooser.CountryCodeChooser
-import com.owlbuddy.www.countrycodechooser.utils.enums.CountryCodeType
+import com.mifos.library.countrycodepicker.CountryCodePicker
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.auth.R
 import org.mifos.mobile.feature.auth.registration.utils.PasswordStrength
 import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationUiState
 import org.mifos.mobile.feature.auth.registration.viewmodel.RegistrationViewModel
 
-
-/**
- * @author pratyush
- * @since 28/12/2023
- */
 @Composable
-fun RegistrationScreen(
-    viewModel: RegistrationViewModel = hiltViewModel(),
+internal fun RegistrationScreen(
     onVerified: () -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
-
-    val context = LocalContext.current
     val uiState by viewModel.registrationUiState.collectAsStateWithLifecycle()
 
     RegistrationScreen(
         uiState = uiState,
         onVerified = onVerified,
         navigateBack = navigateBack,
-        register = { account, username, firstname, lastname, phoneNumber, email, password, authenticationMode, countryCode ->
-            viewModel.registerUser(
-                accountNumber = account,
-                authenticationMode = authenticationMode,
-                email = email,
-                firstName = firstname,
-                lastName = lastname,
-                mobileNumber = "$countryCode$phoneNumber",
-                password = password,
-                username = username
-            )
-        },
-        progress = { updatePasswordStrengthView(it, context) }
+        register = viewModel::registerUser,
+        modifier = modifier,
     )
 }
 
-
 @Composable
-fun RegistrationScreen(
+private fun RegistrationScreen(
     uiState: RegistrationUiState,
     onVerified: () -> Unit,
     navigateBack: () -> Unit,
-    register: (accountNumber: String, username: String, firstName: String, lastName: String, phoneNumber: String, email: String, password: String, authMode: String, countryCode: String) -> Unit,
-    progress: (String) -> Float
+    register: (
+        accountNumber: String,
+        username: String,
+        firstName: String,
+        lastName: String,
+        phoneNumber: String,
+        email: String,
+        password: String,
+        authMode: String,
+        countryCode: String,
+    ) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val snackBarHostState = remember {
-        SnackbarHostState()
-    }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     MifosScaffold(
         topBarTitleResId = R.string.register,
         navigateBack = navigateBack,
+        modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         content = { contentPadding ->
-
             Box(
                 modifier = Modifier
                     .padding(contentPadding)
-                    .fillMaxSize()
+                    .fillMaxSize(),
             ) {
-
                 RegistrationContent(
                     register = register,
-                    progress = progress,
-                    snackBarHostState = snackBarHostState
+                    progress = {
+                        updatePasswordStrengthView(it, context)
+                    },
+                    snackBarHostState = snackBarHostState,
                 )
 
                 when (uiState) {
-
                     RegistrationUiState.Initial -> Unit
 
                     is RegistrationUiState.Error -> {
@@ -156,13 +151,24 @@ fun RegistrationScreen(
                     }
                 }
             }
-        }
+        },
     )
 }
 
 @Composable
-fun RegistrationContent(
-    register: (accountNumber: String, username: String, firstName: String, lastName: String, phoneNumber: String, email: String, password: String, authMode: String, countryCode: String) -> Unit,
+@Suppress("LongMethod")
+private fun RegistrationContent(
+    register: (
+        accountNumber: String,
+        username: String,
+        firstName: String,
+        lastName: String,
+        phoneNumber: String,
+        email: String,
+        password: String,
+        authMode: String,
+        countryCode: String,
+    ) -> Unit,
     progress: (String) -> Float,
     snackBarHostState: SnackbarHostState,
 ) {
@@ -199,7 +205,8 @@ fun RegistrationContent(
     var countryCode by rememberSaveable {
         mutableStateOf("")
     }
-    val radioOptions = listOf(stringResource(id = R.string.rb_email), stringResource(id = R.string.rb_mobile))
+    val radioOptions =
+        listOf(stringResource(id = R.string.rb_email), stringResource(id = R.string.rb_mobile))
 
     var authenticationMode by remember { mutableStateOf(radioOptions[0]) }
 
@@ -209,8 +216,22 @@ fun RegistrationContent(
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(scrollState.canScrollForward){
+    LaunchedEffect(scrollState.canScrollForward) {
         if (scrollState.canScrollForward) scrollState.scrollTo(scrollState.maxValue)
+    }
+
+    fun validateAllFields(): String {
+        return areFieldsValidated(
+            context = context,
+            accountNumberContent = accountNumber.text,
+            usernameContent = username.text,
+            firstNameContent = firstName.text,
+            lastNameContent = lastName.text,
+            phoneNumberContent = phoneNumber.text,
+            emailContent = email.text,
+            passwordContent = password.text,
+            confirmPasswordContent = confirmPassword.text,
+        )
     }
 
     Column(
@@ -218,75 +239,68 @@ fun RegistrationContent(
             .fillMaxSize()
             .padding(bottom = 12.dp)
             .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    keyboardController?.hide()
-                })
+                detectTapGestures(
+                    onTap = {
+                        keyboardController?.hide()
+                    },
+                )
             }
             .verticalScroll(
                 state = scrollState,
-                enabled = true
-            )
+                enabled = true,
+            ),
     ) {
-
-        MifosMobileIcon(id = R.drawable.mifos_logo)
+        MifosMobileIcon(id = R.drawable.feature_auth_mifos_logo)
 
         MifosOutlinedTextField(
             value = accountNumber,
             onValueChange = { accountNumber = it },
             label = R.string.account_number,
-            supportingText = ""
+            supportingText = "",
         )
         MifosOutlinedTextField(
             value = username,
             onValueChange = { username = it },
             label = R.string.username,
-            supportingText = ""
+            supportingText = "",
         )
         MifosOutlinedTextField(
             value = firstName,
             onValueChange = { firstName = it },
             label = R.string.first_name,
-            supportingText = ""
+            supportingText = "",
         )
         MifosOutlinedTextField(
             value = lastName,
             onValueChange = { lastName = it },
             label = R.string.last_name,
-            supportingText = ""
+            supportingText = "",
         )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            CountryCodeChooser(
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .border(
-                        width = 1.dp,
-                        shape = RoundedCornerShape(5.dp),
-                        color = Color.Gray
-                    )
-                    .padding(10.dp),
-                defaultCountryCode = "91",
-                countryCodeType = CountryCodeType.FLAG,
-                onCountyCodeSelected = { code, codeWithPrefix ->
-                    countryCode = code
-                }
-            )
-            MifosOutlinedTextField(
-                value = phoneNumber,
-                onValueChange = { phoneNumber = it },
-                label = R.string.phone_number,
-                supportingText = "",
-                keyboardType = KeyboardType.Number
-            )
-        }
+
+        CountryCodePicker(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            shape = RoundedCornerShape(2.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+            ),
+            initialPhoneNumber = phoneNumber.text,
+            onValueChange = { (code, phone), _ ->
+                phoneNumber = TextFieldValue(phone)
+                countryCode = code
+            },
+            label = { Text(stringResource(id = R.string.phone_number)) },
+            keyboardActions = KeyboardActions { keyboardController?.hide() },
+        )
+
         MifosOutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = R.string.email,
-            supportingText = ""
+            supportingText = "",
         )
+
         MifosOutlinedTextField(
             value = password,
             onValueChange = {
@@ -295,20 +309,27 @@ fun RegistrationContent(
             },
             label = R.string.password,
             supportingText = "",
-            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisibility) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
             trailingIcon = {
-                val image = if (passwordVisibility)
-                    Icons.Filled.Visibility
-                else Icons.Filled.VisibilityOff
+                val image = if (passwordVisibility) {
+                    MifosIcons.Visibility
+                } else {
+                    MifosIcons.VisibilityOff
+                }
                 IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                     Icon(imageVector = image, null)
                 }
             },
-            keyboardType = KeyboardType.Password
+            keyboardType = KeyboardType.Password,
         )
 
         if (onValueChangePassword) {
             LinearProgressIndicator(
+                progress = { progressIndicator },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp),
@@ -318,8 +339,7 @@ fun RegistrationContent(
                     0.75f -> Color.Green
                     else -> Color.Blue
                 },
-                progress = progressIndicator,
-                trackColor = Color.White
+                trackColor = Color.White,
             )
         }
 
@@ -328,72 +348,70 @@ fun RegistrationContent(
             onValueChange = { confirmPassword = it },
             label = R.string.confirm_password,
             supportingText = "",
-            visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (confirmPasswordVisibility) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
             trailingIcon = {
-                val image = if (confirmPasswordVisibility)
-                    Icons.Filled.Visibility
-                else Icons.Filled.VisibilityOff
+                val image = if (confirmPasswordVisibility) {
+                    MifosIcons.Visibility
+                } else {
+                    MifosIcons.VisibilityOff
+                }
                 IconButton(onClick = { confirmPasswordVisibility = !confirmPasswordVisibility }) {
                     Icon(imageVector = image, null)
                 }
             },
-            keyboardType = KeyboardType.Password
+            keyboardType = KeyboardType.Password,
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(id = R.string.verification_mode),
                 modifier = Modifier.padding(end = 8.dp),
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             radioOptions.forEach { authMode ->
                 RadioButton(
                     selected = (authMode == authenticationMode),
-                    onClick = { authenticationMode = authMode }
+                    onClick = { authenticationMode = authMode },
                 )
                 Text(
                     text = authMode,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
 
-        Button(
+        MifosButton(
+            textResId = R.string.register,
             onClick = {
-                val error = areFieldsValidated(
-                    context = context,
-                    accountNumberContent = accountNumber.text,
-                    usernameContent = username.text,
-                    firstNameContent = firstName.text,
-                    lastNameContent = lastName.text,
-                    phoneNumberContent = phoneNumber.text,
-                    emailContent = email.text,
-                    passwordContent = password.text,
-                    confirmPasswordContent = confirmPassword.text,
-                )
+                val error = validateAllFields()
+
                 if (error == "") {
                     register.invoke(
-                         accountNumber.text,
-                         username.text,
-                         firstName.text,
-                         lastName.text,
-                         phoneNumber.text,
-                         email.text,
-                         password.text,
+                        accountNumber.text,
+                        username.text,
+                        firstName.text,
+                        lastName.text,
+                        phoneNumber.text,
+                        email.text,
+                        password.text,
                         authenticationMode,
-                        countryCode
+                        countryCode,
                     )
-                }else {
+                } else {
                     coroutineScope.launch {
                         snackBarHostState.showSnackbar(
                             message = error,
                             actionLabel = "Ok",
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Short,
                         )
                     }
                 }
@@ -405,20 +423,17 @@ fun RegistrationContent(
                 .padding(start = 16.dp, end = 16.dp, top = 4.dp),
             contentPadding = PaddingValues(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            Text(text = stringResource(id = R.string.register))
-        }
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
+        )
 
         Spacer(modifier = Modifier.imePadding())
     }
 }
 
-fun isInputFieldBlank(fieldText: String): Boolean {
-    return fieldText.trim().isEmpty()
-}
-fun isPhoneNumberValid(fieldText: String?): Boolean {
+private fun isInputFieldBlank(fieldText: String) = fieldText.trim().isEmpty()
+
+private fun isPhoneNumberValid(fieldText: String?): Boolean {
     if (fieldText.isNullOrBlank()) {
         return false
     }
@@ -428,22 +443,17 @@ fun isPhoneNumberValid(fieldText: String?): Boolean {
     return regex.matches(fieldText.trim())
 }
 
-fun isInputLengthInadequate(fieldText: String): Boolean {
-    return fieldText.trim().length < 6
-}
+private fun isInputLengthInadequate(fieldText: String) = fieldText.trim().length < 6
 
-fun inputHasSpaces(fieldText: String): Boolean {
-    return fieldText.trim().contains(" ")
-}
+private fun inputHasSpaces(fieldText: String) = fieldText.trim().contains(" ")
 
-fun hasLeadingTrailingSpaces(fieldText: String): Boolean {
-    return fieldText.trim().length < fieldText.length
-}
+private fun hasLeadingTrailingSpaces(fieldText: String) = fieldText.trim().length < fieldText.length
 
-fun isEmailInvalid(emailText: String): Boolean {
-    return !PatternsCompat.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
-}
-fun areFieldsValidated(
+private fun isEmailInvalid(emailText: String) =
+    !PatternsCompat.EMAIL_ADDRESS.matcher(emailText.trim()).matches()
+
+@Suppress("CyclomaticComplexMethod")
+private fun areFieldsValidated(
     context: Context,
     accountNumberContent: String,
     usernameContent: String,
@@ -454,106 +464,80 @@ fun areFieldsValidated(
     passwordContent: String,
     confirmPasswordContent: String,
 ): String {
-    return when {
-        isInputFieldBlank(accountNumberContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_blank,
-                context.getString(R.string.account_number)
-            )
-            errorMessage
-        }
+    with(context) {
+        return when {
+            isInputFieldBlank(accountNumberContent) -> {
+                getString(
+                    R.string.error_validation_blank,
+                    context.getString(R.string.account_number),
+                )
+            }
 
-        isInputFieldBlank(usernameContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_blank,
-                context.getString(R.string.username)
-            )
-            errorMessage
-        }
+            isInputFieldBlank(usernameContent) -> {
+                getString(R.string.error_validation_blank, context.getString(R.string.username))
+            }
 
-        isInputLengthInadequate(usernameContent) -> {
-            val errorMessage = context.getString(R.string.error_username_greater_than_six)
-            errorMessage
-        }
+            isInputLengthInadequate(usernameContent) -> {
+                getString(R.string.error_username_greater_than_six)
+            }
 
-        inputHasSpaces(usernameContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_cannot_contain_spaces,
-                context.getString(R.string.username),
-                context.getString(R.string.not_contain_username),
-            )
-            errorMessage
-        }
+            inputHasSpaces(usernameContent) -> {
+                getString(
+                    R.string.error_validation_cannot_contain_spaces,
+                    context.getString(R.string.username),
+                    context.getString(R.string.not_contain_username),
+                )
+            }
 
-        isInputFieldBlank(firstNameContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_blank,
-                context.getString(R.string.first_name)
-            )
-            errorMessage
-        }
+            isInputFieldBlank(firstNameContent) -> {
+                getString(R.string.error_validation_blank, context.getString(R.string.first_name))
+            }
 
-        isInputFieldBlank(lastNameContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_blank,
-                context.getString(R.string.last_name)
-            )
-            errorMessage
-        }
+            isInputFieldBlank(lastNameContent) -> {
+                getString(R.string.error_validation_blank, context.getString(R.string.last_name))
+            }
 
-        !isPhoneNumberValid(phoneNumberContent) -> {
-            val errorMessage = context.getString(R.string.invalid_phn_number)
-            errorMessage
-        }
+            !isPhoneNumberValid(phoneNumberContent) -> {
+                getString(R.string.invalid_phn_number)
+            }
 
-        isInputFieldBlank(emailContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_blank,
-                context.getString(R.string.email)
-            )
-            errorMessage
-        }
+            isInputFieldBlank(emailContent) -> {
+                getString(R.string.error_validation_blank, context.getString(R.string.email))
+            }
 
-        isInputFieldBlank(passwordContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_blank,
-                context.getString(R.string.password)
-            )
-            errorMessage
-        }
+            isInputFieldBlank(passwordContent) -> {
+                getString(R.string.error_validation_blank, context.getString(R.string.password))
+            }
 
-        hasLeadingTrailingSpaces(passwordContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
-                context.getString(R.string.password),
-            )
-            errorMessage
-        }
+            hasLeadingTrailingSpaces(passwordContent) -> {
+                getString(
+                    R.string.error_validation_cannot_contain_leading_or_trailing_spaces,
+                    context.getString(R.string.password),
+                )
+            }
 
-        isEmailInvalid(emailContent) -> {
-            val errorMessage = ContextCompat.getString(context, R.string.error_invalid_email)
-            errorMessage
-        }
+            isEmailInvalid(emailContent) -> {
+                getString(context, R.string.error_invalid_email)
+            }
 
-        isInputLengthInadequate(passwordContent) -> {
-            val errorMessage = context.getString(
-                R.string.error_validation_minimum_chars,
-                context.getString(R.string.password),
-                context.resources.getInteger(R.integer.password_minimum_length),
-            )
-            errorMessage
-        }
+            isInputLengthInadequate(passwordContent) -> {
+                getString(
+                    R.string.error_validation_minimum_chars,
+                    context.getString(R.string.password),
+                    context.resources.getInteger(R.integer.password_minimum_length),
+                )
+            }
 
-        passwordContent != confirmPasswordContent -> {
-            val errorMessage = context.getString(R.string.error_password_not_match)
-            errorMessage
-        }
+            passwordContent != confirmPasswordContent -> {
+                getString(R.string.error_password_not_match)
+            }
 
-        else -> ""
+            else -> ""
+        }
     }
 }
 
-fun updatePasswordStrengthView(password: String, context: Context): Float {
+private fun updatePasswordStrengthView(password: String, context: Context): Float {
     val str = PasswordStrength.calculateStrength(password)
     return when (str.getText(context)) {
         getString(context, R.string.password_strength_weak) -> 0.25f
@@ -563,31 +547,29 @@ fun updatePasswordStrengthView(password: String, context: Context): Float {
     }
 }
 
-class RegistrationScreenPreviewProvider : PreviewParameterProvider<RegistrationUiState> {
+internal class RegistrationScreenPreviewProvider : PreviewParameterProvider<RegistrationUiState> {
 
     override val values: Sequence<RegistrationUiState>
-    get() = sequenceOf(
-        RegistrationUiState.Loading,
-        RegistrationUiState.Error(1),
-        RegistrationUiState.Success,
-        RegistrationUiState.Initial,
-    )
+        get() = sequenceOf(
+            RegistrationUiState.Loading,
+            RegistrationUiState.Error(1),
+            RegistrationUiState.Success,
+            RegistrationUiState.Initial,
+        )
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-
 private fun RegistrationScreenPreview(
-    @PreviewParameter(RegistrationScreenPreviewProvider::class) registrationUiState: RegistrationUiState
+    @PreviewParameter(RegistrationScreenPreviewProvider::class)
+    registrationUiState: RegistrationUiState,
 ) {
     MifosMobileTheme {
         RegistrationScreen(
-            registrationUiState,
-            {},
-            {},
-            { _, _, _, _, _, _, _, _, _ -> },
-            { 0f }
+            uiState = registrationUiState,
+            onVerified = {},
+            navigateBack = {},
+            register = { _, _, _, _, _, _, _, _, _ -> },
         )
-
     }
 }

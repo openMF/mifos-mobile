@@ -19,13 +19,13 @@
             android:layout_height="@dimen/Mifos.DesignSystem.Size.LogoImageSize"
             android:layout_gravity="center_horizontal"
             android:layout_marginVertical="@dimen/Mifos.DesignSystem.Size.LogoImageVerticalMargin"
-            app:srcCompat="@drawable/mifos_logo" />
+            app:srcCompat="@drawable/feature_auth_mifos_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_person_black_24dp">
+            app:startIconDrawable="@drawable/feature_auth_ic_person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_username"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
             app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_lock_black_24dp">
+            app:startIconDrawable="@drawable/feature_auth_lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"

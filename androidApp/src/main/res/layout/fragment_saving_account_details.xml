@@ -157,7 +157,7 @@
                             style="@style/Mifos.DesignSystem.Components.Button.Outline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/deposit" />
+                            android:text="@string/feature_account_deposit" />
 
                         <Button
                             android:id="@+id/tv_make_a_transfer"

@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.account.account.utils
 
 import androidx.compose.foundation.Canvas
@@ -13,14 +22,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AccountTypeItemIndicator(color: Color) {
+internal fun AccountTypeItemIndicator(
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.background(Color.Transparent)
+        modifier = modifier
+            .background(Color.Transparent),
     ) {
         Canvas(
             modifier = Modifier
                 .height(60.dp)
-                .width(5.dp)
+                .width(5.dp),
         ) {
             val radius = 10.dp.toPx()
             val path = androidx.compose.ui.graphics.Path().apply {
@@ -29,28 +42,28 @@ fun AccountTypeItemIndicator(color: Color) {
                 arcTo(
                     rect = androidx.compose.ui.geometry.Rect(
                         offset = Offset(size.width - radius, 0f),
-                        size = Size(radius, radius)
+                        size = Size(radius, radius),
                     ),
                     startAngleDegrees = -90f,
                     sweepAngleDegrees = 90f,
-                    forceMoveTo = false
+                    forceMoveTo = false,
                 )
                 lineTo(size.width, size.height - radius)
                 arcTo(
                     rect = androidx.compose.ui.geometry.Rect(
                         offset = Offset(size.width - radius, size.height - radius),
-                        size = Size(radius, radius)
+                        size = Size(radius, radius),
                     ),
                     startAngleDegrees = 0f,
                     sweepAngleDegrees = 90f,
-                    forceMoveTo = false
+                    forceMoveTo = false,
                 )
                 lineTo(0f, size.height)
                 close()
             }
             drawPath(
                 path = path,
-                color = color
+                color = color,
             )
         }
     }

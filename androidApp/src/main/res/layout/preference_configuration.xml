@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/Mifos.DesignSystem.Spacing.marginBetweenItemsMedium"
         app:hintAnimationEnabled="false"
-        app:startIconDrawable="@drawable/ic_lock_black_24dp">
+        app:startIconDrawable="@drawable/feature_auth_lock">
 
         <EditText
             android:id="@+id/et_tenant"

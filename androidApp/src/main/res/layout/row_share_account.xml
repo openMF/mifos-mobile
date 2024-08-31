@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.marginWords"
-                android:text="@string/approved" />
+                android:text="@string/feature_account_approved" />
 
             <TextView
                 android:id="@+id/tv_shares_approved"

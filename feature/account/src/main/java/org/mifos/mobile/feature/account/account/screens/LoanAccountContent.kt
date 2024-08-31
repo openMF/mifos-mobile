@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.account.account.screens
 
 import androidx.compose.foundation.clickable
@@ -22,25 +31,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.feature.account.R
-import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.CurrencyUtil
 import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
-fun LoanAccountContent(
-    accountsList: List<LoanAccount>,
+internal fun LoanAccountContent(
     isSearching: Boolean,
-    getUpdatedSearchList: (accountsList: List<LoanAccount>) -> List<LoanAccount>,
     isFiltered: Boolean,
+    accountsList: List<LoanAccount>,
+    getUpdatedSearchList: (accountsList: List<LoanAccount>) -> List<LoanAccount>,
     getUpdatedFilterList: (accountsList: List<LoanAccount>) -> List<LoanAccount>,
     onItemClick: (accountType: String, accountId: Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val lazyColumnState = rememberLazyListState()
 
-    var accounts by rememberSaveable {
-        mutableStateOf(accountsList)
-    }
+    var accounts by rememberSaveable { mutableStateOf(accountsList) }
 
     accounts = when {
         isFiltered && isSearching -> {
@@ -60,25 +70,24 @@ fun LoanAccountContent(
         }
     }
 
-    val lazyColumnState = rememberLazyListState()
-
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = lazyColumnState
+        modifier = modifier.fillMaxSize(),
+        state = lazyColumnState,
     ) {
         items(items = accounts) { loanAccount ->
             AccountScreenLoanListItem(
                 loanAccount = loanAccount,
-                onItemClick = onItemClick
+                onItemClick = onItemClick,
             )
         }
     }
 }
 
 @Composable
-fun AccountScreenLoanListItem(
+private fun AccountScreenLoanListItem(
     loanAccount: LoanAccount,
-    onItemClick: (accountType: String, accountId: Long) -> Unit
+    onItemClick: (accountType: String, accountId: Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -86,59 +95,72 @@ fun AccountScreenLoanListItem(
         loanAccount.status?.active == true && loanAccount.inArrears == true -> {
             Triple(
                 colorResource(R.color.red),
-                "${stringResource(id = R.string.disbursement)} ${DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate)}",
-                colorResource(R.color.red)
+                "${stringResource(id = R.string.feature_account_disbursement)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate),
+                colorResource(R.color.red),
             )
         }
+
         loanAccount.status?.active == true -> {
             Triple(
                 colorResource(R.color.deposit_green),
-                "${stringResource(id = R.string.disbursement)} ${DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate)}",
-                colorResource(R.color.deposit_green)
+                "${stringResource(id = R.string.feature_account_disbursement)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate),
+                colorResource(R.color.deposit_green),
             )
         }
+
         loanAccount.status?.waitingForDisbursal == true -> {
             Triple(
                 colorResource(R.color.blue),
-                "${stringResource(id = R.string.approved)} ${DateHelper.getDateAsString(loanAccount.timeline?.approvedOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_approved)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.approvedOnDate),
+                null,
             )
         }
+
         loanAccount.status?.pendingApproval == true -> {
             Triple(
                 colorResource(R.color.light_yellow),
-                "${stringResource(id = R.string.submitted)} ${DateHelper.getDateAsString(loanAccount.timeline?.submittedOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_submitted)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.submittedOnDate),
+                null,
             )
         }
+
         loanAccount.status?.overpaid == true -> {
             Triple(
                 colorResource(R.color.purple),
-                "${stringResource(id = R.string.approved)} ${DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate)}",
-                colorResource(R.color.purple)
+                "${stringResource(id = R.string.feature_account_approved)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate),
+                colorResource(R.color.purple),
             )
         }
+
         loanAccount.status?.closed == true -> {
             Triple(
                 colorResource(R.color.black),
-                "${stringResource(id = R.string.closed)} ${DateHelper.getDateAsString(loanAccount.timeline?.closedOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_closed)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.closedOnDate),
+                null,
             )
         }
+
         else -> {
             Triple(
                 colorResource(R.color.gray_dark),
-                "${stringResource(id = R.string.withdrawn)} ${DateHelper.getDateAsString(loanAccount.timeline?.withdrawnOnDate)}",
-                null
+                "${stringResource(id = R.string.feature_account_withdrawn)} " +
+                    DateHelper.getDateAsString(loanAccount.timeline?.withdrawnOnDate),
+                null,
             )
         }
     }
 
     Row(
-        modifier = Modifier.clickable {
-            onItemClick.invoke(org.mifos.mobile.core.common.Constants.LOAN_ACCOUNTS, loanAccount.id)
+        modifier = modifier.clickable {
+            onItemClick.invoke(Constants.LOAN_ACCOUNTS, loanAccount.id)
         },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AccountTypeItemIndicator(color)
 
@@ -146,7 +168,7 @@ fun AccountScreenLoanListItem(
             loanAccount.accountNo?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
 
@@ -154,7 +176,7 @@ fun AccountScreenLoanListItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
-                    color = colorResource(id = R.color.gray_dark)
+                    color = colorResource(id = R.color.gray_dark),
                 )
             }
 
@@ -174,7 +196,7 @@ fun AccountScreenLoanListItem(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp),
-                color = it
+                color = it,
             )
         }
     }

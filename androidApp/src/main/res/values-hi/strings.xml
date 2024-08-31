@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mifos Mobile</string>
+    <string name="feature_about_app_name">Mifos Mobile</string>
     <string name="login">लॉग इन करें</string>
     <string name="toast_welcome">स्वागत हे %1$s</string>
     <string name="unable_to_connect">इंटरनेट से कनेक्ट नहीं है</string>
@@ -16,9 +16,9 @@
     <string name="recent_transactions">हाल ही के लेनदेन</string>
     <string name="charges">प्रभार</string>
     <string name="questionnaire">प्रश्नावली</string>
-    <string name="about_us">हमारे बारे में</string>
+    <string name="feature_about_about_us">हमारे बारे में</string>
     <string name="saving_account_details">बचत खाते का विवरण</string>
-    <string name="savings_account">बचत खाता</string>
+    <string name="feature_account_savings_account">बचत खाता</string>
     <string name="error_loan_account_details_loading">ऋण खातों के विवरण में लोड करने में त्रुटि</string>
     <string name="nominal_interest_rate">मामूली ब्याज दर</string>
     <string name="create_an_account">खाता बनाएं</string>
@@ -32,16 +32,16 @@
     <string name="small_text">Small Text</string>
     <string name="client_accounts">ग्राहक खाते</string>
     <string name="splash">Splash</string>
-    <string name="savings">बचत</string>
-    <string name="loan">ऋण</string>
-    <string name="loan_account">ऋण खाता</string>
+    <string name="feature_account_savings">बचत</string>
+    <string name="feature_account_loan">ऋण</string>
+    <string name="feature_account_loan_account">ऋण खाता</string>
     <string name="savings_charges">बचत प्रभार</string>
-    <string name="share">शेयर</string>
-    <string name="share_account">शेयर खाता</string>
+    <string name="feature_account_share">शेयर</string>
+    <string name="feature_account_share_account">शेयर खाता</string>
     <string name="clients_list">एक ग्राहक चुनें</string>
     <string name="core_common_working">काम कर रहे</string>
-    <string name="submitted">जमा किया गया</string>
-    <string name="disbursement">अदायगी</string>
+    <string name="feature_account_submitted">जमा किया गया</string>
+    <string name="feature_account_disbursement">अदायगी</string>
     <string name="status_image">स्थिति छवि</string>
     <string name="loan_repayment_schedule">पुनः भुगतान कार्यक्रम</string>
     <string name="last_transaction">पिछले लेनदेन</string>
@@ -75,17 +75,17 @@
     <string name="repayment_strategy">चुकौती रणनीति</string>
     <string name="pay_to">को भुगतान करें</string>
     <string name="pay_from">से भुगतान करें</string>
-    <string name="cancel">रद्द करें</string>
+    <string name="feature_account_cancel">रद्द करें</string>
     <string name="review_transfer">ट्रांसफर की समीक्षा</string>
     <string name="transfer_to"> के लिए ट्रांसफर</string>
     <string name="transfer_from">इससे ट्रांसफर करें</string>
     <string name="making_transfer">ट्रांसफर कर रहे हैं</string>
-    <string name="deposit">जमा</string>
+    <string name="feature_account_deposit">जमा</string>
     <string name="enter_amount">राशी डालें</string>
     <string name="enter_remarks">ट्रांसफर के लिए टिप्पणी दर्ज करें</string>
     <string name="select_beneficiary">लाभार्थी का चयन करें</string>
     <string name="remark_is_mandatory">टिप्पणी अनिवार्य है</string>
-    <string name="approved">मंजूर</string>
+    <string name="feature_account_approved">मंजूर</string>
     <string name="shares_pending">अपूर्ण</string>
     <string name="loan_amount_paid">भुगतान किया गया</string>
     <string name="balance">शेष</string>
@@ -93,24 +93,24 @@
     <string name="waiting">इंतज़ार</string>
     <string name="register">रजिस्टर</string>
     <string name="request_id">अनुरोध आईडी</string>
-    <string name="overpaid">अधिक भुगतान</string>
-    <string name="in_arrears">बकाया राशि में</string>
-    <string name="select_you_want">उन सभी का चयन करें जिन्हें आप आवेदन करना चाहते हैं</string>
+    <string name="feature_account_overpaid">अधिक भुगतान</string>
+    <string name="feature_account_in_arrears">बकाया राशि में</string>
+    <string name="feature_account_select_you_want">उन सभी का चयन करें जिन्हें आप आवेदन करना चाहते हैं</string>
     <string name="filter_savings">बचत खाते को फ़िल्टर करें</string>
     <string name="filter_loan">ऋण खातों को फ़िल्टर करें</string>
     <string name="filter_share">शेयर खाते फ़िल्टर करें</string>
     <string name="search">खोजें</string>
     <string name="choose_transfer_type">ट्रांसफर टाइप चुनें</string>
-    <string name="active">सक्रिय</string>
-    <string name="closed">बन्द है</string>
+    <string name="feature_account_active">सक्रिय</string>
+    <string name="feature_account_closed">बन्द है</string>
     <string name="need_approval">अनुमोदन आवश्यक</string>
-    <string name="pending">अपूर्ण</string>
-    <string name="matured">परिपक्व</string>
+    <string name="feature_account_pending">अपूर्ण</string>
+    <string name="feature_account_matured">परिपक्व</string>
     <string name="continue_str">आगे बढ़ें</string>
     <string name="close">बंद करें</string>
     <string name="transfer_to_savings">बचत खाते में स्थानांतरण</string>
     <string name="transfer_from_savings">बचत खाते से स्थानांतरण</string>
-    <string name="withdrawn">Withdrawn</string>
+    <string name="feature_account_withdrawn">Withdrawn</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">क्यूआर आयात करें</string>
     <string name="authentication_token">प्रमाणीकरण चिह्न</string>
@@ -149,9 +149,9 @@
     <string name="no">नहीं</string>
     <string name="found">मिला</string>x
 
-    <string name="empty_savings_accounts">आपके पास कोई बचत खाता नहीं है </string>
-    <string name="empty_loan_accounts">आपके पास कोई ऋण खाता नहीं है</string>
-    <string name="empty_share_accounts">आपके साथ कोई साझा खाता नहीं है</string>
+    <string name="feature_account_empty_savings_accounts">आपके पास कोई बचत खाता नहीं है </string>
+    <string name="feature_account_empty_loan_accounts">आपके पास कोई ऋण खाता नहीं है</string>
+    <string name="feature_account_empty_share_accounts">आपके साथ कोई साझा खाता नहीं है</string>
     <string name="empty_transactions">आपके साथ कोई लेन-देन जुड़े नहीं है</string>
     <string name="empty_repayment_schedule">आपके साथ संबद्ध कोई भी पुनर्भुगतान शेड्यूल नहीं है</string>
     <string name="no_more_transactions_available">कोई और लेनदेन उपलब्ध नहीं है</string>
@@ -280,8 +280,8 @@
     <string name="repayment_schedule">पुनः भुगतान कार्यक्रम</string>
     <string name="transactions">लेन-देन</string>
     <string name="transfer">ट्रांसफर</string>
-    <string name="approval_pending">स्वीकृति लंबित</string>
-    <string name="waiting_for_disburse">व्यय की प्रतीक्षा की जा रही है</string>
+    <string name="feature_account_approval_pending">स्वीकृति लंबित</string>
+    <string name="feature_account_disburse">व्यय की प्रतीक्षा की जा रही है</string>
     <string name="closed_because_of_obligation">कुछ दायित्वों के कारण बंद</string>
     <string name="loan_closed">ऋण बंद</string>
     <string name="due_date_in_charges">नियत तारीख:</string>
@@ -305,7 +305,7 @@
     <string name="four_weeks">4 सप्ताह</string>
     <string name="three_months">3 महीने</string>
     <string name="six_months">6 महीने</string>
-    <string name="filter">फिल्टर</string>
+    <string name="feature_account_filter">फिल्टर</string>
     <string name="start_date">आरंभ करने की तिथि</string>
     <string name="end_date">अंतिम तिथि</string>
     <string name="filtered">फ़िल्टर दकर िया गया</string>
@@ -407,7 +407,7 @@
     <!--Format Strings-->
     <string name="hello_client">नमस्ते, %1$s</string>
     <string name="double_and_string">%1$.2f %2$s</string>
-    <string name="string_and_string">%1$s %2$s</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
     <string name="string_and_double">%1$s: %2$.2f</string>
     <string name="string_and_int">%1$s: %2$d</string>
     <string name="invalid_amount">अवैध राशि</string>
@@ -435,7 +435,7 @@
 
     <string name="permission_denied_camera">कैमरे का उपयोग करने के लिए अनुमति अस्वीकृत</string>
     <string name="no_withdrawals">No withdrawals</string>
-    <string name="clear_filters">फ़िल्टर हटाएँ</string>
+    <string name="feature_account_clear_filters">फ़िल्टर हटाएँ</string>
     <string name="notification">सूचनाएं</string>
     <string name="base_url">आधार यूआरएल</string>
     <string name="tenant">किराएदार</string>
@@ -460,10 +460,10 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="error_password_not_match">Password doesnot match.</string>
     <string name="app_version">Version %1$s</string>
-    <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
+    <string name="feature_about_copyright_mifos">©2016-%1$s Mifos Initiative.</string>
     <string name="all_rights_reserved">All rights reserved.</string>
-    <string name="licenses">Licenses</string>
-    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="feature_about_licenses">Licenses</string>
+    <string name="feature_about_privacy_policy">गोपनीयता नीति</string>
     <string name="change_passcode">पासकोड बदलें</string>
     <string name="change_app_passcode">ऐप पासवर्ड बदलें</string>
     <string name="change_password">पासवर्ड बदलें</string>
@@ -518,13 +518,13 @@
     <string name="details">विवरण</string>
     <string name="product">उत्पाद</string>
 
-    <string name="dividend_payout">लाभांश भुगतान</string>
-    <string name="withdrawal">निकासी</string>
-    <string name="interest_posting">रुचि पोस्टिंग</string>
-    <string name="fee_deduction">शुल्क कटौती</string>
-    <string name="withdrawal_transfer">निकासी स्थानांतरण</string>
-    <string name="rejected_transfer">अस्वीकृत स्थानांतरण</string>
-    <string name="overdraft_fee">ओवरड्राफ्ट शुल्क</string>
+    <string name="feature_account_dividend_payout">लाभांश भुगतान</string>
+    <string name="feature_account_withdrawal">निकासी</string>
+    <string name="feature_account_interest_posting">रुचि पोस्टिंग</string>
+    <string name="feature_account_fee_deduction">शुल्क कटौती</string>
+    <string name="feature_account_withdrawal_transfer">निकासी स्थानांतरण</string>
+    <string name="feature_account_rejected_transfer">अस्वीकृत स्थानांतरण</string>
+    <string name="feature_account_overdraft_fee">ओवरड्राफ्ट शुल्क</string>
     <string name="savings_account_transaction">बचत खाता लेनदेन</string>
     <string name="transaction_period">लेन-देन की अवधि</string>
     <string name="transaction_type">सौदे का प्रकार</string>
