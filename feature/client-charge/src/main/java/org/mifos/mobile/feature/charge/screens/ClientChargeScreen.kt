@@ -48,9 +48,9 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
 import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.charge.R
 import org.mifos.mobile.feature.charge.utils.ClientChargeState
 import org.mifos.mobile.feature.charge.viewmodel.ClientChargeViewModel
+import org.mifos.mobile.feature.client_charge.R
 
 @Composable
 internal fun ClientChargeScreen(

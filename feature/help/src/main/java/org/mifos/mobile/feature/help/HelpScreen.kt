@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.help
 
 import androidx.compose.foundation.layout.Box
@@ -8,10 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -28,29 +32,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FaqItemHolder
 import org.mifos.mobile.core.ui.component.MifosTextButtonWithTopDrawable
 import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
-fun HelpScreen(
-    viewModel: HelpViewModel = hiltViewModel(),
+internal fun HelpScreen(
     callNow: () -> Unit,
     leaveEmail: () -> Unit,
     findLocations: () -> Unit,
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: HelpViewModel = hiltViewModel(),
 ) {
-
     val context = LocalContext.current
     val uiState by viewModel.helpUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.loadFaq(
             context.resources?.getStringArray(R.array.faq_qs),
-            context.resources?.getStringArray(R.array.faq_ans)
+            context.resources?.getStringArray(R.array.faq_ans),
         )
     }
 
@@ -60,14 +66,15 @@ fun HelpScreen(
         leaveEmail = leaveEmail,
         findLocations = findLocations,
         navigateBack = navigateBack,
-        searchQuery = { viewModel.filterList(it) },
+        searchQuery = viewModel::filterList,
+        modifier = modifier,
         onSearchDismiss = { viewModel.loadFaq(qs = null, ans = null) },
-        updateFaqPosition = { viewModel.updateSelectedFaqPosition(it) }
+        updateFaqPosition = viewModel::updateSelectedFaqPosition,
     )
 }
 
 @Composable
-fun HelpScreen(
+private fun HelpScreen(
     uiState: HelpUiState,
     callNow: () -> Unit,
     leaveEmail: () -> Unit,
@@ -76,8 +83,8 @@ fun HelpScreen(
     searchQuery: (String) -> Unit,
     onSearchDismiss: () -> Unit,
     updateFaqPosition: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-
     MifosScaffold(
         topBar = {
             MifosTopBar(
@@ -86,14 +93,14 @@ fun HelpScreen(
                     MifosTitleSearchCard(
                         searchQuery = searchQuery,
                         titleResourceId = R.string.help,
-                        onSearchDismiss = onSearchDismiss
+                        onSearchDismiss = onSearchDismiss,
                     )
-                }
+                },
             )
         },
         content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
-                when(uiState) {
+                when (uiState) {
                     is HelpUiState.Initial -> Unit
                     is HelpUiState.ShowFaq -> {
                         HelpContent(
@@ -102,29 +109,29 @@ fun HelpScreen(
                             callNow = callNow,
                             leaveEmail = leaveEmail,
                             findLocations = findLocations,
-                            updateFaqPosition = updateFaqPosition
+                            updateFaqPosition = updateFaqPosition,
                         )
                     }
                 }
             }
-        }
+        },
+        modifier = modifier,
     )
-
 }
 
-
 @Composable
-fun HelpContent(
+private fun HelpContent(
     faqArrayList: List<FAQ>,
     selectedFaqPosition: Int,
     callNow: () -> Unit,
     leaveEmail: () -> Unit,
     findLocations: () -> Unit,
     updateFaqPosition: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxSize(),
     ) {
         Text(
             text = stringResource(id = R.string.faq),
@@ -132,22 +139,22 @@ fun HelpContent(
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 8.dp),
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
-        if (!faqArrayList.isNullOrEmpty()) {
+        if (faqArrayList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 itemsIndexed(items = faqArrayList) { index, faqItem ->
                     FaqItemHolder(
                         index = index,
                         isSelected = selectedFaqPosition == index,
                         onItemSelected = { updateFaqPosition(it) },
-                        question = faqItem?.question,
-                        answer = faqItem?.answer
+                        question = faqItem.question,
+                        answer = faqItem.answer,
                     )
                 }
             }
@@ -155,15 +162,15 @@ fun HelpContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp)
+                    .padding(vertical = 4.dp),
             ) {
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier
                         .weight(1f),
                     onClick = callNow,
                     textResourceId = R.string.call_now,
-                    icon = Icons.Default.Phone,
-                    contentDescription = "Phone Icon"
+                    icon = MifosIcons.Phone,
+                    contentDescription = "Phone Icon",
                 )
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier
@@ -171,8 +178,8 @@ fun HelpContent(
                         .weight(1f),
                     onClick = leaveEmail,
                     textResourceId = R.string.leave_email,
-                    icon = Icons.Outlined.Mail,
-                    contentDescription = "Mail Icon"
+                    icon = MifosIcons.Mail,
+                    contentDescription = "Mail Icon",
                 )
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier
@@ -180,42 +187,43 @@ fun HelpContent(
                         .weight(1f),
                     onClick = findLocations,
                     textResourceId = R.string.find_locations,
-                    icon = Icons.Default.LocationOn,
-                    contentDescription = "Location Icon"
+                    icon = MifosIcons.LocationOn,
+                    contentDescription = "Location Icon",
                 )
             }
         } else {
             EmptyDataView(
                 modifier = Modifier.fillMaxSize(),
-                error = R.string.no_questions_found
+                error = R.string.no_questions_found,
             )
         }
     }
 }
 
-class HelpScreenPreviewProvider : PreviewParameterProvider<HelpUiState> {
+internal class HelpScreenPreviewProvider : PreviewParameterProvider<HelpUiState> {
     override val values: Sequence<HelpUiState>
         get() = sequenceOf(
             HelpUiState.Initial,
-            HelpUiState.ShowFaq(arrayListOf())
+            HelpUiState.ShowFaq(arrayListOf()),
         )
 }
 
-@Preview(showSystemUi = true, showBackground = true)
+@DevicePreviews
 @Composable
 private fun HelpScreenPreview(
-    @PreviewParameter( HelpScreenPreviewProvider::class) helpUiState: HelpUiState
+    @PreviewParameter(HelpScreenPreviewProvider::class)
+    helpUiState: HelpUiState,
 ) {
     MifosMobileTheme {
         HelpScreen(
-        uiState= helpUiState,
-        callNow = { },
-        leaveEmail= { },
-        findLocations= {},
-        updateFaqPosition= { _-> },
-        navigateBack= {},
-        searchQuery= {_ -> },
-        onSearchDismiss= { },
+            uiState = helpUiState,
+            callNow = { },
+            leaveEmail = { },
+            findLocations = {},
+            updateFaqPosition = { _ -> },
+            navigateBack = {},
+            searchQuery = { _ -> },
+            onSearchDismiss = { },
         )
     }
 }
