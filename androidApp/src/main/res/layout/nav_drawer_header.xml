@@ -15,7 +15,7 @@
         android:layout_height="@dimen/Mifos.DesignSystem.Size.BigView"
         app:shapeAppearance="@style/Mifos.DesignSystem.Shape.roundedImage"
         tools:background="?attr/colorTertiary"
-        tools:srcCompat="@drawable/ic_person_black_24dp" />
+        tools:srcCompat="@drawable/feature_auth_ic_person" />
 
     <TextView
         android:id="@+id/tv_user_name"

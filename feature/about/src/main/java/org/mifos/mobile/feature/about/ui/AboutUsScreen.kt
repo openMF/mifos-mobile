@@ -30,7 +30,7 @@ import org.mifos.mobile.feature.about.R
 import java.util.Calendar
 
 @Composable
-fun AboutUsScreen(
+internal fun AboutUsScreen(
     navigateToItem: (AboutUsItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -61,38 +61,38 @@ fun AboutUsScreen(
     }
 }
 
-fun getAboutUsItem(context: Context): List<AboutUsItem> {
+private fun getAboutUsItem(context: Context): List<AboutUsItem> {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-    val copyrightText = context.getString(R.string.copy_right_mifos).replace("%1\$s", currentYear.toString())
+    val copyrightText = context.getString(R.string.feature_about_copyright_mifos).replace("%1\$s", currentYear.toString())
 
     return listOf(
         AboutUsItem(
-            title = context.getString(R.string.app_version_text),
+            title = context.getString(R.string.feature_about_app_version),
             itemId = AboutUsListItemId.APP_VERSION_TEXT,
         ),
         AboutUsItem(
-            title = context.getString(R.string.official_website),
-            iconUrl = R.drawable.ic_website,
+            title = context.getString(R.string.feature_about_official_website),
+            iconUrl = R.drawable.feature_about_website,
             itemId = AboutUsListItemId.OFFICE_WEBSITE,
         ),
         AboutUsItem(
-            title = context.getString(R.string.licenses),
-            iconUrl = R.drawable.ic_law_icon,
+            title = context.getString(R.string.feature_about_licenses),
+            iconUrl = R.drawable.feature_about_law_icon,
             itemId = AboutUsListItemId.LICENSES,
         ),
         AboutUsItem(
-            title = context.getString(R.string.privacy_policy),
-            iconUrl = R.drawable.ic_privacy_policy,
+            title = context.getString(R.string.feature_about_privacy_policy),
+            iconUrl = R.drawable.feature_about_privacy_policy,
             itemId = AboutUsListItemId.PRIVACY_POLICY,
         ),
         AboutUsItem(
-            title = context.getString(R.string.sources),
-            iconUrl = R.drawable.ic_source_code,
+            title = context.getString(R.string.feature_about_sources),
+            iconUrl = R.drawable.feature_about_source_code,
             itemId = AboutUsListItemId.SOURCE_CODE,
         ),
         AboutUsItem(
             title = copyrightText,
-            subtitle = R.string.license_string_with_value,
+            subtitle = R.string.feature_about_license,
             itemId = AboutUsListItemId.LICENSES_STRING_WITH_VALUE,
         ),
     )

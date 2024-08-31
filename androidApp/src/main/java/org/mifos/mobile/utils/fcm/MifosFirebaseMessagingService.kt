@@ -62,7 +62,7 @@ class MifosFirebaseMessagingService : FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)
             .setSmallIcon(R.mipmap.core_common_mifos_icon)
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(getString(R.string.feature_about_app_name))
             .setContentText(message)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)

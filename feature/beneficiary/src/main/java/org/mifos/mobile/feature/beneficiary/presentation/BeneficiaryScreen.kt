@@ -1,8 +1,14 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.beneficiary.presentation
 
-import android.content.res.Configuration
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -11,70 +17,63 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mifos.mobile.core.designsystem.components.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.beneficiary.R
 
-
 @Composable
-fun BeneficiaryScreen(
-    topAppbarNavigateback: () -> Unit,
-    addiconClicked: () -> Unit,
-    scaniconClicked: () -> Unit,
+internal fun BeneficiaryScreen(
+    topAppbarNavigateBack: () -> Unit,
+    addIconClicked: () -> Unit,
+    scanIconClicked: () -> Unit,
     uploadIconClicked: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
             MifosTopBar(
-                navigateBack = topAppbarNavigateback,
+                navigateBack = topAppbarNavigateBack,
                 title = {
                     Text(text = stringResource(id = R.string.add_beneficiary))
-                }
+                },
             )
-        }
+        },
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier
                 .padding(it)
-                .padding(10.dp)
+                .padding(10.dp),
         ) {
             Text(
                 stringResource(id = R.string.select_mode),
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             Text(
                 modifier = Modifier.padding(top = 16.dp),
                 text = stringResource(R.string.add_beneficiary_option),
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             BeneficiaryScreenIcons(
+                addIconClicked = addIconClicked,
+                scanIconClicked = scanIconClicked,
+                uploadIconClicked = uploadIconClicked,
                 modifier = Modifier.padding(top = 20.dp),
-                addIconclicked = addiconClicked,
-                scanIconClicked = scaniconClicked,
-                uploadIconClicked = uploadIconClicked
             )
         }
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@Preview(
-    name = "Night Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Preview(
-    name = "Day mode",
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@DevicePreviews
 @Composable
-fun BeneficiaryScreenPreview() {
+private fun BeneficiaryScreenPreview() {
     MifosMobileTheme {
         BeneficiaryScreen({}, {}, {}, {})
     }

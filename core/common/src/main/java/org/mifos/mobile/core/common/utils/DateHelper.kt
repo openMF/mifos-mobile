@@ -124,7 +124,7 @@ object DateHelper {
     }
 
     fun getDateAsLongFromString(dateStr: String?, pattern: String?): Long? {
-        val sdf = SimpleDateFormat(pattern)
+        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         var date: Date? = null
         try {
             date = sdf.parse(dateStr)
@@ -153,13 +153,13 @@ object DateHelper {
     }
 
     fun getDateAsStringFromLong(timeInMillis: Long?): String {
-        val sdf = SimpleDateFormat("dd MMM yyyy")
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         return sdf.format(timeInMillis?.let { Date(it) })
     }
 
     @JvmStatic
     fun getDateAndTimeAsStringFromLong(timeInMillis: Long?): String {
-        val sdf = SimpleDateFormat("HH:mm a dd MMM yyyy")
+        val sdf = SimpleDateFormat("HH:mm a dd MMM yyyy", Locale.getDefault())
         return sdf.format(timeInMillis?.let { Date(it) })
     }
 }

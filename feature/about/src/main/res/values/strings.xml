@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2024 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
@@ -9,16 +8,16 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-    <string name="app_name">Mifos Mobile</string>
-    <string name="about_app_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
-    <string name="copy_right_mifos">©2016-%1$s Mifos Initiative.</string>
-    <string name="app_version_text">App version  1.0</string>
-    <string name="official_website">Official Website</string>
-    <string name="licenses">Licenses</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="sources">Source Code</string>
-    <string name="license_string_with_value">License: MPL-2.0</string>
-    <string name="about_us">About Us</string>
-    <string name="privacy_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
-    <string name="privacy_policy_host_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="feature_about_app_name">Mifos Mobile</string>
+    <string name="feature_about_description">An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold.</string>
+    <string name="feature_about_copyright_mifos">©2016-%1$s Mifos Initiative.</string>
+    <string name="feature_about_app_version">App version  1.0</string>
+    <string name="feature_about_official_website">Official Website</string>
+    <string name="feature_about_licenses">Licenses</string>
+    <string name="feature_about_privacy_policy">Privacy Policy</string>
+    <string name="feature_about_sources">Source Code</string>
+    <string name="feature_about_license">License: MPL-2.0</string>
+    <string name="feature_about_about_us">About Us</string>
+    <string name="feature_about_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
+    <string name="feature_about_policy_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
 </resources>

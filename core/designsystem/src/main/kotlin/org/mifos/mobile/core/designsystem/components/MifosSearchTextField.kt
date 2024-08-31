@@ -9,16 +9,17 @@
  */
 package org.mifos.mobile.core.designsystem.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -30,7 +31,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosSearchTextField(
     value: TextFieldValue,
@@ -53,16 +53,18 @@ fun MifosSearchTextField(
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.bodyLarge,
         trailingIcon = {
-            IconButton(onClick = onSearchDismiss) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Close Icon",
-                    tint = Color.DarkGray,
-                )
+            AnimatedVisibility(visible = value.text.isNotEmpty()) {
+                IconButton(onClick = onSearchDismiss) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon",
+                    )
+                }
             }
         },
         colors = TextFieldDefaults.colors().copy(
             focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = Color.LightGray,
             unfocusedIndicatorColor = Color.LightGray,
             focusedTextColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
@@ -86,11 +88,13 @@ private fun MifosSearchTextFieldPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
-        MifosSearchTextField(
-            value = TextFieldValue("Search"),
-            onValueChange = {},
-            onSearchDismiss = {},
-            modifier = modifier,
-        )
+        Surface {
+            MifosSearchTextField(
+                value = TextFieldValue("Search"),
+                onValueChange = {},
+                onSearchDismiss = {},
+                modifier = modifier,
+            )
+        }
     }
 }

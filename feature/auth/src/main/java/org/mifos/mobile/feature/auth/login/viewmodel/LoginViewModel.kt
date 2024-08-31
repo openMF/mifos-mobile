@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.auth.login.viewmodel
 
 import androidx.lifecycle.ViewModel
@@ -12,11 +21,10 @@ import org.mifos.mobile.core.data.repository.UserAuthRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+internal class LoginViewModel @Inject constructor(
     private val userAuthRepositoryImp: UserAuthRepository,
-    private val clientRepositoryImp: ClientRepository
-) :
-    ViewModel() {
+    private val clientRepositoryImp: ClientRepository,
+) : ViewModel() {
 
     private var _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Initial)
     val loginUiState: StateFlow<LoginUiState> get() = _loginUiState
@@ -60,7 +68,7 @@ class LoginViewModel @Inject constructor(
     }
 }
 
-sealed class LoginUiState {
+internal sealed class LoginUiState {
     data object Initial : LoginUiState()
     data object LoginSuccess : LoginUiState()
     data object Loading : LoginUiState()

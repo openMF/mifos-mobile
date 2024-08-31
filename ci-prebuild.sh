@@ -28,7 +28,7 @@ tasks=(
     "spotlessApply --no-configuration-cache"
     "dependencyGuardBaseline"
     "detekt"
-    "testDemoDebug :lint:test :lint:lint :androidApp:lintProdRelease"
+    "testDemoDebug :lint:test :lint:lint :androidApp:lintRelease"
     "build"
     "updateProdReleaseBadging"
 )

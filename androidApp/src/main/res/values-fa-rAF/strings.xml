@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mifos Mobile</string>
-    <string name="about_us">درباره ما</string>
+    <string name="feature_about_app_name">Mifos Mobile</string>
+    <string name="feature_about_about_us">درباره ما</string>
     <string name="about_us_under_construction">"درباره ما در  ساخت و ساز "</string>
     <string name="account_balance">موجودی حساب</string>
     <string name="account_id">شناسه حساب</string>
@@ -14,7 +14,7 @@
     <string name="accounts">حساب ها</string>
     <string name="accounts_overview">نمای کلی حساب</string>
     <string name="activation_date">تاریخ فعال سازی</string>
-    <string name="active">فعال</string>
+    <string name="feature_account_active">فعال</string>
     <string name="active_uc">فعال</string>
     <string name="add">اضافه کردن</string>
     <string name="add_beneficiary">ذینفع اضافه کنید</string>
@@ -34,8 +34,8 @@
     <string name="apply">درخواست دادن</string>
     <string name="apply_for_loan">درخواست وام دهید</string>
     <string name="apply_savings_account">درخواست حساب پس انداز</string>
-    <string name="approval_pending">در انتظار تایید</string>
-    <string name="approved">تایید شده</string>
+    <string name="feature_account_approval_pending">در انتظار تایید</string>
+    <string name="feature_account_approved">تایید شده</string>
     <string name="appwidget_text">مثال</string>
     <string name="authentication_token">تأیید اعتبار</string>
     <string name="balance">تعادل</string>
@@ -48,7 +48,7 @@
     <string name="beneficiary_name">نام ذینفع</string>
     <string name="beneficiary_updated_successfully">ذینفع با موفقیت به روز شد</string>
     <string name="call_now">تماس بگیر</string>
-    <string name="cancel">لغو</string>
+    <string name="feature_account_cancel">لغو</string>
     <string name="cancel_transfer">آیا مطمئن هستید که می خواهید انتقال را لغو کنید؟</string>
     <string name="change_account_password">گذرواژه حساب خود را تغییر دهید</string>
     <string name="change_app_passcode">تغییر کد عبور برنامه</string>
@@ -60,7 +60,7 @@
     <string name="choose_language">زبان خود را انتخاب کنید</string>
     <string name="choose_option">گزینه را انتخاب کنید</string>
     <string name="choose_transfer_type">نوع انتقال را انتخاب کنید</string>
-    <string name="clear_filters">فیلترها را پاک کنید</string>
+    <string name="feature_account_clear_filters">فیلترها را پاک کنید</string>
     <string name="client_accounts">حساب های مشتری</string>
     <string name="client_charges">هزینه مشتری</string>
     <string name="client_classification">طبقه بندی مشتری</string>
@@ -70,7 +70,7 @@
     <string name="clients_list">مشتری را انتخاب کنید</string>
     <string name="close">بستن</string>
     <string name="close_drawer">کشو را ببندید</string>
-    <string name="closed">بسته شد</string>
+    <string name="feature_account_closed">بسته شد</string>
     <string name="closed_because_of_obligation">به دلیل برخی تعهدات بسته شد</string>
     <string name="confirm_password">رمز عبور را تأیید کنید</string>
     <string name="continue_str">ادامه هید</string>
@@ -82,7 +82,7 @@
     <string name="delete_beneficiary">ذینفع را حذف کنید</string>
     <string name="delete_beneficiary_confirmation">مطمئن هستید که می خواهید این مزایا را حذف کنید</string>
     <string name="delete_guarantor">ضمانت را حذف کنید</string>
-    <string name="deposit">سپرده</string>
+    <string name="feature_account_deposit">سپرده</string>
     <string name="details">جزئیات</string>
     <string name="dialog_action_app_settings">تنظیمات برنامه</string>
     <string name="dialog_action_back">بازگشت</string>
@@ -99,17 +99,17 @@
     <string name="dialog_message_storage_permission_denied_prompt">بدون اجازه ذخیره نمی توانید کد QR را برای اضافه کردن ذینفع بارگذاری کنید. آیا مطمئن هستید که می خواهید این مجوز را انکار کنید؟</string>
     <string name="dialog_message_write_storage_permission_never_ask_again">شما مجوز نوشتن در انبار را رد کرده اید ، بدون این مجوز قادر نخواهید بود با استفاده از QR Code ذینفع اضافه کنید. لطفاً آن را در تنظیمات فعال کنید</string>
     <string name="dialog_permission_denied">اجازه رد شد</string>
-    <string name="disbursement">پرداخت</string>
+    <string name="feature_account_disbursement">پرداخت</string>
     <string name="disbursement_date">تاریخ پرداخت</string>
-    <string name="dividend_payout">پرداخت سود سهام</string>
+    <string name="feature_account_dividend_payout">پرداخت سود سهام</string>
     <string name="due_date">سر رسید</string>
     <string name="due_date_in_charges">سر رسید:</string>
     <string name="edit">ویرایش</string>
     <string name="email">پست الکترونیک</string>
-    <string name="empty_loan_accounts">هیچ حساب قرضه مربوط به شما وجود ندارد</string>
+    <string name="feature_account_empty_loan_accounts">هیچ حساب قرضه مربوط به شما وجود ندارد</string>
     <string name="empty_repayment_schedule">هیچ برنامه ای بازپرداخت  وجود ندارد</string>
-    <string name="empty_savings_accounts">هیچ حساب پس انداز مرتبط با شما وجود ندارد</string>
-    <string name="empty_share_accounts">هیچ حساب اشتراکی مربوط به شما وجود ندارد</string>
+    <string name="feature_account_empty_savings_accounts">هیچ حساب پس انداز مرتبط با شما وجود ندارد</string>
+    <string name="feature_account_empty_share_accounts">هیچ حساب اشتراکی مربوط به شما وجود ندارد</string>
     <string name="empty_transactions">هیچ معاملات مربوط به شما وجود ندارد</string>
     <string name="end_date">تاریخ پایان</string>
     <string name="end_date_must_be_greater">تاریخ پایان باید بیشتر از تاریخ شروع باشد</string>
@@ -158,11 +158,11 @@
     <string name="exit_message">دوباره به عقب فشار دهید تا خارج شوید</string>
     <string name="expected_disbursement_date">تاریخ پرداخت پیش بینی شده</string>
     <string name="faq">سوالات متداول</string>
-    <string name="fee_deduction">کسر هزینه</string>
+    <string name="feature_account_fee_deduction">کسر هزینه</string>
     <string name="fees">هزینه</string>
     <string name="fees_waived">هزینه پرداخت</string>
     <string name="fetching_client">واگذاری مشتری</string>
-    <string name="filter">فیلتر</string>
+    <string name="feature_account_filter">فیلتر</string>
     <string name="filter_loan">حساب های قرضه را فیلتر کنید</string>
     <string name="filter_savings">حساب های پس انداز را فیلتر کنید</string>
     <string name="filter_share">حساب اشتراکی را فیلتر کنید</string>
@@ -181,7 +181,7 @@
     <string name="help_under_construction">راهنما در دست ساخت</string>
     <string name="home">خانه</string>
     <string name="import_qr">وارد QR</string>
-    <string name="in_arrears">در عقب افتادگی ها</string>
+    <string name="feature_account_in_arrears">در عقب افتادگی ها</string>
     <string name="inactive">غیر فعال</string>
     <string name="inactive_uc">غیر فعال</string>
     <string name="income_generating_loan">وام تولید درآمد</string>
@@ -191,7 +191,7 @@
     <string name="interest_calculation_period">دوره محاسبه ای سود</string>
     <string name="interest_charged">نرخ سود متهم شد</string>
     <string name="interest_paid">سود پرداخت شد</string>
-    <string name="interest_posting">ارسال علاقه</string>
+    <string name="feature_account_interest_posting">ارسال علاقه</string>
     <string name="interest_waived">امتناع کرد از سود</string>
     <string name="internet_not_connected">لطفاً مطمئن شوید که به اینترنت متصل هستید</string>
     <string name="invalid_amount">مقدار نامعتبر است</string>
@@ -203,9 +203,9 @@
     <string name="last_trans">آخرین جزئیات معامله</string>
     <string name="last_transaction">آخرین معامله</string>
     <string name="leave_email">یک ایمیل بگذارید</string>
-    <string name="licenses">مجوزها</string>
-    <string name="loan">قرضه</string>
-    <string name="loan_account">حساب قرضه</string>
+    <string name="feature_about_licenses">مجوزها</string>
+    <string name="feature_account_loan">قرضه</string>
+    <string name="feature_account_loan_account">حساب قرضه</string>
     <string name="loan_account_details">جزئیات حساب قرضه</string>
     <string name="loan_account_withdrawn_successfully">حساب قرضه با موفقیت برداشت شد</string>
     <string name="loan_amount_paid">پرداخت شده</string>
@@ -237,7 +237,7 @@
     <string name="manage_beneficiaries">ذینفعان را مدیریت کنید</string>
     <string name="map_marker_desc">خانه به صنعت بزرگ فناوری</string>
     <string name="map_marker_heading">سیاتل</string>
-    <string name="matured">بالغ</string>
+    <string name="feature_account_matured">بالغ</string>
     <string name="medium_text">متن متوسط</string>
     <string name="message">پیام</string>
     <string name="min_required_balance">حداقل تعادل مورد نیاز</string>
@@ -273,8 +273,8 @@
     <string name="open_drawer">کشوی باز</string>
     <string name="other">دیگر</string>
     <string name="outstanding_balance">"مقدار پرداخت نا شده "</string>
-    <string name="overdraft_fee">هزینه اضافه برداشت</string>
-    <string name="overpaid">اضافه پرداخت</string>
+    <string name="feature_account_overdraft_fee">هزینه اضافه برداشت</string>
+    <string name="feature_account_overpaid">اضافه پرداخت</string>
     <string name="passcode">کد عبور</string>
     <string name="passcode_does_not_match">کد عبور مطابقت ندارد.</string>
     <string name="passcode_setup">یک رمز عبور برای ورود به سیستم تنظیم کنید</string>
@@ -287,7 +287,7 @@
     <string name="pay_to">پرداخت به</string>
     <string name="penalties">مجازات</string>
     <string name="penalties_waived">مجازات برداشته شدند</string>
-    <string name="pending">در انتظار</string>
+    <string name="feature_account_pending">در انتظار</string>
     <string name="permission_denied_camera">اجازه استفاده از دوربین رد شد</string>
     <string name="permission_denied_storage">اجازه ذخیره سازی رد شد</string>
     <string name="phone_number">شماره تلفن</string>
@@ -297,7 +297,7 @@
     <string name="principal">" اصلی"</string>
     <string name="principal_amount">مقدار اصلی*</string>
     <string name="principal_disbursed">اصلی پرداخت شده</string>
-    <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
+    <string name="feature_about_privacy_policy">سیاست حفظ حریم خصوصی</string>
     <string name="proceed">ادامه دهید</string>
     <string name="product">تولید - محصول</string>
     <string name="progress_message_loading">بارگیری</string>
@@ -313,7 +313,7 @@
     <string name="refresh">تازه کردن</string>
     <string name="register">ثبت نام</string>
     <string name="rejected">رد شد</string>
-    <string name="rejected_transfer">انتقال رد شد</string>
+    <string name="feature_account_rejected_transfer">انتقال رد شد</string>
     <string name="remark">اظهار نظریه</string>
     <string name="remark_is_mandatory">اظهار نظر اجباری است</string>
     <string name="repayment">بازپرداخت</string>
@@ -327,8 +327,8 @@
     <string name="saving_account_transactions_details">معاملات در حساب صرفه جوی</string>
     <string name="saving_account_updated_successfully">" حساب پس انداز با موفقیت به روز شد "</string>
     <string name="saving_product_name">نام محصول</string>
-    <string name="savings">پس انداز</string>
-    <string name="savings_account">حساب پس انداز</string>
+    <string name="feature_account_savings">پس انداز</string>
+    <string name="feature_account_savings_account">حساب پس انداز</string>
     <string name="savings_account_transaction">معاملات حساب پس انداز</string>
     <string name="savings_account_withdraw_successful">حساب پس انداز برداشت موفقیت آمیز است</string>
     <string name="savings_charges">هزینه های پس انداز</string>
@@ -343,10 +343,10 @@
     <string name="select_pay_to">برای پرداخت به حساب خود را انتخاب کنید</string>
     <string name="select_product_id">شناسه محصول را انتخاب کنید *</string>
     <string name="select_region_qr">منطقه ای را با کد QR انتخاب کنید</string>
-    <string name="select_you_want">تمام آنچه را که می خواهید درخواست کنید را انتخاب کنید</string>
+    <string name="feature_account_select_you_want">تمام آنچه را که می خواهید درخواست کنید را انتخاب کنید</string>
     <string name="settings">تنظیمات</string>
-    <string name="share">اشتراک گذاری</string>
-    <string name="share_account">حساب اشتراکی</string>
+    <string name="feature_account_share">اشتراک گذاری</string>
+    <string name="feature_account_share_account">حساب اشتراکی</string>
     <string name="share_qr_code">کد QR را به اشتراک بگذارید</string>
     <string name="shares_pending">در انتظار</string>
     <string name="sign_up">ثبت نام</string>
@@ -359,7 +359,7 @@
     <string name="submit">ارسال</string>
     <string name="submit_beneficiary">ارسال ذینفع</string>
     <string name="submit_loan">" ارسال قرض"</string>
-    <string name="submitted">ارسال شده</string>
+    <string name="feature_account_submitted">ارسال شده</string>
     <string name="show_hide_total_saving_amount">نمایش یا پنهان کردن کل مبلغ پس انداز</string>
     <string name="show_hide_total_loan_amount">نمایش یا پنهان کردن کل مبلغ وام</string>
     <string name="hidden_amount">*****</string>
@@ -413,14 +413,14 @@
     <string name="view_repayment">مشاهده برنامه بازپرداخت</string>
     <string name="view_transactions">معاملات را مشاهده کنید</string>
     <string name="waiting">در انتظار</string>
-    <string name="waiting_for_disburse">منتظر اعزام</string>
+    <string name="feature_account_disburse">منتظر اعزام</string>
     <string name="withdraw_loan">برداشت قرضه</string>
     <string name="withdraw_loan_reason">دلیل برداشت قرضه</string>
     <string name="withdraw_savings_account">برداشت حساب پس انداز</string>
-    <string name="withdrawal">برداشت از حساب</string>
+    <string name="feature_account_withdrawal">برداشت از حساب</string>
     <string name="withdrawal_date">تاریخ برداشت</string>
-    <string name="withdrawal_transfer">انتقال برداشت</string>
-    <string name="withdrawn">برداشت</string>
+    <string name="feature_account_withdrawal_transfer">انتقال برداشت</string>
+    <string name="feature_account_withdrawn">برداشت</string>
     <string name="core_common_working">کار کردن</string>
     <string name="yes">بلي</string>
     <string name="app_info">اطلاعات برنامه</string>

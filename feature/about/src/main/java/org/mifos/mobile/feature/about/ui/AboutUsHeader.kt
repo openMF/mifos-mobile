@@ -28,7 +28,7 @@ import org.mifos.mobile.feature.about.R
 
 @DevicePreviews
 @Composable
-fun AboutUsHeader(
+internal fun AboutUsHeader(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
@@ -42,7 +42,7 @@ fun AboutUsHeader(
         )
 
         Text(
-            text = stringResource(id = R.string.app_name),
+            text = stringResource(id = R.string.feature_about_app_name),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
@@ -52,7 +52,7 @@ fun AboutUsHeader(
         )
 
         Text(
-            text = stringResource(id = R.string.about_app_description),
+            text = stringResource(id = R.string.feature_about_description),
             style = MaterialTheme.typography.titleSmall.copy(),
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,

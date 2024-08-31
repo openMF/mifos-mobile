@@ -21,12 +21,18 @@ import androidx.compose.material.icons.filled.FlashOff
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object MifosIcons {
+    val MoreVert: ImageVector = Icons.Filled.MoreVert
+    val VisibilityOff: ImageVector = Icons.Filled.VisibilityOff
+    val Visibility: ImageVector = Icons.Filled.Visibility
     val Info: ImageVector = Icons.Default.Info
     val ArrowDropUp: ImageVector = Icons.Default.ArrowDropUp
     val ArrowDropDown: ImageVector = Icons.Default.ArrowDropDown
