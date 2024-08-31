@@ -30,8 +30,8 @@ import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToAddBeneficiaryScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
-import org.mifos.mobile.feature.client_charge.navigation.clientChargeNavGraph
-import org.mifos.mobile.feature.client_charge.navigation.navigateToClientChargeScreen
+import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
+import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.guarantor.navigation.guarantorNavGraph
 import org.mifos.mobile.feature.guarantor.navigation.navigateToGuarantorScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph

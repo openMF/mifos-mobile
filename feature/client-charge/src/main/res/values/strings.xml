@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="client_charges">Client Charges</string>
+    <string name="error_no_charge">No charges found</string>
+    <string name="amount_due">Due:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Outstanding:</string>
+    <string name="amount_waived">Waved:</string>
+    <string name="amount_paid">Paid:</string>
+</resources>
