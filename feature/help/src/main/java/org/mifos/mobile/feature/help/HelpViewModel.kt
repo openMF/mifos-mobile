@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.help
 
 import androidx.lifecycle.ViewModel
@@ -9,7 +18,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class HelpViewModel @Inject constructor() : ViewModel() {
+internal class HelpViewModel @Inject constructor() : ViewModel() {
 
     private val _helpUiState = MutableStateFlow<HelpUiState>(HelpUiState.Initial)
     val helpUiState: StateFlow<HelpUiState> get() = _helpUiState
@@ -55,10 +64,10 @@ class HelpViewModel @Inject constructor() : ViewModel() {
     }
 }
 
-sealed class HelpUiState {
+internal sealed class HelpUiState {
     data object Initial : HelpUiState()
     data class ShowFaq(
         val faqArrayList: ArrayList<FAQ?>,
-        val selectedFaqPosition: Int = -1
+        val selectedFaqPosition: Int = -1,
     ) : HelpUiState()
 }
