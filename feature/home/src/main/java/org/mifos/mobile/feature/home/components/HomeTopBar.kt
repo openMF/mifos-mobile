@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.home.components
 
 import androidx.compose.foundation.background
@@ -16,18 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.home.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBar(
+internal fun HomeTopBar(
+    notificationCount: Int,
     openNavigationDrawer: () -> Unit,
     openNotifications: () -> Unit,
-    notificationCount: Int,
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = {
@@ -37,29 +47,30 @@ fun HomeTopBar(
             IconButton(
                 onClick = {
                     openNotifications()
-                }
+                },
             ) {
                 Box(
                     modifier = Modifier,
-                    contentAlignment = Alignment.TopEnd
+                    contentAlignment = Alignment.TopEnd,
                 ) {
                     Icon(
                         imageVector = MifosIcons.Notifications,
-                        contentDescription = null
+                        contentDescription = null,
                     )
 
-                    if(notificationCount > 0) {
+                    if (notificationCount > 0) {
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .background(Color.Red)
-                                .padding(2.dp).size(8.dp),
-                            contentAlignment = Alignment.Center
+                                .padding(2.dp)
+                                .size(8.dp),
+                            contentAlignment = Alignment.Center,
                         ) {
                             Text(
                                 text = notificationCount.toString(),
                                 color = Color.White,
-                                fontSize = 6.sp
+                                fontSize = 6.sp,
                             )
                         }
                     }
@@ -70,23 +81,24 @@ fun HomeTopBar(
             IconButton(
                 onClick = {
                     openNavigationDrawer()
-                }
+                },
             ) {
                 Icon(
                     imageVector = MifosIcons.NavigationDrawer,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
-        }
+        },
+        modifier = modifier,
     )
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun HomeTopBarPreview() {
+private fun HomeTopBarPreview() {
     HomeTopBar(
         openNavigationDrawer = {},
         openNotifications = {},
-        notificationCount = 2
+        notificationCount = 2,
     )
 }

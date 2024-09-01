@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.home.navigation
 
 import org.mifos.mobile.feature.home.navigation.HomeRoute.HOME_NAVIGATION_ROUTE_BASE
@@ -9,7 +18,6 @@ sealed class HomeNavigation(val route: String) {
     data object HomeBase : HomeNavigation(route = HOME_NAVIGATION_ROUTE_BASE)
     data object HomeScreen : HomeNavigation(route = HOME_SCREEN_ROUTE)
 }
-
 
 object HomeRoute {
     const val HOME_NAVIGATION_ROUTE_BASE = "home_base_route"
@@ -34,7 +42,7 @@ enum class HomeDestinations {
     BENEFICIARIES,
     SURVEY,
     NOTIFICATIONS,
-    PROFILE
+    PROFILE,
 }
 
 fun HomeNavigationItems.toDestination(): HomeDestinations {
@@ -64,4 +72,3 @@ fun HomeCardItem.toDestination(): HomeDestinations {
         HomeCardItem.TransferCard -> HomeDestinations.TRANSFER
     }
 }
-

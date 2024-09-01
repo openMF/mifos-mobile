@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.home.navigation
 
 import androidx.navigation.NavController
@@ -10,7 +19,7 @@ import org.mifos.mobile.feature.home.screens.HomeScreen
 fun NavGraphBuilder.homeNavGraph(
     onNavigate: (HomeDestinations) -> Unit,
     callHelpline: () -> Unit,
-    mailHelpline: () -> Unit
+    mailHelpline: () -> Unit,
 ) {
     navigation(
         startDestination = HomeNavigation.HomeScreen.route,
@@ -27,7 +36,7 @@ fun NavGraphBuilder.homeNavGraph(
 fun NavGraphBuilder.homeRoute(
     onNavigate: (HomeDestinations) -> Unit,
     callHelpline: () -> Unit,
-    mailHelpline: () -> Unit
+    mailHelpline: () -> Unit,
 ) {
     composable(
         route = HomeNavigation.HomeScreen.route,
@@ -35,7 +44,7 @@ fun NavGraphBuilder.homeRoute(
         HomeScreen(
             callHelpline = callHelpline,
             mailHelpline = mailHelpline,
-            onNavigate = onNavigate
+            onNavigate = onNavigate,
         )
     }
 }

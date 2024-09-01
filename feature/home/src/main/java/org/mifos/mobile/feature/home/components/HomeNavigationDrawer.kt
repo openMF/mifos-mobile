@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.home.components
 
 import android.graphics.Bitmap
@@ -24,23 +33,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosUserImage
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.home.viewmodel.HomeNavigationItems
 
 @Composable
-fun HomeNavigationDrawer(
-    userBitmap: Bitmap?,
+internal fun HomeNavigationDrawer(
     username: String,
+    drawerState: DrawerState,
+    userBitmap: Bitmap?,
     navigateItem: (HomeNavigationItems) -> Unit,
     content: @Composable () -> Unit,
-    drawerState: DrawerState,
+    modifier: Modifier = Modifier,
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         content = content,
+        modifier = modifier,
         drawerContent = {
             ModalDrawerSheet {
                 LazyColumn {
@@ -50,7 +61,7 @@ fun HomeNavigationDrawer(
                                 .padding(20.dp)
                                 .size(84.dp),
                             bitmap = userBitmap,
-                            username = username
+                            username = username,
                         )
                         Text(
                             text = username,
@@ -58,7 +69,7 @@ fun HomeNavigationDrawer(
                             color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier
                                 .padding(horizontal = 20.dp)
-                                .fillMaxWidth(1f)
+                                .fillMaxWidth(1f),
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
@@ -75,39 +86,39 @@ fun HomeNavigationDrawer(
                                         Icon(
                                             imageVector = ImageVector.vectorResource(id = item.iconResId),
                                             contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.primary
+                                            tint = MaterialTheme.colorScheme.primary,
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Text(text = stringResource(id = item.nameResId))
                                     }
                                 },
                                 selected = item == HomeNavigationItems.Home,
-                                onClick = { navigateItem(item) }
+                                onClick = { navigateItem(item) },
                             )
                             Spacer(modifier = Modifier.height(12.dp))
-                            if(item == HomeNavigationItems.ManageBeneficiaries) {
+                            if (item == HomeNavigationItems.ManageBeneficiaries) {
                                 HorizontalDivider(
-                                    modifier = Modifier.padding(horizontal = 20.dp)
+                                    modifier = Modifier.padding(horizontal = 20.dp),
                                 )
                             }
-                        }
+                        },
                     )
                 }
             }
-        }
+        },
     )
 }
 
-@Preview(showBackground = true)
+@DevicePreviews
 @Composable
-fun HomeNavigationDrawerPreview() {
+private fun HomeNavigationDrawerPreview() {
     MifosMobileTheme {
         HomeNavigationDrawer(
-            userBitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888),
             username = "Avneet",
-            content = {},
-            navigateItem = {},
             drawerState = DrawerState(initialValue = DrawerValue.Open),
+            userBitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888),
+            navigateItem = {},
+            content = {},
         )
     }
 }
