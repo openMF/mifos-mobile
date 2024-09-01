@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.notification
 
 import androidx.lifecycle.ViewModel
@@ -9,16 +18,18 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 import javax.inject.Inject
 
 @HiltViewModel
-class NotificationViewModel @Inject constructor(private val notificationRepositoryImp: NotificationRepository) :
-    ViewModel() {
+internal class NotificationViewModel @Inject constructor(
+    private val notificationRepositoryImp: NotificationRepository,
+) : ViewModel() {
 
-    private val _notificationUiState = MutableStateFlow<NotificationUiState>(NotificationUiState.Loading)
+    private val _notificationUiState = MutableStateFlow<NotificationUiState>(Loading)
     val notificationUiState: StateFlow<NotificationUiState> get() = _notificationUiState
 
-    private val _isRefreshing = MutableStateFlow<Boolean>(false)
+    private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing
 
     init {
@@ -26,14 +37,16 @@ class NotificationViewModel @Inject constructor(private val notificationReposito
     }
 
     fun loadNotifications() {
-        _notificationUiState.value = NotificationUiState.Loading
+        _notificationUiState.value = Loading
         viewModelScope.launch {
             notificationRepositoryImp.loadNotifications()
                 .catch {
-                    _notificationUiState.value = NotificationUiState.Error(errorMessage = it.message)
+                    _notificationUiState.value =
+                        NotificationUiState.Error(errorMessage = it.message)
                 }.collect { notifications ->
                     _isRefreshing.emit(false)
-                    _notificationUiState.value = NotificationUiState.Success(notifications = notifications)
+                    _notificationUiState.value =
+                        NotificationUiState.Success(notifications = notifications)
                 }
         }
     }
@@ -49,8 +62,7 @@ class NotificationViewModel @Inject constructor(private val notificationReposito
     }
 }
 
-
-sealed class NotificationUiState {
+internal sealed class NotificationUiState {
     data object Loading : NotificationUiState()
     data class Success(val notifications: List<MifosNotification>) : NotificationUiState()
     data class Error(val errorMessage: String?) : NotificationUiState()

@@ -132,7 +132,7 @@ fun RootNavGraph(
         )
 
         notificationNavGraph(
-            navController = navController
+            navigateBack = navController::popBackStack
         )
 
         locationsNavGraph()
