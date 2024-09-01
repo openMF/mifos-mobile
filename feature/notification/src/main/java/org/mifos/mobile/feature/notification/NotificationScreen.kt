@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.notification
 
 import androidx.compose.foundation.layout.Box
@@ -15,7 +24,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -30,7 +38,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -40,15 +47,18 @@ import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.components.MifosTextButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
-fun NotificationScreen(
-    viewModel: NotificationViewModel = hiltViewModel(),
+internal fun NotificationScreen(
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: NotificationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.notificationUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
@@ -56,39 +66,41 @@ fun NotificationScreen(
     NotificationScreen(
         uiState = uiState,
         navigateBack = navigateBack,
-        onRetry = { viewModel.loadNotifications() },
-        dismissNotification = { viewModel.dismissNotification(it) },
-        onRefresh = { viewModel.refreshNotifications() },
-        isRefreshing = isRefreshing
+        onRetry = viewModel::loadNotifications,
+        dismissNotification = viewModel::dismissNotification,
+        onRefresh = viewModel::refreshNotifications,
+        isRefreshing = isRefreshing,
+        modifier = modifier,
     )
 }
 
 @Composable
-fun NotificationScreen(
+private fun NotificationScreen(
     uiState: NotificationUiState,
     navigateBack: () -> Unit,
     onRetry: () -> Unit,
     dismissNotification: (MifosNotification) -> Unit,
     isRefreshing: Boolean,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+
     MifosScaffold(
         topBarTitleResId = R.string.notification,
         navigateBack = navigateBack,
+        modifier = modifier,
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
-                    is NotificationUiState.Loading -> {
-                        MifosProgressIndicatorOverlay()
-                    }
+                    is NotificationUiState.Loading -> MifosProgressIndicatorOverlay()
 
                     is NotificationUiState.Error -> {
                         MifosErrorComponent(
                             message = uiState.errorMessage,
                             isNetworkConnected = Network.isConnected(context),
                             isRetryEnabled = true,
-                            onRetry = onRetry
+                            onRetry = onRetry,
                         )
                     }
 
@@ -97,30 +109,31 @@ fun NotificationScreen(
                             EmptyDataView(
                                 icon = R.drawable.ic_notifications,
                                 error = R.string.no_notification,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.fillMaxSize(),
                             )
                         } else {
                             NotificationContent(
+                                isRefreshing = isRefreshing,
                                 notifications = uiState.notifications,
                                 dismissNotification = dismissNotification,
                                 onRefresh = onRefresh,
-                                isRefreshing = isRefreshing
                             )
                         }
                     }
                 }
             }
-        }
+        },
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationContent(
+private fun NotificationContent(
+    isRefreshing: Boolean,
     notifications: List<MifosNotification>,
     dismissNotification: (MifosNotification) -> Unit,
-    isRefreshing: Boolean,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
 
@@ -131,20 +144,25 @@ fun NotificationContent(
     }
 
     LaunchedEffect(key1 = isRefreshing) {
-        if (isRefreshing)
+        if (isRefreshing) {
             pullRefreshState.startRefresh()
-        else
+        } else {
             pullRefreshState.endRefresh()
+        }
     }
 
-    Box(modifier = Modifier.fillMaxSize().nestedScroll(pullRefreshState.nestedScrollConnection)) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .nestedScroll(pullRefreshState.nestedScrollConnection),
+    ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             itemsIndexed(items = notifications) { index, notification ->
                 NotificationItem(
                     notification = notification,
-                    dismissNotification = dismissNotification
+                    dismissNotification = dismissNotification,
                 )
-                if(index < notifications.lastIndex) {
+                if (index < notifications.lastIndex) {
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceDim)
                 }
             }
@@ -157,63 +175,72 @@ fun NotificationContent(
 }
 
 @Composable
-fun NotificationItem(
+private fun NotificationItem(
     notification: MifosNotification,
-    dismissNotification: (MifosNotification) -> Unit
+    dismissNotification: (MifosNotification) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var isRead = rememberSaveable { mutableStateOf(notification.isRead()) }
+    val isRead = rememberSaveable { mutableStateOf(notification.isRead()) }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(8.dp)
+        modifier = modifier.padding(8.dp),
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_notifications),
             contentDescription = null,
-            tint = if(isRead.value) MaterialTheme.colorScheme.onSurfaceVariant
-            else MaterialTheme.colorScheme.primary
+            tint = if (isRead.value) {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            } else {
+                MaterialTheme.colorScheme.primary
+            },
         )
         Spacer(modifier = Modifier.width(8.dp))
         Column(
-            horizontalAlignment = Alignment.End
+            horizontalAlignment = Alignment.End,
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = notification.msg ?: "",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
             Text(
                 modifier = Modifier.alpha(0.7f),
                 text = DateHelper.getDateAndTimeAsStringFromLong(notification.timeStamp),
                 style = MaterialTheme.typography.labelMedium,
             )
-            if(!isRead.value) {
-                TextButton(
+            if (!isRead.value) {
+                MifosTextButton(
+                    text = stringResource(id = R.string.dialog_action_ok),
                     onClick = {
                         isRead.value = true
                         dismissNotification(notification)
-                    }
-                ) {
-                    Text(text = stringResource(id = R.string.dialog_action_ok))
-                }
+                    },
+                )
             }
         }
     }
 }
 
-class NotificationUiStatePreviews : PreviewParameterProvider<NotificationUiState> {
+internal class NotificationUiStatePreviews : PreviewParameterProvider<NotificationUiState> {
     override val values: Sequence<NotificationUiState>
         get() = sequenceOf(
-            NotificationUiState.Success(notifications = listOf(MifosNotification(), MifosNotification())),
+            NotificationUiState.Success(
+                notifications = listOf(
+                    MifosNotification(),
+                    MifosNotification(),
+                ),
+            ),
             NotificationUiState.Error(errorMessage = ""),
             NotificationUiState.Loading,
         )
 }
 
-
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun NotificationScreenPreview(
-    @PreviewParameter(NotificationUiStatePreviews::class) notificationUiState: NotificationUiState
+private fun NotificationScreenPreview(
+    @PreviewParameter(NotificationUiStatePreviews::class)
+    notificationUiState: NotificationUiState,
 ) {
     MifosMobileTheme {
         NotificationScreen(
@@ -222,7 +249,7 @@ fun NotificationScreenPreview(
             onRetry = {},
             dismissNotification = {},
             onRefresh = {},
-            isRefreshing = false
+            isRefreshing = false,
         )
     }
 }
