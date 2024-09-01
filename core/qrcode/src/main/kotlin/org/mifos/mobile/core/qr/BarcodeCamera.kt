@@ -1,4 +1,4 @@
-package org.mifos.mobile.feature.qr.qr
+package org.mifos.mobile.core.qr
 
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import org.mifos.mobile.feature.qr.utils.QrCodeAnalyzer
 
 @ExperimentalGetImage
 class BarcodeCamera {

@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.loan.loan_account_withdraw
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanAccountWithdraw
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -20,25 +29,25 @@ import org.mifos.mobile.feature.loan.R
 import javax.inject.Inject
 
 @HiltViewModel
-class LoanAccountWithdrawViewModel @Inject constructor(
+internal class LoanAccountWithdrawViewModel @Inject constructor(
     private val loanRepositoryImp: LoanRepository,
-    savedStateHandle: SavedStateHandle
-) :
-    ViewModel() {
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
-    private val _loanUiState = MutableStateFlow<LoanAccountWithdrawUiState>(LoanAccountWithdrawUiState.WithdrawUiReady)
+    private val _loanUiState =
+        MutableStateFlow<LoanAccountWithdrawUiState>(LoanAccountWithdrawUiState.WithdrawUiReady)
     val loanUiState: StateFlow<LoanAccountWithdrawUiState> = _loanUiState
 
     val loanId = savedStateHandle.getStateFlow<Long?>(key = Constants.LOAN_ID, initialValue = null)
 
-    var loanWithAssociations: StateFlow<LoanWithAssociations?> = loanId
+    val loanWithAssociations: StateFlow<LoanWithAssociations?> = loanId
         .flatMapLatest {
             loanRepositoryImp.getLoanWithAssociations(Constants.TRANSACTIONS, it)
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
+            initialValue = null,
         )
 
     fun withdrawLoanAccount(loanReason: String?) {
@@ -50,9 +59,13 @@ class LoanAccountWithdrawViewModel @Inject constructor(
 
         viewModelScope.launch {
             _loanUiState.value = LoanAccountWithdrawUiState.Loading
-            loanRepositoryImp.withdrawLoanAccount(loanWithAssociations.value?.id?.toLong(), loanWithdraw)
+            loanRepositoryImp.withdrawLoanAccount(
+                loanWithAssociations.value?.id?.toLong(),
+                loanWithdraw,
+            )
                 ?.catch {
-                    _loanUiState.value = LoanAccountWithdrawUiState.Error(R.string.error_loan_account_withdraw)
+                    _loanUiState.value =
+                        LoanAccountWithdrawUiState.Error(R.string.error_loan_account_withdraw)
                 }?.collect {
                     _loanUiState.value = LoanAccountWithdrawUiState.Success
                 }
@@ -60,9 +73,9 @@ class LoanAccountWithdrawViewModel @Inject constructor(
     }
 }
 
-sealed class LoanAccountWithdrawUiState {
-    data object WithdrawUiReady: LoanAccountWithdrawUiState()
-    data object Loading: LoanAccountWithdrawUiState()
-    data object Success: LoanAccountWithdrawUiState()
-    data class Error(val messageId: Int): LoanAccountWithdrawUiState()
+internal sealed class LoanAccountWithdrawUiState {
+    data object WithdrawUiReady : LoanAccountWithdrawUiState()
+    data object Loading : LoanAccountWithdrawUiState()
+    data object Success : LoanAccountWithdrawUiState()
+    data class Error(val messageId: Int) : LoanAccountWithdrawUiState()
 }

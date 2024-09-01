@@ -1,15 +1,21 @@
-package org.mifos.mobile.feature.loan.loan_account
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanAccount
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -18,36 +24,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.common.utils.CurrencyUtil
 import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
 import org.mifos.mobile.core.ui.component.MonitorListItemWithIcon
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.loan.R
 
 @Composable
-fun LoanAccountDetailContent(
+internal fun LoanAccountDetailContent(
     loanWithAssociations: LoanWithAssociations,
     viewLoanSummary: () -> Unit,
     viewCharges: () -> Unit,
     viewRepaymentSchedule: () -> Unit,
     viewTransactions: () -> Unit,
     viewQr: () -> Unit,
-    makePayment: () -> Unit
+    makePayment: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .verticalScroll(scrollState)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         LoanAccountDetailsCard(
             loanWithAssociations = loanWithAssociations,
-            makePayment = makePayment
+            makePayment = makePayment,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -57,17 +66,16 @@ fun LoanAccountDetailContent(
             viewCharges = viewCharges,
             viewRepaymentSchedule = viewRepaymentSchedule,
             viewTransactions = viewTransactions,
-            viewQr = viewQr
+            viewQr = viewQr,
         )
     }
 }
 
-
 @Composable
-fun LoanAccountDetailsCard(
-    modifier: Modifier = Modifier,
+private fun LoanAccountDetailsCard(
     loanWithAssociations: LoanWithAssociations,
-    makePayment: () -> Unit
+    makePayment: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val isActive = loanWithAssociations.status?.active == true
@@ -95,7 +103,7 @@ fun LoanAccountDetailsCard(
                         amt = loanWithAssociations.summary?.totalOutstanding,
                     ),
                 ),
-                descriptionStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                descriptionStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -137,25 +145,24 @@ fun LoanAccountDetailsCard(
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
             )
 
-            if (isActive) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Button(onClick = { makePayment.invoke() }) {
-                        Text(text = stringResource(id = R.string.make_payment))
-                    }
-                }
-            }
+            MifosButton(
+                textResId = R.string.make_payment,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = isActive,
+                onClick = makePayment,
+            )
         }
     }
 }
 
 @Composable
-fun LoanMonitorComponent(
-    modifier: Modifier = Modifier,
+private fun LoanMonitorComponent(
     viewLoanSummary: () -> Unit,
     viewCharges: () -> Unit,
     viewRepaymentSchedule: () -> Unit,
     viewTransactions: () -> Unit,
-    viewQr: () -> Unit
+    viewQr: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -171,35 +178,35 @@ fun LoanMonitorComponent(
             titleId = R.string.loan_summary,
             subTitleId = R.string.view_loan_summary,
             iconId = R.drawable.ic_surveys_48px,
-            onClick = { viewLoanSummary.invoke() }
+            onClick = { viewLoanSummary.invoke() },
         )
 
         MonitorListItemWithIcon(
             titleId = R.string.loan_charges,
             subTitleId = R.string.view_charges,
             iconId = R.drawable.ic_charges,
-            onClick = { viewCharges.invoke() }
+            onClick = { viewCharges.invoke() },
         )
 
         MonitorListItemWithIcon(
             titleId = R.string.repayment_schedule,
             subTitleId = R.string.view_repayment,
             iconId = R.drawable.ic_charges,
-            onClick = { viewRepaymentSchedule.invoke() }
+            onClick = { viewRepaymentSchedule.invoke() },
         )
 
         MonitorListItemWithIcon(
             titleId = R.string.transactions,
             subTitleId = R.string.view_transactions,
             iconId = R.drawable.ic_compare_arrows_black_24dp,
-            onClick = { viewTransactions.invoke() }
+            onClick = { viewTransactions.invoke() },
         )
 
         MonitorListItemWithIcon(
             titleId = R.string.qr_code,
             subTitleId = R.string.view_qr_code,
             iconId = R.drawable.ic_qrcode_scan,
-            onClick = { viewQr.invoke() }
+            onClick = { viewQr.invoke() },
         )
     }
 }
@@ -207,7 +214,7 @@ fun LoanMonitorComponent(
 @Composable
 private fun getNextInstallment(
     loanWithAssociations: LoanWithAssociations,
-    currencySymbol: String
+    currencySymbol: String,
 ): String {
     loanWithAssociations.repaymentSchedule?.periods?.forEach { period ->
         val dueDate = period.dueDate
@@ -217,21 +224,26 @@ private fun getNextInstallment(
                 currencySymbol,
                 CurrencyUtil.formatCurrency(
                     context = LocalContext.current,
-                    amt = period.totalDueForPeriod ?: 0.0
-                )
+                    amt = period.totalDueForPeriod ?: 0.0,
+                ),
             )
         }
     }
     return stringResource(id = R.string.not_available)
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun LoanAccountDetailContentPreview() {
+private fun LoanAccountDetailContentPreview() {
     MifosMobileTheme {
         LoanAccountDetailContent(
             loanWithAssociations = LoanWithAssociations(),
-            {}, {}, {}, {}, {}, {}
+            viewLoanSummary = {},
+            viewCharges = {},
+            viewRepaymentSchedule = {},
+            viewTransactions = {},
+            viewQr = {},
+            makePayment = {},
         )
     }
 }

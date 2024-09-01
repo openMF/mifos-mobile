@@ -1,6 +1,14 @@
-package org.mifos.mobile.feature.loan.loan_account_transaction
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanAccountTransaction
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -43,33 +50,37 @@ import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.loan.R
 
 @Composable
-fun LoanAccountTransactionScreen(
-    viewModel: LoanAccountTransactionViewModel = hiltViewModel(),
+internal fun LoanAccountTransactionScreen(
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: LoanAccountTransactionViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.loanUiState.collectAsStateWithLifecycle()
 
     LoanAccountTransactionScreen(
         uiState = uiState,
         navigateBack = navigateBack,
+        modifier = modifier,
     )
 }
 
 @Composable
-fun LoanAccountTransactionScreen(
+private fun LoanAccountTransactionScreen(
     uiState: LoanAccountTransactionUiState,
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     var loanWithAssociations by rememberSaveable { mutableStateOf(LoanWithAssociations()) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         MifosTopBar(
             navigateBack = navigateBack,
-            title = { Text(text = stringResource(id = R.string.transactions)) }
+            title = { Text(text = stringResource(id = R.string.transactions)) },
         )
 
         Box(modifier = Modifier.weight(1f)) {
@@ -77,7 +88,9 @@ fun LoanAccountTransactionScreen(
 
             when (uiState) {
                 is LoanAccountTransactionUiState.Success -> {
-                    if(uiState.loanWithAssociations != null && uiState.loanWithAssociations.transactions?.isNotEmpty() == true) {
+                    if (uiState.loanWithAssociations != null &&
+                        uiState.loanWithAssociations.transactions?.isNotEmpty() == true
+                    ) {
                         loanWithAssociations = uiState.loanWithAssociations
                     } else {
                         MifosErrorComponent(isEmptyData = true)
@@ -96,23 +109,23 @@ fun LoanAccountTransactionScreen(
                 }
             }
         }
-
     }
 }
 
 @Composable
-fun LoanAccountTransactionContent(
+private fun LoanAccountTransactionContent(
     loanWithAssociations: LoanWithAssociations,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Text(
             text = loanWithAssociations.loanProductName ?: "",
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -126,13 +139,20 @@ fun LoanAccountTransactionContent(
 }
 
 @Composable
-fun LoanAccountTransactionListItem(transaction: Transaction?) {
+private fun LoanAccountTransactionListItem(
+    transaction: Transaction?,
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
-    Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+
+    Row(
+        modifier = modifier.padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Image(
             painter = painterResource(id = R.drawable.ic_local_atm_black_24dp),
             contentDescription = stringResource(id = R.string.atm_icon),
-            modifier = Modifier.size(39.dp)
+            modifier = Modifier.size(39.dp),
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -141,7 +161,7 @@ fun LoanAccountTransactionListItem(transaction: Transaction?) {
             Text(
                 text = formatTransactionType(transaction?.type?.value),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             Row {
@@ -152,28 +172,26 @@ fun LoanAccountTransactionListItem(transaction: Transaction?) {
                         CurrencyUtil.formatCurrency(
                             context = context,
                             transaction?.amount ?: 0.0,
-                        )
+                        ),
                     ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
                         .weight(1f)
                         .alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = getDateAsString(transaction?.submittedOnDate),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
-
         }
-
     }
 }
 
-class LoanAccountTransactionUiStatesParameterProvider :
+internal class LoanAccountTransactionUiStatesParameterProvider :
     PreviewParameterProvider<LoanAccountTransactionUiState> {
     override val values: Sequence<LoanAccountTransactionUiState>
         get() = sequenceOf(
@@ -184,10 +202,11 @@ class LoanAccountTransactionUiStatesParameterProvider :
         )
 }
 
-@Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun LoanAccountTransactionScreenPreview(
-    @PreviewParameter(LoanAccountTransactionUiStatesParameterProvider::class) loanAccountTransactionUiState: LoanAccountTransactionUiState
+private fun LoanAccountTransactionScreenPreview(
+    @PreviewParameter(LoanAccountTransactionUiStatesParameterProvider::class)
+    loanAccountTransactionUiState: LoanAccountTransactionUiState,
 ) {
     MifosMobileTheme {
         LoanAccountTransactionScreen(

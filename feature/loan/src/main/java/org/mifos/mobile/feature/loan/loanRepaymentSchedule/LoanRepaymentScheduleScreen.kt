@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.loan.loan_repayment_schedule
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanRepaymentSchedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,14 +27,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -40,43 +47,46 @@ import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.loan.R
 
 @Composable
-fun LoanRepaymentScheduleScreen(
-    viewmodel: LoanRepaymentScheduleViewModel = hiltViewModel(),
+internal fun LoanRepaymentScheduleScreen(
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewmodel: LoanRepaymentScheduleViewModel = hiltViewModel(),
 ) {
     val loanRepaymentScheduleUiState by viewmodel.loanUiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit) {
-        viewmodel.loanLoanWithAssociations()
-    }
 
     LoanRepaymentScheduleScreen(
         loanRepaymentScheduleUiState = loanRepaymentScheduleUiState,
         navigateBack = navigateBack,
-        onRetry = { viewmodel.loanLoanWithAssociations() }
+        onRetry = viewmodel::loanLoanWithAssociations,
+        modifier = modifier,
     )
 }
 
 @Composable
-fun LoanRepaymentScheduleScreen(
+private fun LoanRepaymentScheduleScreen(
     loanRepaymentScheduleUiState: LoanUiState,
     navigateBack: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+
     MifosScaffold(
         topBarTitleResId = R.string.loan_repayment_schedule,
-        navigateBack = { navigateBack.invoke() }) { contentPadding ->
+        navigateBack = navigateBack,
+        modifier = modifier,
+    ) { contentPadding ->
         when (loanRepaymentScheduleUiState) {
             LoanUiState.Loading -> {
                 MifosProgressIndicator(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(contentPadding)
-                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f))
+                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
                 )
             }
 
@@ -84,7 +94,7 @@ fun LoanRepaymentScheduleScreen(
                 MifosErrorComponent(
                     isNetworkConnected = Network.isConnected(context),
                     isRetryEnabled = true,
-                    onRetry = onRetry
+                    onRetry = onRetry,
                 )
             }
 
@@ -93,13 +103,13 @@ fun LoanRepaymentScheduleScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background)
-                        .padding(contentPadding)
+                        .padding(contentPadding),
                 ) {
                     LoanRepaymentScheduleCard(loanRepaymentScheduleUiState.loanWithAssociations)
                     RepaymentScheduleTable(
                         periods = loanRepaymentScheduleUiState.loanWithAssociations.repaymentSchedule?.periods!!,
                         currency = loanRepaymentScheduleUiState.loanWithAssociations.currency?.displaySymbol
-                            ?: "$"
+                            ?: "$",
                     )
                 }
             }
@@ -110,40 +120,47 @@ fun LoanRepaymentScheduleScreen(
 }
 
 @Composable
-fun LoanRepaymentScheduleCard(loanWithAssociations: LoanWithAssociations) {
+private fun LoanRepaymentScheduleCard(
+    loanWithAssociations: LoanWithAssociations,
+    modifier: Modifier = Modifier,
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
             .border(1.dp, Color.Gray, RoundedCornerShape(12.dp)),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
     ) {
         Column(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         ) {
             LoanRepaymentScheduleCardItem(
                 label = stringResource(id = R.string.account_number),
-                value = loanWithAssociations.accountNo ?: "--"
+                value = loanWithAssociations.accountNo ?: "--",
             )
             LoanRepaymentScheduleCardItem(
                 label = stringResource(id = R.string.disbursement_date),
-                value = DateHelper.getDateAsString(loanWithAssociations.timeline?.expectedDisbursementDate)
+                value = DateHelper.getDateAsString(loanWithAssociations.timeline?.expectedDisbursementDate),
             )
             LoanRepaymentScheduleCardItem(
                 label = stringResource(id = R.string.no_of_payments),
-                value = loanWithAssociations.numberOfRepayments.toString()
+                value = loanWithAssociations.numberOfRepayments.toString(),
             )
         }
     }
 }
 
 @Composable
-fun RepaymentScheduleTable(currency: String, periods: List<Periods>) {
+private fun RepaymentScheduleTable(
+    currency: String,
+    periods: List<Periods>,
+    modifier: Modifier = Modifier,
+) {
     if (periods.isNotEmpty()) {
         LazyColumn(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                .padding(12.dp),
         ) {
             item {
                 Row {
@@ -158,12 +175,13 @@ fun RepaymentScheduleTable(currency: String, periods: List<Periods>) {
                     TableCell(text = "${periods.indexOf(period) + 1}", weight = 0.5f)
                     TableCell(text = DateHelper.getDateAsString(period.dueDate), weight = 1f)
                     TableCell(
-                        text = if (period.principalOriginalDue == null) "$currency 0.00" else "$currency ${period.principalOriginalDue.toString()}",
-                        weight = 1f
+                        text = if (period.principalOriginalDue == null) "$currency 0.00"
+                        else "$currency ${period.principalOriginalDue}",
+                        weight = 1f,
                     )
                     TableCell(
-                        text = "$currency ${period.principalLoanBalanceOutstanding.toString()}",
-                        weight = 1f
+                        text = "$currency ${period.principalLoanBalanceOutstanding}",
+                        weight = 1f,
                     )
                 }
             }
@@ -173,31 +191,35 @@ fun RepaymentScheduleTable(currency: String, periods: List<Periods>) {
     }
 }
 
-
 @Composable
-fun RowScope.TableCell(
+private fun RowScope.TableCell(
     text: String,
-    weight: Float
+    weight: Float,
+    modifier: Modifier = Modifier,
 ) {
     val borderColor = if (isSystemInDarkTheme()) Color.Gray else Color.Black
 
     Text(
         text = text,
-        modifier = Modifier
+        modifier = modifier
             .border(1.dp, borderColor)
             .weight(weight)
             .padding(4.dp),
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }
 
 @Composable
-fun LoanRepaymentScheduleCardItem(label: String, value: String) {
+private fun LoanRepaymentScheduleCardItem(
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier,
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             text = label,
@@ -208,28 +230,31 @@ fun LoanRepaymentScheduleCardItem(label: String, value: String) {
             text = value,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f),
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Start,
         )
     }
 }
 
-class LoanRepaymentSchedulePreviewProvider : PreviewParameterProvider<LoanUiState> {
+internal class LoanRepaymentSchedulePreviewProvider : PreviewParameterProvider<LoanUiState> {
     override val values: Sequence<LoanUiState>
         get() = sequenceOf(
             LoanUiState.Loading,
             LoanUiState.ShowError(R.string.repayment_schedule),
-            LoanUiState.ShowLoan(LoanWithAssociations())
+            LoanUiState.ShowLoan(LoanWithAssociations()),
         )
 }
 
-@Preview(showSystemUi = true, showBackground = true)
+@DevicePreviews
 @Composable
 private fun LoanRepaymentScheduleScreenPreview(
-    @PreviewParameter(LoanRepaymentSchedulePreviewProvider::class) loanUiState: LoanUiState
+    @PreviewParameter(LoanRepaymentSchedulePreviewProvider::class)
+    loanUiState: LoanUiState,
 ) {
     MifosMobileTheme {
         LoanRepaymentScheduleScreen(
             loanRepaymentScheduleUiState = loanUiState,
-            navigateBack = {}) {}
+            navigateBack = {},
+            onRetry = {},
+        )
     }
 }
