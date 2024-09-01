@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.guarantor.screens.guarantor_details
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.guarantor.screens.guarantorDetails
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -11,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,31 +31,34 @@ import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.guarantor.R
 
-
 @Composable
-fun GuarantorDetailScreen(
-    viewModel: GuarantorDetailViewModel = hiltViewModel(),
+internal fun GuarantorDetailScreen(
     navigateBack: () -> Unit,
-    updateGuarantor: (index: Int, loanId: Long) -> Unit
+    updateGuarantor: (index: Int, loanId: Long) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: GuarantorDetailViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
 
     GuarantorDetailScreen(
         uiState = uiState.value,
         navigateBack = navigateBack,
-        deleteGuarantor = { viewModel.deleteGuarantor(it) },
-        updateGuarantor = { updateGuarantor(viewModel.index.value, viewModel.loanId.value) }
+        modifier = modifier,
+        deleteGuarantor = viewModel::deleteGuarantor,
+        updateGuarantor = { updateGuarantor(viewModel.index.value, viewModel.loanId.value) },
     )
 }
 
 @Composable
-fun GuarantorDetailScreen(
+private fun GuarantorDetailScreen(
     uiState: GuarantorDetailUiState,
     navigateBack: () -> Unit,
     deleteGuarantor: (Long) -> Unit,
-    updateGuarantor: () -> Unit
+    updateGuarantor: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     var openAlertDialog by rememberSaveable { mutableStateOf(false) }
@@ -58,7 +69,7 @@ fun GuarantorDetailScreen(
             GuarantorDetailTopBar(
                 navigateBack = navigateBack,
                 deleteGuarantor = { openAlertDialog = true },
-                updateGuarantor = updateGuarantor
+                updateGuarantor = updateGuarantor,
             )
         },
         content = {
@@ -78,7 +89,7 @@ fun GuarantorDetailScreen(
                     }
 
                     is GuarantorDetailUiState.ShowDetail -> {
-                        if(uiState.guarantorItem != null) {
+                        if (uiState.guarantorItem != null) {
                             guarantorItem.value = uiState.guarantorItem
                         } else {
                             MifosErrorComponent(isEmptyData = true)
@@ -86,7 +97,11 @@ fun GuarantorDetailScreen(
                     }
 
                     is GuarantorDetailUiState.GuarantorDeletedSuccessfully -> {
-                        Toast.makeText(context, stringResource(id = uiState.messageResId), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            stringResource(id = uiState.messageResId),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                         navigateBack()
                     }
                 }
@@ -107,11 +122,12 @@ fun GuarantorDetailScreen(
                     ),
                 )
             }
-        }
+        },
+        modifier = modifier,
     )
 }
 
-class UiStatesParameterProvider : PreviewParameterProvider<GuarantorDetailUiState> {
+internal class UiStatesParameterProvider : PreviewParameterProvider<GuarantorDetailUiState> {
     override val values: Sequence<GuarantorDetailUiState>
         get() = sequenceOf(
             GuarantorDetailUiState.ShowDetail(GuarantorPayload()),
@@ -120,17 +136,18 @@ class UiStatesParameterProvider : PreviewParameterProvider<GuarantorDetailUiStat
         )
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun GuarantorDetailScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class) guarantorDetailUiState: GuarantorDetailUiState
+private fun GuarantorDetailScreenPreview(
+    @PreviewParameter(UiStatesParameterProvider::class)
+    guarantorDetailUiState: GuarantorDetailUiState,
 ) {
     MifosMobileTheme {
         GuarantorDetailScreen(
             uiState = guarantorDetailUiState,
             navigateBack = {},
             deleteGuarantor = {},
-            updateGuarantor = {}
+            updateGuarantor = {},
         )
     }
 }

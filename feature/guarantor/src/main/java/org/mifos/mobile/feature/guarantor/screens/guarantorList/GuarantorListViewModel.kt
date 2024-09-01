@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.guarantor.screens.guarantor_list
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.guarantor.screens.guarantorList
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -23,9 +32,9 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class GuarantorListViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val guarantorRepositoryImp: GuarantorRepository
+internal class GuarantorListViewModel @Inject constructor(
+    private val guarantorRepositoryImp: GuarantorRepository,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _loanId = savedStateHandle.getStateFlow<String?>(key = LOAN_ID, initialValue = null)
@@ -35,25 +44,24 @@ class GuarantorListViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, -1L)
 
     val guarantorUiState = loanId
-            .flatMapLatest { loanId ->
-                guarantorRepositoryImp.getGuarantorList(loanId = loanId)
+        .flatMapLatest { loanId ->
+            guarantorRepositoryImp.getGuarantorList(loanId = loanId)
+        }
+        .asResult()
+        .map { result ->
+            when (result) {
+                is Result.Success -> GuarantorListUiState.Success(result.data?.filter { it?.status == true })
+                is Result.Loading -> GuarantorListUiState.Loading
+                is Result.Error -> GuarantorListUiState.Error
             }
-            .asResult()
-            .map { result ->
-                when (result) {
-                    is Result.Success -> GuarantorListUiState.Success(result.data?.filter { it?.status == true })
-                    is Result.Loading -> GuarantorListUiState.Loading
-                    is Result.Error -> GuarantorListUiState.Error
-                }
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = GuarantorListUiState.Loading,
-            )
-
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = GuarantorListUiState.Loading,
+        )
 }
 
-sealed class GuarantorListUiState {
+internal sealed class GuarantorListUiState {
     data object Loading : GuarantorListUiState()
     data object Error : GuarantorListUiState()
     data class Success(val list: List<GuarantorPayload?>?) : GuarantorListUiState()
