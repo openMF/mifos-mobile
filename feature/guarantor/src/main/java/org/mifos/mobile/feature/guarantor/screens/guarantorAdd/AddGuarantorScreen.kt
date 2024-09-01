@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.guarantor.screens.guarantor_add
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.guarantor.screens.guarantorAdd
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -9,9 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -21,11 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -36,13 +42,14 @@ import org.mifos.mobile.core.model.entity.guarantor.GuarantorType
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.guarantor.R
 
-
 @Composable
-fun AddGuarantorScreen(
+internal fun AddGuarantorScreen(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: AddGuarantorViewModel = hiltViewModel(),
-    navigateBack: () -> Unit
 ) {
     val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
     val guarantorItem = viewModel.guarantorItem.collectAsStateWithLifecycle()
@@ -51,34 +58,37 @@ fun AddGuarantorScreen(
         uiState = uiState.value,
         guarantorItem = guarantorItem.value,
         navigateBack = navigateBack,
+        modifier = modifier,
         onSubmitted = {
             when (guarantorItem.value) {
                 null -> viewModel.createGuarantor(it)
                 else -> viewModel.updateGuarantor(it)
             }
-        }
+        },
     )
 }
 
 @Composable
-fun AddGuarantorScreen(
+private fun AddGuarantorScreen(
     uiState: GuarantorAddUiState,
     guarantorItem: GuarantorPayload?,
     navigateBack: () -> Unit,
-    onSubmitted: (GuarantorApplicationPayload) -> Unit
+    onSubmitted: (GuarantorApplicationPayload) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val guarantorTypeOptions = rememberSaveable { mutableStateOf(listOf<GuarantorType>()) }
 
     MifosScaffold(
-        topBarTitleResId = if(guarantorItem == null) R.string.add_guarantor else R.string.update_guarantor,
+        topBarTitleResId = if (guarantorItem == null) R.string.add_guarantor else R.string.update_guarantor,
         navigateBack = navigateBack,
+        modifier = modifier,
         content = {
             Box(modifier = Modifier.padding(it)) {
                 AddGuarantorContent(
                     guarantorItem = guarantorItem,
                     onSubmitted = onSubmitted,
-                    guarantorTypeOptions = guarantorTypeOptions.value
+                    guarantorTypeOptions = guarantorTypeOptions.value,
                 )
                 when (uiState) {
                     is GuarantorAddUiState.Loading -> {
@@ -94,36 +104,44 @@ fun AddGuarantorScreen(
                     }
 
                     is GuarantorAddUiState.Template -> {
-                        guarantorTypeOptions.value = uiState.guarantorTemplatePayload?.guarantorTypeOptions?.toList() ?: listOf()
+                        guarantorTypeOptions.value =
+                            uiState.guarantorTemplatePayload?.guarantorTypeOptions?.toList()
+                                ?: listOf()
                     }
 
                     is GuarantorAddUiState.Success -> {
-                        Toast.makeText(context, stringResource(id = uiState.messageResId), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            stringResource(id = uiState.messageResId),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                         navigateBack()
                     }
                 }
             }
-        }
+        },
     )
 }
 
-
 @Composable
-fun AddGuarantorContent(
-    modifier: Modifier = Modifier,
+private fun AddGuarantorContent(
     guarantorItem: GuarantorPayload?,
     guarantorTypeOptions: List<GuarantorType>,
-    onSubmitted: (GuarantorApplicationPayload) -> Unit
+    onSubmitted: (GuarantorApplicationPayload) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
-    var firstName = rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue( "")) }
-    var lastName = rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue( "")) }
-    var city = rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue( "")) }
-    var guarantorType = rememberSaveable { mutableStateOf(GuarantorType()) }
+    val firstName =
+        rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
+    val lastName =
+        rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
+    val city =
+        rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
+    val guarantorType = rememberSaveable { mutableStateOf(GuarantorType()) }
 
-    var firstNameError = rememberSaveable { mutableStateOf(false) }
-    var lastNameError = rememberSaveable { mutableStateOf(false) }
-    var guarantorTypeError = rememberSaveable { mutableStateOf(false) }
+    val firstNameError = rememberSaveable { mutableStateOf(false) }
+    val lastNameError = rememberSaveable { mutableStateOf(false) }
+    val guarantorTypeError = rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = guarantorItem) {
         firstName.value = TextFieldValue(guarantorItem?.firstname ?: "")
@@ -140,16 +158,16 @@ fun AddGuarantorContent(
         modifier = modifier
             .verticalScroll(state = scrollState)
             .padding(horizontal = 16.dp)
-            .padding(bottom = 16.dp)
+            .padding(bottom = 16.dp),
     ) {
-
         MifosDropDownTextField(
             optionsList = guarantorTypeOptions.filter { it.id == 3L }.mapNotNull { it.value },
             selectedOption = guarantorType.value.value,
             labelResId = R.string.guarantor_type,
             error = guarantorTypeError.value,
-            onClick = { index, item ->
-                guarantorType.value = guarantorTypeOptions.find { it.value == item } ?: GuarantorType()
+            onClick = { _, item ->
+                guarantorType.value =
+                    guarantorTypeOptions.find { it.value == item } ?: GuarantorType()
             },
             supportingText = stringResource(
                 R.string.error_validation_blank,
@@ -166,7 +184,7 @@ fun AddGuarantorContent(
                 R.string.error_validation_blank,
                 stringResource(R.string.first_name),
             ),
-            error = firstNameError.value
+            error = firstNameError.value,
         )
 
         MifosOutlinedTextField(
@@ -178,7 +196,7 @@ fun AddGuarantorContent(
                 R.string.error_validation_blank,
                 stringResource(R.string.last_name),
             ),
-            error = lastNameError.value
+            error = lastNameError.value,
         )
 
         MifosOutlinedTextField(
@@ -194,7 +212,8 @@ fun AddGuarantorContent(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(
+        MifosButton(
+            textResId = R.string.submit,
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 validateFields(
@@ -205,15 +224,8 @@ fun AddGuarantorContent(
                     guarantorTypeError = guarantorTypeError,
                     firstNameError = firstNameError,
                     lastNameError = lastNameError,
-                ){ onSubmitted(it) }
+                ) { onSubmitted(it) }
             },
-            content = {
-                Text(
-                    modifier = Modifier.padding(6.dp),
-                    text = stringResource(id = R.string.submit),
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
         )
     }
 }
@@ -226,35 +238,43 @@ private fun validateFields(
     guarantorTypeError: MutableState<Boolean> = mutableStateOf(false),
     firstNameError: MutableState<Boolean> = mutableStateOf(false),
     lastNameError: MutableState<Boolean> = mutableStateOf(false),
-    onSubmitted: (GuarantorApplicationPayload) -> Unit
+    onSubmitted: (GuarantorApplicationPayload) -> Unit,
 ) {
     when {
-        firstName.isEmpty() -> { firstNameError.value = true }
-        lastName.isEmpty() -> { lastNameError.value = true }
-        guarantorType.value.isNullOrEmpty() -> { guarantorTypeError.value = true }
+        firstName.isEmpty() -> {
+            firstNameError.value = true
+        }
+
+        lastName.isEmpty() -> {
+            lastNameError.value = true
+        }
+
+        guarantorType.value.isNullOrEmpty() -> {
+            guarantorTypeError.value = true
+        }
+
         else -> {
             onSubmitted(
                 GuarantorApplicationPayload(
                     firstName = firstName,
                     lastName = lastName,
                     city = city,
-                    guarantorTypeId = guarantorType.id
-                )
+                    guarantorTypeId = guarantorType.id,
+                ),
             )
         }
     }
 }
 
-
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun AddGuarantorScreenPreview() {
+private fun AddGuarantorScreenPreview() {
     MifosMobileTheme {
         AddGuarantorScreen(
             uiState = GuarantorAddUiState.Template(GuarantorTemplatePayload()),
             guarantorItem = GuarantorPayload(),
-            navigateBack ={},
-            onSubmitted = {}
+            navigateBack = {},
+            onSubmitted = {},
         )
     }
 }

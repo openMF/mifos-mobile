@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.guarantor.screens.guarantor_details
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.guarantor.screens.guarantorDetails
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -19,8 +28,8 @@ import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.network.asResult
 import org.mifos.mobile.feature.guarantor.R
+import org.mifos.mobile.feature.guarantor.screens.guarantorDetails.GuarantorDetailUiState.Loading
 import javax.inject.Inject
-
 
 /**
  * Currently we do not get back any response from the guarantorApi, hence we are using FakeRemoteDataSource
@@ -28,49 +37,51 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class GuarantorDetailViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val guarantorRepositoryImp: GuarantorRepository
+internal class GuarantorDetailViewModel @Inject constructor(
+    private val guarantorRepositoryImp: GuarantorRepository,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     val index = savedStateHandle.getStateFlow(key = Constants.INDEX, initialValue = -1)
     val loanId = savedStateHandle.getStateFlow<Long>(key = Constants.LOAN_ID, initialValue = -1)
 
-    private val _guarantorDeleteState =
-        MutableStateFlow<GuarantorDetailUiState>(GuarantorDetailUiState.Loading)
-    val guarantorDeleteState: StateFlow<GuarantorDetailUiState> = _guarantorDeleteState
+    private val _guarantorDeleteState = MutableStateFlow<GuarantorDetailUiState>(Loading)
+    private val guarantorDeleteState: StateFlow<GuarantorDetailUiState> = _guarantorDeleteState
 
     private var guarantorItem = loanId
         .flatMapLatest { loanId ->
             guarantorRepositoryImp.getGuarantorList(loanId = loanId)
         }.asResult().map { result ->
             when (result) {
-                is Result.Success -> GuarantorDetailUiState.ShowDetail(guarantorItem = result.data?.filter { it?.status == true }
-                    ?.get(index = index.value))
-                is Result.Loading -> GuarantorDetailUiState.Loading
+                is Result.Success -> GuarantorDetailUiState.ShowDetail(
+                    guarantorItem = result.data?.filter { it?.status == true }
+                        ?.get(index = index.value),
+                )
+
+                is Result.Loading -> Loading
                 is Result.Error -> GuarantorDetailUiState.Error(result.exception.message)
             }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(300),
-            initialValue = GuarantorDetailUiState.Loading
+            initialValue = Loading,
         )
 
     val guarantorUiState: StateFlow<GuarantorDetailUiState> = merge(
         guarantorItem,
-        guarantorDeleteState
+        guarantorDeleteState,
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(300),
-        initialValue = GuarantorDetailUiState.Loading
+        initialValue = Loading,
     )
 
     fun deleteGuarantor(guarantorId: Long) {
         viewModelScope.launch {
-            _guarantorDeleteState.value = GuarantorDetailUiState.Loading
+            _guarantorDeleteState.value = Loading
             guarantorRepositoryImp.deleteGuarantor(
                 loanId = loanId.value,
-                guarantorId = guarantorId
+                guarantorId = guarantorId,
             ).catch { e ->
                 _guarantorDeleteState.value = GuarantorDetailUiState.Error(e.message)
             }.collect { response ->
@@ -81,7 +92,7 @@ class GuarantorDetailViewModel @Inject constructor(
     }
 }
 
-sealed class GuarantorDetailUiState {
+internal sealed class GuarantorDetailUiState {
     data class GuarantorDeletedSuccessfully(val messageResId: Int) : GuarantorDetailUiState()
     data class Error(val message: String?) : GuarantorDetailUiState()
     data class ShowDetail(val guarantorItem: GuarantorPayload?) : GuarantorDetailUiState()
