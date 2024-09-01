@@ -26,17 +26,18 @@ include(":androidApp")
 include(":core:ui")
 include(":core:designsystem")
 include(":core:logs")
-include(":feature:guarantor")
 include(":core:model")
 include(":core:common")
 include(":core:data")
 include(":core:network")
 include(":core:datastore")
+include(":core:qrcode")
 
 // Feature Modules
 include(":feature:loan")
 include(":feature:beneficiary")
 include(":feature:savings")
+include(":feature:guarantor")
 include(":feature:qr")
 include(":feature:transfer-process")
 include(":feature:account")
@@ -64,3 +65,4 @@ include(":libs:mifos-passcode")
 
 // Kotlin Multiplatform Modules
 include(":shared")
+

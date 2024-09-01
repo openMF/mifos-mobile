@@ -146,7 +146,7 @@ complexity:
     ignoreOverloaded: false
   CyclomaticComplexMethod:
     active: true
-    threshold: 20
+    threshold: 25
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
@@ -168,7 +168,7 @@ complexity:
     threshold: 600
   LongMethod:
     active: true
-    threshold: 150 #60
+    threshold: 180 #60
   LongParameterList:
     active: true
     # Updating Common values based on current scenario

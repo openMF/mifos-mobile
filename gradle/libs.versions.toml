@@ -28,7 +28,6 @@ compileSdk = "34"
 
 coreKtxVersion = "1.12.0"
 coreTestingVersion = "2.2.0"
-coreVersion = "3.5.2"
 cameraxVersion = "1.3.1"
 compose-material = "1.6.8"
 
@@ -110,7 +109,7 @@ uihouseVersion = "alpha-2.1"
 
 vectordrawableVersion = "1.1.0"
 
-zxingVersion = "1.9.13"
+zxingVersion = "3.5.3"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-test-manifest"]
@@ -226,7 +225,7 @@ slack-compose-lint = {group="com.slack.lint.compose",name="compose-lint-checks",
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 twitter-detekt-compose = { group = "com.twitter.compose.rules", name = "detekt", version.ref = "twitter-detekt-compose" }
 
-zxing-core = { module = "com.google.zxing:core", version.ref = "coreVersion" }
+zxing-core = { module = "com.google.zxing:core", version.ref = "zxingVersion" }
 
 ccp = { module = "com.hbb20:ccp", version.ref = "ccpVersion" }
 countrycodechooser = { module = "com.github.ParveshSandila:CountryCodeChooser", version.ref = "countrycodechooserVersion" }
@@ -254,7 +253,6 @@ work-testing = { group = "androidx.work", name = "work-testing", version = "2.8.
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-zxing = { module = "me.dm7.barcodescanner:zxing", version.ref = "zxingVersion" }
 spotless-gradle = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotlessVersion" }
 
 [plugins]

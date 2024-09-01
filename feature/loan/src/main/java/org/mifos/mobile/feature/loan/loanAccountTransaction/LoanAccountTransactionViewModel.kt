@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.loan.loan_account_transaction
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanAccountTransaction
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -16,9 +25,9 @@ import org.mifos.mobile.core.network.asResult
 import javax.inject.Inject
 
 @HiltViewModel
-class LoanAccountTransactionViewModel @Inject constructor(
+internal class LoanAccountTransactionViewModel @Inject constructor(
     private val loanRepositoryImp: LoanRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     val loanId = savedStateHandle.getStateFlow<Long?>(key = Constants.LOAN_ID, initialValue = null)
 
@@ -37,12 +46,13 @@ class LoanAccountTransactionViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = LoanAccountTransactionUiState.Loading
+            initialValue = LoanAccountTransactionUiState.Loading,
         )
 }
 
-sealed class LoanAccountTransactionUiState() {
+internal sealed class LoanAccountTransactionUiState {
     data object Loading : LoanAccountTransactionUiState()
     data object Error : LoanAccountTransactionUiState()
-    data class Success(val loanWithAssociations: LoanWithAssociations?) : LoanAccountTransactionUiState()
+    data class Success(val loanWithAssociations: LoanWithAssociations?) :
+        LoanAccountTransactionUiState()
 }

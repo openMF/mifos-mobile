@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.loan.loan_account
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanAccount
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -14,23 +23,28 @@ import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
+import org.mifos.mobile.core.qr.QrCodeGenerator
 import javax.inject.Inject
 
 @HiltViewModel
-class LoanAccountsDetailViewModel @Inject constructor(
+internal class LoanAccountsDetailViewModel @Inject constructor(
     private val loanRepositoryImp: LoanRepository,
     savedStateHandle: SavedStateHandle,
-    private val preferencesHelper: PreferencesHelper
+    private val preferencesHelper: PreferencesHelper,
 ) : ViewModel() {
 
-    private val _loanUiState = MutableStateFlow<LoanAccountDetailUiState>(LoanAccountDetailUiState.Loading)
+    private val _loanUiState =
+        MutableStateFlow<LoanAccountDetailUiState>(LoanAccountDetailUiState.Loading)
     val loanUiState: StateFlow<LoanAccountDetailUiState> get() = _loanUiState
 
-    val loanId = savedStateHandle.getStateFlow<Long>(key = LOAN_ID, initialValue = -1L)
+    val loanId = savedStateHandle.getStateFlow(key = LOAN_ID, initialValue = -1L)
 
     private var _loanWithAssociations: LoanWithAssociations? = null
     val loanWithAssociations get() = _loanWithAssociations
+
+    init {
+        loadLoanAccountDetails()
+    }
 
     fun loadLoanAccountDetails() {
         viewModelScope.launch {
@@ -45,7 +59,10 @@ class LoanAccountsDetailViewModel @Inject constructor(
         _loanWithAssociations = loanWithAssociations
         val uiState = when {
             loanWithAssociations == null -> LoanAccountDetailUiState.Error
-            loanWithAssociations.status?.active == true -> LoanAccountDetailUiState.Success(loanWithAssociations)
+            loanWithAssociations.status?.active == true -> LoanAccountDetailUiState.Success(
+                loanWithAssociations,
+            )
+
             loanWithAssociations.status?.pendingApproval == true -> LoanAccountDetailUiState.ApprovalPending
             loanWithAssociations.status?.waitingForDisbursal == true -> LoanAccountDetailUiState.WaitingForDisburse
             else -> LoanAccountDetailUiState.Success(loanWithAssociations)
@@ -62,7 +79,7 @@ class LoanAccountsDetailViewModel @Inject constructor(
     }
 }
 
-sealed class LoanAccountDetailUiState {
+internal sealed class LoanAccountDetailUiState {
     data object Loading : LoanAccountDetailUiState()
     data object Error : LoanAccountDetailUiState()
     data object ApprovalPending : LoanAccountDetailUiState()

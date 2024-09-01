@@ -37,11 +37,11 @@ fun MifosButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = ButtonDefaults. shape,
-    colors: ButtonColors = ButtonDefaults. buttonColors(),
-    elevation: ButtonElevation? = ButtonDefaults. buttonElevation(),
+    shape: Shape = ButtonDefaults.shape,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults. ContentPadding,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     Button(
@@ -57,6 +57,33 @@ fun MifosButton(
         content = {
             Text(text = stringResource(id = textResId))
         },
+    )
+}
+
+@Composable
+fun MifosButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    shape: Shape = ButtonDefaults.shape,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
+    border: BorderStroke? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    content: @Composable (RowScope.() -> Unit),
+) {
+    Button(
+        modifier = modifier,
+        onClick = onClick,
+        enabled = enabled,
+        shape = shape,
+        colors = colors,
+        elevation = elevation,
+        border = border,
+        contentPadding = contentPadding,
+        interactionSource = interactionSource,
+        content = content,
     )
 }
 

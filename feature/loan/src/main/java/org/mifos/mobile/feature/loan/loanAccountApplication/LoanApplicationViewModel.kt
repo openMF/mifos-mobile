@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.loan.loan_account_application
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.loan.loanAccountApplication
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -21,23 +30,23 @@ import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.network.asResult
 import org.mifos.mobile.feature.loan.R
+import org.mifos.mobile.feature.loan.loanAccountApplication.LoanApplicationUiState.Loading
 import java.time.Instant
 import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class LoanApplicationViewModel @Inject constructor(
+internal class LoanApplicationViewModel @Inject constructor(
     private val loanRepositoryImp: LoanRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    var loanUiState: StateFlow<LoanApplicationUiState> =
-        MutableStateFlow(LoanApplicationUiState.Loading)
+    var loanUiState: StateFlow<LoanApplicationUiState> = MutableStateFlow(Loading)
 
     val loanId = savedStateHandle.getStateFlow<Long?>(key = Constants.LOAN_ID, initialValue = null)
     val loanState = savedStateHandle.getStateFlow(
         key = Constants.LOAN_STATE,
-        initialValue = LoanState.CREATE
+        initialValue = LoanState.CREATE,
     )
 
     var loanWithAssociations: StateFlow<LoanWithAssociations?> = loanId
@@ -47,7 +56,7 @@ class LoanApplicationViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
+            initialValue = null,
         )
 
     private val _loanApplicationScreenData = MutableStateFlow(LoanApplicationScreenData())
@@ -62,7 +71,7 @@ class LoanApplicationViewModel @Inject constructor(
         _loanApplicationScreenData.update {
             it.copy(
                 submittedDate = getTodayFormatted(),
-                disbursementDate = getTodayFormatted()
+                disbursementDate = getTodayFormatted(),
             )
         }
     }
@@ -74,19 +83,22 @@ class LoanApplicationViewModel @Inject constructor(
                 when (result) {
                     is Result.Success -> {
                         loanTemplate = result.data ?: LoanTemplate()
-                        if (loanState == LoanState.CREATE) showLoanTemplate(loanTemplate = loanTemplate)
-                        else showUpdateLoanTemplate(loanTemplate = loanTemplate)
+                        if (loanState == LoanState.CREATE) {
+                            showLoanTemplate(loanTemplate = loanTemplate)
+                        } else {
+                            showUpdateLoanTemplate(loanTemplate = loanTemplate)
+                        }
                         LoanApplicationUiState.Success
                     }
 
-                    is Result.Loading -> LoanApplicationUiState.Loading
+                    is Result.Loading -> Loading
                     is Result.Error -> LoanApplicationUiState.Error(R.string.error_fetching_template)
                 }
             }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = LoanApplicationUiState.Loading
+                initialValue = Loading,
             )
     }
 
@@ -97,22 +109,25 @@ class LoanApplicationViewModel @Inject constructor(
                 when (result) {
                     is Result.Success -> {
                         result.data?.let {
-                            if (loanState == LoanState.CREATE) showLoanTemplateByProduct(
-                                loanTemplate = it
-                            )
-                            else showUpdateLoanTemplateByProduct(loanTemplate = it)
+                            if (loanState == LoanState.CREATE) {
+                                showLoanTemplateByProduct(
+                                    loanTemplate = it,
+                                )
+                            } else {
+                                showUpdateLoanTemplateByProduct(loanTemplate = it)
+                            }
                         }
                         LoanApplicationUiState.Success
                     }
 
-                    is Result.Loading -> LoanApplicationUiState.Loading
+                    is Result.Loading -> Loading
                     is Result.Error -> LoanApplicationUiState.Error(R.string.error_fetching_template)
                 }
             }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = LoanApplicationUiState.Loading
+                initialValue = Loading,
             )
     }
 
@@ -128,23 +143,23 @@ class LoanApplicationViewModel @Inject constructor(
         _loanApplicationScreenData.update {
             it.copy(
                 listLoanProducts = listLoanProducts,
-                selectedLoanProduct = loanWithAssociations?.value?.loanProductName,
-                accountNumber = loanWithAssociations?.value?.accountNo,
-                clientName = loanWithAssociations?.value?.clientName,
-                currencyLabel = loanWithAssociations?.value?.currency?.displayLabel,
+                selectedLoanProduct = loanWithAssociations.value?.loanProductName,
+                accountNumber = loanWithAssociations.value?.accountNo,
+                clientName = loanWithAssociations.value?.clientName,
+                currencyLabel = loanWithAssociations.value?.currency?.displayLabel,
                 principalAmount = String.format(
                     Locale.getDefault(),
                     "%.2f",
-                    loanWithAssociations?.value?.principal
+                    loanWithAssociations.value?.principal,
                 ),
                 submittedDate = DateHelper.getDateAsString(
-                    loanWithAssociations?.value?.timeline?.submittedOnDate,
-                    "dd-MM-yyyy"
+                    loanWithAssociations.value?.timeline?.submittedOnDate,
+                    "dd-MM-yyyy",
                 ),
                 disbursementDate = DateHelper.getDateAsString(
-                    loanWithAssociations?.value?.timeline?.expectedDisbursementDate,
-                    "dd-MM-yyyy"
-                )
+                    loanWithAssociations.value?.timeline?.expectedDisbursementDate,
+                    "dd-MM-yyyy",
+                ),
             )
         }
     }
@@ -161,7 +176,7 @@ class LoanApplicationViewModel @Inject constructor(
                 principalAmount = String.format(
                     Locale.getDefault(),
                     "%.2f",
-                    loanTemplate.principal
+                    loanTemplate.principal,
                 ),
             )
         }
@@ -187,7 +202,7 @@ class LoanApplicationViewModel @Inject constructor(
                     principalAmount = String.format(
                         Locale.getDefault(),
                         "%.2f",
-                        loanTemplate.principal
+                        loanTemplate.principal,
                     ),
                 )
             }
@@ -214,7 +229,7 @@ class LoanApplicationViewModel @Inject constructor(
     }
 
     fun productSelected(position: Int) {
-        productId = loanTemplate?.productOptions?.get(position)?.id ?: 0
+        productId = loanTemplate.productOptions[position].id ?: 0
         loadLoanApplicationTemplateByProduct(productId, loanState.value)
         _loanApplicationScreenData.update {
             it.copy(selectedLoanProduct = loanApplicationScreenData.value.listLoanProducts[position])
@@ -224,10 +239,12 @@ class LoanApplicationViewModel @Inject constructor(
     fun purposeSelected(position: Int) {
         loanTemplate.loanPurposeOptions.let {
             if (it.size > position) {
-                purposeId = loanTemplate.loanPurposeOptions.get(position).id ?: 0
+                purposeId = loanTemplate.loanPurposeOptions[position].id ?: 0
             }
         }
-        _loanApplicationScreenData.update { it.copy(selectedLoanPurpose = loanApplicationScreenData.value.listLoanPurpose[position]) }
+        _loanApplicationScreenData.update {
+            it.copy(selectedLoanPurpose = loanApplicationScreenData.value.listLoanPurpose[position])
+        }
     }
 
     fun setDisburseDate(date: String) {
@@ -237,10 +254,9 @@ class LoanApplicationViewModel @Inject constructor(
     fun setPrincipalAmount(amount: String) {
         _loanApplicationScreenData.update { it.copy(principalAmount = amount) }
     }
-
 }
 
-data class LoanApplicationScreenData(
+internal data class LoanApplicationScreenData(
     var accountNumber: String? = null,
     var clientName: String? = null,
     var listLoanProducts: List<String?> = listOf(),
@@ -254,7 +270,7 @@ data class LoanApplicationScreenData(
     var submittedDate: String? = null,
 )
 
-sealed class LoanApplicationUiState() {
+internal sealed class LoanApplicationUiState {
     data object Loading : LoanApplicationUiState()
     data object Success : LoanApplicationUiState()
     data class Error(val errorMessageId: Int) : LoanApplicationUiState()
