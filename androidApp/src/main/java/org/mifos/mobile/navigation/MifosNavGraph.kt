@@ -50,8 +50,8 @@ import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
-import org.mifos.mobile.feature.recent_transaction.navigation.navigateToRecentTransaction
-import org.mifos.mobile.feature.recent_transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.transaction.navigation.navigateToRecentTransaction
+import org.mifos.mobile.feature.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
