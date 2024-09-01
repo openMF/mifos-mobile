@@ -135,9 +135,7 @@ fun RootNavGraph(
             navController = navController
         )
 
-        locationsNavGraph(
-            navController = navController
-        )
+        locationsNavGraph()
 
         helpNavGraph(
             findLocations = navController::navigateToLocationsScreen,
