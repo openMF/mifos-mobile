@@ -15,7 +15,7 @@ import org.mifos.mobile.core.model.entity.Currency
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.accounts.loan.calendardata.Type
-import org.mifos.mobile.feature.recent_transaction.utils.RecentTransactionState
+import org.mifos.mobile.feature.transaction.utils.RecentTransactionState
 import org.mifos.mobile.util.RxSchedulersOverrideRule
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -46,14 +46,14 @@ class RecentTransactionViewModelTest {
     @Mock
     lateinit var currency: Currency
 
-    lateinit var viewModel: org.mifos.mobile.feature.recent_transaction.viewmodel.RecentTransactionViewModel
+    lateinit var viewModel: org.mifos.mobile.feature.transaction.viewmodel.RecentTransactionViewModel
 
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         viewModel =
-            org.mifos.mobile.feature.recent_transaction.viewmodel.RecentTransactionViewModel(
+            org.mifos.mobile.feature.transaction.viewmodel.RecentTransactionViewModel(
                 recentTransactionRepositoryImp
             )
     }
