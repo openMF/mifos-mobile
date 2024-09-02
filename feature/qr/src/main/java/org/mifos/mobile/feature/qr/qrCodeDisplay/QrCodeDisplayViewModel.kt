@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.qr.qr_code_display
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.qr.qrCodeDisplay
 
 import android.graphics.Bitmap
 import androidx.lifecycle.SavedStateHandle
@@ -10,17 +19,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import org.mifos.mobile.core.logs.AnalyticsEvent
-import org.mifos.mobile.core.logs.AnalyticsHelper
+import org.mifos.mobile.core.qr.QrCodeGenerator
 import org.mifos.mobile.feature.qr.navigation.QR_ARGS
-import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
 import javax.inject.Inject
 
 @HiltViewModel
-class QrCodeDisplayViewModel @Inject constructor(
-    private var analyticsHelper: AnalyticsHelper,
-    savedStateHandle: SavedStateHandle
-): ViewModel() {
+internal class QrCodeDisplayViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
     private val qrString = savedStateHandle.getStateFlow<String?>(key = QR_ARGS, initialValue = null)
 
@@ -28,32 +34,23 @@ class QrCodeDisplayViewModel @Inject constructor(
         .flatMapLatest { qrString ->
             flow {
                 val qrBitmap = QrCodeGenerator.encodeAsBitmap(str = qrString)
-                if(qrBitmap == null) {
+                if (qrBitmap == null) {
                     emit(QrCodeDisplayUiState.Error())
                 } else {
                     emit(QrCodeDisplayUiState.Success(qrBitmap = qrBitmap))
                 }
             }
         }.catch {
-            analyticsHelper.logEvent(
-                AnalyticsEvent(
-                    type = AnalyticsEvent.AnalyticsEventTypes.EXCEPTION.type,
-                    listOf(
-                        AnalyticsEvent.Param(key = AnalyticsEvent.ParamKeys.SCREEN_NAME, value = it.message ?: "")
-                    )
-                )
-            )
             emit(QrCodeDisplayUiState.Error(errorMessage = it.message))
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(300),
-            initialValue = QrCodeDisplayUiState.Loading
+            initialValue = QrCodeDisplayUiState.Loading,
         )
 }
 
-sealed class QrCodeDisplayUiState {
-    data object Loading: QrCodeDisplayUiState()
+internal sealed class QrCodeDisplayUiState {
+    data object Loading : QrCodeDisplayUiState()
     data class Success(val qrBitmap: Bitmap) : QrCodeDisplayUiState()
-    data class Error(val errorMessage: String? = null): QrCodeDisplayUiState()
+    data class Error(val errorMessage: String? = null) : QrCodeDisplayUiState()
 }
-

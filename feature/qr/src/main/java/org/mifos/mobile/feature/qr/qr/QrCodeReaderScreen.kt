@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.qr.qr
 
 import android.widget.Toast
@@ -16,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -25,29 +33,37 @@ import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
+import org.mifos.mobile.core.qr.BarcodeCamera
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.qr.R
 
 @Composable
-fun QrCodeReaderScreen(
+internal fun QrCodeReaderScreen(
     navigateBack: () -> Unit,
-    openBeneficiaryApplication: ( Beneficiary, BeneficiaryState ) -> Unit,
+    openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val gson = Gson()
 
-
     MifosScaffold(
         topBarTitleResId = R.string.add_beneficiary,
         navigateBack = navigateBack,
-        content = { it ->
-            Box(modifier = Modifier
-                .padding(it)
-                .fillMaxSize()) {
+        modifier = modifier,
+        content = {
+            Box(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize(),
+            ) {
                 QrCodeReaderContent(
-                    qrScanned = { text->
+                    qrScanned = { text ->
                         try {
                             val beneficiary = gson.fromJson(text, Beneficiary::class.java)
-                            openBeneficiaryApplication.invoke(beneficiary, BeneficiaryState.CREATE_QR)
+                            openBeneficiaryApplication.invoke(
+                                beneficiary,
+                                BeneficiaryState.CREATE_QR,
+                            )
                         } catch (e: JsonSyntaxException) {
                             Toast.makeText(
                                 context,
@@ -56,23 +72,24 @@ fun QrCodeReaderScreen(
                             ).show()
                         }
                     },
-                    navigateBack = navigateBack
+                    navigateBack = navigateBack,
                 )
             }
-        }
+        },
     )
 }
 
 @OptIn(ExperimentalGetImage::class)
 @Composable
-fun QrCodeReaderContent(
+private fun QrCodeReaderContent(
     qrScanned: (String) -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val camera = remember { BarcodeCamera() }
     var isFlashOn by remember { mutableStateOf(false) }
 
-    Box {
+    Box(modifier) {
         camera.BarcodeReaderCamera(
             onBarcodeScanned = { barcode ->
                 barcode?.let {
@@ -87,25 +104,28 @@ fun QrCodeReaderContent(
             onClick = { isFlashOn = !isFlashOn },
             content = {
                 Icon(
-                    imageVector = if(isFlashOn) MifosIcons.FlashOn
-                    else MifosIcons.FlashOff,
-                    contentDescription = null
+                    imageVector = if (isFlashOn) {
+                        MifosIcons.FlashOn
+                    } else {
+                        MifosIcons.FlashOff
+                    },
+                    contentDescription = null,
                 )
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 20.dp)
+                .padding(bottom = 20.dp),
         )
     }
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun QrCodeReaderScreenPreview() {
+private fun QrCodeReaderScreenPreview() {
     MifosMobileTheme {
         QrCodeReaderScreen(
             openBeneficiaryApplication = { _, _ -> },
-            navigateBack = {}
+            navigateBack = {},
         )
     }
 }

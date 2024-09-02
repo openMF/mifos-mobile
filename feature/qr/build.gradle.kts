@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 plugins {
     alias(libs.plugins.mifos.android.feature)
     alias(libs.plugins.mifos.android.library.compose)
@@ -8,31 +17,9 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.ui)
-    implementation(projects.core.common)
-    implementation(projects.core.model)
-    implementation(projects.core.data)
-    implementation(projects.core.logs)
+    implementation(projects.core.qrcode)
 
-    //cameraX
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.core)
-
-    //qr code
-    implementation("com.google.zxing:core:3.5.2")
-//    implementation("me.dm7.barcodescanner:zxing:1.9.13")
-
-    //gson
-    implementation(libs.squareup.retrofit.converter.gson)
-
-    //image cropper
-    implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")
-
-    //guava for ListenableFuture
-    implementation ("com.google.guava:guava:33.0.0-android")
-
-    //permissions
-    implementation ("com.google.accompanist:accompanist-permissions:0.25.0")
+    implementation(libs.android.image.cropper)
+    implementation (libs.accompanist.permissions)
+    implementation(libs.camera.core)
 }
