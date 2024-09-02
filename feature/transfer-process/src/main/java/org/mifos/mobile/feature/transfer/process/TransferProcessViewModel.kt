@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.transfer.process
 
 import androidx.lifecycle.SavedStateHandle
@@ -8,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -17,20 +27,26 @@ import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
+import org.mifos.mobile.feature.transfer.process.TransferProcessUiState.Initial
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferProcessViewModel @Inject constructor(
+internal class TransferProcessViewModel @Inject constructor(
     private val transferRepositoryImp: TransferRepository,
-    savedStateHandle: SavedStateHandle
-) :
-    ViewModel() {
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
-    private val _transferUiState = MutableStateFlow<TransferProcessUiState>(TransferProcessUiState.Initial)
-    val transferUiState: StateFlow<TransferProcessUiState> get() = _transferUiState
+    private val _transferUiState = MutableStateFlow<TransferProcessUiState>(Initial)
+    val transferUiState = _transferUiState.asStateFlow()
 
-    private val transferPayloadString = savedStateHandle.getStateFlow<String?>(key = PAYLOAD, initialValue = null)
-    private val transferType = savedStateHandle.getStateFlow<TransferType?>(key = TRANSFER_TYPE, initialValue = null)
+    private val transferPayloadString = savedStateHandle.getStateFlow<String?>(
+        key = PAYLOAD,
+        initialValue = null,
+    )
+    private val transferType = savedStateHandle.getStateFlow<TransferType?>(
+        key = TRANSFER_TYPE,
+        initialValue = null,
+    )
 
     val transferPayload: StateFlow<TransferPayload?> = transferPayloadString
         .map { jsonString ->
@@ -40,7 +56,7 @@ class TransferProcessViewModel @Inject constructor(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = null
+            initialValue = null,
         )
 
     fun makeTransfer() {
@@ -63,7 +79,7 @@ class TransferProcessViewModel @Inject constructor(
                     locale = payload.locale,
                     fromAccountNumber = payload.fromAccountNumber,
                     toAccountNumber = payload.toAccountNumber,
-                    transferType = transferType.value
+                    transferType = transferType.value,
                 ).catch { e ->
                     _transferUiState.value = TransferProcessUiState.Error(e.message)
                 }.collect {
@@ -74,7 +90,7 @@ class TransferProcessViewModel @Inject constructor(
     }
 }
 
-sealed class TransferProcessUiState {
+internal sealed class TransferProcessUiState {
     data object Initial : TransferProcessUiState()
     data object Loading : TransferProcessUiState()
     data object Success : TransferProcessUiState()

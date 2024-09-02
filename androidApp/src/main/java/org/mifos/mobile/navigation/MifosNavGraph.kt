@@ -153,9 +153,7 @@ fun RootNavGraph(
             navigateToOssLicense = { startActivity(context, OssLicensesMenuActivity::class.java) }
         )
 
-        transferProcessNavGraph(
-            navController = navController
-        )
+        transferProcessNavGraph(navigateBack = navController::popBackStack)
 
         beneficiaryNavGraph(
             navController = navController,
