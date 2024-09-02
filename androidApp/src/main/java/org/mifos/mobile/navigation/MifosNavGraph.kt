@@ -120,7 +120,7 @@ fun RootNavGraph(
         )
 
         settingsNavGraph(
-            navController = navController,
+            navigateBack = navController::popBackStack,
             changePassword = navController::navigateToUpdatePassword,
             changePasscode = {}, // { navigateToUpdatePasscodeActivity(it, context) },
             navigateToLoginScreen = navController::navigateToLoginScreen,

@@ -1,6 +1,17 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.settings
 
 import android.content.Context
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +39,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,63 +50,72 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AppTheme
 import org.mifos.mobile.core.model.enums.MifosAppLanguage
 import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import java.util.Locale
 
 @Composable
-fun SettingsScreen(
-    viewModel: SettingsViewModel = hiltViewModel(),
+internal fun SettingsScreen(
     navigateBack: () -> Unit,
     navigateToLoginScreen: () -> Unit,
     changePassword: () -> Unit,
     changePasscode: (String) -> Unit,
-    languageChanged: () -> Unit
+    languageChanged: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
-
-    val baseURL = viewModel.baseUrl.collectAsStateWithLifecycle()
-    val tenant = viewModel.tenant.collectAsStateWithLifecycle()
-    val passcode = viewModel.passcode.collectAsStateWithLifecycle()
-    val theme = viewModel.theme.collectAsStateWithLifecycle()
-    val language = viewModel.language.collectAsStateWithLifecycle()
-
     val context = LocalContext.current
 
+    val baseURL by viewModel.baseUrl.collectAsStateWithLifecycle()
+    val tenant by viewModel.tenant.collectAsStateWithLifecycle()
+    val passcode by viewModel.passcode.collectAsStateWithLifecycle()
+    val theme by viewModel.theme.collectAsStateWithLifecycle()
+    val language by viewModel.language.collectAsStateWithLifecycle()
+
     SettingsScreen(
+        selectedLanguage = language,
+        selectedTheme = theme,
+        baseURL = baseURL ?: "",
+        tenant = tenant ?: "",
         navigateBack = navigateBack,
-        selectedLanguage = language.value,
-        selectedTheme = theme.value,
-        baseURL = baseURL.value ?: "",
-        tenant = tenant.value ?: "",
-        updateLanguage = {
-            val isSystemLanguage = viewModel.updateLanguage(it)
-            updateLanguageLocale(context = context, language = language.value, isSystemLanguage = isSystemLanguage)
-            languageChanged()
-        },
-        updateTheme = { viewModel.updateTheme(it) },
         changePassword = changePassword,
-        changePasscode = { changePasscode(passcode.value ?: "") },
-        handleEndpointUpdate = { baseURL, tenant ->
-            if(viewModel.tryUpdatingEndpoint(selectedBaseUrl = baseURL, selectedTenant = tenant)) {
+        changePasscode = { changePasscode(passcode ?: "") },
+        handleEndpointUpdate = { url, selectedTenant ->
+            if (viewModel.tryUpdatingEndpoint(
+                    selectedBaseUrl = url,
+                    selectedTenant = selectedTenant,
+                )
+            ) {
                 navigateToLoginScreen()
             }
         },
+        updateTheme = viewModel::updateTheme,
+        updateLanguage = {
+            val isSystemLanguage = viewModel.updateLanguage(it)
+            updateLanguageLocale(
+                context = context,
+                language = language,
+                isSystemLanguage = isSystemLanguage,
+            )
+            languageChanged()
+        },
+        modifier = modifier,
     )
 }
 
-
 @Composable
-fun SettingsScreen(
-    navigateBack: () -> Unit,
+private fun SettingsScreen(
     selectedLanguage: MifosAppLanguage,
     selectedTheme: AppTheme,
     baseURL: String,
     tenant: String,
+    navigateBack: () -> Unit,
     changePassword: () -> Unit,
     changePasscode: () -> Unit,
     handleEndpointUpdate: (baseURL: String, tenant: String) -> Unit,
     updateTheme: (theme: AppTheme) -> Unit,
-    updateLanguage: (language: MifosAppLanguage) -> Unit
+    updateLanguage: (language: MifosAppLanguage) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-
     var showLanguageUpdateDialog by rememberSaveable { mutableStateOf(false) }
     var showEndpointUpdateDialog by rememberSaveable { mutableStateOf(false) }
     var showThemeUpdateDialog by rememberSaveable { mutableStateOf(false) }
@@ -105,78 +124,84 @@ fun SettingsScreen(
         topBar = {
             MifosTopBarTitle(
                 navigateBack = navigateBack,
-                topBarTitleResId = R.string.settings
+                topBarTitleResId = R.string.settings,
             )
-        }
+        },
+        modifier = modifier,
     ) {
         Column(
-            Modifier.padding(it)
+            Modifier.padding(it),
         ) {
             SettingsCards(
                 settingsCardClicked = { item ->
-                    when(item) {
+                    when (item) {
                         SettingsCardItem.PASSWORD -> changePassword()
                         SettingsCardItem.PASSCODE -> changePasscode()
                         SettingsCardItem.LANGUAGE -> showLanguageUpdateDialog = true
                         SettingsCardItem.THEME -> showThemeUpdateDialog = true
                         SettingsCardItem.ENDPOINT -> showEndpointUpdateDialog = true
                     }
-                }
+                },
             )
         }
     }
 
-    if(showLanguageUpdateDialog) {
+    if (showLanguageUpdateDialog) {
         MifosRadioButtonDialog(
             titleResId = R.string.choose_language,
             items = stringArrayResource(R.array.languages),
             selectItem = { _, index -> updateLanguage(MifosAppLanguage.entries[index]) },
             onDismissRequest = { showLanguageUpdateDialog = false },
-            selectedItem = selectedLanguage.displayName
+            selectedItem = selectedLanguage.displayName,
         )
     }
 
-    if(showThemeUpdateDialog) {
+    if (showThemeUpdateDialog) {
         MifosRadioButtonDialog(
             titleResId = R.string.change_app_theme,
             items = AppTheme.entries.map { it.themeName }.toTypedArray(),
             selectItem = { _, index -> updateTheme(AppTheme.entries[index]) },
             onDismissRequest = { showThemeUpdateDialog = false },
-            selectedItem = selectedTheme.themeName
+            selectedItem = selectedTheme.themeName,
         )
     }
 
-    if(showEndpointUpdateDialog) {
+    if (showEndpointUpdateDialog) {
         UpdateEndpointDialogScreen(
             initialBaseURL = baseURL,
             initialTenant = tenant,
             onDismissRequest = { showEndpointUpdateDialog = false },
-            handleEndpointUpdate = handleEndpointUpdate
+            handleEndpointUpdate = handleEndpointUpdate,
         )
     }
 }
 
 @Composable
-fun SettingsCards(
+private fun SettingsCards(
     settingsCardClicked: (SettingsCardItem) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    LazyColumn {
+    LazyColumn(modifier) {
         items(SettingsCardItem.entries) { card ->
             if (card.firstItemInSubclass) {
+                Spacer(modifier = Modifier.height(16.dp))
                 TitleCard(title = card.subclassOf)
+                Spacer(modifier = Modifier.height(12.dp))
             }
 
             SettingsCardItem(
                 title = card.title,
                 details = card.details,
                 icon = card.icon,
-                onclick = { settingsCardClicked(card) }
+                onclick = { settingsCardClicked(card) },
             )
 
             if (card.showDividerInBottom) {
                 HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth().height(1.dp),
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp),
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f),
                 )
             }
         }
@@ -184,17 +209,18 @@ fun SettingsCards(
 }
 
 @Composable
-fun SettingsCardItem(
-    title: Int,
-    details: Int,
-    icon: Int,
-    onclick: () -> Unit
+private fun SettingsCardItem(
+    @StringRes title: Int,
+    @StringRes details: Int,
+    @DrawableRes icon: Int,
+    onclick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         shape = RoundedCornerShape(0.dp),
-        onClick = { onclick.invoke() }
+        onClick = { onclick.invoke() },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -203,14 +229,14 @@ fun SettingsCardItem(
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = null,
-                modifier = Modifier.weight(0.2f)
+                modifier = Modifier.weight(0.2f),
             )
             Column(
-                modifier = Modifier.weight(0.8f)
+                modifier = Modifier.weight(0.8f),
             ) {
                 Text(
                     text = stringResource(id = title),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
                     modifier = Modifier.padding(end = 16.dp),
@@ -224,22 +250,25 @@ fun SettingsCardItem(
 }
 
 @Composable
-fun TitleCard(
-    title: Int
+private fun TitleCard(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
 ) {
-    Spacer(modifier = Modifier.height(16.dp))
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.2f))
         Text(
             text = stringResource(id = title),
             modifier = Modifier.weight(0.8f),
-            fontSize = 14.sp
+            fontSize = 14.sp,
         )
     }
-    Spacer(modifier = Modifier.height(12.dp))
 }
 
-fun updateLanguageLocale(context: Context, language: MifosAppLanguage, isSystemLanguage: Boolean) {
+private fun updateLanguageLocale(
+    context: Context,
+    language: MifosAppLanguage,
+    isSystemLanguage: Boolean,
+) {
     if (!isSystemLanguage) {
         LanguageHelper.setLocale(context, language.code)
     } else {
@@ -253,20 +282,20 @@ fun updateLanguageLocale(context: Context, language: MifosAppLanguage, isSystemL
 }
 
 @Composable
-@Preview(showSystemUi = true, showBackground = true)
-fun PreviewSettingsScreen() {
+@DevicePreviews
+private fun PreviewSettingsScreen() {
     MifosMobileTheme {
         SettingsScreen(
             selectedLanguage = MifosAppLanguage.SYSTEM_LANGUAGE,
             selectedTheme = AppTheme.SYSTEM,
             baseURL = "",
             tenant = "",
-            handleEndpointUpdate = { _, _ -> },
-            updateLanguage = {},
-            updateTheme = {},
             navigateBack = {},
             changePassword = {},
-            changePasscode = {}
+            changePasscode = {},
+            handleEndpointUpdate = { _, _ -> },
+            updateTheme = {},
+            updateLanguage = {},
         )
     }
 }
