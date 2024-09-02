@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccount
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +24,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,47 +35,49 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mifos.mobile.core.common.utils.CurrencyUtil
+import org.mifos.mobile.core.common.utils.DateHelper
+import org.mifos.mobile.core.common.utils.SymbolsUtils
+import org.mifos.mobile.core.designsystem.components.MifosOutlinedButton
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
 import org.mifos.mobile.core.ui.component.MonitorListItemWithIcon
-import org.mifos.mobile.core.common.utils.CurrencyUtil
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.utils.SymbolsUtils
 import org.mifos.mobile.feature.savings.R
 
 @Composable
-fun SavingsAccountDetailContent(
+internal fun SavingsAccountDetailContent(
     savingsAccount: SavingsWithAssociations,
     deposit: () -> Unit,
     makeTransfer: () -> Unit,
     viewTransaction: () -> Unit,
     viewCharges: () -> Unit,
     viewQrCode: (SavingsWithAssociations) -> Unit,
-    callUs: () -> Unit
+    callUs: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
     val currencySymbol = savingsAccount.currency?.displaySymbol ?: "$"
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .verticalScroll(scrollState)
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         AccountDetailsCard(
-            makeTransfer = makeTransfer,
-            deposit = deposit,
+            currencySymbol = currencySymbol,
             savingsAccount = savingsAccount,
-            currencySymbol = currencySymbol
+            deposit = deposit,
+            makeTransfer = makeTransfer,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         LastTransactionCard(
             savingsWithAssociations = savingsAccount,
-            currencySymbol = currencySymbol
+            currencySymbol = currencySymbol,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -75,7 +85,7 @@ fun SavingsAccountDetailContent(
         SavingsMonitorComponent(
             viewTransaction = viewTransaction,
             viewCharges = viewCharges,
-            viewQrCode = { viewQrCode.invoke(savingsAccount) }
+            viewQrCode = { viewQrCode.invoke(savingsAccount) },
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -84,29 +94,33 @@ fun SavingsAccountDetailContent(
             Text(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                text = stringResource(id = R.string.need_help)
+                text = stringResource(id = R.string.need_help),
             )
             Spacer(modifier = Modifier.width(5.dp))
             MifosLinkText(
                 text = stringResource(id = R.string.help_line_number),
-                onClick = { callUs.invoke() },
-                isUnderlined = false
+                onClick = callUs,
+                isUnderlined = false,
             )
         }
     }
 }
 
 @Composable
-fun AccountDetailsCard(
-    modifier: Modifier = Modifier,
+private fun AccountDetailsCard(
+    currencySymbol: String,
     savingsAccount: SavingsWithAssociations,
     deposit: () -> Unit,
     makeTransfer: () -> Unit,
-    currencySymbol: String
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+
     OutlinedCard(modifier = modifier) {
-        Column(modifier = Modifier.padding(14.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(14.dp),
+        ) {
             MifosTextTitleDescDoubleLine(
                 title = stringResource(id = R.string.account_balance),
                 description = stringResource(
@@ -114,17 +128,19 @@ fun AccountDetailsCard(
                     currencySymbol,
                     CurrencyUtil.formatCurrency(
                         context = context,
-                        amt = savingsAccount.summary?.accountBalance ?: 0.0
-                    )
+                        amt = savingsAccount.summary?.accountBalance ?: 0.0,
+                    ),
                 ),
-                descriptionStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                descriptionStyle = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             StatusField(
                 title = stringResource(id = R.string.account_status),
-                accountStatus = savingsAccount.status ?: Status()
+                accountStatus = savingsAccount.status ?: Status(),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -142,9 +158,9 @@ fun AccountDetailsCard(
                 description = stringResource(
                     id = R.string.double_and_string,
                     savingsAccount.getNominalAnnualInterestRate(),
-                    SymbolsUtils.PERCENT
+                    SymbolsUtils.PERCENT,
                 ),
-                descriptionStyle = MaterialTheme.typography.bodyLarge
+                descriptionStyle = MaterialTheme.typography.bodyLarge,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -158,12 +174,12 @@ fun AccountDetailsCard(
                         CurrencyUtil.formatCurrency(
                             context = context,
                             amt = savingsAccount.summary?.totalDeposits ?: 0.0,
-                        )
+                        ),
                     )
                 } else {
                     stringResource(id = R.string.not_available)
                 },
-                descriptionStyle = MaterialTheme.typography.bodyLarge
+                descriptionStyle = MaterialTheme.typography.bodyLarge,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -173,7 +189,8 @@ fun AccountDetailsCard(
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
                 description = if (savingsAccount.summary?.totalDeposits != null) {
                     stringResource(
-                        id = R.string.string_and_string, currencySymbol,
+                        id = R.string.string_and_string,
+                        currencySymbol,
                         CurrencyUtil.formatCurrency(
                             context = context,
                             amt = savingsAccount.summary?.totalWithdrawals ?: 0.0,
@@ -181,35 +198,44 @@ fun AccountDetailsCard(
                     )
                 } else {
                     stringResource(id = R.string.no_withdrawals)
-                }
+                },
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedButton(onClick = {
-                    if(savingsAccount.status?.active == true) {
-                        deposit()
-                    }
-                }) { Text(text = stringResource(id = R.string.deposit)) }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                MifosOutlinedButton(
+                    textResId = R.string.deposit,
+                    onClick = {
+                        if (savingsAccount.status?.active == true) {
+                            deposit()
+                        }
+                    },
+                )
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                OutlinedButton(onClick = {
-                    if(savingsAccount.status?.active == true) {
-                        makeTransfer()
-                    }
-                }) { Text(text = stringResource(id = R.string.make_transfer)) }
+                MifosOutlinedButton(
+                    textResId = R.string.make_transfer,
+                    onClick = {
+                        if (savingsAccount.status?.active == true) {
+                            makeTransfer()
+                        }
+                    },
+                )
             }
         }
     }
 }
 
 @Composable
-fun LastTransactionCard(
+private fun LastTransactionCard(
     savingsWithAssociations: SavingsWithAssociations,
     currencySymbol: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val isTransactionEmpty = savingsWithAssociations.transactions.isEmpty()
@@ -219,7 +245,7 @@ fun LastTransactionCard(
             text = stringResource(id = R.string.last_trans),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -235,9 +261,9 @@ fun LastTransactionCard(
                         stringResource(
                             id = R.string.string_and_double,
                             currencySymbol,
-                            savingsWithAssociations.transactions[0].amount ?: 0.0
+                            savingsWithAssociations.transactions[0].amount ?: 0.0,
                         )
-                    }
+                    },
                 )
 
                 if (!isTransactionEmpty) {
@@ -247,7 +273,7 @@ fun LastTransactionCard(
                         descriptionStyle = MaterialTheme.typography.bodyLarge,
                         description = DateHelper.getDateAsString(
                             savingsWithAssociations.lastActiveTransactionDate,
-                        )
+                        ),
                     )
                 }
 
@@ -257,12 +283,13 @@ fun LastTransactionCard(
                         title = stringResource(id = R.string.min_required_balance),
                         descriptionStyle = MaterialTheme.typography.bodyLarge,
                         description = stringResource(
-                            id = R.string.string_and_string, currencySymbol,
+                            id = R.string.string_and_string,
+                            currencySymbol,
                             CurrencyUtil.formatCurrency(
                                 context = context,
                                 amt = savingsWithAssociations.minRequiredOpeningBalance ?: 0.0,
                             ),
-                        )
+                        ),
                     )
                 }
             }
@@ -271,11 +298,11 @@ fun LastTransactionCard(
 }
 
 @Composable
-fun SavingsMonitorComponent(
-    modifier: Modifier = Modifier,
+private fun SavingsMonitorComponent(
     viewTransaction: () -> Unit,
     viewCharges: () -> Unit,
     viewQrCode: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -291,37 +318,38 @@ fun SavingsMonitorComponent(
             titleId = R.string.transactions,
             subTitleId = R.string.view_transactions,
             iconId = R.drawable.ic_compare_arrows_black_24dp,
-            onClick = viewTransaction
+            onClick = viewTransaction,
         )
         MonitorListItemWithIcon(
             titleId = R.string.savings_charges,
             subTitleId = R.string.view_charges,
             iconId = R.drawable.ic_charges,
-            onClick = viewCharges
+            onClick = viewCharges,
         )
         MonitorListItemWithIcon(
             titleId = R.string.qr_code,
             subTitleId = R.string.view_qr_code,
             iconId = R.drawable.ic_qrcode_scan,
-            onClick = viewQrCode
+            onClick = viewQrCode,
         )
     }
 }
 
 @Composable
-fun StatusField(
+private fun StatusField(
     title: String,
-    accountStatus: Status
+    accountStatus: Status,
+    modifier: Modifier = Modifier,
 ) {
     val (color, textResId) = accountStatus.getStatusColorAndText()
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = title,
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
                 .alpha(0.7f)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -329,13 +357,13 @@ fun StatusField(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(color = color)
-                    .size(15.dp)
+                    .size(15.dp),
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(id = textResId),
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

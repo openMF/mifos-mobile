@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account_withdraw
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccountWithdraw
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -9,7 +18,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -30,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.getTodayFormatted
+import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.components.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -37,56 +45,65 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
 import org.mifos.mobile.core.ui.component.NoInternet
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.savings.R
 
-
 @Composable
-fun SavingsAccountWithdrawScreen(
-    viewModel: SavingsAccountWithdrawViewModel = hiltViewModel(),
+internal fun SavingsAccountWithdrawScreen(
     navigateBack: (withdrawSuccess: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SavingsAccountWithdrawViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.savingsAccountWithdrawUiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val savingsWithAssociations by viewModel.savingsWithAssociations.collectAsStateWithLifecycle()
 
     SavingsAccountWithdrawScreen(
         uiState = uiState,
         savingsWithAssociations = savingsWithAssociations,
         navigateBack = navigateBack,
-        withdraw = { viewModel.submitWithdrawSavingsAccount(it) }
+        withdraw = viewModel::submitWithdrawSavingsAccount,
+        modifier = modifier,
     )
 }
 
 @Composable
-fun SavingsAccountWithdrawScreen(
+private fun SavingsAccountWithdrawScreen(
     uiState: SavingsAccountWithdrawUiState,
     savingsWithAssociations: SavingsWithAssociations?,
     navigateBack: (withdrawSuccess: Boolean) -> Unit,
     withdraw: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         MifosTopBar(
             navigateBack = { navigateBack(false) },
-            title = { Text(text = stringResource(id = R.string.withdraw_savings_account)) }
+            title = { Text(text = stringResource(id = R.string.withdraw_savings_account)) },
         )
 
-        Box(modifier= Modifier.weight(1f)) {
+        Box(modifier = Modifier.weight(1f)) {
             SavingsAccountWithdrawContent(
                 savingsWithAssociations = savingsWithAssociations,
-                withdraw = withdraw
+                withdraw = withdraw,
             )
 
             when (uiState) {
                 is SavingsAccountWithdrawUiState.Loading -> {
-                    MifosProgressIndicator(modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)))
+                    MifosProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
+                    )
                 }
 
                 is SavingsAccountWithdrawUiState.Success -> {
                     LaunchedEffect(true) {
-                        Toast.makeText(context, R.string.savings_account_withdraw_successful, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            R.string.savings_account_withdraw_successful,
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     }
                     navigateBack(true)
                 }
@@ -98,12 +115,11 @@ fun SavingsAccountWithdrawScreen(
                 is SavingsAccountWithdrawUiState.WithdrawUiReady -> {}
             }
         }
-
     }
 }
 
 @Composable
-fun ErrorComponent(
+private fun ErrorComponent(
     errorToast: String?,
 ) {
     val context = LocalContext.current
@@ -120,31 +136,32 @@ fun ErrorComponent(
 }
 
 @Composable
-fun SavingsAccountWithdrawContent(
+private fun SavingsAccountWithdrawContent(
     savingsWithAssociations: SavingsWithAssociations?,
-    withdraw: (String) -> Unit
+    withdraw: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var remark by remember { mutableStateOf(TextFieldValue("")) }
     var remarkFieldError by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(16.dp)
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         MifosTitleDescSingleLineEqual(
             title = stringResource(id = R.string.client_name),
-            description = savingsWithAssociations?.clientName ?: ""
+            description = savingsWithAssociations?.clientName ?: "",
         )
         Spacer(modifier = Modifier.height(8.dp))
         MifosTitleDescSingleLineEqual(
             title = stringResource(id = R.string.account_number),
-            description = savingsWithAssociations?.accountNo ?: ""
+            description = savingsWithAssociations?.accountNo ?: "",
         )
         Spacer(modifier = Modifier.height(8.dp))
         MifosTitleDescSingleLineEqual(
             title = stringResource(id = R.string.withdrawal_date),
-            description = getTodayFormatted()
+            description = getTodayFormatted(),
         )
         Spacer(modifier = Modifier.height(16.dp))
         MifosOutlinedTextField(
@@ -154,15 +171,16 @@ fun SavingsAccountWithdrawContent(
             modifier = Modifier.fillMaxWidth(),
             supportingText = stringResource(
                 R.string.error_validation_blank,
-                stringResource(R.string.remark)
+                stringResource(R.string.remark),
             ),
             onValueChange = {
                 remark = it
                 remarkFieldError = false
-            }
+            },
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(
+        MifosButton(
+            textResId = R.string.withdraw_savings_account,
             onClick = {
                 if (remark.text.isEmpty()) {
                     remarkFieldError = true
@@ -170,34 +188,33 @@ fun SavingsAccountWithdrawContent(
                     withdraw.invoke(remark.text)
                 }
             },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = stringResource(id = R.string.withdraw_savings_account))
-        }
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
-class UiStatesParameterProvider : PreviewParameterProvider<SavingsAccountWithdrawUiState> {
+internal class UiStatesParameterProvider : PreviewParameterProvider<SavingsAccountWithdrawUiState> {
     override val values: Sequence<SavingsAccountWithdrawUiState>
         get() = sequenceOf(
             SavingsAccountWithdrawUiState.WithdrawUiReady,
             SavingsAccountWithdrawUiState.Error(message = ""),
             SavingsAccountWithdrawUiState.Loading,
-            SavingsAccountWithdrawUiState.Success
+            SavingsAccountWithdrawUiState.Success,
         )
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun SavingsAccountWithdrawScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class) savingsAccountWithdrawUiState: SavingsAccountWithdrawUiState
+private fun SavingsAccountWithdrawScreenPreview(
+    @PreviewParameter(UiStatesParameterProvider::class)
+    savingsAccountWithdrawUiState: SavingsAccountWithdrawUiState,
 ) {
     MifosMobileTheme {
         SavingsAccountWithdrawScreen(
             uiState = savingsAccountWithdrawUiState,
             savingsWithAssociations = SavingsWithAssociations(
                 clientName = "Mifos Mobile",
-                accountNo = "0001"
+                accountNo = "0001",
             ),
             navigateBack = {},
             withdraw = {},

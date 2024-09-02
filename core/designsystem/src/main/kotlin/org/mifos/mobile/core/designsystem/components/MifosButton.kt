@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -136,6 +137,21 @@ fun MifosOutlinedTextButton(
     modifier: Modifier = Modifier,
 ) {
     Button(
+        onClick = onClick,
+        modifier = modifier,
+        content = {
+            Text(text = stringResource(id = textResId))
+        },
+    )
+}
+
+@Composable
+fun MifosOutlinedButton(
+    textResId: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    OutlinedButton(
         onClick = onClick,
         modifier = modifier,
         content = {

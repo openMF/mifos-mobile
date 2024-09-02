@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account_application
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -22,44 +32,46 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.feature.savings.R
+import org.mifos.mobile.feature.savings.savingsAccountApplication.SavingsAccountApplicationUiState.Loading
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingsAccountApplicationViewModel @Inject constructor(
+internal class SavingsAccountApplicationViewModel @Inject constructor(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     private val preferencesHelper: PreferencesHelper,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-    val savingsAccountApplicationUiState: StateFlow<SavingsAccountApplicationUiState> get() = _savingsAccountApplicationUiState
-    private val _savingsAccountApplicationUiState =
-        MutableStateFlow<SavingsAccountApplicationUiState>(SavingsAccountApplicationUiState.Loading)
-
 
     private val clientId get() = preferencesHelper.clientId
 
-    val savingsId = savedStateHandle.getStateFlow(key = Constants.SAVINGS_ID, initialValue = -1L)
-    val savingsAccountState = savedStateHandle.getStateFlow(
+    private val savingsId =
+        savedStateHandle.getStateFlow(key = Constants.SAVINGS_ID, initialValue = -1L)
+    private val savingsAccountState = savedStateHandle.getStateFlow(
         key = Constants.SAVINGS_ACCOUNT_STATE,
-        initialValue = SavingsAccountState.CREATE
+        initialValue = SavingsAccountState.CREATE,
     )
 
-    var savingsWithAssociations: StateFlow<SavingsWithAssociations?> = savingsId
+    private val _savingsAccountApplicationUiState =
+        MutableStateFlow<SavingsAccountApplicationUiState>(Loading)
+    val savingsAccountApplicationUiState = _savingsAccountApplicationUiState.asStateFlow()
+
+    private val savingsWithAssociations: StateFlow<SavingsWithAssociations?> = savingsId
         .flatMapLatest {
             savingsAccountRepositoryImp.getSavingsWithAssociations(
-                savingsId.value, Constants.TRANSACTIONS,
+                savingsId.value,
+                Constants.TRANSACTIONS,
             )
         }
         .also { loadSavingsAccountApplicationTemplate() }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
+            initialValue = null,
         )
 
-    fun loadSavingsAccountApplicationTemplate() {
+    private fun loadSavingsAccountApplicationTemplate() {
         viewModelScope.launch {
-            _savingsAccountApplicationUiState.value = SavingsAccountApplicationUiState.Loading
+            _savingsAccountApplicationUiState.value = Loading
             savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(clientId).catch { e ->
                 _savingsAccountApplicationUiState.value =
                     SavingsAccountApplicationUiState.Error(e.message)
@@ -67,15 +79,15 @@ class SavingsAccountApplicationViewModel @Inject constructor(
                 _savingsAccountApplicationUiState.value =
                     SavingsAccountApplicationUiState.ShowUserInterface(
                         it,
-                        savingsAccountState.value
+                        savingsAccountState.value,
                     )
             }
         }
     }
 
-    fun submitSavingsAccountApplication(payload: SavingsAccountApplicationPayload?) {
+    private fun submitSavingsAccountApplication(payload: SavingsAccountApplicationPayload?) {
         viewModelScope.launch {
-            _savingsAccountApplicationUiState.value = SavingsAccountApplicationUiState.Loading
+            _savingsAccountApplicationUiState.value = Loading
             savingsAccountRepositoryImp.submitSavingAccountApplication(payload).catch { e ->
                 _savingsAccountApplicationUiState.value =
                     SavingsAccountApplicationUiState.Error(e.message)
@@ -86,9 +98,9 @@ class SavingsAccountApplicationViewModel @Inject constructor(
         }
     }
 
-    fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?) {
+    private fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?) {
         viewModelScope.launch {
-            _savingsAccountApplicationUiState.value = SavingsAccountApplicationUiState.Loading
+            _savingsAccountApplicationUiState.value = Loading
             savingsAccountRepositoryImp.updateSavingsAccount(accountId, payload).catch { e ->
                 _savingsAccountApplicationUiState.value =
                     SavingsAccountApplicationUiState.Error(e.message)
@@ -133,14 +145,13 @@ class SavingsAccountApplicationViewModel @Inject constructor(
     }
 }
 
-sealed class SavingsAccountApplicationUiState {
+internal sealed class SavingsAccountApplicationUiState {
     data object Loading : SavingsAccountApplicationUiState()
     data class Error(val errorMessage: String?) : SavingsAccountApplicationUiState()
     data class Success(val requestType: SavingsAccountState) : SavingsAccountApplicationUiState()
     data class ShowUserInterface(
         val template: SavingsAccountTemplate,
-        val requestType: SavingsAccountState
+        val requestType: SavingsAccountState,
     ) :
         SavingsAccountApplicationUiState()
 }
-

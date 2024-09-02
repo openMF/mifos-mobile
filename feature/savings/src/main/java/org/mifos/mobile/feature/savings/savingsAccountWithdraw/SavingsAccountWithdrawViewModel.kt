@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account_withdraw
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccountWithdraw
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -15,33 +25,34 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.getTodayFormatted
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
+import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWithdrawUiState.WithdrawUiReady
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingsAccountWithdrawViewModel @Inject constructor(
+internal class SavingsAccountWithdrawViewModel @Inject constructor(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val savingsAccountWithdrawUiState: StateFlow<SavingsAccountWithdrawUiState> get() = _savingsAccountWithdrawUiState
-    private val _savingsAccountWithdrawUiState = MutableStateFlow<SavingsAccountWithdrawUiState>(
-        SavingsAccountWithdrawUiState.WithdrawUiReady
-    )
 
-    val savingsId: StateFlow<Long> = savedStateHandle.getStateFlow<Long>(
+    private val mUiState = MutableStateFlow<SavingsAccountWithdrawUiState>(WithdrawUiReady)
+    val uiState = mUiState.asStateFlow()
+
+    private val savingsId: StateFlow<Long> = savedStateHandle.getStateFlow(
         key = Constants.SAVINGS_ID,
-        initialValue = -1L
+        initialValue = -1L,
     )
 
     val savingsWithAssociations = savingsId
         .flatMapLatest {
             savingsAccountRepositoryImp.getSavingsWithAssociations(
-                savingsId.value, Constants.TRANSACTIONS,
+                savingsId.value,
+                Constants.TRANSACTIONS,
             )
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = null
+            initialValue = null,
         )
 
     fun submitWithdrawSavingsAccount(remark: String) {
@@ -50,22 +61,25 @@ class SavingsAccountWithdrawViewModel @Inject constructor(
         payload.withdrawnOnDate = getTodayFormatted()
 
         viewModelScope.launch {
-            _savingsAccountWithdrawUiState.value = SavingsAccountWithdrawUiState.Loading
-            savingsAccountRepositoryImp.submitWithdrawSavingsAccount(savingsWithAssociations.value?.accountNo, payload)
+            mUiState.value = SavingsAccountWithdrawUiState.Loading
+            savingsAccountRepositoryImp.submitWithdrawSavingsAccount(
+                savingsWithAssociations.value?.accountNo,
+                payload,
+            )
                 .catch { e ->
-                    _savingsAccountWithdrawUiState.value =
+                    mUiState.value =
                         SavingsAccountWithdrawUiState.Error(e.message)
                 }.collect {
-                    _savingsAccountWithdrawUiState.value =
+                    mUiState.value =
                         SavingsAccountWithdrawUiState.Success
                 }
         }
     }
 }
 
-sealed class SavingsAccountWithdrawUiState {
-    data object WithdrawUiReady: SavingsAccountWithdrawUiState()
-    data object Loading: SavingsAccountWithdrawUiState()
-    data object Success: SavingsAccountWithdrawUiState()
-    data class Error(val message: String?): SavingsAccountWithdrawUiState()
+internal sealed class SavingsAccountWithdrawUiState {
+    data object WithdrawUiReady : SavingsAccountWithdrawUiState()
+    data object Loading : SavingsAccountWithdrawUiState()
+    data object Success : SavingsAccountWithdrawUiState()
+    data class Error(val message: String?) : SavingsAccountWithdrawUiState()
 }
