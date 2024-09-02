@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.R
 import org.mifos.mobile.api.local.PreferencesHelper
+import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailViewModel
 import org.mifos.mobile.models.client.Client
 import org.mifos.mobile.repositories.HomeRepositoryImp
 import org.mifos.mobile.repositories.UserDetailRepositoryImp
@@ -47,12 +48,12 @@ class UserDetailViewModelTest {
     private lateinit var preferencesHelper: PreferencesHelper
 
 
-    private lateinit var viewModel: org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel
+    private lateinit var viewModel: UserDetailViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel(
+        viewModel = UserDetailViewModel(
             userDetailRepositoryImp,
             homeRepositoryImp
         )

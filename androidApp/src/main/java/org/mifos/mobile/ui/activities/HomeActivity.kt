@@ -21,7 +21,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
-import org.mifos.mobile.feature.user_profile.viewmodel.UserDetailViewModel
+import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailViewModel
 import org.mifos.mobile.navigation.RootNavGraph
 import org.mifos.mobile.utils.Toaster
 import org.mifos.mobile.utils.fcm.RegistrationIntentService

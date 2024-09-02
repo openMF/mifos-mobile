@@ -22,10 +22,10 @@ import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.ui.utils.ImageUtil
 import org.mifos.mobile.feature.home.R
 import org.mifos.mobile.feature.home.utils.HomeState
 import org.mifos.mobile.feature.home.utils.HomeUiState
-import org.mifos.mobile.feature.home.utils.ImageUtil
 import javax.inject.Inject
 
 @HiltViewModel

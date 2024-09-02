@@ -52,7 +52,7 @@ include(":feature:settings")
 include(":feature:auth")
 include(":feature:update-password")
 include(":feature:home")
-include(":feature:user_profile")
+include(":feature:user-profile")
 
 // Lint Modules
 include(":lint")
