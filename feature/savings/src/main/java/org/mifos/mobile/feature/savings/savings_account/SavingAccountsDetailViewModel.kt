@@ -21,7 +21,7 @@ import org.mifos.mobile.core.model.entity.accounts.savings.Status
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.network.asResult
-import org.mifos.mobile.feature.qr.utils.QrCodeGenerator
+import org.mifos.mobile.core.qr.QrCodeGenerator
 import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 

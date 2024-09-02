@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.WifiOff
@@ -33,6 +34,7 @@ import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object MifosIcons {
+    val Share: ImageVector = Icons.Default.Share
     val Mail: ImageVector = Icons.Outlined.Mail
     val LocationOn: ImageVector = Icons.Filled.LocationOn
     val Phone: ImageVector= Icons.Default.Phone

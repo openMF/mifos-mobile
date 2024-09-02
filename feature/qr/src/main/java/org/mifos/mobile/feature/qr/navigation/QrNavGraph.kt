@@ -1,6 +1,14 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.qr.navigation
 
-import android.icu.text.MessagePattern.ArgType
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -11,13 +19,12 @@ import androidx.navigation.navArgument
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.feature.qr.qr.QrCodeReaderScreen
-import org.mifos.mobile.feature.qr.qr_code_display.QrCodeDisplayScreen
-import org.mifos.mobile.feature.qr.qr_code_import.QrCodeImportScreen
-
+import org.mifos.mobile.feature.qr.qrCodeDisplay.QrCodeDisplayScreen
+import org.mifos.mobile.feature.qr.qrCodeImport.QrCodeImportScreen
 
 fun NavController.navigateToQrDisplayScreen(qrString: String) {
     navigate(
-        QrNavigation.QrDisplayScreen.passArguments(qrString = qrString)
+        QrNavigation.QrDisplayScreen.passArguments(qrString = qrString),
     )
 }
 
@@ -35,11 +42,11 @@ fun NavGraphBuilder.qrNavGraph(
 ) {
     navigation(
         startDestination = QrNavigation.QrDisplayScreen.route,
-        route = QrNavigation.QrBase.route
+        route = QrNavigation.QrBase.route,
     ) {
         readerRoute(
             navigateBack = navController::popBackStack,
-            openBeneficiaryApplication = openBeneficiaryApplication
+            openBeneficiaryApplication = openBeneficiaryApplication,
         )
 
         displayRoute(
@@ -48,7 +55,7 @@ fun NavGraphBuilder.qrNavGraph(
 
         importRoute(
             navigateBack = navController::popBackStack,
-            openBeneficiaryApplication = openBeneficiaryApplication
+            openBeneficiaryApplication = openBeneficiaryApplication,
         )
     }
 }
@@ -59,8 +66,8 @@ fun NavGraphBuilder.readerRoute(
 ) {
     composable(route = QrNavigation.QrReaderScreen.route) {
         QrCodeReaderScreen(
-            navigateBack= navigateBack,
-            openBeneficiaryApplication= openBeneficiaryApplication
+            navigateBack = navigateBack,
+            openBeneficiaryApplication = openBeneficiaryApplication,
         )
     }
 }
@@ -71,9 +78,9 @@ fun NavGraphBuilder.displayRoute(
     composable(
         route = QrNavigation.QrDisplayScreen.route,
         arguments = listOf(
-            navArgument(name = QR_ARGS) { type = NavType.StringType }
-        )
-    ){
+            navArgument(name = QR_ARGS) { type = NavType.StringType },
+        ),
+    ) {
         QrCodeDisplayScreen(
             navigateBack = navigateBack,
         )
@@ -82,12 +89,12 @@ fun NavGraphBuilder.displayRoute(
 
 fun NavGraphBuilder.importRoute(
     navigateBack: () -> Unit,
-    openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit
+    openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
 ) {
-    composable(route = QrNavigation.QrImportScreen.route){
+    composable(route = QrNavigation.QrImportScreen.route) {
         QrCodeImportScreen(
-            navigateBack= navigateBack,
-            openBeneficiaryApplication = openBeneficiaryApplication
+            navigateBack = navigateBack,
+            openBeneficiaryApplication = openBeneficiaryApplication,
         )
     }
 }
