@@ -56,8 +56,8 @@ import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
 import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
-import org.mifos.mobile.feature.third.party.transfer.third_party_transfer.navigation.navigateToThirdPartyTransfer
-import org.mifos.mobile.feature.third.party.transfer.third_party_transfer.navigation.thirdPartyTransferNavGraph
+import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
+import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transaction.navigation.navigateToRecentTransaction
 import org.mifos.mobile.feature.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
@@ -112,7 +112,7 @@ fun RootNavGraph(
         updatePasswordNavGraph(navigateBack = navController::popBackStack)
 
         thirdPartyTransferNavGraph(
-            navController = navController,
+            navigateBack = navController::popBackStack,
             addBeneficiary = navController::navigateToAddBeneficiaryScreen,
             reviewTransfer = navController::navigateToTransferProcessScreen
         )
