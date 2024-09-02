@@ -1,6 +1,7 @@
 plugins {
+    kotlin("multiplatform")
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.jetbrainsCompose)
 }
 
 kotlin {
@@ -24,8 +25,20 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+        }
         commonMain.dependencies {
             //put your multiplatform dependencies here
+            implementation(compose.material)
+            implementation(compose.material3)
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
         }
