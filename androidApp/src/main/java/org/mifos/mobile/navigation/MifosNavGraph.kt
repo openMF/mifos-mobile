@@ -109,9 +109,7 @@ fun RootNavGraph(
             navigateToChangePassword = navController::navigateToUpdatePassword
         )
 
-        updatePasswordNavGraph(
-            navController = navController,
-        )
+        updatePasswordNavGraph(navigateBack = navController::popBackStack)
 
         thirdPartyTransferNavGraph(
             navController = navController,
