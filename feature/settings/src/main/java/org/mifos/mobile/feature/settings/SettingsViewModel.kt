@@ -1,5 +1,13 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.settings
-
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
@@ -17,7 +25,7 @@ import org.mifos.mobile.core.model.enums.MifosAppLanguage
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(
+internal class SettingsViewModel @Inject constructor(
     private val preferencesHelper: PreferencesHelper,
 ) : ViewModel() {
 
@@ -45,7 +53,6 @@ class SettingsViewModel @Inject constructor(
             flow { emit(MifosAppLanguage.fromCode(preferencesHelper.language)) }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, MifosAppLanguage.SYSTEM_LANGUAGE)
 
-
     fun tryUpdatingEndpoint(selectedBaseUrl: String, selectedTenant: String): Boolean {
         if (!(baseUrl.equals(selectedBaseUrl) && tenant.equals(selectedTenant))) {
             preferencesHelper.updateConfiguration(selectedBaseUrl, selectedTenant)
@@ -68,54 +75,54 @@ class SettingsViewModel @Inject constructor(
                 AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
                 AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
                 else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            }
+            },
         )
         preferencesHelper.appTheme = theme.ordinal
         preferencesHelper.applyTheme(theme)
     }
 }
 
-enum class SettingsCardItem(
+internal enum class SettingsCardItem(
     val title: Int,
     val details: Int,
     val icon: Int,
     val subclassOf: Int,
     val firstItemInSubclass: Boolean = false,
-    val showDividerInBottom: Boolean = false
+    val showDividerInBottom: Boolean = false,
 ) {
     PASSWORD(
         title = R.string.change_password,
         details = R.string.change_account_password,
         icon = R.drawable.ic_lock_black_24dp,
         firstItemInSubclass = true,
-        subclassOf = R.string.accounts
+        subclassOf = R.string.accounts,
     ),
     PASSCODE(
         title = R.string.change_passcode,
         details = R.string.change_app_passcode,
         icon = R.drawable.ic_passcode,
         showDividerInBottom = true,
-        subclassOf = R.string.accounts
+        subclassOf = R.string.accounts,
     ),
     LANGUAGE(
         title = R.string.language,
         details = R.string.choose_language,
         icon = R.drawable.ic_translate,
         firstItemInSubclass = true,
-        subclassOf = R.string.other
+        subclassOf = R.string.other,
     ),
     THEME(
         title = R.string.theme,
         details = R.string.change_app_theme,
         icon = R.drawable.ic_baseline_dark_mode_24,
-        subclassOf = R.string.other
+        subclassOf = R.string.other,
     ),
     ENDPOINT(
         title = R.string.pref_base_url_title,
         details = R.string.pref_base_url_desc,
         icon = R.drawable.ic_update,
-        subclassOf = R.string.other
-    )
+        subclassOf = R.string.other,
+    ),
 }
 
 fun PreferencesHelper.applySavedTheme() {
@@ -130,8 +137,7 @@ fun PreferencesHelper.applySavedTheme() {
     )
 }
 
-
-fun PreferencesHelper.applyTheme(applicationTheme: AppTheme) {
+internal fun PreferencesHelper.applyTheme(applicationTheme: AppTheme) {
     this.appTheme = applicationTheme.ordinal
     AppCompatDelegate.setDefaultNightMode(
         when {
@@ -142,4 +148,3 @@ fun PreferencesHelper.applyTheme(applicationTheme: AppTheme) {
         },
     )
 }
-
