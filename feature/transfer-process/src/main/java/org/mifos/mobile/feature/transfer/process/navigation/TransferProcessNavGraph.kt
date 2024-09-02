@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.transfer.process.navigation
 
 import androidx.navigation.NavController
@@ -16,37 +25,42 @@ import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.transfer.process.TransferProcessScreen
 
 // Navigation Setup
-fun NavController.navigateToTransferProcessScreen(transferPayload: ReviewTransferPayload, transferType: TransferType) {
+fun NavController.navigateToTransferProcessScreen(
+    transferPayload: ReviewTransferPayload,
+    transferType: TransferType,
+) {
     navigate(
         TransferProcessNavigation.TransferProcessScreen.passArguments(
             transferType = transferType,
-            payload = transferPayload.convertToTransferPayloadString()
-        )
+            payload = transferPayload.convertToTransferPayloadString(),
+        ),
     )
 }
 
 fun NavGraphBuilder.transferProcessNavGraph(
-    navController: NavController
+    navigateBack: () -> Unit,
 ) {
     navigation(
         startDestination = TransferProcessNavigation.TransferProcessScreen.route,
         route = TransferProcessNavigation.TransferProcessBase.route,
     ) {
         transferProcessScreenRoute(
-            navigateBack = navController::popBackStack,
+            navigateBack = navigateBack,
         )
     }
 }
 
-fun NavGraphBuilder.transferProcessScreenRoute(
+private fun NavGraphBuilder.transferProcessScreenRoute(
     navigateBack: () -> Unit,
 ) {
     composable(
         route = TransferProcessNavigation.TransferProcessScreen.route,
         arguments = listOf(
             navArgument(name = Constants.PAYLOAD) { type = NavType.StringType },
-            navArgument(name = Constants.TRANSFER_TYPE) { type = NavType.EnumType(TransferType::class.java) }
-        )
+            navArgument(name = Constants.TRANSFER_TYPE) {
+                type = NavType.EnumType(TransferType::class.java)
+            },
+        ),
     ) {
         TransferProcessScreen(
             navigateBack = navigateBack,
@@ -54,8 +68,7 @@ fun NavGraphBuilder.transferProcessScreenRoute(
     }
 }
 
-
-fun ReviewTransferPayload.convertToTransferPayloadString(): String {
+private fun ReviewTransferPayload.convertToTransferPayloadString(): String {
     val payload = this
     val transferPayload = TransferPayload().apply {
         fromAccountId = payload.payFromAccount?.accountId
