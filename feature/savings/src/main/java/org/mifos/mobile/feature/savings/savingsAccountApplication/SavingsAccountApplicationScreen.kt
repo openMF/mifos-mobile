@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account_application
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -12,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
@@ -22,29 +30,32 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.savings.R
 
-
 @Composable
-fun SavingsAccountApplicationScreen(
-    viewModel: SavingsAccountApplicationViewModel = hiltViewModel(),
+internal fun SavingsAccountApplicationScreen(
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SavingsAccountApplicationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.savingsAccountApplicationUiState.collectAsStateWithLifecycle()
 
     SavingsAccountApplicationScreen(
         uiState = uiState,
         navigateBack = navigateBack,
-        submit = viewModel::onSubmit
+        submit = viewModel::onSubmit,
+        modifier = modifier,
     )
 }
 
 @Composable
-fun SavingsAccountApplicationScreen(
+private fun SavingsAccountApplicationScreen(
     uiState: SavingsAccountApplicationUiState,
-    savingsWithAssociations: SavingsWithAssociations? = null,
     navigateBack: () -> Unit,
     submit: (Int, Int, showToast: (Int) -> Unit) -> Unit,
+    modifier: Modifier = Modifier,
+    savingsWithAssociations: SavingsWithAssociations? = null,
 ) {
     var topBarTitleText by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
@@ -53,15 +64,14 @@ fun SavingsAccountApplicationScreen(
         topBar = {
             MifosTopBar(
                 navigateBack = navigateBack,
-                title = { Text(text = topBarTitleText) }
+                title = { Text(text = topBarTitleText) },
             )
         },
+        modifier = modifier,
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
-                    is SavingsAccountApplicationUiState.Error -> {
-                        MifosErrorComponent()
-                    }
+                    is SavingsAccountApplicationUiState.Error -> MifosErrorComponent()
 
                     is SavingsAccountApplicationUiState.Loading -> {
                         MifosProgressIndicatorOverlay()
@@ -75,9 +85,9 @@ fun SavingsAccountApplicationScreen(
 
                         topBarTitleText = stringResource(id = titleResourceId)
                         SavingsAccountApplicationContent(
+                            submit = submit,
                             existingProduct = existingProduct,
                             savingsAccountTemplate = uiState.template,
-                            submit = submit
                         )
                     }
 
@@ -86,21 +96,28 @@ fun SavingsAccountApplicationScreen(
                             SavingsAccountState.CREATE -> R.string.new_saving_account_created_successfully
                             else -> R.string.saving_account_updated_successfully
                         }
-                        Toast.makeText(context, stringResource(id = messageResourceId), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            stringResource(id = messageResourceId),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                         navigateBack.invoke()
                     }
                 }
-
             }
-        }
+        },
     )
 }
 
-@Preview(showSystemUi = true)
+@DevicePreviews
 @Composable
-fun SavingsAccountApplicationScreenPreview() {
+private fun SavingsAccountApplicationScreenPreview() {
     MifosMobileTheme {
-        SavingsAccountApplicationScreen(SavingsAccountApplicationUiState.Success(requestType = SavingsAccountState.UPDATE), null, {}, { i, j, k -> })
+        SavingsAccountApplicationScreen(
+            SavingsAccountApplicationUiState.Success(requestType = SavingsAccountState.UPDATE),
+            navigateBack = {},
+            submit = { _, _, _ -> },
+            savingsWithAssociations = null,
+        )
     }
 }
-

@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account_transaction
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccountTransaction
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -32,12 +41,13 @@ import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.savings.R
 
 @Composable
-fun SavingsAccountTransactionContent(
+internal fun SavingsAccountTransactionContent(
     transactionList: List<Transactions>,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
         LazyColumn {
             items(items = transactionList) {
@@ -45,7 +55,7 @@ fun SavingsAccountTransactionContent(
                 HorizontalDivider(
                     thickness = 1.dp,
                     color = Color.Gray,
-                    modifier = Modifier.padding(vertical = 4.dp)
+                    modifier = Modifier.padding(vertical = 4.dp),
                 )
             }
         }
@@ -54,42 +64,44 @@ fun SavingsAccountTransactionContent(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp, horizontal = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.Bottom
+            verticalAlignment = Alignment.Bottom,
         ) {
             Text(
                 text = stringResource(id = R.string.need_help),
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = stringResource(id = R.string.help_line_number),
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
         }
     }
 }
 
-
 @Composable
-fun SavingsAccountTransactionListItem(transaction: Transactions) {
+private fun SavingsAccountTransactionListItem(
+    transaction: Transactions,
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
+            .padding(vertical = 6.dp),
     ) {
         Image(
             painter = painterResource(
-                id = getTransactionTriangleResId(transaction.transactionType)
+                id = getTransactionTriangleResId(transaction.transactionType),
             ),
             contentDescription = stringResource(id = R.string.savings_account_transaction),
             modifier = Modifier
                 .size(56.dp)
-                .padding(4.dp)
+                .padding(4.dp),
         )
         Column(
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -98,47 +110,47 @@ fun SavingsAccountTransactionListItem(transaction: Transactions) {
                 Text(
                     text = DateHelper.getDateAsString(transaction.date),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = stringResource(
                         id = R.string.string_and_string,
                         transaction.currency?.displaySymbol ?: transaction.currency?.code ?: "",
-                        CurrencyUtil.formatCurrency(context, transaction.amount,)
+                        CurrencyUtil.formatCurrency(context, transaction.amount),
                     ),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     text = transaction.transactionType?.value ?: "",
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = stringResource(
                         id = R.string.string_and_string,
                         transaction.currency?.displaySymbol ?: transaction.currency?.code ?: "",
-                        CurrencyUtil.formatCurrency(context, transaction.runningBalance)
+                        CurrencyUtil.formatCurrency(context, transaction.runningBalance),
                     ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
                     text = transaction.paymentDetailData?.paymentType?.name.toString(),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
@@ -147,7 +159,7 @@ fun SavingsAccountTransactionListItem(transaction: Transactions) {
 
 @Preview
 @Composable
-fun SavingsAccountTransactionContentPreview() {
+private fun SavingsAccountTransactionContentPreview() {
     MifosMobileTheme {
         SavingsAccountTransactionContent(transactionList = listOf())
     }

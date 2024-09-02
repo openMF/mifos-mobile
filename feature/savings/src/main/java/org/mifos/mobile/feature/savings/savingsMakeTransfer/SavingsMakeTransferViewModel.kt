@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_make_transfer
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsMakeTransfer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -19,23 +28,22 @@ import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.network.asResult
 import javax.inject.Inject
 
-
 @HiltViewModel
-class SavingsMakeTransferViewModel @Inject constructor(
+internal class SavingsMakeTransferViewModel @Inject constructor(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     val accountId = savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
 
     private val transferType: StateFlow<String> = savedStateHandle.getStateFlow(
         key = Constants.TRANSFER_TYPE,
-        initialValue = TRANSFER_PAY_TO
+        initialValue = TRANSFER_PAY_TO,
     )
 
     private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(
         key = Constants.OUTSTANDING_BALANCE,
-        initialValue = null
+        initialValue = null,
     ).map { balanceString ->
         balanceString?.toDoubleOrNull() ?: 0.0
     }.stateIn(
@@ -54,16 +62,22 @@ class SavingsMakeTransferViewModel @Inject constructor(
         .asResult()
         .map { result ->
             when (result) {
-                is Result.Success -> SavingsMakeTransferUiState.ShowUI
-                    .also {
-                        _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
-                            .copy(
-                                accountOptionsTemplate = result.data,
-                                transferType = transferType.value,
-                                outstandingBalance = if(outstandingBalance.value == 0.0) null else outstandingBalance.value,
-                                accountId = accountId.value
-                            )
-                    }
+                is Result.Success ->
+                    SavingsMakeTransferUiState.ShowUI
+                        .also {
+                            _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
+                                .copy(
+                                    accountOptionsTemplate = result.data,
+                                    transferType = transferType.value,
+                                    outstandingBalance = if (outstandingBalance.value == 0.0) {
+                                        null
+                                    } else {
+                                        outstandingBalance.value
+                                    },
+                                    accountId = accountId.value,
+                                )
+                        }
+
                 is Result.Loading -> SavingsMakeTransferUiState.Loading
                 is Result.Error -> SavingsMakeTransferUiState.Error(result.exception.message)
             }
@@ -72,21 +86,19 @@ class SavingsMakeTransferViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = SavingsMakeTransferUiState.Loading,
         )
-
 }
 
-sealed class SavingsMakeTransferUiState {
+internal sealed class SavingsMakeTransferUiState {
     data object Loading : SavingsMakeTransferUiState()
     data class Error(val errorMessage: String?) : SavingsMakeTransferUiState()
     data object ShowUI : SavingsMakeTransferUiState()
 }
 
-data class SavingsMakeTransferUiData(
+internal data class SavingsMakeTransferUiData(
     var accountId: Long? = null,
     var transferType: String? = null,
     var outstandingBalance: Double? = null,
     var accountOptionsTemplate: AccountOptionsTemplate = AccountOptionsTemplate(),
     var toAccountOptionPrefilled: AccountOption? = null,
-    var fromAccountOptionPrefilled: AccountOption? = null
+    var fromAccountOptionPrefilled: AccountOption? = null,
 )
-

@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccount
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
@@ -26,18 +35,20 @@ import org.mifos.mobile.feature.savings.R
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingAccountsDetailViewModel @Inject constructor(
+internal class SavingAccountsDetailViewModel @Inject constructor(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-    private var preferencesHelper: PreferencesHelper
+    private var preferencesHelper: PreferencesHelper,
 ) : ViewModel() {
 
-    val savingsId = savedStateHandle.getStateFlow<Long?>(key = Constants.SAVINGS_ID, initialValue = null)
+    val savingsId =
+        savedStateHandle.getStateFlow<Long?>(key = Constants.SAVINGS_ID, initialValue = null)
 
     val savingAccountsDetailUiState = savingsId
         .flatMapLatest {
             savingsAccountRepositoryImp.getSavingsWithAssociations(
-                savingsId.value, Constants.TRANSACTIONS,
+                savingsId.value,
+                Constants.TRANSACTIONS,
             )
         }
         .asResult()
@@ -50,7 +61,7 @@ class SavingAccountsDetailViewModel @Inject constructor(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SavingsAccountDetailUiState.Loading
+            initialValue = SavingsAccountDetailUiState.Loading,
         )
 
     fun getQrString(savingsWithAssociations: SavingsWithAssociations?): String {
@@ -62,13 +73,13 @@ class SavingAccountsDetailViewModel @Inject constructor(
     }
 }
 
-sealed class SavingsAccountDetailUiState {
+internal sealed class SavingsAccountDetailUiState {
     data object Loading : SavingsAccountDetailUiState()
     data object Error : SavingsAccountDetailUiState()
     data class Success(val savingAccount: SavingsWithAssociations) : SavingsAccountDetailUiState()
 }
 
-fun Status.getStatusColorAndText(): Pair<Color, Int> {
+internal fun Status.getStatusColorAndText(): Pair<Color, Int> {
     return when {
         this.active == true -> Pair(DepositGreen, R.string.active)
         this.approved == true -> Pair(Blue, R.string.need_approval)
@@ -77,5 +88,3 @@ fun Status.getStatusColorAndText(): Pair<Color, Int> {
         else -> Pair(Color.Black, R.string.closed)
     }
 }
-
-

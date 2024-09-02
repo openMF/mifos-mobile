@@ -1,4 +1,13 @@
-package org.mifos.mobile.feature.savings.savings_account_transaction
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savings.savingsAccountTransaction
 
 import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
@@ -8,6 +17,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -20,40 +30,42 @@ import org.mifos.mobile.core.designsystem.theme.RedLight
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.savings.R
+import org.mifos.mobile.feature.savings.savingsAccountTransaction.SavingsAccountTransactionUiState.Loading
 import javax.inject.Inject
 
 @HiltViewModel
-class SavingAccountsTransactionViewModel @Inject constructor(
+internal class SavingAccountsTransactionViewModel @Inject constructor(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
-    savedStateHandle: SavedStateHandle
-) :
-    ViewModel() {
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
-    private val _savingAccountsTransactionUiState = MutableStateFlow<SavingsAccountTransactionUiState>(
-        SavingsAccountTransactionUiState.Loading
-    )
-    val savingAccountsTransactionUiState: StateFlow<SavingsAccountTransactionUiState> get() = _savingAccountsTransactionUiState
+    private val mUiState = MutableStateFlow<SavingsAccountTransactionUiState>(Loading)
+    val uiState = mUiState.asStateFlow()
 
     private var _transactionsList: List<Transactions> = mutableListOf()
     private val transactionsList: List<Transactions> get() = _transactionsList
 
-    val savingsId: StateFlow<Long> = savedStateHandle.getStateFlow<Long>(
+    private val savingsId: StateFlow<Long> = savedStateHandle.getStateFlow(
         key = SAVINGS_ID,
-        initialValue = -1L
+        initialValue = -1L,
     )
 
-    fun loadSavingsWithAssociations(accountId: Long) {
+    init {
+        loadSavingsWithAssociations()
+    }
+
+    fun loadSavingsWithAssociations(accountId: Long = savingsId.value) {
         viewModelScope.launch {
-            _savingAccountsTransactionUiState.value = SavingsAccountTransactionUiState.Loading
+            mUiState.value = Loading
             savingsAccountRepositoryImp.getSavingsWithAssociations(
                 accountId,
                 org.mifos.mobile.core.common.Constants.TRANSACTIONS,
             ).catch {
-                _savingAccountsTransactionUiState.value =
+                mUiState.value =
                     SavingsAccountTransactionUiState.Error(it.message)
             }.collect {
                 _transactionsList = it.transactions
-                _savingAccountsTransactionUiState.value =
+                mUiState.value =
                     SavingsAccountTransactionUiState.Success(it.transactions)
             }
         }
@@ -65,55 +77,66 @@ class SavingAccountsTransactionViewModel @Inject constructor(
                 filterByDateAndType(
                     startDate = filter.startDate,
                     endDate = filter.endDate,
-                    checkBoxFilters = filter.checkBoxFilters
+                    checkBoxFilters = filter.checkBoxFilters,
                 )
             }
+
             filter.radioFilter != null -> {
                 filterByDate(
                     startDate = filter.startDate,
-                    endDate = filter.endDate
+                    endDate = filter.endDate,
                 )
             }
+
             filter.checkBoxFilters.isNotEmpty() -> {
                 filterByType(
-                    checkBoxFilters = filter.checkBoxFilters
+                    checkBoxFilters = filter.checkBoxFilters,
                 )
             }
+
             else -> {
-                _savingAccountsTransactionUiState.value =
+                mUiState.value =
                     SavingsAccountTransactionUiState.Success(transactionsList)
             }
         }
     }
 
-
     private fun filterByDateAndType(
         startDate: Long,
         endDate: Long,
-        checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>
+        checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>,
     ) {
-        val typeFilteredList = filterSavingsAccountTransactionsByType(checkBoxFilters = checkBoxFilters)
-        val dateAndTypeFilteredList = filterTransactionListByDate(transactions = typeFilteredList, startDate = startDate, endDate = endDate)
-        _savingAccountsTransactionUiState.value =
+        val typeFilteredList =
+            filterSavingsAccountTransactionsByType(checkBoxFilters = checkBoxFilters)
+        val dateAndTypeFilteredList = filterTransactionListByDate(
+            transactions = typeFilteredList,
+            startDate = startDate,
+            endDate = endDate,
+        )
+        mUiState.value =
             SavingsAccountTransactionUiState.Success(dateAndTypeFilteredList)
     }
 
     private fun filterByDate(startDate: Long, endDate: Long) {
-        val list = filterTransactionListByDate(transactions = transactionsList, startDate = startDate, endDate = endDate)
-        _savingAccountsTransactionUiState.value = SavingsAccountTransactionUiState.Success(list)
+        val list = filterTransactionListByDate(
+            transactions = transactionsList,
+            startDate = startDate,
+            endDate = endDate,
+        )
+        mUiState.value = SavingsAccountTransactionUiState.Success(list)
     }
 
     private fun filterByType(
-        checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>
+        checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>,
     ) {
         val list = filterSavingsAccountTransactionsByType(checkBoxFilters = checkBoxFilters)
-        _savingAccountsTransactionUiState.value = SavingsAccountTransactionUiState.Success(list)
+        mUiState.value = SavingsAccountTransactionUiState.Success(list)
     }
 
     private fun filterTransactionListByDate(
         transactions: List<Transactions>,
         startDate: Long,
-        endDate: Long
+        endDate: Long,
     ): List<Transactions> {
         return transactions.filter {
             (DateHelper.getDateAsLongFromList(it.date) in startDate..endDate)
@@ -121,7 +144,7 @@ class SavingAccountsTransactionViewModel @Inject constructor(
     }
 
     private fun filterSavingsAccountTransactionsByType(
-        checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>
+        checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>,
     ): List<Transactions> {
         var filteredSavingsTransactions: List<Transactions> = ArrayList()
         checkBoxFilters.forEach { filter ->
@@ -129,12 +152,15 @@ class SavingAccountsTransactionViewModel @Inject constructor(
                 SavingsTransactionCheckBoxFilter.DEPOSIT -> {
                     transactionsList.filter { it.transactionType?.deposit == true }
                 }
+
                 SavingsTransactionCheckBoxFilter.DIVIDEND_PAYOUT -> {
                     transactionsList.filter { it.transactionType?.dividendPayout == true }
                 }
+
                 SavingsTransactionCheckBoxFilter.WITHDRAWAL -> {
                     transactionsList.filter { it.transactionType?.withdrawal == true }
                 }
+
                 SavingsTransactionCheckBoxFilter.INTEREST_POSTING -> {
                     transactionsList.filter { it.transactionType?.interestPosting == true }
                 }
@@ -145,13 +171,14 @@ class SavingAccountsTransactionViewModel @Inject constructor(
     }
 }
 
-sealed class SavingsAccountTransactionUiState {
+internal sealed class SavingsAccountTransactionUiState {
     data object Loading : SavingsAccountTransactionUiState()
     data class Error(val errorMessage: String?) : SavingsAccountTransactionUiState()
-    data class Success(val savingAccountsTransactionList: List<Transactions>?) : SavingsAccountTransactionUiState()
+    data class Success(val savingAccountsTransactionList: List<Transactions>?) :
+        SavingsAccountTransactionUiState()
 }
 
-fun getTransactionTriangleResId(transactionType: TransactionType?): Int {
+internal fun getTransactionTriangleResId(transactionType: TransactionType?): Int {
     return transactionType?.run {
         when {
             deposit == true -> R.drawable.triangular_green_view
@@ -170,38 +197,38 @@ fun getTransactionTriangleResId(transactionType: TransactionType?): Int {
 }
 
 @Parcelize
-data class SavingsTransactionFilterDataModel(
+internal data class SavingsTransactionFilterDataModel(
     val startDate: Long,
     val endDate: Long,
     val radioFilter: SavingsTransactionRadioFilter?,
-    val checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>
-): Parcelable
+    val checkBoxFilters: MutableList<SavingsTransactionCheckBoxFilter>,
+) : Parcelable
 
-enum class SavingsTransactionRadioFilter(val textResId: Int) {
+internal enum class SavingsTransactionRadioFilter(val textResId: Int) {
     DATE(textResId = R.string.date),
     FOUR_WEEKS(textResId = R.string.four_weeks),
     THREE_MONTHS(textResId = R.string.three_months),
-    SIX_MONTHS(textResId = R.string.six_months)
+    SIX_MONTHS(textResId = R.string.six_months),
 }
 
-enum class SavingsTransactionCheckBoxFilter(
+internal enum class SavingsTransactionCheckBoxFilter(
     val textResId: Int,
     val checkBoxColor: Color,
 ) {
     DEPOSIT(
         textResId = R.string.deposit,
-        checkBoxColor = DepositGreen
+        checkBoxColor = DepositGreen,
     ),
     DIVIDEND_PAYOUT(
         textResId = R.string.dividend_payout,
-        checkBoxColor = RedLight
+        checkBoxColor = RedLight,
     ),
     WITHDRAWAL(
         textResId = R.string.withdrawal,
-        checkBoxColor = RedLight
+        checkBoxColor = RedLight,
     ),
     INTEREST_POSTING(
         textResId = R.string.interest_posting,
-        checkBoxColor = GreenSuccess
-    )
+        checkBoxColor = GreenSuccess,
+    ),
 }
