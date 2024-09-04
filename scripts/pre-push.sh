@@ -4,7 +4,7 @@
 check_current_branch() {
     printf "\n🚀 Checking the current git branch..."
     CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "develop" ]; then
+    if [ "$CURRENT_BRANCH" = "master" ] || [ "$CURRENT_BRANCH" = "development" ]; then
         echo "🛑 Hold it right there! Committing directly to the '$CURRENT_BRANCH' branch? That's a big no-no!"
         echo "🚫 Direct commits to '$CURRENT_BRANCH' are like trying to use a wrench to write code—doesn't work! 😜"
         printf "\nABORTING COMMIT: You must navigate to a feature branch or create a new one to save the day! 🦸‍♂️🦸‍♀️\n"
@@ -73,6 +73,24 @@ run_dependency_guard() {
     fi
 }
 
+# Function to run Version Catalog checks
+run_version_catalog_checks() {
+    echo "\n🚀 Version catalog linter is now analyzing your catalog for potential issues!"
+    ./gradlew checkVersionCatalog
+    DETEKT_EXIT_CODE=$?
+
+    if [ ${DETEKT_EXIT_CODE} -ne 0 ]; then
+        echo "\n*********************************************************************************"
+        echo "     💥 Oh no! Version Catalog found issues in the code! Time to fix those issues! 💥"
+        echo "     💡 Tip: Review the Version Catalog logs to resolve these issues. 🛠️"
+        echo "*********************************************************************************"
+        echo "🚀 Attempting to format the Version Catalog again..."
+        ./gradlew formatVersionCatalog
+    else
+        echo "🎉 Fantastic work! Your Version catalog has been formatted successfully 🚀🌟"
+    fi
+}
+
 # Function to print success message
 print_success_message() {
     GIT_USERNAME=$(git config user.name)
@@ -88,6 +106,7 @@ check_current_branch
 run_spotless_checks
 run_detekt_checks
 run_dependency_guard
+run_version_catalog_checks
 print_success_message
 
 exit 0
