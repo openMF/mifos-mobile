@@ -33,7 +33,7 @@ internal fun AboutUsHeader(
 ) {
     Column(modifier) {
         Image(
-            painter = painterResource(id = R.mipmap.core_common_mifos_icon),
+            painter = painterResource(id = R.drawable.mifos_logo),
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)

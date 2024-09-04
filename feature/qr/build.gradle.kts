@@ -19,7 +19,7 @@ android {
 dependencies {
     implementation(projects.core.qrcode)
 
-    implementation(libs.android.image.cropper)
+    implementation(libs.easycrop.compose)
     implementation (libs.accompanist.permissions)
-    implementation(libs.camera.core)
+    implementation(libs.androidx.camera.core)
 }

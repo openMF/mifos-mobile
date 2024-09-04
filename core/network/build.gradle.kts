@@ -13,14 +13,11 @@ plugins {
     id("kotlinx-serialization")
 }
 
-apply(from = "${project.rootDir}/config/quality/quality.gradle")
-
 android {
     namespace = "org.mifos.mobile.core.network"
 }
 
 dependencies {
-
     api(projects.core.common)
     api(projects.core.model)
     api(projects.core.datastore)
@@ -32,12 +29,12 @@ dependencies {
     }
     implementation(libs.squareup.retrofit.adapter.rxjava)
     implementation(libs.squareup.retrofit.converter.gson)
-    implementation(libs.squareup.okhttp)
     implementation(libs.squareup.logging.interceptor)
+    implementation(libs.squareup.okhttp)
 
     implementation(libs.jetbrains.kotlin.jdk7)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.mockito.core)
+    implementation(libs.mockito.core)
 }

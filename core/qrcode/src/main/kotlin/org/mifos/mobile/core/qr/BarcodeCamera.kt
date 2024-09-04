@@ -1,3 +1,12 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.qr
 
 import android.content.ContentValues.TAG
@@ -23,7 +32,6 @@ import androidx.lifecycle.LifecycleOwner
 
 @ExperimentalGetImage
 class BarcodeCamera {
-
     private var camera: Camera? = null
 
     @Composable
@@ -44,11 +52,10 @@ class BarcodeCamera {
         AndroidView(
             factory = { context ->
                 PreviewView(context).apply {
-                    layoutParams =
-                        LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT
-                        )
+                    layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                    )
                     scaleType = PreviewView.ScaleType.FILL_START
 
                     startCamera(
@@ -56,10 +63,10 @@ class BarcodeCamera {
                         previewView = this,
                         imageCapture = imageCapture,
                         lifecycleOwner = lifecycleOwner,
-                        onBarcodeScanned = onBarcodeScanned
+                        onBarcodeScanned = onBarcodeScanned,
                     )
                 }
-            }
+            },
         )
     }
 
@@ -68,7 +75,7 @@ class BarcodeCamera {
         previewView: PreviewView,
         lifecycleOwner: LifecycleOwner,
         imageCapture: ImageCapture,
-        onBarcodeScanned: (String) -> Unit
+        onBarcodeScanned: (String) -> Unit,
     ) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
@@ -86,26 +93,30 @@ class BarcodeCamera {
                 imageAnalysis.setAnalyzer(
                     ContextCompat.getMainExecutor(context),
                     QrCodeAnalyzer(
-                        onBarcodeScanned = onBarcodeScanned
-                    )
+                        onBarcodeScanned = onBarcodeScanned,
+                    ),
                 )
 
                 val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
                 try {
                     cameraProvider.unbindAll()
-                    camera = cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCapture, imageAnalysis)
+                    camera = cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        cameraSelector,
+                        preview,
+                        imageCapture,
+                        imageAnalysis,
+                    )
                 } catch (exc: Exception) {
                     Log.e(TAG, "Use case binding failed", exc)
                 }
             },
-            ContextCompat.getMainExecutor(context)
+            ContextCompat.getMainExecutor(context),
         )
     }
 
-    private fun toggleFlash(
-        isOn: Boolean,
-    ) {
+    private fun toggleFlash(isOn: Boolean) {
         camera?.cameraControl?.enableTorch(isOn)
     }
 }

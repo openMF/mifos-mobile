@@ -10,55 +10,44 @@
 package org.mifos.mobile.feature.qr.qrCodeImport
 
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.CropImageContractOptions
-import com.canhub.cropper.CropImageOptions
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.designsystem.components.MifosButton
+import com.mr0xf00.easycrop.CropError
+import com.mr0xf00.easycrop.CropResult
+import com.mr0xf00.easycrop.crop
+import com.mr0xf00.easycrop.rememberImageCropper
+import com.mr0xf00.easycrop.rememberImagePicker
+import kotlinx.coroutines.launch
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.qr.R
+import org.mifos.mobile.feature.qr.components.CropContent
+import org.mifos.mobile.feature.qr.components.CropErrorDialog
 
 @Composable
 internal fun QrCodeImportScreen(
@@ -143,126 +132,37 @@ private fun QrCodeImportContent(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val imageCropper = rememberImageCropper()
+    val scope = rememberCoroutineScope()
 
-    var bitmap: Bitmap? by rememberSaveable {
-        mutableStateOf(null)
-    }
-    var showErrorScreen by rememberSaveable {
-        mutableStateOf(false)
-    }
+    var selectedImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var error by remember { mutableStateOf<CropError?>(null) }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize(),
-    ) {
-        /**
-         * responsible for image picking,
-         * & cropping image
-         */
-        QrCodeImportFunctions(
-            setImageBitmap = { bitmap = it },
-            showErrorScreen = { showErrorScreen = it },
-        )
-
-        if (showErrorScreen) {
-            MifosErrorComponent(
-                isNetworkConnected = Network.isConnected(context),
-                isRetryEnabled = false,
-                isEmptyData = true,
-                message = stringResource(
-                    id = R.string.no_image_selected_or_something_went_wrong,
-                ),
-            )
-        } else if (bitmap != null) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = stringResource(id = R.string.seleted_qr_image),
-                textAlign = TextAlign.Center,
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Image(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                bitmap = bitmap!!.asImageBitmap(),
-                contentDescription = null,
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            MifosButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                textResId = R.string.proceed,
-                onClick = { proceedClicked.invoke(bitmap!!) },
-            )
-        }
-    }
-}
-
-@Composable
-@Suppress("ModifierMissing")
-private fun QrCodeImportFunctions(
-    setImageBitmap: (Bitmap) -> Unit,
-    showErrorScreen: (error: Boolean) -> Unit,
-) {
-    val context = LocalContext.current
-
-    var imageUri: Uri? by rememberSaveable { mutableStateOf(null) }
-    var bitmap: Bitmap? by rememberSaveable { mutableStateOf(null) }
-    var hasImagePicked by rememberSaveable { mutableStateOf(false) }
-
-    /**
-     * responsible for image cropping
-     * [https://github.com/CanHub/Android-Image-Cropper]
-     */
-    val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
-        if (result.isSuccessful) {
-            hasImagePicked = true
-            val uri = result.uriContent
-            bitmap = if (Build.VERSION.SDK_INT < 28) {
-                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
-            } else {
-                val source = uri?.let { ImageDecoder.createSource(context.contentResolver, it) }
-                val hardwareBitmap = source?.let { ImageDecoder.decodeBitmap(it) }
-                hardwareBitmap?.let { convertToMutableBitmap(it) }
+    val imagePicker = rememberImagePicker(
+        onImage = { uri ->
+            scope.launch {
+                when (val result = imageCropper.crop(uri, context)) {
+                    is CropResult.Cancelled -> {}
+                    is CropError -> error = result
+                    is CropResult.Success -> {
+                        selectedImage = result.bitmap
+                    }
+                }
             }
-        } else {
-            /**
-             *  handles if the user presses back button on top-left (that comes with the cropLauncher)
-             *  instead of cropping the image
-             */
-            showErrorScreen.invoke(true)
-            Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
-        }
-        bitmap?.let { setImageBitmap.invoke(it) }
-    }
+        },
+    )
 
-    /**
-     * uri is null when the user presses back button instead of
-     * selecting images when on gallery. so we have to handle it as well
-     */
-    val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-    ) { uri: Uri? ->
-        imageUri = uri
-        if (imageUri == null) {
-            Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
-            showErrorScreen.invoke(true)
-        } else {
-            imageCropLauncher.launch(CropImageContractOptions(imageUri, CropImageOptions()))
-        }
-    }
+    CropContent(
+        cropState = imageCropper.cropState,
+        loadingStatus = imageCropper.loadingStatus,
+        selectedImage = selectedImage,
+        onPick = { imagePicker.pick() },
+        onProceed = { selectedImage?.let { proceedClicked.invoke(it.asAndroidBitmap()) } },
+        modifier = modifier,
+    )
 
-    LaunchedEffect(Unit) {
-        if (!hasImagePicked) {
-            imagePickerLauncher.launch("image/*")
-        }
+    error?.let {
+        CropErrorDialog(it, onDismiss = { error = null })
     }
 }
 

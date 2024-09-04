@@ -17,4 +17,6 @@ android {
     namespace = "org.mifos.mobile.feature.update.password"
 }
 
-dependencies { }
+dependencies {
+    implementation(libs.squareup.okhttp)
+}

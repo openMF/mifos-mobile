@@ -29,7 +29,7 @@ class ReviewLoanApplicationRepositoryImpl @Inject constructor(
     ): Flow<ResponseBody> {
         return flow {
             emit(
-                if (loanState == org.mifos.mobile.core.model.enums.LoanState.CREATE) {
+                if (loanState == LoanState.CREATE) {
                     dataManager.createLoansAccount(loansPayload)
                 } else {
                     dataManager.updateLoanAccount(loanId, loansPayload)

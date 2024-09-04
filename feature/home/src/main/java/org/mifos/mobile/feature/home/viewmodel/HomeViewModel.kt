@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.home.viewmodel
 
 import android.util.Base64
 import android.util.Log
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.ui.utils.ImageUtil
@@ -163,85 +165,100 @@ internal class HomeViewModel @Inject constructor(
 
 sealed class HomeCardItem(
     val titleId: Int,
-    val drawableResId: Int,
+    val imageVector: ImageVector,
 ) {
-    data object AccountCard :
-        HomeCardItem(R.string.accounts, R.drawable.ic_account_balance_black_24dp)
+    data object AccountCard : HomeCardItem(
+        titleId = R.string.accounts,
+        imageVector = MifosIcons.AccountBalance,
+    )
 
-    data object TransferCard :
-        HomeCardItem(R.string.transfer, R.drawable.ic_compare_arrows_black_24dp)
+    data object TransferCard : HomeCardItem(
+        titleId = R.string.transfer,
+        imageVector = MifosIcons.CompareArrows,
+    )
 
-    data object ChargesCard :
-        HomeCardItem(R.string.charges, R.drawable.ic_account_balance_wallet_black_24dp)
+    data object ChargesCard : HomeCardItem(
+        titleId = R.string.charges,
+        imageVector = MifosIcons.AccountBalanceWallet,
+    )
 
-    data object LoanCard : HomeCardItem(R.string.apply_for_loan, R.drawable.ic_loan)
-    data object BeneficiariesCard :
-        HomeCardItem(R.string.beneficiaries, R.drawable.ic_beneficiaries_48px)
+    data object LoanCard : HomeCardItem(
+        titleId = R.string.apply_for_loan,
+        imageVector = MifosIcons.RealEstateAgent,
+    )
 
-    data object SurveyCard : HomeCardItem(R.string.survey, R.drawable.ic_surveys_48px)
+    data object BeneficiariesCard : HomeCardItem(
+        titleId = R.string.beneficiaries,
+        imageVector = MifosIcons.People,
+    )
+
+    data object SurveyCard : HomeCardItem(
+        R.string.survey,
+        MifosIcons.Assignment,
+    )
 }
 
 enum class HomeNavigationItems(
     val nameResId: Int,
-    val iconResId: Int,
+    val imageVector: ImageVector,
 ) {
     Home(
         nameResId = R.string.home,
-        iconResId = R.drawable.ic_account_balance_black_24dp,
+        imageVector = MifosIcons.AccountBalance,
     ),
 
     Accounts(
         nameResId = R.string.accounts,
-        iconResId = R.drawable.ic_account_balance_wallet_black_24dp,
+        imageVector = MifosIcons.AccountBalanceWallet,
     ),
 
     RecentTransactions(
         nameResId = R.string.recent_transactions,
-        iconResId = R.drawable.ic_label_black_24dp,
+        imageVector = MifosIcons.Label,
     ),
 
     Charges(
         nameResId = R.string.charges,
-        iconResId = R.drawable.ic_charges,
+        imageVector = MifosIcons.Paid,
     ),
 
     ThirdPartyTransfer(
         nameResId = R.string.third_party_transfer,
-        iconResId = R.drawable.ic_compare_arrows_black_24dp,
+        imageVector = MifosIcons.CompareArrows,
     ),
 
     ManageBeneficiaries(
         nameResId = R.string.manage_beneficiaries,
-        iconResId = R.drawable.ic_beneficiaries_48px,
+        imageVector = MifosIcons.People,
     ),
 
     Settings(
         nameResId = R.string.settings,
-        iconResId = R.drawable.ic_settings,
+        imageVector = MifosIcons.Settings,
     ),
 
     AboutUs(
         nameResId = R.string.about_us,
-        iconResId = R.drawable.ic_about_us_black_24dp,
+        imageVector = MifosIcons.People,
     ),
 
     Help(
         nameResId = R.string.help,
-        iconResId = R.drawable.ic_help_black_24dp,
+        imageVector = MifosIcons.Help,
     ),
 
     Share(
         nameResId = R.string.share,
-        iconResId = R.drawable.ic_share_black_24dp,
+        imageVector = MifosIcons.Share,
     ),
 
     AppInfo(
         nameResId = R.string.app_info,
-        iconResId = R.drawable.ic_info_black_24dp,
+        imageVector = MifosIcons.Info,
     ),
 
     Logout(
         nameResId = R.string.logout,
-        iconResId = R.drawable.ic_logout,
+        imageVector = MifosIcons.Logout,
     ),
 }

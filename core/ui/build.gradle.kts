@@ -23,10 +23,7 @@ dependencies {
     api(projects.core.designsystem)
     api(projects.core.model)
     api(projects.core.common)
-
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    api(libs.androidx.metrics)
 
     testImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.bundles.androidx.compose.ui.test)

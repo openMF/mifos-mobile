@@ -26,12 +26,8 @@ build/
 .classpath
 .project
 
-# Windows thumbnail db
-.DS_Store
-
 # IDEA/Android Studio project files, because
 # the project can be imported from settings.gradle.kts
-*.iml
 .idea/*
 !.idea/copyright
 # Keep the code styles.
@@ -40,8 +36,6 @@ build/
 !/.idea/codeStyles/Project.xml
 !/.idea/codeStyles/codeStyleConfig.xml
 
-# Gradle cache
-.gradle
 
 # Kotlin
 .kotlin

@@ -10,7 +10,7 @@
 package org.mifos.mobile.core.logs.di
 
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.analytics.logEvent
 import org.mifos.mobile.core.logs.AnalyticsEvent
 import org.mifos.mobile.core.logs.AnalyticsHelper
 import javax.inject.Inject

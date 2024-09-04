@@ -31,6 +31,9 @@ dependencies {
     api(libs.androidx.compose.ui.util)
     api(libs.androidx.activity.compose)
 
+    // Accompanist Pager Library
+    implementation(libs.accompanist.pager)
+
     testImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test)
 }

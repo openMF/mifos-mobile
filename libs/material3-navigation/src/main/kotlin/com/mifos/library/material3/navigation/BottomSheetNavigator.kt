@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-wallet/blob/master/LICENSE.md
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 @file:OptIn(ExperimentalMaterial3Api::class)
 @file:Suppress("ktlint:standard:discouraged-comment-location")

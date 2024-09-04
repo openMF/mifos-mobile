@@ -1,9 +1,9 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
@@ -32,6 +32,7 @@ include(":core:data")
 include(":core:network")
 include(":core:datastore")
 include(":core:qrcode")
+include(":core:testing")
 
 // Feature Modules
 include(":feature:loan")

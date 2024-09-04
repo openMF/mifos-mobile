@@ -23,9 +23,7 @@ import org.mifos.mobile.feature.qr.qrCodeDisplay.QrCodeDisplayScreen
 import org.mifos.mobile.feature.qr.qrCodeImport.QrCodeImportScreen
 
 fun NavController.navigateToQrDisplayScreen(qrString: String) {
-    navigate(
-        QrNavigation.QrDisplayScreen.passArguments(qrString = qrString),
-    )
+    navigate(QrNavigation.QrDisplayScreen.passArguments(qrString = qrString))
 }
 
 fun NavController.navigateToQrImportScreen() {
