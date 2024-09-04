@@ -69,6 +69,28 @@ We will accept pull requests if:
 * If it makes changes to the UI the pull request should include screenshots
 * It is a single commit (please use `git rebase -i` to squash commits)
 
+All your pull requests must pass the CI build only then, it will be allowed to merge.
+Sometimes, when the build doesn't pass you can use these commands in your local terminal and check for the errors,</br>
+
+**We've commited to use Material3 design in our project. And added lint check for not to use any M2 libraries in our project.</br>**
+**And when adding new library, please make sure to follow the naming convention and place in sequential order(A->Z).</br>**
+
+In MacOS, Windows or Linux, you should run the following commands before opening a PR, and make sure to pass all the commands:
+
+**In order to enhance our development process, we have implemented Git hooks in our project.
+To install these hooks locally, simply run the command `./gradlew installGitHooks`.
+This will ensure that the Git hooks are installed on your local machine.**</br>
+
+* `./gradlew check -p build-logic` this checks build-logic configured properly.</br>
+* `./gradlew spotlessApply --no-configuration-cache` an check and apply formatting to any file.</br>
+* `./gradlew dependencyGuardBaseline`  to generate dependency-guard baseline.</br>
+* `./gradlew detekt`  to check detekt error.</br>
+* `./gradlew testDebug :lint:test :androidApp:lintRelease :lint:lint` to check lint and test error.</br>
+* `./gradlew build` to build the project.</br>
+* `./gradlew updateReleaseBadging` to update the badging for the project.</br>
+
+*Or Run the `ci-prepush.sh` or `ci-prepush.bat` script to run all the above commands in one go.*
+
 ### Best Practices for reporting or requesting for Issues/Enhancements:
   - Follow the Issue Template while creating the issue.
   - Include Screenshots if any (especially for UI related issues)
