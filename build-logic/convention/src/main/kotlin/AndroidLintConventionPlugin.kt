@@ -30,10 +30,8 @@ private fun Lint.configure() {
     xmlReport = true
     checkDependencies = true
     abortOnError = false
-    enable += "ComposeM2Api"
-    error += "ComposeM2Api"
     // Disable this rule until we ship the libraries to some maven.
-//    disable += "ResourceName"
+    disable += "ResourceName"
     baseline = File("lint-baseline.xml")
     explainIssues = true
     htmlReport = true

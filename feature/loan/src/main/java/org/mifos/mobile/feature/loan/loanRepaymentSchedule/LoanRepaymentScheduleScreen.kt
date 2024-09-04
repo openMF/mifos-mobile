@@ -175,8 +175,11 @@ private fun RepaymentScheduleTable(
                     TableCell(text = "${periods.indexOf(period) + 1}", weight = 0.5f)
                     TableCell(text = DateHelper.getDateAsString(period.dueDate), weight = 1f)
                     TableCell(
-                        text = if (period.principalOriginalDue == null) "$currency 0.00"
-                        else "$currency ${period.principalOriginalDue}",
+                        text = if (period.principalOriginalDue == null) {
+                            "$currency 0.00"
+                        } else {
+                            "$currency ${period.principalOriginalDue}"
+                        },
                         weight = 1f,
                     )
                     TableCell(

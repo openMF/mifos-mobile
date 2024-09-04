@@ -27,8 +27,10 @@ import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
+import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.data.repository.UserDetailRepository
 import org.mifos.mobile.core.data.repositoryImpl.AccountsRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.AuthenticationUserRepository
 import org.mifos.mobile.core.data.repositoryImpl.BeneficiaryRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.ClientChargeRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.ClientRepositoryImp
@@ -43,10 +45,22 @@ import org.mifos.mobile.core.data.repositoryImpl.ThirdPartyTransferRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.TransferRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.UserAuthRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.UserDetailRepositoryImp
+import org.mifos.mobile.core.data.utils.ConnectivityManagerNetworkMonitor
+import org.mifos.mobile.core.data.utils.NetworkMonitor
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
+    @Binds
+    internal abstract fun bindsUserDataRepository(
+        authenticationUserRepository: AuthenticationUserRepository,
+    ): UserDataRepository
+
+    @Binds
+    internal abstract fun bindsNetworkMonitor(
+        networkMonitor: ConnectivityManagerNetworkMonitor,
+    ): NetworkMonitor
 
     @Binds
     internal abstract fun providesUserAuthRepository(

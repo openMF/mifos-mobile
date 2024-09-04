@@ -21,11 +21,15 @@ tasks.withType<KotlinCompile>().configureEach {
 dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.android.tools.common)
+    compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.firebase.crashlytics.gradlePlugin)
     compileOnly(libs.firebase.performance.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
+    compileOnly(libs.detekt.gradlePlugin)
+    compileOnly(libs.ktlint.gradlePlugin)
+    compileOnly(libs.spotless.gradlePlugin)
     implementation(libs.truth)
 }
 
@@ -46,6 +50,10 @@ gradlePlugin {
             id = "mifos.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidApplicationJacoco") {
+            id = "mifos.android.application.jacoco"
+            implementationClass = "AndroidApplicationJacocoConventionPlugin"
+        }
         register("androidHilt") {
             id = "mifos.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
@@ -61,6 +69,10 @@ gradlePlugin {
         register("androidFeature") {
             id = "mifos.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
+        }
+        register("androidLibraryJacoco") {
+            id = "mifos.android.library.jacoco"
+            implementationClass = "AndroidLibraryJacocoConventionPlugin"
         }
         register("androidTest") {
             id = "mifos.android.test"
@@ -81,6 +93,26 @@ gradlePlugin {
         register("jvmLibrary") {
             id = "mifos.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
+        }
+        register("detekt") {
+            id = "mifos.detekt.plugin"
+            implementationClass = "MifosDetektConventionPlugin"
+            description = "Configures detekt for the project"
+        }
+        register("spotless") {
+            id = "mifos.spotless.plugin"
+            implementationClass = "MifosSpotlessConventionPlugin"
+            description = "Configures spotless for the project"
+        }
+        register("ktlint") {
+            id = "mifos.ktlint.plugin"
+            implementationClass = "MifosKtlintConventionPlugin"
+            description = "Configures kotlinter for the project"
+        }
+        register("gitHooks") {
+            id = "mifos.git.hooks"
+            implementationClass = "MifosGitHooksConventionPlugin"
+            description = "Installs git hooks for the project"
         }
     }
 }

@@ -18,4 +18,6 @@ android {
 
 dependencies {
     implementation(projects.libs.pullrefresh)
+    // Accompanist Pager Library
+    implementation(libs.accompanist.pager)
 }

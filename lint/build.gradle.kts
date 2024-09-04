@@ -29,8 +29,6 @@ kotlin {
 }
 
 dependencies {
-    lintChecks(libs.slack.compose.lint)
-
     compileOnly(libs.kotlin.stdlib)
     compileOnly(libs.lint.api)
 

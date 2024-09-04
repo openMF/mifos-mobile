@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.home.screens
 
 import android.graphics.Bitmap
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -44,10 +43,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -213,7 +212,7 @@ private fun HomeCards(
                     .weight(1f)
                     .padding(bottom = 8.dp),
                 titleId = card.titleId,
-                drawableResId = card.drawableResId,
+                imageVector = card.imageVector,
                 onClick = {
                     if (card == HomeCardItem.TransferCard) {
                         showTransferDialog = true
@@ -272,7 +271,7 @@ private fun UserDetailsRow(
 @Composable
 private fun HomeCard(
     @StringRes titleId: Int,
-    @DrawableRes drawableResId: Int,
+    imageVector: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -288,9 +287,9 @@ private fun HomeCard(
             verticalArrangement = Arrangement.Center,
         ) {
             Icon(
-                painter = painterResource(id = drawableResId),
+                imageVector = imageVector,
                 contentDescription = null,
-                modifier = Modifier.size(56.dp),
+                modifier = Modifier.size(48.dp),
                 tint = MaterialTheme.colorScheme.primary,
             )
             Text(

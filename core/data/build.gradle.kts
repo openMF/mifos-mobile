@@ -16,6 +16,13 @@ plugins {
 
 android {
     namespace = "org.mifos.mobile.core.data"
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 dependencies {
@@ -23,22 +30,15 @@ dependencies {
     api(projects.core.model)
     api(projects.core.network)
 
-    implementation(libs.squareup.retrofit2) {
-        // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
-        exclude(module = "okhttp")
-    }
-    implementation(libs.squareup.retrofit.adapter.rxjava)
-    implementation(libs.squareup.retrofit.converter.gson)
+    implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.okhttp)
-    implementation(libs.squareup.logging.interceptor)
+    implementation(libs.mockito.core)
+    implementation(libs.turbine)
 
-    implementation(libs.jetbrains.kotlin.jdk7)
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.cloud.messaging)
+    testImplementation(projects.core.testing)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

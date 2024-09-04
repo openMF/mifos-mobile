@@ -63,7 +63,8 @@ internal fun AboutUsScreen(
 
 private fun getAboutUsItem(context: Context): List<AboutUsItem> {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-    val copyrightText = context.getString(R.string.feature_about_copyright_mifos).replace("%1\$s", currentYear.toString())
+    val copyrightText = context.getString(R.string.feature_about_copyright_mifos)
+        .replace("%1\$s", currentYear.toString())
 
     return listOf(
         AboutUsItem(

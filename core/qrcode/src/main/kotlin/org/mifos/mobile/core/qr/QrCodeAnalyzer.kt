@@ -1,6 +1,16 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.qr
 
 import android.graphics.ImageFormat
+import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.zxing.BarcodeFormat
@@ -12,7 +22,7 @@ import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
 
 class QrCodeAnalyzer(
-    private val onBarcodeScanned: (String) -> Unit
+    private val onBarcodeScanned: (String) -> Unit,
 ) : ImageAnalysis.Analyzer {
 
     private val supportedImageFormats = listOf(
@@ -32,7 +42,7 @@ class QrCodeAnalyzer(
                 0,
                 image.width,
                 image.height,
-                false
+                false,
             )
             val binaryBmp = BinaryBitmap(HybridBinarizer(source))
             try {
@@ -40,14 +50,14 @@ class QrCodeAnalyzer(
                     setHints(
                         mapOf(
                             DecodeHintType.POSSIBLE_FORMATS to arrayListOf(
-                                BarcodeFormat.QR_CODE
-                            )
-                        )
+                                BarcodeFormat.QR_CODE,
+                            ),
+                        ),
                     )
                 }.decode(binaryBmp)
                 onBarcodeScanned(result.text)
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.d("QrCodeAnalyzer", "analyze: ${e.message}")
             } finally {
                 image.close()
             }

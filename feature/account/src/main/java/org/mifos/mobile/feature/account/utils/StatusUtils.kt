@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.account.utils
 import android.content.Context
 import androidx.core.content.ContextCompat
 import org.mifos.mobile.core.model.entity.CheckboxStatus
-import org.mifos.mobile.core.ui.utils.getThemeAttributeColor
 import org.mifos.mobile.feature.account.R
 
 object StatusUtils {
@@ -48,7 +47,7 @@ object StatusUtils {
         arrayList.add(
             CheckboxStatus(
                 context.getString(R.string.feature_account_closed),
-                context.getThemeAttributeColor(R.attr.colorOnSurface),
+                ContextCompat.getColor(context, R.color.black),
             ),
         )
 
@@ -91,13 +90,13 @@ object StatusUtils {
         arrayList.add(
             CheckboxStatus(
                 context.getString(R.string.feature_account_closed),
-                context.getThemeAttributeColor(R.attr.colorOnSurface),
+                ContextCompat.getColor(context, R.color.black),
             ),
         )
         arrayList.add(
             CheckboxStatus(
                 context.getString(R.string.feature_account_withdrawn),
-                context.getThemeAttributeColor(R.attr.colorOnSurfaceVariant),
+                ContextCompat.getColor(context, R.color.light_black),
             ),
         )
         return arrayList

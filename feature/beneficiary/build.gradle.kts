@@ -16,4 +16,6 @@ android {
     namespace = "org.mifos.mobile.feature.beneficiary"
 }
 
-dependencies { }
+dependencies {
+    implementation(libs.squareup.okhttp)
+}

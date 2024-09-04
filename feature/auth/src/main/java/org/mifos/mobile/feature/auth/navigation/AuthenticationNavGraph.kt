@@ -26,20 +26,25 @@ fun NavController.navigateToLoginScreen() {
 
 fun NavGraphBuilder.authenticationNavGraph(
     navController: NavHostController,
+    route: String,
     navigateToPasscodeScreen: () -> Unit,
 ) {
     navigation(
+        route = route,
         startDestination = AuthenticationNavigation.Login.route,
-        route = AuthenticationNavigation.AuthenticationBase.route,
     ) {
         loginRoute(
-            navigateToRegisterScreen = { navController.navigate(AuthenticationNavigation.Registration.route) },
+            navigateToRegisterScreen = {
+                navController.navigate(AuthenticationNavigation.Registration.route)
+            },
             navigateToPasscodeScreen = navigateToPasscodeScreen,
         )
 
         registrationRoute(
             navigateBack = navController::popBackStack,
-            onRegistered = { navController.navigate(AuthenticationNavigation.RegistrationVerification.route) },
+            onRegistered = {
+                navController.navigate(AuthenticationNavigation.RegistrationVerification.route)
+            },
         )
 
         registrationVerificationRoute(
@@ -49,7 +54,7 @@ fun NavGraphBuilder.authenticationNavGraph(
     }
 }
 
-fun NavGraphBuilder.loginRoute(
+private fun NavGraphBuilder.loginRoute(
     navigateToRegisterScreen: () -> Unit,
     navigateToPasscodeScreen: () -> Unit,
 ) {
@@ -61,7 +66,7 @@ fun NavGraphBuilder.loginRoute(
     }
 }
 
-fun NavGraphBuilder.registrationRoute(
+private fun NavGraphBuilder.registrationRoute(
     navigateBack: () -> Unit,
     onRegistered: () -> Unit,
 ) {
@@ -73,7 +78,7 @@ fun NavGraphBuilder.registrationRoute(
     }
 }
 
-fun NavGraphBuilder.registrationVerificationRoute(
+private fun NavGraphBuilder.registrationVerificationRoute(
     navigateBack: () -> Unit,
     onRegistrationVerified: () -> Unit,
 ) {

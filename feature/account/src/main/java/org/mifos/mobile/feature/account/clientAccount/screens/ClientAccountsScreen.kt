@@ -9,10 +9,8 @@
  */
 package org.mifos.mobile.feature.account.clientAccount.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.pager.rememberPagerState
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
@@ -173,8 +172,8 @@ private fun ClientAccountsScreen(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
+@Suppress("DEPRECATION")
 private fun ClientAccountsTabRow(
     currentPage: Int,
     pageChanged: (index: Int) -> Unit,
@@ -182,7 +181,7 @@ private fun ClientAccountsTabRow(
     modifier: Modifier = Modifier,
 ) {
     var page by remember { mutableIntStateOf(currentPage) }
-    val pagerState = rememberPagerState(pageCount = { 3 })
+    val pagerState = rememberPagerState()
 
     val tabs = listOf(
         stringResource(id = R.string.feature_account_savings),
