@@ -20,8 +20,8 @@ android {
     namespace = "org.mifos.mobile"
 
     defaultConfig {
-        versionCode = 1
-        versionName = "1.0"
+        versionName = project.version.toString()
+        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
         applicationId = "org.mifos.mobile"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -33,17 +33,20 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("../default_key_store.jks")
-            storePassword = "mifos1234"
-            keyAlias = "mifos-mobile"
-            keyPassword = "mifos1234"
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "release_keystore.keystore")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "mifos1234"
+            keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "mifos-mobile"
+            keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "mifos1234"
+            enableV1Signing = true
+            enableV2Signing = true
         }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
             isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
