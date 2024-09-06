@@ -8,6 +8,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
@@ -26,7 +27,7 @@ extensions.configure<ReckonExtension> {
     setDefaultInferredScope("patch")
     stages("beta", "final")
     setScopeCalc { java.util.Optional.of(org.ajoberstar.reckon.core.Scope.PATCH) }
-//    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
     setStageCalc(calcStageFromProp())
     setTagWriter { it.toString() }
 }
@@ -81,4 +82,3 @@ include(":libs:mifos-passcode")
 
 // Kotlin Multiplatform Modules
 include(":shared")
-
