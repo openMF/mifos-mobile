@@ -33,9 +33,10 @@ plugins {
     alias(libs.plugins.jetbrainsCompose) apply false
 }
 
-tasks.register("versionFile").configure {
+tasks.register("versionFile") {
     group = "publishing"
     doLast {
-        File(projectDir, "version.txt").writeText(project.version.toString())
+        println(project.version)
+        project.rootProject.file("version.txt").writeText(project.version.toString())
     }
 }

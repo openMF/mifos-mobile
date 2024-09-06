@@ -16,7 +16,7 @@ env:
 
 jobs:
   app_build:
-    name: Github, Firebase, and Sentry Release
+    name: Github Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -145,7 +145,7 @@ jobs:
         run: |
           ./gradlew :androidApp:bundleRelease
 
-      - name: Deploy to Playstore Internal
+      - name: Deploy to Play Store Internal
         run: bundle exec fastlane deploy_internal
 
       - name: Promote Internal to Beta
