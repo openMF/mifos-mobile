@@ -28,4 +28,4 @@ jobs:
           playstore-creds: ${{ secrets.PLAYSTORECREDS }}
 
       - name: Promote Beta to Production Play Store
-        run: bundle exec fastlane promote_to_production
+        run: bundle exec fastlane android promote_to_production
