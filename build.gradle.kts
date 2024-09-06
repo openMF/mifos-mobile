@@ -36,7 +36,7 @@ plugins {
 tasks.register("versionFile") {
     group = "publishing"
     doLast {
-        println(project.version)
-        project.rootProject.file("version.txt").writeText(project.version.toString())
+        println(project.version.toString())
+        project.file("version.txt").writeText(project.version.toString())
     }
 }

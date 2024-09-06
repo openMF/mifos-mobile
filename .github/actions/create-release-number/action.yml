@@ -1,5 +1,5 @@
 name: 'Create Release Numbers'
-description: 'Creates the current release number based on checked out code'
+description: 'Creates the current release number based on Gradle or Git history'
 outputs:
   version-code:
     description: 'The numeric app version'
@@ -10,18 +10,45 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Set Build Number
+    - name: Set Build Number and Version
       id: version-generator
       shell: bash
       run: |
+        # Try to get version from Gradle
         ./gradlew versionFile
-        COMMITS=`git rev-list --count HEAD`
-        TAGS=`git tag | grep -v beta | wc -l`
+        GRADLE_VERSION=$(cat version.txt)
+        
+        if [ "$GRADLE_VERSION" = "unspecified" ] || [ -z "$GRADLE_VERSION" ]; then
+          echo "Gradle version is unspecified or empty. Generating version from Git."
+        
+          # Get the latest tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        
+          # Extract major, minor, patch from the tag
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST_TAG#v}"
+        
+          # Count commits since the last tag
+          COMMITS_SINCE_TAG=$(git rev-list ${LATEST_TAG}..HEAD --count)
+        
+          # Calculate new patch version
+          NEW_PATCH=$((PATCH + COMMITS_SINCE_TAG))
+        
+          # Generate version name
+          VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
+        else
+          echo "Using Gradle-generated version."
+          VERSION=$GRADLE_VERSION
+        fi
+        
+        # Calculate version code
+        COMMITS=$(git rev-list --count HEAD)
+        TAGS=$(git tag | grep -v beta | wc -l)
         VC=$((((COMMITS+TAGS) * 3) << 1))
-        echo Number Commits $COMMITS
-        echo Number Tags $TAGS
-        echo Version Code $VC
+        
+        echo "Version: $VERSION"
+        echo "Number of Commits: $COMMITS"
+        echo "Number of Tags: $TAGS"
+        echo "Version Code: $VC"
+        
         echo "version-code=$VC" >> $GITHUB_OUTPUT
-        VERSION=`cat version.txt`
-        echo Version $VERSION
         echo "version=$VERSION" >> $GITHUB_OUTPUT
