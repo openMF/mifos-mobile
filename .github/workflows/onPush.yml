@@ -148,8 +148,8 @@ jobs:
           ./gradlew :androidApp:bundleRelease
 
       - name: Deploy to Play Store Internal
-        run: bundle exec fastlane deploy_internal
+        run: bundle exec fastlane android deploy_internal
 
       - name: Promote Internal to Beta
         if: github.event.inputs.beta == 'true'
-        run: bundle exec fastlane promote_to_beta
+        run: bundle exec fastlane android promote_to_beta
