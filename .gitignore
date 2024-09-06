@@ -47,7 +47,7 @@ captures/
 app/app.iml
 app/manifest-merger-release-report.txt
 
-#*.keystore
+release_keystore.keystore
 
 version.txt
 

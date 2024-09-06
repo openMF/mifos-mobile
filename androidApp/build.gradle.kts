@@ -33,7 +33,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "release_keystore.keystore")
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "debug_keystore.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "mifos1234"
             keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "mifos-mobile"
             keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "mifos1234"
