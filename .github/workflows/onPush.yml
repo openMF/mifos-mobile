@@ -58,6 +58,7 @@ jobs:
 
       - name: Build Release
         env:
+          KEYSTORE_PATH: ${{ secrets.KEYSTORE_NAME }}
           KEYSTORE_PASSWORD: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
           KEYSTORE_ALIAS: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS }}
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
@@ -138,6 +139,7 @@ jobs:
 
       - name: Build Release
         env:
+          KEYSTORE_PATH: ${{ secrets.KEYSTORE_NAME }}
           KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_FILE_PASSWORD }}
           KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_ALIAS }}
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_ALIAS_PASSWORD }}
