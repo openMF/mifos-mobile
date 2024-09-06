@@ -23,7 +23,7 @@ runs:
       env:
         KEYSTORE: ${{ inputs.keystore }}
       run: | 
-        echo $KEYSTORE | androidApp/release_keystore.keystore
+        echo $KEYSTORE | base64 -d > androidApp/release_keystore.keystore
 
     - name: Inflate google-services.json
       shell: bash
