@@ -63,7 +63,7 @@ jobs:
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
         run: |
-          ./gradlew :mifospay:assembleRelease
+          ./gradlew :androidApp:assembleRelease
 
       - name: Archive Build
         uses: actions/upload-artifact@v4
@@ -76,20 +76,19 @@ jobs:
         env:
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
         run: |
-          echo $VERSION_CODE > ./app/build/outputs/version_code.txt
+          echo $VERSION_CODE > ./androidApp/build/outputs/version_code.txt
 
       - name: Create Github Pre-Release
         if: github.event.inputs.beta == 'true'
         uses: softprops/action-gh-release@v2.0.8
         with:
           tag_name: ${{ steps.rel_number.outputs.version }}
-          body_path: ./app/build/outputs/changelogGithub
+          body_path: ./androidApp/build/outputs/changelogGithub
           draft: false
           prerelease: true
           files: |
-            ./mifospay/build/outputs/apk/demo/release/mifospay-demo-release.apk
-            ./mifospay/build/outputs/apk/prod/release/mifospay-prod-release.apk
-            ./mifospay/build/outputs/version_code.txt
+            ./androidApp/build/outputs/apk/release/androidApp-release.apk
+            ./androidApp/build/outputs/version_code.txt
 
       - name: Print `git status`
         run: git status
@@ -144,7 +143,7 @@ jobs:
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_ALIAS_PASSWORD }}
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
         run: |
-          ./gradlew :mifospay:bundleRelease
+          ./gradlew :androidApp:bundleRelease
 
       - name: Deploy to Playstore Internal
         run: bundle exec fastlane deploy_internal

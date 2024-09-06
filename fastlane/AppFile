@@ -1,2 +1,2 @@
-json_key_file("") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
-package_name(ENV["STAGING_PACKAGE_NAME"]) # e.g. org.mifospay.demo
+json_key_file("app/playStorePublishServiceCredentialsFile.json")
+package_name("org.mifos.mobile") # e.g. org.mifos.mobile

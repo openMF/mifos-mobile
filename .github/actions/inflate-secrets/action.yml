@@ -16,26 +16,25 @@ runs:
     - name: Mock debug google-services.json
       shell: bash
       run: |
-        cp .github/mock-google-services.json androdiApp/src/demo/google-services.json
-        cp .github/mock-google-services.json androdiApp/src/prod/google-services.json
+        cp .github/mock-google-services.json androidApp/src/google-services.json
 
     - name: Inflate release_keystore.keystore
       shell: bash
       env:
         KEYSTORE: ${{ inputs.keystore }}
       run: | 
-        echo $KEYSTORE | base64 --decode > androdiApp/release_keystore.keystore
+        echo $KEYSTORE | androidApp/release_keystore.keystore
 
     - name: Inflate google-services.json
       shell: bash
       env:
         GOOGLE_SERVICES: ${{ inputs.google-services }}
       run: |
-        echo $GOOGLE_SERVICES > androdiApp/google-services.json
+        echo $GOOGLE_SERVICES > androidApp/google-services.json
 
     - name: Inflate playStorePublishServiceCredentialsFile.json
       shell: bash
       env:
         CREDS: ${{ inputs.playstore-creds }}
       run: |
-        echo $CREDS > androdiApp/playStorePublishServiceCredentialsFile.json
+        echo $CREDS > androidApp/playStorePublishServiceCredentialsFile.json
