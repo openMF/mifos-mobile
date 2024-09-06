@@ -46,3 +46,14 @@ captures/
 /app/app-release.apk
 app/app.iml
 app/manifest-merger-release-report.txt
+
+#*.keystore
+
+version.txt
+
+firebaseAppDistributionServiceCredentialsFile.json
+playStorePublishServiceCredentialsFile.json
+
+# Ruby stuff we don't care about
+.bundle/
+vendor/

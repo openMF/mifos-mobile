@@ -1,0 +1,60 @@
+default_platform(:android)
+
+platform :android do
+  desc "Deploy internal tracks to Google Play"
+  lane :deploy_internal do
+    supply(
+      track: 'internal',
+      aab: 'app/build/outputs/bundle/prod/app-prod-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+    )
+  end
+
+  desc "Promote internal tracks to beta on Google Play"
+  lane :promote_to_beta do
+    supply(
+      track: 'internal',
+      track_promote_to: 'beta',
+      skip_upload_changelogs: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+    )
+  end
+
+  desc "Promote beta tracks to production on Google Play"
+  lane :promote_to_production do
+    supply(
+      track: 'beta',
+      track_promote_to: 'production',
+      skip_upload_changelogs: true,
+      sync_image_upload: true,
+    )
+  end
+
+  desc "Prep Amazon Appstore submission"
+  lane :prep_amazon do
+    amazon_app_submission(
+        client_id: ENV["AMAZON_APPSTORE_CLIENT_ID"],
+        client_secret: ENV["AMAZON_APPSTORE_CLIENT_SECRET"],
+        app_id: ENV["AMAZON_APPSTORE_APP_ID"],
+        apk_path: "app/build/outputs/apk/prod/release/app-prod-release.apk",
+        upload_apk: true,
+        changelogs_path:  "fastlane/metadata/android/en-US/changelogs/",
+        upload_changelogs: true,
+        submit_for_review: false
+      )
+  end
+
+  desc "Submit to Amazon Appstore"
+  lane :submit_amazon do
+    amazon_app_submission(
+        client_id: ENV["AMAZON_APPSTORE_CLIENT_ID"],
+        client_secret: ENV["AMAZON_APPSTORE_CLIENT_SECRET"],
+        app_id: ENV["AMAZON_APPSTORE_APP_ID"],
+        submit_for_review: true
+      )
+  end
+end

@@ -1,0 +1,154 @@
+name: On Push
+
+on:
+  workflow_dispatch:
+    inputs:
+      beta:
+        description: 'true if this is a beta release'
+        required: false
+        default: 'false'
+  push:
+    branches:
+      - master
+
+env:
+  SUPPLY_UPLOAD_MAX_RETRIES: 5
+
+jobs:
+  app_build:
+    name: Github, Firebase, and Sentry Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4.2.2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - uses: ./.github/actions/create-release-number
+        name: Create Release Number
+        id: rel_number
+
+      - uses: ./.github/actions/inflate-secrets
+        name: Inflate Secrets
+        with:
+          keystore: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
+          google-services: ${{ secrets.GOOGLESERVICES }}
+          playstore-creds: ${{ secrets.PLAYSTORECREDS }}
+
+      - uses: ./.github/actions/create-release-notes
+        name: Create Release Notes
+        with:
+          tag-name: ${{ steps.rel_number.outputs.version }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Release
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
+          VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
+        run: |
+          ./gradlew :mifospay:assembleRelease
+
+      - name: Archive Build
+        uses: actions/upload-artifact@v4
+        with:
+          path: ./**/*.apk
+
+      - name: Create Version File
+        if: github.event.inputs.beta == 'true'
+        shell: bash
+        env:
+          VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
+        run: |
+          echo $VERSION_CODE > ./app/build/outputs/version_code.txt
+
+      - name: Create Github Pre-Release
+        if: github.event.inputs.beta == 'true'
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          tag_name: ${{ steps.rel_number.outputs.version }}
+          body_path: ./app/build/outputs/changelogGithub
+          draft: false
+          prerelease: true
+          files: |
+            ./mifospay/build/outputs/apk/demo/release/mifospay-demo-release.apk
+            ./mifospay/build/outputs/apk/prod/release/mifospay-prod-release.apk
+            ./mifospay/build/outputs/version_code.txt
+
+      - name: Print `git status`
+        run: git status
+
+  play_publish:
+    name: Play Publish
+    runs-on: ubuntu-latest
+    concurrency:
+      group: playstore_deploy
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4.2.2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - uses: ./.github/actions/create-release-number
+        name: Create Release Number
+        id: rel_number
+
+      - uses: ./.github/actions/inflate-secrets
+        name: Inflate Secrets
+        with:
+          keystore: ${{ secrets.UPLOAD_KEYSTORE_FILE }}
+          google-services: ${{ secrets.GOOGLESERVICES }}
+          playstore-creds: ${{ secrets.PLAYSTORECREDS }}
+
+      - uses: ./.github/actions/create-release-notes
+        name: Create Release Notes
+        with:
+          tag-name: ${{ steps.rel_number.outputs.version }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Release
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_FILE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_ALIAS_PASSWORD }}
+          VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
+        run: |
+          ./gradlew :mifospay:bundleRelease
+
+      - name: Deploy to Playstore Internal
+        run: bundle exec fastlane deploy_internal
+
+      - name: Promote Internal to Beta
+        if: github.event.inputs.beta == 'true'
+        run: bundle exec fastlane promote_to_beta
