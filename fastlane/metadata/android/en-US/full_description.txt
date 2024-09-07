@@ -1,0 +1,18 @@
+Mifos Mobile is a mobile banking app allowing financial institutions using the Mifos X or Apache Fineract to provide an omni-channel banking experience to their clients.
+
+Clients can download the mobile banking app and view their accounts and conduct transactions including:
+
+* View Summary and Details of All Accounts
+* View Account Statements
+* Apply for new Accounts
+* Transfers funds between savings
+* Repay loans via savings accounts
+* Transfers funds to other members of the financial institution
+* Add new beneficiaries via QR code
+*  3rd party transfers (coming soon)
+
+Financial Institution can:
+* Brand the app with logo for their financial institution
+* Send event-based and campaign-style in-app notifications to clients
+
+This app is only meant for demonstration purposes and before being used in any production environment should be hardened with proper security for the API and channel connections.
