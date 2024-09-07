@@ -5,7 +5,7 @@ platform :android do
   lane :deploy_internal do
     supply(
       track: 'internal',
-      aab: 'androidApp/build/outputs/bundle/androidApp-release.aab',
+      aab: 'androidApp/build/outputs/bundle/release/androidApp-release.aab',
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_screenshots: true,
@@ -38,7 +38,7 @@ platform :android do
   lane :internal do
     upload_to_play_store(
         track: 'internal',
-        aab: 'androidApp/build/outputs/bundle/androidApp-release.aab',
+        aab: 'androidApp/build/outputs/bundle/release/androidApp-release.aab',
         skip_upload_metadata: true,
         skip_upload_images: true,
         skip_upload_screenshots: true,
