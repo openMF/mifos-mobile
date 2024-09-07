@@ -1,0 +1,1 @@
+Reference mobile banking app powered by Mifos X and Fineract banking platform.
