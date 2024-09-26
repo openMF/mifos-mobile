@@ -11,9 +11,6 @@ on:
         options:
           - internal
           - beta
-  push:
-    branches:
-      - development
 
 env:
   SUPPLY_UPLOAD_MAX_RETRIES: 5
