@@ -23,6 +23,10 @@ android {
             isReturnDefaultValues = true
         }
     }
+
+    defaultConfig {
+        consumerProguardFiles("consumer-rules.pro")
+    }
 }
 
 dependencies {

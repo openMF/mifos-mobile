@@ -11,6 +11,9 @@ import org.gradle.kotlin.dsl.getByType
 val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
+val Project.dynamicVersion: String
+    get() = this.version.toString().split('+')[0]
+
 inline fun Project.detektGradle(crossinline configure: DetektExtension.() -> Unit) =
     extensions.configure<DetektExtension> {
         configure()

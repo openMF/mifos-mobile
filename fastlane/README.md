@@ -39,30 +39,6 @@ Promote internal tracks to beta on Google Play
 
 Promote beta tracks to production on Google Play
 
-### android internal
-
-```sh
-[bundle exec] fastlane android internal
-```
-
-Deploy internal tracks to Google Play
-
-### android beta
-
-```sh
-[bundle exec] fastlane android beta
-```
-
-Promote internal tracks to beta on Google Play
-
-### android production
-
-```sh
-[bundle exec] fastlane android production
-```
-
-Promote beta tracks to production on Google Play
-
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

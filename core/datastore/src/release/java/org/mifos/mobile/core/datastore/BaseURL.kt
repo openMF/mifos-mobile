@@ -9,10 +9,6 @@
  */
 package org.mifos.mobile.core.datastore
 
-/**
- * @author Vishwajeet
- * @since 09/06/16
- */
 class BaseURL {
     val url: String? = null
         get() = field
@@ -25,7 +21,7 @@ class BaseURL {
     }
 
     companion object {
-        const val API_ENDPOINT = "demo.mifos.community"
+        const val API_ENDPOINT = "gsoc.mifos.community"
         const val API_PATH = "/fineract-provider/api/v1/"
         const val PROTOCOL_HTTPS = "https://"
     }

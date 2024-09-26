@@ -33,10 +33,15 @@ plugins {
     alias(libs.plugins.jetbrainsCompose) apply false
 }
 
-tasks.register("versionFile") {
-    group = "publishing"
-    doLast {
-        println(project.version.toString())
-        project.file("version.txt").writeText(project.version.toString())
+object DynamicVersion {
+    fun setDynamicVersion(file: File, version: String) {
+        val cleanedVersion = version.split('+')[0]
+        file.writeText(cleanedVersion)
     }
+}
+
+tasks.register("versionFile") {
+    val file = File(projectDir, "version.txt")
+
+    DynamicVersion.setDynamicVersion(file, project.version.toString())
 }

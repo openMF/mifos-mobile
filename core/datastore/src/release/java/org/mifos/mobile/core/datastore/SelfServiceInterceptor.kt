@@ -15,20 +15,18 @@ import okhttp3.Request.Builder
 import okhttp3.Response
 import java.io.IOException
 
-/**
- * @author Vishwajeet
- * @since 21/06/16
- */
-class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
-    Interceptor {
+class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest: Request = chain.request()
         val builder: Builder = chainRequest.newBuilder()
+        builder.header("Content-Type", "application/json")
+        builder.header("Accept", "application/json")
 
         preferencesHelper.tenant?.let {
             builder.header(HEADER_TENANT, it)
         }
+
         preferencesHelper.token?.let {
             if (it.isNotEmpty()) {
                 builder.header(HEADER_AUTH, it)
@@ -42,6 +40,6 @@ class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     companion object {
         const val HEADER_TENANT = "Fineract-Platform-TenantId"
         const val HEADER_AUTH = "Authorization"
-        const val DEFAULT_TENANT = "mobile"
+        const val DEFAULT_TENANT = "gsoc"
     }
 }

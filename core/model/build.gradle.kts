@@ -16,6 +16,9 @@ plugins {
 
 android {
     namespace = "org.mifos.mobile.core.model"
+    defaultConfig {
+        consumerProguardFiles("consumer-rules.pro")
+    }
 }
 
 dependencies {
