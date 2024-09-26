@@ -57,7 +57,7 @@ class DataManager @Inject constructor(
 ) {
     var clientId: Long? = preferencesHelper.clientId
 
-    suspend fun login(loginPayload: LoginPayload?): User {
+    suspend fun login(loginPayload: LoginPayload): User {
         return baseApiManager.authenticationApi.authenticate(loginPayload)
     }
 

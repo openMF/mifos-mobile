@@ -123,10 +123,10 @@ class UserAuthRepositoryImpTest {
 
     @Test
     fun testLogin_SuccessResponseReceivedFromDataManager_ReturnsUserSuccessfully() = runTest {
-        val mockLoginPayload = LoginPayload().apply {
-            this.username = "username"
-            this.password = "password"
-        }
+        val mockLoginPayload = LoginPayload(
+            username = "username",
+            password = "password",
+        )
 
         Mockito.`when`(
             dataManager.login(mockLoginPayload),
@@ -143,10 +143,11 @@ class UserAuthRepositoryImpTest {
 
     @Test(expected = Exception::class)
     fun testLogin_ErrorResponseReceivedFromDataManager_ReturnsError() = runTest {
-        val mockLoginPayload = LoginPayload().apply {
-            this.username = "username"
-            this.password = "password"
-        }
+        val mockLoginPayload = LoginPayload(
+            username = "username",
+            password = "password",
+        )
+
         Mockito.`when`(
             dataManager.login(mockLoginPayload),
         ).thenThrow(Exception("Error occurred"))

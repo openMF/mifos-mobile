@@ -31,9 +31,9 @@ jobs:
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'onPush.yml',
-              ref: 'master',
+              workflow_id: 'release_to_internal_or_beta.yml',
+              ref: 'development',
               inputs: {
-                "beta": "true",
+                "release_type": "beta",
               },
             })

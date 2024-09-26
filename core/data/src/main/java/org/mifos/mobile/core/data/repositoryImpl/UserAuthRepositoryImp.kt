@@ -51,10 +51,11 @@ class UserAuthRepositoryImp @Inject constructor(
     }
 
     override suspend fun login(username: String, password: String): Flow<User> {
-        val loginPayload = LoginPayload().apply {
-            this.username = username
-            this.password = password
-        }
+        val loginPayload = LoginPayload(
+            username = username,
+            password = password,
+        )
+
         return flow {
             emit(dataManager.login(loginPayload))
         }

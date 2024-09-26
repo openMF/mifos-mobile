@@ -7,6 +7,17 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+import org.mifos.mobile.dynamicVersion
+
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 plugins {
     alias(libs.plugins.mifos.android.application)
     alias(libs.plugins.mifos.android.application.compose)
@@ -20,7 +31,7 @@ android {
     namespace = "org.mifos.mobile"
 
     defaultConfig {
-        versionName = project.version.toString()
+        versionName = project.dynamicVersion
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
         applicationId = "org.mifos.mobile"
         vectorDrawables.useSupportLibrary = true

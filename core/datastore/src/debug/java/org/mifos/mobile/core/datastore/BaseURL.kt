@@ -9,10 +9,6 @@
  */
 package org.mifos.mobile.core.datastore
 
-/**
- * @author Vishwajeet
- * @since 09/06/16
- */
 class BaseURL {
     val url: String? = null
         get() = field

@@ -1,15 +1,19 @@
-name: On Push
+name: Internal Or Beta Release
 
 on:
   workflow_dispatch:
     inputs:
-      beta:
-        description: 'true if this is a beta release'
+      release_type:
         required: false
-        default: 'false'
+        default: 'internal'
+        description: Please select the release type
+        type: choice
+        options:
+          - internal
+          - beta
   push:
     branches:
-      - master
+      - development
 
 env:
   SUPPLY_UPLOAD_MAX_RETRIES: 5
@@ -72,7 +76,7 @@ jobs:
           path: ./**/*.apk
 
       - name: Create Version File
-        if: github.event.inputs.beta == 'true'
+        if: github.event.inputs.release_type == 'beta'
         shell: bash
         env:
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
@@ -80,7 +84,7 @@ jobs:
           echo $VERSION_CODE > ./androidApp/build/outputs/version_code.txt
 
       - name: Create Github Pre-Release
-        if: github.event.inputs.beta == 'true'
+        if: github.event.inputs.release_type == 'beta'
         uses: softprops/action-gh-release@v2.0.8
         with:
           tag_name: ${{ steps.rel_number.outputs.version }}
@@ -117,6 +121,12 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
+      - name: Install Fastlane
+        run: |
+          gem install bundler:2.2.27
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
@@ -148,8 +158,8 @@ jobs:
           ./gradlew :androidApp:bundleRelease
 
       - name: Deploy to Play Store Internal
-        run: bundle exec fastlane android internal
+        run: bundle exec fastlane android deploy_internal
 
       - name: Promote Internal to Beta
-        if: github.event.inputs.beta == 'true'
-        run: bundle exec fastlane android beta
+        if: github.event.inputs.release_type == 'beta'
+        run: bundle exec fastlane android promote_to_beta

@@ -1,9 +1,7 @@
-name: Production Deploy
+name: Promote Beta to Production Play Store
 
 on:
   workflow_dispatch:
-  release:
-    types: [ released ]
 
 env:
   SUPPLY_UPLOAD_MAX_RETRIES: 5
@@ -19,6 +17,12 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+
+      - name: Install Fastlane
+        run: |
+          gem install bundler:2.2.27
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3    
 
       - uses: ./.github/actions/inflate-secrets
         name: Inflate Secrets

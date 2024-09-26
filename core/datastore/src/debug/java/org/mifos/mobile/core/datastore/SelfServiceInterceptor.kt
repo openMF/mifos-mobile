@@ -18,8 +18,7 @@ import java.io.IOException
  * @author Vishwajeet
  * @since 21/06/16
  */
-class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
-    Interceptor {
+class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest = chain.request()
