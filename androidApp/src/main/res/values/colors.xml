@@ -54,6 +54,7 @@
     <color name="gray_bright">#33CCCCCC</color>
 
     <!-- Material design colors -->
+    <color name="status_bar">#FFFEFBFF</color>
 
     <!-- New UI color palette -->
     <!--<color name="primary">#068799</color>-->
