@@ -96,7 +96,7 @@ class HomeActivity : ComponentActivity() {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
                         Color.TRANSPARENT,
-                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
                     ) { darkTheme },
                     navigationBarStyle = SystemBarStyle.auto(
                         lightScrim.toArgb(),
