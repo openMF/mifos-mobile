@@ -9,6 +9,7 @@
 .externalNativeBuild
 .idea
 /*.iml
+.kotlin
 
 # files for the dex VM
 *.dex
