@@ -14,7 +14,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,6 +32,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.HomeActivityUiState.Success
 import org.mifos.mobile.core.data.utils.NetworkMonitor
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.feature.settings.ThemeManager
 import org.mifos.mobile.navigation.MifosNavGraph.AUTH_GRAPH
 import org.mifos.mobile.navigation.MifosNavGraph.PASSCODE_GRAPH
 import org.mifos.mobile.navigation.RootNavGraph
@@ -41,6 +44,9 @@ class HomeActivity : ComponentActivity() {
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    @Inject
+    lateinit var themeManager: ThemeManager
 
     private val viewModel: HomeActivityViewModel by viewModels()
 
@@ -72,7 +78,9 @@ class HomeActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             val appState = rememberMifosMobileState(networkMonitor = networkMonitor)
-
+            val theme by themeManager.themeFlow.collectAsState()
+            val isDarkMode = themeManager.isDarkTheme(theme) == "DARK" ||
+                    (themeManager.isDarkTheme(theme) == "SYSTEM" && isSystemInDarkTheme())
             val navDestination = when (uiState) {
                 is Success -> if ((uiState as Success).userData.isAuthenticated) {
                     PASSCODE_GRAPH
@@ -84,7 +92,7 @@ class HomeActivity : ComponentActivity() {
             }
 
             CompositionLocalProvider {
-                MifosMobileTheme {
+                MifosMobileTheme(isDarkMode) {
                     RootNavGraph(
                         appState = appState,
                         navHostController = navController,

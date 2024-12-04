@@ -27,6 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
     private val preferencesHelper: PreferencesHelper,
+    private val themeManager: ThemeManager
 ) : ViewModel() {
 
     val tenant: StateFlow<String?> = preferencesHelper
@@ -79,6 +80,7 @@ internal class SettingsViewModel @Inject constructor(
         )
         preferencesHelper.appTheme = theme.ordinal
         preferencesHelper.applyTheme(theme)
+        themeManager.notifyThemeUpdated(theme)
     }
 }
 
