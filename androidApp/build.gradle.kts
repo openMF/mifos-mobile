@@ -132,6 +132,7 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     implementation(libs.google.oss.licenses)
     implementation(libs.androidx.multidex)
+    implementation(libs.dbflow)
 
     testImplementation(projects.core.testing)
     testImplementation(libs.hilt.android.testing)
