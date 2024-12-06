@@ -12,6 +12,7 @@ package org.mifos.mobile
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.hilt.android.HiltAndroidApp
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.feature.settings.applySavedTheme
@@ -21,7 +22,13 @@ class MifosSelfServiceApp : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
+        FlowManager.init(this)
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         PreferencesHelper(this).applySavedTheme()
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        FlowManager.destroy()
     }
 }
