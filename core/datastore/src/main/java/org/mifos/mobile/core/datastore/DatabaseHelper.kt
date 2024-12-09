@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.core.datastore
 
+import android.util.Log
+import com.google.gson.Gson
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
 import org.mifos.mobile.core.datastore.model.Charge
@@ -48,6 +50,7 @@ class DatabaseHelper @Inject constructor() {
             .from(MifosNotification::class.java)
             .queryList()
         Collections.sort(notifications, NotificationComparator())
+        Log.d("Notifications@@@", Gson().toJson(notifications))
         return notifications
     }
 

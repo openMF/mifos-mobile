@@ -47,7 +47,6 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-
         var uiState: HomeActivityUiState by mutableStateOf(HomeActivityUiState.Loading)
 
         // Update the uiState
