@@ -14,10 +14,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +33,8 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.HomeActivityUiState.Success
 import org.mifos.mobile.core.data.utils.NetworkMonitor
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.darkScrim
+import org.mifos.mobile.core.designsystem.theme.lightScrim
 import org.mifos.mobile.navigation.MifosNavGraph.AUTH_GRAPH
 import org.mifos.mobile.navigation.MifosNavGraph.PASSCODE_GRAPH
 import org.mifos.mobile.navigation.RootNavGraph
@@ -71,7 +76,7 @@ class HomeActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             val appState = rememberMifosMobileState(networkMonitor = networkMonitor)
-
+            val darkTheme= isSystemInDarkTheme()
             val navDestination = when (uiState) {
                 is Success -> if ((uiState as Success).userData.isAuthenticated) {
                     PASSCODE_GRAPH
@@ -80,6 +85,12 @@ class HomeActivity : ComponentActivity() {
                 }
 
                 else -> AUTH_GRAPH
+            }
+
+            DisposableEffect(darkTheme) {
+                window?.statusBarColor = if (darkTheme) darkScrim.toArgb() else lightScrim.toArgb()
+                window?.navigationBarColor = if (darkTheme) darkScrim.toArgb() else lightScrim.toArgb()
+                onDispose {}
             }
 
             CompositionLocalProvider {

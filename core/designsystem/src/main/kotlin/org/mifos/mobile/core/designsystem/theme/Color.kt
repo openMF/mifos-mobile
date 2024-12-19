@@ -35,3 +35,6 @@ val DarkGray = Color(0xBB666666)
 val GreenSuccess = Color(0xff14c416)
 val LightSurfaceTint = Color(0xFF325CA8)
 val DarkSurfaceTint = Color(0xFFAEC6FF)
+
+val lightScrim = Color(0x80FFFFFF)
+val darkScrim = Color(0x80000000)
