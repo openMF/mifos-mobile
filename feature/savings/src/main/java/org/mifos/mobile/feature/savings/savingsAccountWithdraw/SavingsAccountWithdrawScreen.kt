@@ -76,7 +76,11 @@ private fun SavingsAccountWithdrawScreen(
 ) {
     val context = LocalContext.current
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+    ) {
         MifosTopBar(
             navigateBack = { navigateBack(false) },
             title = { Text(text = stringResource(id = R.string.withdraw_savings_account)) },
