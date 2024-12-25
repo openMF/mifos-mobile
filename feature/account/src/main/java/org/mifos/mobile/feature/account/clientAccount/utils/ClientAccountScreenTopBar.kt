@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.account.clientAccount.utils
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -94,7 +93,7 @@ internal fun ClientAccountsScreenTopBar(
                     onClick = { isSearchActive = true },
                     modifier = Modifier.size(40.dp),
                 ) {
-                    Image(
+                    Icon(
                         imageVector = MifosIcons.Search,
                         contentDescription = "Add account",
                     )
@@ -103,7 +102,7 @@ internal fun ClientAccountsScreenTopBar(
                     onClick = clickDialog,
                     modifier = Modifier.size(40.dp),
                 ) {
-                    Image(
+                    Icon(
                         imageVector = MifosIcons.FilterList,
                         contentDescription = "Add account",
                     )
