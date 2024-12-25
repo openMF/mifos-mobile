@@ -59,11 +59,13 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.AppCompat.DayNight" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.AppCompat.DayNight" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
