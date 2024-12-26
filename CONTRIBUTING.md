@@ -1,85 +1,185 @@
-# Contribute to Self Service Android Application
+# Contributing to Mifos Mobile
 
-This guide details how to use issues and pull requests to improve Self Service Android Application.
+Welcome to the Mifos Mobile contributing guide. This comprehensive document outlines how to contribute effectively to improve the Self Service Android Application, from reporting issues to submitting code changes.
 
-## Building Self-Service Android Application.
+The [Open Source Guides](https://opensource.guide/) website has a collection of resources for individuals, communities, and companies who want to learn how to run and contribute to an open source project. Contributors and people new to open source alike will find the following guides especially useful:
 
-There are two steps, you have to follow when you are building the self-service android application.
+- [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
+- [Building Welcoming Communities](https://opensource.guide/building-community/)
 
-1. Setting up the [Android Studio](https://github.com/openMF/self-service-app/wiki/Android-Studio-Setup)
+## Code of Conduct
 
-2. [Building up Code](https://github.com/openMF/self-service-app/wiki/Building-up-Code) on Android Studio.
+Mifos has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
 
-## Configure remotes
+> \[!Note]
+> **We're moving to Jira for issue tracking. Please use [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC) for issue tracking.**
+> **And Join our [slack](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) channel `mifos-mobile` to discuss all things about Mifos Mobile development. and do not cross post your messages in multiple channels. ask your question in the appropriate channel.**
 
-When a repository is cloned, it has a default remote called `origin` that points to your fork on GitHub, not the original repository it was forked from. To keep track of the original repository, you should add another remote named `upstream`:
+## Get Involved
 
-The easiest way is to use the https URL:
+There are many ways to contribute to Mifos Mobile, and many of them do not involve writing any code. Here's a few ideas to get started:
 
-`git remote add upstream https://github.com/openMF/self-service-app.git`
+- Simply start using Mifos Mobile. Go through the [Getting Started](https://github.com/openMF/mifos-mobile/wiki) guide. Does everything work as expected? If not, we're always looking for improvements. Let us know by [opening an issue](#issues).
+- Look through the [open issues](https://github.com/openMF/mifos-mobile/issues). Provide workarounds, ask for clarification, or suggest labels. Help [triage issues](#triaging-issues-and-pull-requests).
+- If you find an issue you would like to fix, [open a pull request](#pull-requests). Issues tagged as [_Good first issue_](https://github.com/openMF/mifos-mobile/labels/good%20first%20issue) are a good place to get started.
+- Read through the [Wiki](https://github.com/openMF/mifos-mobile/wiki). If you find anything that is confusing or can be improved, you can click "Edit this page" at the top of most page, which takes you to the GitHub interface to make and propose changes.
 
-or if you have ssh set up you can use that URL instead:
+Contributions are very welcome. If you think you need help planning your contribution, please ping us on Slack at [#mifos-mobile](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) and let us know you are looking for a bit of help.
 
-`git remote add upstream git@github.com:openMF/self-service-app.git`
+### Join our Slack Channel & Jira
 
-## Commit Style Guide
+We have the [`#mifos-mobile`](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) channel on [Slack](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) to discuss all things about Mifos Mobile development. You can also be of great help by helping other users in the [`#mobile](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) channel.
+also join [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC) for issue tracking.
 
- Mifos Self-Service Android application have a set of [Commit Style Guidelines](https://github.com/openMF/self-service-app/wiki/Commit-Style-Guide). we strictly following this guideline to track every change, any bug fixes, any enhancement, and any new feature addition. we are suggesting you, please follow these guidelines to help us managing every commit.
+[![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat-square&logo=slack&logoColor=white)](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA)
+[![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=flat-square&logo=jira&logoColor=white)](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC)
 
-## Issue tracker
 
-The [issue tracker](https://github.com/openMF/self-service-app/issues) is only for obvious bugs, misbehavior, & feature requests in the latest stable or development release of Self-Service Android Application. When submitting an issue please conform to the issue submission guidelines listed below. Not all issues will be addressed and your issue is more likely to be addressed if you submit a pull request which partially or fully addresses the issue.
+### Triaging Issues and Pull Requests
 
-### Issue tracker guidelines
+One great way you can contribute to the project without writing any code is to help triage issues and pull requests as they come in.
 
-**[Search](https://github.com/openMF/self-service-app/search?q=&ref=cmdform&type=Issues)** for similar entries before submitting your own, there's a good chance somebody else had the same issue or feature request. Show your support with `+1:` and/or join the discussion. Please submit issues in the following format and feature requests in a similar format:
+- Ask for more information if you believe the issue does not provide all the details required to solve it.
+- Suggest [labels](https://github.com/openMF/mifos-mobile/labels) that can help categorize issues.
+- Flag issues that are stale or that should be closed.
+- Ask for test plans and review code.
 
-1. **Summary:** Summarize your issue in one sentence (what goes wrong, what did you expect to happen)
-2. **Steps to reproduce:** How can we reproduce the issue?
-3. **Expected behavior:** What did you expect the app to do?
-4. **Observed behavior:** What did you see instead?  Describe your issue in detail here.
-5. **Device and Android version:** What make and model device (e.g., Samsung Galaxy S3) did you encounter this on?  What Android version (e.g., Android 4.0 Ice Cream Sandwich) are you running?  Is it the stock version from the manufacturer or a custom ROM?
-5. **Screenshots:** Can be created by pressing the Volume Down and Power Button at the same time on Android 4.0 and higher.
-6. **Possible fixes**: If you can, link to the line of code that might be responsible for the problem.
+## Our Development Process
 
-## Pull requests
+We uses [GitHub](https://github.com/openMF/mifos-mobile), [Slack](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA), [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC) for issue tracking and development. The core team will be working directly there. All changes will be public from the beginning.
 
-We welcome pull requests with fixes and improvements to Self-Service Android Application code, tests, and/or documentation. The features we would really like a pull request for are [open issues with the enhancements label](https://github.com/openMF/self-service-app/issues?labels=enhancement&page=1&state=open).
+All pull requests will be checked by the continuous integration system, GitHub actions. There are unit tests, end-to-end tests, performance tests, style tests, and much more.
 
-### Pull request guidelines
+### Branch Organization
 
-If you can, please submit a pull request with the fix or improvements including tests.
+Mifos Mobile has one primary branch `development` and we use feature branches with deploy previews to deliver new features with pull requests.
 
-* Fork the project on GitHub 
-* Create a feature branch
-* Write tests and code
-* Run the CheckStyle, PMD, Findbugs code analysis tools with the `gradlew check` to make sure you have written quality code.
-* If you have multiple commits please combine them into one commit by squashing them.  See [this article](http://eli.thegreenplace.net/2014/02/19/squashing-github-pull-requests-into-a-single-commit) and [this Git documentation](http://git-scm.com/book/en/Git-Tools-Rewriting-History#Squashing-Commits) for instructions.
-* Please follow the commit message [guidelines](https://github.com/openMF/self-service-app/wiki/Commit-Style-Guide) before making PR.
-* Push the commit to your fork
-* Submit a pull request with a motive for your change and the method you used to achieve it with the `development` branch.
+## Issues
 
-We will accept pull requests if:
+When [opening a new issue](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC), always make sure to fill out the issue template. **This step is very important!** Not doing so may result in your issue not being managed in a timely fashion. Don't take this personally if this happens, and feel free to open a new issue once you've gathered all the information required by the template.
 
-* The code has proper tests and all tests pass (or it is a test exposing a failure in existing code)
-* It doesn't break any existing functionality
-* It's quality code that conforms to standard style guides and best practices
-* The description includes a motive for your change and the method you used to achieve it
-* It is not a catch-all pull request but rather fixes a specific issue or implements a specific feature
-* If it makes changes to the UI the pull request should include screenshots
-* It is a single commit (please use `git rebase -i` to squash commits)
+**Please don't use the GitHub issue tracker for questions.** If you have questions about using Mifos Mobile, use of our [slack channel](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA), and we will do our best to answer your questions.
 
-All your pull requests must pass the CI build only then, it will be allowed to merge.
-Sometimes, when the build doesn't pass you can use these commands in your local terminal and check for the errors,</br>
+### Bugs
 
-**We've commited to use Material3 design in our project. And added lint check for not to use any M2 libraries in our project.</br>**
-**And when adding new library, please make sure to follow the naming convention and place in sequential order(A->Z).</br>**
+We use [Jira](https://mifosforge.jira.com/jira/software/c/projects/MOBILE/boards/57) for our public bugs. If you would like to report a problem, take a look around and see if someone already opened an issue about it. If you are certain this is a new, unreported bug, you can submit a [bug report](https://github.com/facebook/docusaurus/issues/new?assignees=&labels=bug%2Cstatus%3A+needs+triage&template=bug.yml).
+
+- **One issue, one bug:** Please report a single bug per issue.
+- **Provide reproduction steps:** List all the steps necessary to reproduce the issue. The person reading your bug report should be able to follow these steps to reproduce your issue with minimal effort.
+
+If you're only fixing a bug, it's fine to submit a pull request right away but we still recommend filing an issue detailing what you're fixing. This is helpful in case we don't accept that specific fix but want to keep track of the issue.
+
+### Feature requests
+
+If you would like to request a new feature or enhancement but are not yet thinking about opening a pull request, 
+you can open a ticket on [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/). Alternatively, you can use the [GitHub](https://docusaurus.io/feature-requests) for more casual feature requests and gain enough traction before proposing on Jira.
+
+### Proposals
+
+If you intend to make any non-trivial changes to existing implementations, we recommend filing an issue with the [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/). This lets us reach an agreement on your proposal before you put significant effort into it. These types of issues should be rare.
+
+### Claiming issues
+
+We have a list of [beginner-friendly issues](https://github.com/openMF/mifos-mobile/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to help you get your feet wet in the Mifos Mobile codebase and familiar with our contribution process. This is a great place to get started.
+
+Apart from the `good first issue`, the following labels are also worth looking at:
+
+- [`help wanted`](https://github.com/openMF/mifos-mobile/labels/help%20wanted): if you have specific knowledge in one domain, working on these issues can make your expertise shine.
+- [`jira`](https://mifosforge.jira.com/jira/software/c/projects/MOBILE/boards/57): if you are looking for a specific issue, you can find it here.
+
+If you want to work on any of these issues, just drop a message saying "I'd like to work on this", and we will assign the issue to you and update the issue's status as "claimed". **You are expected to send a pull request within seven days** after that, so we can still delegate the issue to someone else if you are unavailable.
+
+
+![jira-create-issue](https://github.com/user-attachments/assets/f2440bc1-a7d2-4815-92d3-549a72983df6)
+
+> \[!Note]
+> To know more about [Jira](https://www.atlassian.com/software/jira/guides/getting-started/basics#step-4-create-an-issue) and how to create an issue, click [here](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/)
+
+## Development
+
+### Pre-requisites
+- Install [Android Studio](https://developer.android.com/studio)
+- Install [Git](https://git-scm.com/downloads)
+- Install JDK 17 or higher
+
+For more information, see the [Development Setup](https://github.com/openMF/mifos-mobile/wiki/Set-up-an-environment) guide.
+
+### Building the Code
+
+Before you begin, you should have already downloaded the Android Studio SDK and set it up correctly. You can find a guide on how to do this here: [Setting up Android Studio](http://developer.android.com/sdk/installing/index.html?pkg=studio).
+
+To Setup the project, follow the steps below:
+- [Fork the Repository](https://github.com/openMF/mifos-mobile/wiki/Project-Setup#step-1-fork-the-repository)
+- [Clone Your Forked Repository on Android Studio](https://github.com/openMF/mifos-mobile/wiki/Project-Setup#step-2-clone-your-forked-repository)
+- [Set Up Your Development Branch](https://github.com/openMF/mifos-mobile/wiki/Project-Setup#step-3-set-up-your-development-branch)
+
+### Code Conventions
+
+- **Most important: Look around.** Match the style you see used in the rest of the project. This includes formatting, naming files, naming things in code, naming things in documentation, etc.
+- "Attractive"
+- We do have Prettier (a formatter) and ESLint (a syntax linter) to catch most stylistic problems. If you are working locally, they should automatically fix some issues during every git commit.
+- **For documentation**: Do not wrap lines at 80 characters - configure your editor to soft-wrap when editing documentation.
+
+Don't worry too much about styles in general—the maintainers will help you fix them as they review your code.
+
+## Pull Requests
+
+So you have decided to contribute code back to upstream by opening a pull request. You've invested a good chunk of time, and we appreciate it. We will do our best to work with you and get the PR looked at.
+
+Working on your first Pull Request? You can learn how from this free video series:
+
+[**How to Contribute to an Open Source Project on GitHub**](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
+
+Please make sure the following is done when submitting a pull request:
+
+1. **Keep your PR small.** Small pull requests (~300 lines of diff) are much easier to review and more likely to get merged. Make sure the PR does only one thing, otherwise please split it.
+2. **Use descriptive titles.** It is recommended to follow this [commit message style](#semantic-commit-messages).
+3. **Test your changes.** Describe your [**test plan**](#test-plan) in your pull request description.
+
+All pull requests should be opened against the `development` branch.
+
+We have a lot of integration systems that run automated tests to guard against mistakes. The maintainers will also review your code and fix obvious issues for you. These systems' duty is to make you worry as little about the chores as possible. Your code contributions are more important than sticking to any procedures, although completing the checklist will surely save everyone's time.
+
+### Semantic Commit Messages
+
+See how a minor change to your commit message style can make you a better programmer.
+
+Format: `<type>(<scope>): <subject>`
+
+`<scope>` is optional. If your change is specific to one/two packages, consider adding the scope. Scopes should be brief but recognizable, e.g. `content-docs`, `theme-classic`, `core`
+
+The various types of commits:
+
+- `feat`: a new API or behavior **for the end user**.
+- `fix`: a bug fix **for the end user**.
+- `docs`: a change to the website or other Markdown documents in our repo.
+- `refactor`: a change to production code that leads to no behavior difference, e.g. splitting files, renaming internal variables, improving code style...
+- `test`: adding missing tests, refactoring tests; no production code change.
+- `chore`: upgrading dependencies, releasing new versions... Chores that are **regularly done** for maintenance purposes.
+- `misc`: anything else that doesn't change production code, yet is not `test` or `chore`. e.g. updating GitHub actions workflow.
+
+Do not get too stressed about PR titles, however. Your PR will be squash-merged and your commit to the `main` branch will get the title of your PR, so commits within a branch don't need to be semantically named. The maintainers will help you get the PR title right, and we also have a PR label system that doesn't equate with the commit message types. Your code is more important than conventions!
+
+Example:
+
+```
+feat(core): allow overriding of webpack config
+^--^^----^  ^------------^
+|   |       |
+|   |       +-> Summary in present tense. Use lower case not title case!
+|   |
+|   +-> The package(s) that this change affected.
+|
++-------> Type: see above for the list we use.
+```
+
+### Test Plan
+
+A good test plan has the exact commands you ran and their output and provides screenshots or videos if the pull request changes UI.
+
+Tests are integrated into our continuous integration system, so you don't always need to run local tests. However, for significant code changes, it saves both your and the maintainers' time if you can do exhaustive tests locally first to make sure your PR is in good shape. There are many types of tests:
 
 In MacOS, Windows or Linux, you should run the following commands before opening a PR, and make sure to pass all the commands:
-
-**In order to enhance our development process, we have implemented Git hooks in our project.
-To install these hooks locally, simply run the command `./gradlew installGitHooks`.
-This will ensure that the Git hooks are installed on your local machine.**</br>
 
 * `./gradlew check -p build-logic` this checks build-logic configured properly.</br>
 * `./gradlew spotlessApply --no-configuration-cache` an check and apply formatting to any file.</br>
@@ -89,23 +189,4 @@ This will ensure that the Git hooks are installed on your local machine.**</br>
 * `./gradlew build` to build the project.</br>
 * `./gradlew updateReleaseBadging` to update the badging for the project.</br>
 
-*Or Run the `ci-prepush.sh` or `ci-prepush.bat` script to run all the above commands in one go.*
-
-### Best Practices for reporting or requesting for Issues/Enhancements:
-  - Follow the Issue Template while creating the issue.
-  - Include Screenshots if any (especially for UI related issues)
-  - For UI enhancements or workflows, include mockups to get a clear idea.
-
-### Best Practices for assigning an issue:
-- If you would like to work on an issue, inform in the issue ticket by commenting on it.
-- Please be sure that you are able to reproduce the issue, before working on it. If not, please ask for clarification by commenting or asking the issue creator.
-
-Note: Please do not work on issues which are already being worked on by another contributor. We don't encourage creating multiple pull requests for the same issue. Also, please allow the assigned person some days to work on the issue ( The time might vary depending on the difficulty). If there is no progress after the deadline, please comment on the issue asking the contributor whether he/she is still working on it. If there is no reply, then feel free to work on the issue.
-
-
-### Best Practices to send Pull Requests:
-  - Follow the Pull request template.
-  - Commit messages should follow this template: `fix #<issue-no> - <short description of the changes>`
-  - Pull request title shoud follow this template: `fix: <issue-desc>`
-  - Squash all your commits to a single commit.
-  - Create a new branch before adding and committing your changes ( This allows you to send multiple Pull Requests )
+*Or Run the `ci-prepush.sh` or `ci-prepush.bat` script to run all required checks in sequence.*
