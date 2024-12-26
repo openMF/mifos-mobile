@@ -76,7 +76,7 @@ class HomeActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             val appState = rememberMifosMobileState(networkMonitor = networkMonitor)
-            val darkTheme= isSystemInDarkTheme()
+            val darkTheme = isSystemInDarkTheme()
             val navDestination = when (uiState) {
                 is Success -> if ((uiState as Success).userData.isAuthenticated) {
                     PASSCODE_GRAPH

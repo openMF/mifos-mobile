@@ -1,114 +1,71 @@
-<p>
-  <img src="https://github.com/Vikashgathala/mifos-mobile/assets/12993867/0fd88221-24b4-4f6c-b589-45322a544a28" />
-</p>
-
-<img height='175' src="https://user-images.githubusercontent.com/37406965/51083189-d5dc3a80-173b-11e9-8ca0-28015e0893ac.png" align="left" hspace="1" vspace="1">
+<div align="center">
+<img src="https://user-images.githubusercontent.com/37406965/51083189-d5dc3a80-173b-11e9-8ca0-28015e0893ac.png" alt="Mifos Mobile" />
 
 # Mifos-Mobile Android Application for MifosX
 
 An Android Application built on top of the MifosX Self-Service platform for end-user customers to view/transact on the accounts and loans they hold. Data visible to customers will be a sub-set of what staff can see. This is a native Android Application written in Kotlin.
 
-<!-- ## Notice -->
-### Status
+![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=white)
+![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin%20Multiplatform-4c8d3f?style=flat-square&logo=kotlin&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white)
 
-| Master | Development | Chat |
-|------------|-----------------|-----------------|
-| ![Mifos-Mobile CI[Master]](https://github.com/openMF/mifos-mobile/workflows/Workflow%20for%20master/development%20branches/badge.svg?branch=master) | ![Mifos-Mobile CI[Development]](https://github.com/openMF/mifos-mobile/workflows/Workflow%20for%20master/development%20branches/badge.svg?branch=development) |[![Join the chat at https://mifos.slack.com/](https://img.shields.io/badge/Join%20Our%20Community-Slack-blue)](https://mifos.slack.com/)|
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/openMF/mifos-mobile/blob/development/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/openMF/mifos-mobile/releases/)
+[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/openMF/mifos-mobile/issues/)
 
+[![Workflow for master/development branches](https://github.com/openMF/mifos-mobile/actions/workflows/master_dev_ci.yml/badge.svg)](https://github.com/openMF/mifos-mobile/actions/workflows/master_dev_ci.yml)
+[![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat-square&logo=slack&logoColor=white)](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA)
+[![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=flat-square&logo=jira&logoColor=white)](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC)
 
-## Join Us on Slack
+</div>
 
-Mifos boasts an active and vibrant contributor community, Please join us on [slack](https://join.slack.com/t/mifos/shared_invite/zt-2f4nr6tk3-ZJlHMi1lc0R19FFEHxdvng). Once you've joined the mifos slack community, please join the `#mifos-mobile` channel to engage with mifos-mobile development. If you encounter any difficulties joining our Slack channel, please don't hesitate to open an issue. This will allow us to assist you promptly or send you an invitation.
-
-
-
-## How to Contribute
-
-This is an OpenSource project and we would be happy to see new contributors. The issues should be raised via the GitHub issue tracker.
-For Issue tracker guidelines please click <a href="https://github.com/openMF/mifos-mobile/blob/development/.github/ISSUE_TEMPLATE.md">here</a>. All fixes should be proposed via pull requests.
-For pull request guidelines please click <a href="https://github.com/openMF/mifos-mobile/blob/development/CONTRIBUTING.md#pull-requests">here</a>. For commit style guidelines please click <a href="https://github.com/openMF/mifos-mobile/wiki/Commit-Style-Guide">here</a>.
-
-### Branch Policy
-
-We have the following branches :
-
-* **development**
-  All the contributions should be pushed to this branch. If you're making a contribution,
-  you are supposed to make a pull request to _development_.
-  Please make sure it passes a build check on Github Workflows CI.
-
-  It is advisable to clone only the development branch using the following command:
-
-  `git clone -b <branch> <remote_repo>`
-
-  With Git 1.7.10 and later, add --single-branch to prevent fetching of all branches. Example, with development branch:
-
-  `git clone -b development --single-branch https://github.com/username/mifos-mobile.git`
-
-* **ui-redesign**
-  All the contributions related to redesigning of the app should be pushed to this branch. If you're making a contribution,
-  you are supposed to make a pull request to _ui-redesign_.
-  Please make sure it passes a build check on Github Workflows CI.
-
-  This branch will be merged with the development branch once the redesign is complete.
-
-* **master**
-  The master branch contains all the stable and bug-free working code. The development branch once complete will be merged with this branch.
+> \[!Note]
+> **We're moving towards to Jira for issue tracking. Please use [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC) for issue tracking.**
+> **And Join our [slack](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) community channel `mifos-mobile` to discuss all things about Mifos Mobile development, and keep discussions focused and avoid cross-posting across channels.**
 
 ### Demo credentials
-Fineract Instance: gsoc.mifos.community
+- **Fineract Instance**: `gsoc.mifos.community`
+- **Username**: `mifos`
+- **Password**: `password`
 
-Username: `mifos`
+### How to Contribute
+Thank you for your interest in contributing to the Mifos Mobile project by Mifos! We welcome all contributions and encourage you to follow these guidelines to ensure a smooth and efficient collaboration process.
+To get started, please refer to the [Contribution Guide](https://github.com/openMF/mifos-mobile/wiki/Contribution-Guide) for detailed instructions on how to contribute to the project.
 
-Password: `password`
+### Branch Policy
+For development purposes, always pull from the **development** branch, as all contributions and updates are merged into this branch. Upon completion of development, changes are subsequently merged into the **master** branch, which represents the stable and bug-free version of the code.
 
-### Instruction to get the latest APK
+### Development Setup
+Please refer to the  [Development Setup Guide](https://github.com/openMF/mifos-mobile/wiki/Set-up-an-environment) for detailed instructions on configuring the development environment.
 
-To get the latest apk of master/development branch from Github Artifacts, follow these steps:
-1. Go to to the [Actions](https://github.com/openMF/mifos-mobile/actions?query=workflow%3A%22Workflow+for+master%2Fdevelopment+branches%22+event%3Apush) tab of this repository.
-2. Select the latest workflow for master/development branch.
-3. Click on hyperlink 'mifos-mobile' in Artifacts section.
-4. Extract the downloaded file and get the apk.
+### Committing Your Changes
+After making changes in your local repository, you will need to commit them to your GitHub repository.
+If you are unfamiliar with the process of committing changes, please refer to the [Committing Your Changes](https://github.com/openMF/mifos-mobile/wiki/Committing-Your-Changes) guide.
 
-## Development Setup
+### Squashing Your Commits
+To ensure a clean and organized Git history, contributors are encouraged to squash their commits before merging. Instructions on how to squash commits can be found in the [Squashing Your Commits](https://github.com/openMF/mifos-mobile/wiki/Squashing-Your-Commits) guide.
 
-Before you begin, you should have already downloaded the Android Studio SDK and set it up correctly. You can find a guide on how to do this here: [Setting up Android Studio](http://developer.android.com/sdk/installing/index.html?pkg=studio).
+### Resolving Merge Conflicts
+Occasionally, merge conflicts may arise when your pull request is being reviewed. These conflicts need to be resolved manually.
+To learn how to resolve merge conflicts, please refer to the [Solving Merge Conflicts](https://github.com/openMF/mifos-mobile/wiki/Solving-Merge-Conflicts) guide.
 
-## Building the Code
+### Instructions to Get the Latest APK
 
-1. Clone the repository using HTTP: git clone https://github.com/openMF/mifos-mobile.git
+To download the latest APK navigate to the latest release [here](https://github.com/openMF/mifos-mobile/releases), and download the APK file from the assets section.
 
-2. Open Android Studio.
+### Wiki
+To know more about the project details and architecture guidelines, visit our [Wiki](https://github.com/openMF/mifos-mobile/wiki).
 
-3. Click on 'Open an existing Android Studio project'
+### Code of Conduct
 
-4. Browse to the directory where you cloned the mifos-mobile repo and click OK.
+Mifos has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
 
-5. Let Android Studio import the project.
-
-6. Build the application in your device by clicking run button.
-
-## Wiki
-
-View the [wiki](https://github.com/openMF/self-service-app/wiki) to see pages that provide details on the project.
-
-## Specification
-
-See the [requirements](https://github.com/openMF/self-service-app/wiki/Design-&-Requirements) for an initial design mockup and documentation on the Fineract API.
-
-## PaymentHub Usecases
-
-For Payment Hub usecases, check this [documentation](https://mifos.gitbook.io/docs/payment-hub-ee/overview/payment-hub-apis). Mifos Mobile utilises medium connector of Payment Hub.
-
-## Note
-
-The UI design is currently being revamped. New design can be found [here](https://docs.google.com/presentation/d/1yFR19vGlKW-amxzGms8TgPzd1jWkrALPFcaC85EyYpw/edit#slide=id.g6c6ccd991d_0_42)
-
-## Contributors
+### Contributors
 
 Special thanks to the incredible code contributors who continue to drive this project forward.
 
 <a href="https://github.com/openMF/mifos-mobile/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=openMF/mifos-mobile" />
+  <img src="https://contrib.rocks/image?repo=openMF/mifos-mobile"  alt="mifos-mobile-contributors"/>
 </a>
 
