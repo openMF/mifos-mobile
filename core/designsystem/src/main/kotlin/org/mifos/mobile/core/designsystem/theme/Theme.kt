@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 private val LightThemeColors = lightColorScheme(
@@ -50,8 +51,14 @@ fun MifosMobileTheme(
         else -> LightThemeColors
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        content = content,
-    )
+    val backgroundTheme = if (useDarkTheme) BackgroundDark else BackgroundLight
+
+    CompositionLocalProvider(
+        LocalBackgroundTheme provides BackgroundTheme(backgroundTheme),
+    ) {
+        MaterialTheme(
+            colorScheme = colors,
+            content = content,
+        )
+    }
 }
