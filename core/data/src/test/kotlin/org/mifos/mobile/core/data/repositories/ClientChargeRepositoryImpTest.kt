@@ -12,13 +12,15 @@ package org.mifos.mobile.core.data.repositories
 import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.core.data.repositoryImpl.ClientChargeRepositoryImp
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.datastore.dao.ChargeDao
+import org.mifos.mobile.core.datastore.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.testing.util.MainDispatcherRule
@@ -38,12 +40,15 @@ class ClientChargeRepositoryImpTest {
     @Mock
     lateinit var dataManager: DataManager
 
+    @Mock
+    lateinit var chargeDao: ChargeDao
+
     private lateinit var clientChargeRepositoryImp: ClientChargeRepositoryImp
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        clientChargeRepositoryImp = ClientChargeRepositoryImp(dataManager)
+        clientChargeRepositoryImp = ClientChargeRepositoryImp(dataManager, chargeDao)
     }
 
     @Test
@@ -119,7 +124,7 @@ class ClientChargeRepositoryImpTest {
         val clientLocalChargeMock = List(5) { mock(Charge::class.java) }
         val chargeList = clientLocalChargeMock.toList()
         val success = Page<Charge?>(5, chargeList)
-        `when`(dataManager.clientLocalCharges()).thenReturn(success)
+        `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(flowOf(success))
         val resultFlow = clientChargeRepositoryImp.clientLocalCharges()
         resultFlow.test {
             assertEquals(success, awaitItem())
@@ -129,7 +134,7 @@ class ClientChargeRepositoryImpTest {
 
     @Test(expected = Exception::class)
     fun testClientLocalCharges_Unsuccessful() = runTest {
-        `when`(dataManager.clientLocalCharges())
+        `when`(clientChargeRepositoryImp.clientLocalCharges())
             .thenThrow(Exception("Error occurred"))
         val result = clientChargeRepositoryImp.clientLocalCharges()
         result.test {

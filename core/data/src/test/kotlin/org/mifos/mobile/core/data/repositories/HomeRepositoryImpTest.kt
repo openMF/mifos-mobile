@@ -12,12 +12,14 @@ package org.mifos.mobile.core.data.repositories
 import app.cash.turbine.test
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.data.repositoryImpl.HomeRepositoryImp
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
@@ -39,12 +41,15 @@ class HomeRepositoryImpTest {
     @Mock
     lateinit var dataManager: DataManager
 
+    @Mock
+    lateinit var notificationRepository: NotificationRepository
+
     private lateinit var homeRepositoryImp: HomeRepositoryImp
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        homeRepositoryImp = HomeRepositoryImp(dataManager)
+        homeRepositoryImp = HomeRepositoryImp(dataManager, notificationRepository)
     }
 
     @Test
@@ -93,7 +98,7 @@ class HomeRepositoryImpTest {
     fun testUnreadNotificationsCount_Successful() = runTest {
         val mockUnreadCount = 5
 
-        `when`(dataManager.unreadNotificationsCount()).thenReturn(mockUnreadCount)
+        `when`(notificationRepository.getUnReadNotificationCount()).thenReturn(flowOf(mockUnreadCount))
 
         val flow = homeRepositoryImp.unreadNotificationsCount()
 
@@ -147,7 +152,7 @@ class HomeRepositoryImpTest {
     fun testUnreadNotificationsCount_Error() = runTest {
         val errorMessage = "Failed to fetch unread notifications count"
 
-        `when`(dataManager.unreadNotificationsCount())
+        `when`(notificationRepository.getUnReadNotificationCount())
             .thenThrow(Exception(errorMessage))
 
         val flow = homeRepositoryImp.unreadNotificationsCount()

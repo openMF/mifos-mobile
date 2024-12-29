@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.charge.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -63,6 +64,8 @@ internal class ClientChargeViewModel @Inject constructor(
             clientChargeRepositoryImp.getClientCharges(clientId).catch {
                 _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
+                Log.e("selfServiceDatabase", it.toString())
+                clientChargeRepositoryImp.syncCharges(it)
                 _clientChargeUiState.value = ClientChargeState.Success(it.pageItems)
             }
         }

@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.datastore.model
+package org.mifos.mobile.core.datastore.entity
 
 /**
  * @author Vishwajeet

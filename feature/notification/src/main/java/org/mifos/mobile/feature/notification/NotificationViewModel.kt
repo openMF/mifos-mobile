@@ -9,15 +9,17 @@
  */
 package org.mifos.mobile.feature.notification
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.datastore.entity.MifosNotification
 import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 import javax.inject.Inject
 
@@ -33,17 +35,22 @@ internal class NotificationViewModel @Inject constructor(
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing
 
     init {
-        loadNotifications()
+        viewModelScope.launch(Dispatchers.IO) {
+            notificationRepositoryImp.deleteOldNotifications()
+            loadNotifications()
+        }
     }
 
     fun loadNotifications() {
         _notificationUiState.value = Loading
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             notificationRepositoryImp.loadNotifications()
                 .catch {
+                    Log.e("selfServiceDatabase", it.toString())
                     _notificationUiState.value =
                         NotificationUiState.Error(errorMessage = it.message)
                 }.collect { notifications ->
+                    Log.e("selfServiceDatabase", notifications.toString())
                     _isRefreshing.emit(false)
                     _notificationUiState.value =
                         NotificationUiState.Success(notifications = notifications)
@@ -57,8 +64,13 @@ internal class NotificationViewModel @Inject constructor(
     }
 
     fun dismissNotification(notification: MifosNotification) {
-        notification.setRead(true)
-        notification.save()
+//        notification.updateReadStatus(true)
+//        notification.save()
+        notification.read = true
+        viewModelScope.launch {
+            notificationRepositoryImp.saveNotification(notification.copy(read = true))
+            notificationRepositoryImp.updateReadStatus(notification, true)
+        }
     }
 }
 

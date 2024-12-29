@@ -9,7 +9,7 @@
  */
 package org.mifos.mobile.core.datastore.utils
 
-import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.datastore.entity.MifosNotification
 
 /**
  * Created by dilpreet on 14/9/17.

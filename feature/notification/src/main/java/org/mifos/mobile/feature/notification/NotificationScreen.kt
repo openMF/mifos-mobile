@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.datastore.entity.MifosNotification
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.components.MifosTextButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -227,8 +227,16 @@ internal class NotificationUiStatePreviews : PreviewParameterProvider<Notificati
         get() = sequenceOf(
             NotificationUiState.Success(
                 notifications = listOf(
-                    MifosNotification(),
-                    MifosNotification(),
+                    MifosNotification(
+                        timeStamp = 13231331L,
+                        msg = "Your payment is successful",
+                        read = false,
+                    ),
+                    MifosNotification(
+                        timeStamp = 13231331L,
+                        msg = "Your payment is successful",
+                        read = true,
+                    ),
                 ),
             ),
             NotificationUiState.Error(errorMessage = ""),

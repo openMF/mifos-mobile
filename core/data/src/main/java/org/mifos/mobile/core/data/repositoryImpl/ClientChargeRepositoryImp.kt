@@ -12,13 +12,15 @@ package org.mifos.mobile.core.data.repositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.datastore.dao.ChargeDao
+import org.mifos.mobile.core.datastore.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.DataManager
 import javax.inject.Inject
 
 class ClientChargeRepositoryImp @Inject constructor(
     private val dataManager: DataManager,
+    private val chargeDao: ChargeDao,
 ) : ClientChargeRepository {
 
     override suspend fun getClientCharges(clientId: Long): Flow<Page<Charge>> {
@@ -41,7 +43,14 @@ class ClientChargeRepositoryImp @Inject constructor(
 
     override suspend fun clientLocalCharges(): Flow<Page<Charge?>> {
         return flow {
-            emit(dataManager.clientLocalCharges())
+            chargeDao.clientLocalCharges()
         }
+    }
+
+    override suspend fun syncCharges(charges: Page<Charge>?): Page<Charge>? {
+        charges?.pageItems?.let {
+            chargeDao.syncCharges(it)
+        }
+        return charges?.copy(pageItems = charges.pageItems)
     }
 }

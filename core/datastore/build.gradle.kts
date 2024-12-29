@@ -10,6 +10,8 @@
 plugins {
     alias(libs.plugins.mifos.android.library)
     alias(libs.plugins.mifos.android.hilt)
+    id("com.google.devtools.ksp") version "2.0.20-1.0.24"
+    id("kotlin-parcelize")
 }
 
 android {
@@ -26,14 +28,20 @@ dependencies {
     api(projects.core.model)
     implementation(libs.squareup.retrofit.converter.gson)
 
-    // DBFlow
-    implementation(libs.dbflow)
-    kapt(libs.dbflow.processor)
-    implementation(libs.dbflow.core)
-
     //rxjava Dependencies
     implementation(libs.reactivex.rxjava2.android)
     implementation(libs.reactivex.rxjava2)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    kspTest(libs.androidx.room.compiler)
+
+    implementation(libs.gson)
+    testImplementation(libs.androidx.room.testing)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.jetbrains.kotlin.stdlib)
+    implementation(libs.androidx.appcompat)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

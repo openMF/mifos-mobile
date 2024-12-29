@@ -22,5 +22,5 @@ interface HomeRepository {
 
     fun clientImage(): Flow<ResponseBody>
 
-    fun unreadNotificationsCount(): Flow<Int>
+    suspend fun unreadNotificationsCount(): Flow<Int>
 }

@@ -38,7 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.CurrencyUtil
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.datastore.entity.Charge
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.GreenSuccess
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme

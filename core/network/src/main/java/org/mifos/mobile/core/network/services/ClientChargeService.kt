@@ -10,7 +10,7 @@
 package org.mifos.mobile.core.network.services
 
 import org.mifos.mobile.core.common.ApiEndPoints
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.datastore.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import retrofit2.http.GET
 import retrofit2.http.Path

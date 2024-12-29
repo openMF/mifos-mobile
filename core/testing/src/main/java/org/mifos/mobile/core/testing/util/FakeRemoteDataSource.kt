@@ -10,7 +10,7 @@
 package org.mifos.mobile.core.testing.util
 
 import com.google.gson.reflect.TypeToken
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.datastore.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
