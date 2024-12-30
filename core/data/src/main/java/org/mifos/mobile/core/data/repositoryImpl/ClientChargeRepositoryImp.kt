@@ -11,6 +11,7 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.datastore.dao.ChargeDao
 import org.mifos.mobile.core.datastore.entity.Charge
@@ -42,8 +43,8 @@ class ClientChargeRepositoryImp @Inject constructor(
     }
 
     override suspend fun clientLocalCharges(): Flow<Page<Charge?>> {
-        return flow {
-            chargeDao.clientLocalCharges()
+        return chargeDao.clientLocalCharges().map { chargeList ->
+            Page(chargeList.size, chargeList.map { it })
         }
     }
 

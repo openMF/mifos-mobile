@@ -122,9 +122,8 @@ class ClientChargeRepositoryImpTest {
     @Test
     fun testClientLocalCharges_Successful() = runTest {
         val clientLocalChargeMock = List(5) { mock(Charge::class.java) }
-        val chargeList = clientLocalChargeMock.toList()
-        val success = Page<Charge?>(5, chargeList)
-        `when`(clientChargeRepositoryImp.clientLocalCharges()).thenReturn(flowOf(success))
+        val success = Page<Charge?>(clientLocalChargeMock.size, clientLocalChargeMock)
+        `when`(chargeDao.clientLocalCharges()).thenReturn(flowOf(clientLocalChargeMock))
         val resultFlow = clientChargeRepositoryImp.clientLocalCharges()
         resultFlow.test {
             assertEquals(success, awaitItem())
