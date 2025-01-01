@@ -12,7 +12,7 @@ package org.mifos.mobile.core.data.repositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.mifos.mobile.core.data.repository.UserDataRepository
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.database.PreferencesHelper
 import org.mifos.mobile.core.model.UserData
 import javax.inject.Inject
 

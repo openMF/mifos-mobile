@@ -19,8 +19,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.core.data.repositoryImpl.ClientChargeRepositoryImp
-import org.mifos.mobile.core.datastore.dao.ChargeDao
-import org.mifos.mobile.core.datastore.entity.Charge
+import org.mifos.mobile.core.database.dao.ChargeDao
+import org.mifos.mobile.core.database.entity.ChargeEntity
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.testing.util.MainDispatcherRule
@@ -53,9 +53,9 @@ class ClientChargeRepositoryImpTest {
 
     @Test
     fun testGetClientCharges_Successful() = runTest {
-        val clientChargeMock = List(5) { mock(Charge::class.java) }
+        val clientChargeMock = List(5) { mock(ChargeEntity::class.java) }
         val chargeList = clientChargeMock.toList()
-        val success = Page<Charge>(5, chargeList)
+        val success = Page<ChargeEntity>(5, chargeList)
         `when`(dataManager.getClientCharges(123L))
             .thenReturn(success)
         val resultFlow = clientChargeRepositoryImp.getClientCharges(123L)
@@ -77,7 +77,7 @@ class ClientChargeRepositoryImpTest {
 
     @Test
     fun testGetLoanCharges_Successful() = runTest {
-        val loanChargeMock = mock(Charge::class.java)
+        val loanChargeMock = mock(ChargeEntity::class.java)
         val success = List(5) { loanChargeMock }.toList()
         `when`(dataManager.getLoanCharges(123L)).thenReturn(success)
         val resultFlow = clientChargeRepositoryImp.getLoanCharges(123L)
@@ -99,7 +99,7 @@ class ClientChargeRepositoryImpTest {
 
     @Test
     fun testGetSavingsCharges_Successful() = runTest {
-        val savingChargeMock = mock(Charge::class.java)
+        val savingChargeMock = mock(ChargeEntity::class.java)
         val success = List(5) { savingChargeMock }.toList()
         `when`(dataManager.getSavingsCharges(123L)).thenReturn(success)
         val resultFlow = clientChargeRepositoryImp.getSavingsCharges(123L)
@@ -121,8 +121,8 @@ class ClientChargeRepositoryImpTest {
 
     @Test
     fun testClientLocalCharges_Successful() = runTest {
-        val clientLocalChargeMock = List(5) { mock(Charge::class.java) }
-        val success = Page<Charge?>(clientLocalChargeMock.size, clientLocalChargeMock)
+        val clientLocalChargeMock = List(5) { mock(ChargeEntity::class.java) }
+        val success = Page<ChargeEntity?>(clientLocalChargeMock.size, clientLocalChargeMock)
         `when`(chargeDao.clientLocalCharges()).thenReturn(flowOf(clientLocalChargeMock))
         val resultFlow = clientChargeRepositoryImp.clientLocalCharges()
         resultFlow.test {

@@ -84,7 +84,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.model)
     implementation(projects.core.data)
-    implementation(projects.core.datastore)
+    implementation(projects.core.database)
     implementation(projects.core.ui)
     implementation(projects.core.designsystem)
 
@@ -132,7 +132,6 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     implementation(libs.google.oss.licenses)
     implementation(libs.androidx.multidex)
-    implementation(libs.dbflow)
 
     testImplementation(projects.core.testing)
     testImplementation(libs.hilt.android.testing)

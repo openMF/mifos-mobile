@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.Credentials
 import org.mifos.mobile.core.data.repository.ClientRepository
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.database.PreferencesHelper
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.model.entity.client.Client

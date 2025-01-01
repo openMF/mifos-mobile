@@ -11,8 +11,8 @@ package org.mifos.mobile.core.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.mifos.mobile.core.datastore.PreferencesHelper
-import org.mifos.mobile.core.datastore.SelfServiceInterceptor
+import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.database.SelfServiceInterceptor
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate

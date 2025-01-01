@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.UserDetailRepository
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.database.PreferencesHelper
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.ui.utils.ImageUtil

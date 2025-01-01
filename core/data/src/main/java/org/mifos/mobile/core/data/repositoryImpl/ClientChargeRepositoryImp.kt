@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
-import org.mifos.mobile.core.datastore.dao.ChargeDao
-import org.mifos.mobile.core.datastore.entity.Charge
+import org.mifos.mobile.core.database.dao.ChargeDao
+import org.mifos.mobile.core.database.entity.ChargeEntity
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.DataManager
 import javax.inject.Inject
@@ -24,31 +24,31 @@ class ClientChargeRepositoryImp @Inject constructor(
     private val chargeDao: ChargeDao,
 ) : ClientChargeRepository {
 
-    override suspend fun getClientCharges(clientId: Long): Flow<Page<Charge>> {
+    override suspend fun getClientCharges(clientId: Long): Flow<Page<ChargeEntity>> {
         return flow {
             emit(dataManager.getClientCharges(clientId))
         }
     }
 
-    override suspend fun getLoanCharges(loanId: Long): Flow<List<Charge>> {
+    override suspend fun getLoanCharges(loanId: Long): Flow<List<ChargeEntity>> {
         return flow {
             emit(dataManager.getLoanCharges(loanId))
         }
     }
 
-    override suspend fun getSavingsCharges(savingsId: Long): Flow<List<Charge>> {
+    override suspend fun getSavingsCharges(savingsId: Long): Flow<List<ChargeEntity>> {
         return flow {
             emit(dataManager.getSavingsCharges(savingsId))
         }
     }
 
-    override suspend fun clientLocalCharges(): Flow<Page<Charge?>> {
+    override suspend fun clientLocalCharges(): Flow<Page<ChargeEntity?>> {
         return chargeDao.clientLocalCharges().map { chargeList ->
             Page(chargeList.size, chargeList.map { it })
         }
     }
 
-    override suspend fun syncCharges(charges: Page<Charge>?): Page<Charge>? {
+    override suspend fun syncCharges(charges: Page<ChargeEntity>?): Page<ChargeEntity>? {
         charges?.pageItems?.let {
             chargeDao.syncCharges(it)
         }

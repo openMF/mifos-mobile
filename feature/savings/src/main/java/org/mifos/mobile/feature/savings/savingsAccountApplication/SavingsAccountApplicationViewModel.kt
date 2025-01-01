@@ -25,7 +25,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.getTodayFormatted
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.database.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations

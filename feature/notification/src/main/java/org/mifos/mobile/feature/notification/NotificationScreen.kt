@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.datastore.entity.MifosNotification
+import org.mifos.mobile.core.database.entity.MifosNotificationEntity
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.components.MifosTextButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -79,7 +79,7 @@ private fun NotificationScreen(
     uiState: NotificationUiState,
     navigateBack: () -> Unit,
     onRetry: () -> Unit,
-    dismissNotification: (MifosNotification) -> Unit,
+    dismissNotification: (MifosNotificationEntity) -> Unit,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
@@ -130,8 +130,8 @@ private fun NotificationScreen(
 @Composable
 private fun NotificationContent(
     isRefreshing: Boolean,
-    notifications: List<MifosNotification>,
-    dismissNotification: (MifosNotification) -> Unit,
+    notifications: List<MifosNotificationEntity>,
+    dismissNotification: (MifosNotificationEntity) -> Unit,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -176,8 +176,8 @@ private fun NotificationContent(
 
 @Composable
 private fun NotificationItem(
-    notification: MifosNotification,
-    dismissNotification: (MifosNotification) -> Unit,
+    notification: MifosNotificationEntity,
+    dismissNotification: (MifosNotificationEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val isRead = rememberSaveable { mutableStateOf(notification.isRead()) }
@@ -227,12 +227,12 @@ internal class NotificationUiStatePreviews : PreviewParameterProvider<Notificati
         get() = sequenceOf(
             NotificationUiState.Success(
                 notifications = listOf(
-                    MifosNotification(
+                    MifosNotificationEntity(
                         timeStamp = 13231331L,
                         msg = "Your payment is successful",
                         read = false,
                     ),
-                    MifosNotification(
+                    MifosNotificationEntity(
                         timeStamp = 13231331L,
                         msg = "Your payment is successful",
                         read = true,

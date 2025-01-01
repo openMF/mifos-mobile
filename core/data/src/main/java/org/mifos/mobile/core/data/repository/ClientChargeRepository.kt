@@ -10,13 +10,13 @@
 package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.datastore.entity.Charge
+import org.mifos.mobile.core.database.entity.ChargeEntity
 import org.mifos.mobile.core.model.entity.Page
 
 interface ClientChargeRepository {
-    suspend fun getClientCharges(clientId: Long): Flow<Page<Charge>>
-    suspend fun getLoanCharges(loanId: Long): Flow<List<Charge>>
-    suspend fun getSavingsCharges(savingsId: Long): Flow<List<Charge>>
-    suspend fun clientLocalCharges(): Flow<Page<Charge?>>
-    suspend fun syncCharges(charges: Page<Charge>?): Page<Charge>?
+    suspend fun getClientCharges(clientId: Long): Flow<Page<ChargeEntity>>
+    suspend fun getLoanCharges(loanId: Long): Flow<List<ChargeEntity>>
+    suspend fun getSavingsCharges(savingsId: Long): Flow<List<ChargeEntity>>
+    suspend fun clientLocalCharges(): Flow<Page<ChargeEntity?>>
+    suspend fun syncCharges(charges: Page<ChargeEntity>?): Page<ChargeEntity>?
 }

@@ -36,15 +36,13 @@ dependencies {
 
     implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.okhttp)
-//    implementation(libs.mockito.core)
-    implementation(libs.mockito.inline)
+    implementation(libs.mockito.core)
     implementation(libs.turbine)
 
     testImplementation(projects.core.testing)
 
     testImplementation(libs.junit)
-//    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito.core)
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
 }

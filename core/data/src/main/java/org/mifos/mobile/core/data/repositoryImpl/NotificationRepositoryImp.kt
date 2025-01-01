@@ -9,27 +9,30 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.network.Dispatcher
+import org.mifos.mobile.core.common.network.MifosDispatchers
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.datastore.dao.MifosNotificationDao
-import org.mifos.mobile.core.datastore.entity.MifosNotification
-import org.mifos.mobile.core.datastore.utils.NotificationComparator
+import org.mifos.mobile.core.database.dao.MifosNotificationDao
+import org.mifos.mobile.core.database.entity.MifosNotificationEntity
 import javax.inject.Inject
 
 class NotificationRepositoryImp @Inject constructor(
     private val notificationDao: MifosNotificationDao,
+    @Dispatcher(MifosDispatchers.IO)
+    private val ioDispatcher: CoroutineDispatcher,
 ) : NotificationRepository {
 
-    override suspend fun saveNotification(notification: MifosNotification) {
+    override suspend fun saveNotification(notification: MifosNotificationEntity) {
         notificationDao.saveNotification(notification)
     }
 
-    override suspend fun loadNotifications(): Flow<List<MifosNotification>> {
-        return notificationDao.getNotifications()
-            .map { notifications ->
-                notifications.sortedWith(NotificationComparator())
-            }
+    override suspend fun loadNotifications(): Flow<List<MifosNotificationEntity>> {
+        return withContext(ioDispatcher) {
+            notificationDao.getNotifications()
+        }
     }
 
     override suspend fun getUnReadNotificationCount(): Flow<Int> {
@@ -37,13 +40,14 @@ class NotificationRepositoryImp @Inject constructor(
     }
 
     override suspend fun deleteOldNotifications() {
-        val thirtyDaysInMillis = 2592000000L
-        val cutoffTime = System.currentTimeMillis() - thirtyDaysInMillis
-
-        notificationDao.deleteOldNotifications(cutoffTime)
+        return withContext(ioDispatcher) {
+            val thirtyDaysInMillis = 2592000000L
+            val cutoffTime = System.currentTimeMillis() - thirtyDaysInMillis
+            notificationDao.deleteOldNotifications(cutoffTime)
+        }
     }
 
-    override suspend fun updateReadStatus(notification: MifosNotification, isRead: Boolean) {
+    override suspend fun updateReadStatus(notification: MifosNotificationEntity, isRead: Boolean) {
         notificationDao.updateReadStatus(notification.timeStamp, isRead)
     }
 }

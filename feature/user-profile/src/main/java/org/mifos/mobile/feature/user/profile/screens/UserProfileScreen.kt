@@ -40,7 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.database.PreferencesHelper
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.Group
