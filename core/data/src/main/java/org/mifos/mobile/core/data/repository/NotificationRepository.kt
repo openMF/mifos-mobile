@@ -10,17 +10,17 @@
 package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.database.entity.MifosNotificationEntity
+import org.mifos.mobile.core.model.entity.MifosNotification
 
 interface NotificationRepository {
 
-    suspend fun saveNotification(notification: MifosNotificationEntity)
+    fun loadNotifications(): Flow<List<MifosNotification>>
 
-    suspend fun loadNotifications(): Flow<List<MifosNotificationEntity>>
+    fun getUnReadNotificationCount(): Flow<Int>
 
-    suspend fun getUnReadNotificationCount(): Flow<Int>
+    suspend fun saveNotification(notification: MifosNotification)
 
     suspend fun deleteOldNotifications()
 
-    suspend fun updateReadStatus(notification: MifosNotificationEntity, isRead: Boolean)
+    suspend fun updateReadStatus(notification: MifosNotification, isRead: Boolean)
 }

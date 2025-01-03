@@ -38,11 +38,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.CurrencyUtil
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.database.entity.ChargeEntity
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.GreenSuccess
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.RedErrorDark
+import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -121,7 +121,7 @@ private fun ClientChargeScreen(
 
 @Composable
 private fun ClientChargeContent(
-    chargesList: List<ChargeEntity>,
+    chargesList: List<Charge>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier) {
@@ -134,7 +134,7 @@ private fun ClientChargeContent(
 
 @Composable
 private fun ClientChargeItem(
-    charge: ChargeEntity,
+    charge: Charge,
     modifier: Modifier = Modifier,
 ) {
     val currencyRepresentation = charge.currency?.displaySymbol ?: charge.currency?.code ?: ""
@@ -232,7 +232,7 @@ private fun ClientChargeScreenPreview(
 internal class ClientChargeUiStatesPreviews : PreviewParameterProvider<ClientChargeState> {
     override val values: Sequence<ClientChargeState>
         get() = sequenceOf(
-            ClientChargeState.Success(listOf(ChargeEntity(), ChargeEntity())),
+            ClientChargeState.Success(listOf(Charge(), Charge())),
             ClientChargeState.Error(""),
             ClientChargeState.Loading,
         )

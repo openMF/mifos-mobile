@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.HomeRepository
-import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount

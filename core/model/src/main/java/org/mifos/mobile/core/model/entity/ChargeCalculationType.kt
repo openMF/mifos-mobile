@@ -11,8 +11,10 @@ package org.mifos.mobile.core.model.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
 data class ChargeCalculationType(
     var id: Int = 0,
     var code: String? = null,

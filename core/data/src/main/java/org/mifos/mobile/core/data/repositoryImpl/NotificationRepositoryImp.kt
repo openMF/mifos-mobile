@@ -11,12 +11,16 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.network.Dispatcher
 import org.mifos.mobile.core.common.network.MifosDispatchers
+import org.mifos.mobile.core.data.model.toEntity
+import org.mifos.mobile.core.data.model.toModel
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.database.dao.MifosNotificationDao
-import org.mifos.mobile.core.database.entity.MifosNotificationEntity
+import org.mifos.mobile.core.model.entity.MifosNotification
 import javax.inject.Inject
 
 class NotificationRepositoryImp @Inject constructor(
@@ -25,18 +29,20 @@ class NotificationRepositoryImp @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
 ) : NotificationRepository {
 
-    override suspend fun saveNotification(notification: MifosNotificationEntity) {
-        notificationDao.saveNotification(notification)
+    override fun loadNotifications(): Flow<List<MifosNotification>> {
+        return notificationDao.getNotifications()
+            .map { it.map { it.toModel() } }
+            .flowOn(ioDispatcher)
     }
 
-    override suspend fun loadNotifications(): Flow<List<MifosNotificationEntity>> {
-        return withContext(ioDispatcher) {
-            notificationDao.getNotifications()
+    override fun getUnReadNotificationCount(): Flow<Int> {
+        return notificationDao.getUnreadNotificationsCount().flowOn(ioDispatcher)
+    }
+
+    override suspend fun saveNotification(notification: MifosNotification) {
+        withContext(ioDispatcher) {
+            notificationDao.saveNotification(notification.toEntity())
         }
-    }
-
-    override suspend fun getUnReadNotificationCount(): Flow<Int> {
-        return notificationDao.getUnreadNotificationsCount()
     }
 
     override suspend fun deleteOldNotifications() {
@@ -47,7 +53,9 @@ class NotificationRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun updateReadStatus(notification: MifosNotificationEntity, isRead: Boolean) {
-        notificationDao.updateReadStatus(notification.timeStamp, isRead)
+    override suspend fun updateReadStatus(notification: MifosNotification, isRead: Boolean) {
+        withContext(ioDispatcher) {
+            notificationDao.updateReadStatus(notification.timeStamp, isRead)
+        }
     }
 }

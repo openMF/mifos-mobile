@@ -19,7 +19,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 apply("mifos.android.lint")
                 apply("mifos.detekt.plugin")
                 apply("mifos.spotless.plugin")
-                apply("mifos.ktlint.plugin")
             }
 
             extensions.configure<LibraryExtension> {

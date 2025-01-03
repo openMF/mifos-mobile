@@ -1,24 +1,30 @@
 
-import org.mifos.mobile.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import org.mifos.mobile.libs
 
 class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply("dagger.hilt.android.plugin")
-                // KAPT must go last to avoid build warnings.
-                // See: https://stackoverflow.com/questions/70550883/warning-the-following-options-were-not-recognized-by-any-processor-dagger-f
-                apply("org.jetbrains.kotlin.kapt")
+            pluginManager.apply("com.google.devtools.ksp")
+            dependencies {
+                "ksp"(libs.findLibrary("hilt.compiler").get())
             }
 
-            dependencies {
-                "implementation"(libs.findLibrary("hilt.android").get())
-                "kapt"(libs.findLibrary("hilt.compiler").get())
-                "kaptAndroidTest"(libs.findLibrary("hilt.compiler").get())
-                "kaptTest"(libs.findLibrary("hilt.compiler").get())
+            // Add support for Jvm Module, base on org.jetbrains.kotlin.jvm
+            pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+                dependencies {
+                    "implementation"(libs.findLibrary("hilt.core").get())
+                }
+            }
+
+            /** Add support for Android modules, based on [AndroidBasePlugin] */
+            pluginManager.withPlugin("com.android.base") {
+                pluginManager.apply("dagger.hilt.android.plugin")
+                dependencies {
+                    "implementation"(libs.findLibrary("hilt.android").get())
+                }
             }
         }
     }

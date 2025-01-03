@@ -20,7 +20,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("com.dropbox.dependency-guard")
                 apply("mifos.detekt.plugin")
                 apply("mifos.spotless.plugin")
-                apply("mifos.ktlint.plugin")
                 apply("mifos.git.hooks")
             }
 

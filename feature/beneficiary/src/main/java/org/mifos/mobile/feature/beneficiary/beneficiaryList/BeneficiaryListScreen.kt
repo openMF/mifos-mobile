@@ -9,21 +9,17 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryList
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -99,61 +95,42 @@ private fun BeneficiaryListScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
-                .nestedScroll(pullRefreshState.nestedScrollConnection),
+                .padding(it),
         ) {
-            when (uiState) {
-                BeneficiaryListUiState.Loading -> {
-                    MifosProgressIndicatorOverlay()
-                }
+            PullToRefreshBox(
+                state = pullRefreshState,
+                onRefresh = refresh,
+                isRefreshing = isRefreshing,
+            ) {
+                when (uiState) {
+                    BeneficiaryListUiState.Loading -> {
+                        MifosProgressIndicatorOverlay()
+                    }
 
-                is BeneficiaryListUiState.Error -> {
-                    MifosErrorComponent(
-                        isNetworkConnected = Network.isConnected(context),
-                        isRetryEnabled = true,
-                        onRetry = retryLoadingBeneficiary,
-                        message = stringResource(R.string.error_fetching_beneficiaries),
-                    )
-                }
-
-                is BeneficiaryListUiState.Success -> {
-                    if (uiState.beneficiaries.isEmpty()) {
-                        EmptyDataView(
-                            modifier = Modifier.fillMaxSize(),
-                            icon = R.drawable.ic_error_black_24dp,
-                            error = R.string.no_beneficiary_found_please_add,
-                        )
-                    } else {
-                        ShowBeneficiary(
-                            beneficiaryList = uiState.beneficiaries,
-                            onClick = onBeneficiaryItemClick,
+                    is BeneficiaryListUiState.Error -> {
+                        MifosErrorComponent(
+                            isNetworkConnected = Network.isConnected(context),
+                            isRetryEnabled = true,
+                            onRetry = retryLoadingBeneficiary,
+                            message = stringResource(R.string.error_fetching_beneficiaries),
                         )
                     }
+
+                    is BeneficiaryListUiState.Success -> {
+                        if (uiState.beneficiaries.isEmpty()) {
+                            EmptyDataView(
+                                modifier = Modifier.fillMaxSize(),
+                                icon = R.drawable.ic_error_black_24dp,
+                                error = R.string.no_beneficiary_found_please_add,
+                            )
+                        } else {
+                            ShowBeneficiary(
+                                beneficiaryList = uiState.beneficiaries,
+                                onClick = onBeneficiaryItemClick,
+                            )
+                        }
+                    }
                 }
-            }
-
-            PullToRefreshContainer(
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter),
-            )
-        }
-
-        LaunchedEffect(key1 = isRefreshing) {
-            if (isRefreshing) pullRefreshState.startRefresh()
-        }
-
-        LaunchedEffect(key1 = pullRefreshState.isRefreshing) {
-            if (pullRefreshState.isRefreshing) {
-                if (Network.isConnected(context)) {
-                    refresh()
-                } else {
-                    Toast.makeText(
-                        context,
-                        context.resources.getText(R.string.internet_not_connected),
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
-                pullRefreshState.endRefresh()
             }
         }
     }

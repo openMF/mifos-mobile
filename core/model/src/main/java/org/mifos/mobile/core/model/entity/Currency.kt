@@ -24,5 +24,4 @@ data class Currency(
     var displaySymbol: String? = null,
     var nameCode: String? = null,
     var displayLabel: String? = null,
-
 ) : Parcelable

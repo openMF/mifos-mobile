@@ -11,8 +11,8 @@ package org.mifos.mobile.core.network
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import org.mifos.mobile.core.database.PreferencesHelper
-import org.mifos.mobile.core.database.entity.ChargeEntity
+import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
@@ -84,15 +84,15 @@ class DataManager @Inject constructor(
         )
     }
 
-    suspend fun getClientCharges(clientId: Long): Page<ChargeEntity> {
+    suspend fun getClientCharges(clientId: Long): Page<Charge> {
         return baseApiManager.clientChargeApi.getClientChargeList(clientId)
     }
 
-    suspend fun getLoanCharges(loanId: Long): List<ChargeEntity> {
+    suspend fun getLoanCharges(loanId: Long): List<Charge> {
         return baseApiManager.clientChargeApi.getLoanAccountChargeList(loanId)
     }
 
-    suspend fun getSavingsCharges(savingsId: Long): List<ChargeEntity> {
+    suspend fun getSavingsCharges(savingsId: Long): List<Charge> {
         return baseApiManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
     }
 

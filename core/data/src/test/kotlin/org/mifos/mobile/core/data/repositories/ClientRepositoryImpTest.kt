@@ -21,7 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mifos.mobile.core.data.repositoryImpl.ClientRepositoryImp
-import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.network.DataManager

@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
-import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.charge.utils.ClientChargeState
 import org.mifos.mobile.feature.charge.utils.ClientChargeState.Loading
@@ -29,8 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ClientChargeViewModel @Inject constructor(
     private val clientChargeRepositoryImp: ClientChargeRepository,
-    val preferencesHelper: PreferencesHelper,
-    private val savedStateHandle: SavedStateHandle,
+    preferencesHelper: PreferencesHelper,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _clientChargeUiState = MutableStateFlow<ClientChargeState>(Loading)
@@ -99,8 +99,7 @@ internal class ClientChargeViewModel @Inject constructor(
             clientChargeRepositoryImp.clientLocalCharges().catch {
                 _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
-                _clientChargeUiState.value =
-                    ClientChargeState.Success(it.pageItems.filterNotNull())
+                _clientChargeUiState.value = ClientChargeState.Success(it.pageItems)
             }
         }
     }

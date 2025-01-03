@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.enums.AppTheme
 import org.mifos.mobile.core.model.enums.MifosAppLanguage
 import javax.inject.Inject

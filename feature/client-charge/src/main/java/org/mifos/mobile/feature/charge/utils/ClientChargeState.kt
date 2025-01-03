@@ -9,10 +9,10 @@
  */
 package org.mifos.mobile.feature.charge.utils
 
-import org.mifos.mobile.core.database.entity.ChargeEntity
+import org.mifos.mobile.core.model.entity.Charge
 
 internal sealed class ClientChargeState {
     data object Loading : ClientChargeState()
     data class Error(val message: String?) : ClientChargeState()
-    data class Success(val charges: List<ChargeEntity>) : ClientChargeState()
+    data class Success(val charges: List<Charge>) : ClientChargeState()
 }

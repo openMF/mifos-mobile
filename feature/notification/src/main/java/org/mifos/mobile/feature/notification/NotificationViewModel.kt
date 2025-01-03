@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.database.entity.MifosNotificationEntity
+import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 import javax.inject.Inject
 
@@ -63,7 +63,7 @@ internal class NotificationViewModel @Inject constructor(
         loadNotifications()
     }
 
-    fun dismissNotification(notification: MifosNotificationEntity) {
+    fun dismissNotification(notification: MifosNotification) {
         notification.read = true
         viewModelScope.launch {
             notificationRepositoryImp.saveNotification(notification.copy(read = true))
@@ -71,9 +71,9 @@ internal class NotificationViewModel @Inject constructor(
         }
     }
 
-    private fun sortNotifications(notifications: List<MifosNotificationEntity>): List<MifosNotificationEntity> {
+    private fun sortNotifications(notifications: List<MifosNotification>): List<MifosNotification> {
         return notifications.sortedWith(
-            compareByDescending<MifosNotificationEntity> { !it.isRead() }
+            compareByDescending<MifosNotification> { !it.isRead() }
                 .thenByDescending { it.timeStamp },
         )
     }
@@ -81,6 +81,6 @@ internal class NotificationViewModel @Inject constructor(
 
 internal sealed class NotificationUiState {
     data object Loading : NotificationUiState()
-    data class Success(val notifications: List<MifosNotificationEntity>) : NotificationUiState()
+    data class Success(val notifications: List<MifosNotification>) : NotificationUiState()
     data class Error(val errorMessage: String?) : NotificationUiState()
 }

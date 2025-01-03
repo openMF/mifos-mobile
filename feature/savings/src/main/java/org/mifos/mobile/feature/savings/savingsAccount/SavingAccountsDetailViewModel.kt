@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.designsystem.theme.Blue
 import org.mifos.mobile.core.designsystem.theme.DepositGreen
 import org.mifos.mobile.core.designsystem.theme.LightYellow

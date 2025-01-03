@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.core.data.repository.LoanRepository
-import org.mifos.mobile.core.database.PreferencesHelper
+import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.qr.QrCodeGenerator

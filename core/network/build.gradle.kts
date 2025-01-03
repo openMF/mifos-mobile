@@ -23,7 +23,7 @@ android {
 dependencies {
     api(projects.core.common)
     api(projects.core.model)
-    api(projects.core.database)
+    api(projects.core.datastore)
 
     //Square dependencies
     implementation(libs.squareup.retrofit2) {

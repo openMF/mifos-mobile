@@ -19,6 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.core.data.model.toModel
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.data.repositoryImpl.NotificationRepositoryImp
 import org.mifos.mobile.core.database.dao.MifosNotificationDao
@@ -49,7 +50,10 @@ class NotificationRepositoryImpTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        notificationRepositoryImp = NotificationRepositoryImp(mifosNotificationDao, UnconfinedTestDispatcher())
+        notificationRepositoryImp = NotificationRepositoryImp(
+            notificationDao = mifosNotificationDao,
+            ioDispatcher = UnconfinedTestDispatcher(),
+        )
     }
 
     @Test
@@ -63,7 +67,7 @@ class NotificationRepositoryImpTest {
         val notifications = notificationRepositoryImp.loadNotifications()
 
         notifications.test {
-            assertEquals(notificationList, awaitItem())
+            assertEquals(notificationList.map { it.toModel() }, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
