@@ -9,7 +9,7 @@
  */
 package org.mifos.mobile.feature.charge.utils
 
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.model.entity.Charge
 
 internal sealed class ClientChargeState {
     data object Loading : ClientChargeState()

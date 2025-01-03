@@ -654,4 +654,5 @@
     <string name="s_no">S.No</string>
     <string name="no_transaction_found">No Transaction Found</string>
     <string name="not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBbeT2BaMWLj-lReCgYoNmXs_TIyRLr9qQ</string>
 </resources>

@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.charge.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,8 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ClientChargeViewModel @Inject constructor(
     private val clientChargeRepositoryImp: ClientChargeRepository,
-    val preferencesHelper: PreferencesHelper,
-    private val savedStateHandle: SavedStateHandle,
+    preferencesHelper: PreferencesHelper,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _clientChargeUiState = MutableStateFlow<ClientChargeState>(Loading)
@@ -63,6 +64,8 @@ internal class ClientChargeViewModel @Inject constructor(
             clientChargeRepositoryImp.getClientCharges(clientId).catch {
                 _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
+                Log.e("selfServiceDatabase", it.toString())
+                clientChargeRepositoryImp.syncCharges(it)
                 _clientChargeUiState.value = ClientChargeState.Success(it.pageItems)
             }
         }
@@ -96,8 +99,7 @@ internal class ClientChargeViewModel @Inject constructor(
             clientChargeRepositoryImp.clientLocalCharges().catch {
                 _clientChargeUiState.value = ClientChargeState.Error(it.message)
             }.collect {
-                _clientChargeUiState.value =
-                    ClientChargeState.Success(it.pageItems.filterNotNull())
+                _clientChargeUiState.value = ClientChargeState.Success(it.pageItems)
             }
         }
     }

@@ -11,10 +11,8 @@ package org.mifos.mobile.core.network
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import org.mifos.mobile.core.datastore.DatabaseHelper
 import org.mifos.mobile.core.datastore.PreferencesHelper
-import org.mifos.mobile.core.datastore.model.Charge
-import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
@@ -53,7 +51,6 @@ import javax.inject.Singleton
 class DataManager @Inject constructor(
     val preferencesHelper: PreferencesHelper,
     private val baseApiManager: BaseApiManager,
-    private val databaseHelper: DatabaseHelper,
 ) {
     var clientId: Long? = preferencesHelper.clientId
 
@@ -88,9 +85,7 @@ class DataManager @Inject constructor(
     }
 
     suspend fun getClientCharges(clientId: Long): Page<Charge> {
-        return baseApiManager.clientChargeApi.getClientChargeList(clientId).apply {
-            databaseHelper.syncCharges(this)
-        }
+        return baseApiManager.clientChargeApi.getClientChargeList(clientId)
     }
 
     suspend fun getLoanCharges(loanId: Long): List<Charge> {
@@ -207,14 +202,6 @@ class DataManager @Inject constructor(
 
     suspend fun verifyUser(userVerify: UserVerify?): ResponseBody {
         return baseApiManager.registrationApi.verifyUser(userVerify)
-    }
-
-    fun clientLocalCharges(): Page<Charge?> = databaseHelper.clientCharges()
-
-    fun notifications(): List<MifosNotification> = databaseHelper.notifications()
-
-    fun unreadNotificationsCount(): Int {
-        return databaseHelper.unreadNotificationsCount()
     }
 
     suspend fun registerNotification(payload: NotificationRegisterPayload?): ResponseBody {

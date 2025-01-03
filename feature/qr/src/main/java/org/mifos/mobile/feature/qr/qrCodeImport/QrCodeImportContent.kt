@@ -13,12 +13,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -27,11 +25,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.rememberPermissionState
@@ -110,7 +108,7 @@ internal fun PermissionBox(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { permissionResults ->
             val isGranted =
-                requiredPermissions.all { permissionResults[it] ?: false }
+                requiredPermissions.all { permissionResults[it] == true }
 
             permissionGranted = isGranted
 
@@ -179,7 +177,6 @@ internal fun PermissionBox(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 internal fun convertToMutableBitmap(bitmap: Bitmap): Bitmap {
     return if (bitmap.config == Bitmap.Config.HARDWARE) {
         bitmap.copy(Bitmap.Config.ARGB_8888, true)

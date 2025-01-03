@@ -12,14 +12,18 @@ package org.mifos.mobile.core.data.repositories
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mifos.mobile.core.data.model.toModel
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.data.repositoryImpl.NotificationRepositoryImp
-import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.database.dao.MifosNotificationDao
+import org.mifos.mobile.core.database.entity.MifosNotificationEntity
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.testing.util.MainDispatcherRule
 import org.mockito.Mock
@@ -38,26 +42,32 @@ class NotificationRepositoryImpTest {
     @Mock
     lateinit var dataManager: DataManager
 
+    @Mock
+    lateinit var mifosNotificationDao: MifosNotificationDao
+
     private lateinit var notificationRepositoryImp: NotificationRepository
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        notificationRepositoryImp = NotificationRepositoryImp(dataManager)
+        notificationRepositoryImp = NotificationRepositoryImp(
+            notificationDao = mifosNotificationDao,
+            ioDispatcher = UnconfinedTestDispatcher(),
+        )
     }
 
     @Test
     fun testLoadNotifications_SuccessResponseReceivedFromDataManager_ReturnsSuccess() = runTest {
-        val notification = mock(MifosNotification::class.java)
+        val notification = mock(MifosNotificationEntity::class.java)
         val notificationList = List(5) { notification }
         `when`(
-            dataManager.notifications(),
-        ).thenReturn(notificationList)
+            mifosNotificationDao.getNotifications(),
+        ).thenReturn(flowOf(notificationList))
 
         val notifications = notificationRepositoryImp.loadNotifications()
 
         notifications.test {
-            assertEquals(notificationList, awaitItem())
+            assertEquals(notificationList.map { it.toModel() }, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -65,7 +75,7 @@ class NotificationRepositoryImpTest {
     @Test(expected = Exception::class)
     fun testLoadNotifications_ErrorResponseReceivedFromDataManager_ReturnsError() = runTest {
         val dummyError = Exception("Dummy error")
-        `when`(dataManager.notifications()).thenThrow(dummyError)
+        `when`(mifosNotificationDao.getNotifications()).thenThrow(dummyError)
 
         val notifications = notificationRepositoryImp.loadNotifications()
 

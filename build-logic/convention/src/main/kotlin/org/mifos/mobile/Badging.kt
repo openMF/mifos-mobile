@@ -1,9 +1,9 @@
 package org.mifos.mobile
 
+import com.android.SdkConstants
 import com.android.build.api.artifact.SingleArtifact
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
-import com.android.SdkConstants
 import com.google.common.truth.Truth.assertWithMessage
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -19,7 +19,6 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
-import org.gradle.configurationcache.extensions.capitalized
 import org.gradle.kotlin.dsl.register
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 import org.gradle.process.ExecOperations
@@ -83,7 +82,7 @@ abstract class CheckBadgingTask : DefaultTask() {
     fun taskAction() {
         assertWithMessage(
             "Generated badging is different from golden badging! " +
-                "If this change is intended, run ./gradlew ${updateBadgingTaskName.get()}",
+                    "If this change is intended, run ./gradlew ${updateBadgingTaskName.get()}",
         )
             .that(generatedBadging.get().asFile.readText())
             .isEqualTo(goldenBadging.get().asFile.readText())
@@ -97,7 +96,8 @@ fun Project.configureBadgingTasks(
     // Registers a callback to be called, when a new variant is configured
     componentsExtension.onVariants { variant ->
         // Registers a new task to verify the app bundle.
-        val capitalizedVariantName = variant.name.capitalized()
+        val capitalizedVariantName = variant.name.toString()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         val generateBadgingTaskName = "generate${capitalizedVariantName}Badging"
         val generateBadging =
             tasks.register<GenerateBadgingTask>(generateBadgingTaskName) {
@@ -108,8 +108,8 @@ fun Project.configureBadgingTasks(
                     File(
                         baseExtension.sdkDirectory,
                         "${SdkConstants.FD_BUILD_TOOLS}/" +
-                            "${baseExtension.buildToolsVersion}/" +
-                            SdkConstants.FN_AAPT2,
+                                "${baseExtension.buildToolsVersion}/" +
+                                SdkConstants.FN_AAPT2,
                     ),
                 )
 

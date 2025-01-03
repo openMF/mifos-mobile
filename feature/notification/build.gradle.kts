@@ -17,6 +17,5 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.datastore)
-    implementation(libs.dbflow)
+
 }

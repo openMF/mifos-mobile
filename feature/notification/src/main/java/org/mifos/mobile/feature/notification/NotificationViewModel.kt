@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.notification
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.datastore.model.MifosNotification
+import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 import javax.inject.Inject
 
@@ -33,7 +34,10 @@ internal class NotificationViewModel @Inject constructor(
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing
 
     init {
-        loadNotifications()
+        viewModelScope.launch {
+            notificationRepositoryImp.deleteOldNotifications()
+            loadNotifications()
+        }
     }
 
     fun loadNotifications() {
@@ -41,12 +45,15 @@ internal class NotificationViewModel @Inject constructor(
         viewModelScope.launch {
             notificationRepositoryImp.loadNotifications()
                 .catch {
+                    Log.e("selfServiceDatabase", it.toString())
                     _notificationUiState.value =
                         NotificationUiState.Error(errorMessage = it.message)
                 }.collect { notifications ->
+                    Log.e("selfServiceDatabase", notifications.toString())
+                    val sortedNotifications = sortNotifications(notifications)
                     _isRefreshing.emit(false)
                     _notificationUiState.value =
-                        NotificationUiState.Success(notifications = notifications)
+                        NotificationUiState.Success(notifications = sortedNotifications)
                 }
         }
     }
@@ -57,8 +64,18 @@ internal class NotificationViewModel @Inject constructor(
     }
 
     fun dismissNotification(notification: MifosNotification) {
-        notification.setRead(true)
-        notification.save()
+        notification.read = true
+        viewModelScope.launch {
+            notificationRepositoryImp.saveNotification(notification.copy(read = true))
+            notificationRepositoryImp.updateReadStatus(notification, true)
+        }
+    }
+
+    private fun sortNotifications(notifications: List<MifosNotification>): List<MifosNotification> {
+        return notifications.sortedWith(
+            compareByDescending<MifosNotification> { !it.isRead() }
+                .thenByDescending { it.timeStamp },
+        )
     }
 }
 

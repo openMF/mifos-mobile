@@ -26,6 +26,7 @@ dependencies {
     api(projects.core.common)
 
     implementation(libs.jetbrains.kotlin.jdk7)
+    implementation(libs.kotlinx.serialization.json)
 
     // For Serialized name
     implementation(libs.squareup.retrofit.converter.gson)

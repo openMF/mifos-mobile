@@ -26,15 +26,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -104,64 +102,50 @@ private fun RecentTransactionScreen(
             Box(
                 Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
-                    .nestedScroll(pullRefreshState.nestedScrollConnection),
+                    .padding(paddingValues),
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
+                PullToRefreshBox(
+                    state = pullRefreshState,
+                    onRefresh = onRefresh,
+                    isRefreshing = isRefreshing,
                 ) {
-                    when (uiState) {
-                        is RecentTransactionState.Error -> {
-                            MifosErrorComponent(
-                                isNetworkConnected = Network.isConnected(context),
-                                isRetryEnabled = true,
-                                onRetry = onRetry,
-                            )
-                        }
-
-                        is RecentTransactionState.Loading -> {
-                            MifosProgressIndicatorOverlay()
-                        }
-
-                        is RecentTransactionState.Success -> {
-                            if (uiState.transactions.isEmpty()) {
-                                EmptyDataView(
-                                    icon = R.drawable.ic_error_black_24dp,
-                                    error = R.string.no_transaction,
-                                    modifier = Modifier.fillMaxSize(),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        when (uiState) {
+                            is RecentTransactionState.Error -> {
+                                MifosErrorComponent(
+                                    isNetworkConnected = Network.isConnected(context),
+                                    isRetryEnabled = true,
+                                    onRetry = onRetry,
                                 )
-                            } else {
-                                RecentTransactionsContent(
-                                    transactions = uiState.transactions,
-                                    isPaginating = isPaginating,
-                                    loadMore = loadMore,
-                                    canPaginate = uiState.canPaginate,
-                                )
+                            }
+
+                            is RecentTransactionState.Loading -> {
+                                MifosProgressIndicatorOverlay()
+                            }
+
+                            is RecentTransactionState.Success -> {
+                                if (uiState.transactions.isEmpty()) {
+                                    EmptyDataView(
+                                        icon = R.drawable.ic_error_black_24dp,
+                                        error = R.string.no_transaction,
+                                        modifier = Modifier.fillMaxSize(),
+                                    )
+                                } else {
+                                    RecentTransactionsContent(
+                                        transactions = uiState.transactions,
+                                        isPaginating = isPaginating,
+                                        loadMore = loadMore,
+                                        canPaginate = uiState.canPaginate,
+                                    )
+                                }
                             }
                         }
                     }
                 }
-                if (pullRefreshState.isRefreshing) {
-                    LaunchedEffect(key1 = true) {
-                        onRefresh()
-                    }
-                }
-                LaunchedEffect(key1 = isRefreshing) {
-                    if (isRefreshing) {
-                        pullRefreshState.startRefresh()
-                    } else {
-                        pullRefreshState.endRefresh()
-                    }
-                }
-
-                PullToRefreshContainer(
-                    state = pullRefreshState,
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .align(Alignment.TopCenter),
-                )
             }
         },
     )

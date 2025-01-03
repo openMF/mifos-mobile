@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.ResponseBody
 import org.mifos.mobile.core.data.repository.HomeRepository
+import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.network.DataManager
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 class HomeRepositoryImp @Inject constructor(
     private val dataManager: DataManager,
+    private val notificationRepository: NotificationRepository,
 ) : HomeRepository {
 
     override fun clientAccounts(): Flow<ClientAccounts> {
@@ -40,9 +42,7 @@ class HomeRepositoryImp @Inject constructor(
         }
     }
 
-    override fun unreadNotificationsCount(): Flow<Int> {
-        return flow {
-            emit(dataManager.unreadNotificationsCount())
-        }
+    override suspend fun unreadNotificationsCount(): Flow<Int> {
+        return notificationRepository.getUnReadNotificationCount()
     }
 }

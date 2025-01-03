@@ -13,8 +13,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.mifos.mobile.core.datastore.BaseURL
 import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.network.BaseURL
 import org.mifos.mobile.core.network.SelfServiceOkHttpClient
 import org.mifos.mobile.core.network.services.AuthenticationService
 import org.mifos.mobile.core.network.services.BeneficiaryService

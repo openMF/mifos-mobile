@@ -9,15 +9,6 @@
  */
 import org.mifos.mobile.dynamicVersion
 
-/*
- * Copyright 2024 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/.
- *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
- */
 plugins {
     alias(libs.plugins.mifos.android.application)
     alias(libs.plugins.mifos.android.application.compose)
@@ -84,7 +75,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.model)
     implementation(projects.core.data)
-    implementation(projects.core.datastore)
+    implementation(projects.core.database)
     implementation(projects.core.ui)
     implementation(projects.core.designsystem)
 
@@ -132,7 +123,6 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     implementation(libs.google.oss.licenses)
     implementation(libs.androidx.multidex)
-    implementation(libs.dbflow)
 
     testImplementation(projects.core.testing)
     testImplementation(libs.hilt.android.testing)

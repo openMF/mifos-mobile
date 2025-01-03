@@ -33,6 +33,8 @@ dependencies {
     api(projects.core.common)
     api(projects.core.model)
     api(projects.core.network)
+    api(projects.core.database)
+    api(projects.core.datastore)
 
     implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.okhttp)

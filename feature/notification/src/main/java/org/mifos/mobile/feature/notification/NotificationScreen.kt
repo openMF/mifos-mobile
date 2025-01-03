@@ -24,17 +24,15 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,10 +43,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.datastore.model.MifosNotification
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.components.MifosTextButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -137,24 +135,11 @@ private fun NotificationContent(
 ) {
     val pullRefreshState = rememberPullToRefreshState()
 
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(key1 = true) {
-            onRefresh()
-        }
-    }
-
-    LaunchedEffect(key1 = isRefreshing) {
-        if (isRefreshing) {
-            pullRefreshState.startRefresh()
-        } else {
-            pullRefreshState.endRefresh()
-        }
-    }
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .nestedScroll(pullRefreshState.nestedScrollConnection),
+    PullToRefreshBox(
+        state = pullRefreshState,
+        onRefresh = onRefresh,
+        isRefreshing = isRefreshing,
+        modifier = modifier,
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             itemsIndexed(items = notifications) { index, notification ->
@@ -167,10 +152,6 @@ private fun NotificationContent(
                 }
             }
         }
-        PullToRefreshContainer(
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter),
-        )
     }
 }
 
@@ -227,8 +208,16 @@ internal class NotificationUiStatePreviews : PreviewParameterProvider<Notificati
         get() = sequenceOf(
             NotificationUiState.Success(
                 notifications = listOf(
-                    MifosNotification(),
-                    MifosNotification(),
+                    MifosNotification(
+                        timeStamp = 13231331L,
+                        msg = "Your payment is successful",
+                        read = false,
+                    ),
+                    MifosNotification(
+                        timeStamp = 13231331L,
+                        msg = "Your payment is successful",
+                        read = true,
+                    ),
                 ),
             ),
             NotificationUiState.Error(errorMessage = ""),

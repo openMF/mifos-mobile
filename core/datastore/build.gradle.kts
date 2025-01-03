@@ -10,6 +10,7 @@
 plugins {
     alias(libs.plugins.mifos.android.library)
     alias(libs.plugins.mifos.android.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -22,20 +23,8 @@ android {
 }
 
 dependencies {
-    api(projects.core.common)
-    api(projects.core.model)
-    implementation(libs.squareup.retrofit.converter.gson)
+    implementation(projects.core.common)
+    implementation(projects.core.model)
 
-    // DBFlow
-    implementation(libs.dbflow)
-    kapt(libs.dbflow.processor)
-    implementation(libs.dbflow.core)
-
-    //rxjava Dependencies
-    implementation(libs.reactivex.rxjava2.android)
-    implementation(libs.reactivex.rxjava2)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
+    
 }

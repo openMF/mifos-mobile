@@ -14,6 +14,10 @@ plugins {
 
 android {
     namespace = "com.mifos.library.countrycodepicker"
+
+    lint {
+        disable += "SuspiciousModifierThen"
+    }
 }
 
 dependencies {

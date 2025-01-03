@@ -10,7 +10,7 @@
 package org.mifos.mobile.core.testing.util
 
 import com.google.gson.reflect.TypeToken
-import org.mifos.mobile.core.datastore.model.Charge
+import org.mifos.mobile.core.database.entity.ChargeEntity
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
@@ -177,22 +177,22 @@ object FakeRemoteDataSource {
             LoginPayload::class.java,
             FakeJsonName.LOGIN,
         )
-    val charge: Page<Charge?>?
-        get() = mTestDataFactory.getListTypePojo<Page<Charge?>?>(
+    val charge: Page<ChargeEntity?>?
+        get() = mTestDataFactory.getListTypePojo<Page<ChargeEntity?>?>(
             object :
-                TypeToken<Page<Charge?>?>() {},
+                TypeToken<Page<ChargeEntity?>?>() {},
             FakeJsonName.CHARGE,
         )
-    val savingsCharge: List<Charge>
+    val savingsCharge: List<ChargeEntity>
         get() = mTestDataFactory.getListTypePojo(
             object :
-                TypeToken<List<Charge>?>() {},
+                TypeToken<List<ChargeEntity>?>() {},
             FakeJsonName.SAVING_CHARGE,
         )
-    val loanCharge: List<Charge>
+    val loanCharge: List<ChargeEntity>
         get() = mTestDataFactory.getListTypePojo(
             object :
-                TypeToken<List<Charge>?>() {},
+                TypeToken<List<ChargeEntity>?>() {},
             FakeJsonName.LOAN_CHARGE,
         )
     val userVerify: UserVerify
