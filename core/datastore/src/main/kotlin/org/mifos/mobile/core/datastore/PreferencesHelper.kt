@@ -208,7 +208,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         const val DEFAULT_SYSTEM_LANGUAGE = "default_system_language"
 
         private const val DEFAULT_TENANT = "default"
-        private const val DEFAULT_BASE_URL = "https://gsoc.mifos.community"
+        private const val DEFAULT_BASE_URL = "https://demo.mifos.community"
     }
 
     fun getStringFlowForKey(keyForString: String) = callbackFlow<String?> {
