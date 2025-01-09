@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:622027757397:android:29f731fdcd3a65a6",
         "android_client_info": {
-          "package_name": "org.mifos.mobile"
+          "package_name": "org.mifos.mobile.demo"
         }
       },
       "oauth_client": [

@@ -6,13 +6,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -49,12 +43,12 @@ kotlin {
 
 android {
     namespace = "org.mifos.mobile.shared"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         minSdk = 24
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }

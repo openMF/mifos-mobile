@@ -41,7 +41,7 @@ object NetworkModule {
     @Singleton
     fun providesRetrofitInstance(preferencesHelper: PreferencesHelper): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BaseURL().getUrl(preferencesHelper.baseUrl!!))
+            .baseUrl(BaseURL().url)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(SelfServiceOkHttpClient(preferencesHelper).mifosOkHttpClient)

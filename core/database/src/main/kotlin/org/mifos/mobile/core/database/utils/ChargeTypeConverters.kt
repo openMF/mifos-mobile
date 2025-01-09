@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.database.utils
 
 import androidx.room.TypeConverter
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.database.entity.ChargeCalculationTypeEntity
 import org.mifos.mobile.core.database.entity.ChargeTimeTypeEntity
@@ -29,7 +30,7 @@ class ChargeTypeConverters {
 
     @TypeConverter
     fun fromChargeTimeType(value: ChargeTimeTypeEntity?): String? {
-        return value?.let { Json.encodeToString(it) }
+        return value?.let { Json.encodeToString(ChargeTimeTypeEntity.serializer(), it) }
     }
 
     @TypeConverter
@@ -39,7 +40,7 @@ class ChargeTypeConverters {
 
     @TypeConverter
     fun fromChargeCalculationType(value: ChargeCalculationTypeEntity?): String? {
-        return value?.let { Json.encodeToString(it) }
+        return value?.let { Json.encodeToString(ChargeCalculationTypeEntity.serializer(), it) }
     }
 
     @TypeConverter
@@ -49,7 +50,7 @@ class ChargeTypeConverters {
 
     @TypeConverter
     fun fromCurrency(value: CurrencyEntity?): String? {
-        return value?.let { Json.encodeToString(it) }
+        return value?.let { Json.encodeToString(CurrencyEntity.serializer(), it) }
     }
 
     @TypeConverter

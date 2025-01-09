@@ -65,7 +65,7 @@ object Utils {
         val newFile = File(imagePath, "image.png")
         return FileProvider.getUriForFile(
             context!!,
-            "org.mifos.mobile.fileprovider",
+            "${context.packageName}.fileprovider",
             newFile,
         )
     }

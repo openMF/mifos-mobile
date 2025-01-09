@@ -10,9 +10,9 @@
 package org.mifos.mobile.core.network
 
 class BaseURL {
-    val url: String? = null
-        get() = field
-            ?: (PROTOCOL_HTTPS + API_ENDPOINT + API_PATH)
+    val url: String
+        get() = PROTOCOL_HTTPS + API_ENDPOINT + API_PATH
+
     val defaultBaseUrl: String
         get() = PROTOCOL_HTTPS + API_ENDPOINT
 

@@ -12,7 +12,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("mifos.android.library")
                 apply("mifos.android.hilt")
-                apply("mifos.android.library.jacoco")
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {

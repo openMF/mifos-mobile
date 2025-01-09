@@ -22,8 +22,6 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.android.tools.common)
     compileOnly(libs.compose.gradlePlugin)
-    compileOnly(libs.firebase.crashlytics.gradlePlugin)
-    compileOnly(libs.firebase.performance.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
@@ -42,58 +40,47 @@ tasks {
 
 gradlePlugin {
     plugins {
-        register("androidApplicationCompose") {
-            id = "mifos.android.application.compose"
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
-        }
         register("androidApplication") {
             id = "mifos.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
-        register("androidApplicationJacoco") {
-            id = "mifos.android.application.jacoco"
-            implementationClass = "AndroidApplicationJacocoConventionPlugin"
+        register("androidApplicationCompose") {
+            id = "mifos.android.application.compose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
-        register("androidHilt") {
-            id = "mifos.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+
+        register("androidFlavors") {
+            id = "mifos.android.application.flavors"
+            implementationClass = "AndroidApplicationFlavorsConventionPlugin"
         }
-        register("androidLibraryCompose") {
-            id = "mifos.android.library.compose"
-            implementationClass = "AndroidLibraryComposeConventionPlugin"
-        }
+
+        // This can removed after migration
         register("androidLibrary") {
             id = "mifos.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+
+        register("androidLibraryCompose") {
+            id = "mifos.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+
         register("androidFeature") {
             id = "mifos.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
-        register("androidLibraryJacoco") {
-            id = "mifos.android.library.jacoco"
-            implementationClass = "AndroidLibraryJacocoConventionPlugin"
-        }
-        register("androidTest") {
-            id = "mifos.android.test"
-            implementationClass = "AndroidTestConventionPlugin"
+
+        // Room Plugin
+        register("androidHilt") {
+            id = "mifos.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
         }
         register("androidRoom") {
             id = "mifos.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
-        register("androidFirebase") {
-            id = "mifos.android.application.firebase"
-            implementationClass = "AndroidApplicationFirebaseConventionPlugin"
-        }
-        register("androidLint") {
-            id = "mifos.android.lint"
-            implementationClass = "AndroidLintConventionPlugin"
-        }
-        register("jvmLibrary") {
-            id = "mifos.jvm.library"
-            implementationClass = "JvmLibraryConventionPlugin"
-        }
+
+        // Utility Plugins
         register("detekt") {
             id = "mifos.detekt.plugin"
             implementationClass = "MifosDetektConventionPlugin"
@@ -104,15 +91,24 @@ gradlePlugin {
             implementationClass = "MifosSpotlessConventionPlugin"
             description = "Configures spotless for the project"
         }
-        register("ktlint") {
-            id = "mifos.ktlint.plugin"
-            implementationClass = "MifosKtlintConventionPlugin"
-            description = "Configures kotlinter for the project"
-        }
         register("gitHooks") {
             id = "mifos.git.hooks"
             implementationClass = "MifosGitHooksConventionPlugin"
             description = "Installs git hooks for the project"
+        }
+
+        // KMP & CMP Plugins
+        register("kmpLibrary") {
+            id = "mifos.kmp.library"
+            implementationClass = "KMPLibraryConventionPlugin"
+        }
+        register("cmpFeature") {
+            id = "mifos.cmp.feature"
+            implementationClass = "CMPFeatureConventionPlugin"
+        }
+        register("kmpKoin") {
+            id = "mifos.kmp.koin"
+            implementationClass = "KMPKoinConventionPlugin"
         }
     }
 }

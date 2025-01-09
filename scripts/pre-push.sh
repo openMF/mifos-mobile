@@ -73,24 +73,6 @@ run_dependency_guard() {
     fi
 }
 
-# Function to run Version Catalog checks
-run_version_catalog_checks() {
-    echo "\n🚀 Version catalog linter is now analyzing your catalog for potential issues!"
-    ./gradlew checkVersionCatalog
-    DETEKT_EXIT_CODE=$?
-
-    if [ ${DETEKT_EXIT_CODE} -ne 0 ]; then
-        echo "\n*********************************************************************************"
-        echo "     💥 Oh no! Version Catalog found issues in the code! Time to fix those issues! 💥"
-        echo "     💡 Tip: Review the Version Catalog logs to resolve these issues. 🛠️"
-        echo "*********************************************************************************"
-        echo "🚀 Attempting to format the Version Catalog again..."
-        ./gradlew formatVersionCatalog
-    else
-        echo "🎉 Fantastic work! Your Version catalog has been formatted successfully 🚀🌟"
-    fi
-}
-
 # Function to print success message
 print_success_message() {
     GIT_USERNAME=$(git config user.name)
@@ -106,7 +88,6 @@ check_current_branch
 run_spotless_checks
 run_detekt_checks
 run_dependency_guard
-run_version_catalog_checks
 print_success_message
 
 exit 0

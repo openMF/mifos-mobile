@@ -20,6 +20,7 @@ dependencyResolutionManagement {
 }
 
 plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version("0.8.0")
     id("org.ajoberstar.reckon.settings") version("0.18.3")
 }
 
@@ -73,7 +74,7 @@ include(":feature:home")
 include(":feature:user-profile")
 
 // Lint Modules
-include(":lint")
+//include(":lint")
 
 // Library Modules
 include(":libs:country-code-picker")

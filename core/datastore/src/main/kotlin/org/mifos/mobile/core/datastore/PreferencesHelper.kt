@@ -207,7 +207,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         const val LANGUAGE_TYPE = "language_type"
         const val DEFAULT_SYSTEM_LANGUAGE = "default_system_language"
 
-        private const val DEFAULT_TENANT = "gsoc"
+        private const val DEFAULT_TENANT = "default"
         private const val DEFAULT_BASE_URL = "https://gsoc.mifos.community"
     }
 

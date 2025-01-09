@@ -7,15 +7,15 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+import org.mifos.mobile.MifosBuildType
 import org.mifos.mobile.dynamicVersion
 
 plugins {
     alias(libs.plugins.mifos.android.application)
     alias(libs.plugins.mifos.android.application.compose)
+    alias(libs.plugins.mifos.android.application.flavors)
     alias(libs.plugins.mifos.android.hilt)
-    alias(libs.plugins.mifos.android.application.firebase)
     id("com.google.android.gms.oss-licenses-plugin")
-    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -45,11 +45,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = MifosBuildType.DEBUG.applicationIdSuffix
+        }
+
         release {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
+            applicationIdSuffix = MifosBuildType.RELEASE.applicationIdSuffix
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -61,10 +66,10 @@ android {
 }
 
 dependencyGuard {
-    configuration("releaseRuntimeClasspath"){
-        modules = true
-        tree = true
-    }
+    configuration("demoDebugRuntimeClasspath")
+    configuration("demoReleaseRuntimeClasspath")
+    configuration("prodDebugRuntimeClasspath")
+    configuration("prodReleaseRuntimeClasspath")
 }
 
 dependencies {

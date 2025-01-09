@@ -1,5 +1,3 @@
-
-
 import androidx.room.gradle.RoomExtension
 import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin

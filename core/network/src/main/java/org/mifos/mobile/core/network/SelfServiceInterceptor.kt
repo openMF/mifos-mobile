@@ -20,7 +20,7 @@ class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     override fun intercept(chain: Interceptor.Chain): Response {
         val chainRequest = chain.request()
         val builder = chainRequest.newBuilder()
-            .header(HEADER_TENANT, preferencesHelper.tenant!!)
+            .header(HEADER_TENANT, DEFAULT_TENANT)
             .header(CONTENT_TYPE, "application/json")
         if (!TextUtils.isEmpty(preferencesHelper.token)) {
             builder.header(HEADER_AUTH, preferencesHelper.token!!)
@@ -32,7 +32,7 @@ class SelfServiceInterceptor(private val preferencesHelper: PreferencesHelper) :
     companion object {
         const val HEADER_TENANT = "Fineract-Platform-TenantId"
         const val HEADER_AUTH = "Authorization"
-        const val DEFAULT_TENANT = "gsoc"
+        const val DEFAULT_TENANT = "default"
         const val CONTENT_TYPE = "Content-Type"
     }
 }

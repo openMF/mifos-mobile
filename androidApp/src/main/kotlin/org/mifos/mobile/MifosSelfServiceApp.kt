@@ -11,7 +11,6 @@ package org.mifos.mobile
 
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
 import org.mifos.mobile.core.datastore.PreferencesHelper
 import org.mifos.mobile.feature.settings.applySavedTheme
@@ -21,7 +20,6 @@ class MifosSelfServiceApp : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
-        FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
         PreferencesHelper(this).applySavedTheme()
     }
 }
