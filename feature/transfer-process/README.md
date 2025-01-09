@@ -1,0 +1,3 @@
+# :feature:transfer-process module
+## Dependency graph
+![Dependency graph](../../docs/images/graphs/dep_graph_feature_transfer_process.svg)

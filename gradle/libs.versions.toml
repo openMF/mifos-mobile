@@ -69,6 +69,7 @@ turbineVersion = "1.1.0"
 twitter-detekt-compose = "0.0.26"
 versionCatalogLinterVersion = "1.0.3"
 zxingVersion = "3.5.3"
+moduleGraph = "2.7.1"
 
 # Kotlin KMP Dependencies
 kotlin = "2.1.0"
@@ -372,3 +373,4 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotlessVersion" }
 version-catalog-linter = { id = "io.github.pemistahl.version-catalog-linter", version.ref = "versionCatalogLinterVersion" }
+module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }

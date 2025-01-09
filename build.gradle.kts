@@ -28,6 +28,7 @@ plugins {
     alias(libs.plugins.dependencyGuard) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.spotless) apply false
+    alias(libs.plugins.module.graph) apply true // Plugin for module graph generation
 
     //Multiplatform Plugins
     alias(libs.plugins.jetbrainsCompose) apply false
@@ -48,4 +49,14 @@ tasks.register("versionFile") {
     val file = File(projectDir, "version.txt")
 
     DynamicVersion.setDynamicVersion(file, project.version.toString())
+}
+
+// Task to print all the module paths in the project e.g. :core:data
+// Used by module graph generator script
+tasks.register("printModulePaths") {
+    subprojects {
+        if (subprojects.size == 0) {
+            println(this.path)
+        }
+    }
 }
