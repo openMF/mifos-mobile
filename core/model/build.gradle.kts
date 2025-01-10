@@ -8,8 +8,7 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.mifos.kmp.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
 }
@@ -21,17 +20,15 @@ android {
     }
 }
 
-dependencies {
-
-    api(projects.core.common)
-
-    implementation(libs.jetbrains.kotlin.jdk7)
-    implementation(libs.kotlinx.serialization.json)
-
-    // For Serialized name
-    implementation(libs.squareup.retrofit.converter.gson)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
+kotlin {
+    androidTarget {
+        compilerOptions {
+            freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=org.mifos.mobile.core.model.Parcelize")
+        }
+    }
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
+        }
+    }
 }
