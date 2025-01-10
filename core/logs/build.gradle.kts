@@ -8,23 +8,24 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.library)
-    alias(libs.plugins.mifos.android.library.compose)
-    alias(libs.plugins.mifos.android.hilt)
+    alias(libs.plugins.mifos.kmp.library)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
+
 }
 
 android {
     namespace = "org.mifos.mobile.core.logs"
 }
 
-
-dependencies {
-    implementation(libs.androidx.compose.runtime)
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.jb.composeRuntime)
+        }
+        androidMain.dependencies {
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.analytics)
+        }
+    }
 }

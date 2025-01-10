@@ -13,12 +13,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
 import org.mifos.mobile.core.logs.AnalyticsEvent
 import org.mifos.mobile.core.logs.AnalyticsHelper
-import javax.inject.Inject
 
 /**
  * Implementation of `AnalyticsHelper` which logs events to a Firebase backend.
  */
-internal class FirebaseAnalyticsHelper @Inject constructor(
+internal class FirebaseAnalyticsHelper(
     private val firebaseAnalytics: FirebaseAnalytics,
 ) : AnalyticsHelper {
     override fun logEvent(event: AnalyticsEvent) {
