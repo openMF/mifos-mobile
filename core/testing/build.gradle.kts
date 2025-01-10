@@ -21,7 +21,7 @@ dependencies {
     api(libs.bundles.androidx.compose.ui.test)
     api(libs.kotlinx.coroutines.test)
     api(projects.core.data)
-    api(projects.core.logs)
+//    api(projects.core.logs)
     api(projects.core.model)
     api(libs.turbine)
     api(libs.mockito.core)

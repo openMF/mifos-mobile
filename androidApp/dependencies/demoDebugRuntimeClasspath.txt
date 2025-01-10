@@ -186,6 +186,9 @@ dev.chrisbanes.snapper:snapper:0.2.2
 io.github.mr0xf00:easycrop:0.1.1
 io.insert-koin:koin-android:4.0.1-RC1
 io.insert-koin:koin-androidx-compose:4.0.1-RC1
+io.insert-koin:koin-annotations-jvm:1.4.0-RC4
+io.insert-koin:koin-annotations:1.4.0-RC4
+io.insert-koin:koin-bom:4.0.1-RC1
 io.insert-koin:koin-compose-jvm:4.0.1-RC1
 io.insert-koin:koin-compose-viewmodel-jvm:4.0.1-RC1
 io.insert-koin:koin-compose-viewmodel:4.0.1-RC1
@@ -212,8 +215,8 @@ org.jetbrains.androidx.lifecycle:lifecycle-viewmodel:2.8.3
 org.jetbrains.androidx.savedstate:savedstate:1.2.2
 org.jetbrains.compose.animation:animation-core:1.7.0-rc01
 org.jetbrains.compose.animation:animation:1.7.0-rc01
-org.jetbrains.compose.annotation-internal:annotation:1.7.0-rc01
-org.jetbrains.compose.collection-internal:collection:1.7.0-rc01
+org.jetbrains.compose.annotation-internal:annotation:1.7.3
+org.jetbrains.compose.collection-internal:collection:1.7.3
 org.jetbrains.compose.foundation:foundation-layout:1.7.0-rc01
 org.jetbrains.compose.foundation:foundation:1.7.0-rc01
 org.jetbrains.compose.material3:material3:1.7.0-rc01
@@ -221,7 +224,7 @@ org.jetbrains.compose.material:material-icons-core:1.7.0-rc01
 org.jetbrains.compose.material:material-ripple:1.7.0-rc01
 org.jetbrains.compose.material:material:1.7.0-rc01
 org.jetbrains.compose.runtime:runtime-saveable:1.7.0-rc01
-org.jetbrains.compose.runtime:runtime:1.7.0-rc01
+org.jetbrains.compose.runtime:runtime:1.7.3
 org.jetbrains.compose.ui:ui-geometry:1.7.0-rc01
 org.jetbrains.compose.ui:ui-graphics:1.7.0-rc01
 org.jetbrains.compose.ui:ui-text:1.7.0-rc01
