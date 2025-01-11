@@ -1,0 +1,66 @@
+# Automated Monthly Release Versioning Workflow
+# ============================================
+
+# Purpose:
+# - Automatically create consistent monthly version tags
+# - Implement a calendar-based versioning strategy
+# - Facilitate easy tracking of monthly releases
+
+# Versioning Strategy:
+# - Tag format: YYYY.MM.0 (e.g., 2024.01.0 for January 2024)
+# - First digit: Full year
+# - Second digit: Month (01-12)
+# - Third digit: Patch version (starts at 0, allows for potential updates)
+
+# Key Features:
+# - Runs automatically on the first day of each month at 3:30 AM UTC
+# - Can be manually triggered via workflow_dispatch
+# - Uses GitHub Actions to generate tags programmatically
+# - Provides a predictable and systematic versioning approach
+
+# Prerequisites:
+# - Repository configured with GitHub Actions
+# - Permissions to create tags
+# - Access to actions/checkout and tag creation actions
+
+# Workflow Triggers:
+# - Scheduled monthly run
+# - Manual workflow dispatch
+# - Callable from other workflows
+
+# Actions Used:
+# 1. actions/checkout@v4 - Checks out repository code
+# 2. josStorer/get-current-time - Retrieves current timestamp
+# 3. rickstaa/action-create-tag - Creates Git tags
+
+# Example Generated Tags:
+# - 2024.01.0 (January 2024 initial release)
+# - 2024.02.0 (February 2024 initial release)
+# - 2024.02.1 (Potential patch for February 2024)
+
+# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/monthly-version-tag.yaml
+
+# ##############################################################################
+#                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
+# ##############################################################################
+
+name: Tag Monthly Release
+
+on:
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+  # Schedule the workflow to run monthly
+  schedule:
+    # Runs at 03:30 UTC on the first day of every month
+    # Cron syntax: minute hour day-of-month month day-of-week
+    - cron: '30 3 1 * *'
+
+concurrency:
+  group: "monthly-release"
+  cancel-in-progress: false
+
+jobs:
+  monthly_release:
+    name: Tag Monthly Release
+    uses: openMF/mifos-mobile-github-actions/.github/workflows/monthly-version-tag.yaml@main
+    secrets: inherit

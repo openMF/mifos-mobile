@@ -1,0 +1,96 @@
+# GitHub Actions Workflow for Kotlin Android Application Deployment
+#
+# OVERVIEW:
+# This workflow supports building and publishing applications across multiple platforms:
+# - Android (APK/AAB)
+#
+# PREREQUISITES:
+# Ensure your project is configured with:
+#  - Gradle build system
+#  - Kotlin Multiplatform Project with Android, iOS, Desktop, and Web modules
+#  - Fastlane for deployment automation
+#  - Separate modules/package names for each platform
+#
+# REQUIRED SECRETS:
+# Configure the following secrets in GitHub repository settings:
+# - ORIGINAL_KEYSTORE_FILE: Base64 encoded Android release keystore
+# - ORIGINAL_KEYSTORE_FILE_PASSWORD: Keystore password
+# - ORIGINAL_KEYSTORE_ALIAS: Keystore alias
+# - ORIGINAL_KEYSTORE_ALIAS_PASSWORD: Keystore alias password
+
+# - UPLOAD_KEYSTORE_FILE: Base64 encoded Android release keystore
+# - UPLOAD_KEYSTORE_FILE_PASSWORD: Keystore password
+# - UPLOAD_KEYSTORE_ALIAS: Keystore alias
+# - UPLOAD_KEYSTORE_ALIAS_PASSWORD: Keystore alias password
+
+# - GOOGLESERVICES: Google Services configuration JSON
+# - PLAYSTORECREDS: Play Store service account credentials
+# - FIREBASECREDS: Firebase distribution credentials
+
+# WORKFLOW INPUTS:
+# - release_type: 'internal' (default) or 'beta'
+# - target_branch: Branch to use for release (default: 'dev')
+# - android_package_name: Name of Android module
+
+# USAGE:
+# 1. Ensure all required secrets are configured
+# 2. Customize package names in workflow inputs
+# 3. Toggle platform-specific publishing flags
+# 4. Trigger workflow manually or via GitHub Actions UI
+
+# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/android-build-and-publish.yaml
+
+# ##############################################################################
+#                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
+# ##############################################################################
+name: Android Build and Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        type: choice
+        options:
+          - internal
+          - beta
+        default: internal
+        description: Release Type
+
+      target_branch:
+        type: string
+        default: 'development'
+        description: 'Target branch for release'
+
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+
+concurrency:
+  group: "reusable"
+  cancel-in-progress: false
+
+jobs:
+  android_build_and_publish:
+    name: Android Build and Publish
+    uses: openMF/mifos-mobile-github-actions/.github/workflows/android-build-and-publish.yaml@main
+    with:
+      release_type: ${{ inputs.release_type }}
+      target_branch: ${{ inputs.target_branch }}
+      android_package_name: 'androidApp' # <-- Change this to your android package name
+      tester_groups: 'mifos-mobile-testers' # <-- Change this to your Firebase tester group
+    secrets:
+      original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
+      original_keystore_file_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
+      original_keystore_alias: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS }}
+      original_keystore_alias_password: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
+
+      upload_keystore_file: ${{ secrets.UPLOAD_KEYSTORE_FILE }}
+      upload_keystore_file_password: ${{ secrets.UPLOAD_KEYSTORE_FILE_PASSWORD }}
+      upload_keystore_alias: ${{ secrets.UPLOAD_KEYSTORE_ALIAS }}
+      upload_keystore_alias_password: ${{ secrets.UPLOAD_KEYSTORE_ALIAS_PASSWORD }}
+
+      google_services: ${{ secrets.GOOGLESERVICES }}
+      firebase_creds: ${{ secrets.FIREBASECREDS }}
+      playstore_creds: ${{ secrets.PLAYSTORECREDS }}
+      token: ${{ secrets.GITHUB_TOKEN }}

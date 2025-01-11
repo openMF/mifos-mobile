@@ -35,7 +35,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "debug_keystore.jks")
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "../keystores/release_keystore.keystore")
             storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "mifos1234"
             keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "mifos-mobile"
             keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "mifos1234"
@@ -62,6 +62,17 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    lint {
+        xmlReport = true
+        checkDependencies = true
+        abortOnError = false
+        // Disable this rule until we ship the libraries to some maven.
+        disable += "ResourceName"
+        baseline = File("lint-baseline.xml")
+        explainIssues = true
+        htmlReport = true
     }
 }
 

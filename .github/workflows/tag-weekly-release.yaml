@@ -31,7 +31,7 @@ jobs:
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'release_to_internal_or_beta.yml',
+              workflow_id: 'android-release.yml',
               ref: 'development',
               inputs: {
                 "release_type": "beta",

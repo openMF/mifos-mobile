@@ -1,0 +1,6 @@
+fix: API endpoint (#2733)
+* MM-102 KMP dependencies setup (#2729)
+* fix: API endpoint
+---------
+Co-authored-by: Sk Niyaj Ali <skniyajali0@gmail.com>
+Co-authored-by: Pronay Sarker <pronaycoding@gmail.com>s

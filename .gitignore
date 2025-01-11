@@ -9,7 +9,6 @@
 .externalNativeBuild
 .idea
 /*.iml
-.kotlin
 
 # files for the dex VM
 *.dex
@@ -22,13 +21,25 @@ bin/
 gen/
 out/
 build/
+.externalNativeBuild
+.cxx
+iosApp/Podfile.lock
+iosApp/Pods/*
+iosApp/iosApp.xcworkspace/*
+iosApp/iosApp.xcodeproj/*
+!iosApp/iosApp.xcodeproj/project.pbxproj
+mifospay-shared/mifospay-shared.podspec
 
 # Eclipse project files
 .classpath
 .project
 
+# Windows thumbnail db
+.DS_Store
+
 # IDEA/Android Studio project files, because
 # the project can be imported from settings.gradle.kts
+*.iml
 .idea/*
 !.idea/copyright
 # Keep the code styles.
@@ -36,7 +47,6 @@ build/
 /.idea/codeStyles/*
 !/.idea/codeStyles/Project.xml
 !/.idea/codeStyles/codeStyleConfig.xml
-
 
 # Kotlin
 .kotlin
@@ -48,13 +58,17 @@ captures/
 app/app.iml
 app/manifest-merger-release-report.txt
 
-release_keystore.keystore
+# Exclude Google services from prod flavour
+androidApp/src/prod/google-services.json
+
+#*.keystore
 
 version.txt
-
+fastlane/report.xml
 firebaseAppDistributionServiceCredentialsFile.json
 playStorePublishServiceCredentialsFile.json
 
 # Ruby stuff we don't care about
 .bundle/
 vendor/
+secrets/

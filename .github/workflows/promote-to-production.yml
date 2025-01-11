@@ -1,0 +1,75 @@
+# GitHub Actions Workflow for Play Store Release Promotion
+#
+# PURPOSE:
+# This workflow automates the process of promoting a beta release
+# to the production track on Google Play Store.
+#
+# PREREQUISITES:
+# 1. Fastlane setup with Android deployment configurations
+# 2. Configured Fastlane lanes:
+#    - `promote_to_production`: Handles beta to production promotion
+#
+# REQUIRED CONFIGURATION:
+# - Secrets:
+#   PLAYSTORECREDS: Google Play Store service account JSON credentials
+#
+# INPUTS:
+# - android_package_name: Name of the Android project module
+#   (REQUIRED, must match your project's module structure)
+#
+# WORKFLOW TRIGGERS:
+# - Can be called manually or triggered by other workflows
+# - Typically used after beta testing and validation
+#
+# DEPLOYMENT PROCESS:
+# 1. Checks out repository code
+# 2. Sets up Ruby and Fastlane environment
+# 3. Inflates Play Store credentials
+# 4. Runs Fastlane lane to promote beta to production
+#
+# IMPORTANT NOTES:
+# - Requires proper Fastlane configuration in your project
+# - Ensures consistent and automated Play Store deployments
+# - Configurable retry mechanism for upload stability
+#
+# RECOMMENDED FASTLANE LANE IMPLEMENTATION:
+# ```ruby
+# lane :promote_to_production do
+#   upload_to_play_store(
+#     track: 'beta',
+#     track_promote_to: 'production',
+#     json_key: './playStorePublishServiceCredentialsFile.json'
+#   )
+# end
+# ```
+
+# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/promote-to-production.yaml
+
+# ##############################################################################
+#                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
+# ##############################################################################
+
+name: Promote Release to Play Store
+
+# Workflow triggers:
+# 1. Manual trigger with option to publish to Play Store
+# 2. Automatic trigger when a GitHub release is published
+on:
+  workflow_dispatch:
+  release:
+    types: [ released ]
+
+concurrency:
+  group: "production-deploy"
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  # Job to promote app from beta to production in Play Store
+  play_promote_production:
+    name: Promote Beta to Production Play Store
+    uses: openMF/mifos-mobile-github-actions/.github/workflows/promote-to-production.yaml@main
+    secrets:
+      playstore_creds: ${{ secrets.PLAYSTORECREDS }}
