@@ -39,7 +39,7 @@ platform :android do
     generateVersion = generateVersion()
 
     # Generate Release Note
-    releaseNotes = generateReleaseNotes()
+    releaseNotes = generateFullReleaseNote()
 
     # Write the generated release notes to default.txt
     buildConfigPath = "metadata/android/en-US/changelogs/default.txt"
@@ -67,7 +67,7 @@ platform :android do
     options[:groups] ||= "mifos-mobile-testers"
 
     # Generate Release Note
-    releaseNotes = generateReleaseNotes()
+    releaseNotes = generateFullReleaseNote()
 
     firebase_app_distribution(
       app: "1:728434912738:android:d853a78f14af0c381a1dbb",
@@ -145,34 +145,176 @@ platform :android do
 
   desc "Generate Version"
   lane :generateVersion do
+    # Get current version codes from both production and beta
+    prod_codes = google_play_track_version_codes(
+      track: 'production',
+    )
+    beta_codes = google_play_track_version_codes(
+      track: 'beta',
+    )
+
+    # Find highest version code
+    latest_code = (prod_codes + beta_codes).max || 1
+    new_version_code = latest_code + 1
+
     # Generate version file
     gradle(tasks: ["versionFile"])
 
     # Set version from file
     ENV['VERSION'] = File.read("../version.txt").strip
 
-    def count_tags
-      if Gem.win_platform?
-        # Windows version
-        `git tag | findstr /V "beta" | find /C /V ""`.strip.to_i
-      else
-        # Unix version
-        `git tag | grep -v beta | wc -l`.strip.to_i
-      end
-    end
-
-    ENV['VERSION_CODE'] = (count_tags + 1).to_s
+    # Set it as environment variable or use directly
+    ENV['VERSION_CODE'] = new_version_code.to_s
 
     UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
   end
 
   desc "Generate release notes"
   lane :generateReleaseNotes do |options|
-    branchName = `git rev-parse --abbrev-ref HEAD`.chomp()
     releaseNotes = changelog_from_git_commits(
       commits_count: 1,
     )
     releaseNotes
+  end
+
+  desc "Generate release notes from specified tag or latest release tag"
+  lane :generateFullReleaseNote do |options|
+    # Platform-independent way to get the latest tag
+    def get_latest_tag
+      begin
+        # Try to get the latest tag without redirection
+        latest = `git describe --tags --abbrev=0`.strip
+        return latest unless latest.empty?
+      rescue
+        begin
+          # Alternative approach if the first one fails
+          latest = `git tag --sort=-creatordate`.split("\n").first
+          return latest unless latest.nil? || latest.empty?
+        rescue
+          return nil
+        end
+      end
+      nil
+    end
+
+    # Get the tag from options or find the latest tag
+    from_tag = options[:from_tag]
+    if from_tag
+      UI.message "Using specified tag: #{from_tag}"
+      # Verify the tag exists
+      unless system("git rev-parse #{from_tag}")
+        UI.user_error! "Tag #{from_tag} not found!"
+        return
+      end
+    else
+      from_tag = get_latest_tag
+      if from_tag && !from_tag.empty?
+        UI.message "Using latest tag: #{from_tag}"
+      else
+        UI.message "No tags found. Getting all commits..."
+      end
+    end
+
+    # Get commits since the tag
+    commits = if from_tag && !from_tag.empty?
+      `git log #{from_tag}..HEAD --pretty=format:"%B"`.split("\n")
+    else
+      `git log --pretty=format:"%B"`.split("\n")
+    end
+
+    # Process commits to get actual commit messages and remove Co-authored-by lines
+    processed_commits = []
+    current_commit = []
+
+    commits.each do |line|
+      # Skip empty lines and Co-authored-by lines
+      next if line.empty? || line.start_with?("Co-authored-by:")
+
+      if line.start_with?("Merge pull request")
+        # For merge commits, we want to get the actual commit message
+        next
+      elsif current_commit.empty? || !line.start_with?(" ")
+        # If it's a new commit message, store the previous one (if exists) and start a new one
+        processed_commits << current_commit.join(" ") unless current_commit.empty?
+        current_commit = [line]
+      else
+        # Continue with current commit message
+        current_commit << line
+      end
+    end
+    # Add the last commit
+    processed_commits << current_commit.join(" ") unless current_commit.empty?
+
+    # Remove empty strings and duplicates
+    processed_commits = processed_commits.reject(&:empty?).uniq
+
+    # Initialize categories
+    notes = {
+      "feat" => [],      # Features
+      "fix" => [],       # Bug fixes
+      "perf" => [],      # Performance
+      "refactor" => [],  # Refactoring
+      "style" => [],     # Style
+      "docs" => [],      # Documentation
+      "test" => [],      # Tests
+      "build" => [],     # Build
+      "ci" => [],        # CI
+      "chore" => [],     # Maintenance
+      "breaking" => [],  # Breaking changes
+      "other" => []      # Other
+    }
+
+    # Categorize commits
+    processed_commits.each do |commit|
+      # Handle breaking changes
+      if commit.include?("BREAKING CHANGE:") || commit.include?("!")
+        notes["breaking"] << commit.sub(/^[^:]+:\s*/, "")
+        next
+      end
+
+      # Match conventional commit format
+      if commit =~ /^(feat|fix|perf|refactor|style|docs|test|build|ci|chore)(\(.+?\))?:/
+        type = $1
+        notes[type] << commit.sub(/^[^:]+:\s*/, "")
+      else
+        notes["other"] << commit unless commit.start_with?("Merge")
+      end
+    end
+
+    # Format release notes
+    sections = {
+      "breaking" => "💥 Breaking Changes",
+      "feat" => "🚀 New Features",
+      "fix" => "🐛 Bug Fixes",
+      "perf" => "⚡ Performance Improvements",
+      "refactor" => "♻️ Refactoring",
+      "style" => "💅 Style Changes",
+      "docs" => "📚 Documentation",
+      "test" => "🧪 Tests",
+      "build" => "📦 Build System",
+      "ci" => "👷 CI Changes",
+      "chore" => "🔧 Maintenance",
+      "other" => "📝 Other Changes"
+    }
+
+    # Build release notes
+    release_notes = ["# Release Notes"]
+    release_notes << "\nRelease date: #{Time.now.strftime('%d-%m-%Y')}"
+
+    sections.each do |type, title|
+      next if notes[type].empty?
+      release_notes << "\n## #{title}"
+      notes[type].each do |commit|
+        release_notes << "\n- #{commit}"
+      end
+    end
+
+    # Print release notes
+    UI.message "Generated Release Notes:"
+    UI.message release_notes.join("\n")
+
+    # Return the release notes string
+    release_notes.join("\n")
   end
 
 end

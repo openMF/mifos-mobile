@@ -87,6 +87,14 @@ Generate Version
 
 Generate release notes
 
+### android generateFullReleaseNote
+
+```sh
+[bundle exec] fastlane android generateFullReleaseNote
+```
+
+Generate release notes from specified tag or latest release tag
+
 ----
 
 
