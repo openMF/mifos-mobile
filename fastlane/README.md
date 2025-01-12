@@ -77,7 +77,15 @@ Promote beta tracks to production on Google Play
 [bundle exec] fastlane android generateVersion
 ```
 
-Generate Version
+Generate Play Store Version
+
+### android generateFirebaseVersion
+
+```sh
+[bundle exec] fastlane android generateFirebaseVersion
+```
+
+Generate Firebase Version
 
 ### android generateReleaseNotes
 

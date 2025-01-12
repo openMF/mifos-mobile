@@ -16,7 +16,7 @@ platform :android do
     options[:keyPassword] ||= "mifos1234"
 
     # Generate version
-    generateVersion = generateVersion()
+    generateVersion = generateFirebaseVersion()
 
     buildAndSignApp(
       taskName: "assemble",
@@ -62,7 +62,7 @@ platform :android do
 
   desc "Publish Release Play Store artifacts to Firebase App Distribution"
   lane :deploy_on_firebase do |options|
-    options[:apkFile] ||= "androidApp/build/outputs/apk/prod/release/androidApp-prod-release.apk"
+    options[:apkFile] ||= "androidApp/build/outputs/apk/demo/release/androidApp-demo-release.apk"
     options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
     options[:groups] ||= "mifos-mobile-testers"
 
@@ -143,7 +143,7 @@ platform :android do
     )
   end
 
-  desc "Generate Version"
+  desc "Generate Play Store Version"
   lane :generateVersion do
     # Get current version codes from both production and beta
     prod_codes = google_play_track_version_codes(
@@ -167,6 +167,55 @@ platform :android do
     ENV['VERSION_CODE'] = new_version_code.to_s
 
     UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
+  end
+
+  desc "Generate Firebase Version"
+  lane :generateFirebaseVersion do |options|
+    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+
+    begin
+      # Get latest release from Firebase App Distribution
+      latest_release = firebase_app_distribution_get_latest_release(
+        app: "1:728434912738:android:d853a78f14af0c381a1dbb",
+        service_credentials_file: options[:serviceCredsFile]
+      )
+
+      # Extract the build version from latest release
+      latest_build_version = if latest_release
+        latest_release[:buildVersion].to_i
+      else
+        1  # Default to 0 if no releases found
+      end
+
+      # Increment the build version
+      new_build_version = latest_build_version + 1
+
+      # Generate version file
+      gradle(task: "versionFile")
+
+      # Set version from file
+      version = File.read("../version.txt").strip rescue "1.0.0"  # Default version if file not found
+
+      # Set environment variables
+      ENV['VERSION'] = version
+      ENV['VERSION_CODE'] = new_build_version.to_s
+
+      # Output the results
+      UI.success("Latest Firebase build version: #{latest_build_version}")
+      UI.success("New build version: #{new_build_version}")
+      UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
+
+      # Return the values for potential further use
+      {
+        version: ENV['VERSION'],
+        version_code: ENV['VERSION_CODE']
+      }
+
+    rescue => e
+      UI.error("Error generating Firebase version: #{e.message}")
+      UI.error(e.backtrace.join("\n"))
+      raise e
+    end
   end
 
   desc "Generate release notes"
