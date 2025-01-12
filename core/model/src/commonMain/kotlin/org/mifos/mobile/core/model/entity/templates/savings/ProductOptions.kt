@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.templates.savings
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/*
- * Created by saksham on 01/July/2018
- */
-
+@Serializable
 @Parcelize
 data class ProductOptions(
     val id: Int? = null,

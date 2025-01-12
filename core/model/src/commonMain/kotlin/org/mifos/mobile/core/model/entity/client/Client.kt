@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.client
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Timeline
 
+@Serializable
 @Parcelize
 data class Client(
     val id: Int = 0,

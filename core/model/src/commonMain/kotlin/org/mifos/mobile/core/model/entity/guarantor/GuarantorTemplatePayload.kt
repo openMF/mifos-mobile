@@ -9,10 +9,9 @@
  */
 package org.mifos.mobile.core.model.entity.guarantor
 
-/*
- * Created by saksham on 23/July/2018
- */
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GuarantorTemplatePayload(
 
     val guarantorType: GuarantorType? = null,

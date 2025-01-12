@@ -16,6 +16,7 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
@@ -24,10 +25,10 @@ import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface BeneficiaryService {
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt")
-    suspend fun beneficiaryList(): List<Beneficiary>
+    fun beneficiaryList(): Flow<List<Beneficiary>>
 
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt/template")
-    suspend fun beneficiaryTemplate(): BeneficiaryTemplate
+    fun beneficiaryTemplate(): Flow<BeneficiaryTemplate>
 
     @POST(ApiEndPoints.BENEFICIARIES + "/tpt")
     suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload?): HttpResponse

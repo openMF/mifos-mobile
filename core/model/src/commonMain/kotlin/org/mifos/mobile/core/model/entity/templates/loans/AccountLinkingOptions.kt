@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.templates.loans
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * Created by Tarun on 12/16/2016.
- */
-
+@Serializable
 @Parcelize
 data class AccountLinkingOptions(
 

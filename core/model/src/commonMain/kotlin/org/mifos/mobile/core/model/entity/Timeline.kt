@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.model.entity
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
@@ -22,6 +23,7 @@ import org.mifos.mobile.core.model.Parcelize
  * See https://github.com/openMF/android-client/blob/master/LICENSE.md
  */
 
+@Serializable
 @Parcelize
 data class Timeline(
     val submittedOnDate: List<Int> = emptyList(),

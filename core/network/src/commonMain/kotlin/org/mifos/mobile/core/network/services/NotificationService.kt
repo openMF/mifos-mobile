@@ -15,13 +15,14 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface NotificationService {
     @GET(ApiEndPoints.DEVICE + "/registration/client/{clientId}")
-    suspend fun getUserNotificationId(@Path("clientId") clientId: Long): NotificationUserDetail
+    fun getUserNotificationId(@Path("clientId") clientId: Long): Flow<NotificationUserDetail>
 
     @POST(ApiEndPoints.DEVICE + "/registration")
     suspend fun registerNotification(@Body payload: NotificationRegisterPayload?): HttpResponse

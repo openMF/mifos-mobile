@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * Created by michaelsosnick on 12/11/16.
- */
-
+@Serializable
 @Parcelize
 data class ChargeTimeType(
     val id: Int = 0,

@@ -10,10 +10,12 @@
 package org.mifos.mobile.core.model.entity.accounts.loan
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.accounts.loan.calendardata.CalendarData
 
+@Serializable
 @Parcelize
 data class InterestRecalculationData(
     val id: Int? = null,

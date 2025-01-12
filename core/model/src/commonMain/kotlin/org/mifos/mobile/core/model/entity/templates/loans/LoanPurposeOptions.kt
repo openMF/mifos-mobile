@@ -10,13 +10,11 @@
 package org.mifos.mobile.core.model.entity.templates.loans
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * Created by Rajan Maurya on 16/07/16.
- */
-
+@Serializable
 @Parcelize
 data class LoanPurposeOptions(
 

@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.guarantor
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/*
- * Created by saksham on 23/July/2018
- */
-
+@Serializable
 @Parcelize
 class GuarantorType(
     val id: Long? = null,

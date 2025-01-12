@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.templates.account
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * Created by Rajan Maurya on 10/03/17.
- */
-
+@Serializable
 @Parcelize
 data class AccountType(
 

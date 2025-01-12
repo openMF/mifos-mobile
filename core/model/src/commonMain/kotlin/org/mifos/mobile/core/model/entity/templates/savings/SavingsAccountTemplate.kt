@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.templates.savings
 
-/*
- * Created by saksham on 01/July/2018
- */
-
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
+@Serializable
 @Parcelize
 data class SavingsAccountTemplate(
     val clientId: Int = 0,

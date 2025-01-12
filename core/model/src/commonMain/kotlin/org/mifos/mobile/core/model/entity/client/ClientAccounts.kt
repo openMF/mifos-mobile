@@ -9,17 +9,18 @@
  */
 package org.mifos.mobile.core.model.entity.client
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 
+@Serializable
 @Parcelize
 data class ClientAccounts(
     val loanAccounts: List<LoanAccount> = emptyList(),
     val savingsAccounts: List<SavingAccount>? = emptyList(),
-
     val shareAccounts: List<ShareAccount> = emptyList(),
 
 ) : Parcelable {

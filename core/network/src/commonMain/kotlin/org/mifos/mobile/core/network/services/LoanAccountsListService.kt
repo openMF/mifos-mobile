@@ -16,6 +16,7 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
@@ -25,22 +26,22 @@ import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface LoanAccountsListService {
     @GET(ApiEndPoints.LOANS + "/{loanId}/")
-    suspend fun getLoanAccountsDetail(@Path("loanId") loanId: Long): LoanAccount?
+    fun getLoanAccountsDetail(@Path("loanId") loanId: Long): Flow<LoanAccount>?
 
     @GET(ApiEndPoints.LOANS + "/{loanId}")
-    suspend fun getLoanWithAssociations(
+    fun getLoanWithAssociations(
         @Path("loanId") loanId: Long,
         @Query("associations") associationType: String?,
-    ): LoanWithAssociations
+    ): Flow<LoanWithAssociations>
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
-    suspend fun getLoanTemplate(@Query("clientId") clientId: Long?): LoanTemplate
+    fun getLoanTemplate(@Query("clientId") clientId: Long?): Flow<LoanTemplate>
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
-    suspend fun getLoanTemplateByProduct(
+    fun getLoanTemplateByProduct(
         @Query("clientId") clientId: Long?,
         @Query("productId") productId: Int?,
-    ): LoanTemplate
+    ): Flow<LoanTemplate>
 
     @POST(ApiEndPoints.LOANS)
     suspend fun createLoansAccount(@Body loansPayload: LoansPayload?): HttpResponse

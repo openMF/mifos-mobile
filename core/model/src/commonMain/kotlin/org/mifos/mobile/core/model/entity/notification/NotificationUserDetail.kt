@@ -9,11 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.notification
 
-/**
- * Created by dilpreet on 17/12/17.
- */
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NotificationUserDetail(
 
     val id: Int = 0,
+
 )

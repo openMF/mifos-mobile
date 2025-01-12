@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.model.entity.client
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
@@ -16,6 +17,7 @@ import org.mifos.mobile.core.model.Parcelize
 private const val SAVINGS_ACCOUNTS = "savingsaccounts"
 private const val RECURRING_ACCOUNTS = "recurringdepositaccounts"
 
+@Serializable
 @Parcelize
 data class DepositType(
     val id: Int? = null,

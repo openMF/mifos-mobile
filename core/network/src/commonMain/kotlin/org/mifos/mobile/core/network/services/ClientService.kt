@@ -25,19 +25,19 @@ interface ClientService {
     fun clients(): Flow<Page<Client>>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
-    suspend fun getClientForId(@Path(CLIENT_ID) clientId: Long): Client
+    fun getClientForId(@Path(CLIENT_ID) clientId: Long): Flow<Client>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
-    suspend fun getClientImage(@Path(CLIENT_ID) clientId: Long): HttpResponse
+    fun getClientImage(@Path(CLIENT_ID) clientId: Long): Flow<HttpResponse>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
     fun getClientAccounts(@Path(CLIENT_ID) clientId: Long): Flow<ClientAccounts>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
-    suspend fun getAccounts(
+    fun getAccounts(
         @Path(CLIENT_ID) clientId: Long,
         @Query("fields") accountType: String?,
-    ): ClientAccounts
+    ): Flow<ClientAccounts>
 
     companion object {
         const val CLIENT_ID = "clientId"

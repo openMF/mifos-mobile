@@ -9,14 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.guarantor
 
-/*
- * Created by saksham on 24/July/2018
- */
-
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.RawValue
 
+@Serializable
 @Parcelize
 data class GuarantorPayload(
 

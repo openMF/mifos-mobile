@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.templates.beneficiary
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * Created by dilpreet on 14/6/17.
- */
-
+@Serializable
 @Parcelize
 data class BeneficiaryTemplate(
     val accountTypeOptions: List<AccountTypeOption>? = null,

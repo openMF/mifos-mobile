@@ -22,8 +22,8 @@ interface ClientChargeService {
     fun getClientChargeList(@Path("clientId") clientId: Long): Flow<Page<Charge>>
 
     @GET(ApiEndPoints.LOANS + "/{loanId}/charges")
-    suspend fun getLoanAccountChargeList(@Path("loanId") loanId: Long): List<Charge>
+    fun getLoanAccountChargeList(@Path("loanId") loanId: Long): Flow<List<Charge>>
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}/charges")
-    suspend fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long): List<Charge>
+    fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long): Flow<List<Charge>>
 }

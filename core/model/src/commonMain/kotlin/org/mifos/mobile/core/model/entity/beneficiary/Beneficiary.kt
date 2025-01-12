@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.beneficiary
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
 
+@Serializable
 @Parcelize
 data class Beneficiary(
     val id: Int? = null,

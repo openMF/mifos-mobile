@@ -16,16 +16,17 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
 
 interface GuarantorService {
     @GET("loans/{loanId}/guarantors/template")
-    suspend fun getGuarantorTemplate(@Path("loanId") loanId: Long): GuarantorTemplatePayload
+    fun getGuarantorTemplate(@Path("loanId") loanId: Long): Flow<GuarantorTemplatePayload>
 
     @GET("loans/{loanId}/guarantors")
-    suspend fun getGuarantorList(@Path("loanId") loanId: Long): List<GuarantorPayload>
+    fun getGuarantorList(@Path("loanId") loanId: Long): Flow<List<GuarantorPayload>>
 
     @POST("loans/{loanId}/guarantors")
     suspend fun createGuarantor(
