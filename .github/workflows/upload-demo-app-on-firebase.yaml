@@ -3,11 +3,6 @@ name: Upload Demo App on Firebase
 on:
   workflow_dispatch:
     inputs:
-      label:
-        description: 'Run tests and upload demo app on Firebase'
-        required: true
-        default: 'firebase-test-on'
-        type: string
       tester_groups:
         description: 'Comma-separated list of tester groups'
         required: true
@@ -16,11 +11,18 @@ on:
 
   pull_request:
     types: [ synchronize, opened, reopened, edited, closed, labeled ]
+    branches:
+      - 'development'
+      - 'master'
+
+concurrency:
+  group: firebase-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   upload_demo_app_on_firebase:
     runs-on: macos-latest
-    if: github.event.label.name == github.event.inputs.label
+    if: github.event.label.name == 'firebase-test-on'
     steps:
       - uses: actions/checkout@v4
         with:
