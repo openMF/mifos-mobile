@@ -16,7 +16,7 @@ platform :android do
     options[:keyPassword] ||= "mifos1234"
 
     # Generate version
-    generateVersion = generateFirebaseVersion()
+    generateVersion = generateVersion()
 
     buildAndSignApp(
       taskName: "assemble",
@@ -28,8 +28,8 @@ platform :android do
     )
   end
 
-  desc "Bundle Play Store release"
-  lane :bundlePlayStoreRelease do |options|
+  desc "Bundle Release APK"
+  lane :bundleReleaseApks do |options|
     options[:storeFile] ||= "release_keystore.keystore"
     options[:storePassword] ||= "mifos1234"
     options[:keyAlias] ||= "mifos-mobile"
@@ -37,6 +37,111 @@ platform :android do
 
     # Generate version
     generateVersion = generateVersion()
+
+    buildAndSignApp(
+      taskName: "assemble",
+      buildType: "Release",
+      storeFile: options[:storeFile],
+      storePassword: options[:storePassword],
+      keyAlias: options[:keyAlias],
+      keyPassword: options[:keyPassword],
+    )
+  end
+
+  desc "Publish Release Artifacts to Firebase App Distribution"
+  lane :deployReleaseApkOnFirebase do |options|
+    options[:appId] ||= "1:728434912738:android:d853a78f14af0c381a1dbb"
+    options[:apkFile] ||= "androidApp/build/outputs/apk/prod/release/androidApp-prod-release.apk"
+    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+    options[:groups] ||= "mifos-mobile-testers"
+
+    options[:storeFile] ||= "release_keystore.keystore"
+    options[:storePassword] ||= "mifos1234"
+    options[:keyAlias] ||= "mifos-mobile"
+    options[:keyPassword] ||= "mifos1234"
+
+    # Generate version
+    generateVersion = generateVersion(
+        platform: "firebase",
+        appId: options[:appId],
+        serviceCredsFile: options[:serviceCredsFile]
+    )
+
+    # Generate Release Note
+    releaseNotes = generateFullReleaseNote()
+
+    buildAndSignApp(
+      taskName: "assembleProd",
+      buildType: "Release",
+      storeFile: options[:storeFile],
+      storePassword: options[:storePassword],
+      keyAlias: options[:keyAlias],
+      keyPassword: options[:keyPassword],
+    )
+
+    firebase_app_distribution(
+      app: options[:appId],
+      android_artifact_type: "APK",
+      android_artifact_path: options[:apkFile],
+      service_credentials_file: options[:serviceCredsFile],
+      groups: options[:groups],
+      release_notes: "#{releaseNotes}",
+    )
+  end
+
+  desc "Publish Demo Artifacts to Firebase App Distribution"
+  lane :deployDemoApkOnFirebase do |options|
+    options[:appId] ||= "1:728434912738:android:7845cce9777d9cf11a1dbb"
+    options[:apkFile] ||= "androidApp/build/outputs/apk/demo/release/androidApp-demo-release.apk"
+    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+    options[:groups] ||= "mifos-mobile-testers"
+
+    options[:storeFile] ||= "release_keystore.keystore"
+    options[:storePassword] ||= "mifos1234"
+    options[:keyAlias] ||= "mifos-mobile"
+    options[:keyPassword] ||= "mifos1234"
+
+    # Generate version with app ID
+    generateVersion = generateVersion(
+      platform: "firebase",
+      appId: options[:appId],
+      serviceCredsFile: options[:serviceCredsFile]
+    )
+
+    # Generate Release Note
+    releaseNotes = generateReleaseNote()
+
+    buildAndSignApp(
+      taskName: "assembleDemo",
+      buildType: "Release",
+      storeFile: options[:storeFile],
+      storePassword: options[:storePassword],
+      keyAlias: options[:keyAlias],
+      keyPassword: options[:keyPassword],
+    )
+
+    firebase_app_distribution(
+      app: options[:appId],
+      android_artifact_type: "APK",
+      android_artifact_path: options[:apkFile],
+      service_credentials_file: options[:serviceCredsFile],
+      groups: options[:groups],
+      release_notes: "#{releaseNotes}",
+    )
+  end
+
+  desc "Deploy internal tracks to Google Play"
+  lane :deployInternal do |options|
+    options[:aabFile] ||= "androidApp/build/outputs/bundle/prodRelease/androidApp-prod-release.aab"
+    options[:storeFile] ||= "release_keystore.keystore"
+    options[:storePassword] ||= "mifos1234"
+    options[:keyAlias] ||= "mifos-mobile"
+    options[:keyPassword] ||= "mifos1234"
+
+    # Generate version
+    generateVersion = generateVersion(
+        platform: "playstore"
+    )
 
     # Generate Release Note
     releaseNotes = generateFullReleaseNote()
@@ -51,37 +156,14 @@ platform :android do
     File.write(buildConfigPath, releaseNotes)
 
     buildAndSignApp(
-      taskName: "bundle",
+      taskName: "bundleProd",
       buildType: "Release",
       storeFile: options[:storeFile],
       storePassword: options[:storePassword],
       keyAlias: options[:keyAlias],
       keyPassword: options[:keyPassword],
     )
-  end
 
-  desc "Publish Release Play Store artifacts to Firebase App Distribution"
-  lane :deploy_on_firebase do |options|
-    options[:apkFile] ||= "androidApp/build/outputs/apk/demo/release/androidApp-demo-release.apk"
-    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-    options[:groups] ||= "mifos-mobile-testers"
-
-    # Generate Release Note
-    releaseNotes = generateFullReleaseNote()
-
-    firebase_app_distribution(
-      app: "1:728434912738:android:d853a78f14af0c381a1dbb",
-      android_artifact_type: "APK",
-      android_artifact_path: options[:apkFile],
-      service_credentials_file: options[:serviceCredsFile],
-      groups: options[:groups],
-      release_notes: "#{releaseNotes}",
-    )
-  end
-
-  desc "Deploy internal tracks to Google Play"
-  lane :deploy_internal do |options|
-    options[:aabFile] ||= "androidApp/build/outputs/bundle/prodRelease/androidApp-prod-release.aab"
     upload_to_play_store(
       track: 'internal',
       aab: options[:aabFile],
@@ -92,7 +174,7 @@ platform :android do
   end
 
   desc "Promote internal tracks to beta on Google Play"
-  lane :promote_to_beta do
+  lane :promoteToBeta do
     upload_to_play_store(
       track: 'internal',
       track_promote_to: 'beta',
@@ -143,83 +225,75 @@ platform :android do
     )
   end
 
-  desc "Generate Play Store Version"
-  lane :generateVersion do
-    # Get current version codes from both production and beta
-    prod_codes = google_play_track_version_codes(
-      track: 'production',
-    )
-    beta_codes = google_play_track_version_codes(
-      track: 'beta',
-    )
+  desc "Generate Version for different platforms"
+  lane :generateVersion do |options|
+    # Default to 'git' if no platform specified
+    platform = (options[:platform] || 'git').downcase
 
-    # Find highest version code
-    latest_code = (prod_codes + beta_codes).max || 1
-    new_version_code = latest_code + 1
-
-    # Generate version file
+    # Generate version file for all platforms
     gradle(tasks: ["versionFile"])
 
-    # Set version from file
-    ENV['VERSION'] = File.read("../version.txt").strip
+    # Set version from file with fallback
+    ENV['VERSION'] = File.read("../version.txt").strip rescue "1.0.0"
 
-    # Set it as environment variable or use directly
-    ENV['VERSION_CODE'] = new_version_code.to_s
-
-    UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
-  end
-
-  desc "Generate Firebase Version"
-  lane :generateFirebaseVersion do |options|
-    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-
-    begin
-      # Get latest release from Firebase App Distribution
-      latest_release = firebase_app_distribution_get_latest_release(
-        app: "1:728434912738:android:d853a78f14af0c381a1dbb",
-        service_credentials_file: options[:serviceCredsFile]
+    case platform
+    when 'playstore'
+      # Get current version codes from both production and beta
+      prod_codes = google_play_track_version_codes(
+        track: 'production',
+      )
+      beta_codes = google_play_track_version_codes(
+        track: 'beta',
       )
 
-      # Extract the build version from latest release
-      latest_build_version = if latest_release
-        latest_release[:buildVersion].to_i
-      else
-        1  # Default to 0 if no releases found
+      # Find highest version code
+      latest_code = (prod_codes + beta_codes).max || 1
+      ENV['VERSION_CODE'] = (latest_code + 1).to_s
+
+    when 'firebase'
+      service_creds = options[:serviceCredsFile] || "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+      app_id = options[:appId] || "1:728434912738:android:d853a78f14af0c381a1dbb"
+
+      begin
+        # Get latest release from Firebase App Distribution
+        latest_release = firebase_app_distribution_get_latest_release(
+          app: app_id,
+          service_credentials_file: service_creds
+        )
+
+        # Extract and increment the build version
+        latest_build_version = latest_release ? latest_release[:buildVersion].to_i : 0
+        ENV['VERSION_CODE'] = (latest_build_version + 1).to_s
+
+      rescue => e
+        UI.error("Error generating Firebase version: #{e.message}")
+        UI.error(e.backtrace.join("\n"))
+        raise e
       end
 
-      # Increment the build version
-      new_build_version = latest_build_version + 1
+    when 'git'
+      # Calculate version code from git history
+      commit_count = `git rev-list --count HEAD`.to_i
+      tag_count = `git tag | grep -v beta | wc -l`.to_i
+      ENV['VERSION_CODE'] = (commit_count << 1).to_s
 
-      # Generate version file
-      gradle(task: "versionFile")
-
-      # Set version from file
-      version = File.read("../version.txt").strip rescue "1.0.0"  # Default version if file not found
-
-      # Set environment variables
-      ENV['VERSION'] = version
-      ENV['VERSION_CODE'] = new_build_version.to_s
-
-      # Output the results
-      UI.success("Latest Firebase build version: #{latest_build_version}")
-      UI.success("New build version: #{new_build_version}")
-      UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
-
-      # Return the values for potential further use
-      {
-        version: ENV['VERSION'],
-        version_code: ENV['VERSION_CODE']
-      }
-
-    rescue => e
-      UI.error("Error generating Firebase version: #{e.message}")
-      UI.error(e.backtrace.join("\n"))
-      raise e
+    else
+      UI.user_error!("Unsupported platform: #{platform}. Supported platforms are: playstore, firebase, git")
     end
+
+    # Output the results
+    UI.success("Generated version for #{platform}")
+    UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
+
+    # Return the values for potential further use
+    {
+      version: ENV['VERSION'],
+      version_code: ENV['VERSION_CODE']
+    }
   end
 
   desc "Generate release notes"
-  lane :generateReleaseNotes do |options|
+  lane :generateReleaseNote do |options|
     releaseNotes = changelog_from_git_commits(
       commits_count: 1,
     )
@@ -247,7 +321,7 @@ platform :android do
     end
 
     # Get the tag from options or find the latest tag
-    from_tag = options[:from_tag]
+    from_tag = options[:fromTag]
     if from_tag
       UI.message "Using specified tag: #{from_tag}"
       # Verify the tag exists
@@ -410,7 +484,7 @@ platform :ios do
 
     increment_version()
     build_ios()
-    releaseNotes = generateReleaseNotes()
+    releaseNotes = generateReleaseNote()
     release = firebase_app_distribution(
       app: "1:728434912738:ios:86a7badfaed88b841a1dbb",
       service_credentials_file: options[:serviceCredsFile],
@@ -421,7 +495,7 @@ platform :ios do
   end
 
   desc "Generate release notes"
-  lane :generateReleaseNotes do
+  lane :generateReleaseNote do
     branchName = `git rev-parse --abbrev-ref HEAD`.chomp()
     releaseNotes = changelog_from_git_commits(
       commits_count: 1,

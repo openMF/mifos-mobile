@@ -1,4 +1,4 @@
-name: Workflow for master/development branches
+name: Workflow for kmp-impl branch
 
 on:
   pull_request:
