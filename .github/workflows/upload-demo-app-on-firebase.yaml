@@ -16,8 +16,8 @@ on:
       - 'master'
 
 concurrency:
-  group: build-${{ github.ref }}
-  cancel-in-progress: false
+  group: firebase-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   upload_demo_app_on_firebase:
