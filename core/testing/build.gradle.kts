@@ -22,7 +22,7 @@ dependencies {
     api(libs.kotlinx.coroutines.test)
     api(projects.core.data)
 //    api(projects.core.logs)
-    api(projects.core.model)
+//    api(projects.core.model)
     api(libs.turbine)
     api(libs.mockito.core)
 
