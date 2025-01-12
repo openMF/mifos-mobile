@@ -1,0 +1,40 @@
+name: Upload Demo App on Firebase
+
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: 'Run tests and upload demo app on Firebase'
+        required: true
+        default: 'firebase-test-on'
+        type: string
+      tester_groups:
+        description: 'Comma-separated list of tester groups'
+        required: true
+        default: 'mifos-mobile-testers'
+        type: string
+
+  pull_request:
+    types: [ synchronize, opened, reopened, edited, closed, labeled ]
+
+jobs:
+  upload_demo_app_on_firebase:
+    runs-on: macos-latest
+    if: github.event.label.name == github.event.inputs.label
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ☁️ Deploy Android App on Firebase
+        uses: openMF/kmp-android-firebase-publish-action@v1.0.0
+        with:
+          release_type: 'demo'
+          android_package_name: 'androidApp'
+          keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
+          keystore_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
+          keystore_alias: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS }}
+          keystore_alias_password: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
+          google_services: ${{ secrets.GOOGLESERVICES }}
+          firebase_creds: ${{ secrets.FIREBASECREDS }}
+          tester_groups: ${{ inputs.tester_groups }}
