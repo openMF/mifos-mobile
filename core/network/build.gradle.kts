@@ -31,9 +31,9 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-//            api(projects.core.common)
+            api(projects.core.common)
             implementation(projects.core.model)
-//            implementation(projects.core.datastore)
+            implementation(projects.core.datastore)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.json)
@@ -44,9 +44,6 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktorfit.lib)
             implementation(libs.squareup.okio)
-            // TODO remove this dependency from here after common module successfully migrated to
-            //  KMP
-            api(libs.kermit.logging)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)

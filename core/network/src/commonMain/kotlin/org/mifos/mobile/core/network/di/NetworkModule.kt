@@ -12,7 +12,7 @@ package org.mifos.mobile.core.network.di
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.auth.Auth
 import org.koin.dsl.module
-import org.mifos.mobile.core.datastore.PreferencesHelper
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.network.KtorfitClient
 import org.mifos.mobile.core.network.ktorHttpClient
@@ -22,12 +22,12 @@ import org.mifos.mobile.core.network.utils.KtorInterceptor
 val NetworkModule = module {
 
     single<HttpClient>(KtorClient) {
-        val preferencesRepository = get<PreferencesHelper>()
+        val preferencesRepository = get<UserPreferencesRepository>()
 
         ktorHttpClient.config {
             install(Auth)
             install(KtorInterceptor) {
-                getToken = { preferencesRepository.authToken }
+                getToken = { preferencesRepository.token.value }
             }
         }
     }

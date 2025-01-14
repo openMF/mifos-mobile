@@ -14,6 +14,7 @@ import io.ktor.client.plugins.HttpClientPlugin
 import io.ktor.client.request.HttpRequestPipeline
 import io.ktor.client.request.header
 import io.ktor.util.AttributeKey
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 
 class KtorInterceptor(
     private val getToken: () -> String?,
@@ -51,7 +52,7 @@ class Config {
 }
 
 class KtorInterceptorRe(
-    private val preferencesHelper: PreferencesHelper,
+    private val repository: UserPreferencesRepository,
 ) {
     companion object Plugin : HttpClientPlugin<ConfigRe, KtorInterceptorRe> {
         private const val HEADER_TENANT = "Fineract-Platform-TenantId"
@@ -84,5 +85,5 @@ class KtorInterceptorRe(
 }
 
 class ConfigRe {
-    lateinit var preferencesHelper: PreferencesHelper
+    lateinit var repository: UserPreferencesRepository
 }
