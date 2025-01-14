@@ -55,10 +55,10 @@ Publish Release Artifacts to Firebase App Distribution
 
 Publish Demo Artifacts to Firebase App Distribution
 
-### android deployOnInternal
+### android deployInternal
 
 ```sh
-[bundle exec] fastlane android deployOnInternal
+[bundle exec] fastlane android deployInternal
 ```
 
 Deploy internal tracks to Google Play

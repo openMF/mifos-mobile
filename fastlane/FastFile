@@ -68,7 +68,7 @@ platform :android do
     )
 
     # Generate Release Note
-    releaseNotes = generateFullReleaseNote()
+    releaseNotes = generateReleaseNote()
 
     buildAndSignApp(
       taskName: "assembleProd",
@@ -144,7 +144,7 @@ platform :android do
     )
 
     # Generate Release Note
-    releaseNotes = generateFullReleaseNote()
+    releaseNotes = generateReleaseNote()
 
     # Write the generated release notes to default.txt
     buildConfigPath = "metadata/android/en-US/changelogs/default.txt"
@@ -234,7 +234,8 @@ platform :android do
     gradle(tasks: ["versionFile"])
 
     # Set version from file with fallback
-    ENV['VERSION'] = File.read("../version.txt").strip rescue "1.0.0"
+    version = File.read("../version.txt").strip rescue "1.0.0"
+    ENV['VERSION'] = version
 
     case platform
     when 'playstore'
@@ -251,8 +252,8 @@ platform :android do
       ENV['VERSION_CODE'] = (latest_code + 1).to_s
 
     when 'firebase'
-      service_creds = options[:serviceCredsFile] || "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-      app_id = options[:appId] || "1:728434912738:android:d853a78f14af0c381a1dbb"
+      service_creds = options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+      app_id = options[:appId] ||= "1:728434912738:android:d853a78f14af0c381a1dbb"
 
       begin
         # Get latest release from Firebase App Distribution
@@ -286,10 +287,7 @@ platform :android do
     UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
 
     # Return the values for potential further use
-    {
-      version: ENV['VERSION'],
-      version_code: ENV['VERSION_CODE']
-    }
+    version
   end
 
   desc "Generate release notes"

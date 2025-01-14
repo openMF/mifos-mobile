@@ -10,7 +10,7 @@ on:
         type: string
 
   pull_request:
-    types: [ synchronize, opened, reopened, edited, closed, labeled ]
+    types: [ labeled ]
     branches:
       - 'development'
       - 'master'
@@ -21,8 +21,9 @@ concurrency:
 
 jobs:
   upload_demo_app_on_firebase:
+    name: Upload Demo App on Firebase
     runs-on: macos-latest
-    if: github.event.label.name == 'firebase-test-on'
+    if: github.event.label.name == 'firebase-test-on' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
         with:
