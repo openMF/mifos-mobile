@@ -9,15 +9,13 @@
  */
 package org.mifos.mobile.core.model.entity.templates.loans
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.ChargeCalculationType
 import org.mifos.mobile.core.model.entity.ChargeTimeType
 
-/**
- * Created by Rajan Maurya on 16/07/16.
- */
-
+@Serializable
 @Parcelize
 data class ChargeOptions(
 

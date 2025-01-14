@@ -10,13 +10,11 @@
 package org.mifos.mobile.core.model.entity
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * @author Vishwajeet
- * @since 12/06/16
- */
+@Serializable
 @Parcelize
 data class User(
     val userId: Long = 0,
@@ -32,6 +30,7 @@ data class User(
     val isTwoFactorAuthenticationRequired: Boolean = false,
 ) : Parcelable
 
+@Serializable
 @Parcelize
 data class Role(
     @SerialName("id")

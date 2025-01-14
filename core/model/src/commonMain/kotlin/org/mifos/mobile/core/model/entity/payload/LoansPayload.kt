@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.payload
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
-/**
- * Created by nellyk on 2/20/2016.
- */
-
+@Serializable
 @Parcelize
 data class LoansPayload(
 

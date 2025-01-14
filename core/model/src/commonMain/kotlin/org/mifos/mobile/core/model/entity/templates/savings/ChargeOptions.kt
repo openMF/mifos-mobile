@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.templates.savings
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Currency
 
+@Serializable
 @Parcelize
 data class ChargeOptions(
     val id: Int? = null,

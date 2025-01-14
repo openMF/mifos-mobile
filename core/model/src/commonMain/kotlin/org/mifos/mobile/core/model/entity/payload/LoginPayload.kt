@@ -9,6 +9,9 @@
  */
 package org.mifos.mobile.core.model.entity.payload
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LoginPayload(
     val username: String,
     val password: String,

@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.model.entity.templates.loans
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.accounts.loan.AmortizationType
@@ -21,10 +22,7 @@ import org.mifos.mobile.core.model.entity.accounts.loan.InterestRecalculationDat
 import org.mifos.mobile.core.model.entity.accounts.loan.InterestType
 import org.mifos.mobile.core.model.entity.accounts.loan.RepaymentFrequencyType
 
-/**
- * Created by Rajan Maurya on 16/07/16.
- */
-
+@Serializable
 @Parcelize
 data class Product(
 

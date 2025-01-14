@@ -10,10 +10,12 @@
 package org.mifos.mobile.core.model.entity.accounts.loan
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Transaction
 
+@Serializable
 @Parcelize
 data class LoanWithAssociations(
     val id: Int? = null,
@@ -72,7 +74,7 @@ data class LoanWithAssociations(
 
     val interestCalculationPeriodType: InterestCalculationPeriodType? = null,
 
-    val allowPartialPeriodInterestCalcualtion: Boolean? = null,
+    val allowPartialPeriodInterestCalculation: Boolean? = null,
 
     val transactionProcessingStrategyId: Int? = null,
 
