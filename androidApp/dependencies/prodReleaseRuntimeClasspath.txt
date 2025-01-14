@@ -175,6 +175,14 @@ com.google.j2objc:j2objc-annotations:1.3
 com.google.maps.android:maps-compose:4.4.1
 com.google.maps.android:maps-ktx:5.0.0
 com.google.zxing:core:3.5.3
+com.russhwolf:multiplatform-settings-android:1.2.0
+com.russhwolf:multiplatform-settings-coroutines-android:1.2.0
+com.russhwolf:multiplatform-settings-coroutines:1.2.0
+com.russhwolf:multiplatform-settings-no-arg-android:1.2.0
+com.russhwolf:multiplatform-settings-no-arg:1.2.0
+com.russhwolf:multiplatform-settings-serialization-android:1.2.0
+com.russhwolf:multiplatform-settings-serialization:1.2.0
+com.russhwolf:multiplatform-settings:1.2.0
 com.squareup.okhttp3:logging-interceptor:4.12.0
 com.squareup.okhttp3:okhttp:4.12.0
 com.squareup.okio:okio-jvm:3.9.1
