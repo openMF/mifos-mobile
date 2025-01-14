@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.accounts.savings
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.client.DepositType
 
+@Serializable
 @Parcelize
 data class SavingAccount(
 

@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.accounts.loan
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
 @Suppress("ktlint:standard:property-naming")
+@Serializable
 @Parcelize
 data class Timeline(
     val submittedOnDate: List<Int>? = null,

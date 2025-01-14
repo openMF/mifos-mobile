@@ -9,9 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.templates.savings
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
+@Serializable
 @Parcelize
 data class ChargePaymentMode(
     val id: Float = 0f,

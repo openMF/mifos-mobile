@@ -9,15 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.client.Type
 
-/**
- * @author Vishwajeet
- * @since 10/8/16.
- */
-
+@Serializable
 @Parcelize
 data class Transaction(
 

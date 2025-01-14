@@ -9,7 +9,10 @@
  */
 package org.mifos.mobile.core.model.entity.beneficiary
 
-data class BeneficiaryUpdatePayload constructor(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class BeneficiaryUpdatePayload(
     val name: String? = null,
     val transferLimit: Float = 0f,
 )

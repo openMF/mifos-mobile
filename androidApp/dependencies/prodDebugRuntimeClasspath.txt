@@ -188,11 +188,9 @@ com.russhwolf:multiplatform-settings-no-arg:1.2.0
 com.russhwolf:multiplatform-settings-serialization-android-debug:1.2.0
 com.russhwolf:multiplatform-settings-serialization:1.2.0
 com.russhwolf:multiplatform-settings:1.2.0
-com.squareup.okhttp3:logging-interceptor:4.12.0
 com.squareup.okhttp3:okhttp:4.12.0
 com.squareup.okio:okio-jvm:3.9.1
 com.squareup.okio:okio:3.9.1
-com.squareup.retrofit2:adapter-rxjava2:2.11.0
 com.squareup.retrofit2:converter-gson:2.11.0
 com.squareup.retrofit2:retrofit:2.11.0
 dev.chrisbanes.snapper:snapper:0.2.2
@@ -239,7 +237,6 @@ io.ktor:ktor-websocket-serialization:3.0.1
 io.ktor:ktor-websockets-jvm:3.0.1
 io.ktor:ktor-websockets:3.0.1
 io.michaelrocks:libphonenumber-android:8.13.35
-io.reactivex.rxjava2:rxjava:2.2.21
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
 net.bytebuddy:byte-buddy-agent:1.14.8
@@ -276,7 +273,7 @@ org.jetbrains.compose.ui:ui:1.7.0-rc01
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:2.1.0
 org.jetbrains.kotlin:kotlin-parcelize-runtime:2.1.0
 org.jetbrains.kotlin:kotlin-stdlib-common:2.1.0
-org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.0
+org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22
 org.jetbrains.kotlin:kotlin-stdlib:2.1.0
 org.jetbrains.kotlinx:atomicfu-jvm:0.23.2
@@ -306,5 +303,4 @@ org.jetbrains:annotations:23.0.0
 org.jspecify:jspecify:1.0.0
 org.mockito:mockito-core:5.6.0
 org.objenesis:objenesis:3.3
-org.reactivestreams:reactive-streams:1.0.4
 org.slf4j:slf4j-api:2.0.16

@@ -9,9 +9,11 @@
  */
 package org.mifos.mobile.core.model.entity.beneficiary
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
+@Serializable
 @Parcelize
 data class BeneficiaryPayload(
     internal val locale: String = "en_GB",

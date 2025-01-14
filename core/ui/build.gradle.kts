@@ -21,7 +21,7 @@ android {
 
 dependencies {
     api(projects.core.designsystem)
-    api(projects.core.model)
+//    api(projects.core.model)
     api(projects.core.common)
     api(libs.androidx.metrics)
 
