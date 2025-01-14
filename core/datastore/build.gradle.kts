@@ -7,10 +7,10 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+
 plugins {
-    alias(libs.plugins.mifos.android.library)
-    alias(libs.plugins.mifos.android.hilt)
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.mifos.kmp.library)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -22,9 +22,17 @@ android {
 
 }
 
-dependencies {
-    implementation(projects.core.common)
-    implementation(projects.core.model)
+kotlin{
 
-    
+    sourceSets{
+        commonMain.dependencies {
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.serialization)
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.core)
+            implementation(projects.core.common)
+        }
+    }
 }
+
