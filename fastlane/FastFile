@@ -251,8 +251,8 @@ platform :android do
       ENV['VERSION_CODE'] = (latest_code + 1).to_s
 
     when 'firebase'
-      service_creds = options[:serviceCredsFile] || "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-      app_id = options[:appId] || "1:728434912738:android:d853a78f14af0c381a1dbb"
+      service_creds = options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+      app_id = options[:appId] ||= "1:728434912738:android:d853a78f14af0c381a1dbb"
 
       begin
         # Get latest release from Firebase App Distribution

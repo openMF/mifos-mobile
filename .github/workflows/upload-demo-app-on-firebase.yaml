@@ -10,7 +10,7 @@ on:
         type: string
 
   pull_request:
-    types: [ synchronize, opened, reopened, edited, closed, labeled ]
+    types: [ labeled ]
     branches:
       - 'development'
       - 'master'
