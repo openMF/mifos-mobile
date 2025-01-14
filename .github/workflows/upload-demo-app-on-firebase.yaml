@@ -22,7 +22,7 @@ concurrency:
 jobs:
   upload_demo_app_on_firebase:
     runs-on: macos-latest
-    if: github.event.label.name == 'firebase-test-on'
+    if: github.event.label.name == 'firebase-test-on' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
         with:
