@@ -293,7 +293,7 @@ platform :android do
   desc "Generate release notes"
   lane :generateReleaseNote do |options|
     releaseNotes = changelog_from_git_commits(
-      commits_count: 3,
+      commits_count: 1,
     )
     releaseNotes
   end
