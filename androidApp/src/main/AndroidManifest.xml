@@ -25,14 +25,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
 
     <application
         android:name=".MifosSelfServiceApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/feature_about_app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MifosSplash">
         <activity
@@ -56,13 +58,16 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.DayNight"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.DayNight"
             android:windowSoftInputMode="adjustResize" />
 
         <provider
