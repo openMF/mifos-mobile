@@ -101,6 +101,15 @@ class UserPreferencesRepositoryImpl(
         }
     }
 
+    override suspend fun updateClientId(clientId: Long?): DataState<Unit> {
+        return try {
+            val result = preferenceManager.updateClientId(clientId!!)
+            DataState.Success(result)
+        } catch (e: Exception) {
+            DataState.Error(e)
+        }
+    }
+
     override suspend fun logOut() {
         preferenceManager.clearInfo()
     }

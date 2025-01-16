@@ -13,27 +13,27 @@ class DataManager(
     private val ktorfitClient: KtorfitClient,
 ) {
 
-    internal val authenticationApi by lazy { ktorfitClient.authenticationApi }
+    val authenticationApi by lazy { ktorfitClient.authenticationApi }
 
-    internal val beneficiaryApi by lazy { ktorfitClient.beneficiaryApi }
+    val beneficiaryApi by lazy { ktorfitClient.beneficiaryApi }
 
-    internal val clientsApi by lazy { ktorfitClient.clientsApi }
+    val clientsApi by lazy { ktorfitClient.clientsApi }
 
-    internal val loanAccountsListApi by lazy { ktorfitClient.loanAccountsListApi }
+    val loanAccountsListApi by lazy { ktorfitClient.loanAccountsListApi }
 
-    internal val savingAccountsListApi by lazy { ktorfitClient.savingAccountsListApi }
+    val savingAccountsListApi by lazy { ktorfitClient.savingAccountsListApi }
 
-    internal val recentTransactionsApi by lazy { ktorfitClient.recentTransactionsApi }
+    val recentTransactionsApi by lazy { ktorfitClient.recentTransactionsApi }
 
-    internal val clientChargeApi by lazy { ktorfitClient.clientChargeApi }
+    val clientChargeApi by lazy { ktorfitClient.clientChargeApi }
 
-    internal val thirdPartyTransferApi by lazy { ktorfitClient.thirdPartyTransferApi }
+    val thirdPartyTransferApi by lazy { ktorfitClient.thirdPartyTransferApi }
 
-    internal val registrationApi by lazy { ktorfitClient.registrationApi }
+    val registrationApi by lazy { ktorfitClient.registrationApi }
 
-    internal val notificationApi by lazy { ktorfitClient.notificationApi }
+    val notificationApi by lazy { ktorfitClient.notificationApi }
 
-    internal val userDetailsApi by lazy { ktorfitClient.userDetailsApi }
+    val userDetailsApi by lazy { ktorfitClient.userDetailsApi }
 
-    internal val guarantorApi by lazy { ktorfitClient.guarantorApi }
+    val guarantorApi by lazy { ktorfitClient.guarantorApi }
 }

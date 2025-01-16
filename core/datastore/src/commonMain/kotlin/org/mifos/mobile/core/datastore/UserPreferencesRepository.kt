@@ -39,5 +39,7 @@ interface UserPreferencesRepository {
 
     suspend fun updateProfileImage(image: String): DataState<Unit>
 
+    suspend fun updateClientId(clientId: Long?): DataState<Unit>
+
     suspend fun logOut(): Unit
 }

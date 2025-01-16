@@ -93,6 +93,18 @@ class UserPreferencesDataSource(
             )
         }
     }
+    suspend fun updateClientId(clientId: Long) {
+        withContext(dispatcher) {
+            settings.putUserPreference(
+                UserData.DEFAULT.copy(
+                    clientId = clientId,
+                ),
+            )
+            _userInfo.value = UserData.DEFAULT.copy(
+                clientId = clientId,
+            )
+        }
+    }
 
     suspend fun updateTheme(theme: AppTheme) {
         withContext(dispatcher) {
