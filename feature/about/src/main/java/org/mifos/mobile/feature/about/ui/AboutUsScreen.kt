@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,26 +36,28 @@ internal fun AboutUsScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-    ) {
-        item {
-            Spacer(modifier = Modifier.height(48.dp))
-            AboutUsHeader()
-        }
-        items(getAboutUsItem(context)) { item ->
-            MifosItemCard(
-                modifier = Modifier.padding(bottom = 8.dp),
-                onClick = { navigateToItem(item) },
-            ) {
-                item.title?.let {
-                    AboutUsItemCard(
-                        title = it,
-                        subtitle = item.subtitle,
-                        iconUrl = item.iconUrl,
-                    )
+    Surface {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(48.dp))
+                AboutUsHeader()
+            }
+            items(getAboutUsItem(context)) { item ->
+                MifosItemCard(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    onClick = { navigateToItem(item) },
+                ) {
+                    item.title?.let {
+                        AboutUsItemCard(
+                            title = it,
+                            subtitle = item.subtitle,
+                            iconUrl = item.iconUrl,
+                        )
+                    }
                 }
             }
         }
