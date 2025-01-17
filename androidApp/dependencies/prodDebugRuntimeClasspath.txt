@@ -129,8 +129,6 @@ androidx.versionedparcelable:versionedparcelable:1.1.1
 androidx.viewpager:viewpager:1.0.0
 androidx.window.extensions.core:core:1.0.0
 androidx.window:window:1.2.0
-app.cash.turbine:turbine-jvm:1.1.0
-app.cash.turbine:turbine:1.1.0
 co.touchlab:kermit-android-debug:2.0.4
 co.touchlab:kermit-core-android-debug:2.0.4
 co.touchlab:kermit-core:2.0.4
@@ -273,8 +271,6 @@ io.ktor:ktor-websockets:3.0.3
 io.michaelrocks:libphonenumber-android:8.13.35
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
-net.bytebuddy:byte-buddy-agent:1.14.8
-net.bytebuddy:byte-buddy:1.14.8
 org.checkerframework:checker-qual:3.12.0
 org.jetbrains.androidx.core:core-bundle-android-debug:1.0.1
 org.jetbrains.androidx.core:core-bundle:1.0.1
@@ -311,7 +307,6 @@ org.jetbrains.compose.ui:ui-util:1.7.0-rc01
 org.jetbrains.compose.ui:ui:1.7.0-rc01
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:2.1.0
 org.jetbrains.kotlin:kotlin-parcelize-runtime:2.1.0
-org.jetbrains.kotlin:kotlin-stdlib-common:2.1.0
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22
 org.jetbrains.kotlin:kotlin-stdlib:2.1.0

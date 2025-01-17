@@ -124,8 +124,6 @@ androidx.versionedparcelable:versionedparcelable:1.1.1
 androidx.viewpager:viewpager:1.0.0
 androidx.window.extensions.core:core:1.0.0
 androidx.window:window:1.2.0
-app.cash.turbine:turbine-jvm:1.1.0
-app.cash.turbine:turbine:1.1.0
 co.touchlab:kermit-android:2.0.4
 co.touchlab:kermit-core-android:2.0.4
 co.touchlab:kermit-core:2.0.4
@@ -196,14 +194,14 @@ com.squareup.okio:okio-jvm:3.9.1
 com.squareup.okio:okio:3.9.1
 com.squareup.retrofit2:converter-gson:2.11.0
 com.squareup.retrofit2:retrofit:2.11.0
-dev.chrisbanes.material3:material3-window-size-class-multiplatform-android:0.5.0
-dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0
 de.jensklingenberg.ktorfit:ktorfit-annotations-android:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-annotations:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-lib-android:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-lib-light-android:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-lib-light:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-lib:2.2.0
+dev.chrisbanes.material3:material3-window-size-class-multiplatform-android:0.5.0
+dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0
 dev.chrisbanes.snapper:snapper:0.2.2
 io.coil-kt.coil3:coil-android:3.0.4
 io.coil-kt.coil3:coil-compose-core-android:3.0.4
@@ -304,7 +302,6 @@ org.jetbrains.compose.ui:ui-util:1.7.0-rc01
 org.jetbrains.compose.ui:ui:1.7.0-rc01
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:2.1.0
 org.jetbrains.kotlin:kotlin-parcelize-runtime:2.1.0
-org.jetbrains.kotlin:kotlin-stdlib-common:2.1.0
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22
 org.jetbrains.kotlin:kotlin-stdlib:2.1.0
