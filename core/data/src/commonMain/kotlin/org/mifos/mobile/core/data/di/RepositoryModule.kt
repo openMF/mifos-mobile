@@ -57,11 +57,11 @@ val RepositoryModule = module {
     single<UserDataRepository> { AuthenticationUserRepository(get(), get(ioDispatcher)) }
     single<BeneficiaryRepository> { BeneficiaryRepositoryImp(get(), get(ioDispatcher)) }
     single<ClientChargeRepository> { ClientChargeRepositoryImp(get(), get(ioDispatcher)) } // TODO
-    single<ClientRepository> { ClientRepositoryImp(get(), get(), get(ioDispatcher)) }
+    single<ClientRepository> { ClientRepositoryImp(get(), get(ioDispatcher)) }
     single<GuarantorRepository> { GuarantorRepositoryImp(get(), get(ioDispatcher)) }
     single<HomeRepository> { HomeRepositoryImp(get(), get(), get(ioDispatcher)) }
     single<LoanRepository> { LoanRepositoryImp(get(), get(ioDispatcher)) }
-    single<NotificationRepository> { NotificationRepositoryImp(get(), get(ioDispatcher)) } // TODO
+    single<NotificationRepository> { NotificationRepositoryImp(get(ioDispatcher)) } // TODO
     single<RecentTransactionRepository> { RecentTransactionRepositoryImp(get(), get(ioDispatcher)) }
     single<ReviewLoanApplicationRepository> { ReviewLoanApplicationRepositoryImpl(get(), get(ioDispatcher)) }
     single<SavingsAccountRepository> { SavingsAccountRepositoryImp(get(), get(ioDispatcher)) }

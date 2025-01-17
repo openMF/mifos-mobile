@@ -7,20 +7,19 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.data.model
+package org.mifos.mobile.core.data.mapper
 
-import org.mifos.mobile.core.database.entity.MifosNotificationEntity
 import org.mifos.mobile.core.model.entity.MifosNotification
 
-fun MifosNotification.toEntity(): MifosNotificationEntity {
-    return MifosNotificationEntity(
-        timeStamp = timeStamp,
-        msg = msg,
-        read = read,
-    )
-}
+// fun MifosNotification.toEntity(): MifosNotificationEntity {
+//    return MifosNotificationEntity(
+//        timeStamp = timeStamp,
+//        msg = msg,
+//        read = read,
+//    )
+// }
 
-fun MifosNotificationEntity.toModel(): MifosNotification {
+fun MifosNotification.toModel(): MifosNotification {
     return MifosNotification(
         timeStamp = timeStamp,
         msg = msg,

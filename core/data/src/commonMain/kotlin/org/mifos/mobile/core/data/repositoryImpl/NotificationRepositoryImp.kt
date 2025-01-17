@@ -11,50 +11,48 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
-import org.mifos.mobile.core.common.Dispatcher
-import org.mifos.mobile.core.common.MifosDispatchers
-import org.mifos.mobile.core.data.model.toEntity
-import org.mifos.mobile.core.data.model.toModel
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.database.dao.MifosNotificationDao
 import org.mifos.mobile.core.model.entity.MifosNotification
+import org.mifospay.core.common.DataState
 
 class NotificationRepositoryImp(
-    private val notificationDao: MifosNotificationDao,
-    @Dispatcher(MifosDispatchers.IO)
+//    private val notificationDao: MifosNotificationDao,
     private val ioDispatcher: CoroutineDispatcher,
 ) : NotificationRepository {
 
-    override fun loadNotifications(): Flow<List<MifosNotification>> {
-        return notificationDao.getNotifications()
-            .map { it.map { it.toModel() } }
+    override fun loadNotifications(): Flow<DataState<List<MifosNotification>>> {
+//        return notificationDao.getNotifications()
+//            .map { it.map { it.toModel() } }
+//            .flowOn(ioDispatcher)
+        return flowOf(DataState.Success(emptyList<MifosNotification>()))
             .flowOn(ioDispatcher)
     }
 
-    override fun getUnReadNotificationCount(): Flow<Int> {
-        return notificationDao.getUnreadNotificationsCount().flowOn(ioDispatcher)
+    override fun getUnReadNotificationCount(): Flow<DataState<Int>> {
+//        return notificationDao.getUnreadNotificationsCount().flowOn(ioDispatcher)
+        return flowOf(DataState.Success(0))
+            .flowOn(ioDispatcher)
     }
 
     override suspend fun saveNotification(notification: MifosNotification) {
-        withContext(ioDispatcher) {
-            notificationDao.saveNotification(notification.toEntity())
-        }
+//        withContext(ioDispatcher) {
+//            notificationDao.saveNotification(notification.toEntity())
+//        }
     }
 
     override suspend fun deleteOldNotifications() {
-        return withContext(ioDispatcher) {
-            val thirtyDaysInMillis = 2592000000L
-            val cutoffTime = System.currentTimeMillis() - thirtyDaysInMillis
-            notificationDao.deleteOldNotifications(cutoffTime)
-        }
+//        return withContext(ioDispatcher) {
+//            val thirtyDaysInMillis = 2592000000L
+//            val cutoffTime = System.currentTimeMillis() - thirtyDaysInMillis
+//            notificationDao.deleteOldNotifications(cutoffTime)
+//        }
     }
 
     override suspend fun updateReadStatus(notification: MifosNotification, isRead: Boolean) {
-        withContext(ioDispatcher) {
-            notificationDao.updateReadStatus(notification.timeStamp, isRead)
-        }
+//        withContext(ioDispatcher) {
+//            notificationDao.updateReadStatus(notification.timeStamp, isRead)
+//        }
     }
 }

@@ -11,15 +11,12 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.Dispatcher
 import org.mifos.mobile.core.common.MifosDispatchers
-import org.mifos.mobile.core.data.model.toCharge
-import org.mifos.mobile.core.data.model.toChargeEntity
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
-import org.mifos.mobile.core.database.dao.ChargeDao
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.DataManager
@@ -28,7 +25,7 @@ import org.mifospay.core.common.asDataStateFlow
 
 class ClientChargeRepositoryImp(
     private val dataManager: DataManager,
-    private val chargeDao: ChargeDao,
+//    private val chargeDao: ChargeDao,
     @Dispatcher(MifosDispatchers.IO)
     private val ioDispatcher: CoroutineDispatcher,
 ) : ClientChargeRepository {
@@ -48,19 +45,23 @@ class ClientChargeRepositoryImp(
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
-    override fun clientLocalCharges(): Flow<Page<Charge>> {
-        return chargeDao.getAllLocalCharges().map { chargeList ->
-            Page(chargeList.size, chargeList.map { it.toCharge() })
-        }.flowOn(ioDispatcher)
+    override fun clientLocalCharges(): Flow<DataState<Page<Charge>>> {
+//        return chargeDao.getAllLocalCharges().map { chargeList ->
+//            Page(chargeList.size, chargeList.map { it.toCharge() })
+//        }.flowOn(ioDispatcher)
+        return flowOf(DataState.Success(Page(0, emptyList<Charge>())))
+            .flowOn(ioDispatcher)
     }
 
-    override suspend fun syncCharges(charges: Page<Charge>?): Page<Charge>? {
+    override suspend fun syncCharges(charges: Page<Charge>?): DataState<Page<Charge>?> {
         return withContext(ioDispatcher) {
-            charges?.pageItems?.let {
-                chargeDao.syncCharges(it.map { it.toChargeEntity() })
-            }
-
-            charges?.copy(pageItems = charges.pageItems)
+//            charges?.pageItems?.let {
+//                chargeDao.syncCharges(it.map { it.toChargeEntity() })
+//            }
+//
+//            charges?.copy(pageItems = charges.pageItems)
+            val result = charges?.copy(pageItems = charges.pageItems) ?: Page(0, emptyList())
+            DataState.Success(result)
         }
     }
 }

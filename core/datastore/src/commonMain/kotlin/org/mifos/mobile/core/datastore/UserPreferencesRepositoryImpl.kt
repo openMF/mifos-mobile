@@ -56,9 +56,9 @@ class UserPreferencesRepositoryImpl(
     override val profileImage: String?
         get() = preferenceManager.getProfileImage()
 
-    override suspend fun updateToken(token: String): DataState<Unit> {
+    override suspend fun updateToken(password: String): DataState<Unit> {
         return try {
-            val result = preferenceManager.updateToken(token)
+            val result = preferenceManager.updateToken(password)
             DataState.Success(result)
         } catch (e: Exception) {
             DataState.Error(e)
