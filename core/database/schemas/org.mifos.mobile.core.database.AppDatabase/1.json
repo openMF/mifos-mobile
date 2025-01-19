@@ -1,0 +1,160 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "534bff4d0668aa4c7b843d255397b445",
+    "entities": [
+      {
+        "tableName": "charges",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `clientId` INTEGER, `chargeId` INTEGER, `name` TEXT, `dueDate` TEXT NOT NULL, `chargeTimeType` TEXT, `chargeCalculationType` TEXT, `currency` TEXT, `amount` REAL NOT NULL, `amountPaid` REAL NOT NULL, `amountWaived` REAL NOT NULL, `amountWrittenOff` REAL NOT NULL, `amountOutstanding` REAL NOT NULL, `penalty` INTEGER NOT NULL, `isActive` INTEGER NOT NULL, `isChargePaid` INTEGER NOT NULL, `isChargeWaived` INTEGER NOT NULL, `paid` INTEGER NOT NULL, `waived` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "chargeId",
+            "columnName": "chargeId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dueDate",
+            "columnName": "dueDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chargeTimeType",
+            "columnName": "chargeTimeType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "chargeCalculationType",
+            "columnName": "chargeCalculationType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountPaid",
+            "columnName": "amountPaid",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountWaived",
+            "columnName": "amountWaived",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountWrittenOff",
+            "columnName": "amountWrittenOff",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountOutstanding",
+            "columnName": "amountOutstanding",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "penalty",
+            "columnName": "penalty",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isActive",
+            "columnName": "isActive",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChargePaid",
+            "columnName": "isChargePaid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChargeWaived",
+            "columnName": "isChargeWaived",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paid",
+            "columnName": "paid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waived",
+            "columnName": "waived",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "mifos_notification",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timeStamp` INTEGER NOT NULL, `msg` TEXT, `read` INTEGER, PRIMARY KEY(`timeStamp`))",
+        "fields": [
+          {
+            "fieldPath": "timeStamp",
+            "columnName": "timeStamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "msg",
+            "columnName": "msg",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "read",
+            "columnName": "read",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "timeStamp"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '534bff4d0668aa4c7b843d255397b445')"
+    ]
+  }
+}
