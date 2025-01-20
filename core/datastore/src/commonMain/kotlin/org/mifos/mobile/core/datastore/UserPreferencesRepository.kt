@@ -29,7 +29,7 @@ interface UserPreferencesRepository {
 
     val profileImage: String?
 
-    suspend fun updateToken(token: String): DataState<Unit>
+    suspend fun updateToken(password: String): DataState<Unit>
 
     suspend fun updateTheme(theme: AppTheme): DataState<Unit>
 
@@ -38,6 +38,8 @@ interface UserPreferencesRepository {
     suspend fun updateSettings(appSettings: AppSettings): DataState<Unit>
 
     suspend fun updateProfileImage(image: String): DataState<Unit>
+
+    suspend fun updateClientId(clientId: Long?): DataState<Unit>
 
     suspend fun logOut(): Unit
 }

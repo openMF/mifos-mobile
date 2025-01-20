@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
+import okio.ByteString.Companion.encodeUtf8
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
@@ -81,16 +82,33 @@ class UserPreferencesDataSource(
         }
     }
 
-    suspend fun updateToken(token: String) {
+    suspend fun updateToken(password: String) {
+        val username = _userInfo.value.userName
+        val authenticationToken = "Basic " + "$username:$password".encodeToBase64()
         withContext(dispatcher) {
-            settings.putUserPreference(
-                UserData.DEFAULT.copy(
-                    base64EncodedAuthenticationKey = token,
-                ),
+            val updatedClient = userInfo.value.copy(
+                userId = _userInfo.value.userId,
+                userName = _userInfo.value.userName,
+                clientId = userInfo.value.clientId,
+                isAuthenticated = _userInfo.value.isAuthenticated,
+                base64EncodedAuthenticationKey = authenticationToken,
             )
-            _userInfo.value = UserData.DEFAULT.copy(
-                base64EncodedAuthenticationKey = token,
+            settings.putUserPreference(updatedClient)
+            _userInfo.value = updatedClient
+        }
+    }
+
+    suspend fun updateClientId(clientId: Long) {
+        withContext(dispatcher) {
+            val updatedClient = userInfo.value.copy(
+                userId = _userInfo.value.userId,
+                userName = _userInfo.value.userName,
+                clientId = clientId,
+                isAuthenticated = _userInfo.value.isAuthenticated,
+                base64EncodedAuthenticationKey = _userInfo.value.base64EncodedAuthenticationKey,
             )
+            settings.putUserPreference(updatedClient)
+            _userInfo.value = updatedClient
         }
     }
 
@@ -124,6 +142,10 @@ class UserPreferencesDataSource(
     companion object {
         private const val PROFILE_IMAGE = "preferences_profile_image"
     }
+}
+
+private fun String.encodeToBase64(): String {
+    return this.encodeUtf8().base64()
 }
 
 @OptIn(ExperimentalSerializationApi::class)
