@@ -7,12 +7,14 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.model.entity
+package org.mifos.mobile.core.data.repository
 
-/*
-* Created by saksham on 13/July/2018
-*/
-data class UpdatePasswordPayload(
-    val password: String? = null,
-    val repeatPassword: String? = null,
-)
+import kotlinx.coroutines.flow.Flow
+import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.client.Client
+import org.mifospay.core.common.DataState
+
+interface ClientRepository {
+
+    fun loadClient(): Flow<DataState<Page<Client>>>
+}

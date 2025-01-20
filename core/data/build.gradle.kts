@@ -8,10 +8,9 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.library)
-    alias(libs.plugins.mifos.android.hilt)
+    alias(libs.plugins.mifos.kmp.library)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.kotlin.serialization)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -24,27 +23,26 @@ android {
         }
     }
 
-    defaultConfig {
-        consumerProguardFiles("consumer-rules.pro")
-    }
+//    defaultConfig {
+//        consumerProguardFiles("consumer-rules.pro")
+//    }
 }
 
-dependencies {
-    api(projects.core.common)
-//    api(projects.core.model)
-//    api(projects.core.network)
-    api(projects.core.database)
-    api(projects.core.datastore)
 
-    implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.okhttp)
-    implementation(libs.mockito.core)
-    implementation(libs.turbine)
-
-    testImplementation(projects.core.testing)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.turbine)
-    testImplementation(libs.kotlinx.coroutines.test)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            api(projects.core.common)
+            api(projects.core.datastore)
+            api(projects.core.model)
+//            api(projects.core.database)
+            implementation(projects.core.network)
+            implementation(libs.kotlinx.serialization.json)
+        }
+        androidMain.dependencies {
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.tracing.ktx)
+            implementation(libs.koin.android)
+        }
+    }
 }
