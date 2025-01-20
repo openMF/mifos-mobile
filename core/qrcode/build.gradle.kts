@@ -9,24 +9,45 @@
  */
 
 plugins {
-    alias(libs.plugins.mifos.android.library)
-    alias(libs.plugins.mifos.android.library.compose)
+    alias(libs.plugins.mifos.kmp.library)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "org.mifos.mobile.core.qrcode"
+    defaultConfig {
+        consumerProguardFiles("consumer-rules.pro")
+    }
 }
 
-dependencies {
-    implementation(projects.core.model)
-    implementation(libs.androidx.compose.ui)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            commonMain.dependencies {
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.coil.kt.compose)
+                implementation(libs.filekit.core)
+                implementation(libs.filekit.compose)
+                api(libs.kermit.logging)
+            }
 
-    api(libs.zxing.core)
-    api(libs.squareup.retrofit.converter.gson)
+            androidMain.dependencies {
+                implementation(libs.androidx.camera.view)
+                implementation(libs.androidx.camera.camera2)
+                implementation(libs.androidx.camera.lifecycle)
+                implementation(libs.accompanist.permissions)
+                implementation(libs.mlkit.barcode.scanning)
+                implementation(libs.guava)
+            }
 
-    // cameraX
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.core)
+            nativeMain.dependencies {
+                implementation(libs.moko.permission.compose)
+            }
+        }
+    }
 }
