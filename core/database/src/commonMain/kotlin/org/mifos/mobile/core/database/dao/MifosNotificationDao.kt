@@ -18,18 +18,18 @@ import org.mifos.mobile.core.database.entity.MifosNotificationEntity
 @Dao
 interface MifosNotificationDao {
 
-    @Query("SELECT * FROM mifos_notifications ORDER BY timeStamp DESC")
+    @Query("SELECT * FROM mifos_notification ORDER BY timeStamp DESC")
     fun getNotifications(): Flow<List<MifosNotificationEntity>>
 
-    @Query("SELECT COUNT(*) FROM mifos_notifications WHERE read = 0")
+    @Query("SELECT COUNT(*) FROM mifos_notification WHERE read = 0")
     fun getUnreadNotificationsCount(): Flow<Int>
 
     @Insert(entity = MifosNotificationEntity::class, onConflict = 1)
     suspend fun saveNotification(notification: MifosNotificationEntity)
 
-    @Query("DELETE FROM mifos_notifications WHERE timeStamp < :cutoffTime")
+    @Query("DELETE FROM mifos_notification WHERE timeStamp < :cutoffTime")
     suspend fun deleteOldNotifications(cutoffTime: Long)
 
-    @Query("UPDATE mifos_notifications SET read = :isRead WHERE timeStamp = :timeStamp")
+    @Query("UPDATE mifos_notification SET read = :isRead WHERE timeStamp = :timeStamp")
     suspend fun updateReadStatus(timeStamp: Long, isRead: Boolean)
 }
