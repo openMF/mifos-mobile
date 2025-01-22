@@ -21,18 +21,6 @@ expect annotation class Query(
     val value: String,
 )
 
-// @Suppress("NO_ACTUAL_FOR_EXPECT")
-// expect annotation class OnConflictStrategy {
-//    companion object {
-//        val NONE: Int
-//        val REPLACE: Int
-//        val ROLLBACK: Int
-//        val ABORT: Int
-//        val FAIL: Int
-//        val IGNORE: Int
-//    }
-// }
-
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.BINARY)
@@ -69,3 +57,14 @@ expect annotation class Entity(
     val foreignKeys: Array<ForeignKey>,
     val ignoredColumns: Array<String>,
 )
+
+class OnConflictStrategy {
+    companion object {
+        const val NONE = 0
+        const val REPLACE = 1
+        const val ROLLBACK = 2
+        const val ABORT = 3
+        const val FAIL = 4
+        const val IGNORE = 5
+    }
+}

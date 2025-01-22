@@ -12,6 +12,7 @@ package org.mifos.mobile.core.database.dao
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.database.Dao
 import org.mifos.mobile.core.database.Insert
+import org.mifos.mobile.core.database.OnConflictStrategy
 import org.mifos.mobile.core.database.Query
 import org.mifos.mobile.core.database.entity.ChargeEntity
 
@@ -21,9 +22,9 @@ interface ChargeDao {
     @Query("SELECT * FROM charges")
     fun getAllLocalCharges(): Flow<List<ChargeEntity>>
 
-    @Insert(entity = ChargeEntity::class, onConflict = 1)
+    @Insert(entity = ChargeEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharge(charge: List<ChargeEntity>)
 
-    @Insert(entity = ChargeEntity::class, onConflict = 1)
+    @Insert(entity = ChargeEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun syncCharges(charges: List<ChargeEntity>)
 }

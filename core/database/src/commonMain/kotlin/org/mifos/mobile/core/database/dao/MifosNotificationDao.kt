@@ -12,6 +12,7 @@ package org.mifos.mobile.core.database.dao
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.database.Dao
 import org.mifos.mobile.core.database.Insert
+import org.mifos.mobile.core.database.OnConflictStrategy
 import org.mifos.mobile.core.database.Query
 import org.mifos.mobile.core.database.entity.MifosNotificationEntity
 
@@ -24,7 +25,7 @@ interface MifosNotificationDao {
     @Query("SELECT COUNT(*) FROM mifos_notification WHERE read = 0")
     fun getUnreadNotificationsCount(): Flow<Int>
 
-    @Insert(entity = MifosNotificationEntity::class, onConflict = 1)
+    @Insert(entity = MifosNotificationEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveNotification(notification: MifosNotificationEntity)
 
     @Query("DELETE FROM mifos_notification WHERE timeStamp < :cutoffTime")

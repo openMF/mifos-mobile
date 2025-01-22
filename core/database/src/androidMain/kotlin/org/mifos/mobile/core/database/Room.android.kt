@@ -30,5 +30,3 @@ actual typealias ForeignKey = ForeignKey
 actual typealias Index = Index
 
 actual typealias Entity = Entity
-
-// actual typealias OnConflictStrategy = OnConflictStrategy
