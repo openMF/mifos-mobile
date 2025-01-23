@@ -11,13 +11,18 @@ package org.mifos.mobile.core.database.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.mifos.mobile.core.common.MifosDispatchers
 import org.mifos.mobile.core.database.AppDatabaseFactory
 
 actual val platformModule: Module = module {
     single {
-        AppDatabaseFactory().createDatabase()
+        AppDatabaseFactory()
+            .createDatabase()
+            .fallbackToDestructiveMigrationOnDowngrade(false)
             .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(get(named(MifosDispatchers.IO.name)))
             .build()
     }
 }

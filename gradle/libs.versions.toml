@@ -338,7 +338,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 room = { id = "androidx.room", version.ref = "room" }
 
 mifos-android-hilt = { id = "mifos.android.hilt", version = "unspecified" }
-mifos-android-room = { id = "mifos.android.room", version = "unspecified" }
+mifos-kmp-room = { id = "mifos.kmp.room", version = "unspecified" }
 mifos-android-application = { id = "mifos.android.application", version = "unspecified" }
 mifos-android-application-compose = { id = "mifos.android.application.compose", version = "unspecified" }
 mifos-android-application-flavors = { id = "mifos.android.application.flavors", version = "unspecified" }

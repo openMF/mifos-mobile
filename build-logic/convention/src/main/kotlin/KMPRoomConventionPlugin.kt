@@ -6,7 +6,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.mifos.mobile.libs
 
-class AndroidRoomConventionPlugin : Plugin<Project> {
+class KMPRoomConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply("androidx.room")
@@ -26,7 +26,17 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
             dependencies {
                 "implementation"(libs.findLibrary("androidx.room.runtime").get())
                 "implementation"(libs.findLibrary("androidx.room.ktx").get())
-                "ksp"(libs.findLibrary("androidx.room.compiler").get())
+                // Adding ksp dependencies for multiple platforms
+                listOf(
+                    "kspDesktop",
+                    "kspAndroid",
+                    "kspIosArm64",
+                    "kspIosX64",
+                    "kspIosSimulatorArm64",
+                    // Add any other platform you may support
+                ).forEach { platform ->
+                    add(platform, libs.findLibrary("androidx.room.compiler").get())
+                }
             }
         }
     }

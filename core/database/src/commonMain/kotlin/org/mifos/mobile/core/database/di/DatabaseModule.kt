@@ -13,9 +13,10 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.mifos.mobile.core.database.AppDatabase
 
-expect val platformModule: Module
-
-val sharedModule = module {
+val DatabaseModule = module {
+    includes(platformModule)
     single { get<AppDatabase>().chargeDao }
     single { get<AppDatabase>().mifosNotificationDao }
 }
+
+expect val platformModule: Module

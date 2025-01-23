@@ -8,11 +8,6 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-
 /*
  * Copyright 2024 Mifos Initiative
  *
@@ -25,8 +20,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(libs.plugins.mifos.kmp.library)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.room)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.mifos.kmp.room)
 }
 
 android {
@@ -37,11 +31,6 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -49,10 +38,6 @@ android {
 }
 
 kotlin {
-
-    room {
-        schemaDirectory("$projectDir/schemas")
-    }
 
     sourceSets {
         val desktopMain by getting
@@ -76,18 +61,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
-        }
-
-        dependencies {
-            listOf(
-                "kspAndroid",
-                "kspIosArm64",
-                "kspIosX64",
-                "kspIosSimulatorArm64",
-                // Add any other platform you may support
-            ).forEach {
-                add(it, libs.androidx.room.compiler)
-            }
+            api(projects.core.common)
         }
     }
 }
