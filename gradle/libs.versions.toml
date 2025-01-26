@@ -57,10 +57,8 @@ playServicesCodeScanner = "16.1.0"
 playServicesVersion = "19.0.0"
 retrofitVersion = "2.11.0"
 roborazzi = "1.26.0"
-room = "2.6.1"
-roomKtxVersion = "2.6.1"
-roomRuntimeVersion = "2.6.1"
-roomTestingVersion = "2.6.1"
+room = "2.7.0-alpha12"
+sqliteBundled = "2.5.0-alpha12"
 rxandroidVersion = "2.1.1"
 rxjavaVersion = "2.2.21"
 secrets = "2.0.1"
@@ -117,6 +115,7 @@ jbSavedState = "1.2.2"
 packageName = "MifosWallet"
 packageNamespace = "org.mifos.desktop"
 packageVersion = "1.0.0"
+roomCommonVersion = "2.6.1"
 
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
@@ -164,9 +163,10 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileinstaller" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtxVersion" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntimeVersion" }
-androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomTestingVersion" }
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqliteBundled" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
@@ -315,6 +315,7 @@ moko-permission = { group = "dev.icerock.moko", name = "permissions", version.re
 moko-permission-compose = { group = "dev.icerock.moko", name = "permissions-compose", version.ref = "mokoPermission" }
 
 window-size = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version.ref = "windowsSizeClass" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommonVersion" }
 
 [bundles]
 androidx-compose-ui-test = [
@@ -335,7 +336,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 room = { id = "androidx.room", version.ref = "room" }
 
 mifos-android-hilt = { id = "mifos.android.hilt", version = "unspecified" }
-mifos-android-room = { id = "mifos.android.room", version = "unspecified" }
+mifos-kmp-room = { id = "mifos.kmp.room", version = "unspecified" }
 mifos-android-application = { id = "mifos.android.application", version = "unspecified" }
 mifos-android-application-compose = { id = "mifos.android.application.compose", version = "unspecified" }
 mifos-android-application-flavors = { id = "mifos.android.application.flavors", version = "unspecified" }
