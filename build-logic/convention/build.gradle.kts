@@ -75,9 +75,9 @@ gradlePlugin {
             id = "mifos.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
-        register("androidRoom") {
-            id = "mifos.android.room"
-            implementationClass = "AndroidRoomConventionPlugin"
+        register("kmpRoom") {
+            id = "mifos.kmp.room"
+            implementationClass = "KMPRoomConventionPlugin"
         }
 
         // Utility Plugins
