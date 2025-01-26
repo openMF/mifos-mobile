@@ -64,10 +64,12 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.DayNight"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.DayNight"
             android:windowSoftInputMode="adjustResize" />
 
         <provider
