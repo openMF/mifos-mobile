@@ -1,5 +1,14 @@
 import org.ajoberstar.reckon.gradle.ReckonExtension
 
+include(":mifos-shared")
+
+
+include(":mifos-android")
+
+
+include(":mifos-android")
+
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -50,28 +59,28 @@ include(":core:network")
 include(":core:database")
 include(":core:datastore")
 include(":core:qrcode")
-include(":core:testing")
+//include(":core:testing")
 
 // Feature Modules
-include(":feature:loan")
-include(":feature:beneficiary")
-include(":feature:savings")
-include(":feature:guarantor")
-include(":feature:qr")
-include(":feature:transfer-process")
-include(":feature:account")
-include(":feature:recent-transaction")
-include(":feature:client-charge")
-include(":feature:third-party-transfer")
-include(":feature:help")
-include(":feature:notification")
-include(":feature:location")
-include(":feature:about")
-include(":feature:settings")
+//include(":feature:loan")
+//include(":feature:beneficiary")
+//include(":feature:savings")
+//include(":feature:guarantor")
+//include(":feature:qr")
+//include(":feature:transfer-process")
+//include(":feature:account")
+//include(":feature:recent-transaction")
+//include(":feature:client-charge")
+//include(":feature:third-party-transfer")
+//include(":feature:help")
+//include(":feature:notification")
+//include(":feature:location")
+//include(":feature:about")
+//include(":feature:settings")
 include(":feature:auth")
-include(":feature:update-password")
-include(":feature:home")
-include(":feature:user-profile")
+//include(":feature:update-password")
+//include(":feature:home")
+//include(":feature:user-profile")
 
 // Lint Modules
 //include(":lint")

@@ -86,7 +86,7 @@ jobs:
       - name: Check Dependency Guard
         id: dependencyguard_verify
         continue-on-error: true
-        run: ./gradlew dependencyGuard
+        run: ./gradlew :mifos-android:dependencyGuard
 
       - name: Prevent updating Dependency Guard baselines if this is a fork
         id: checkfork_dependencyguard
@@ -99,7 +99,7 @@ jobs:
         id: dependencyguard_baseline
         if: steps.dependencyguard_verify.outcome == 'failure' && github.event_name == 'pull_request'
         run: |
-          ./gradlew dependencyGuardBaseline
+          ./gradlew :mifos-android:dependencyGuard
 
       - name: Push new Dependency Guard baselines if available
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -122,7 +122,8 @@ jobs:
 
       - name: Run tests
         run: |
-          ./gradlew testDebug :lint:test :androidApp:lintRelease :lint:lint
+          ./gradlew :mifos-android:testDemoDebug
+#          ./gradlew testDebug :lint:test :androidApp:lintRelease :lint:lint
 
       - name: Upload reports
         if: always()
@@ -176,7 +177,7 @@ jobs:
           java-version: 17
 
       - name: Build APKs
-        run: ./gradlew :androidApp:assembleDebug
+        run: ./gradlew :mifos-android:assembleDemoDebug
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4

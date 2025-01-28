@@ -14,9 +14,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import org.mifos.mobile.feature.auth.login.screens.LoginScreen
-import org.mifos.mobile.feature.auth.registration.screens.RegistrationScreen
-import org.mifos.mobile.feature.auth.registration.screens.RegistrationVerificationScreen
+import org.mifos.mobile.feature.auth.login.LoginScreen
+import org.mifos.mobile.feature.auth.registration.RegistrationScreen
+import org.mifos.mobile.feature.auth.registration.RegistrationVerificationScreen
 
 fun NavController.navigateToLoginScreen() {
     navigate(AuthenticationNavigation.Login.route) {

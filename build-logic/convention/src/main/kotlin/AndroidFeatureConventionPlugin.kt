@@ -36,13 +36,13 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("androidTestImplementation", libs.findLibrary("androidx.lifecycle.runtimeTesting").get())
 
                 add("testImplementation", kotlin("test"))
-                add("testImplementation", project(":core:testing"))
+//                add("testImplementation", project(":core:testing"))
                 add("testImplementation", libs.findLibrary("hilt.android.testing").get())
                 add("testImplementation", libs.findLibrary("squareup.okhttp").get())
 
                 add("debugImplementation", libs.findLibrary("androidx.compose.ui.test.manifest").get())
 
-                add("androidTestImplementation", project(":core:testing"))
+//                add("androidTestImplementation", project(":core:testing"))
                 add("androidTestImplementation", libs.findLibrary("androidx.navigation.testing").get())
                 add("androidTestImplementation", libs.findLibrary("androidx.compose.ui.test").get())
                 add("androidTestImplementation", libs.findLibrary("hilt.android.testing").get())

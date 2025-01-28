@@ -49,6 +49,16 @@
     <string name="error_username_greater_than_six">Username should be greater than 6 alphabets</string>
     <string name="not_contain_username">Spaces</string>
     <string name="invalid_phn_number">Invalid Phone Number</string>
+    <string name="error_invalid_password">Password must be at least 8 characters long</string>
     <string name="error_invalid_email">Invalid email id</string>
-    <string name="error_password_not_match">Password does not match.</string>
+    <string name="error_password_not_match">Password does not match</string>
+    <string name="error_enter_email">Please enter a valid email</string>
+    <string name="error_mobile_length">Mobile number must be 10 digits long</string>
+    <string name="error_enter_account_number">Please enter your account number</string>
+    <string name="error_enter_mobile_number">Please enter your mobile number</string>
+    <string name="error_enter_first_name">Please enter your first name</string>
+    <string name="error_enter_last_name">Please enter your last name</string>
+    <string name="error_enter_user_name">Please enter your user name</string>
+    <string name="error_enter_country">Please enter your country</string>
+
 </resources>
