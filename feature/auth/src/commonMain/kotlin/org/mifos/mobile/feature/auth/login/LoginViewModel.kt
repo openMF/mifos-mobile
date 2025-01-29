@@ -51,10 +51,20 @@ class LoginViewModel(
     override fun handleAction(action: LoginAction) {
         when (action) {
             is LoginAction.UsernameChanged -> {
-                updateState { it.copy(username = action.username) }
+                updateState {
+                    it.copy(
+                        username = action.username,
+                        isLoginButtonEnabled = action.username.isNotEmpty() && it.password.isNotEmpty(),
+                    )
+                }
             }
             is LoginAction.PasswordChanged -> {
-                updateState { it.copy(password = action.password) }
+                updateState {
+                    it.copy(
+                        password = action.password,
+                        isLoginButtonEnabled = it.username.isNotEmpty() && it.password.isNotEmpty(),
+                    )
+                }
             }
             is LoginAction.TogglePasswordVisibility -> {
                 updateState { it.copy(isPasswordVisible = !it.isPasswordVisible) }
@@ -139,6 +149,7 @@ data class LoginState(
     val isPasswordVisible: Boolean = false,
     val clientName: String = "",
     val dialogState: DialogState?,
+    val isLoginButtonEnabled: Boolean = false,
 ) : Parcelable {
     sealed class DialogState : Parcelable {
         @Parcelize

@@ -67,6 +67,8 @@ fun MifosBasicDialog(
     visibilityState: BasicDialogState,
     onConfirm: () -> Unit,
     onDismissRequest: () -> Unit,
+    confirmText: String = "Ok",
+    cancelText: String = "Cancel",
 ): Unit = when (visibilityState) {
     BasicDialogState.Hidden -> Unit
     is BasicDialogState.Shown -> {
@@ -75,7 +77,7 @@ fun MifosBasicDialog(
             confirmButton = {
                 MifosTextButton(
                     content = {
-                        Text(text = "Ok")
+                        Text(text = confirmText)
                     },
                     onClick = onConfirm,
                     modifier = Modifier.testTag("AcceptAlertButton"),
@@ -84,7 +86,7 @@ fun MifosBasicDialog(
             dismissButton = {
                 MifosTextButton(
                     content = {
-                        Text(text = "Cancel")
+                        Text(text = cancelText)
                     },
                     onClick = onDismissRequest,
                     modifier = Modifier.testTag("DismissAlertButton"),

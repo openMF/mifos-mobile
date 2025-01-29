@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -171,6 +170,7 @@ private fun LoginScreenContent(
                     },
                 )
             },
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         MifosMobileIcon(mobileIcon = Res.drawable.feature_auth_mifos_logo)
 
@@ -188,8 +188,6 @@ private fun LoginScreenContent(
             },
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         MifosPasswordField(
             label = stringResource(Res.string.password),
             value = state.password,
@@ -204,17 +202,12 @@ private fun LoginScreenContent(
 
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-        val isLoginButtonEnabled = state.username.isNotEmpty() && state.password.isNotEmpty()
         MifosButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 4.dp),
             contentPadding = PaddingValues(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-            enabled = isLoginButtonEnabled,
+            enabled = state.isLoginButtonEnabled,
             onClick = {
                 onAction(LoginAction.LoginClicked)
             },
@@ -262,9 +255,6 @@ private fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally),
-            colors = ButtonDefaults.textButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary,
-            ),
         ) {
             Text(text = stringResource(Res.string.create_an_account))
         }

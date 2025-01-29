@@ -52,7 +52,7 @@ class RegistrationVerificationViewModel(
     private fun handleSubmitClick() {
         val errorMessage = validateForm()
         if (errorMessage != null) {
-            updateState { it.copy(dialogState = VerificationDialog.Error(errorMessage)) }
+            updateState { it.copy(dialogState = VerificationState.VerificationDialog.Error(errorMessage)) }
         } else {
             verifyUser()
         }
@@ -67,11 +67,11 @@ class RegistrationVerificationViewModel(
 
             is DataState.Error -> {
                 updateState {
-                    it.copy(dialogState = VerificationDialog.Error(result.exception.message ?: "An error occurred."))
+                    it.copy(dialogState = VerificationState.VerificationDialog.Error(result.exception.message ?: "An error occurred."))
                 }
             }
 
-            DataState.Loading -> updateState { it.copy(dialogState = VerificationDialog.Loading) }
+            DataState.Loading -> updateState { it.copy(dialogState = VerificationState.VerificationDialog.Loading) }
 
             else -> {}
         }
@@ -102,7 +102,7 @@ class RegistrationVerificationViewModel(
                     ),
                 )
             } catch (e: Exception) {
-                updateState { it.copy(dialogState = VerificationDialog.Error((e.message ?: Res.string.could_not_register_user_error).toString())) }
+                updateState { it.copy(dialogState = VerificationState.VerificationDialog.Error((e.message ?: Res.string.could_not_register_user_error).toString())) }
             }
         }
     }
@@ -115,16 +115,15 @@ data class VerificationState(
     val requestIdError: Boolean = false,
     val showConfirmationDialog: Boolean = false,
     val dialogState: VerificationDialog? = null,
-) : Parcelable
+) : Parcelable {
+    sealed interface VerificationDialog : Parcelable {
+        @Parcelize
+        data object Loading : VerificationDialog
 
-sealed interface VerificationDialog : Parcelable {
-    @Parcelize
-    data object Loading : VerificationDialog
-
-    @Parcelize
-    data class Error(val message: String) : VerificationDialog
+        @Parcelize
+        data class Error(val message: String) : VerificationDialog
+    }
 }
-
 sealed interface VerificationEvent {
     data class ShowToast(val message: String) : VerificationEvent
     data class NavigateToLogin(val username: String) : VerificationEvent

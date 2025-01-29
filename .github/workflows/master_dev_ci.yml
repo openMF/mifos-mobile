@@ -86,7 +86,7 @@ jobs:
       - name: Check Dependency Guard
         id: dependencyguard_verify
         continue-on-error: true
-        run: ./gradlew :mifos-android:dependencyGuard
+        run: ./gradlew dependencyGuard
 
       - name: Prevent updating Dependency Guard baselines if this is a fork
         id: checkfork_dependencyguard

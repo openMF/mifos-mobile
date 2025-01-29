@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="mifospay-android" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+    <configuration default="false" name="androidApp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
         <module name="mobile-wallet.mifospay-android.main" />
         <option name="DEPLOY" value="true" />
         <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
