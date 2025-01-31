@@ -6,8 +6,6 @@ include(":mifos-shared")
 include(":mifos-android")
 
 
-include(":mifos-android")
-
 
 pluginManagement {
     includeBuild("build-logic")

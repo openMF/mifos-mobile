@@ -27,8 +27,8 @@ import org.mifospay.core.common.DataState
 private const val KEY_STATE = "state"
 
 class LoginViewModel(
-    private val userAuthRepositoryImp: UserAuthRepository,
-    private val clientRepositoryImp: ClientRepository,
+    private val userAuthRepositoryImpl: UserAuthRepository,
+    private val clientRepositoryImpl: ClientRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
@@ -116,7 +116,7 @@ class LoginViewModel(
         }
 
         viewModelScope.launch {
-            val result = userAuthRepositoryImp.login(username, password)
+            val result = userAuthRepositoryImpl.login(username, password)
             sendAction(LoginAction.Internal.ReceiveLoginResult(result))
         }
     }
@@ -127,7 +127,7 @@ class LoginViewModel(
     private fun loadClient() {
         viewModelScope.launch {
             try {
-                val client = clientRepositoryImp.loadClient().firstOrNull()
+                val client = clientRepositoryImpl.loadClient().firstOrNull()
                 if (client != null && client.data?.pageItems?.isEmpty() != false) {
                     val clientId = client.data?.pageItems?.get(0)?.id?.toLong()
                     val clientName = client.data?.pageItems?.get(0)?.displayName

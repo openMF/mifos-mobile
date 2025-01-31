@@ -44,7 +44,7 @@ import org.mifospay.core.common.DataState
 private const val KEY_STATE = "signup_state"
 
 class RegistrationViewModel(
-    private val userAuthRepositoryImp: UserAuthRepository,
+    private val userAuthRepositoryImpl: UserAuthRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SignUpState, SignUpEvent, SignUpAction>(
     initialState = savedStateHandle[KEY_STATE] ?: SignUpState(),
@@ -189,7 +189,7 @@ class RegistrationViewModel(
         viewModelScope.launch {
             updateState { it.copy(dialogState = SignUpDialog.Loading) }
             try {
-                userAuthRepositoryImp.registerUser(
+                userAuthRepositoryImpl.registerUser(
                     accountNumber = state.accountNumber,
                     authenticationMode = state.authenticationMode,
                     email = state.emailInput,

@@ -27,7 +27,7 @@ import org.mifospay.core.common.DataState
 private const val KEY_STATE = "verification_state"
 
 class RegistrationVerificationViewModel(
-    private val userAuthRepositoryImp: UserAuthRepository,
+    private val userAuthRepositoryImpl: UserAuthRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<VerificationState, VerificationEvent, VerificationAction>(
     initialState = savedStateHandle[KEY_STATE] ?: VerificationState(),
@@ -89,7 +89,7 @@ class RegistrationVerificationViewModel(
     private fun verifyUser() {
         viewModelScope.launch {
             try {
-                userAuthRepositoryImp.verifyUser(
+                userAuthRepositoryImpl.verifyUser(
                     authenticationToken =
                     state.authenticationToken,
                     requestId = state.requestId,

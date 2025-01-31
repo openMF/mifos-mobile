@@ -124,7 +124,7 @@ private fun LoginScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            createAccount = { navigateToRegisterScreen() },
+            createAccount = navigateToRegisterScreen,
         )
     }
 }
