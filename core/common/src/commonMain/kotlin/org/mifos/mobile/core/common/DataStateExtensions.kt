@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifospay.core.common
+package org.mifos.mobile.core.common
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformWhile
@@ -62,7 +62,7 @@ fun <T1, T2, R> combineResults(
         dataState1 is DataState.Loading || dataState2 is DataState.Loading -> DataState.Loading
 
         // Pending state for everything while any one piece of data is updating.
-        // Both states are _root_ide_package_.org.mifospay.core.common.Result.Success and have data
+        // Both states are _root_ide_package_.org.mifos.mobile.core.common.Result.Success and have data
         else -> {
             @Suppress("UNCHECKED_CAST")
             DataState.Success(transform(dataState1.data as T1, dataState2.data as T2))
