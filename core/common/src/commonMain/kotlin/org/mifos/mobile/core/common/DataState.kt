@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifospay.core.common
+package org.mifos.mobile.core.common
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
