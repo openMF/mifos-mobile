@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.mifos.android.application.compose)
     alias(libs.plugins.mifos.android.application.flavors)
     alias(libs.plugins.mifos.android.hilt)
+    alias(libs.plugins.gms)
     id("com.google.android.gms.oss-licenses-plugin")
 }
 

@@ -101,7 +101,7 @@ Generate release notes
 [bundle exec] fastlane android generateFullReleaseNote
 ```
 
-Generate release notes from specified tag or latest release tag
+Generate full release notes from specified tag or latest release tag
 
 ----
 
