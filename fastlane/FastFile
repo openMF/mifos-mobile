@@ -1,3 +1,9 @@
+project_dir = File.expand_path('..', Dir.pwd)
+
+require_relative File.join(project_dir, 'fastlane-config', 'android_config')
+require_relative File.join(project_dir, 'fastlane-config', 'ios_config')
+require_relative './config/config_helpers'
+
 default_platform(:android)
 
 platform :android do
@@ -10,10 +16,7 @@ platform :android do
 
   desc "Assemble Release APK"
   lane :assembleReleaseApks do |options|
-    options[:storeFile] ||= "release_keystore.keystore"
-    options[:storePassword] ||= "mifos1234"
-    options[:keyAlias] ||= "mifos-mobile"
-    options[:keyPassword] ||= "mifos1234"
+    signing_config = FastlaneConfig.get_android_signing_config(options)
 
     # Generate version
     generateVersion = generateVersion()
@@ -21,50 +24,34 @@ platform :android do
     buildAndSignApp(
       taskName: "assemble",
       buildType: "Release",
-      storeFile: options[:storeFile],
-      storePassword: options[:storePassword],
-      keyAlias: options[:keyAlias],
-      keyPassword: options[:keyPassword],
+      **signing_config
     )
   end
 
   desc "Bundle Release APK"
   lane :bundleReleaseApks do |options|
-    options[:storeFile] ||= "release_keystore.keystore"
-    options[:storePassword] ||= "mifos1234"
-    options[:keyAlias] ||= "mifos-mobile"
-    options[:keyPassword] ||= "mifos1234"
+    signing_config = FastlaneConfig.get_android_signing_config(options)
 
     # Generate version
     generateVersion = generateVersion()
 
     buildAndSignApp(
-      taskName: "assemble",
+      taskName: "bundle",
       buildType: "Release",
-      storeFile: options[:storeFile],
-      storePassword: options[:storePassword],
-      keyAlias: options[:keyAlias],
-      keyPassword: options[:keyPassword],
+      **signing_config
     )
   end
 
   desc "Publish Release Artifacts to Firebase App Distribution"
   lane :deployReleaseApkOnFirebase do |options|
-    options[:appId] ||= "1:728434912738:android:d853a78f14af0c381a1dbb"
-    options[:apkFile] ||= "androidApp/build/outputs/apk/prod/release/androidApp-prod-release.apk"
-    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-    options[:groups] ||= "mifos-mobile-testers"
-
-    options[:storeFile] ||= "release_keystore.keystore"
-    options[:storePassword] ||= "mifos1234"
-    options[:keyAlias] ||= "mifos-mobile"
-    options[:keyPassword] ||= "mifos1234"
+    signing_config = FastlaneConfig.get_android_signing_config(options)
+    firebase_config = FastlaneConfig.get_firebase_config(:android, :prod)
+    build_paths = FastlaneConfig::AndroidConfig::BUILD_PATHS
 
     # Generate version
     generateVersion = generateVersion(
         platform: "firebase",
-        appId: options[:appId],
-        serviceCredsFile: options[:serviceCredsFile]
+        **firebase_config
     )
 
     # Generate Release Note
@@ -73,39 +60,29 @@ platform :android do
     buildAndSignApp(
       taskName: "assembleProd",
       buildType: "Release",
-      storeFile: options[:storeFile],
-      storePassword: options[:storePassword],
-      keyAlias: options[:keyAlias],
-      keyPassword: options[:keyPassword],
+      **signing_config
     )
 
     firebase_app_distribution(
-      app: options[:appId],
+      app: firebase_config[:appId],
       android_artifact_type: "APK",
-      android_artifact_path: options[:apkFile],
-      service_credentials_file: options[:serviceCredsFile],
-      groups: options[:groups],
-      release_notes: "#{releaseNotes}",
+      android_artifact_path: build_paths[:prod_apk_path],
+      service_credentials_file: firebase_config[:serviceCredsFile],
+      groups: firebase_config[:groups],
+      release_notes: releaseNotes
     )
   end
 
   desc "Publish Demo Artifacts to Firebase App Distribution"
   lane :deployDemoApkOnFirebase do |options|
-    options[:appId] ||= "1:728434912738:android:7845cce9777d9cf11a1dbb"
-    options[:apkFile] ||= "androidApp/build/outputs/apk/demo/release/androidApp-demo-release.apk"
-    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-    options[:groups] ||= "mifos-mobile-testers"
+    signing_config = FastlaneConfig.get_android_signing_config(options)
+    firebase_config = FastlaneConfig.get_firebase_config(:android, :demo)
+    build_paths = FastlaneConfig::AndroidConfig::BUILD_PATHS
 
-    options[:storeFile] ||= "release_keystore.keystore"
-    options[:storePassword] ||= "mifos1234"
-    options[:keyAlias] ||= "mifos-mobile"
-    options[:keyPassword] ||= "mifos1234"
-
-    # Generate version with app ID
+    # Generate version
     generateVersion = generateVersion(
       platform: "firebase",
-      appId: options[:appId],
-      serviceCredsFile: options[:serviceCredsFile]
+      **firebase_config
     )
 
     # Generate Release Note
@@ -114,62 +91,48 @@ platform :android do
     buildAndSignApp(
       taskName: "assembleDemo",
       buildType: "Release",
-      storeFile: options[:storeFile],
-      storePassword: options[:storePassword],
-      keyAlias: options[:keyAlias],
-      keyPassword: options[:keyPassword],
+      **signing_config
     )
 
     firebase_app_distribution(
-      app: options[:appId],
+      app: firebase_config[:appId],
       android_artifact_type: "APK",
-      android_artifact_path: options[:apkFile],
-      service_credentials_file: options[:serviceCredsFile],
-      groups: options[:groups],
-      release_notes: "#{releaseNotes}",
+      android_artifact_path: build_paths[:demo_apk_path],
+      service_credentials_file: firebase_config[:serviceCredsFile],
+      groups: firebase_config[:groups],
+      release_notes: releaseNotes
     )
   end
 
   desc "Deploy internal tracks to Google Play"
   lane :deployInternal do |options|
-    options[:aabFile] ||= "androidApp/build/outputs/bundle/prodRelease/androidApp-prod-release.aab"
-    options[:storeFile] ||= "release_keystore.keystore"
-    options[:storePassword] ||= "mifos1234"
-    options[:keyAlias] ||= "mifos-mobile"
-    options[:keyPassword] ||= "mifos1234"
+    signing_config = FastlaneConfig.get_android_signing_config(options)
+    build_paths = FastlaneConfig::AndroidConfig::BUILD_PATHS
 
     # Generate version
-    generateVersion = generateVersion(
-        platform: "playstore"
-    )
+    generateVersion = generateVersion(platform: "playstore")
 
     # Generate Release Note
     releaseNotes = generateReleaseNote()
 
     # Write the generated release notes to default.txt
     buildConfigPath = "metadata/android/en-US/changelogs/default.txt"
-
-    # Create directories if they don't exist
-    require 'fileutils'
     FileUtils.mkdir_p(File.dirname(buildConfigPath))
-
     File.write(buildConfigPath, releaseNotes)
 
     buildAndSignApp(
       taskName: "bundleProd",
       buildType: "Release",
-      storeFile: options[:storeFile],
-      storePassword: options[:storePassword],
-      keyAlias: options[:keyAlias],
-      keyPassword: options[:keyPassword],
+      **signing_config
     )
 
     upload_to_play_store(
       track: 'internal',
-      aab: options[:aabFile],
+      aab: build_paths[:prod_aab_path],
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_screenshots: true,
+      skip_upload_apk: true,
     )
   end
 
@@ -227,7 +190,6 @@ platform :android do
 
   desc "Generate Version for different platforms"
   lane :generateVersion do |options|
-    # Default to 'git' if no platform specified
     platform = (options[:platform] || 'git').downcase
 
     # Generate version file for all platforms
@@ -239,45 +201,28 @@ platform :android do
 
     case platform
     when 'playstore'
-      # Get current version codes from both production and beta
-      prod_codes = google_play_track_version_codes(
-        track: 'production',
-      )
-      beta_codes = google_play_track_version_codes(
-        track: 'beta',
-      )
-
-      # Find highest version code
+      prod_codes = google_play_track_version_codes(track: 'production')
+      beta_codes = google_play_track_version_codes(track: 'beta')
       latest_code = (prod_codes + beta_codes).max || 1
       ENV['VERSION_CODE'] = (latest_code + 1).to_s
 
     when 'firebase'
-      service_creds = options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-      app_id = options[:appId] ||= "1:728434912738:android:d853a78f14af0c381a1dbb"
-
       begin
-        # Get latest release from Firebase App Distribution
         latest_release = firebase_app_distribution_get_latest_release(
-          app: app_id,
-          service_credentials_file: service_creds
+          app: options[:appId],
+          service_credentials_file: options[:serviceCredsFile]
         )
-
-        # Extract and increment the build version
         latest_build_version = latest_release ? latest_release[:buildVersion].to_i : 0
         ENV['VERSION_CODE'] = (latest_build_version + 1).to_s
-
       rescue => e
         UI.error("Error generating Firebase version: #{e.message}")
-        UI.error(e.backtrace.join("\n"))
         raise e
       end
 
     when 'git'
       # Calculate version code from git history
       commit_count = `git rev-list --count HEAD`.to_i
-      tag_count = `git tag | grep -v beta | wc -l`.to_i
       ENV['VERSION_CODE'] = (commit_count << 1).to_s
-
     else
       UI.user_error!("Unsupported platform: #{platform}. Supported platforms are: playstore, firebase, git")
     end
@@ -285,8 +230,6 @@ platform :android do
     # Output the results
     UI.success("Generated version for #{platform}")
     UI.success("Set VERSION=#{ENV['VERSION']} VERSION_CODE=#{ENV['VERSION_CODE']}")
-
-    # Return the values for potential further use
     version
   end
 
@@ -298,111 +241,54 @@ platform :android do
     releaseNotes
   end
 
-  desc "Generate release notes from specified tag or latest release tag"
+  desc "Generate full release notes from specified tag or latest release tag"
   lane :generateFullReleaseNote do |options|
-    # Platform-independent way to get the latest tag
     def get_latest_tag
-      begin
-        # Try to get the latest tag without redirection
-        latest = `git describe --tags --abbrev=0`.strip
-        return latest unless latest.empty?
-      rescue
-        begin
-          # Alternative approach if the first one fails
-          latest = `git tag --sort=-creatordate`.split("\n").first
-          return latest unless latest.nil? || latest.empty?
-        rescue
-          return nil
-        end
-      end
+      latest = `git describe --tags --abbrev=0`.strip
+      return latest unless latest.empty?
+
+      latest = `git tag --sort=-creatordate`.split("\n").first
+      return latest unless latest.nil? || latest.empty?
+
       nil
     end
 
-    # Get the tag from options or find the latest tag
-    from_tag = options[:fromTag]
-    if from_tag
-      UI.message "Using specified tag: #{from_tag}"
-      # Verify the tag exists
-      unless system("git rev-parse #{from_tag}")
-        UI.user_error! "Tag #{from_tag} not found!"
-        return
-      end
-    else
-      from_tag = get_latest_tag
-      if from_tag && !from_tag.empty?
-        UI.message "Using latest tag: #{from_tag}"
-      else
-        UI.message "No tags found. Getting all commits..."
-      end
-    end
+    from_tag = options[:fromTag] || get_latest_tag
+    UI.message "Using tag: #{from_tag || 'No tags found. Getting all commits...'}"
 
-    # Get commits since the tag
     commits = if from_tag && !from_tag.empty?
       `git log #{from_tag}..HEAD --pretty=format:"%B"`.split("\n")
     else
       `git log --pretty=format:"%B"`.split("\n")
     end
 
-    # Process commits to get actual commit messages and remove Co-authored-by lines
-    processed_commits = []
-    current_commit = []
+    categories = process_commits(commits)
+    format_release_notes(categories)
+  end
 
-    commits.each do |line|
-      # Skip empty lines and Co-authored-by lines
-      next if line.empty? || line.start_with?("Co-authored-by:")
-
-      if line.start_with?("Merge pull request")
-        # For merge commits, we want to get the actual commit message
-        next
-      elsif current_commit.empty? || !line.start_with?(" ")
-        # If it's a new commit message, store the previous one (if exists) and start a new one
-        processed_commits << current_commit.join(" ") unless current_commit.empty?
-        current_commit = [line]
-      else
-        # Continue with current commit message
-        current_commit << line
-      end
-    end
-    # Add the last commit
-    processed_commits << current_commit.join(" ") unless current_commit.empty?
-
-    # Remove empty strings and duplicates
-    processed_commits = processed_commits.reject(&:empty?).uniq
-
-    # Initialize categories
+  private_lane :process_commits do |commits|
     notes = {
-      "feat" => [],      # Features
-      "fix" => [],       # Bug fixes
-      "perf" => [],      # Performance
-      "refactor" => [],  # Refactoring
-      "style" => [],     # Style
-      "docs" => [],      # Documentation
-      "test" => [],      # Tests
-      "build" => [],     # Build
-      "ci" => [],        # CI
-      "chore" => [],     # Maintenance
-      "breaking" => [],  # Breaking changes
-      "other" => []      # Other
+      "breaking" => [], "feat" => [], "fix" => [],
+      "perf" => [], "refactor" => [], "style" => [],
+      "docs" => [], "test" => [], "build" => [],
+      "ci" => [], "chore" => [], "other" => []
     }
 
-    # Categorize commits
-    processed_commits.each do |commit|
-      # Handle breaking changes
+    commits.each do |commit|
+      next if commit.empty? || commit.start_with?("Co-authored-by:", "Merge")
+
       if commit.include?("BREAKING CHANGE:") || commit.include?("!")
         notes["breaking"] << commit.sub(/^[^:]+:\s*/, "")
-        next
-      end
-
-      # Match conventional commit format
-      if commit =~ /^(feat|fix|perf|refactor|style|docs|test|build|ci|chore)(\(.+?\))?:/
-        type = $1
-        notes[type] << commit.sub(/^[^:]+:\s*/, "")
+      elsif commit =~ /^(feat|fix|perf|refactor|style|docs|test|build|ci|chore)(\(.+?\))?:/
+        notes[$1] << commit.sub(/^[^:]+:\s*/, "")
       else
-        notes["other"] << commit unless commit.start_with?("Merge")
+        notes["other"] << commit
       end
     end
+    notes
+  end
 
-    # Format release notes
+  private_lane :format_release_notes do |categories|
     sections = {
       "breaking" => "💥 Breaking Changes",
       "feat" => "🚀 New Features",
@@ -418,24 +304,17 @@ platform :android do
       "other" => "📝 Other Changes"
     }
 
-    # Build release notes
-    release_notes = ["# Release Notes"]
-    release_notes << "\nRelease date: #{Time.now.strftime('%d-%m-%Y')}"
+    notes = ["# Release Notes", "\nRelease date: #{Time.now.strftime('%d-%m-%Y')}"]
 
     sections.each do |type, title|
-      next if notes[type].empty?
-      release_notes << "\n## #{title}"
-      notes[type].each do |commit|
-        release_notes << "\n- #{commit}"
-      end
+      next if categories[type].empty?
+      notes << "\n## #{title}"
+      categories[type].each { |commit| notes << "\n- #{commit}" }
     end
 
-    # Print release notes
     UI.message "Generated Release Notes:"
-    UI.message release_notes.join("\n")
-
-    # Return the release notes string
-    release_notes.join("\n")
+    UI.message notes.join("\n")
+    notes.join("\n")
   end
 
 end
@@ -445,51 +324,52 @@ platform :ios do
   lane :build_ios do |options|
     # Set default configuration if not provided
     options[:configuration] ||= "Debug"
+    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
-    # automatic code signing
     update_code_signing_settings(
       use_automatic_signing: true,
-      path: "mifos-ios/iosApp.xcodeproj"
+      path: ios_config[:project_path]
     )
+
     build_ios_app(
-      project: "mifos-ios/iosApp.xcodeproj",
-      scheme: "iosApp",
-      # Set configuration to debug for now
+      project: ios_config[:project_path],
+      scheme: ios_config[:scheme],
       configuration: options[:configuration],
       skip_codesigning: "true",
-      output_directory: "mifos-ios/build",
+      output_directory: ios_config[:output_directory],
       skip_archive: "true"
     )
   end
 
   lane :increment_version do |options|
-    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
+    firebase_config = FastlaneConfig.get_firebase_config(:ios)
+    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
     latest_release = firebase_app_distribution_get_latest_release(
-      app: "1:728434912738:ios:86a7badfaed88b841a1dbb",
-      service_credentials_file: options[:serviceCredsFile]
+      app: firebase_config[:appId],
+      service_credentials_file: options[:serviceCredsFile] || firebase_config[:serviceCredsFile]
     )
+
     increment_build_number(
-      xcodeproj: "mifos-ios/iosApp.xcodeproj",
+      xcodeproj: ios_config[:project_path],
       build_number: latest_release[:buildVersion].to_i + 1
     )
   end
 
   desc "Upload iOS application to Firebase App Distribution"
   lane :deploy_on_firebase do |options|
-    options[:serviceCredsFile] ||= "secrets/firebaseAppDistributionServiceCredentialsFile.json"
-    options[:groups] ||= "mifos-mobile-testers"
+    firebase_config = FastlaneConfig.get_firebase_config(:ios)
 
-    increment_version()
+    increment_version(serviceCredsFile: firebase_config[:serviceCredsFile])
     build_ios()
     releaseNotes = generateReleaseNote()
-    release = firebase_app_distribution(
-      app: "1:728434912738:ios:86a7badfaed88b841a1dbb",
-      service_credentials_file: options[:serviceCredsFile],
-      release_notes_file: "#{releaseNotes}",
-      groups: options[:groups]
-    )
 
+    firebase_app_distribution(
+      app: firebase_config[:appId],
+      service_credentials_file: firebase_config[:serviceCredsFile],
+      release_notes: releaseNotes,
+      groups: firebase_config[:groups]
+    )
   end
 
   desc "Generate release notes"

@@ -16,16 +16,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.camera.any" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
 
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
@@ -81,6 +72,28 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileproviderpath" />
         </provider>
+
+        <!-- Prompt Google Play services to install the backported photo picker module -->
+        <service android:name="com.google.android.gms.metadata.ModuleDependencies" android:enabled="false" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+            </intent-filter>
+
+            <meta-data android:name="photopicker_activity:0:required" android:value="" />
+        </service>
+
+        <!-- Disable Firebase analytics by default. This setting is overwritten for the `prod` flavor -->
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+        <!-- Disable collection of AD_ID for all build variants -->
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+        <!-- Firebase automatically adds the following property which we don't use so remove it -->
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            tools:node="remove" />
     </application>
 
 </manifest>
