@@ -13,12 +13,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.UserDetailRepository
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
 import org.mifos.mobile.core.network.DataManager
-import org.mifospay.core.common.DataState
-import org.mifospay.core.common.asDataStateFlow
 
 class UserDetailRepositoryImp(
     private val dataManager: DataManager,

@@ -10,11 +10,11 @@
 package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
-import org.mifospay.core.common.DataState
 
 interface BeneficiaryRepository {
 

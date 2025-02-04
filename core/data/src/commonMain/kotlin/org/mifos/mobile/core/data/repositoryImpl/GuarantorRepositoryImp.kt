@@ -13,13 +13,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.GuarantorRepository
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
 import org.mifos.mobile.core.network.DataManager
-import org.mifospay.core.common.DataState
-import org.mifospay.core.common.asDataStateFlow
 
 class GuarantorRepositoryImp(
     private val dataManager: DataManager,

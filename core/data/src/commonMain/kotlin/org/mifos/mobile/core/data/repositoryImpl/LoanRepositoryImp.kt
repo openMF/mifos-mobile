@@ -13,13 +13,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.network.DataManager
-import org.mifospay.core.common.DataState
-import org.mifospay.core.common.asDataStateFlow
 
 class LoanRepositoryImp(
     private val dataManager: DataManager,

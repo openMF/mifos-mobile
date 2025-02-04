@@ -11,6 +11,7 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
 import org.mifos.mobile.core.model.entity.User
@@ -18,7 +19,6 @@ import org.mifos.mobile.core.model.entity.payload.LoginPayload
 import org.mifos.mobile.core.model.entity.register.RegisterPayload
 import org.mifos.mobile.core.model.entity.register.UserVerify
 import org.mifos.mobile.core.network.DataManager
-import org.mifospay.core.common.DataState
 
 class UserAuthRepositoryImp(
     private val dataManager: DataManager,

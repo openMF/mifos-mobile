@@ -11,11 +11,11 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.network.DataManager
-import org.mifospay.core.common.DataState
 
 class TransferRepositoryImp(
     private val dataManager: DataManager,
