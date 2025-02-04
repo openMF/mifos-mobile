@@ -11,7 +11,7 @@ package org.mifos.mobile.core.data.di
 
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import org.mifospay.core.data.NativePlatformDependentDataModule
+import org.mifos.mobile.core.data.NativePlatformDependentDataModule
 
 actual val getPlatformDataModule: PlatformDependentDataModule
     get() = NativePlatformDependentDataModule()

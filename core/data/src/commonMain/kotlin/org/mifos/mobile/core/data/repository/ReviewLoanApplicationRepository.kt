@@ -9,9 +9,9 @@
  */
 package org.mifos.mobile.core.data.repository
 
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
-import org.mifospay.core.common.DataState
 
 interface ReviewLoanApplicationRepository {
 

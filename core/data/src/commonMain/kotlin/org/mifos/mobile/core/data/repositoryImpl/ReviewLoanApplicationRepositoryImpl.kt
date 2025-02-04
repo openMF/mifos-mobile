@@ -11,11 +11,11 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.network.DataManager
-import org.mifospay.core.common.DataState
 
 class ReviewLoanApplicationRepositoryImpl(
     private val dataManager: DataManager,

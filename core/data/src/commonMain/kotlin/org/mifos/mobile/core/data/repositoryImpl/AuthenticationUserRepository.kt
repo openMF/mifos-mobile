@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.UserData
-import org.mifospay.core.common.DataState
 
 class AuthenticationUserRepository(
     private val preferencesHelper: UserPreferencesRepository,

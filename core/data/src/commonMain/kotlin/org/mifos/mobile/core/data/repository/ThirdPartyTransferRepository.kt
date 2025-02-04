@@ -10,8 +10,8 @@
 package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
-import org.mifospay.core.common.DataState
 
 interface ThirdPartyTransferRepository {
 

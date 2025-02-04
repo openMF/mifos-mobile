@@ -9,8 +9,8 @@
  */
 package org.mifos.mobile.core.data.repository
 
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.enums.TransferType
-import org.mifospay.core.common.DataState
 
 interface TransferRepository {
 

@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.model.entity.MifosNotification
-import org.mifospay.core.common.DataState
 
 class NotificationRepositoryImp(
 //    private val notificationDao: MifosNotificationDao,
