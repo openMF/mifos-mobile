@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="androidApp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-        <module name="mobile-wallet.mifospay-android.main" />
+    <configuration default="false" name="cmp-android" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+        <module name="mifos-mobile.cmp-android.main" />
         <option name="DEPLOY" value="true" />
         <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
         <option name="DEPLOY_AS_INSTANT" value="false" />

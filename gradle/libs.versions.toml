@@ -86,7 +86,7 @@ ktorfit = "2.2.0"
 ktorfitKsp = "2.2.0-1.0.29"
 
 # Koin CMP Dependencies
-koin = "4.0.1-RC1"
+koin = "4.0.2"
 koinAnnotationsVersion = "1.4.0-RC4"
 
 # CMP Libraries
@@ -117,6 +117,7 @@ packageNamespace = "org.mifos.desktop"
 packageVersion = "1.0.0"
 roomCommonVersion = "2.6.1"
 materialVersion = "1.10.0"
+material = "1.12.0"
 
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
@@ -317,6 +318,7 @@ moko-permission-compose = { group = "dev.icerock.moko", name = "permissions-comp
 
 window-size = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version.ref = "windowsSizeClass" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommonVersion" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 androidx-compose-ui-test = [

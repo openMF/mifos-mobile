@@ -99,7 +99,7 @@ jobs:
         id: dependencyguard_baseline
         if: steps.dependencyguard_verify.outcome == 'failure' && github.event_name == 'pull_request'
         run: |
-          ./gradlew :mifos-android:dependencyGuard
+          ./gradlew :cmp-android:dependencyGuard
 
       - name: Push new Dependency Guard baselines if available
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -122,7 +122,7 @@ jobs:
 
       - name: Run tests
         run: |
-          ./gradlew :mifos-android:testDemoDebug
+          ./gradlew :cmp-android:testDemoDebug
 #          ./gradlew testDebug :lint:test :androidApp:lintRelease :lint:lint
 
       - name: Upload reports
@@ -177,7 +177,7 @@ jobs:
           java-version: 17
 
       - name: Build APKs
-        run: ./gradlew :mifos-android:assembleDemoDebug
+        run: ./gradlew :cmp-android:assembleDemoDebug
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4
