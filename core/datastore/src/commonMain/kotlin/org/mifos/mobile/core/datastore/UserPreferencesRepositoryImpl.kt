@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
-import org.mifospay.core.common.DataState
 
 class UserPreferencesRepositoryImpl(
     private val preferenceManager: UserPreferencesDataSource,
