@@ -18,13 +18,13 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-//val packageNameSpace: String = libs.versions.androidPackageNamespace.get()
+val packageNameSpace: String = libs.versions.androidPackageName.get()
 
 android {
     namespace = "cmp.android.app"
 
     defaultConfig {
-        applicationId = "org.mifos.mobile"
+        applicationId = packageNameSpace
         versionName = System.getenv("VERSION") ?: project.dynamicVersion
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
         vectorDrawables.useSupportLibrary = true
@@ -34,9 +34,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file(System.getenv("KEYSTORE_PATH") ?: "../keystores/release_keystore.keystore")
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "Wizard@123"
-            keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "kmp-project-template"
-            keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "Wizard@123"
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "mifos1234"
+            keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "mifos-mobile"
+            keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "mifos1234"
             enableV1Signing = true
             enableV2Signing = true
         }

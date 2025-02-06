@@ -116,7 +116,11 @@ packageName = "MifosWallet"
 packageNamespace = "org.mifos.desktop"
 packageVersion = "1.0.0"
 roomCommonVersion = "2.6.1"
-materialVersion = "1.10.0"
+
+# Android Version
+androidPackageName = "AndroidApp"
+androidPackageNamespace = "cmp.android.app"
+androidPackageVersion = "1.0.0"
 
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
