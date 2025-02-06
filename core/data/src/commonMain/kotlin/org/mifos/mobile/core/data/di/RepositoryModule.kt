@@ -54,7 +54,7 @@ val RepositoryModule = module {
     single<Json> { Json { ignoreUnknownKeys = true } }
 
     single<AccountsRepository> { AccountsRepositoryImp(get(), get(ioDispatcher)) }
-    single<UserDataRepository> { AuthenticationUserRepository(get(), get(named(MifosDispatchers.IO.name))) }
+    single<UserDataRepository> { AuthenticationUserRepository(get(), get(ioDispatcher)) }
     single<BeneficiaryRepository> { BeneficiaryRepositoryImp(get(), get(ioDispatcher)) }
     single<ClientChargeRepository> { ClientChargeRepositoryImp(get(), get(ioDispatcher)) } // TODO
     single<ClientRepository> { ClientRepositoryImp(get(), get(ioDispatcher)) }

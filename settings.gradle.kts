@@ -1,5 +1,12 @@
 import org.ajoberstar.reckon.gradle.ReckonExtension
 
+include(":mifos-shared")
+
+
+include(":mifos-android")
+
+
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -37,10 +44,8 @@ rootProject.name = "mifos-mobile"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include(":cmp-shared")
-include(":cmp-android")
-include(":cmp-desktop")
-include(":cmp-web")
+include(":androidApp")
+
 // Core Modules
 include(":core:ui")
 include(":core:designsystem")
@@ -55,7 +60,6 @@ include(":core:qrcode")
 //include(":core:testing")
 
 // Feature Modules
-include(":feature:auth")
 //include(":feature:loan")
 //include(":feature:beneficiary")
 //include(":feature:savings")
@@ -71,6 +75,7 @@ include(":feature:auth")
 //include(":feature:location")
 //include(":feature:about")
 //include(":feature:settings")
+include(":feature:auth")
 //include(":feature:update-password")
 //include(":feature:home")
 //include(":feature:user-profile")
@@ -85,3 +90,4 @@ include(":libs:material3-navigation")
 include(":libs:mifos-passcode")
 
 // Kotlin Multiplatform Modules
+include(":shared")

@@ -100,6 +100,7 @@ internal fun LoginScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
+        navigateToRegisterScreen = { navigateToRegisterScreen() },
     )
 }
 
@@ -110,6 +111,7 @@ private fun LoginScreen(
     snackbarHostState: SnackbarHostState,
     onAction: (LoginAction) -> Unit,
     modifier: Modifier = Modifier,
+    navigateToRegisterScreen: () -> Unit,
 ) {
     MifosScaffold(
         snackbarHostState = snackbarHostState,
@@ -122,6 +124,7 @@ private fun LoginScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues),
+            createAccount = navigateToRegisterScreen,
         )
     }
 }
@@ -152,13 +155,13 @@ private fun LoginScreenContent(
     state: LoginState,
     modifier: Modifier = Modifier,
     onAction: (LoginAction) -> Unit,
+    createAccount: () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(7.dp)
             .verticalScroll(rememberScrollState())
             .pointerInput(Unit) {
                 detectTapGestures(
@@ -201,7 +204,8 @@ private fun LoginScreenContent(
 
         MifosButton(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 4.dp),
             contentPadding = PaddingValues(12.dp),
             enabled = state.isLoginButtonEnabled,
             onClick = {
@@ -247,7 +251,7 @@ private fun LoginScreenContent(
         }
 
         MifosButton(
-            onClick = { onAction(LoginAction.SignupClicked) },
+            onClick = createAccount,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally),
@@ -265,6 +269,7 @@ private fun LoanScreenPreview() {
             state = LoginState(dialogState = null),
             snackbarHostState = remember { SnackbarHostState() },
             onAction = {},
+            navigateToRegisterScreen = {},
         )
     }
 }

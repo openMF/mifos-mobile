@@ -16,7 +16,19 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.could_not_register_user_error
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
+import mifos_mobile.feature.auth.generated.resources.error_enter_account_number
+import mifos_mobile.feature.auth.generated.resources.error_enter_country
+import mifos_mobile.feature.auth.generated.resources.error_enter_email
+import mifos_mobile.feature.auth.generated.resources.error_enter_first_name
+import mifos_mobile.feature.auth.generated.resources.error_enter_last_name
+import mifos_mobile.feature.auth.generated.resources.error_enter_mobile_number
+import mifos_mobile.feature.auth.generated.resources.error_enter_user_name
+import mifos_mobile.feature.auth.generated.resources.error_invalid_email
+import mifos_mobile.feature.auth.generated.resources.error_invalid_password
+import mifos_mobile.feature.auth.generated.resources.error_mobile_length
+import mifos_mobile.feature.auth.generated.resources.error_password_not_match
+import mifos_mobile.feature.auth.generated.resources.invalid_phn_number
+import mifos_mobile.feature.auth.generated.resources.password_strength_weak
 import org.mifos.mobile.core.common.utils.isValidEmail
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.IgnoredOnParcel
@@ -54,7 +66,7 @@ class RegistrationViewModel(
             is SignUpAction.PasswordInputChange -> handlePasswordInput(action.password)
             is SignUpAction.ConfirmPasswordInputChange -> updateState { it.copy(confirmPasswordInput = action.confirmPassword) }
             is SignUpAction.UserNameInputChange -> updateState { it.copy(userNameInput = action.username) }
-//            is SignUpAction.CountryInputChange -> updateState { it.copy(countryInput = action.country) }
+            is SignUpAction.CountryInputChange -> updateState { it.copy(countryInput = action.country) }
             is SignUpAction.IsPasswordChanges -> updateState { it.copy(isPasswordChanged = true) }
             is SignUpAction.AuthenticationMode -> updateState {
                 it.copy(
@@ -71,13 +83,12 @@ class RegistrationViewModel(
             is SignUpAction.ConfirmTogglePasswordVisibility -> updateState {
                 it.copy(
                     isConfirmPasswordVisible = !it
-                        .isConfirmPasswordVisible,
+                        .isPasswordVisible,
                 )
             }
             is SignUpAction.Internal.ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
             is SignUpAction.Internal.ReceiveRegisterResult -> handleRegisterResult(action)
             is SignUpAction.SubmitClick -> handleSubmitClick()
-            is SignUpAction.BackPress -> sendEvent(SignUpEvent.NavigateBack)
             SignUpAction.ErrorDialogDismiss -> updateState { it.copy(dialogState = null) }
         }
     }
@@ -118,9 +129,8 @@ class RegistrationViewModel(
 
     private fun handleSubmitClick() {
         val errorMessage = validateForm()
-        logger.d { "handleSubmitClick: $errorMessage" }
         if (errorMessage != null) {
-            sendEvent(SignUpEvent.ShowToast(errorMessage))
+            updateState { it.copy(dialogState = SignUpDialog.Error(errorMessage)) }
         } else {
             registerUser()
         }
@@ -130,17 +140,12 @@ class RegistrationViewModel(
         when (val result = action.registerResult) {
             is DataState.Success -> {
                 updateState { it.copy(dialogState = null) }
-                sendEvent(SignUpEvent.NavigateToVerification(result.data))
+                sendEvent(SignUpEvent.NavigateToLogin(result.data))
             }
 
             is DataState.Error -> {
                 updateState {
-                    it.copy(
-                        dialogState = SignUpDialog.Error(
-                            result.exception.message
-                                ?: "An error occurred.",
-                        ),
-                    )
+                    it.copy(dialogState = SignUpDialog.Error(result.exception.message ?: "An error occurred."))
                 }
             }
 
@@ -150,37 +155,47 @@ class RegistrationViewModel(
         }
     }
 
+    // TODO:: move error messages to strings.xml
     private fun validateForm(): String? {
         return when {
-            state.accountNumber.isEmpty() -> "Please enter an account number"
-            state.firstNameInput.isEmpty() -> "Please enter first name"
-            state.lastNameInput.isEmpty() -> "Please enter last name"
-            state.userNameInput.isEmpty() -> "Please enter username"
-            state.emailInput.isEmpty() -> "Please enter email"
-            !state.emailInput.isValidEmail() -> "Invalid email format"
-            state.mobileNumberInput.isEmpty() -> "Please enter mobile number"
-            state.mobileNumberInput.length < 10 -> "Mobile number must be at least 10 digits"
-            state.passwordInput.length < 8 -> "Password must be at least 8 characters"
-            !state.isPasswordMatch -> "Passwords do not match"
-            !state.isPasswordStrong -> "Password is too weak"
-//            state.countryInput.isEmpty() -> "Please enter country"
+            state.accountNumber.isEmpty() -> Res.string.error_enter_account_number.toString()
+            state.firstNameInput.isEmpty() -> Res.string.error_enter_first_name.toString()
+            state.lastNameInput.isEmpty() -> Res.string.error_enter_last_name.toString()
+            state.userNameInput.isEmpty() -> Res.string.error_enter_user_name.toString()
+            state.emailInput.isEmpty() -> Res.string.error_enter_email.toString()
+            !state.emailInput.isValidEmail() -> Res.string.error_invalid_email.toString()
+            state.mobileNumberInput.isEmpty() -> Res.string.error_enter_mobile_number.toString()
+            state.mobileNumberInput.length < 10 -> Res.string.error_mobile_length.toString()
+            isPhoneNumberValid(state.mobileNumberInput) -> Res.string.invalid_phn_number.toString()
+            state.passwordInput.length < 8 -> Res.string.error_invalid_password.toString()
+            !state.isPasswordMatch -> Res.string.error_password_not_match.toString()
+            !state.isPasswordStrong -> Res.string.password_strength_weak.toString()
+            state.countryInput.isEmpty() -> Res.string.error_enter_country.toString()
             else -> null
         }
+    }
+
+    private fun isPhoneNumberValid(fieldText: String?): Boolean {
+        if (fieldText.isNullOrBlank()) {
+            return false
+        }
+
+        val phoneNumberPattern = "^\\+?[0-9]{10,15}\$"
+        val regex = phoneNumberPattern.toRegex()
+        return regex.matches(fieldText.trim())
     }
 
     private fun registerUser() {
         viewModelScope.launch {
             updateState { it.copy(dialogState = SignUpDialog.Loading) }
             try {
-                logger.d { state.authenticationMode }
                 userAuthRepositoryImpl.registerUser(
                     accountNumber = state.accountNumber,
                     authenticationMode = state.authenticationMode,
                     email = state.emailInput,
                     firstName = state.firstNameInput,
                     lastName = state.lastNameInput,
-//                    mobileNumber = state.countryInput + state.mobileNumberInput,
-                    mobileNumber = state.mobileNumberInput,
+                    mobileNumber = state.countryInput + state.mobileNumberInput,
                     password = state.passwordInput,
                     username = state.userNameInput,
                 )
@@ -191,17 +206,7 @@ class RegistrationViewModel(
                     ),
                 )
             } catch (e: Exception) {
-                updateState {
-                    it.copy(
-                        dialogState = SignUpDialog.Error(
-                            (
-                                e.message
-                                    ?: Res.string
-                                        .could_not_register_user_error
-                                ).toString(),
-                        ),
-                    )
-                }
+                updateState { it.copy(dialogState = SignUpDialog.Error((e.message ?: Res.string.could_not_register_user_error).toString())) }
             }
         }
     }
@@ -217,9 +222,9 @@ data class SignUpState(
     val passwordInput: String = "",
     val confirmPasswordInput: String = "",
     val mobileNumberInput: String = "",
-//    val countryInput: String = "",
+    val countryInput: String = "",
     val dialogState: SignUpDialog? = null,
-    val authenticationMode: String = "email",
+    val authenticationMode: String = "Email",
     val isPasswordChanged: Boolean = false,
     val passwordStrengthState: PasswordStrengthState = PasswordStrengthState.NONE,
     val isPasswordVisible: Boolean = false,
@@ -252,32 +257,30 @@ sealed interface SignUpDialog : Parcelable {
     @Parcelize
     data class Error(val message: String) : SignUpDialog
 }
-sealed class SignUpEvent {
-    data class ShowToast(val message: String) : SignUpEvent()
-    data class NavigateToVerification(val username: String) : SignUpEvent()
-    data object NavigateBack : SignUpEvent()
+
+sealed interface SignUpEvent {
+    data class ShowToast(val message: String) : SignUpEvent
+    data class NavigateToLogin(val username: String) : SignUpEvent
 }
 
-sealed class SignUpAction {
-    data class AccountInputChange(val accountNumber: String) : SignUpAction()
-    data class UserNameInputChange(val username: String) : SignUpAction()
-    data class FirstNameInputChange(val firstName: String) : SignUpAction()
-    data class LastNameInputChange(val lastName: String) : SignUpAction()
-    data class EmailInputChange(val email: String) : SignUpAction()
-    data class PasswordInputChange(val password: String) : SignUpAction()
-    data class ConfirmPasswordInputChange(val confirmPassword: String) : SignUpAction()
-    data class MobileNumberInputChange(val mobileNumber: String) : SignUpAction()
+sealed interface SignUpAction {
+    data class AccountInputChange(val accountNumber: String) : SignUpAction
+    data class UserNameInputChange(val username: String) : SignUpAction
+    data class FirstNameInputChange(val firstName: String) : SignUpAction
+    data class LastNameInputChange(val lastName: String) : SignUpAction
+    data class EmailInputChange(val email: String) : SignUpAction
+    data class PasswordInputChange(val password: String) : SignUpAction
+    data class ConfirmPasswordInputChange(val confirmPassword: String) : SignUpAction
+    data class MobileNumberInputChange(val mobileNumber: String) : SignUpAction
+    data class CountryInputChange(val country: String) : SignUpAction
+    data class AuthenticationMode(val authenticationMode: String) : SignUpAction
+    data class IsPasswordChanges(val isPasswordChanged: Boolean) : SignUpAction
+    data object TogglePasswordVisibility : SignUpAction
+    data object ConfirmTogglePasswordVisibility : SignUpAction
+    data object SubmitClick : SignUpAction
+    data object ErrorDialogDismiss : SignUpAction
 
-//    data class CountryInputChange(val country: String) : SignUpAction()
-    data class AuthenticationMode(val authenticationMode: String) : SignUpAction()
-    data class IsPasswordChanges(val isPasswordChanged: Boolean) : SignUpAction()
-    data object TogglePasswordVisibility : SignUpAction()
-    data object ConfirmTogglePasswordVisibility : SignUpAction()
-    data object SubmitClick : SignUpAction()
-    data object BackPress : SignUpAction()
-    data object ErrorDialogDismiss : SignUpAction()
-
-    sealed class Internal : SignUpAction() {
+    sealed class Internal : SignUpAction {
         data class ReceiveRegisterResult(
             val registerResult: DataState<String>,
         ) : Internal()

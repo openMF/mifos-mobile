@@ -72,7 +72,7 @@ private fun NavGraphBuilder.registrationRoute(
 ) {
     composable(route = AuthenticationNavigation.Registration.route) {
         RegistrationScreen(
-            navigateToVerification = onRegistered,
+            onVerified = onRegistered,
             navigateBack = navigateBack,
         )
     }
@@ -84,8 +84,8 @@ private fun NavGraphBuilder.registrationVerificationRoute(
 ) {
     composable(route = AuthenticationNavigation.RegistrationVerification.route) {
         RegistrationVerificationScreen(
-            navigateToLogin = onRegistrationVerified,
-            navigateToRegister = navigateBack,
+            onVerified = onRegistrationVerified,
+            navigateBack = navigateBack,
         )
     }
 }

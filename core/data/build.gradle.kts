@@ -35,7 +35,7 @@ kotlin {
             api(projects.core.common)
             api(projects.core.datastore)
             api(projects.core.model)
-            api(projects.core.database)
+//            api(projects.core.database)
             implementation(projects.core.network)
             implementation(libs.kotlinx.serialization.json)
         }

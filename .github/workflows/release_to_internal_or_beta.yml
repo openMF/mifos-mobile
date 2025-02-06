@@ -65,7 +65,7 @@ jobs:
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
         run: |
-          ./gradlew :cmp-android:assembleRelease
+          ./gradlew :androidApp:assembleRelease
 
       - name: Archive Build
         uses: actions/upload-artifact@v4
@@ -89,8 +89,8 @@ jobs:
           draft: false
           prerelease: true
           files: |
-            ./cmp-android/build/outputs/apk/release/androidApp-release.apk
-            ./cmp-android/build/outputs/version_code.txt
+            ./androidApp/build/outputs/apk/release/androidApp-release.apk
+            ./androidApp/build/outputs/version_code.txt
 
       - name: Print `git status`
         run: git status
@@ -152,7 +152,7 @@ jobs:
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_ALIAS_PASSWORD }}
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
         run: |
-          ./gradlew :cmp-android:bundleRelease
+          ./gradlew :androidApp:bundleRelease
 
       - name: Deploy to Play Store Internal
         run: bundle exec fastlane android deploy_internal

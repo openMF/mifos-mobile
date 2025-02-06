@@ -117,11 +117,6 @@ class LoginViewModel(
 
         viewModelScope.launch {
             val result = userAuthRepositoryImpl.login(username, password)
-            when (result) {
-                is DataState.Error -> sendEvent(LoginEvent.ShowToast(result.message))
-                is DataState.Loading -> mutableStateFlow.update { it.copy(dialogState = LoginState.DialogState.Loading) }
-                is DataState.Success -> sendEvent(LoginEvent.ShowToast("Logged in")) // navigate
-            }
             sendAction(LoginAction.Internal.ReceiveLoginResult(result))
         }
     }

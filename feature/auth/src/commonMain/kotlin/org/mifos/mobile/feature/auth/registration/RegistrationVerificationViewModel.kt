@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.could_not_register_user_error
+import mifos_mobile.feature.auth.generated.resources.empty_authentication_token
+import mifos_mobile.feature.auth.generated.resources.empty_requestid
 import mifos_mobile.feature.auth.generated.resources.verified
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.Parcelable
@@ -40,30 +42,9 @@ class RegistrationVerificationViewModel(
             is VerificationAction.AuthenticationTokenChange -> updateState { it.copy(authenticationToken = action.authenticationToken) }
             is VerificationAction.RequestIdChange -> updateState { it.copy(requestId = action.requestId) }
             is VerificationAction.RequestIdError -> updateState { it.copy(requestIdError = false) }
-            is VerificationAction.ConfirmationDialog -> {
-                updateState { it ->
-                    it.copy(
-                        confirmationDialog = action.confirmationDialog,
-                        dialogState = if (action.confirmationDialog) {
-                            VerificationState.VerificationDialog.ConfirmationDialog(
-                                title = "Cancel Registration?",
-                                message = "Are you sure you want to cancel registration?",
-                                confirmText = "Yes",
-                                cancelText = "No",
-                                onConfirm = {
-                                    updateState { it.copy(dialogState = null, confirmationDialog = false) }
-                                    sendEvent(VerificationEvent.NavigateToRegistration)
-                                },
-                            )
-                        } else {
-                            null
-                        },
-                    )
-                }
-            }
+            is VerificationAction.ConfirmationDialog -> updateState { it.copy(showConfirmationDialog = action.confirmationDialog) }
             is VerificationAction.Internal.ReceiveRegisterResult -> handleVerificationResult(action)
             is VerificationAction.SubmitClick -> handleSubmitClick()
-            is VerificationAction.NavigateToRegistration -> sendEvent(VerificationEvent.NavigateToRegistration)
             VerificationAction.ErrorDialogDismiss -> updateState { it.copy(dialogState = null) }
         }
     }
@@ -71,7 +52,7 @@ class RegistrationVerificationViewModel(
     private fun handleSubmitClick() {
         val errorMessage = validateForm()
         if (errorMessage != null) {
-            sendEvent(VerificationEvent.ShowToast(errorMessage))
+            updateState { it.copy(dialogState = VerificationState.VerificationDialog.Error(errorMessage)) }
         } else {
             verifyUser()
         }
@@ -99,8 +80,8 @@ class RegistrationVerificationViewModel(
     // TODO:: move error messages to strings.xml
     private fun validateForm(): String? {
         return when {
-            state.authenticationToken.isEmpty() -> "Authentication Token cannot be empty"
-            state.requestId.isEmpty() -> "Request ID cannot be empty"
+            state.authenticationToken.isEmpty() -> Res.string.empty_authentication_token.toString()
+            state.requestId.isEmpty() -> Res.string.empty_requestid.toString()
             else -> null
         }
     }
@@ -132,42 +113,32 @@ data class VerificationState(
     val authenticationToken: String = "",
     val requestId: String = "",
     val requestIdError: Boolean = false,
-    val confirmationDialog: Boolean = false,
+    val showConfirmationDialog: Boolean = false,
     val dialogState: VerificationDialog? = null,
 ) : Parcelable {
-    sealed class VerificationDialog : Parcelable {
+    sealed interface VerificationDialog : Parcelable {
         @Parcelize
-        data object Loading : VerificationDialog()
+        data object Loading : VerificationDialog
 
         @Parcelize
-        data class Error(val message: String) : VerificationDialog()
-
-        @Parcelize
-        data class ConfirmationDialog(
-            val title: String,
-            val message: String,
-            val confirmText: String,
-            val cancelText: String,
-            val onConfirm: () -> Unit,
-        ) : VerificationDialog()
+        data class Error(val message: String) : VerificationDialog
     }
 }
-
-sealed class VerificationEvent {
-    data class ShowToast(val message: String) : VerificationEvent()
-    data class NavigateToLogin(val username: String) : VerificationEvent()
-    data object NavigateToRegistration : VerificationEvent()
+sealed interface VerificationEvent {
+    data class ShowToast(val message: String) : VerificationEvent
+    data class NavigateToLogin(val username: String) : VerificationEvent
+    data object NavigateToRegister : VerificationEvent
 }
 
-sealed class VerificationAction {
-    data class RequestIdChange(val requestId: String) : VerificationAction()
-    data class AuthenticationTokenChange(val authenticationToken: String) : VerificationAction()
-    data class ConfirmationDialog(val confirmationDialog: Boolean) : VerificationAction()
-    data object RequestIdError : VerificationAction()
-    data object SubmitClick : VerificationAction()
-    data object ErrorDialogDismiss : VerificationAction()
-    data object NavigateToRegistration : VerificationAction()
-    sealed class Internal : VerificationAction() {
+sealed interface VerificationAction {
+    data class RequestIdChange(val requestId: String) : VerificationAction
+    data class AuthenticationTokenChange(val authenticationToken: String) : VerificationAction
+    data class ConfirmationDialog(val confirmationDialog: Boolean) : VerificationAction
+    data object RequestIdError : VerificationAction
+    data object SubmitClick : VerificationAction
+    data object ErrorDialogDismiss : VerificationAction
+
+    sealed class Internal : VerificationAction {
         data class ReceiveRegisterResult(
             val registerResult: DataState<String>,
         ) : Internal()
