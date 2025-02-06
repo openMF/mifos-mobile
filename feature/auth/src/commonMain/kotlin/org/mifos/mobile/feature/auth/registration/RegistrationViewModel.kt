@@ -39,7 +39,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
-import org.mifospay.core.common.DataState
+import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "signup_state"
 

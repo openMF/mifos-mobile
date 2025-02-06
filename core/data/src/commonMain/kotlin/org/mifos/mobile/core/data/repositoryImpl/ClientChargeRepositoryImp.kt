@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.Dispatcher
-import org.mifos.mobile.core.common.MifosDispatchers
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.model.entity.Charge
@@ -26,7 +24,6 @@ import org.mifos.mobile.core.network.DataManager
 class ClientChargeRepositoryImp(
     private val dataManager: DataManager,
 //    private val chargeDao: ChargeDao,
-    @Dispatcher(MifosDispatchers.IO)
     private val ioDispatcher: CoroutineDispatcher,
 ) : ClientChargeRepository {
 

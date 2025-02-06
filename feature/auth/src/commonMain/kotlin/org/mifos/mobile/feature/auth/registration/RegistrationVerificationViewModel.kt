@@ -22,7 +22,7 @@ import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifospay.core.common.DataState
+import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "verification_state"
 

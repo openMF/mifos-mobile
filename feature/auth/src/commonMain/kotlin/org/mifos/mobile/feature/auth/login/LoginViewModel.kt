@@ -22,7 +22,7 @@ import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifospay.core.common.DataState
+import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "state"
 

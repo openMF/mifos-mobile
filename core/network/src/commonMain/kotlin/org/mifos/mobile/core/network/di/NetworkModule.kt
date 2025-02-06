@@ -34,7 +34,7 @@ val NetworkModule = module {
 
     single<KtorfitClient>(MifosClient) {
         KtorfitClient.builder()
-            .httpClient(get(KtorBaseClient))
+            .httpClient(get(KtorClient))
             .baseURL(BaseURL().url)
             .build()
     }
