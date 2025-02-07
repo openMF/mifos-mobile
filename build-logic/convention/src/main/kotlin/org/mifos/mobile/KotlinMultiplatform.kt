@@ -20,7 +20,7 @@ internal fun Project.configureKotlinMultiplatform() {
             this.nodejs()
             binaries.executable()
         }
-        wasmJs() {
+        wasmJs {
             browser()
             nodejs()
         }

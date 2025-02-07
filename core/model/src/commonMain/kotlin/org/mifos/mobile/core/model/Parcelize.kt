@@ -9,7 +9,7 @@
  */
 package org.mifos.mobile.core.model
 
-annotation class Parcelize()
+expect annotation class Parcelize()
 
 expect interface Parcelable
 

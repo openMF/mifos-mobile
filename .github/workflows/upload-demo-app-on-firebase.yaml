@@ -1,4 +1,4 @@
-name: Upload Demo App on Firebase
+name: Upload Demo App on Firebase KMP
 
 on:
   workflow_dispatch:
@@ -12,8 +12,7 @@ on:
   pull_request:
     types: [ labeled ]
     branches:
-      - 'development'
-      - 'master'
+      - 'kmp-impl'
 
 concurrency:
   group: firebase-${{ github.ref }}
@@ -33,7 +32,7 @@ jobs:
         uses: openMF/kmp-android-firebase-publish-action@v1.0.0
         with:
           release_type: 'demo'
-          android_package_name: 'androidApp'
+          android_package_name: 'cmp-android'
           keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
           keystore_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
           keystore_alias: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS }}

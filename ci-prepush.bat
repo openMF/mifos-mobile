@@ -13,6 +13,8 @@ call :run_gradle_task "check -p build-logic"
 call :run_gradle_task "spotlessApply --no-configuration-cache"
 call :run_gradle_task "dependencyGuardBaseline"
 call :run_gradle_task "detekt"
+call :run_gradle_task ":cmp-android:build"
+call :run_gradle_task ":cmp-android:updateProdReleaseBadging"
 
 echo All checks and tests completed successfully.
 exit /b 0

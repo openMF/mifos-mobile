@@ -11,7 +11,10 @@ package org.mifos.mobile.core.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
+
+actual typealias Parcelize = Parcelize
 
 actual typealias Parcelable = Parcelable
 
