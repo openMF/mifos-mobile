@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "mobilesdk_app_id",
         "android_client_info": {
-          "package_name": "org.mifos"
+          "package_name": "org.mifos.mobile"
         }
       },
       "api_key": [
@@ -23,7 +23,7 @@
       "client_info": {
         "mobilesdk_app_id": "mobilesdk_app_id",
         "android_client_info": {
-          "package_name": "org.mifos.demo.debug"
+          "package_name": "org.mifos.mobile.demo.debug"
         }
       },
       "api_key": [
@@ -36,7 +36,7 @@
       "client_info": {
         "mobilesdk_app_id": "mobilesdk_app_id",
         "android_client_info": {
-          "package_name": "org.mifos.demo"
+          "package_name": "org.mifos.mobile.demo"
         }
       },
       "api_key": [
@@ -49,7 +49,7 @@
       "client_info": {
         "mobilesdk_app_id": "mobilesdk_app_id",
         "android_client_info": {
-          "package_name": "org.mifos.debug"
+          "package_name": "org.mifos.mobile.debug"
         }
       },
       "api_key": [
