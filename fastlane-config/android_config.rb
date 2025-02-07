@@ -15,9 +15,9 @@ module FastlaneConfig
     }
 
     BUILD_PATHS = {
-      prod_apk_path: "cmp-android/build/outputs/apk/prod/release/androidApp-prod-release.apk",
-      demo_apk_path: "cmp-android/build/outputs/apk/demo/release/androidApp-demo-release.apk",
-      prod_aab_path: "cmp-android/build/outputs/bundle/prodRelease/androidApp-prod-release.aab"
+      prod_apk_path: "cmp-android/build/outputs/apk/prod/release/cmp-android-prod-release.apk",
+      demo_apk_path: "cmp-android/build/outputs/apk/demo/release/cmp-android-demo-release.apk",
+      prod_aab_path: "cmp-android/build/outputs/bundle/prodRelease/cmp-android-prod-release.aab"
     }
   end
 end
