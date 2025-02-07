@@ -9,4 +9,6 @@
  */
 package org.mifos.mobile.feature.about
 
-expect fun openUrl(url: String?)
+internal expect fun openUrl(url: String?)
+
+internal expect fun openOssLicenses()

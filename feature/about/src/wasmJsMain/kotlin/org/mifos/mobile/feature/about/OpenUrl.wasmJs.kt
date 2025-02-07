@@ -9,6 +9,13 @@
  */
 package org.mifos.mobile.feature.about
 
+import kotlinx.browser.window
+
 actual fun openUrl(url: String?) {
-//    window.open(url, "_blank") // Opens in a new tab
+    if (url != null) {
+        window.open(url, "_blank") // Opens in a new tab
+    }
+}
+
+internal actual fun openOssLicenses() {
 }
