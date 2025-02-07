@@ -9,13 +9,15 @@
  */
 package org.mifos.mobile.feature.about
 
-import kotlinx.browser.window
+import android.app.Application
 
-actual fun openUrl(url: String?) {
-    if (url != null) {
-        window.open(url, "_blank") // Opens in a new tab
+class AndroidApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
     }
-}
 
-internal actual fun openOssLicenses() {
+    companion object {
+        lateinit var instance: AndroidApp
+    }
 }

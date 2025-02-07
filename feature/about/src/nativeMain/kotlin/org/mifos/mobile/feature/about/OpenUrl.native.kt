@@ -9,9 +9,17 @@
  */
 package org.mifos.mobile.feature.about
 
-actual fun openUrl(url: String?) {
-//    val nsUrl = NSURL.URLWithString(url)
-//    if (nsUrl != null) {
-//        UIApplication.sharedApplication.openURL(nsUrl)
-//    }
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
+
+internal actual fun openUrl(url: String?) {
+    val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return
+    UIApplication.sharedApplication.openURL(nsUrl, options = emptyMap<Any?, Any>()) { success ->
+        if (!success) {
+            println("Failed to open URL: $url")
+        }
+    }
+}
+
+internal actual fun openOssLicenses() {
 }

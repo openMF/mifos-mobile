@@ -26,7 +26,7 @@ import mifos_mobile.feature.about.generated.resources.feature_about_privacy_poli
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.feature.about.MyWebView
+import org.mifos.mobile.feature.about.MifosWebView
 import org.mifos.mobile.feature.about.openUrl
 
 @Composable
@@ -56,7 +56,7 @@ private fun WebView(
 
     Column(modifier) {
         Spacer(modifier = Modifier.height(20.dp))
-        MyWebView(
+        MifosWebView(
             htmlContent = url,
             isLoading = { isLoading = it },
             modifier = Modifier.fillMaxWidth(),

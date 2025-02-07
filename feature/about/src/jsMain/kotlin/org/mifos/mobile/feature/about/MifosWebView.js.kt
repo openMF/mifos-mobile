@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-actual fun MyWebView(
+actual fun MifosWebView(
     htmlContent: String,
     isLoading: (isLoading: Boolean) -> Unit,
     onUrlClicked: (url: String) -> Unit,
