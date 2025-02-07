@@ -8,7 +8,7 @@ class CMPFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("mifos.kmp.libray")
+                apply("mifos.kmp.library")
                 apply("mifos.kmp.koin")
                 apply("org.jetbrains.kotlin.plugin.compose")
                 apply("org.jetbrains.compose")
@@ -17,7 +17,7 @@ class CMPFeatureConventionPlugin : Plugin<Project> {
             dependencies {
                 add("commonMainImplementation", project(":core:ui"))
                 add("commonMainImplementation", project(":core:designsystem"))
-                add("commonMainImplementation", project(":core:testing"))
+//                add("commonMainImplementation", project(":core:testing"))
                 add("commonMainImplementation", project(":core:data"))
 
                 add("commonMainImplementation", libs.findLibrary("koin.compose").get())

@@ -1,105 +1,92 @@
-name: Workflow for master/development branches
+## Overview
+#
+# This reusable GitHub Actions workflow provides a comprehensive Continuous Integration (CI) pipeline
+# for multi-platform mobile and desktop applications, specifically designed for projects using Gradle and Java/Kotlin.
+#
+### Key Features
+# - Automated code quality checks
+# - Dependency management and verification
+# - Cross-platform desktop application builds (Windows, Linux, MacOS)
+# - Android APK build generation
+# - Artifact generation and storage
+#
+### Workflow Jobs
+# 1. **Setup**: Prepares the build environment
+#   - Checks out repository code
+#   - Sets up Java 17
+#   - Configures Gradle
+#   - Manages dependency caching
+#
+# 2. **Code Quality Checks**:
+#   - Build logic verification
+#   - Code formatting checks (Spotless)
+#   - Static code analysis (Detekt)
+#
+# 3. **Dependency Guard**:
+#   - Verifies dependencies against baseline
+#   - Prevents unauthorized dependency changes
+#   - Supports automatic baseline updates
+#
+# 4. **Android App Build**:
+#   - Builds debug APK for demo flavor
+#   - Uploads APK artifacts
+#
+# 5. **Desktop App Build**:
+#   - Builds applications for Windows, Linux, and MacOS
+#   - Generates platform-specific executables and packages
+#
+### Prerequisites
+#   - Java 17
+#   - Gradle
+#   - Configured build scripts for:
+#       - Android module
+#       - Desktop module
+#   - Installed Gradle plugins:
+#       - Spotless
+#       - Detekt
+#       - Dependency Guard
+#
+### Configuration Parameters
+# The workflow requires two input parameters:
+#
+#   |         Parameter      |              Description           |  Type  | Required |
+#   |------------------------|------------------------------------|--------|----------|
+#   | `android_package_name` | Name of the Android project module | String |    Yes   |
+#   | `desktop_package_name` | Name of the Desktop project module | String |    Yes   |
+#
 
+# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/pr-check.yaml
+
+# ##############################################################################
+#                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
+# ##############################################################################
+
+
+name: PR Checks
+
+# Trigger conditions for the workflow
 on:
-  pull_request:
-    branches:
-      - 'kmp-impl'
   push:
-    branches:
-      - 'kmp-impl'
+    branches: [ dev ]  # Runs on pushes to dev branch
+  pull_request:
+    branches: [ dev ]  # Runs on pushes to dev branch
 
+# Concurrency settings to prevent multiple simultaneous workflow runs
 concurrency:
-  group: build-${{ github.ref }}
-  cancel-in-progress: true
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true  # Cancels previous runs if a new one is triggered
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: write
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
-      - uses: gradle/actions/setup-gradle@v4
-
-      - name: Cache Gradle and build outputs
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            build
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
-
-  checks:
-    needs: setup
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        check: [ build_logic, spotless, detekt ]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
-      - name: Run ${{ matrix.check }}
-        id: run_check
-        run: |
-          if [ "${{ matrix.check }}" = "build_logic" ]; then
-            ./gradlew check -p build-logic
-          elif [ "${{ matrix.check }}" = "spotless" ]; then
-            ./gradlew spotlessCheck --no-configuration-cache --no-daemon
-          elif [ "${{ matrix.check }}" = "detekt" ]; then
-            ./gradlew detekt
-          fi
-
-      - name: Upload Detekt Reports
-        if: ${{ matrix.check == 'detekt' && steps.run_check.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: detekt-reports
-          path: |
-            **/build/reports/detekt/detekt.md
-
-  dependency_guard:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
-
-      - name: Check Dependency Guard
-        id: dependencyguard_verify
-        continue-on-error: true
-        run: ./gradlew dependencyGuard
-
-      - name: Prevent updating Dependency Guard baselines if this is a fork
-        id: checkfork_dependencyguard
-        if: steps.dependencyguard_verify.outcome == 'failure' && github.event.pull_request.head.repo.full_name != github.repository
-        run: |
-          echo "::error::Dependency Guard failed, please update baselines with: ./gradlew dependencyGuardBaseline" && exit 1
-
-        # Runs if previous job failed
-      - name: Generate new Dependency Guard baselines if verification failed and it's a PR
-        id: dependencyguard_baseline
-        if: steps.dependencyguard_verify.outcome == 'failure' && github.event_name == 'pull_request'
-        run: |
-          ./gradlew dependencyGuardBaseline
-
-      - name: Push new Dependency Guard baselines if available
-        uses: stefanzweifel/git-auto-commit-action@v5
-        if: steps.dependencyguard_baseline.outcome == 'success'
-        with:
-          file_pattern: '**/dependencies/*.txt'
-          disable_globbing: true
-          commit_message: "🤖 Updates baselines for Dependency Guard"
+  pr_checks:
+    name: PR Checks
+    uses: openMF/mifos-mobile-github-actions/.github/workflows/pr-check.yaml@main
+    secrets: inherit
+    with:
+      android_package_name: 'cmp-android' # <-- Change Your Android Package Name
+      desktop_package_name: 'cmp-desktop' # <-- Change Your Desktop Package Name
+      web_package_name: 'cmp-web' # <-- Change Your Web Package Name
+      ios_package_name: 'cmp-ios' # <-- Change Your iOS Package Name
+      build_ios: false # <-- Change to 'false' if you don't want to build iOS
