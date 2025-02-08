@@ -9,7 +9,6 @@
 .externalNativeBuild
 .idea
 /*.iml
-.kotlin
 
 # files for the dex VM
 *.dex
@@ -47,8 +46,6 @@ captures/
 /app/app-release.apk
 app/app.iml
 app/manifest-merger-release-report.txt
-
-release_keystore.keystore
 
 version.txt
 

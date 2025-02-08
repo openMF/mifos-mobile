@@ -8,63 +8,57 @@
 
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--
-    Firebase automatically adds the AD_ID permission, even though we don't use it. If you use this
-    permission you must declare how you're using it to Google Play, otherwise the app will be
-    rejected when publishing it. To avoid this we remove the permission entirely.
-    -->
-    <uses-permission
-        android:name="com.google.android.gms.permission.AD_ID"
-        tools:node="remove" />
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera.any"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
     <application
         android:name=".AndroidApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/feature_about_app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppSplash">
-
+        android:theme="@style/Theme.MifosSplash">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppSplash"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+            android:theme="@style/Theme.MifosSplash"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="barcode_ui" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
+            android:value="barcode_ui"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <provider android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider" android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/fileproviderpath"/>
         </provider>
-
-        <!-- Disable collection of AD_ID for all build variants -->
-        <meta-data
-            android:name="google_analytics_adid_collection_enabled"
-            android:value="false" />
     </application>
-
 </manifest>

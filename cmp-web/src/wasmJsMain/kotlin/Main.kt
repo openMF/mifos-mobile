@@ -34,10 +34,10 @@ fun main() {
 
     /*
      * Creates a Canvas-based window for rendering the Compose UI.
-     * This window uses the canvas element with the ID "ComposeTarget" and has the title "WebApp".
+     * This window uses the canvas element with the ID "ComposeTarget" and has the title "Mifos Mobile".
      */
     CanvasBasedWindow(
-        title = "WebApp", // Window title
+        title = "Mifos Mobile", // Window title
         canvasElementId = "ComposeTarget", // The canvas element where the Compose UI will be rendered
     ) {
         /*

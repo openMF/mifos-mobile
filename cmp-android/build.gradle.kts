@@ -14,11 +14,12 @@ plugins {
     alias(libs.plugins.mifos.android.application)
     alias(libs.plugins.mifos.android.application.compose)
     alias(libs.plugins.mifos.android.application.flavors)
+    alias(libs.plugins.gms)
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.devtools.ksp")
 }
 
-val packageNameSpace: String = libs.versions.androidPackageName.get()
+val packageNameSpace: String = libs.versions.androidPackageNamespace.get()
 
 android {
     namespace = "cmp.android.app"
@@ -131,6 +132,9 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+
+    implementation(libs.google.oss.licenses)
+
 
     runtimeOnly(libs.androidx.compose.runtime)
     debugImplementation(libs.androidx.compose.ui.tooling)
