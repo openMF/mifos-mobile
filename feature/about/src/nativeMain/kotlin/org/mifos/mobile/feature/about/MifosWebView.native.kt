@@ -20,10 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 @Composable
 actual fun MifosWebView(
     htmlContent: String,
-    isLoading: (isLoading: Boolean) -> Unit,
-    onUrlClicked: (url: String) -> Unit,
+    onLoadingChange: (isLoading: Boolean) -> Unit,
     modifier: Modifier,
 ) {
+    onLoadingChange(false)
     Box(modifier = modifier.fillMaxSize()) {
         Text(
             text = "Implement platform specific WebView for IOS",

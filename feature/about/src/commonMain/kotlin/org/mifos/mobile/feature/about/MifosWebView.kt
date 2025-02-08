@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 @Composable
 expect fun MifosWebView(
     htmlContent: String,
-    isLoading: (isLoading: Boolean) -> Unit,
-    onUrlClicked: (url: String) -> Unit,
+    onLoadingChange: (isLoading: Boolean) -> Unit,
     modifier: Modifier,
 )

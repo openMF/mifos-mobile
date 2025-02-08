@@ -27,13 +27,14 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.feature.about.MifosWebView
-import org.mifos.mobile.feature.about.openUrl
 
 @Composable
 internal fun PrivacyPolicyScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var isLoading by remember { mutableStateOf(true) }
+
     MifosScaffold(
         topBarTitle = stringResource(Res.string.feature_about_privacy_policy),
         backPress = navigateBack,
@@ -41,26 +42,26 @@ internal fun PrivacyPolicyScreen(
         content = {
             WebView(
                 url = stringResource(Res.string.feature_about_policy_url),
+                isLoading = isLoading,
+                onLoadingChange = { isLoading = it },
             )
         },
     )
 }
 
-// @SuppressLint("SetJavaScriptEnabled")
 @Composable
 private fun WebView(
     url: String,
+    isLoading: Boolean,
+    onLoadingChange: (isLoading: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var isLoading by remember { mutableStateOf(true) }
-
     Column(modifier) {
         Spacer(modifier = Modifier.height(20.dp))
         MifosWebView(
             htmlContent = url,
-            isLoading = { isLoading = it },
+            onLoadingChange = onLoadingChange,
             modifier = Modifier.fillMaxWidth(),
-            onUrlClicked = { url -> openUrl(url) },
         )
         if (isLoading) {
             MifosProgressIndicator()
