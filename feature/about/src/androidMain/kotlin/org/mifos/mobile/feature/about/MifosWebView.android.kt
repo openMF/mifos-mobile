@@ -20,8 +20,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 actual fun MifosWebView(
     htmlContent: String,
-    isLoading: (isLoading: Boolean) -> Unit,
-    onUrlClicked: (url: String) -> Unit,
+    onLoadingChange: (isLoading: Boolean) -> Unit,
     modifier: Modifier,
 ) {
     AndroidView(
@@ -43,17 +42,17 @@ actual fun MifosWebView(
                         ) {
                             true
                         } else {
-                            onUrlClicked(request?.url.toString())
+                            openUrl(request?.url.toString())
                             true
                         }
                     }
 
                     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                        isLoading(true)
+                        onLoadingChange(true)
                     }
 
                     override fun onPageFinished(view: WebView?, url: String?) {
-                        isLoading(false)
+                        onLoadingChange(false)
                     }
                 }
                 loadUrl(htmlContent)

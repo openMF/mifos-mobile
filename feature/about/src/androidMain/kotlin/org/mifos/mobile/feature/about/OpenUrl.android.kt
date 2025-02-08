@@ -9,18 +9,22 @@
  */
 package org.mifos.mobile.feature.about
 
-import android.content.Intent
-import android.net.Uri
-
 internal actual fun openUrl(url: String?) {
-    val uri = url?.let { Uri.parse(url) } ?: return
-    val intent = Intent().apply {
-        action = Intent.ACTION_VIEW
-        data = uri
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    AndroidApp.instance.startActivity(intent)
+//    val uri = url?.let { Uri.parse(url) } ?: return
+//    val intent = Intent().apply {
+//        action = Intent.ACTION_VIEW
+//        data = uri
+//        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//    }
+//    AndroidApp.instance.startActivity(intent)
 }
 
 internal actual fun openOssLicenses() {
+//    val context: Application by inject
+//    val intent = Intent(
+//        AndroidApp.instance,
+//        OssLicensesMenuActivity::class.java,
+//    )
+//    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//    AndroidApp.instance.startActivity(intent)
 }
