@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosTextButtonWithTopDrawable(
@@ -60,9 +60,9 @@ fun MifosTextButtonWithTopDrawable(
     )
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTextButtonWithTopDrawablePreview(
+fun MifosTextButtonWithTopDrawablePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

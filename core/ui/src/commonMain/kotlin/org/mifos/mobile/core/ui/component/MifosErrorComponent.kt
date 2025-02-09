@@ -37,7 +37,7 @@ import mifos_mobile.core.ui.generated.resources.something_went_wrong
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosErrorComponent(
@@ -174,7 +174,7 @@ fun EmptyDataComponentWithModifiedMessageAndIcon(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun NoInternetPreview() {
     MifosMobileTheme {
@@ -182,7 +182,7 @@ fun NoInternetPreview() {
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun EmptyDataPreview() {
     MifosMobileTheme {
@@ -190,9 +190,9 @@ fun EmptyDataPreview() {
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun EmptyDataComponentWithModifiedMessageAndIconPreview(
+fun EmptyDataComponentWithModifiedMessageAndIconPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

@@ -31,7 +31,7 @@ import mifos_mobile.core.ui.generated.resources.core_common_working
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +84,7 @@ fun MifosRadioButtonDialog(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun PreviewRadioButtonDialog() {
     MifosMobileTheme {

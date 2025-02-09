@@ -28,7 +28,7 @@ actual object ImageUtil {
         val originalImage: BufferedImage = try {
             ImageIO.read(inputStream)
         } catch (e: Exception) {
-            e.printStackTrace()
+//            e.printStackTrace()
             return ByteArray(0)
         }
 
@@ -45,7 +45,7 @@ actual object ImageUtil {
         try {
             ImageIO.write(scaledImage, "JPEG", byteArrayOutputStream)
         } catch (e: Exception) {
-            e.printStackTrace()
+//            e.printStackTrace()
         }
 
         return byteArrayOutputStream.toByteArray()

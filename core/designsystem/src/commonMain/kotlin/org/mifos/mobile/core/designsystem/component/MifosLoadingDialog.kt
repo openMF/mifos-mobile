@@ -35,6 +35,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 @Composable
 fun MifosLoadingDialog(
     visibilityState: LoadingDialogState,
+    modifier: Modifier = Modifier,
 ) {
     when (visibilityState) {
         is LoadingDialogState.Hidden -> Unit
@@ -51,7 +52,7 @@ fun MifosLoadingDialog(
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     ),
-                    modifier = Modifier
+                    modifier = modifier
                         .semantics {
                             testTag = "AlertPopup"
                         }

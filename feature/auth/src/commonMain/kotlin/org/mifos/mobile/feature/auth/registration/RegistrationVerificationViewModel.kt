@@ -18,11 +18,11 @@ import mifos_mobile.feature.auth.generated.resources.could_not_register_user_err
 import mifos_mobile.feature.auth.generated.resources.empty_authentication_token
 import mifos_mobile.feature.auth.generated.resources.empty_requestid
 import mifos_mobile.feature.auth.generated.resources.verified
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "verification_state"
 
@@ -39,10 +39,17 @@ class RegistrationVerificationViewModel(
 
     override fun handleAction(action: VerificationAction) {
         when (action) {
-            is VerificationAction.AuthenticationTokenChange -> updateState { it.copy(authenticationToken = action.authenticationToken) }
+            is VerificationAction.AuthenticationTokenChange -> updateState {
+                it.copy(
+                    authenticationToken = action.authenticationToken,
+                )
+            }
+
             is VerificationAction.RequestIdChange -> updateState { it.copy(requestId = action.requestId) }
             is VerificationAction.RequestIdError -> updateState { it.copy(requestIdError = false) }
-            is VerificationAction.ConfirmationDialog -> updateState { it.copy(showConfirmationDialog = action.confirmationDialog) }
+            is VerificationAction.ConfirmationDialog -> updateState {
+                it.copy(showConfirmationDialog = action.confirmationDialog)
+            }
             is VerificationAction.Internal.ReceiveRegisterResult -> handleVerificationResult(action)
             is VerificationAction.SubmitClick -> handleSubmitClick()
             VerificationAction.ErrorDialogDismiss -> updateState { it.copy(dialogState = null) }
@@ -52,7 +59,13 @@ class RegistrationVerificationViewModel(
     private fun handleSubmitClick() {
         val errorMessage = validateForm()
         if (errorMessage != null) {
-            updateState { it.copy(dialogState = VerificationState.VerificationDialog.Error(errorMessage)) }
+            updateState {
+                it.copy(
+                    dialogState = VerificationState.VerificationDialog.Error(
+                        errorMessage,
+                    ),
+                )
+            }
         } else {
             verifyUser()
         }
@@ -67,7 +80,11 @@ class RegistrationVerificationViewModel(
 
             is DataState.Error -> {
                 updateState {
-                    it.copy(dialogState = VerificationState.VerificationDialog.Error(result.exception.message ?: "An error occurred."))
+                    it.copy(
+                        dialogState = VerificationState.VerificationDialog.Error(
+                            result.exception.message ?: "An error occurred.",
+                        ),
+                    )
                 }
             }
 
@@ -102,7 +119,13 @@ class RegistrationVerificationViewModel(
                     ),
                 )
             } catch (e: Exception) {
-                updateState { it.copy(dialogState = VerificationState.VerificationDialog.Error((e.message ?: Res.string.could_not_register_user_error).toString())) }
+                updateState {
+                    it.copy(
+                        dialogState = VerificationState.VerificationDialog.Error(
+                            (e.message ?: Res.string.could_not_register_user_error).toString(),
+                        ),
+                    )
+                }
             }
         }
     }
@@ -124,6 +147,7 @@ data class VerificationState(
         data class Error(val message: String) : VerificationDialog
     }
 }
+
 sealed interface VerificationEvent {
     data class ShowToast(val message: String) : VerificationEvent
     data class NavigateToLogin(val username: String) : VerificationEvent

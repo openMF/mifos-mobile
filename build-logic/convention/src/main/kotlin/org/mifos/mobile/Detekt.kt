@@ -9,6 +9,14 @@ import org.gradle.kotlin.dsl.named
 internal fun Project.configureDetekt(extension: DetektExtension) = extension.apply {
     tasks.named<Detekt>("detekt") {
         jvmTarget = "17"
+        source(files(rootDir))
+        include("**/*.kt")
+        exclude("**/*.kts")
+        exclude("**/resources/**")
+        exclude("**/build/**")
+        exclude("**/generated/**")
+        exclude("**/build-logic/**")
+        exclude("**/spotless/**")
         reports {
             xml.required.set(true)
             html.required.set(true)

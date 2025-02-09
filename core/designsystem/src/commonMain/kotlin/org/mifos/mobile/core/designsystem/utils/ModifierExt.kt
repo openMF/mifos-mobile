@@ -12,7 +12,6 @@ package org.mifos.mobile.core.designsystem.utils
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -32,33 +31,42 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.LayoutDirection
 
 @Stable
-@Composable
 fun Modifier.mirrorIfRtl(): Modifier =
-    if (LocalLayoutDirection.current == LayoutDirection.Rtl) {
-        scale(scaleX = -1f, scaleY = 1f)
-    } else {
-        this
+    composed(
+        inspectorInfo = debugInspectorInfo {
+            name = "mirrorIfRtl"
+        },
+    ) {
+        if (LocalLayoutDirection.current == LayoutDirection.Rtl) {
+            scale(scaleX = -1f, scaleY = 1f)
+        } else {
+            this
+        }
     }
 
 @Stable
-@Composable
-fun Modifier.tabNavigation(): Modifier {
-    val focusManager = LocalFocusManager.current
-    return onPreviewKeyEvent { keyEvent ->
-        if (keyEvent.key == Key.Tab && keyEvent.type == KeyEventType.KeyDown) {
-            focusManager.moveFocus(
-                if (keyEvent.isShiftPressed) {
-                    FocusDirection.Previous
-                } else {
-                    FocusDirection.Next
-                },
-            )
-            true
-        } else {
-            false
+fun Modifier.tabNavigation(): Modifier =
+    composed(
+        inspectorInfo = debugInspectorInfo {
+            name = "tabNavigation"
+        },
+    ) {
+        val focusManager = LocalFocusManager.current
+        onPreviewKeyEvent { keyEvent ->
+            if (keyEvent.key == Key.Tab && keyEvent.type == KeyEventType.KeyDown) {
+                focusManager.moveFocus(
+                    if (keyEvent.isShiftPressed) {
+                        FocusDirection.Previous
+                    } else {
+                        FocusDirection.Next
+                    },
+                )
+                true
+            } else {
+                false
+            }
         }
     }
-}
 
 fun Modifier.onClick(
     indication: Indication? = null,
@@ -66,7 +74,7 @@ fun Modifier.onClick(
     onClickLabel: String? = null,
     role: Role? = null,
     onClick: () -> Unit,
-) = this.composed(
+) = composed(
     inspectorInfo = debugInspectorInfo {
         name = "onClickModifier"
         value = enabled

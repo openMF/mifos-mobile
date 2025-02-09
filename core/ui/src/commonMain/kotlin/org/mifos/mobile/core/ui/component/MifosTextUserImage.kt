@@ -26,7 +26,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 import kotlin.math.min
 
 @Composable
@@ -57,9 +57,9 @@ fun MifosTextUserImage(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTextUserImagePreview(
+fun MifosTextUserImagePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

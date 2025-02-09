@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -22,7 +23,6 @@ import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "state"
 
@@ -58,6 +58,7 @@ class LoginViewModel(
                     )
                 }
             }
+
             is LoginAction.PasswordChanged -> {
                 updateState {
                     it.copy(
@@ -66,18 +67,23 @@ class LoginViewModel(
                     )
                 }
             }
+
             is LoginAction.TogglePasswordVisibility -> {
                 updateState { it.copy(isPasswordVisible = !it.isPasswordVisible) }
             }
+
             is LoginAction.LoginClicked -> {
                 loginUser(state.username, state.password)
             }
+
             is LoginAction.Internal.ReceiveLoginResult -> {
                 handleLoginResult(action)
             }
+
             is LoginAction.SignupClicked -> {
                 sendEvent(LoginEvent.NavigateToSignup)
             }
+
             is LoginAction.ErrorDialogDismiss -> updateState { it.copy(dialogState = null) }
         }
     }
@@ -135,7 +141,13 @@ class LoginViewModel(
                     mutableStateFlow.update { it.copy(clientName = clientName ?: "clientName") }
                 }
             } catch (e: Exception) {
-                mutableStateFlow.update { it.copy(dialogState = LoginState.DialogState.Error(e.message ?: "Error loading client")) }
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = LoginState.DialogState.Error(
+                            e.message ?: "Error loading client",
+                        ),
+                    )
+                }
             }
         }
     }

@@ -32,7 +32,7 @@ import mifos_mobile.core.ui.generated.resources.core_ui_money_in
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosTextTitleDescSingleLine(
@@ -153,9 +153,9 @@ fun MifosTitleDescSingleLineEqual(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTextTitleDescSingleLinePreview(
+fun MifosTextTitleDescSingleLinePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
@@ -167,9 +167,9 @@ private fun MifosTextTitleDescSingleLinePreview(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTextTitleDescDoubleLinePreview(
+fun MifosTextTitleDescDoubleLinePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
@@ -182,9 +182,9 @@ private fun MifosTextTitleDescDoubleLinePreview(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTextTitleDescDrawableSingleLinePreview(
+fun MifosTextTitleDescDrawableSingleLinePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
@@ -197,9 +197,9 @@ private fun MifosTextTitleDescDrawableSingleLinePreview(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTitleDescSingleLineEqualPreview(
+fun MifosTitleDescSingleLineEqualPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

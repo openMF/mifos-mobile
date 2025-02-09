@@ -58,6 +58,7 @@ import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -74,7 +75,7 @@ internal fun LoginScreen(
 
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    EventsEffect(viewModel) { event ->
+    EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is LoginEvent.NavigateToSignup -> navigateToRegisterScreen.invoke()
             is LoginEvent.NavigateToPasscodeScreen -> navigateToPasscodeScreen.invoke()
@@ -121,7 +122,7 @@ private fun LoginScreen(
         LoginScreenContent(
             state = state,
             onAction = onAction,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
             createAccount = navigateToRegisterScreen,
@@ -153,8 +154,8 @@ private fun LoginDialogs(
 @Composable
 private fun LoginScreenContent(
     state: LoginState,
-    modifier: Modifier = Modifier,
     onAction: (LoginAction) -> Unit,
+    modifier: Modifier = Modifier,
     createAccount: () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -180,12 +181,14 @@ private fun LoginScreenContent(
                 onAction(LoginAction.UsernameChanged(it))
             },
             label = stringResource(Res.string.username),
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(Res.drawable.feature_auth_ic_person),
-                    contentDescription = null,
-                )
-            },
+            config = MifosTextFieldConfig(
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(Res.drawable.feature_auth_ic_person),
+                        contentDescription = null,
+                    )
+                },
+            ),
         )
 
         MifosPasswordField(

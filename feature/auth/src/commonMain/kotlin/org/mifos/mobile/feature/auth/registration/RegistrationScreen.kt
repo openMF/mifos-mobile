@@ -66,12 +66,13 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -86,7 +87,7 @@ internal fun RegistrationScreen(
 
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    EventsEffect(viewModel) { event ->
+    EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is SignUpEvent.ShowToast -> {
                 scope.launch {
@@ -103,7 +104,7 @@ internal fun RegistrationScreen(
         snackbarHostState = snackbarHostState,
         navigateBack = navigateBack,
         onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
+            viewModel.trySendAction(it)
         },
         modifier = modifier,
     )
@@ -183,37 +184,47 @@ private fun RegistrationScreenContent(
             onValueChange = { onAction(SignUpAction.AccountInputChange(it)) },
             label = stringResource(Res.string.account_number),
             modifier = Modifier.fillMaxWidth(),
-            isError = state.accountNumber.isEmpty(),
+            config = MifosTextFieldConfig(
+                isError = state.accountNumber.isEmpty(),
+            ),
         )
         MifosOutlinedTextField(
             value = state.userNameInput,
             onValueChange = { onAction(SignUpAction.EmailInputChange(it)) },
             label = stringResource(Res.string.username),
             modifier = Modifier.fillMaxWidth(),
-            isError = state.userNameInput.isEmpty(),
+            config = MifosTextFieldConfig(
+                isError = state.userNameInput.isEmpty(),
+            ),
         )
         MifosOutlinedTextField(
             value = state.firstNameInput,
             onValueChange = { onAction(SignUpAction.FirstNameInputChange(it)) },
             label = stringResource(Res.string.first_name),
             modifier = Modifier.fillMaxWidth(),
-            isError = state.firstNameInput.isEmpty(),
+            config = MifosTextFieldConfig(
+                isError = state.firstNameInput.isEmpty(),
+            ),
         )
         MifosOutlinedTextField(
             value = state.lastNameInput,
             onValueChange = { onAction(SignUpAction.LastNameInputChange(it)) },
             label = stringResource(Res.string.last_name),
             modifier = Modifier.fillMaxWidth(),
-            isError = state.lastNameInput.isEmpty(),
+            config = MifosTextFieldConfig(
+                isError = state.lastNameInput.isEmpty(),
+            ),
         )
 
         MifosOutlinedTextField(
             value = state.mobileNumberInput,
             label = stringResource(Res.string.phone_number),
             modifier = Modifier.fillMaxWidth(),
-            isError = state.mobileNumberInput.isEmpty(),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Phone,
+            config = MifosTextFieldConfig(
+                isError = state.mobileNumberInput.isEmpty(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Phone,
+                ),
             ),
             onValueChange = {
                 onAction(SignUpAction.MobileNumberInputChange(it))
@@ -225,7 +236,9 @@ private fun RegistrationScreenContent(
             onValueChange = { onAction(SignUpAction.EmailInputChange(it)) },
             label = stringResource(Res.string.email),
             modifier = Modifier.fillMaxWidth(),
-            isError = state.emailInput.isEmpty(),
+            config = MifosTextFieldConfig(
+                isError = state.emailInput.isEmpty(),
+            ),
         )
 
         MifosOutlinedTextField(
@@ -236,23 +249,25 @@ private fun RegistrationScreenContent(
             },
             label = stringResource(Res.string.password),
             modifier = Modifier.fillMaxWidth(),
-            visualTransformation = if (state.isPasswordVisible) {
-                VisualTransformation.None
-            } else {
-                PasswordVisualTransformation()
-            },
-            trailingIcon = {
-                val image = if (state.isPasswordVisible) {
-                    MifosIcons.Visibility
+            config = MifosTextFieldConfig(
+                visualTransformation = if (state.isPasswordVisible) {
+                    VisualTransformation.None
                 } else {
-                    MifosIcons.VisibilityOff
-                }
-                IconButton(onClick = { onAction(SignUpAction.TogglePasswordVisibility) }) {
-                    Icon(imageVector = image, null)
-                }
-            },
-            isError = state.passwordInput.isEmpty(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    PasswordVisualTransformation()
+                },
+                trailingIcon = {
+                    val image = if (state.isPasswordVisible) {
+                        MifosIcons.Visibility
+                    } else {
+                        MifosIcons.VisibilityOff
+                    }
+                    IconButton(onClick = { onAction(SignUpAction.TogglePasswordVisibility) }) {
+                        Icon(imageVector = image, null)
+                    }
+                },
+                isError = state.passwordInput.isEmpty(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            ),
         )
 
         if (state.isPasswordChanged) {
@@ -264,7 +279,7 @@ private fun RegistrationScreenContent(
                 PasswordStrengthState.STRONG,
                 PasswordStrengthState.GOOD,
                 PasswordStrengthState.VERY_STRONG,
-                -> 1f
+                    -> 1f
             }
             LinearProgressIndicator(
                 progress = { progress },
@@ -286,23 +301,25 @@ private fun RegistrationScreenContent(
             onValueChange = { onAction(SignUpAction.ConfirmPasswordInputChange(it)) },
             label = stringResource(Res.string.confirm_password),
             modifier = Modifier.fillMaxWidth(),
-            visualTransformation = if (state.isConfirmPasswordVisible) {
-                VisualTransformation.None
-            } else {
-                PasswordVisualTransformation()
-            },
-            trailingIcon = {
-                val image = if (state.isConfirmPasswordVisible) {
-                    MifosIcons.Visibility
+            config = MifosTextFieldConfig(
+                visualTransformation = if (state.isConfirmPasswordVisible) {
+                    VisualTransformation.None
                 } else {
-                    MifosIcons.VisibilityOff
-                }
-                IconButton(onClick = { onAction(SignUpAction.ConfirmTogglePasswordVisibility) }) {
-                    Icon(imageVector = image, null)
-                }
-            },
-            isError = state.confirmPasswordInput.isEmpty(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    PasswordVisualTransformation()
+                },
+                trailingIcon = {
+                    val image = if (state.isConfirmPasswordVisible) {
+                        MifosIcons.Visibility
+                    } else {
+                        MifosIcons.VisibilityOff
+                    }
+                    IconButton(onClick = { onAction(SignUpAction.ConfirmTogglePasswordVisibility) }) {
+                        Icon(imageVector = image, null)
+                    }
+                },
+                isError = state.confirmPasswordInput.isEmpty(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            ),
         )
 
         Row(
@@ -319,7 +336,6 @@ private fun RegistrationScreenContent(
             radioOptions.forEach { authMode ->
                 RadioButton(
                     selected = (authMode == state.authenticationMode),
-//                    onClick = { authenticationMode = authMode },
                     onClick = { onAction(SignUpAction.AuthenticationMode(authMode)) },
                 )
                 Text(
@@ -349,9 +365,9 @@ private fun RegistrationScreenContent(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun RegistrationScreenPreview() {
+fun RegistrationScreenPreview() {
     MifosMobileTheme {
         RegistrationScreen(
             state = SignUpState(dialogState = null),

@@ -59,36 +59,38 @@ fun MifosPasswordField(
         label = label,
         value = value,
         onValueChange = onValueChange,
-        visualTransformation = when {
-            !showPassword -> PasswordVisualTransformation()
-            readOnly -> nonLetterColorVisualTransformation()
-            else -> VisualTransformation.None
-        },
-        singleLine = singleLine,
-        readOnly = readOnly,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = imeAction,
-        ),
-        keyboardActions = keyboardActions,
-        errorText = hint,
-        trailingIcon = {
-            IconButton(
-                onClick = { showPasswordChange.invoke(!showPassword) },
-            ) {
-                val imageVector = if (showPassword) {
-                    MifosIcons.OutlinedVisibilityOff
-                } else {
-                    MifosIcons.OutlinedVisibility
-                }
+        config = MifosTextFieldConfig(
+            visualTransformation = when {
+                !showPassword -> PasswordVisualTransformation()
+                readOnly -> nonLetterColorVisualTransformation()
+                else -> VisualTransformation.None
+            },
+            singleLine = singleLine,
+            readOnly = readOnly,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction,
+            ),
+            keyboardActions = keyboardActions,
+            errorText = hint,
+            trailingIcon = {
+                IconButton(
+                    onClick = { showPasswordChange.invoke(!showPassword) },
+                ) {
+                    val imageVector = if (showPassword) {
+                        MifosIcons.OutlinedVisibilityOff
+                    } else {
+                        MifosIcons.OutlinedVisibility
+                    }
 
-                Icon(
-                    modifier = Modifier.semantics { showPasswordTestTag?.let { testTag = it } },
-                    imageVector = imageVector,
-                    contentDescription = "togglePassword",
-                )
-            }
-        },
+                    Icon(
+                        modifier = Modifier.semantics { showPasswordTestTag?.let { testTag = it } },
+                        imageVector = imageVector,
+                        contentDescription = "togglePassword",
+                    )
+                }
+            },
+        ),
     )
     if (autoFocus) {
         LaunchedEffect(Unit) { focusRequester.requestFocus() }

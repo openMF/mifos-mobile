@@ -58,13 +58,11 @@ expect annotation class Entity(
     val ignoredColumns: Array<String>,
 )
 
-class OnConflictStrategy {
-    companion object {
-        const val NONE = 0
-        const val REPLACE = 1
-        const val ROLLBACK = 2
-        const val ABORT = 3
-        const val FAIL = 4
-        const val IGNORE = 5
-    }
+object OnConflictStrategy {
+    const val NONE = 0
+    const val REPLACE = 1
+    const val ROLLBACK = 2
+    const val ABORT = 3
+    const val FAIL = 4
+    const val IGNORE = 5
 }

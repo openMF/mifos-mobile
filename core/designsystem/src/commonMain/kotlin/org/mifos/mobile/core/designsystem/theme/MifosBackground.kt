@@ -51,9 +51,9 @@ fun MifosBackground(
  * composable to render the both themes.
  */
 @Preview
-annotation class ThemePreviews
+annotation class ThemePreview
 
-@ThemePreviews
+@ThemePreview
 @Composable
 fun BackgroundDefault() {
     MifosMobileTheme {
@@ -61,7 +61,7 @@ fun BackgroundDefault() {
     }
 }
 
-@ThemePreviews
+@ThemePreview
 @Composable
 fun BackgroundDynamic() {
     MifosMobileTheme {
@@ -69,7 +69,7 @@ fun BackgroundDynamic() {
     }
 }
 
-@ThemePreviews
+@ThemePreview
 @Composable
 fun BackgroundAndroid() {
     MifosMobileTheme {

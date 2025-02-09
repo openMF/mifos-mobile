@@ -30,7 +30,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun FaqItemHolder(
@@ -91,9 +91,9 @@ fun FaqItemHolder(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun FaqItemHolderPreview(
+fun FaqItemHolderPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

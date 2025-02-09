@@ -32,7 +32,6 @@ fun RootNavGraph(
     ) {
         composable(MAIN_GRAPH) {
             App(
-                modifier = modifier,
                 networkMonitor = networkMonitor,
             )
         }

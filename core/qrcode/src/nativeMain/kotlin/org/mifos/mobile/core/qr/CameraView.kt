@@ -58,8 +58,8 @@ import platform.darwin.dispatch_get_main_queue
 
 @Composable
 fun UiScannerView(
-    modifier: Modifier = Modifier,
     allowedMetadataTypes: List<AVMetadataObjectType>,
+    modifier: Modifier = Modifier,
     onScanned: (String) -> Boolean,
 ) {
     val coordinator = remember {
@@ -103,7 +103,8 @@ fun UiScannerView(
 }
 
 @OptIn(ExperimentalForeignApi::class)
-class ScannerPreviewView(private val coordinator: ScannerCameraCoordinator) : UIView(frame = cValue { CGRectZero }) {
+class ScannerPreviewView(private val coordinator: ScannerCameraCoordinator) :
+    UIView(frame = cValue { CGRectZero }) {
     @OptIn(ExperimentalForeignApi::class)
     override fun layoutSubviews() {
         super.layoutSubviews()
@@ -128,62 +129,53 @@ class ScannerCameraCoordinator(
     fun prepare(layer: CALayer, allowedMetadataTypes: List<AVMetadataObjectType>) {
         captureSession = AVCaptureSession()
         val device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+
         if (device == null) {
             println("Device has no camera")
-            return
-        }
+        } else {
+            println("Initializing video input")
+            val videoInput = createVideoInput(device)
+            println("Adding video input")
+            if (videoInput != null && captureSession.canAddInput(videoInput)) {
+                captureSession.addInput(videoInput)
 
-        println("Initializing video input")
-        val videoInput = memScoped {
-            val error: ObjCObjectVar<NSError?> = alloc<ObjCObjectVar<NSError?>>()
-            val videoInput = AVCaptureDeviceInput(device = device, error = error.ptr)
-            if (error.value != null) {
-                println(error.value)
-                null
+                val metadataOutput = AVCaptureMetadataOutput()
+                println("Adding metadata output")
+                if (captureSession.canAddOutput(metadataOutput)) {
+                    captureSession.addOutput(metadataOutput)
+
+                    metadataOutput.setMetadataObjectsDelegate(
+                        this,
+                        queue = dispatch_get_main_queue(),
+                    )
+                    metadataOutput.metadataObjectTypes = allowedMetadataTypes
+
+                    println("Adding preview layer")
+                    previewLayer = AVCaptureVideoPreviewLayer(session = captureSession).also {
+                        it.frame = layer.bounds
+                        it.videoGravity = AVLayerVideoGravityResizeAspectFill
+                        println("Set orientation")
+                        setCurrentOrientation(newOrientation = UIDevice.currentDevice.orientation)
+                        println("Adding sublayer")
+                        layer.bounds.useContents {
+                            println("Bounds: ${this.size.width}x${this.size.height}")
+                        }
+                        layer.frame.useContents {
+                            println("Frame: ${this.size.width}x${this.size.height}")
+                        }
+                        layer.addSublayer(it)
+                    }
+
+                    println("Launching capture session")
+                    GlobalScope.launch(Dispatchers.Default) {
+                        captureSession.startRunning()
+                    }
+                } else {
+                    println("Could not add output")
+                }
             } else {
-                videoInput
+                println("Could not add input")
             }
-        }
-
-        println("Adding video input")
-        if (videoInput != null && captureSession.canAddInput(videoInput)) {
-            captureSession.addInput(videoInput)
-        } else {
-            println("Could not add input")
-            return
-        }
-
-        val metadataOutput = AVCaptureMetadataOutput()
-
-        println("Adding metadata output")
-        if (captureSession.canAddOutput(metadataOutput)) {
-            captureSession.addOutput(metadataOutput)
-
-            metadataOutput.setMetadataObjectsDelegate(this, queue = dispatch_get_main_queue())
-            metadataOutput.metadataObjectTypes = allowedMetadataTypes
-        } else {
-            println("Could not add output")
-            return
-        }
-        println("Adding preview layer")
-        previewLayer = AVCaptureVideoPreviewLayer(session = captureSession).also {
-            it.frame = layer.bounds
-            it.videoGravity = AVLayerVideoGravityResizeAspectFill
-            println("Set orientation")
-            setCurrentOrientation(newOrientation = UIDevice.currentDevice.orientation)
-            println("Adding sublayer")
-            layer.bounds.useContents {
-                println("Bounds: ${this.size.width}x${this.size.height}")
-            }
-            layer.frame.useContents {
-                println("Frame: ${this.size.width}x${this.size.height}")
-            }
-            layer.addSublayer(it)
-        }
-
-        println("Launching capture session")
-        GlobalScope.launch(Dispatchers.Default) {
-            captureSession.startRunning()
         }
     }
 
@@ -191,12 +183,17 @@ class ScannerCameraCoordinator(
         when (newOrientation) {
             UIDeviceOrientation.UIDeviceOrientationLandscapeLeft ->
                 previewLayer?.connection?.videoOrientation = AVCaptureVideoOrientationLandscapeRight
+
             UIDeviceOrientation.UIDeviceOrientationLandscapeRight ->
                 previewLayer?.connection?.videoOrientation = AVCaptureVideoOrientationLandscapeLeft
+
             UIDeviceOrientation.UIDeviceOrientationPortrait ->
                 previewLayer?.connection?.videoOrientation = AVCaptureVideoOrientationPortrait
+
             UIDeviceOrientation.UIDeviceOrientationPortraitUpsideDown ->
-                previewLayer?.connection?.videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown
+                previewLayer?.connection?.videoOrientation =
+                    AVCaptureVideoOrientationPortraitUpsideDown
+
             else ->
                 previewLayer?.connection?.videoOrientation = AVCaptureVideoOrientationPortrait
         }
@@ -207,7 +204,8 @@ class ScannerCameraCoordinator(
         didOutputMetadataObjects: List<*>,
         fromConnection: platform.AVFoundation.AVCaptureConnection,
     ) {
-        val metadataObject = didOutputMetadataObjects.firstOrNull() as? AVMetadataMachineReadableCodeObject
+        val metadataObject =
+            didOutputMetadataObjects.firstOrNull() as? AVMetadataMachineReadableCodeObject
         metadataObject?.stringValue?.let { onFound(it) }
     }
 
@@ -223,5 +221,20 @@ class ScannerCameraCoordinator(
 
     fun setFrame(rect: CValue<CGRect>) {
         previewLayer?.setFrame(rect)
+    }
+}
+
+// Extracted function: Creates a video input
+@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
+private fun createVideoInput(device: AVCaptureDevice): AVCaptureDeviceInput? {
+    return memScoped {
+        val error: ObjCObjectVar<NSError?> = alloc()
+        val videoInput = AVCaptureDeviceInput(device = device, error = error.ptr)
+        if (error.value != null) {
+            println(error.value)
+            null
+        } else {
+            videoInput
+        }
     }
 }

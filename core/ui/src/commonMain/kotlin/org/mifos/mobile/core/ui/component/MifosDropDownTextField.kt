@@ -37,13 +37,13 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosDropDownTextField(
     onClick: (Int, String) -> Unit,
-    modifier: Modifier = Modifier,
     labelResId: StringResource,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     supportingText: String? = null,
     error: Boolean = false,
@@ -112,8 +112,8 @@ fun MifosDropDownTextField(
 @Composable
 fun MifosDropDownDoubleTextField(
     onClick: (Int, Pair<String, String>) -> Unit,
-    modifier: Modifier = Modifier,
     labelResId: StringResource,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     supportingText: String? = null,
     error: Boolean = false,
@@ -185,9 +185,9 @@ fun MifosDropDownDoubleTextField(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosDropDownTextFieldPreview(
+fun MifosDropDownTextFieldPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
@@ -204,9 +204,9 @@ private fun MifosDropDownTextFieldPreview(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosDropDownDoubleTextFieldPreview(
+fun MifosDropDownDoubleTextFieldPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

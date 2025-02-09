@@ -19,7 +19,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
 @Composable
 fun MifosSearchTextField(
@@ -79,20 +77,4 @@ fun MifosSearchTextField(
         ),
         singleLine = true,
     )
-}
-
-@Composable
-private fun MifosSearchTextFieldPreview(
-    modifier: Modifier = Modifier,
-) {
-    MifosMobileTheme {
-        Surface {
-            MifosSearchTextField(
-                value = TextFieldValue("Search"),
-                onValueChange = {},
-                onSearchDismiss = {},
-                modifier = modifier,
-            )
-        }
-    }
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosItemCard(
@@ -44,9 +44,9 @@ fun MifosItemCard(
     )
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosItemCardPreview(
+fun MifosItemCardPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
