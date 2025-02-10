@@ -29,6 +29,7 @@ import mifos_mobile.feature.auth.generated.resources.error_mobile_length
 import mifos_mobile.feature.auth.generated.resources.error_password_not_match
 import mifos_mobile.feature.auth.generated.resources.invalid_phn_number
 import mifos_mobile.feature.auth.generated.resources.password_strength_weak
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.utils.isValidEmail
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.IgnoredOnParcel
@@ -39,7 +40,6 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
-import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "signup_state"
 
@@ -64,29 +64,34 @@ class RegistrationViewModel(
             is SignUpAction.EmailInputChange -> updateState { it.copy(emailInput = action.email) }
             is SignUpAction.MobileNumberInputChange -> updateState { it.copy(mobileNumberInput = action.mobileNumber) }
             is SignUpAction.PasswordInputChange -> handlePasswordInput(action.password)
-            is SignUpAction.ConfirmPasswordInputChange -> updateState { it.copy(confirmPasswordInput = action.confirmPassword) }
+            is SignUpAction.ConfirmPasswordInputChange -> updateState {
+                it.copy(confirmPasswordInput = action.confirmPassword)
+            }
             is SignUpAction.UserNameInputChange -> updateState { it.copy(userNameInput = action.username) }
             is SignUpAction.CountryInputChange -> updateState { it.copy(countryInput = action.country) }
             is SignUpAction.IsPasswordChanges -> updateState { it.copy(isPasswordChanged = true) }
             is SignUpAction.AuthenticationMode -> updateState {
                 it.copy(
-                    authenticationMode =
-                    action.authenticationMode,
+                    authenticationMode = action.authenticationMode,
                 )
             }
+
             is SignUpAction.TogglePasswordVisibility -> updateState {
                 it.copy(
-                    isPasswordVisible =
-                    !it.isPasswordVisible,
+                    isPasswordVisible = !it.isPasswordVisible,
                 )
             }
+
             is SignUpAction.ConfirmTogglePasswordVisibility -> updateState {
                 it.copy(
-                    isConfirmPasswordVisible = !it
-                        .isPasswordVisible,
+                    isConfirmPasswordVisible = !it.isPasswordVisible,
                 )
             }
-            is SignUpAction.Internal.ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
+
+            is SignUpAction.Internal.ReceivePasswordStrengthResult -> handlePasswordStrengthResult(
+                action,
+            )
+
             is SignUpAction.Internal.ReceiveRegisterResult -> handleRegisterResult(action)
             is SignUpAction.SubmitClick -> handleSubmitClick()
             SignUpAction.ErrorDialogDismiss -> updateState { it.copy(dialogState = null) }
@@ -145,7 +150,11 @@ class RegistrationViewModel(
 
             is DataState.Error -> {
                 updateState {
-                    it.copy(dialogState = SignUpDialog.Error(result.exception.message ?: "An error occurred."))
+                    it.copy(
+                        dialogState = SignUpDialog.Error(
+                            result.exception.message ?: "An error occurred.",
+                        ),
+                    )
                 }
             }
 
@@ -206,7 +215,13 @@ class RegistrationViewModel(
                     ),
                 )
             } catch (e: Exception) {
-                updateState { it.copy(dialogState = SignUpDialog.Error((e.message ?: Res.string.could_not_register_user_error).toString())) }
+                updateState {
+                    it.copy(
+                        dialogState = SignUpDialog.Error(
+                            (e.message ?: Res.string.could_not_register_user_error).toString(),
+                        ),
+                    )
+                }
             }
         }
     }

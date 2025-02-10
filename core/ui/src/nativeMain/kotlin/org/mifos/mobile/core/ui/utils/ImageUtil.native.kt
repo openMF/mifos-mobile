@@ -34,7 +34,8 @@ actual object ImageUtil {
         val scaledImage = Image.makeFromBitmap(scaledBitmap)
 
         return scaledImage.encodeToData()?.bytes
-            ?: throw IllegalStateException("Failed to encode bitmap")
+//            ?: throw IllegalStateException("Failed to encode bitmap")
+            ?: error("Failed to encode bitmap")
     }
 
     private fun calculateActualDimensions(

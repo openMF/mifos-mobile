@@ -34,7 +34,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosSearchTextField
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosTitleSearchCard(
@@ -94,9 +94,9 @@ fun MifosTitleSearchCard(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosTitleSearchCardPreview(
+fun MifosTitleSearchCardPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

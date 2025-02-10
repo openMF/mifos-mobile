@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosCheckBox(
@@ -41,7 +41,7 @@ fun MifosCheckBox(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun MifosCheckBoxPreview() {
     MifosMobileTheme {

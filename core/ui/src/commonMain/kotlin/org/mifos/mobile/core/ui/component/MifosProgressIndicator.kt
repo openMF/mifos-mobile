@@ -18,9 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun MifosProgressIndicator(
     modifier: Modifier = Modifier.fillMaxSize(),
@@ -34,7 +34,7 @@ fun MifosProgressIndicator(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun MifosProgressIndicatorOverlay(
     modifier: Modifier = Modifier.fillMaxSize(),

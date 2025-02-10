@@ -450,6 +450,13 @@ naming:
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
+    excludes:
+      - "**/*.jvm.kt"
+      - "**/*.desktop.kt"
+      - "**/*.wasmJs.kt"
+      - "**/*.native.kt"
+      - "**/*.js.kt"
+      - "**/*.android.kt"
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true

@@ -56,9 +56,10 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -85,16 +86,18 @@ internal fun RegistrationVerificationScreen(
         },
     )
 
-    EventsEffect(viewModel) { event ->
+    EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is VerificationEvent.ShowToast -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(event.message)
                 }
             }
+
             is VerificationEvent.NavigateToLogin -> {
                 onVerified.invoke()
             }
+
             is VerificationEvent.NavigateToRegister -> {
                 navigateBack.invoke()
             }
@@ -210,8 +213,10 @@ private fun RegistrationVerificationContent(
                 onAction(VerificationAction.RequestIdChange(it))
             },
             label = stringResource(Res.string.request_id),
-            errorText = stringResource(Res.string.empty_requestid),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            config = MifosTextFieldConfig(
+                errorText = stringResource(Res.string.empty_requestid),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            ),
         )
 
         MifosOutlinedTextField(
@@ -220,7 +225,9 @@ private fun RegistrationVerificationContent(
                 onAction(VerificationAction.AuthenticationTokenChange(it))
             },
             label = stringResource(Res.string.authentication_token),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            config = MifosTextFieldConfig(
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            ),
         )
 
         MifosButton(
@@ -239,9 +246,9 @@ private fun RegistrationVerificationContent(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun RegistrationVerificationScreenPreview(
+fun RegistrationVerificationScreenPreview(
     state: VerificationState,
 ) {
     MifosMobileTheme {

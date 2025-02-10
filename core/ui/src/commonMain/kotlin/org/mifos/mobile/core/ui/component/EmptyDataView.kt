@@ -29,7 +29,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun EmptyDataView(
@@ -62,9 +62,9 @@ fun EmptyDataView(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun EmptyDataViewPreview(
+fun EmptyDataViewPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

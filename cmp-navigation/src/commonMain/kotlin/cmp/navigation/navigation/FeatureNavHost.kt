@@ -26,7 +26,7 @@ const val WELCOME_ROUTE = "home_route"
 @Composable
 internal fun FeatureNavHost(
     appState: AppState,
-    onClickLogout: () -> Unit,
+//    onClickLogout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
@@ -46,9 +46,11 @@ fun NavGraphBuilder.homeScreen() {
 }
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
