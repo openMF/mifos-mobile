@@ -21,6 +21,9 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.core.common)
             implementation(projects.core.network)
+
+            implementation(projects.feature.auth)
+
             //put your multiplatform dependencies here
             implementation(compose.material3)
             implementation(compose.foundation)

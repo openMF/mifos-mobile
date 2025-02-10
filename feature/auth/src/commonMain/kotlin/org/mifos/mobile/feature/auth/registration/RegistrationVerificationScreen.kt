@@ -12,17 +12,15 @@ package org.mifos.mobile.feature.auth.registration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -50,10 +48,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -63,8 +59,8 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun RegistrationVerificationScreen(
-    navigateBack: () -> Unit?,
-    onVerified: () -> Unit,
+    navigateToRegister: () -> Unit?,
+    navigateToLogin: () -> Unit,
     viewModel: RegistrationVerificationViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -72,17 +68,15 @@ internal fun RegistrationVerificationScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     BackCallback(isEnabled = true) {
-        VerificationAction.ConfirmationDialog(true)
+        viewModel.trySendAction(VerificationAction.ConfirmationDialog(true))
     }
 
     VerificationDialogs(
         dialogState = state.dialogState,
-        showConfirmationDialog = state.showConfirmationDialog,
-        onDismissRequest = { VerificationAction.ConfirmationDialog(false) },
-        onConfirmExit = {
-            VerificationAction.ConfirmationDialog(false)
-            navigateBack()
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
         },
+        onDismissRequest = { viewModel.trySendAction(VerificationAction.ConfirmationDialog(false)) },
     )
 
     EventsEffect(viewModel) { event ->
@@ -93,10 +87,10 @@ internal fun RegistrationVerificationScreen(
                 }
             }
             is VerificationEvent.NavigateToLogin -> {
-                onVerified.invoke()
+                navigateToLogin.invoke()
             }
-            is VerificationEvent.NavigateToRegister -> {
-                navigateBack.invoke()
+            is VerificationEvent.NavigateToRegistration -> {
+                navigateToRegister.invoke()
             }
         }
     }
@@ -106,16 +100,14 @@ internal fun RegistrationVerificationScreen(
             { viewModel.trySendAction(it) }
         },
         snackbarHostState = snackbarHostState,
-        navigateBack = { VerificationAction.ConfirmationDialog(true) },
     )
 }
 
 @Composable
 private fun VerificationDialogs(
+    onAction: (VerificationAction) -> Unit,
     dialogState: VerificationState.VerificationDialog?,
-    showConfirmationDialog: Boolean,
     onDismissRequest: () -> Unit,
-    onConfirmExit: () -> Unit,
 ) {
     when (dialogState) {
         is VerificationState.VerificationDialog.Error -> MifosBasicDialog(
@@ -126,15 +118,9 @@ private fun VerificationDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is VerificationState.VerificationDialog.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
+        is VerificationState.VerificationDialog.Loading -> MifosProgressIndicatorOverlay()
 
-        null -> Unit
-    }
-
-    if (showConfirmationDialog) {
-        MifosBasicDialog(
+        is VerificationState.VerificationDialog.ConfirmationDialog -> MifosBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = stringResource(Res.string.dialog_cancel_registration_title),
                 message = stringResource(Res.string.dialog_cancel_registration_message),
@@ -142,8 +128,10 @@ private fun VerificationDialogs(
             confirmText = stringResource(Res.string.yes),
             cancelText = stringResource(Res.string.no),
             onDismissRequest = onDismissRequest,
-            onConfirm = onConfirmExit,
+            onConfirm = { onAction(VerificationAction.NavigateToRegistration) },
         )
+
+        null -> Unit
     }
 }
 
@@ -152,12 +140,11 @@ private fun RegistrationVerificationScreen(
     state: VerificationState,
     onAction: (VerificationAction) -> Unit,
     snackbarHostState: SnackbarHostState,
-    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.register),
-        backPress = navigateBack,
+        backPress = { onAction(VerificationAction.ConfirmationDialog(true)) },
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         content = { contentPadding ->
@@ -167,11 +154,6 @@ private fun RegistrationVerificationScreen(
                     .fillMaxSize(),
             ) {
                 RegistrationVerificationContent(state = state, onAction = onAction)
-                when (state.dialogState) {
-                    is VerificationState.VerificationDialog.Loading -> MifosProgressIndicatorOverlay()
-                    is VerificationState.VerificationDialog.Error -> {}
-                    null -> {}
-                }
             }
         },
     )
@@ -184,7 +166,7 @@ private fun RegistrationVerificationContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(11.dp),
     ) {
         Image(
             painter = painterResource(Res.drawable.feature_auth_mifos_logo),
@@ -222,20 +204,21 @@ private fun RegistrationVerificationContent(
             label = stringResource(Res.string.authentication_token),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+        )
 
         MifosButton(
-            text = { stringResource(Res.string.verify) },
             onClick = {
                 onAction(VerificationAction.SubmitClick)
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 12.dp),
-            contentPadding = PaddingValues(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-        )
+                .fillMaxWidth(),
+        ) {
+            Text(text = stringResource(Res.string.verify))
+        }
     }
 }
 

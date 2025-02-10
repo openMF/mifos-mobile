@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -22,7 +23,6 @@ import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.common.DataState
 
 private const val KEY_STATE = "state"
 
@@ -85,7 +85,7 @@ class LoginViewModel(
     private fun handleLoginResult(action: LoginAction.Internal.ReceiveLoginResult) {
         when (action.loginResult) {
             is DataState.Error -> {
-                val message = action.loginResult.exception.message ?: ""
+                val message = action.loginResult.exception.message ?: "Error logging in"
 
                 mutableStateFlow.update {
                     it.copy(dialogState = LoginState.DialogState.Error(message))
@@ -102,7 +102,10 @@ class LoginViewModel(
                 mutableStateFlow.update {
                     it.copy(dialogState = null)
                 }
-                sendEvent(LoginEvent.NavigateToPasscodeScreen)
+                // TODO Can be removed after integrating passcode and directly navigate to
+                //  passcode
+                sendEvent(LoginEvent.ShowToast("Successfully logged in"))
+//                sendEvent(LoginEvent.NavigateToPasscodeScreen)
             }
         }
     }

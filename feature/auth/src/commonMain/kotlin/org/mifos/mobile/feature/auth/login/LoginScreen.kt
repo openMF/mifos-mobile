@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.auth.login
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -100,7 +99,6 @@ internal fun LoginScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
-        navigateToRegisterScreen = { navigateToRegisterScreen() },
     )
 }
 
@@ -111,7 +109,6 @@ private fun LoginScreen(
     snackbarHostState: SnackbarHostState,
     onAction: (LoginAction) -> Unit,
     modifier: Modifier = Modifier,
-    navigateToRegisterScreen: () -> Unit,
 ) {
     MifosScaffold(
         snackbarHostState = snackbarHostState,
@@ -124,7 +121,6 @@ private fun LoginScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            createAccount = navigateToRegisterScreen,
         )
     }
 }
@@ -155,13 +151,13 @@ private fun LoginScreenContent(
     state: LoginState,
     modifier: Modifier = Modifier,
     onAction: (LoginAction) -> Unit,
-    createAccount: () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
+            .padding(11.dp)
             .verticalScroll(rememberScrollState())
             .pointerInput(Unit) {
                 detectTapGestures(
@@ -199,14 +195,12 @@ private fun LoginScreenContent(
             showPasswordChange = {
                 onAction(LoginAction.TogglePasswordVisibility)
             },
-
         )
+        Spacer(modifier = Modifier.height(8.dp))
 
         MifosButton(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 4.dp),
-            contentPadding = PaddingValues(12.dp),
+                .fillMaxWidth(),
             enabled = state.isLoginButtonEnabled,
             onClick = {
                 onAction(LoginAction.LoginClicked)
@@ -219,7 +213,7 @@ private fun LoginScreenContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -229,7 +223,6 @@ private fun LoginScreenContent(
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp)
                     .weight(1f),
                 thickness = 1.dp,
                 color = Color.Gray,
@@ -243,7 +236,6 @@ private fun LoginScreenContent(
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(end = 16.dp)
                     .weight(1f),
                 thickness = 1.dp,
                 color = Color.Gray,
@@ -251,7 +243,7 @@ private fun LoginScreenContent(
         }
 
         MifosButton(
-            onClick = createAccount,
+            onClick = { onAction(LoginAction.SignupClicked) },
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally),
@@ -269,7 +261,6 @@ private fun LoanScreenPreview() {
             state = LoginState(dialogState = null),
             snackbarHostState = remember { SnackbarHostState() },
             onAction = {},
-            navigateToRegisterScreen = {},
         )
     }
 }

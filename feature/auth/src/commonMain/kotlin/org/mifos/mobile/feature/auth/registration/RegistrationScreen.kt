@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -73,10 +72,9 @@ import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.core.ui.utils.EventsEffect
-
 @Composable
 internal fun RegistrationScreen(
-    onVerified: () -> Unit,
+    navigateToVerification: () -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = koinViewModel(),
@@ -94,14 +92,14 @@ internal fun RegistrationScreen(
                 }
             }
 
-            is SignUpEvent.NavigateToLogin -> onVerified.invoke()
+            is SignUpEvent.NavigateToVerification -> navigateToVerification.invoke()
+            is SignUpEvent.NavigateBack -> navigateBack.invoke()
         }
     }
 
     RegistrationScreen(
         state = state,
         snackbarHostState = snackbarHostState,
-        navigateBack = navigateBack,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -113,14 +111,13 @@ internal fun RegistrationScreen(
 private fun RegistrationScreen(
     state: SignUpState,
     snackbarHostState: SnackbarHostState,
-    navigateBack: () -> Unit,
     onAction: (SignUpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBarTitle = stringResource(Res.string.register),
-        backPress = navigateBack,
+        backPress = { onAction(SignUpAction.BackPress) },
         modifier = modifier,
         content = { contentPadding ->
             Box(
@@ -134,7 +131,7 @@ private fun RegistrationScreen(
                 )
 
                 when {
-                    state.dialogState is SignUpDialog.Loading -> {
+                    state.dialogState is SignUpState.SignUpDialog.Loading -> {
                         MifosProgressIndicatorOverlay()
                     }
                 }
@@ -163,7 +160,7 @@ private fun RegistrationScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 12.dp)
+            .padding(11.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = {
@@ -187,7 +184,7 @@ private fun RegistrationScreenContent(
         )
         MifosOutlinedTextField(
             value = state.userNameInput,
-            onValueChange = { onAction(SignUpAction.EmailInputChange(it)) },
+            onValueChange = { onAction(SignUpAction.UserNameInputChange(it)) },
             label = stringResource(Res.string.username),
             modifier = Modifier.fillMaxWidth(),
             isError = state.userNameInput.isEmpty(),
@@ -269,8 +266,7 @@ private fun RegistrationScreenContent(
             LinearProgressIndicator(
                 progress = { progress },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
+                    .fillMaxWidth().padding(top = 5.dp),
                 color = when (progress) {
                     0.25f -> Color.Red
                     0.5f -> Color(alpha = 255, red = 220, green = 185, blue = 0)
@@ -302,24 +298,21 @@ private fun RegistrationScreenContent(
                 }
             },
             isError = state.confirmPasswordInput.isEmpty(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         )
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(Res.string.verification_mode),
-                modifier = Modifier.padding(end = 8.dp),
                 color = MaterialTheme.colorScheme.onSurface,
             )
             radioOptions.forEach { authMode ->
                 RadioButton(
                     selected = (authMode == state.authenticationMode),
-//                    onClick = { authenticationMode = authMode },
                     onClick = { onAction(SignUpAction.AuthenticationMode(authMode)) },
                 )
                 Text(
@@ -330,20 +323,16 @@ private fun RegistrationScreenContent(
         }
 
         MifosButton(
-            text = { stringResource(Res.string.register) },
             onClick = {
                 onAction(SignUpAction.SubmitClick)
-
                 keyboardController?.hide()
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 4.dp),
+                .fillMaxWidth(),
             contentPadding = PaddingValues(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-        )
+        ) {
+            Text(text = stringResource(Res.string.register))
+        }
 
         Spacer(modifier = Modifier.imePadding())
     }
@@ -356,7 +345,6 @@ private fun RegistrationScreenPreview() {
         RegistrationScreen(
             state = SignUpState(dialogState = null),
             snackbarHostState = remember { SnackbarHostState() },
-            navigateBack = {},
             onAction = {},
             modifier = Modifier,
         )

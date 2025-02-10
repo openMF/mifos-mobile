@@ -9,9 +9,11 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
 import org.mifos.mobile.core.model.entity.User
@@ -47,8 +49,12 @@ class UserAuthRepositoryImp(
         )
         return try {
             withContext(ioDispatcher) {
-                dataManager.registrationApi.registerUser(registerPayload)
-                DataState.Success("User registered Successfully")
+                val result = dataManager.registrationApi.registerUser(registerPayload)
+                val errorMessage = result.bodyAsText()
+                when (result.status.value) {
+                    200 -> DataState.Success("User registered Successfully")
+                    else -> DataState.Error(Exception("Error in registering user: $errorMessage"), null)
+                }
             }
         } catch (e: Exception) {
             DataState.Error(e, null)
@@ -63,7 +69,12 @@ class UserAuthRepositoryImp(
         return try {
             withContext(ioDispatcher) {
                 val user = dataManager.authenticationApi.authenticate(loginPayload)
-                DataState.Success(user)
+                logger.withTag("ktorClient").d { user.toString() }
+                if (user.base64EncodedAuthenticationKey != null) {
+                    DataState.Success(user)
+                } else {
+                    DataState.Error(Exception("Invalid Credentials"), null)
+                }
             }
         } catch (e: Exception) {
             DataState.Error(e, null)
@@ -80,9 +91,16 @@ class UserAuthRepositoryImp(
         )
         return try {
             withContext(ioDispatcher) {
-                dataManager.registrationApi.verifyUser(userVerify)
+                val result = dataManager.registrationApi.verifyUser(userVerify)
+                val errorMessage = result.bodyAsText()
+                when (result.status.value) {
+                    200 -> DataState.Success("User Verified Successfully")
+                    else -> DataState.Error(
+                        Exception("Error in verifying user: $errorMessage"),
+                        null,
+                    )
+                }
             }
-            DataState.Success("User Verified Successfully")
         } catch (e: Exception) {
             DataState.Error(e, null)
         }
@@ -98,7 +116,15 @@ class UserAuthRepositoryImp(
         )
         return try {
             withContext(ioDispatcher) {
-                dataManager.userDetailsApi.updateAccountPassword(payload)
+                val result = dataManager.userDetailsApi.updateAccountPassword(payload)
+                val errorMessage = result.bodyAsText()
+                when (result.status.value) {
+                    200 -> DataState.Success("User Verified Successfully")
+                    else -> DataState.Error(
+                        Exception("Error in verifying user: $errorMessage"),
+                        null,
+                    )
+                }
             }
             DataState.Success("Password Updated Successfully")
         } catch (e: Exception) {
