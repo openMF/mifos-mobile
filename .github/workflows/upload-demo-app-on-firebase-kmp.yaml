@@ -40,4 +40,4 @@ jobs:
           keystore_alias_password: ${{ secrets.ORIGINAL_KEYSTORE_ALIAS_PASSWORD }}
           google_services: ${{ secrets.GOOGLESERVICES }}
           firebase_creds: ${{ secrets.FIREBASECREDS }}
-          tester_groups: ${{ inputs.tester_groups }}
+          tester_groups: ${{ inputs.tester_groups || 'mifos-mobile-testers' }}
