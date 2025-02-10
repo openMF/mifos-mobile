@@ -62,18 +62,18 @@
 # ##############################################################################
 
 
-name: PR Checks
+name: PR Checks for KMP
 
 # Trigger conditions for the workflow
 on:
   push:
-    branches: [ dev ]  # Runs on pushes to dev branch
+    branches: [ kmp-impl ]  # Runs on pushes to dev branch
   pull_request:
-    branches: [ dev ]  # Runs on pushes to dev branch
+    branches: [ kmp-impl ]  # Runs on pushes to dev branch
 
 # Concurrency settings to prevent multiple simultaneous workflow runs
 concurrency:
-  group: pr-${{ github.ref }}
+  group: pr-kmp-${{ github.ref }}
   cancel-in-progress: true  # Cancels previous runs if a new one is triggered
 
 permissions:
@@ -81,7 +81,7 @@ permissions:
 
 jobs:
   pr_checks:
-    name: PR Checks
+    name: PR Checks KMP
     uses: openMF/mifos-mobile-github-actions/.github/workflows/pr-check.yaml@main
     secrets: inherit
     with:

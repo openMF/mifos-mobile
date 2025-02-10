@@ -20,12 +20,13 @@ concurrency:
 
 jobs:
   upload_demo_app_on_firebase:
-    name: Upload Demo App on Firebase
+    name: Upload Demo App on Firebase KMP
     runs-on: macos-latest
     if: github.event.label.name == 'firebase-test-on' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: kmp-impl
           fetch-depth: 0
 
       - name: ☁️ Deploy Android App on Firebase

@@ -18,7 +18,7 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-val packageNameSpace: String = libs.versions.androidPackageName.get()
+val packageNameSpace: String = libs.versions.androidPackageNamespace.get()
 
 android {
     namespace = "cmp.android.app"
@@ -33,7 +33,8 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "../keystores/release_keystore.keystore")
+            storeFile =
+                file(System.getenv("KEYSTORE_PATH") ?: "../keystores/release_keystore.keystore")
             storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "mifos1234"
             keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "mifos-mobile"
             keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "mifos1234"
@@ -56,7 +57,10 @@ android {
             isDebuggable = false
             isJniDebuggable = false
             signingConfig = signingConfigs.getByName("release")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 
@@ -75,6 +79,19 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
+    }
+
+    lint {
+        xmlReport = true
+        checkDependencies = true
+        abortOnError = false
+        // Disable this rule until we ship the libraries to some maven.
+        disable += "ResourceName"
+        disable += "MissingTranslation"
+        disable += "ExtraTranslation"
+        baseline = File("lint-baseline.xml")
+        explainIssues = true
+        htmlReport = true
     }
 }
 dependencyGuard {
