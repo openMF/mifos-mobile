@@ -37,9 +37,8 @@ build/
 !/.idea/codeStyles/Project.xml
 !/.idea/codeStyles/codeStyleConfig.xml
 
-
-# Kotlin
-.kotlin
+secrets/
+fastlane/report.xml
 
 # Android Studio captures folder
 captures/
@@ -48,10 +47,7 @@ captures/
 app/app.iml
 app/manifest-merger-release-report.txt
 
-release_keystore.keystore
-
 version.txt
-
 firebaseAppDistributionServiceCredentialsFile.json
 playStorePublishServiceCredentialsFile.json
 

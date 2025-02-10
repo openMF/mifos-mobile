@@ -113,13 +113,13 @@ jbSavedState = "1.2.2"
 
 # Desktop Version
 packageName = "MifosWallet"
-packageNamespace = "org.mifos.desktop"
+packageNamespace = "org.mifos.mobile"
 packageVersion = "1.0.0"
 roomCommonVersion = "2.6.1"
 
 # Android Version
 androidPackageName = "AndroidApp"
-androidPackageNamespace = "cmp.android.app"
+androidPackageNamespace = "org.mifos.mobile"
 androidPackageVersion = "1.0.0"
 
 [libraries]
