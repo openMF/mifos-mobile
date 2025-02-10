@@ -19,21 +19,22 @@ object PasswordChecker {
     private const val MAX_PASSWORD_LENGTH = 128
 
     fun getPasswordStrengthResult(password: String): PasswordStrengthResult {
-        when {
-            password.isEmpty() -> return PasswordStrengthResult.Error("Password cannot be empty.")
+        return when {
+            password.isEmpty() -> PasswordStrengthResult.Error("Password cannot be empty.")
             password.length > MAX_PASSWORD_LENGTH -> {
-                return PasswordStrengthResult.Error(
+                PasswordStrengthResult.Error(
                     "Password is too long. Maximum length is $MAX_PASSWORD_LENGTH characters.",
                 )
             }
+
+            else -> {
+                val result = getPasswordStrength(password)
+                PasswordStrengthResult.Success(result)
+            }
         }
-
-        val result = getPasswordStrength(password)
-
-        return PasswordStrengthResult.Success(result)
     }
 
-    fun getPasswordStrength(password: String): PasswordStrength {
+    private fun getPasswordStrength(password: String): PasswordStrength {
         val length = password.length
         val hasUpperCase = password.any { it.isUpperCase() }
         val hasLowerCase = password.any { it.isLowerCase() }

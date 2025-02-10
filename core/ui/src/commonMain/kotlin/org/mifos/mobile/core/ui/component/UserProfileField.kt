@@ -31,7 +31,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun UserProfileField(
@@ -83,9 +83,9 @@ fun UserProfileField(
     HorizontalDivider()
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun UserProfileFieldPreview(
+fun UserProfileFieldPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {
@@ -98,9 +98,9 @@ private fun UserProfileFieldPreview(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun UserProfileFieldValuePreview(
+fun UserProfileFieldValuePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

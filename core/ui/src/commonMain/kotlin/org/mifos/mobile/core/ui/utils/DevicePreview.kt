@@ -16,4 +16,4 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
  * to render various devices.
  */
 @Preview
-annotation class DevicePreviews
+annotation class DevicePreview

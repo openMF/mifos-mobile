@@ -29,7 +29,7 @@ val PreferencesModule = module {
     single<UserPreferencesRepository> {
         UserPreferencesRepositoryImpl(
             preferenceManager = get(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
+//            ioDispatcher = get(named(MifosDispatchers.IO.name)),
             unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
         )
     }

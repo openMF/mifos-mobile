@@ -33,15 +33,10 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.inter
     crossinline nextItemOnMainAxis: LazyState.(LazyStateItem) -> LazyStateItem?,
     crossinline itemIndex: (LazyStateItem) -> Int,
 ): Float {
-    if (visibleItems.isEmpty()) return 0f
-
     val firstItem = visibleItems.first()
     val firstItemIndex = itemIndex(firstItem)
 
-    if (firstItemIndex < 0) return Float.NaN
-
     val firstItemSize = itemSize(firstItem)
-    if (firstItemSize == 0) return Float.NaN
 
     val itemOffset = offset(firstItem).toFloat()
     val offsetPercentage = abs(itemOffset) / firstItemSize
@@ -50,7 +45,12 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.inter
 
     val nextItemIndex = itemIndex(nextItem)
 
-    return firstItemIndex + ((nextItemIndex - firstItemIndex) * offsetPercentage)
+    return when {
+        visibleItems.isEmpty() -> 0f
+        firstItemIndex < 0 -> Float.NaN
+        firstItemSize == 0 -> Float.NaN
+        else -> firstItemIndex + ((nextItemIndex - firstItemIndex) * offsetPercentage)
+    }
 }
 
 /**

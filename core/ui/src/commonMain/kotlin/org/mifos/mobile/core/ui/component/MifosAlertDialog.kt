@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosAlertDialog(
@@ -55,9 +55,9 @@ fun MifosAlertDialog(
     )
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosAlertDialogPreview(
+fun MifosAlertDialogPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

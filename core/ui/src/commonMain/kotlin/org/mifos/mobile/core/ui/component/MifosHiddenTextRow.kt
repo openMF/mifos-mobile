@@ -33,7 +33,7 @@ import mifos_mobile.core.ui.generated.resources.core_ui_money_in
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosHiddenTextRow(
@@ -88,9 +88,9 @@ fun MifosHiddenTextRow(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosHiddenTextRowPreview(
+fun MifosHiddenTextRowPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

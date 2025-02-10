@@ -42,23 +42,10 @@ fun MifosOutlinedTextField(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    showClearIcon: Boolean = true,
-    readOnly: Boolean = false,
-    clearIcon: ImageVector = MifosIcons.Close,
-    isError: Boolean = false,
-    errorText: String? = null,
-    onClickClearIcon: () -> Unit = { onValueChange("") },
     textStyle: TextStyle = LocalTextStyle.current,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = true,
-    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
-    minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-    trailingIcon: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
+    config: MifosTextFieldConfig = MifosTextFieldConfig(),
+    onClickClearIcon: () -> Unit = { onValueChange("") },
 ) {
     val isFocused by interactionSource.collectIsFocusedAsState()
     val showIcon by rememberUpdatedState(value.isNotEmpty())
@@ -69,33 +56,33 @@ fun MifosOutlinedTextField(
         onValueChange = onValueChange,
         textStyle = textStyle,
         modifier = modifier.fillMaxWidth(),
-        enabled = enabled,
-        readOnly = readOnly,
-        visualTransformation = visualTransformation,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
+        enabled = config.enabled,
+        readOnly = config.readOnly,
+        visualTransformation = config.visualTransformation,
+        keyboardOptions = config.keyboardOptions,
+        keyboardActions = config.keyboardActions,
         interactionSource = interactionSource,
-        singleLine = singleLine,
-        maxLines = maxLines,
-        minLines = minLines,
-        leadingIcon = leadingIcon,
-        isError = isError,
+        singleLine = config.singleLine,
+        maxLines = config.maxLines,
+        minLines = config.minLines,
+        leadingIcon = config.leadingIcon,
+        isError = config.isError,
         trailingIcon = @Composable {
             AnimatedContent(
-                targetState = showClearIcon && isFocused && showIcon,
+                targetState = config.showClearIcon && isFocused && showIcon,
             ) {
                 if (it) {
                     ClearIconButton(
                         showClearIcon = true,
-                        clearIcon = clearIcon,
+                        clearIcon = config.clearIcon,
                         onClickClearIcon = onClickClearIcon,
                     )
                 } else {
-                    trailingIcon?.invoke()
+                    config.trailingIcon?.invoke()
                 }
             }
         },
-        supportingText = errorText?.let {
+        supportingText = config.errorText?.let {
             {
                 Text(
                     modifier = Modifier.testTag("errorTag"),
@@ -114,23 +101,10 @@ fun MifosTextField(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    showClearIcon: Boolean = true,
-    readOnly: Boolean = false,
-    clearIcon: ImageVector = MifosIcons.Close,
-    isError: Boolean = false,
-    errorText: String? = null,
-    onClickClearIcon: () -> Unit = { onValueChange("") },
     textStyle: TextStyle = LocalTextStyle.current,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = true,
-    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
-    minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-    trailingIcon: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
+    config: MifosTextFieldConfig = MifosTextFieldConfig(),
+    onClickClearIcon: () -> Unit = { onValueChange("") },
 ) {
     val isFocused by interactionSource.collectIsFocusedAsState()
     val showIcon by rememberUpdatedState(value.isNotEmpty())
@@ -141,33 +115,33 @@ fun MifosTextField(
         onValueChange = onValueChange,
         textStyle = textStyle,
         modifier = modifier.fillMaxWidth(),
-        enabled = enabled,
-        readOnly = readOnly,
-        visualTransformation = visualTransformation,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
+        enabled = config.enabled,
+        readOnly = config.readOnly,
+        visualTransformation = config.visualTransformation,
+        keyboardOptions = config.keyboardOptions,
+        keyboardActions = config.keyboardActions,
         interactionSource = interactionSource,
-        singleLine = singleLine,
-        maxLines = maxLines,
-        minLines = minLines,
-        leadingIcon = leadingIcon,
-        isError = isError,
+        singleLine = config.singleLine,
+        maxLines = config.maxLines,
+        minLines = config.minLines,
+        leadingIcon = config.leadingIcon,
+        isError = config.isError,
         trailingIcon = @Composable {
             AnimatedContent(
-                targetState = showClearIcon && isFocused && showIcon,
+                targetState = config.showClearIcon && isFocused && showIcon,
             ) {
                 if (it) {
                     ClearIconButton(
                         showClearIcon = true,
-                        clearIcon = clearIcon,
+                        clearIcon = config.clearIcon,
                         onClickClearIcon = onClickClearIcon,
                     )
                 } else {
-                    trailingIcon?.invoke()
+                    config.trailingIcon?.invoke()
                 }
             }
         },
-        supportingText = errorText?.let {
+        supportingText = config.errorText?.let {
             {
                 Text(
                     modifier = Modifier.testTag("errorTag"),
@@ -204,3 +178,20 @@ private fun ClearIconButton(
         }
     }
 }
+
+data class MifosTextFieldConfig(
+    val enabled: Boolean = true,
+    val showClearIcon: Boolean = true,
+    val readOnly: Boolean = false,
+    val clearIcon: ImageVector = MifosIcons.Close,
+    val isError: Boolean = false,
+    val errorText: String? = null,
+    val visualTransformation: VisualTransformation = VisualTransformation.None,
+    val keyboardActions: KeyboardActions = KeyboardActions.Default,
+    val singleLine: Boolean = true,
+    val maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    val minLines: Int = 1,
+    val keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+    val trailingIcon: @Composable (() -> Unit)? = null,
+    val leadingIcon: @Composable (() -> Unit)? = null,
+)

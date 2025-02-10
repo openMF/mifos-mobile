@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosUserImage(
@@ -44,9 +44,9 @@ fun MifosUserImage(
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosUserImagePreview(
+fun MifosUserImagePreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

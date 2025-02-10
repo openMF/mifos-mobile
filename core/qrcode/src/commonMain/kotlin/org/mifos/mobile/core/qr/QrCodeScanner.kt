@@ -41,7 +41,6 @@ fun QrScannerWithPermissions(
         onScanned = onScanned,
         permissionDeniedContent = { permissionState ->
             Column(
-                modifier = modifier,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
@@ -61,8 +60,8 @@ fun QrScannerWithPermissions(
 @Composable
 fun QrScannerWithPermissions(
     types: List<CodeType>,
-    modifier: Modifier = Modifier,
     onScanned: (String) -> Boolean,
+    modifier: Modifier = Modifier,
     permissionDeniedContent: @Composable (CameraPermissionState) -> Unit,
 ) {
     val permissionState = rememberCameraPermissionState()

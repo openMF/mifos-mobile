@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosLinkText(
@@ -41,9 +41,9 @@ fun MifosLinkText(
     )
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun MifosLinkTextPreview(
+fun MifosLinkTextPreview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

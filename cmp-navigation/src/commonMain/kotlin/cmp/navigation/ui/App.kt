@@ -79,7 +79,7 @@ fun App(
             ) {
                 FeatureNavHost(
                     appState = appState,
-                    onClickLogout = {},
+//                    onClickLogout = {},
                     modifier = Modifier,
                 )
             }

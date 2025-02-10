@@ -22,7 +22,7 @@ import org.mifos.mobile.core.datastore.model.UserData
 
 class UserPreferencesRepositoryImpl(
     private val preferenceManager: UserPreferencesDataSource,
-    private val ioDispatcher: CoroutineDispatcher,
+//    private val ioDispatcher: CoroutineDispatcher,
     unconfinedDispatcher: CoroutineDispatcher,
 ) : UserPreferencesRepository {
     private val unconfinedScope = CoroutineScope(unconfinedDispatcher)

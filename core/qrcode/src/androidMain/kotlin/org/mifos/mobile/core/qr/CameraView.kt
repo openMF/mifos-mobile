@@ -27,8 +27,8 @@ import co.touchlab.kermit.Logger
 
 @Composable
 fun CameraView(
-    modifier: Modifier = Modifier,
     analyzer: QrCodeAnalyzer,
+    modifier: Modifier = Modifier,
 ) {
     val localContext = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current

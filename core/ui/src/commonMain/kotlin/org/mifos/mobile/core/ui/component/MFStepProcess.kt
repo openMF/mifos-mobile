@@ -34,7 +34,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MFStepProcess(
@@ -107,9 +107,9 @@ fun getStepState(targetStep: Int, currentStep: Int): StepProcessState {
     }
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
-private fun Preview(
+fun Preview(
     modifier: Modifier = Modifier,
 ) {
     MifosMobileTheme {

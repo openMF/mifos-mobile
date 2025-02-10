@@ -36,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorProducer
@@ -45,6 +46,7 @@ import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.invalidateDraw
+import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -156,13 +158,18 @@ private fun ScrollableState.DecorativeScrollbarThumb(
     )
 }
 
-@Composable
-private fun Modifier.scrollThumb(
+fun Modifier.scrollThumb(
     scrollableState: ScrollableState,
     interactionSource: InteractionSource,
-): Modifier {
+): Modifier = composed(
+    inspectorInfo = debugInspectorInfo {
+        name = "scrollThumb"
+        properties["scrollableState"] = scrollableState
+        properties["interactionSource"] = interactionSource
+    },
+) {
     val colorState = scrollbarThumbColor(scrollableState, interactionSource)
-    return this then ScrollThumbElement { colorState.value }
+    this then ScrollThumbElement { colorState.value }
 }
 
 private data class ScrollThumbElement(val colorProducer: ColorProducer) :
@@ -174,7 +181,8 @@ private data class ScrollThumbElement(val colorProducer: ColorProducer) :
     }
 }
 
-private class ScrollThumbNode(var colorProducer: ColorProducer) : DrawModifierNode, Modifier.Node() {
+private class ScrollThumbNode(var colorProducer: ColorProducer) : DrawModifierNode,
+    Modifier.Node() {
     private val shape = RoundedCornerShape(16.dp)
 
     // naive cache outline calculation if size is the same
