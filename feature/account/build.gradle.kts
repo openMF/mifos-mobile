@@ -8,16 +8,27 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.feature)
-    alias(libs.plugins.mifos.android.library.compose)
+    alias(libs.plugins.mifos.cmp.feature)
 }
 
 android {
     namespace = "org.mifos.mobile.feature.account"
 }
 
-dependencies {
-    implementation(projects.libs.pullrefresh)
-    // Accompanist Pager Library
-    implementation(libs.accompanist.pager)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            api(projects.core.model)
+            api(projects.core.common)
+        }
+
+        androidMain.dependencies {
+            implementation(projects.libs.pullrefresh)
+            // Accompanist Pager Library
+            implementation(libs.accompanist.pager)
+        }
+    }
 }
