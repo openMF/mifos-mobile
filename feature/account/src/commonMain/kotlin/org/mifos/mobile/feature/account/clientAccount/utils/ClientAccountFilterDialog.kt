@@ -33,7 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.designsystem.components.MifosTextButton
+import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.feature.account.R
 
@@ -71,17 +71,17 @@ internal fun ClientAccountFilterDialog(
                 ) {
                     MifosTextButton(
                         onClick = clearFilter,
-                        text = stringResource(R.string.feature_account_clear_filters),
+                        text = { stringResource(R.string.feature_account_clear_filters) },
                     )
 
                     Row {
                         MifosTextButton(
                             onClick = cancelDialog,
-                            text = stringResource(R.string.feature_account_cancel),
+                            text = { stringResource(R.string.feature_account_cancel) },
                         )
                         MifosTextButton(
                             onClick = { updateFilterList(checkBoxList) },
-                            text = stringResource(R.string.feature_account_filter),
+                            text = { stringResource(R.string.feature_account_filter) },
                         )
                     }
                 }

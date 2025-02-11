@@ -144,7 +144,7 @@ fun MifosOutlinedButton(
  * @param content The button content.
  */
 @Composable
-fun MifosTextButton(
+internal fun MifosTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,

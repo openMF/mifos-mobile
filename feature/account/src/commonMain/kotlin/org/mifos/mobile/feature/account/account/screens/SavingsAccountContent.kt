@@ -32,20 +32,19 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.common.utils.CurrencyUtil
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
-internal fun LoanAccountContent(
+internal fun SavingsAccountContent(
+    accountsList: List<SavingAccount>,
     isSearching: Boolean,
     isFiltered: Boolean,
-    accountsList: List<LoanAccount>,
-    getUpdatedSearchList: (accountsList: List<LoanAccount>) -> List<LoanAccount>,
-    getUpdatedFilterList: (accountsList: List<LoanAccount>) -> List<LoanAccount>,
+    getUpdatedSearchList: (accountsList: List<SavingAccount>) -> List<SavingAccount>,
+    getUpdatedFilterList: (accountsList: List<SavingAccount>) -> List<SavingAccount>,
     onItemClick: (accountType: String, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -75,9 +74,9 @@ internal fun LoanAccountContent(
         modifier = modifier.fillMaxSize(),
         state = lazyColumnState,
     ) {
-        items(items = accounts) { loanAccount ->
-            AccountScreenLoanListItem(
-                loanAccount = loanAccount,
+        items(items = accounts) { savingAccount ->
+            AccountScreenSavingsListItem(
+                savingAccount = savingAccount,
                 onItemClick = onItemClick,
             )
         }
@@ -85,73 +84,53 @@ internal fun LoanAccountContent(
 }
 
 @Composable
-private fun AccountScreenLoanListItem(
-    loanAccount: LoanAccount,
+private fun AccountScreenSavingsListItem(
+    savingAccount: SavingAccount,
     onItemClick: (accountType: String, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
     val (color, stringResource, numColor) = when {
-        loanAccount.status?.active == true && loanAccount.inArrears == true -> {
-            Triple(
-                colorResource(R.color.red),
-                "${stringResource(id = R.string.feature_account_disbursement)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate),
-                colorResource(R.color.red),
-            )
-        }
-
-        loanAccount.status?.active == true -> {
+        savingAccount.status?.active == true -> {
             Triple(
                 colorResource(R.color.deposit_green),
-                "${stringResource(id = R.string.feature_account_disbursement)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate),
+                savingAccount.lastActiveTransactionDate?.let { DateHelper.getDateAsString(it) },
                 colorResource(R.color.deposit_green),
             )
         }
 
-        loanAccount.status?.waitingForDisbursal == true -> {
+        savingAccount.status?.approved == true -> {
             Triple(
-                colorResource(R.color.blue),
+                colorResource(R.color.light_green),
                 "${stringResource(id = R.string.feature_account_approved)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.approvedOnDate),
+                    savingAccount.timeLine?.approvedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
         }
 
-        loanAccount.status?.pendingApproval == true -> {
+        savingAccount.status?.submittedAndPendingApproval == true -> {
             Triple(
                 colorResource(R.color.light_yellow),
                 "${stringResource(id = R.string.feature_account_submitted)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.submittedOnDate),
+                    savingAccount.timeLine?.submittedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
         }
 
-        loanAccount.status?.overpaid == true -> {
+        savingAccount.status?.matured == true -> {
             Triple(
-                colorResource(R.color.purple),
-                "${stringResource(id = R.string.feature_account_approved)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.actualDisbursementDate),
-                colorResource(R.color.purple),
-            )
-        }
-
-        loanAccount.status?.closed == true -> {
-            Triple(
-                colorResource(R.color.black),
-                "${stringResource(id = R.string.feature_account_closed)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.closedOnDate),
-                null,
+                colorResource(R.color.red_light),
+                savingAccount.lastActiveTransactionDate?.let { DateHelper.getDateAsString(it) },
+                colorResource(R.color.red_light),
             )
         }
 
         else -> {
             Triple(
-                colorResource(R.color.gray_dark),
-                "${stringResource(id = R.string.feature_account_withdrawn)} " +
-                    DateHelper.getDateAsString(loanAccount.timeline?.withdrawnOnDate),
+                colorResource(R.color.light_yellow),
+                "${stringResource(id = R.string.feature_account_closed)} " +
+                    savingAccount.timeLine?.closedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
         }
@@ -159,21 +138,21 @@ private fun AccountScreenLoanListItem(
 
     Row(
         modifier = modifier.clickable {
-            onItemClick.invoke(Constants.LOAN_ACCOUNTS, loanAccount.id)
+            onItemClick.invoke(Constants.SAVINGS_ACCOUNTS, savingAccount.id)
         },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AccountTypeItemIndicator(color)
 
         Column(modifier = Modifier.padding(all = 12.dp)) {
-            loanAccount.accountNo?.let {
+            savingAccount.accountNo?.let {
                 Text(
                     text = it,
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
 
-            loanAccount.productName?.let {
+            savingAccount.productName?.let {
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
@@ -181,19 +160,30 @@ private fun AccountScreenLoanListItem(
                 )
             }
 
-            Text(
-                text = stringResource,
-                style = MaterialTheme.typography.labelLarge,
-                color = colorResource(id = R.color.gray_dark),
-            )
+            if (stringResource != null) {
+                Text(
+                    text = stringResource,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = colorResource(id = R.color.gray_dark),
+                )
+            }
         }
 
         Spacer(Modifier.weight(1f))
 
         numColor?.let {
-            val amountBalance = if (loanAccount.loanBalance != 0.0) loanAccount.loanBalance else 0.0
+            val amountBalance = context.getString(
+                R.string.feature_account_string_and_string,
+                savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code,
+                CurrencyFormatter.format(
+                    balance = savingAccount.accountBalance,
+                    currencyCode = savingAccount.currency?.code,
+                    maximumFractionDigits = 2,
+                ),
+            )
+
             Text(
-                text = CurrencyUtil.formatCurrency(context, amountBalance),
+                text = amountBalance,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp),

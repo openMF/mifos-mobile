@@ -9,11 +9,9 @@
  */
 package org.mifos.mobile.feature.account.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,12 +32,8 @@ import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.account.account.utils.AccountsFilterUtil
 import org.mifos.mobile.feature.account.utils.AccountState
-import org.mifos.mobile.feature.account.utils.StatusUtils
-import java.util.Locale
-import javax.inject.Inject
 
-@HiltViewModel
-class AccountsViewModel @Inject constructor(
+class AccountsViewModel(
     private val accountsRepositoryImp: AccountsRepository,
     private val homeRepositoryImp: HomeRepository,
     savedStateHandle: SavedStateHandle,
@@ -109,23 +103,22 @@ class AccountsViewModel @Inject constructor(
     fun setFilterList(
         checkBoxList: List<CheckboxStatus>,
         currentPage: Int,
-        context: Context,
     ) {
         if (checkBoxList.isEmpty()) {
             when (currentPage) {
                 0 -> {
                     _isFiltered.update { false }
-                    _filterList.update { StatusUtils.getSavingsAccountStatusList(context) }
+//                    _filterList.update { StatusUtils.getSavingsAccountStatusList(context) }
                 }
 
                 1 -> {
                     _isFiltered.update { false }
-                    _filterList.update { StatusUtils.getLoanAccountStatusList(context) }
+//                    _filterList.update { StatusUtils.getLoanAccountStatusList(context) }
                 }
 
                 2 -> {
                     _isFiltered.update { false }
-                    _filterList.update { StatusUtils.getShareAccountStatusList(context) }
+//                    _filterList.update { StatusUtils.getShareAccountStatusList(context) }
                 }
             }
         } else {
@@ -148,14 +141,14 @@ class AccountsViewModel @Inject constructor(
     fun getFilterLoanAccountList(
         accountsList: List<LoanAccount?>,
         filterList: List<CheckboxStatus>,
-        context: Context,
     ): List<LoanAccount> {
-        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
+//        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
 
         return filterList
             .filter { it.isChecked }
             .flatMap { filter ->
-                getFilteredLoanAccount(accountsList, filter, accountsFilterUtil)
+//                getFilteredLoanAccount(accountsList, filter, accountsFilterUtil)
+                getFilteredLoanAccount(accountsList, filter, AccountsFilterUtil())
             }
             .distinctBy { getUniqueIdentifierForLoanAccount(it) }
     }
@@ -167,14 +160,14 @@ class AccountsViewModel @Inject constructor(
     fun getFilterSavingsAccountList(
         accountsList: List<SavingAccount?>,
         filterList: List<CheckboxStatus>,
-        context: Context,
     ): List<SavingAccount> {
-        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
+//        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
 
         return filterList
             .filter { it.isChecked }
             .flatMap { filter ->
-                getFilteredSavingsAccount(accountsList, filter, accountsFilterUtil)
+//                getFilteredSavingsAccount(accountsList, filter, accountsFilterUtil)
+                getFilteredSavingsAccount(accountsList, filter, AccountsFilterUtil())
             }
             .distinct()
     }
@@ -182,14 +175,14 @@ class AccountsViewModel @Inject constructor(
     fun getFilterShareAccountList(
         accountsList: List<ShareAccount?>,
         filterList: List<CheckboxStatus>,
-        context: Context,
     ): List<ShareAccount> {
-        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
+//        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
 
         return filterList
             .filter { it.isChecked }
             .flatMap { filter ->
-                getFilteredShareAccount(accountsList, filter, accountsFilterUtil)
+//                getFilteredShareAccount(accountsList, filter, accountsFilterUtil)
+                getFilteredShareAccount(accountsList, filter, AccountsFilterUtil())
             }
             .distinct()
     }
@@ -202,15 +195,16 @@ class AccountsViewModel @Inject constructor(
     fun loadClientAccounts() {
         viewModelScope.launch {
             _accountsUiState.value = AccountState.Loading
-            homeRepositoryImp.clientAccounts().catch {
+//            homeRepositoryImp.clientAccounts(clientId =).catch {
+            homeRepositoryImp.clientAccounts(clientId = 1).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 _accountsUiState.value =
-                    AccountState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
+                    AccountState.ShowSavingsAccounts(clientAccounts.data?.savingsAccounts)
                 _accountsUiState.value =
-                    AccountState.ShowLoanAccounts(clientAccounts.loanAccounts)
+                    AccountState.ShowLoanAccounts(clientAccounts.data?.loanAccounts)
                 _accountsUiState.value =
-                    AccountState.ShowShareAccounts(clientAccounts.shareAccounts)
+                    AccountState.ShowShareAccounts(clientAccounts.data?.shareAccounts)
             }
         }
     }
@@ -224,21 +218,22 @@ class AccountsViewModel @Inject constructor(
     fun loadAccounts(accountType: String?) {
         viewModelScope.launch {
             _accountsUiState.value = AccountState.Loading
-            accountsRepositoryImp.loadAccounts(accountType).catch {
+//            accountsRepositoryImp.loadAccounts(clientId =, accountType = accountType).catch {
+            accountsRepositoryImp.loadAccounts(clientId = 1, accountType = accountType).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 when (accountType) {
                     Constants.SAVINGS_ACCOUNTS ->
                         _accountsUiState.value =
-                            AccountState.ShowSavingsAccounts(clientAccounts.savingsAccounts)
+                            AccountState.ShowSavingsAccounts(clientAccounts.data?.savingsAccounts)
 
                     Constants.LOAN_ACCOUNTS ->
                         _accountsUiState.value =
-                            AccountState.ShowLoanAccounts(clientAccounts.loanAccounts)
+                            AccountState.ShowLoanAccounts(clientAccounts.data?.loanAccounts)
 
                     Constants.SHARE_ACCOUNTS ->
                         _accountsUiState.value =
-                            AccountState.ShowShareAccounts(clientAccounts.shareAccounts)
+                            AccountState.ShowShareAccounts(clientAccounts.data?.shareAccounts)
                 }
                 _isRefreshing.emit(false)
             }
@@ -256,12 +251,12 @@ class AccountsViewModel @Inject constructor(
         accounts: List<SavingAccount?>?,
         input: String?,
     ): List<SavingAccount> {
-        val searchTerm = input?.lowercase(Locale.ROOT).orEmpty()
+        val searchTerm = input?.lowercase().orEmpty()
 
         return accounts.orEmpty().filter { account ->
             account?.let {
-                it.productName?.lowercase(Locale.ROOT)?.contains(searchTerm) == true ||
-                    it.accountNo?.lowercase(Locale.ROOT)?.contains(searchTerm) == true
+                it.productName?.lowercase()?.contains(searchTerm) == true ||
+                    it.accountNo?.lowercase()?.contains(searchTerm) == true
             } ?: false
         }.filterNotNull()
     }
@@ -277,12 +272,12 @@ class AccountsViewModel @Inject constructor(
         accounts: List<LoanAccount?>?,
         input: String?,
     ): List<LoanAccount> {
-        val searchTerm = input?.lowercase(Locale.ROOT).orEmpty()
+        val searchTerm = input?.lowercase().orEmpty()
 
         return accounts.orEmpty().filter { account ->
             account?.let {
-                it.productName?.lowercase(Locale.ROOT)?.contains(searchTerm) == true ||
-                    it.accountNo?.lowercase(Locale.ROOT)?.contains(searchTerm) == true
+                it.productName?.lowercase()?.contains(searchTerm) == true ||
+                    it.accountNo?.lowercase()?.contains(searchTerm) == true
             } ?: false
         }.filterNotNull()
     }
@@ -298,12 +293,12 @@ class AccountsViewModel @Inject constructor(
         accounts: Collection<ShareAccount?>?,
         input: String?,
     ): List<ShareAccount> {
-        val searchTerm = input?.lowercase(Locale.ROOT).orEmpty()
+        val searchTerm = input?.lowercase().orEmpty()
 
         return accounts.orEmpty().filter { account ->
             account?.let {
-                it.productName?.lowercase(Locale.ROOT)?.contains(searchTerm) == true ||
-                    it.accountNo?.lowercase(Locale.ROOT)?.contains(searchTerm) == true
+                it.productName?.lowercase()?.contains(searchTerm) == true ||
+                    it.accountNo?.lowercase()?.contains(searchTerm) == true
             } ?: false
         }.filterNotNull()
     }

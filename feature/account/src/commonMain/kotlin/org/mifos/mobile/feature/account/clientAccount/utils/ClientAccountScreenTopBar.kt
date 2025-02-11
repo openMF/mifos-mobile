@@ -32,8 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.designsystem.components.MifosSearchTextField
-import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import org.mifos.mobile.core.designsystem.component.MifosSearchTextField
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
 @Composable
 internal fun ClientAccountsScreenTopBar(

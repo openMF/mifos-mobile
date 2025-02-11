@@ -19,14 +19,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mifos.library.pullrefresh.PullRefreshIndicator
 import com.mifos.library.pullrefresh.pullRefresh
 import com.mifos.library.pullrefresh.rememberPullRefreshState
+import mifos_mobile.feature.account.generated.resources.Res
+import org.jetbrains.compose.resources.vectorResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
+import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
@@ -44,7 +46,7 @@ internal fun AccountsScreen(
     accountType: String,
     onItemClick: (accountType: String, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AccountsViewModel = hiltViewModel(),
+    viewModel: AccountsViewModel = koinViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -173,8 +175,8 @@ private fun AccountsScreen(
                 is AccountState.ShowLoanAccounts -> {
                     if ((uiState.loanAccounts.isNullOrEmpty())) {
                         EmptyDataView(
-                            icon = R.drawable.feature_account_error_black,
-                            error = R.string.feature_account_empty_loan_accounts,
+                            icon = vectorResource(resource = Res.drawable.feature_account_error_black),
+                            error = Res.string.feature_account_empty_loan_accounts,
                             modifier = Modifier.fillMaxSize(),
                         )
                     } else {
@@ -229,7 +231,7 @@ internal class AccountsScreenPreviewProvider : PreviewParameterProvider<AccountS
         )
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun AccountSavingsScreenPreview(
     @PreviewParameter(AccountsScreenPreviewProvider::class) accountUiState: AccountState,

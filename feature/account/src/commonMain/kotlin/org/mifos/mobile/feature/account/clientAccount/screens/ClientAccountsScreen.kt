@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.account.clientAccount.screens
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -25,18 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.pager.rememberPagerState
+import org.koin.androidx.compose.koinViewModel
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
-import org.mifos.mobile.core.designsystem.components.MifosScaffold
-import org.mifos.mobile.core.designsystem.components.MifosTabPager
-import org.mifos.mobile.core.designsystem.icons.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.component.FloatingActionButtonContent
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTabPager
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.CheckboxStatus
 import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.core.ui.utils.DevicePreviews
 import org.mifos.mobile.feature.account.R
 import org.mifos.mobile.feature.account.account.screens.AccountsScreen
 import org.mifos.mobile.feature.account.clientAccount.utils.ClientAccountFilterDialog
@@ -50,7 +48,7 @@ internal fun ClientAccountsScreen(
     navigateToSavingsApplicationScreen: () -> Unit,
     onItemClick: (accountType: AccountType, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AccountsViewModel = hiltViewModel(),
+    viewModel: AccountsViewModel = koinViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -180,8 +178,13 @@ private fun ClientAccountsTabRow(
     onItemClick: (accountType: AccountType, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+//    TODO: what is this pager
     var page by remember { mutableIntStateOf(currentPage) }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        initialPage = page,
+        initialPageOffsetFraction = 0f,
+        pageCount = { 3 },
+    )
 
     val tabs = listOf(
         stringResource(id = R.string.feature_account_savings),
@@ -246,25 +249,25 @@ private fun ClientAccountsTabRow(
     }
 }
 
-@DevicePreviews
-@Composable
-private fun ClientAccountsScreenPreview() {
-    MifosMobileTheme {
-        ClientAccountsScreen(
-            currentPage = 0,
-            isDialogActive = false,
-            filterList = listOf(),
-            openSearch = { },
-            closeSearch = { },
-            onSearchQueryChange = { },
-            pageChanged = { },
-            clearFilter = { },
-            cancelFilterDialog = { },
-            filterAccounts = { },
-            navigateBack = {},
-            navigateToLoanApplicationScreen = {},
-            navigateToSavingsApplicationScreen = {},
-            onItemClick = { _, _ -> },
-        )
-    }
-}
+// @DevicePreview
+// @Composable
+// private fun ClientAccountsScreenPreview() {
+//    MifosMobileTheme {
+//        ClientAccountsScreen(
+//            currentPage = 0,
+//            isDialogActive = false,
+//            filterList = listOf(),
+//            openSearch = { },
+//            closeSearch = { },
+//            onSearchQueryChange = { },
+//            pageChanged = { },
+//            clearFilter = { },
+//            cancelFilterDialog = { },
+//            filterAccounts = { },
+//            navigateBack = {},
+//            navigateToLoanApplicationScreen = {},
+//            navigateToSavingsApplicationScreen = {},
+//            onItemClick = { _, _ -> },
+//        )
+//    }
+// }
