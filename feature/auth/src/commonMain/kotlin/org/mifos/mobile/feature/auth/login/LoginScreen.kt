@@ -47,7 +47,6 @@ import mifos_mobile.feature.auth.generated.resources.password
 import mifos_mobile.feature.auth.generated.resources.username
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
@@ -58,7 +57,6 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
@@ -251,9 +249,9 @@ private fun LoginScreenContent(
     }
 }
 
-//@Preview
-//@Composable
-//private fun LoanScreenPreview() {
+// @Preview
+// @Composable
+// private fun LoanScreenPreview() {
 //    MifosMobileTheme {
 //        LoginScreen(
 //            state = LoginState(dialogState = null),
@@ -261,4 +259,4 @@ private fun LoginScreenContent(
 //            onAction = {},
 //        )
 //    }
-//}
+// }

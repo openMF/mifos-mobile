@@ -184,6 +184,7 @@ class RegistrationViewModel(
             val errorMessage = validateForm()
             if (errorMessage != null) {
                 sendEvent(SignUpEvent.ShowToast(errorMessage))
+                updateState { it.copy(dialogState = null) }
             } else {
                 try {
                     userAuthRepositoryImpl.registerUser(
