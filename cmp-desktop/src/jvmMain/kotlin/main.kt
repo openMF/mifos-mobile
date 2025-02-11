@@ -40,7 +40,7 @@ fun main() {
         Window(
             onCloseRequest = ::exitApplication,
             state = windowState,
-            title = "DesktopApp",
+            title = "Mifos Mobile",
         ) {
             // Sets the content of the window.
             SharedApp()
