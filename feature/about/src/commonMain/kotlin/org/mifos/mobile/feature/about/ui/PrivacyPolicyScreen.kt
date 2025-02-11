@@ -56,7 +56,7 @@ private fun WebView(
     onLoadingChange: (isLoading: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
+    Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(20.dp))
         MifosWebView(
             htmlContent = url,

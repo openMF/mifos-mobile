@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.about.generated.resources.Res
@@ -35,7 +36,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.core.ui.component.AboutUsItemCard
 import org.mifos.mobile.core.ui.component.MifosItemCard
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.feature.about.AboutUsItem
 
 @Composable
@@ -43,7 +44,8 @@ internal fun AboutUsScreen(
     navigateToItem: (AboutUsItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val currentYear = DateHelper.currentDate.year
+    val currentYear = remember { DateHelper.currentDate.year }
+    val aboutUsItems = remember { getAboutUsItems() }
 
     LazyColumn(
         modifier = modifier
@@ -55,7 +57,7 @@ internal fun AboutUsScreen(
             AboutUsHeader()
         }
 
-        items(getAboutUsItem()) { item ->
+        items(items = aboutUsItems, key = { item -> item.itemId }) { item ->
             MifosItemCard(
                 modifier = Modifier.padding(bottom = 8.dp),
                 onClick = { navigateToItem(item) },
@@ -74,7 +76,7 @@ internal fun AboutUsScreen(
     }
 }
 
-private fun getAboutUsItem(): List<AboutUsItem> {
+private fun getAboutUsItems(): List<AboutUsItem> {
     return listOf(
         AboutUsItem(
             title = Res.string.feature_about_app_version,
@@ -108,7 +110,7 @@ private fun getAboutUsItem(): List<AboutUsItem> {
     )
 }
 
-@DevicePreviews
+@DevicePreview
 @Composable
 fun AboutScreenPreview() {
     MifosMobileTheme {

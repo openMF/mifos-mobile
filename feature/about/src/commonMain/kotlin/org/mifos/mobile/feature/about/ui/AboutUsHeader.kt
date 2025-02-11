@@ -27,9 +27,9 @@ import mifos_mobile.feature.about.generated.resources.feature_about_description
 import mifos_mobile.feature.about.generated.resources.mifos_logo
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.mifos.mobile.core.ui.utils.DevicePreviews
+import org.mifos.mobile.core.ui.utils.DevicePreview
 
-@DevicePreviews
+@DevicePreview
 @Composable
 internal fun AboutUsHeader(
     modifier: Modifier = Modifier,
