@@ -20,6 +20,3 @@ internal actual fun openUrl(url: String?) {
         }
     }
 }
-
-internal actual fun openOssLicenses() {
-}

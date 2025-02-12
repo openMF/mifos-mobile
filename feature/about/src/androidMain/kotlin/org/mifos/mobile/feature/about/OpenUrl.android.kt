@@ -18,13 +18,3 @@ internal actual fun openUrl(url: String?) {
 //    }
 //    AndroidApp.instance.startActivity(intent)
 }
-
-internal actual fun openOssLicenses() {
-//    val context: Application by inject
-//    val intent = Intent(
-//        AndroidApp.instance,
-//        OssLicensesMenuActivity::class.java,
-//    )
-//    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//    AndroidApp.instance.startActivity(intent)
-}

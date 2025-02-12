@@ -16,6 +16,3 @@ actual fun openUrl(url: String?) {
         window.open(url, "_blank") // Opens in a new tab
     }
 }
-
-internal actual fun openOssLicenses() {
-}
