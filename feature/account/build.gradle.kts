@@ -24,11 +24,5 @@ kotlin {
             api(projects.core.model)
             api(projects.core.common)
         }
-
-        androidMain.dependencies {
-            implementation(projects.libs.pullrefresh)
-            // Accompanist Pager Library
-            implementation(libs.accompanist.pager)
-        }
     }
 }

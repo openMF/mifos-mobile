@@ -143,8 +143,9 @@ fun MifosOutlinedButton(
  * clickable and will appear disabled to accessibility services.
  * @param content The button content.
  */
+// internal fun MifosTextButton(
 @Composable
-internal fun MifosTextButton(
+fun MifosTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,

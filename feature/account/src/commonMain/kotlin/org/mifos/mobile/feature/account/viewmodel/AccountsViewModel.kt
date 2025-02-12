@@ -25,19 +25,24 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.HomeRepository
-import org.mifos.mobile.core.model.entity.CheckboxStatus
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.account.account.utils.AccountsFilterUtil
 import org.mifos.mobile.feature.account.utils.AccountState
+import org.mifos.mobile.feature.account.utils.CheckboxStatus
+import org.mifos.mobile.feature.account.utils.StatusUtils
 
 class AccountsViewModel(
     private val accountsRepositoryImp: AccountsRepository,
     private val homeRepositoryImp: HomeRepository,
+    userPreferencesRepository: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    private val clientId = requireNotNull(userPreferencesRepository.clientId.value)
 
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountsUiState: StateFlow<AccountState> = _accountsUiState
@@ -55,7 +60,7 @@ class AccountsViewModel(
     val isFiltered: StateFlow<Boolean> get() = _isFiltered.asStateFlow()
 
     private val _filterList = MutableStateFlow(emptyList<CheckboxStatus>())
-    val filterList: StateFlow<List<CheckboxStatus>> = _filterList.asStateFlow()
+    internal val filterList: StateFlow<List<CheckboxStatus>> = _filterList.asStateFlow()
 
     private val accountTypeString = savedStateHandle.getStateFlow(
         key = Constants.ACCOUNT_TYPE,
@@ -100,7 +105,7 @@ class AccountsViewModel(
         _isSearching.update { false }
     }
 
-    fun setFilterList(
+    internal fun setFilterList(
         checkBoxList: List<CheckboxStatus>,
         currentPage: Int,
     ) {
@@ -108,17 +113,17 @@ class AccountsViewModel(
             when (currentPage) {
                 0 -> {
                     _isFiltered.update { false }
-//                    _filterList.update { StatusUtils.getSavingsAccountStatusList(context) }
+                    _filterList.update { StatusUtils.getSavingsAccountStatusList() }
                 }
 
                 1 -> {
                     _isFiltered.update { false }
-//                    _filterList.update { StatusUtils.getLoanAccountStatusList(context) }
+                    _filterList.update { StatusUtils.getLoanAccountStatusList() }
                 }
 
                 2 -> {
                     _isFiltered.update { false }
-//                    _filterList.update { StatusUtils.getShareAccountStatusList(context) }
+                    _filterList.update { StatusUtils.getShareAccountStatusList() }
                 }
             }
         } else {
@@ -138,17 +143,16 @@ class AccountsViewModel(
         }
     }
 
-    fun getFilterLoanAccountList(
+    internal fun getFilterLoanAccountList(
         accountsList: List<LoanAccount?>,
         filterList: List<CheckboxStatus>,
     ): List<LoanAccount> {
-//        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
+        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings()
 
         return filterList
             .filter { it.isChecked }
             .flatMap { filter ->
-//                getFilteredLoanAccount(accountsList, filter, accountsFilterUtil)
-                getFilteredLoanAccount(accountsList, filter, AccountsFilterUtil())
+                getFilteredLoanAccount(accountsList, filter, accountsFilterUtil)
             }
             .distinctBy { getUniqueIdentifierForLoanAccount(it) }
     }
@@ -157,32 +161,30 @@ class AccountsViewModel(
         return account.accountNo ?: account.loanProductId.toString()
     }
 
-    fun getFilterSavingsAccountList(
+    internal fun getFilterSavingsAccountList(
         accountsList: List<SavingAccount?>,
         filterList: List<CheckboxStatus>,
     ): List<SavingAccount> {
-//        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
+        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings()
 
         return filterList
             .filter { it.isChecked }
             .flatMap { filter ->
-//                getFilteredSavingsAccount(accountsList, filter, accountsFilterUtil)
-                getFilteredSavingsAccount(accountsList, filter, AccountsFilterUtil())
+                getFilteredSavingsAccount(accountsList, filter, accountsFilterUtil)
             }
             .distinct()
     }
 
-    fun getFilterShareAccountList(
+    internal fun getFilterShareAccountList(
         accountsList: List<ShareAccount?>,
         filterList: List<CheckboxStatus>,
     ): List<ShareAccount> {
-//        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings(context)
+        val accountsFilterUtil = AccountsFilterUtil.getFilterStrings()
 
         return filterList
             .filter { it.isChecked }
             .flatMap { filter ->
-//                getFilteredShareAccount(accountsList, filter, accountsFilterUtil)
-                getFilteredShareAccount(accountsList, filter, AccountsFilterUtil())
+                getFilteredShareAccount(accountsList, filter, accountsFilterUtil)
             }
             .distinct()
     }
@@ -195,8 +197,7 @@ class AccountsViewModel(
     fun loadClientAccounts() {
         viewModelScope.launch {
             _accountsUiState.value = AccountState.Loading
-//            homeRepositoryImp.clientAccounts(clientId =).catch {
-            homeRepositoryImp.clientAccounts(clientId = 1).catch {
+            homeRepositoryImp.clientAccounts(clientId = clientId).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 _accountsUiState.value =
@@ -218,25 +219,25 @@ class AccountsViewModel(
     fun loadAccounts(accountType: String?) {
         viewModelScope.launch {
             _accountsUiState.value = AccountState.Loading
-//            accountsRepositoryImp.loadAccounts(clientId =, accountType = accountType).catch {
-            accountsRepositoryImp.loadAccounts(clientId = 1, accountType = accountType).catch {
-                _accountsUiState.value = AccountState.Error
-            }.collect { clientAccounts ->
-                when (accountType) {
-                    Constants.SAVINGS_ACCOUNTS ->
-                        _accountsUiState.value =
-                            AccountState.ShowSavingsAccounts(clientAccounts.data?.savingsAccounts)
+            accountsRepositoryImp.loadAccounts(clientId = clientId, accountType = accountType)
+                .catch {
+                    _accountsUiState.value = AccountState.Error
+                }.collect { clientAccounts ->
+                    when (accountType) {
+                        Constants.SAVINGS_ACCOUNTS ->
+                            _accountsUiState.value =
+                                AccountState.ShowSavingsAccounts(clientAccounts.data?.savingsAccounts)
 
-                    Constants.LOAN_ACCOUNTS ->
-                        _accountsUiState.value =
-                            AccountState.ShowLoanAccounts(clientAccounts.data?.loanAccounts)
+                        Constants.LOAN_ACCOUNTS ->
+                            _accountsUiState.value =
+                                AccountState.ShowLoanAccounts(clientAccounts.data?.loanAccounts)
 
-                    Constants.SHARE_ACCOUNTS ->
-                        _accountsUiState.value =
-                            AccountState.ShowShareAccounts(clientAccounts.data?.shareAccounts)
+                        Constants.SHARE_ACCOUNTS ->
+                            _accountsUiState.value =
+                                AccountState.ShowShareAccounts(clientAccounts.data?.shareAccounts)
+                    }
+                    _isRefreshing.emit(false)
                 }
-                _isRefreshing.emit(false)
-            }
         }
     }
 
@@ -309,7 +310,7 @@ class AccountsViewModel(
      * @return Returns [List] of [CheckboxStatus] which have
      * `checkboxStatus.isChecked()` as true.
      */
-    fun getCheckedStatus(statusModelList: List<CheckboxStatus?>?): List<CheckboxStatus?>? {
+    internal fun getCheckedStatus(statusModelList: List<CheckboxStatus?>?): List<CheckboxStatus?>? {
         return statusModelList?.filter { it?.isChecked == true }
     }
 

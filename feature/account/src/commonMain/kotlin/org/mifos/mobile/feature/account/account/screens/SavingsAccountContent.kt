@@ -27,15 +27,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_approved
+import mifos_mobile.feature.account.generated.resources.feature_account_closed
+import mifos_mobile.feature.account.generated.resources.feature_account_string_and_string
+import mifos_mobile.feature.account.generated.resources.feature_account_submitted
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.DepositGreen
+import org.mifos.mobile.feature.account.GrayDark
+import org.mifos.mobile.feature.account.LightGreen
+import org.mifos.mobile.feature.account.LightYellow
+import org.mifos.mobile.feature.account.RedLight
 import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
@@ -89,21 +96,19 @@ private fun AccountScreenSavingsListItem(
     onItemClick: (accountType: String, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
     val (color, stringResource, numColor) = when {
         savingAccount.status?.active == true -> {
             Triple(
-                colorResource(R.color.deposit_green),
+                DepositGreen,
                 savingAccount.lastActiveTransactionDate?.let { DateHelper.getDateAsString(it) },
-                colorResource(R.color.deposit_green),
+                DepositGreen,
             )
         }
 
         savingAccount.status?.approved == true -> {
             Triple(
-                colorResource(R.color.light_green),
-                "${stringResource(id = R.string.feature_account_approved)} " +
+                LightGreen,
+                stringResource(resource = Res.string.feature_account_approved) +
                     savingAccount.timeLine?.approvedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -111,8 +116,8 @@ private fun AccountScreenSavingsListItem(
 
         savingAccount.status?.submittedAndPendingApproval == true -> {
             Triple(
-                colorResource(R.color.light_yellow),
-                "${stringResource(id = R.string.feature_account_submitted)} " +
+                LightYellow,
+                stringResource(resource = Res.string.feature_account_submitted) +
                     savingAccount.timeLine?.submittedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -120,16 +125,16 @@ private fun AccountScreenSavingsListItem(
 
         savingAccount.status?.matured == true -> {
             Triple(
-                colorResource(R.color.red_light),
+                RedLight,
                 savingAccount.lastActiveTransactionDate?.let { DateHelper.getDateAsString(it) },
-                colorResource(R.color.red_light),
+                RedLight,
             )
         }
 
         else -> {
             Triple(
-                colorResource(R.color.light_yellow),
-                "${stringResource(id = R.string.feature_account_closed)} " +
+                LightYellow,
+                stringResource(resource = Res.string.feature_account_closed) +
                     savingAccount.timeLine?.closedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -156,7 +161,7 @@ private fun AccountScreenSavingsListItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
-                    color = colorResource(id = R.color.gray_dark),
+                    color = GrayDark,
                 )
             }
 
@@ -164,30 +169,34 @@ private fun AccountScreenSavingsListItem(
                 Text(
                     text = stringResource,
                     style = MaterialTheme.typography.labelLarge,
-                    color = colorResource(id = R.color.gray_dark),
+                    color = GrayDark,
                 )
             }
         }
 
         Spacer(Modifier.weight(1f))
 
-        numColor?.let {
-            val amountBalance = context.getString(
-                R.string.feature_account_string_and_string,
-                savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code,
-                CurrencyFormatter.format(
-                    balance = savingAccount.accountBalance,
-                    currencyCode = savingAccount.currency?.code,
-                    maximumFractionDigits = 2,
-                ),
+        numColor?.let { color ->
+            val currencySymbolOrCode =
+                savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code ?: ""
+            val formattedBalance = CurrencyFormatter.format(
+                balance = savingAccount.accountBalance,
+                currencyCode = savingAccount.currency?.code,
+                maximumFractionDigits = 2,
+            )
+
+            val amountAndCurrency = stringResource(
+                Res.string.feature_account_string_and_string,
+                formattedBalance,
+                currencySymbolOrCode,
             )
 
             Text(
-                text = amountBalance,
+                text = amountAndCurrency,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp),
-                color = it,
+                color = color,
             )
         }
     }

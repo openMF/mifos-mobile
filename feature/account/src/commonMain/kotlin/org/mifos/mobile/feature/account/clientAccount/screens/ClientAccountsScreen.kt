@@ -24,25 +24,33 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.androidx.compose.koinViewModel
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_loan
+import mifos_mobile.feature.account.generated.resources.feature_account_loan_account
+import mifos_mobile.feature.account.generated.resources.feature_account_savings
+import mifos_mobile.feature.account.generated.resources.feature_account_savings_account
+import mifos_mobile.feature.account.generated.resources.feature_account_share
+import mifos_mobile.feature.account.generated.resources.feature_account_share_account
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.FloatingActionButtonContent
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTabPager
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.model.entity.CheckboxStatus
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.feature.account.account.screens.AccountsScreen
 import org.mifos.mobile.feature.account.clientAccount.utils.ClientAccountFilterDialog
 import org.mifos.mobile.feature.account.clientAccount.utils.ClientAccountsScreenTopBar
+import org.mifos.mobile.feature.account.utils.CheckboxStatus
 import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 
 @Composable
 internal fun ClientAccountsScreen(
+    isNetworkConnected: Boolean,
     navigateBack: () -> Unit,
     navigateToLoanApplicationScreen: () -> Unit,
     navigateToSavingsApplicationScreen: () -> Unit,
@@ -50,8 +58,6 @@ internal fun ClientAccountsScreen(
     modifier: Modifier = Modifier,
     viewModel: AccountsViewModel = koinViewModel(),
 ) {
-    val context = LocalContext.current
-
     var isDialogActive by rememberSaveable { mutableStateOf(false) }
     var currentPage by rememberSaveable { mutableIntStateOf(0) }
 
@@ -66,11 +72,11 @@ internal fun ClientAccountsScreen(
         viewModel.setFilterList(
             checkBoxList = emptyList(),
             currentPage = currentPage,
-            context = context,
         )
     }
 
     ClientAccountsScreen(
+        isNetworkConnected = isNetworkConnected,
         currentPage = currentPage,
         isDialogActive = isDialogActive,
         filterList = filterList,
@@ -82,13 +88,12 @@ internal fun ClientAccountsScreen(
             viewModel.setFilterList(
                 checkBoxList = emptyList(),
                 currentPage = currentPage,
-                context = context,
             )
             isDialogActive = false
         },
         cancelFilterDialog = { isDialogActive = false },
         filterAccounts = {
-            viewModel.setFilterList(checkBoxList = it, currentPage = currentPage, context = context)
+            viewModel.setFilterList(checkBoxList = it, currentPage = currentPage)
             isDialogActive = false
         },
         modifier = modifier,
@@ -101,6 +106,7 @@ internal fun ClientAccountsScreen(
 
 @Composable
 private fun ClientAccountsScreen(
+    isNetworkConnected: Boolean,
     currentPage: Int,
     isDialogActive: Boolean,
     filterList: List<CheckboxStatus>,
@@ -118,9 +124,9 @@ private fun ClientAccountsScreen(
     modifier: Modifier = Modifier,
 ) {
     val tabs = listOf(
-        stringResource(id = R.string.feature_account_savings_account),
-        stringResource(id = R.string.feature_account_loan_account),
-        stringResource(id = R.string.feature_account_share_account),
+        stringResource(resource = Res.string.feature_account_savings_account),
+        stringResource(resource = Res.string.feature_account_loan_account),
+        stringResource(resource = Res.string.feature_account_share_account),
     )
 
     if (isDialogActive) {
@@ -142,24 +148,27 @@ private fun ClientAccountsScreen(
                 closeSearch = closeSearch,
             )
         },
-        floatingActionButtonContent = FloatingActionButtonContent(
-            onClick = {
-                when (currentPage) {
-                    0 -> navigateToSavingsApplicationScreen()
-                    1 -> navigateToLoanApplicationScreen()
-                }
-            },
-            contentColor = MaterialTheme.colorScheme.primary,
-            content = {
-                Icon(
-                    imageVector = MifosIcons.Add,
-                    contentDescription = "Create Account",
-                    tint = if (isSystemInDarkTheme()) Color.Black else Color.White,
-                )
-            },
-        ),
+        floatingActionButton = {
+            FloatingActionButtonContent(
+                onClick = {
+                    when (currentPage) {
+                        0 -> navigateToSavingsApplicationScreen()
+                        1 -> navigateToLoanApplicationScreen()
+                    }
+                },
+                contentColor = MaterialTheme.colorScheme.primary,
+                content = {
+                    Icon(
+                        imageVector = MifosIcons.Add,
+                        contentDescription = "Create Account",
+                        tint = if (isSystemInDarkTheme()) Color.Black else Color.White,
+                    )
+                },
+            )
+        },
         content = {
             ClientAccountsTabRow(
+                isNetworkConnected = isNetworkConnected,
                 modifier = Modifier.padding(it),
                 pageChanged = pageChanged,
                 onItemClick = onItemClick,
@@ -171,14 +180,13 @@ private fun ClientAccountsScreen(
 }
 
 @Composable
-@Suppress("DEPRECATION")
 private fun ClientAccountsTabRow(
+    isNetworkConnected: Boolean,
     currentPage: Int,
     pageChanged: (index: Int) -> Unit,
     onItemClick: (accountType: AccountType, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-//    TODO: what is this pager
     var page by remember { mutableIntStateOf(currentPage) }
     val pagerState = rememberPagerState(
         initialPage = page,
@@ -187,9 +195,9 @@ private fun ClientAccountsTabRow(
     )
 
     val tabs = listOf(
-        stringResource(id = R.string.feature_account_savings),
-        stringResource(id = R.string.feature_account_loan),
-        stringResource(id = R.string.feature_account_share),
+        stringResource(resource = Res.string.feature_account_savings),
+        stringResource(resource = Res.string.feature_account_loan),
+        stringResource(resource = Res.string.feature_account_share),
     )
 
     LaunchedEffect(key1 = page) {
@@ -217,6 +225,7 @@ private fun ClientAccountsTabRow(
     ) {
         when (page) {
             0 -> AccountsScreen(
+                isNetworkConnected = isNetworkConnected,
                 accountType = Constants.SAVINGS_ACCOUNTS,
                 onItemClick = { _, accountId ->
                     onItemClick.invoke(
@@ -227,6 +236,7 @@ private fun ClientAccountsTabRow(
             )
 
             1 -> AccountsScreen(
+                isNetworkConnected = isNetworkConnected,
                 accountType = Constants.LOAN_ACCOUNTS,
                 onItemClick = { _, accountId ->
                     onItemClick.invoke(
@@ -237,6 +247,7 @@ private fun ClientAccountsTabRow(
             )
 
             2 -> AccountsScreen(
+                isNetworkConnected = isNetworkConnected,
                 accountType = Constants.SHARE_ACCOUNTS,
                 onItemClick = { _, accountId ->
                     onItemClick.invoke(
@@ -249,25 +260,26 @@ private fun ClientAccountsTabRow(
     }
 }
 
-// @DevicePreview
-// @Composable
-// private fun ClientAccountsScreenPreview() {
-//    MifosMobileTheme {
-//        ClientAccountsScreen(
-//            currentPage = 0,
-//            isDialogActive = false,
-//            filterList = listOf(),
-//            openSearch = { },
-//            closeSearch = { },
-//            onSearchQueryChange = { },
-//            pageChanged = { },
-//            clearFilter = { },
-//            cancelFilterDialog = { },
-//            filterAccounts = { },
-//            navigateBack = {},
-//            navigateToLoanApplicationScreen = {},
-//            navigateToSavingsApplicationScreen = {},
-//            onItemClick = { _, _ -> },
-//        )
-//    }
-// }
+@DevicePreview
+@Composable
+internal fun ClientAccountsScreenPreview() {
+    MifosMobileTheme {
+        ClientAccountsScreen(
+            isNetworkConnected = true,
+            currentPage = 0,
+            isDialogActive = false,
+            filterList = listOf(),
+            openSearch = { },
+            closeSearch = { },
+            onSearchQueryChange = { },
+            pageChanged = { },
+            clearFilter = { },
+            cancelFilterDialog = { },
+            filterAccounts = { },
+            navigateBack = {},
+            navigateToLoanApplicationScreen = {},
+            navigateToSavingsApplicationScreen = {},
+            onItemClick = { _, _ -> },
+        )
+    }
+}

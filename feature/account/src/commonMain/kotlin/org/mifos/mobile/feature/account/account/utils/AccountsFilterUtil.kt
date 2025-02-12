@@ -9,32 +9,41 @@
  */
 package org.mifos.mobile.feature.account.account.utils
 
-import android.content.Context
-import org.mifos.mobile.feature.account.R
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_active
+import mifos_mobile.feature.account.generated.resources.feature_account_approval_pending
+import mifos_mobile.feature.account.generated.resources.feature_account_approved
+import mifos_mobile.feature.account.generated.resources.feature_account_closed
+import mifos_mobile.feature.account.generated.resources.feature_account_disburse
+import mifos_mobile.feature.account.generated.resources.feature_account_in_arrears
+import mifos_mobile.feature.account.generated.resources.feature_account_matured
+import mifos_mobile.feature.account.generated.resources.feature_account_overpaid
+import mifos_mobile.feature.account.generated.resources.feature_account_withdrawn
+import org.jetbrains.compose.resources.StringResource
 
 data class AccountsFilterUtil(
-    var activeString: String? = null,
-    var approvedString: String? = null,
-    var approvalPendingString: String? = null,
-    var maturedString: String? = null,
-    var waitingForDisburseString: String? = null,
-    var overpaidString: String? = null,
-    var closedString: String? = null,
-    var withdrawnString: String? = null,
-    var inArrearsString: String? = null,
+    var activeString: StringResource? = null,
+    var approvedString: StringResource? = null,
+    var approvalPendingString: StringResource? = null,
+    var maturedString: StringResource? = null,
+    var waitingForDisburseString: StringResource? = null,
+    var overpaidString: StringResource? = null,
+    var closedString: StringResource? = null,
+    var withdrawnString: StringResource? = null,
+    var inArrearsString: StringResource? = null,
 ) {
     companion object {
-        fun getFilterStrings(context: Context): AccountsFilterUtil {
+        fun getFilterStrings(): AccountsFilterUtil {
             return AccountsFilterUtil(
-                activeString = context.getString(R.string.feature_account_active),
-                approvedString = context.getString(R.string.feature_account_approved),
-                approvalPendingString = context.getString(R.string.feature_account_approval_pending),
-                maturedString = context.getString(R.string.feature_account_matured),
-                waitingForDisburseString = context.getString(R.string.feature_account_disburse),
-                overpaidString = context.getString(R.string.feature_account_overpaid),
-                closedString = context.getString(R.string.feature_account_closed),
-                withdrawnString = context.getString(R.string.feature_account_withdrawn),
-                inArrearsString = context.getString(R.string.feature_account_in_arrears),
+                activeString = Res.string.feature_account_active,
+                approvedString = Res.string.feature_account_approved,
+                approvalPendingString = Res.string.feature_account_approval_pending,
+                maturedString = Res.string.feature_account_matured,
+                waitingForDisburseString = Res.string.feature_account_disburse,
+                overpaidString = Res.string.feature_account_overpaid,
+                closedString = Res.string.feature_account_closed,
+                withdrawnString = Res.string.feature_account_withdrawn,
+                inArrearsString = Res.string.feature_account_in_arrears,
             )
         }
     }

@@ -9,7 +9,10 @@
  */
 package org.mifos.mobile.feature.account.di
 
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 
 val accountModule = module {
+    viewModelOf(::AccountsViewModel)
 }

@@ -28,11 +28,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_approved
+import mifos_mobile.feature.account.generated.resources.feature_account_pending
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
-import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.Black
+import org.mifos.mobile.feature.account.DepositGreen
+import org.mifos.mobile.feature.account.GrayDark
+import org.mifos.mobile.feature.account.LightBlue
+import org.mifos.mobile.feature.account.LightGreen
+import org.mifos.mobile.feature.account.LightYellow
 import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
@@ -85,19 +92,19 @@ private fun AccountScreenShareListItem(
 ) {
     val (color, setSharingAccountDetail) = when {
         shareAccount.status?.active == true -> {
-            Pair(colorResource(R.color.deposit_green), true)
+            Pair(DepositGreen, true)
         }
 
         shareAccount.status?.approved == true -> {
-            Pair(colorResource(R.color.light_green), false)
+            Pair(LightGreen, false)
         }
 
         shareAccount.status?.submittedAndPendingApproval == true -> {
-            Pair(colorResource(R.color.light_yellow), false)
+            Pair(LightYellow, false)
         }
 
         else -> {
-            Pair(colorResource(R.color.light_blue), false)
+            Pair(LightBlue, false)
         }
     }
 
@@ -119,7 +126,7 @@ private fun AccountScreenShareListItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
-                    color = colorResource(id = R.color.gray_dark),
+                    color = GrayDark,
                 )
             }
 
@@ -129,31 +136,31 @@ private fun AccountScreenShareListItem(
             ) {
                 Row {
                     Text(
-                        text = stringResource(id = R.string.feature_account_pending),
+                        text = stringResource(resource = Res.string.feature_account_pending),
                         style = MaterialTheme.typography.labelLarge,
-                        color = colorResource(id = R.color.gray_dark),
+                        color = GrayDark,
                     )
 
                     Text(
                         text = " ${shareAccount.totalPendingForApprovalShares}",
                         style = MaterialTheme.typography.bodyLarge,
-                        color = colorResource(id = R.color.black),
+                        color = Black,
                     )
                 }
 
                 if (setSharingAccountDetail) {
                     Row {
                         Text(
-                            text = stringResource(id = R.string.feature_account_approved),
+                            text = stringResource(resource = Res.string.feature_account_approved),
                             style = MaterialTheme.typography.labelLarge,
-                            color = colorResource(id = R.color.gray_dark),
+                            color = GrayDark,
                         )
 
                         Text(
                             modifier = Modifier.padding(end = 12.dp),
                             text = " ${shareAccount.totalApprovedShares}",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = colorResource(id = R.color.black),
+                            color = Black,
                         )
                     }
                 }

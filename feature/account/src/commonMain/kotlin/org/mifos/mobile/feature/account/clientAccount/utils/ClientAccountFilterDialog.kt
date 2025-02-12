@@ -29,13 +29,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_cancel
+import mifos_mobile.feature.account.generated.resources.feature_account_clear_filters
+import mifos_mobile.feature.account.generated.resources.feature_account_filter
+import mifos_mobile.feature.account.generated.resources.feature_account_select_you_want
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
-import org.mifos.mobile.core.model.entity.CheckboxStatus
-import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.Black
+import org.mifos.mobile.feature.account.GrayDark
+import org.mifos.mobile.feature.account.GrayLight
+import org.mifos.mobile.feature.account.White
+import org.mifos.mobile.feature.account.utils.CheckboxStatus
 
 @Composable
 internal fun ClientAccountFilterDialog(
@@ -57,7 +63,7 @@ internal fun ClientAccountFilterDialog(
 
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
-                    text = stringResource(R.string.feature_account_select_you_want),
+                    text = stringResource(Res.string.feature_account_select_you_want),
                 )
 
                 ClientAccountFilterCheckBox(
@@ -71,17 +77,17 @@ internal fun ClientAccountFilterDialog(
                 ) {
                     MifosTextButton(
                         onClick = clearFilter,
-                        text = { stringResource(R.string.feature_account_clear_filters) },
+                        text = { stringResource(Res.string.feature_account_clear_filters) },
                     )
 
                     Row {
                         MifosTextButton(
                             onClick = cancelDialog,
-                            text = { stringResource(R.string.feature_account_cancel) },
+                            text = { stringResource(Res.string.feature_account_cancel) },
                         )
                         MifosTextButton(
                             onClick = { updateFilterList(checkBoxList) },
-                            text = { stringResource(R.string.feature_account_filter) },
+                            text = { stringResource(Res.string.feature_account_filter) },
                         )
                     }
                 }
@@ -120,30 +126,30 @@ private fun ClientAccountFilterCheckBox(
                         updateList.invoke(checkBoxList)
                     },
                     colors = CheckboxColors(
-                        checkedBoxColor = Color(checkBoxList[index].color),
+                        checkedBoxColor = checkBoxList[index].color,
                         uncheckedBoxColor = if (isSystemInDarkTheme()) {
-                            colorResource(id = R.color.gray_light)
+                            GrayLight
                         } else {
-                            colorResource(id = R.color.white)
+                            White
                         },
                         checkedCheckmarkColor = if (isSystemInDarkTheme()) {
-                            colorResource(id = R.color.black)
+                            Black
                         } else {
-                            colorResource(id = R.color.white)
+                            White
                         },
-                        uncheckedCheckmarkColor = colorResource(id = R.color.white),
-                        checkedBorderColor = Color(checkBoxList[index].color),
-                        uncheckedBorderColor = Color(checkBoxList[index].color),
-                        disabledBorderColor = colorResource(id = R.color.gray_dark),
-                        disabledIndeterminateBorderColor = colorResource(id = R.color.gray_dark),
-                        disabledCheckedBoxColor = colorResource(id = R.color.black),
-                        disabledUncheckedBoxColor = colorResource(id = R.color.black),
-                        disabledIndeterminateBoxColor = colorResource(id = R.color.black),
-                        disabledUncheckedBorderColor = colorResource(id = R.color.black),
+                        uncheckedCheckmarkColor = White,
+                        checkedBorderColor = checkBoxList[index].color,
+                        uncheckedBorderColor = checkBoxList[index].color,
+                        disabledBorderColor = GrayDark,
+                        disabledIndeterminateBorderColor = GrayDark,
+                        disabledCheckedBoxColor = Black,
+                        disabledUncheckedBoxColor = Black,
+                        disabledIndeterminateBoxColor = Black,
+                        disabledUncheckedBorderColor = Black,
                     ),
                 )
                 Text(
-                    text = checkBoxList[index].status ?: "",
+                    text = stringResource(resource = checkBoxList[index].status!!),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }

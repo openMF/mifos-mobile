@@ -27,14 +27,25 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_approved
+import mifos_mobile.feature.account.generated.resources.feature_account_closed
+import mifos_mobile.feature.account.generated.resources.feature_account_disbursement
+import mifos_mobile.feature.account.generated.resources.feature_account_submitted
+import mifos_mobile.feature.account.generated.resources.feature_account_withdrawn
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
-import org.mifos.mobile.feature.account.R
+import org.mifos.mobile.feature.account.Black
+import org.mifos.mobile.feature.account.Blue
+import org.mifos.mobile.feature.account.DepositGreen
+import org.mifos.mobile.feature.account.GrayDark
+import org.mifos.mobile.feature.account.LightYellow
+import org.mifos.mobile.feature.account.Purple
+import org.mifos.mobile.feature.account.Red
 import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
@@ -91,30 +102,30 @@ private fun AccountScreenLoanListItem(
     val (color, stringResource, numColor) = when {
         loanAccount.status?.active == true && loanAccount.inArrears == true -> {
             Triple(
-                colorResource(R.color.red),
-                "${stringResource(id = R.string.feature_account_disbursement)} " +
+                Red,
+                stringResource(resource = Res.string.feature_account_disbursement) +
                     loanAccount.timeline?.actualDisbursementDate?.let {
                         DateHelper.getDateAsString(it)
                     },
-                colorResource(R.color.red),
+                Red,
             )
         }
 
         loanAccount.status?.active == true -> {
             Triple(
-                colorResource(R.color.deposit_green),
-                "${stringResource(id = R.string.feature_account_disbursement)} " +
+                DepositGreen,
+                stringResource(resource = Res.string.feature_account_disbursement) +
                     loanAccount.timeline?.actualDisbursementDate?.let {
                         DateHelper.getDateAsString(it)
                     },
-                colorResource(R.color.deposit_green),
+                DepositGreen,
             )
         }
 
         loanAccount.status?.waitingForDisbursal == true -> {
             Triple(
-                colorResource(R.color.blue),
-                "${stringResource(id = R.string.feature_account_approved)} " +
+                Blue,
+                stringResource(resource = Res.string.feature_account_approved) +
                     loanAccount.timeline?.approvedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -122,8 +133,8 @@ private fun AccountScreenLoanListItem(
 
         loanAccount.status?.pendingApproval == true -> {
             Triple(
-                colorResource(R.color.light_yellow),
-                "${stringResource(id = R.string.feature_account_submitted)} " +
+                LightYellow,
+                stringResource(resource = Res.string.feature_account_submitted) +
                     loanAccount.timeline?.submittedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -131,19 +142,19 @@ private fun AccountScreenLoanListItem(
 
         loanAccount.status?.overpaid == true -> {
             Triple(
-                colorResource(R.color.purple),
-                "${stringResource(id = R.string.feature_account_approved)} " +
+                Purple,
+                stringResource(resource = Res.string.feature_account_approved) +
                     loanAccount.timeline?.actualDisbursementDate?.let {
                         DateHelper.getDateAsString(it)
                     },
-                colorResource(R.color.purple),
+                Purple,
             )
         }
 
         loanAccount.status?.closed == true -> {
             Triple(
-                colorResource(R.color.black),
-                "${stringResource(id = R.string.feature_account_closed)} " +
+                Black,
+                stringResource(resource = Res.string.feature_account_closed) +
                     loanAccount.timeline?.closedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -151,8 +162,8 @@ private fun AccountScreenLoanListItem(
 
         else -> {
             Triple(
-                colorResource(R.color.gray_dark),
-                "${stringResource(id = R.string.feature_account_withdrawn)} " +
+                GrayDark,
+                stringResource(resource = Res.string.feature_account_withdrawn) +
                     loanAccount.timeline?.withdrawnOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
             )
@@ -179,14 +190,14 @@ private fun AccountScreenLoanListItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
-                    color = colorResource(id = R.color.gray_dark),
+                    color = GrayDark,
                 )
             }
 
             Text(
                 text = stringResource,
                 style = MaterialTheme.typography.labelLarge,
-                color = colorResource(id = R.color.gray_dark),
+                color = GrayDark,
             )
         }
 

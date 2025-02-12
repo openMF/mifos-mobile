@@ -25,6 +25,7 @@ fun NavController.navigateToClientAccountsScreen(accountType: AccountType = Acco
 
 fun NavGraphBuilder.clientAccountsNavGraph(
     navController: NavController,
+    isNetworkConnected: Boolean,
     navigateToAccountDetail: (AccountType, Long) -> Unit,
     navigateToLoanApplicationScreen: () -> Unit,
     navigateToSavingsApplicationScreen: () -> Unit,
@@ -34,6 +35,7 @@ fun NavGraphBuilder.clientAccountsNavGraph(
         route = ClientAccountsNavigation.ClientAccountsBase.route,
     ) {
         clientAccountsScreenRoute(
+            isNetworkConnected = isNetworkConnected,
             navigateToAccountDetail = navigateToAccountDetail,
             navigateBack = navController::popBackStack,
             navigateToLoanApplicationScreen = navigateToLoanApplicationScreen,
@@ -43,6 +45,7 @@ fun NavGraphBuilder.clientAccountsNavGraph(
 }
 
 fun NavGraphBuilder.clientAccountsScreenRoute(
+    isNetworkConnected: Boolean,
     navigateToLoanApplicationScreen: () -> Unit,
     navigateToSavingsApplicationScreen: () -> Unit,
     navigateToAccountDetail: (AccountType, Long) -> Unit,
@@ -55,6 +58,7 @@ fun NavGraphBuilder.clientAccountsScreenRoute(
         ),
     ) {
         ClientAccountsScreen(
+            isNetworkConnected = isNetworkConnected,
             navigateBack = navigateBack,
             navigateToLoanApplicationScreen = navigateToLoanApplicationScreen,
             navigateToSavingsApplicationScreen = navigateToSavingsApplicationScreen,

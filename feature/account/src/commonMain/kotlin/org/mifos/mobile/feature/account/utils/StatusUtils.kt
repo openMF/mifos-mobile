@@ -9,126 +9,147 @@
  */
 package org.mifos.mobile.feature.account.utils
 
-import android.content.Context
-import androidx.core.content.ContextCompat
-import org.mifos.mobile.core.model.entity.CheckboxStatus
-import org.mifos.mobile.feature.account.R
+import androidx.compose.ui.graphics.Color
+import mifos_mobile.feature.account.generated.resources.Res
+import mifos_mobile.feature.account.generated.resources.feature_account_active
+import mifos_mobile.feature.account.generated.resources.feature_account_approval_pending
+import mifos_mobile.feature.account.generated.resources.feature_account_approved
+import mifos_mobile.feature.account.generated.resources.feature_account_closed
+import mifos_mobile.feature.account.generated.resources.feature_account_disburse
+import mifos_mobile.feature.account.generated.resources.feature_account_in_arrears
+import mifos_mobile.feature.account.generated.resources.feature_account_matured
+import mifos_mobile.feature.account.generated.resources.feature_account_overpaid
+import mifos_mobile.feature.account.generated.resources.feature_account_withdrawn
+import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.feature.account.Black
+import org.mifos.mobile.feature.account.Blue
+import org.mifos.mobile.feature.account.DepositGreen
+import org.mifos.mobile.feature.account.LightBlack
+import org.mifos.mobile.feature.account.LightBlue
+import org.mifos.mobile.feature.account.LightGreen
+import org.mifos.mobile.feature.account.LightYellow
+import org.mifos.mobile.feature.account.Purple
+import org.mifos.mobile.feature.account.Red
+import org.mifos.mobile.feature.account.RedLight
 
 object StatusUtils {
 
-    fun getSavingsAccountStatusList(context: Context?): List<CheckboxStatus> {
+    internal fun getSavingsAccountStatusList(): List<CheckboxStatus> {
         val arrayList = ArrayList<CheckboxStatus>()
 
         arrayList.add(
             CheckboxStatus(
-                context?.getString(R.string.feature_account_active),
-                ContextCompat.getColor(context!!, R.color.deposit_green),
+                Res.string.feature_account_active,
+                DepositGreen,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_approved),
-                ContextCompat.getColor(context, R.color.light_green),
+                Res.string.feature_account_approved,
+                LightGreen,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_approval_pending),
-                ContextCompat
-                    .getColor(context, R.color.light_yellow),
+                Res.string.feature_account_approval_pending,
+                LightYellow,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_matured),
-                ContextCompat.getColor(context, R.color.red_light),
+                Res.string.feature_account_matured,
+                RedLight,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_closed),
-                ContextCompat.getColor(context, R.color.black),
+                Res.string.feature_account_closed,
+                Black,
             ),
         )
 
         return arrayList
     }
 
-    fun getLoanAccountStatusList(context: Context?): List<CheckboxStatus> {
+    internal fun getLoanAccountStatusList(): List<CheckboxStatus> {
         val arrayList = ArrayList<CheckboxStatus>()
         arrayList.add(
             CheckboxStatus(
-                context?.getString(R.string.feature_account_in_arrears),
-                ContextCompat.getColor(context!!, R.color.red),
+                Res.string.feature_account_in_arrears,
+                Red,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_active),
-                ContextCompat.getColor(context, R.color.deposit_green),
+                Res.string.feature_account_active,
+                DepositGreen,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_disburse),
-                ContextCompat.getColor(context, R.color.blue),
+                Res.string.feature_account_disburse,
+                Blue,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_approval_pending),
-                ContextCompat
-                    .getColor(context, R.color.light_yellow),
+                Res.string.feature_account_approval_pending,
+                LightYellow,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_overpaid),
-                ContextCompat.getColor(context, R.color.purple),
+                Res.string.feature_account_overpaid,
+                Purple,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_closed),
-                ContextCompat.getColor(context, R.color.black),
+                Res.string.feature_account_closed,
+                Black,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_withdrawn),
-                ContextCompat.getColor(context, R.color.light_black),
+                Res.string.feature_account_withdrawn,
+                LightBlack,
             ),
         )
         return arrayList
     }
 
-    fun getShareAccountStatusList(context: Context?): List<CheckboxStatus> {
+    internal fun getShareAccountStatusList(): List<CheckboxStatus> {
         val arrayList = ArrayList<CheckboxStatus>()
         arrayList.add(
             CheckboxStatus(
-                context?.getString(R.string.feature_account_active),
-                ContextCompat.getColor(context!!, R.color.deposit_green),
+                Res.string.feature_account_active,
+                DepositGreen,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_approved),
-                ContextCompat.getColor(context, R.color.light_green),
+                Res.string.feature_account_approved,
+                LightGreen,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_approval_pending),
-                ContextCompat
-                    .getColor(context, R.color.light_yellow),
+                Res.string.feature_account_approval_pending,
+                LightYellow,
             ),
         )
         arrayList.add(
             CheckboxStatus(
-                context.getString(R.string.feature_account_closed),
-                ContextCompat.getColor(context, R.color.light_blue),
+                Res.string.feature_account_closed,
+                LightBlue,
             ),
         )
         return arrayList
     }
 }
+
+internal data class CheckboxStatus(
+    val status: StringResource?,
+    val color: Color,
+    val isChecked: Boolean = false,
+)
