@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.auth.registration
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +46,7 @@ import mifos_mobile.feature.auth.generated.resources.verify
 import mifos_mobile.feature.auth.generated.resources.yes
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
@@ -54,6 +56,7 @@ import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -171,6 +174,7 @@ private fun RegistrationVerificationContent(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Image(
             painter = painterResource(Res.drawable.feature_auth_mifos_logo),
@@ -197,8 +201,6 @@ private fun RegistrationVerificationContent(
             ),
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         MifosOutlinedTextField(
             value = state.authenticationToken,
             onValueChange = {
@@ -208,11 +210,6 @@ private fun RegistrationVerificationContent(
             config = MifosTextFieldConfig(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             ),
-        )
-
-        Spacer(
-            modifier = Modifier
-                .height(16.dp),
         )
 
         MifosButton(
@@ -227,15 +224,15 @@ private fun RegistrationVerificationContent(
     }
 }
 
-// @DevicePreview
-// @Composable
-// private fun RegistrationVerificationScreenPreview(
-//    state: VerificationState,
-// ) {
-//    MifosMobileTheme {
-//        RegistrationVerificationContent(
-//            state = state,
-//            onAction = {},
-//        )
-//    }
-// }
+@Preview
+@Composable
+private fun RegistrationVerificationScreenPreview(
+    state: VerificationState,
+) {
+    MifosMobileTheme {
+        RegistrationVerificationContent(
+            state = state,
+            onAction = {},
+        )
+    }
+}

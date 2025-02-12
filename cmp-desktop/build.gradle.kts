@@ -33,6 +33,8 @@ kotlin {
             implementation(libs.kotlin.reflect)
 
             implementation(libs.koin.core)
+
+            implementation(compose.components.resources)
         }
     }
 }

@@ -13,10 +13,8 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -47,6 +45,7 @@ import mifos_mobile.feature.auth.generated.resources.password
 import mifos_mobile.feature.auth.generated.resources.username
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
@@ -57,6 +56,7 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
@@ -194,7 +194,6 @@ private fun LoginScreenContent(
                 onAction(LoginAction.TogglePasswordVisibility)
             },
         )
-        Spacer(modifier = Modifier.height(16.dp))
 
         MifosButton(
             modifier = Modifier
@@ -249,14 +248,14 @@ private fun LoginScreenContent(
     }
 }
 
-// @Preview
-// @Composable
-// private fun LoanScreenPreview() {
-//    MifosMobileTheme {
-//        LoginScreen(
-//            state = LoginState(dialogState = null),
-//            snackbarHostState = remember { SnackbarHostState() },
-//            onAction = {},
-//        )
-//    }
-// }
+@Preview
+@Composable
+private fun LoanScreenPreview() {
+    MifosMobileTheme {
+        LoginScreen(
+            state = LoginState(dialogState = null),
+            snackbarHostState = remember { SnackbarHostState() },
+            onAction = {},
+        )
+    }
+}

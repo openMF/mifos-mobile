@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.auth.registration
 
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -62,12 +63,14 @@ import mifos_mobile.feature.auth.generated.resources.register
 import mifos_mobile.feature.auth.generated.resources.username
 import mifos_mobile.feature.auth.generated.resources.verification_mode
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -172,6 +175,7 @@ private fun RegistrationScreenContent(
                 state = scrollState,
                 enabled = true,
             ),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         MifosMobileIcon(mobileIcon = Res.drawable.feature_auth_mifos_logo)
 
@@ -339,15 +343,15 @@ private fun RegistrationScreenContent(
     }
 }
 
-// @DevicePreview
-// @Composable
-// private fun RegistrationScreenPreview() {
-//    MifosMobileTheme {
-//        RegistrationScreen(
-//            state = SignUpState(dialogState = null),
-//            snackbarHostState = remember { SnackbarHostState() },
-//            onAction = {},
-//            modifier = Modifier,
-//        )
-//    }
-// }
+@Preview
+@Composable
+private fun RegistrationScreenPreview() {
+    MifosMobileTheme {
+        RegistrationScreen(
+            state = SignUpState(dialogState = null),
+            snackbarHostState = remember { SnackbarHostState() },
+            onAction = {},
+            modifier = Modifier,
+        )
+    }
+}
