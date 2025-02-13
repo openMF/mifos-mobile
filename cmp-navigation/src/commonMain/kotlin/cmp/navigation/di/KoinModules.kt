@@ -9,11 +9,14 @@
  */
 package cmp.navigation.di
 
+import cmp.navigation.ComposeAppViewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.di.DispatchersModule
 import org.mifos.mobile.core.data.di.RepositoryModule
 import org.mifos.mobile.core.datastore.di.PreferencesModule
 import org.mifos.mobile.core.network.di.NetworkModule
+import org.mifos.mobile.feature.auth.di.AuthModule
 
 object KoinModules {
     private val commonModules = module {
@@ -28,14 +31,14 @@ object KoinModules {
     private val networkModules = module {
         includes(NetworkModule)
     }
-//    private val sharedModule = module {
-//        viewModelOf(::MifosMobileViewModel)
-//    }
-//    private val featureModules = module {
-//        includes(
-//            AuthModule,
-//        )
-//    }
+    private val sharedModule = module {
+        viewModelOf(::ComposeAppViewModel)
+    }
+    private val featureModules = module {
+        includes(
+            AuthModule,
+        )
+    }
 //    private val LibraryModule = module {
 //        includes(PasscodeModule)
 //    }
@@ -45,7 +48,7 @@ object KoinModules {
         dataModules,
         coreDataStoreModules,
         networkModules,
-//        featureModules,
-//        sharedModule,
+        featureModules,
+        sharedModule,
     )
 }

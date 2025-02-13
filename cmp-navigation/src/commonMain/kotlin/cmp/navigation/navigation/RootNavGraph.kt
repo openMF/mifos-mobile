@@ -14,25 +14,36 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import cmp.navigation.navigation.NavGraphRoute.AUTH_GRAPH
 import cmp.navigation.navigation.NavGraphRoute.MAIN_GRAPH
 import cmp.navigation.ui.App
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.feature.auth.navigation.authenticationNavGraph
 
 @Composable
 fun RootNavGraph(
     networkMonitor: NetworkMonitor,
     navHostController: NavHostController,
+    startDestination: String,
     modifier: Modifier = Modifier,
+//    onClickLogout: () -> Unit,
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = MAIN_GRAPH,
+        startDestination = startDestination,
         route = NavGraphRoute.ROOT_GRAPH,
-        modifier = modifier,
     ) {
+        authenticationNavGraph(
+            navController = navHostController,
+            route = AUTH_GRAPH,
+//            navigateToPasscodeScreen = navHostController::navigateToPasscodeScreen,
+            navigateToPasscodeScreen = { },
+        )
         composable(MAIN_GRAPH) {
             App(
+                modifier = modifier,
                 networkMonitor = networkMonitor,
+//                onClickLogout = onClickLogout,
             )
         }
     }
